@@ -1,0 +1,12 @@
+{
+  "name": "c3-blog",
+  "version": "1.0.0",
+  "description": "Cards on Cards on Cards - Eleventy blog",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

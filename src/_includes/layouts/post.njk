@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title }} | Cards on Cards on Cards</title>
+<meta name="description" content="{{ description }}">
+<meta property="og:title" content="{{ title }} | Cards on Cards on Cards">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="https://cardsoncardsoncards.com.au/blog/{{ page.fileSlug }}.html">
+<meta property="og:type" content="article">
+<meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/post.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo">🃏 Cards on Cards on Cards</a>
+    <div class="nav-links">
+      <a href="/index.html" class="nav-link">Home</a>
+      <a href="/shop.html" class="nav-link nav-link--gold">Shop</a>
+      <a href="/blog.html" class="nav-link nav-link--active">Blog</a>
+      <a href="/tracker.html" class="nav-link">Free Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay Store</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<article class="wrap post-wrap">
+
+  <header class="post-header">
+    <div class="post-meta-top">
+      <span class="post-tag {{ category | tagClass }}">{{ category | tagLabel }}</span>
+      <time datetime="{{ date | dateISO }}" class="post-date">{{ date | dateDisplay }}</time>
+    </div>
+    <h1 class="post-h1">{{ title }}</h1>
+    {% if description %}
+    <p class="post-intro">{{ description }}</p>
+    {% endif %}
+    {% if affiliate_disclaimer %}
+    <div class="disclaimer">This post contains affiliate links. If you buy through them, we may earn a small commission at no extra cost to you.</div>
+    {% endif %}
+  </header>
+
+  <div class="post-body">
+    {{ content | safe }}
+  </div>
+
+  {% if cta_product_url %}
+  <div class="post-cta">
+    <h3>Ready to Buy?</h3>
+    <p>All products mentioned are confirmed available on Amazon AU with current pricing.</p>
+    <a href="{{ cta_product_url }}" target="_blank" rel="noopener sponsored" class="btn-gold">Check Price on Amazon AU →</a>
+  </div>
+  {% endif %}
+
+  <div class="post-nav">
+    <a href="/blog.html" class="post-back">← Back to Blog</a>
+    <a href="/shop.html" class="btn-gold-sm">Browse TCG Shop →</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">Cards on Cards on Cards</div>
+      <div class="footer-links">
+        <a href="/index.html" class="footer-link">Home</a>
+        <a href="/shop.html" class="footer-link">Shop</a>
+        <a href="/blog.html" class="footer-link">Blog</a>
+        <a href="/tracker.html" class="footer-link">Tracker</a>
+        <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
+      </div>
+      <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
