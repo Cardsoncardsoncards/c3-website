@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Cards on Cards on Cards</title>
+<meta name="description" content="Get in touch with Cards on Cards on Cards. Questions about products, your order, or the buylist.">
+<meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0C14;--deep:#111422;--card:#161929;--border:#252840;--gold:#C9A84C;--gold-lit:#E8C86A;--gold-dim:#7A621E;--silver:#A0A8C0;--white:#F0F2FF;--purple:#6B6BFF;--orange:#F56400;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse 80% 45% at 50% -8%,rgba(201,168,76,.09) 0%,transparent 60%),radial-gradient(ellipse 50% 30% at 80% 90%,rgba(107,107,255,.04) 0%,transparent 50%)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+.nav-logo{display:inline-flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
+.nav-link--gold{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
+.nav-link--active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
+.nav-link--etsy{color:var(--orange);border-color:rgba(245,100,0,.32);background:rgba(245,100,0,.05)}
+.page-hd{padding:56px 0 40px;text-align:center;position:relative;z-index:1}
+.page-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.page-h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,52px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:14px}
+.page-h1 .gold{color:var(--gold)}
+.page-desc{font-size:15px;color:rgba(240,242,255,.5);max-width:480px;margin:0 auto}
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);margin:0 0 56px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:760px;margin:0 auto 48px}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:36px 32px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;transition:all .25s}
+.contact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .25s}
+.contact-card:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.contact-card--general{border-color:rgba(201,168,76,.18)}
+.contact-card--general::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.contact-card--general:hover{border-color:rgba(201,168,76,.4)}
+.contact-card--general:hover::before{opacity:1}
+.contact-card--buylist{border-color:rgba(107,107,255,.18)}
+.contact-card--buylist::before{background:linear-gradient(90deg,transparent,var(--purple),transparent)}
+.contact-card--buylist:hover{border-color:rgba(107,107,255,.4)}
+.contact-card--buylist:hover::before{opacity:1}
+.contact-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.contact-icon--general{background:rgba(201,168,76,.1)}
+.contact-icon--buylist{background:rgba(107,107,255,.1)}
+.contact-label{font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.contact-card--general .contact-label{color:var(--gold)}
+.contact-card--buylist .contact-label{color:#9898FF}
+.contact-title{font-family:'Cinzel',serif;font-size:18px;font-weight:700;line-height:1.2}
+.contact-card--general .contact-title{color:var(--gold)}
+.contact-card--buylist .contact-title{color:#C0C0FF}
+.contact-body{font-size:13px;color:rgba(160,168,192,.65);line-height:1.6;flex:1}
+.contact-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:8px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .22s;margin-top:4px}
+.contact-btn--general{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold)}
+.contact-btn--general:hover{background:rgba(201,168,76,.2);border-color:var(--gold)}
+.contact-btn--buylist{background:rgba(107,107,255,.1);border:1px solid rgba(107,107,255,.35);color:#9898FF}
+.contact-btn--buylist:hover{background:rgba(107,107,255,.2);border-color:var(--purple)}
+.note-box{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;padding:20px 24px;max-width:760px;margin:0 auto 64px;font-size:13px;color:rgba(160,168,192,.55);line-height:1.7;text-align:center}
+.note-box strong{color:rgba(160,168,192,.8)}
+footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-index:1;margin-top:24px}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1100px;margin:0 auto;padding:0 24px}
+.footer-logo{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold)}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-link{font-size:12px;color:rgba(160,168,192,.4);text-decoration:none;transition:color .2s}
+.footer-link:hover{color:var(--silver)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.25)}
+@media(max-width:640px){.contact-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🃏 Cards on Cards on Cards</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">← Home</a>
+      <a href="shop.html" class="nav-link nav-link--gold">Shop</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="tracker.html" class="nav-link">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--etsy">D&amp;D Tools ↗</a>
+      <a href="contact.html" class="nav-link nav-link--active">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-hd">
+    <p class="page-eyebrow">Cards on Cards on Cards</p>
+    <h1 class="page-h1">Get in <span class="gold">Touch</span></h1>
+    <p class="page-desc">Questions about a product, an order, or the upcoming buylist? Pick the right option below and we will get back to you.</p>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <div class="contact-grid">
+
+    <div class="contact-card contact-card--general">
+      <div class="contact-icon contact-icon--general">✉️</div>
+      <p class="contact-label">General Enquiries</p>
+      <h2 class="contact-title">Have a question for us?</h2>
+      <p class="contact-body">Questions about our eBay store, a specific product, shipping, or anything else — send us a message and we will respond as soon as we can.</p>
+      <a href="/cdn-cgi/l/email-protection#eb888888c5989a9e8a8f838e879bab8c868a8287c5888486d4989e89818e889fd6ac8e858e998a87ced9dbae859a9e829992" class="contact-btn contact-btn--general">Send a Message →</a>
+    </div>
+
+    <div class="contact-card contact-card--buylist">
+      <div class="contact-icon contact-icon--buylist">📋</div>
+      <p class="contact-label">Buylist Coming Soon</p>
+      <h2 class="contact-title">Buylist Interest</h2>
+      <p class="contact-body">We're building a buylist tool for Australian TCG players — a single place to compare what stores are paying for your cards. Register your interest below and we'll keep you updated as it gets closer to launch.</p>
+      <a href="/cdn-cgi/l/email-protection#c3a0a0a0edb0b2b6a2a7aba6afb383a4aea2aaafeda0acaefcb0b6a1a9a6a0b7fe81b6bae6f1f3afaab0b7e6f1f3aaadb7a6b1a6b0b7" class="contact-btn contact-btn--buylist">Register Interest →</a>
+    </div>
+
+  </div>
+
+  <div class="note-box">
+    <strong>Response times:</strong> We aim to respond within 1 to 2 business days. For eBay order enquiries, messaging us directly through eBay is faster and keeps a record of the conversation for both parties.
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Cards on Cards on Cards</div>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Home</a>
+      <a href="shop.html" class="footer-link">Shop</a>
+      <a href="blog.html" class="footer-link">Blog</a>
+      <a href="tracker.html" class="footer-link">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-lin

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C3 VIP Hub | Cards on Cards on Cards</title>
+<meta name="robots" content="noindex, nofollow">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0A0C14;--deep:#111422;--card:#161929;--border:#252840;--gold:#C9A84C;--gold-lit:#E8C86A;--gold-dim:#7A621E;--silver:#A0A8C0;--white:#F0F2FF;--purple:#6B6BFF;--orange:#F56400;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(ellipse 80% 45% at 50% -8%,rgba(201,168,76,.11) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 100%,rgba(107,107,255,.06) 0%,transparent 50%)}
+
+/* GATE SCREEN */
+#gate{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:var(--ink)}
+#gate::before{content:'';position:absolute;inset:0;background-image:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(201,168,76,.1) 0%,transparent 60%);pointer-events:none}
+.gate-box{background:var(--card);border:1px solid rgba(201,168,76,.25);border-radius:16px;padding:48px 40px;max-width:400px;width:100%;text-align:center;position:relative;z-index:1}
+.gate-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:16px 16px 0 0}
+.gate-logo{font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.gate-badge{display:inline-block;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:100px;padding:4px 14px;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
+.gate-title{font-family:'Cinzel',serif;font-size:22px;font-weight:900;color:var(--white);margin-bottom:10px}
+.gate-desc{font-size:13px;color:rgba(160,168,192,.55);margin-bottom:28px;line-height:1.6}
+.gate-input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;padding:13px 16px;outline:none;transition:border-color .2s,box-shadow .2s;margin-bottom:12px;text-align:center;letter-spacing:.1em}
+.gate-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+.gate-input::placeholder{color:rgba(160,168,192,.3);letter-spacing:0}
+.gate-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-lit) 50%,var(--gold) 100%);background-size:200% 200%;border:none;border-radius:8px;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--ink);cursor:pointer;transition:all .3s;animation:shimmer 3s ease-in-out infinite}
+@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.gate-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.gate-error{font-size:12px;color:#e07070;margin-top:10px;display:none}
+.gate-error.show{display:block}
+
+/* MAIN CONTENT — hidden until unlocked */
+#main{display:none;position:relative;z-index:1}
+
+/* NAV */
+nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+.nav-logo{display:inline-flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
+.nav-link--gold{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
+
+/* PAGE */
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.page-hd{padding:56px 0 40px;text-align:center;position:relative;z-index:1}
+.page-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.page-h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,48px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:14px}
+.page-h1 .gold{color:var(--gold)}
+.page-desc{font-size:15px;color:rgba(240,242,255,.5);max-width:480px;margin:0 auto}
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);margin:0 0 52px}
+
+/* HUB GRID */
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:64px}
+.hub-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;transition:all .25s;position:relative;overflow:hidden;text-decoration:none;cursor:pointer}
+.hub-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .25s}
+.hub-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.hub-card--tool{border-color:rgba(201,168,76,.18)}
+.hub-card--tool::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hub-card--tool:hover{border-color:rgba(201,168,76,.4)}
+.hub-card--tool:hover::before{opacity:1}
+.hub-card--sheet{border-color:rgba(74,158,255,.18)}
+.hub-card--sheet::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.hub-card--sheet:hover{border-color:rgba(74,158,255,.4)}
+.hub-card--sheet:hover::before{opacity:1}
+.hub-card--coming{border-color:rgba(160,168,192,.1);opacity:.65;cursor:default}
+.hub-card--coming:hover{transform:none;box-shadow:none}
+.hub-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.hub-icon--tool{background:rgba(201,168,76,.1)}
+.hub-icon--sheet{background:rgba(74,158,255,.1)}
+.hub-icon--coming{background:rgba(160,168,192,.06)}
+.hub-label{font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.hub-card--tool .hub-label{color:var(--gold)}
+.hub-card--sheet .hub-label{color:var(--blue)}
+.hub-card--coming .hub-label{color:var(--silver)}
+.hub-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;line-height:1.25}
+.hub-card--tool .hub-title{color:var(--gold)}
+.hub-card--sheet .hub-title{color:#A0C8FF}
+.hub-card--coming .hub-title{color:var(--silver)}
+.hub-body{font-size:13px;color:rgba(160,168,192,.6);line-height:1.55;flex:1}
+.hub-arrow{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.65;margin-top:4px}
+.hub-card--tool .hub-arrow{color:var(--gold)}
+.hub-card--sheet .hub-arrow{color:var(--blue)}
+.coming-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(160,168,192,.4);border:1px solid rgba(160,168,192,.15);border-radius:100px;padding:3px 10px;width:fit-content}
+.lock-icon{font-size:12px}
+
+/* SECTION HEADER */
+.section-hd{margin-bottom:20px}
+.section-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(16px,2.5vw,22px);font-weight:700;color:var(--white);line-height:1.2}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-index:1}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1100px;margin:0 auto;padding:0 24px}
+.footer-logo{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold)}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-link{font-size:12px;color:rgba(160,168,192,.4);text-decoration:none;transition:color .2s}
+.footer-link:hover{color:var(--silver)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.25)}
+
+@media(max-width:640px){.hub-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+
+<!-- GATE SCREEN -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-logo">Cards on Cards on Cards</div>
+    <div class="gate-badge">⭐ VIP Hub</div>
+    <h1 class="gate-title">Members Only</h1>
+    <p class="gate-desc">Enter your access code to continue. This area contains tools and resources for C3 members.</p>
+    <input type="password" id="gateInput" class="gate-input" placeholder="Enter access code" onkeydown="if(event.key==='Enter')checkPass()">
+    <button class="gate-btn" onclick="checkPass()">Enter Hub →</button>
+    <p class="gate-error" id="gateError">Incorrect code. Please try again.</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">🃏 Cards on Cards on Cards</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">← Home</a>
+      <a href="shop.html" class="nav-link nav-link--gold">TCG Shop</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="tracker.html" class="nav-link">Tracker</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--etsy">D&amp;D Tools ↗</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-hd">
+    <p class="page-eyebrow">Members Only</p>
+    <h1 class="page-h1">C3 <span class="gold">VIP Hub</span></h1>
+    <p class="page-desc">Your central access point for C3 tools, spreadsheets, and resources. Bookmark this page.</p>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <div class="section-hd">
+    <span class="section-eyebrow">Tools</span>
+    <h2 class="section-title">Content and Selling Tools</h2>
+  </div>
+
+  <div class="hub-grid">
+
+    <a href="content-engine.html" class="hub-card hub-card--tool">
+      <div class="hub-icon hub-icon--tool">✦</div>
+      <p class="hub-label">AI Tool</p>
+      <h3 class="hub-title">C3 Content Engine</h3>
+      <p class="hub-body">Generate platform-specific marketing content for eBay, Instagram, Facebook, Reddit, TikTok, Email and more. Powered by Claude AI.</p>
+      <p class="hub-arrow">Open Tool →</p>
+    </a>
+
+    <div class="hub-card hub-card--coming">
+      <div class="hub-icon hub-icon--coming">📊</div>
+      <p class="hub-label">Coming Soon</p>
+      <h3 class="hub-title">Buylist Intelligence</h3>
+      <p class="hub-body">Live buylist pricing aggregated from Australian stores. Know what your cards are worth before you sell.</p>
+      <div class="coming-badge"><span class="lock-icon">🔒</span> In Development</div>
+    </div>
+
+  </div>
+
+  <div class="section-hd">
+    <span class="section-eyebrow">Spreadsheets</span>
+    <h2 class="section-title">Free TCG Spreadsheet Tools</h2>
+  </div>
+
+  <div class="hub-grid">
+
+    <a href="tracker.html" class="hub-card hub-card--sheet">
+      <div class="hub-icon hub-icon--sheet">📦</div>
+      <p class="hub-label">Google Sheets</p>
+      <h3 class="hub-title">Collection Tracker</h3>
+      <p class="hub-body">Log your sealed product, track what you have opened, and monitor your collection value over time.</p>
+      <p class="hub-arrow">Open Tracker →</p>
+    </a>
+
+    <a href="tracker.html" class="hub-card hub-card--sheet">
+      <div class="hub-icon hub-icon--sheet">📈</div>
+      <p class="hub-label">Google Sheets</p>
+      <h3 class="hub-title">Booster Box ROI Calculator</h3>
+      <p class="hub-body">Calculate your booster box return on investment. Enter your box cost, pulls, and sales to see your profit or loss.</p>
+      <p class="hub-arrow">Open Calculator →</p>
+    </a>
+
+    <a href="tracker.html" class="hub-card hub-card--sheet">
+      <div class="hub-icon hub-icon--sheet">🏆</div>
+      <p class="hub-label">Google Sheets</p>
+      <h3 class="hub-title">Tournament Performance Log</h3>
+      <p class="hub-body">Track your tournament results, deck performance, win rates, and meta trends across all your events.</p>
+      <p class="hub-arrow">Open Log →</p>
+    </a>
+
+    <a href="tracker.html" class="hub-card hub-card--sheet">
+      <div class="hub-icon hub-icon--sheet">💰</div>
+      <p class="hub-label">Google Sheets</p>
+      <h3 class="hub-title">Seller Fee Calculator</h3>
+      <p class="hub-body">Calculate your actual take-home after eBay fees, PayPal fees, and postage. Know your real margin before you list.</p>
+      <p class="hub-arrow">Open Calculator →</p>
+    </a>
+
+    <div class="hub-card hub-card--coming">
+      <div class="hub-icon hub-icon--coming">🗓️</div>
+      <p class="hub-label">Coming Soon</p>
+      <h3 class="hub-title">TCG Release Calendar</h3>
+      <p class="hub-body">Upcoming set release dates across all major TCGs, updated regularly. Plan your pulls and pre-orders in advance.</p>
+      <div class="coming-badge"><span class="lock-icon">🔒</span> In Development</div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Cards on Cards on Cards</div>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Home</a>
+      <a href="shop.html" class="footer-link">Shop</a>
+      <a href="blog.html" class="footer-link">Blog</a>
+      <a href="tracker.html" class="footer-link">Tracker</a>
+      <a href="contact.html" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
+  </div>
+</footer>
+
+</div><!-- end #main -->
+
+<script>
+// ── PASSWORD GATE ──────────────────────────────────────────────────────
+// TO CHANGE THE PASSWORD: edit the value below between the quotes.
+// When you add a real auth system later, delete this entire script block
+// and remove the gate div from the HTML. The #main div stays as-is.
+const VIP_PASSWORD = 'c3vip2026';
+
+function checkPass() {
+  const input = document.getElementById('gateInput').value.trim();
+  const error = document.getElementById('gateError');
+  if (input === VIP_PASSWORD) {
+    sessionStorage.setItem('c3_vip', '1');
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('main').style.display = 'block';
+    error.classList.remove('show');
+  } else {
+    error.classList.add('show');
+    document.getElementById('gateInput').value = '';
+    document.getElementById('gateInput').focus();
+  }
+}
+
+// Keep unlocked during the same browser session
+(function() {
+  if (sessionStorage.getItem('c3_vip') === '1') {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('main').style.display = 'block';
+  }
+})();
+</script>
+
+</body>
+</html>
