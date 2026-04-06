@@ -51,3 +51,5 @@ Highest density. Best for bulk commons and uncommons where display quality matte
 - **Bulk storage:** 12-pocket or monster binders.
 
 One important note: always buy side-loading pocket binders, not top-loading. Cards fall out of top-loading binders when you open the pages horizontally. Side-loading solves this completely.
+
+Test update from new computer
