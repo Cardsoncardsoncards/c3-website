@@ -1,0 +1,12 @@
+---
+layout: layouts/post.njk
+title: Cards on Cards on Cards
+---
+
+<h1>Cards on Cards on Cards</h1>
+
+<p>Your home for TCG buying guides, set reviews, and tools.</p>
+
+<p>
+  <a href="/blog/">Go to Blog →</a>
+</p>
