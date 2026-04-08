@@ -102,11 +102,11 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   <div class="gold-divider"></div>
 
   <div class="cat-filter">
-    <button class="cat-btn active" data-filter="all" onclick="filterPosts('all')">All</button>
-    <button class="cat-btn" data-filter="guide" onclick="filterPosts('guide')">Buying Guides</button>
-    <button class="cat-btn" data-filter="review" onclick="filterPosts('review')">Set Reviews</button>
-    <button class="cat-btn" data-filter="game" onclick="filterPosts('game')">Game Guides</button>
-    <button class="cat-btn" data-filter="accessory" onclick="filterPosts('accessory')">Accessories</button>
+<button class="cat-btn active" data-filter="all" onclick="filterPosts('all')">All</button>
+<button class="cat-btn" data-filter="buying-guides" onclick="filterPosts('buying-guides')">Buying Guides</button>
+<button class="cat-btn" data-filter="beginner-guides" onclick="filterPosts('beginner-guides')">Game Guides</button>
+<button class="cat-btn" data-filter="accessories" onclick="filterPosts('accessories')">Accessories</button>
+<button class="cat-btn" data-filter="tools-and-trackers" onclick="filterPosts('tools-and-trackers')">Free Tools</button>
   </div>
 
   <div class="blog-grid" id="blogGrid">
@@ -156,8 +156,13 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 function filterPosts(cat) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('.cat-btn[data-filter="' + cat + '"]').classList.add('active');
+  const guideCategories = ['buying-guides','value-and-worth','product-comparisons','selling-and-money'];
   document.querySelectorAll('#blogGrid .blog-card').forEach(card => {
-    card.style.display = (cat === 'all' || card.dataset.category === cat) ? 'flex' : 'none';
+    const c = card.dataset.category;
+    const show = cat === 'all'
+      || c === cat
+      || (cat === 'buying-guides' && guideCategories.includes(c));
+    card.style.display = show ? 'flex' : 'none';
   });
 }
 const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){e.target.classList.add('in-view');obs.unobserve(e.target);} }), {threshold:0.06});
