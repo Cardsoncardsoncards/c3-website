@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free TCG Collection Tracker | Cards on Cards on Cards</title>
+<meta name="description" content="Download your free TCG Collection Tracker. Works for Magic, Pokemon, Yu-Gi-Oh, Lorcana, One Piece and more.">
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SETUP GUIDE — replace placeholders before deploying
+     ═══════════════════════════════════════════════════════════════════
+
+  Replace these placeholders (Ctrl+H):
+    YOUR_MAILERLITE_FORM_URL   → Your MailerLite embedded form action URL (4 occurrences)
+    https://docs.google.com/spreadsheets/d/18GtZjToO1lxMzM3urEq-nj_5Ck86BLOnDqGv5uN7VmM/edit?usp=sharing     → Shareable link to your free tracker Google Sheet
+    YOUR_EBAY_STORE_URL        → Your full eBay store URL
+    YOUR_ETSY_STORE_URL        → Your full Etsy store URL (BLAS Digital)
+    blasdigital-22             → Your Amazon Associates tracking tag
+
+  After replacing, do Ctrl+F and search for YOUR_ — zero should remain.
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WR68HPE92S');
+  document.addEventListener('submit', function(e) {
+    if (e.target && e.target.tagName === 'FORM') {
+      gtag('event', 'form_submit', { event_category: 'newsletter', event_label: 'signup' });
+    }
+  }, true);
+</script>
+<!-- MailerLite Universal -->
+<script>
+  (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+  .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);}
+  (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml'));
+  ml('account', '2220065');
+</script>
+<!-- End MailerLite Universal -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:      #0A0C14;
+    --deep:     #111422;
+    --card:     #161929;
+    --border:   #252840;
+    --gold:     #C9A84C;
+    --gold-lit: #E8C86A;
+    --gold-dim: #7A621E;
+    --silver:   #A0A8C0;
+    --white:    #F0F2FF;
+    --success:  #3DD68C;
+    --purple:   #6B6BFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      repeating-linear-gradient(60deg, transparent, transparent 30px, rgba(255,255,255,0.012) 30px, rgba(255,255,255,0.012) 31px),
+      repeating-linear-gradient(-60deg, transparent, transparent 30px, rgba(255,255,255,0.012) 30px, rgba(255,255,255,0.012) 31px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap        { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  .wrap--narrow { max-width: 680px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,12,20,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 960px; margin: 0 auto; padding: 0 24px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700;
+    letter-spacing: 0.12em; color: var(--gold); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-logo img { height: 36px; width: 36px; border-radius: 6px; object-fit: cover; }
+  .nav-logo span { color: var(--gold); font-weight: 700; }
+  .nav-links { display: flex; gap: 8px; }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: all 0.2s ease; border: 1px solid transparent;
+  }
+  .nav-link--ebay  { color: var(--silver); border-color: var(--border); }
+  .nav-link--ebay:hover { color: var(--white); border-color: var(--silver); background: rgba(255,255,255,0.04); }
+  .nav-link--etsy  { color: var(--gold); border-color: var(--gold-dim); background: rgba(201,168,76,0.06); }
+  .nav-link--etsy:hover { background: rgba(201,168,76,0.14); border-color: var(--gold); }
+  .nav-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ── HERO ── */
+  .hero { padding: 96px 0 72px; text-align: center; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); padding: 6px 16px; border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 100px; margin-bottom: 32px; background: rgba(201,168,76,0.06);
+    animation: fadeSlideDown 0.6s ease both;
+  }
+  .hero-eyebrow::before { content: '◆'; font-size: 8px; }
+  .hero-title {
+    font-family: 'Cinzel', serif; font-size: clamp(38px, 7vw, 72px);
+    font-weight: 900; line-height: 1.08; color: var(--white); margin-bottom: 8px;
+    animation: fadeSlideDown 0.6s 0.1s ease both;
+  }
+  .hero-title .gold { color: var(--gold); }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif; font-size: clamp(13px, 2vw, 18px);
+    font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--silver); margin-bottom: 28px;
+    animation: fadeSlideDown 0.6s 0.2s ease both;
+  }
+  .hero-desc {
+    font-size: 17px; color: rgba(240,242,255,0.65);
+    max-width: 540px; margin: 0 auto 48px;
+    animation: fadeSlideDown 0.6s 0.3s ease both;
+  }
+  .hero-tcgs {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+    animation: fadeSlideDown 0.6s 0.4s ease both;
+  }
+  .tcg-badge {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    padding: 5px 12px; border-radius: 4px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--silver); text-transform: uppercase;
+  }
+
+  /* ── DIVIDER ── */
+  .gold-divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
+    position: relative; z-index: 1;
+  }
+
+  /* ── SECTIONS ── */
+  .section { padding: 80px 0; position: relative; z-index: 1; }
+  .section--alt { background: rgba(22,25,41,0.5); }
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Cinzel', serif; font-size: clamp(24px, 4vw, 38px);
+    font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 16px;
+  }
+  .section-body { font-size: 16px; color: rgba(240,242,255,0.6); max-width: 560px; }
+
+  /* ── DOWNLOAD CARD ── */
+  .download-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 48px; margin-top: 40px;
+    position: relative; overflow: hidden;
+  }
+  .download-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .feature-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0 36px;
+  }
+  .feature-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; color: rgba(240,242,255,0.75);
+  }
+  .feature-item::before { content: '◆'; font-size: 8px; color: var(--gold); margin-top: 5px; flex-shrink: 0; }
+
+  /* ── MERGED FORM ── */
+  .form-section-label {
+    font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600;
+    color: var(--white); margin-bottom: 6px;
+  }
+  .form-section-sub { font-size: 14px; color: var(--silver); margin-bottom: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .input-field {
+    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    border-radius: 8px; padding: 13px 16px; font-size: 15px;
+    font-family: 'DM Sans', sans-serif; color: var(--white); outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .input-field::placeholder { color: rgba(160,168,192,0.5); }
+  .input-field:focus { border-color: var(--gold-dim); background: rgba(255,255,255,0.07); }
+  select.input-field { cursor: pointer; margin-bottom: 16px; }
+  select.input-field option { background: var(--deep); color: var(--white); }
+
+  .expectation-copy {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
+    font-size: 13px; color: rgba(160,168,192,0.7); line-height: 1.6;
+  }
+  .expectation-copy strong { color: var(--silver); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em;
+    cursor: pointer; border: none; transition: all 0.2s ease; white-space: nowrap;
+  }
+  .btn--gold { background: linear-gradient(135deg, var(--gold), #A8843A); color: #0A0C14; }
+  .btn--gold:hover { background: linear-gradient(135deg, var(--gold-lit), var(--gold)); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,168,76,0.25); }
+  .btn--gold:active { transform: translateY(0); }
+  .btn--outline { background: transparent; border: 1px solid var(--gold-dim); color: var(--gold); }
+  .btn--outline:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+  .btn--silver { background: rgba(255,255,255,0.07); border: 1px solid var(--border); color: var(--white); }
+  .btn--silver:hover { background: rgba(255,255,255,0.12); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+  .btn--full { width: 100%; justify-content: center; padding: 15px 24px; font-size: 15px; }
+
+  .alert { padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-top: 12px; display: none; }
+  .alert.visible { display: block; }
+  .alert--error { background: rgba(240,97,74,0.1); border: 1px solid rgba(240,97,74,0.3); color: #F0614A; }
+
+  /* ── SUCCESS STATE ── */
+  .download-success { display: none; animation: fadeIn 0.5s ease both; }
+  .download-success.visible { display: block; }
+  .success-icon {
+    width: 56px; height: 56px; background: rgba(61,214,140,0.12);
+    border: 2px solid var(--success); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+  }
+  .download-btn-wrap { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  .btn--download {
+    background: linear-gradient(135deg, var(--gold), #A8843A); color: #0A0C14;
+    padding: 16px 32px; font-size: 16px; border-radius: 10px;
+  }
+  .btn--download:hover {
+    background: linear-gradient(135deg, var(--gold-lit), var(--gold));
+    transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.3);
+  }
+  .success-note {
+    margin-top: 20px; padding: 16px;
+    background: rgba(61,214,140,0.06); border: 1px solid rgba(61,214,140,0.2);
+    border-radius: 8px; font-size: 13px; color: rgba(240,242,255,0.65);
+  }
+
+  /* ── PLATFORM TEASER ── */
+  .platform-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 48px; margin-top: 40px;
+    position: relative; overflow: hidden;
+  }
+  .platform-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--purple), transparent);
+  }
+  .coming-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #9898FF; padding: 5px 14px; border: 1px solid rgba(107,107,255,0.35);
+    border-radius: 100px; margin-bottom: 24px; background: rgba(107,107,255,0.07);
+  }
+  .coming-badge::before { content: '◈'; font-size: 10px; }
+  .platform-features {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; margin: 32px 0 28px;
+  }
+  .platform-feat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(107,107,255,0.15); border-radius: 10px; padding: 20px;
+  }
+  .platform-feat-icon { font-size: 24px; margin-bottom: 10px; }
+  .platform-feat-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .platform-feat-desc { font-size: 13px; color: var(--silver); opacity: 0.7; }
+  .signup-nudge {
+    text-align: center; padding: 16px 20px;
+    background: rgba(107,107,255,0.06); border: 1px solid rgba(107,107,255,0.2);
+    border-radius: 10px; font-size: 14px; color: rgba(160,168,192,0.8);
+  }
+  .signup-nudge a { color: #9898FF; text-decoration: none; border-bottom: 1px solid rgba(152,152,255,0.4); }
+  .signup-nudge a:hover { color: var(--white); }
+
+  /* ── GEAR SECTION ── */
+  .gear-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; margin-top: 40px;
+  }
+  .gear-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; text-decoration: none;
+    display: block; transition: all 0.25s ease; position: relative; overflow: hidden;
+  }
+  .gear-card:hover {
+    transform: translateY(-3px); border-color: rgba(201,168,76,0.3);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.4);
+  }
+  .gear-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    opacity: 0; transition: opacity 0.25s ease;
+  }
+  .gear-card:hover::before { opacity: 1; }
+  .gear-icon { font-size: 28px; margin-bottom: 12px; }
+  .gear-name { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .gear-desc { font-size: 13px; color: var(--silver); opacity: 0.7; line-height: 1.5; margin-bottom: 14px; }
+  .gear-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--gold); text-decoration: none;
+  }
+  .gear-disclaimer {
+    margin-top: 20px; font-size: 12px; color: rgba(160,168,192,0.35);
+    text-align: center; line-height: 1.5;
+  }
+
+  /* ── STORES GRID ── */
+  .stores-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .store-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px; text-decoration: none;
+    display: block; transition: all 0.25s ease; position: relative; overflow: hidden;
+  }
+  .store-card:hover { transform: translateY(-3px); border-color: rgba(201,168,76,0.4); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+  .store-card::after {
+    content: '→'; position: absolute; top: 20px; right: 20px;
+    font-size: 16px; color: var(--gold-dim); transition: transform 0.2s ease;
+  }
+  .store-card:hover::after { transform: translateX(4px); color: var(--gold); }
+  .store-name { font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .store-desc { font-size: 13px; color: var(--silver); line-height: 1.5; }
+  .store-tag {
+    display: inline-block; margin-top: 14px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold);
+    border: 1px solid var(--gold-dim); border-radius: 4px; padding: 3px 10px;
+  }
+  .store-tag--purple { color: #9898FF; border-color: rgba(107,107,255,0.4); }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--border); padding: 36px 0; position: relative; z-index: 1; }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-logo { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); }
+  .footer-partner { font-size: 12px; color: rgba(160,168,192,0.45); text-align: center; }
+  .footer-partner a { color: var(--gold-dim); text-decoration: none; border-bottom: 1px solid var(--gold-dim); }
+  .footer-partner a:hover { color: var(--gold); }
+  .footer-copy { font-size: 12px; color: rgba(160,168,192,0.35); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .stores-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .feature-list { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .download-card, .platform-card { padding: 28px 20px; }
+    .nav-link span { display: none; }
+    .platform-features { grid-template-columns: 1fr 1fr; }
+    .download-btn-wrap { flex-direction: column; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .gear-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 420px) {
+    .gear-grid { grid-template-columns: 1fr; }
+    .platform-features { grid-template-columns: 1fr; }
+  }
+
+  /* ── SIDEBAR NAV ─────────────────────────────────────────────── */
+  .sidebar-nav {
+    position: fixed;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(10,12,20,0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 10px;
+  }
+  .sidebar-nav-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(160,168,192,0.4);
+    text-align: center;
+    margin-bottom: 4px;
+    padding: 0 4px;
+  }
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(160,168,192,0.6);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .sidebar-link:hover {
+    color: var(--white);
+    background: rgba(255,255,255,0.05);
+    border-color: var(--border);
+  }
+  .sidebar-link.active {
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.25);
+  }
+  .sidebar-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+  .sidebar-link.active .sidebar-dot { opacity: 1; }
+  @media (max-width: 1200px) { .sidebar-nav { display: none; } }
+
+
+/* NAV COLOUR CLASSES - outline and font only */
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
+.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}
+.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
+.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
+.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
+.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+/* Active page override */
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+
+</style>
+</head>
+<body>
+
+
+<!-- ── SIDEBAR NAV ─────────────────────────────────────────────── -->
+<aside class="sidebar-nav" id="sidebar-nav">
+  <div class="sidebar-nav-label">On This Page</div>
+  <a href="#coming-soon" class="sidebar-link active" data-section="coming-soon">
+    <span class="sidebar-dot"></span>Coming Soon
+  </a>
+  <a href="#download" class="sidebar-link" data-section="download">
+    <span class="sidebar-dot"></span>Free Tracker
+  </a>
+  <a href="#premium-tools" class="sidebar-link" data-section="premium-tools">
+    <span class="sidebar-dot"></span>Premium Tools
+  </a>
+  <a href="#gear" class="sidebar-link" data-section="gear">
+    <span class="sidebar-dot"></span>Gear &amp; Supplies
+  </a>
+  <a href="#stores" class="sidebar-link" data-section="stores">
+    <span class="sidebar-dot"></span>Our Stores
+  </a>
+</aside>
+
+<!-- ── NAV ────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link nav-link--home">← Home</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker nav-link--active">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="wrap--narrow">
+    <div class="hero-eyebrow">Free Download Below</div>
+    <h1 class="hero-title">
+      Track Every Card.<br>
+      <span class="gold">Know Your Numbers.</span>
+    </h1>
+    <p class="hero-subtitle">Cards on Cards on Cards</p>
+    <p class="hero-desc">
+      You scanned the insert. Here's the free TCG Collection Tracker we promised.
+      Works for every game, right out of the box.
+    </p>
+    <div class="hero-tcgs">
+      <span class="tcg-badge">Magic</span>
+      <span class="tcg-badge">Pokémon</span>
+      <span class="tcg-badge">Yu-Gi-Oh</span>
+      <span class="tcg-badge">Lorcana</span>
+      <span class="tcg-badge">One Piece</span>
+      <span class="tcg-badge">Flesh &amp; Blood</span>
+      <span class="tcg-badge">Digimon</span>
+      <span class="tcg-badge">+ More</span>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ── COMING SOON ─────────────────────────────────────────────── -->
+<section class="section section--alt" id="coming-soon">
+  <div class="wrap--narrow">
+    <div class="reveal">
+      <p class="section-label">Coming Soon</p>
+      <h2 class="section-title">Something Big is Coming<br>for AU TCG Players</h2>
+      <p class="section-body">
+        We're building a suite of tools designed specifically for the Australian TCG community —
+        sellers, collectors, and players all in one place.
+      </p>
+    </div>
+
+    <div class="platform-card reveal">
+      <div class="coming-badge">In Development</div>
+      <div style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);padding:4px 13px;border:1px solid rgba(201,168,76,.3);border-radius:100px;margin-bottom:20px;background:rgba(201,168,76,.05);">◆ Free Tracker Below</div>
+
+      <div class="platform-features">
+        <div class="platform-feat">
+          <div class="platform-feat-icon">📅</div>
+          <div class="platform-feat-title">TCG Events Calendar</div>
+          <div class="platform-feat-desc">One place for every local tournament, prerelease, and game night across all card games in Australia.</div>
+        </div>
+        <div class="platform-feat">
+          <div class="platform-feat-icon">📊</div>
+          <div class="platform-feat-title">Buylist Intelligence</div>
+          <div class="platform-feat-desc">See what stores near you are paying for your cards without calling around or checking multiple sites.</div>
+        </div>
+        <div class="platform-feat">
+          <div class="platform-feat-icon">🔔</div>
+          <div class="platform-feat-title">Market Alerts</div>
+          <div class="platform-feat-desc">Get notified when a card or sealed product hits your target price — buy and sell at the right time.</div>
+        </div>
+        <div class="platform-feat">
+          <div class="platform-feat-icon">🇦🇺</div>
+          <div class="platform-feat-title">Built for Australia</div>
+          <div class="platform-feat-desc">Designed around Australian stores, local events, and the AU TCG community. Not an afterthought.</div>
+        </div>
+      </div>
+
+      <div class="signup-nudge">
+        ◈ Sign up below for news and updates as the buylist gets closer to launch. The free tracker is also waiting for you below.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FREE DOWNLOAD + MERGED SIGN-UP ─────────────────────────── -->
+<section class="section" id="download">
+  <div class="wrap--narrow">
+    <div class="reveal">
+      <p class="section-label">Free Download</p>
+      <h2 class="section-title">Your Free TCG Collection Tracker</h2>
+      <p class="section-body">A Google Sheets tracker built for collectors who actually sell. Drop your details below and get instant access.</p>
+    </div>
+
+    <div class="download-card reveal">
+      <div class="feature-list">
+        <div class="feature-item">Collection inventory with auto profit/loss</div>
+        <div class="feature-item">Works across all major TCGs</div>
+        <div class="feature-item">Wishlist with priority ranking</div>
+        <div class="feature-item">200 card capacity (free version)</div>
+        <div class="feature-item">Instant Google Sheets access</div>
+        <div class="feature-item">No app download needed</div>
+      </div>
+
+      <!-- MailerLite embedded form -->
+      <div class="form-section-label">Get your free tracker</div>
+      <div class="form-section-sub">Sign up to be the first to know when the C3 Buylist goes live — and get instant access to the free tracker while you wait.</div>
+      <div class="ml-embedded" data-form="mIFDGb"></div>
+
+      <!-- Post-signup download note (always visible below form) -->
+      <div style="margin-top:28px; padding:20px; background:rgba(61,214,140,0.06); border:1px solid rgba(61,214,140,0.2); border-radius:10px;">
+        <p style="font-size:14px; color:rgba(240,242,255,0.75); line-height:1.6; margin-bottom:16px;">
+          After subscribing, check your email for your confirmation link, then come back here to access the tracker.
+        </p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="https://docs.google.com/spreadsheets/d/18GtZjToO1lxMzM3urEq-nj_5Ck86BLOnDqGv5uN7VmM/edit?usp=sharing" target="_blank" rel="noopener" class="btn btn--gold">
+            ↗ Open Free Tracker
+          </a>
+          <a href="https://www.etsy.com/au/listing/4482818193/tcg-collection-tracker-magic-pokemon" target="_blank" rel="noopener" class="btn btn--outline">
+            See Premium Version
+          </a>
+        </div>
+        <p style="margin-top:14px; font-size:12px; color:rgba(160,168,192,0.5);">
+          Once open: File → Make a Copy to save it to your own Google Drive.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── PREMIUM TOOLS ──────────────────────────────────────────── -->
+<section class="section" id="premium-tools">
+  <div class="wrap--narrow">
+    <div class="reveal">
+      <p class="section-label">Available on Etsy</p>
+      <h2 class="section-title">Premium TCG Spreadsheet Tools</h2>
+      <p class="section-body">Upgraded versions built for serious collectors and sellers. One-time purchase — delivered as Excel files, compatible with Google Sheets.</p>
+    </div>
+
+    <div class="gear-grid reveal" style="margin-top:32px;">
+
+      <a href="https://www.etsy.com/au/listing/4482818193/tcg-collection-tracker-magic-pokemon" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2);">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);"></div>
+        <div class="gear-icon">📦</div>
+        <div class="gear-name" style="color:var(--white);">Premium Collection Tracker</div>
+        <div class="gear-desc">Everything in the free version plus unlimited card capacity, advanced profit/loss breakdowns, and multi-game portfolio tracking.</div>
+        <span class="gear-cta" style="margin-top:auto;">View on Etsy — AU$9.95 ↗</span>
+      </a>
+
+      <a href="https://www.etsy.com/au/listing/4483270444/tcg-seller-fee-calculator-google-sheets" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2);">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);"></div>
+        <div class="gear-icon">💰</div>
+        <div class="gear-name" style="color:var(--white);">Seller Fee Calculator</div>
+        <div class="gear-desc">Calculate your real take-home after eBay, TCGplayer, and other platform fees. Side-by-side platform comparison built in.</div>
+        <span class="gear-cta" style="margin-top:auto;">View on Etsy — AU$9.95 ↗</span>
+      </a>
+
+      <a href="https://www.etsy.com/au/listing/4483341751/tcg-booster-box-roi-calculator-google" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2);">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);"></div>
+        <div class="gear-icon">📈</div>
+        <div class="gear-name" style="color:var(--white);">Booster Box ROI Calculator</div>
+        <div class="gear-desc">Enter your box cost, pulls, and sale prices to get a clear open-vs-sell recommendation. Includes expected value modelling.</div>
+        <span class="gear-cta" style="margin-top:auto;">View on Etsy — AU$9.95 ↗</span>
+      </a>
+
+      <a href="https://www.etsy.com/au/listing/4483367459/tcg-tournament-performance-log-google" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2);">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);"></div>
+        <div class="gear-icon">🏆</div>
+        <div class="gear-name" style="color:var(--white);">Tournament Performance Log</div>
+        <div class="gear-desc">Track win rates, deck performance, prize earnings vs entry fees, and meta trends across all your competitive events.</div>
+        <span class="gear-cta" style="margin-top:auto;">View on Etsy — AU$9.95 ↗</span>
+      </a>
+
+    </div>
+
+    <div style="margin-top:20px;padding:14px 20px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);border-radius:10px;text-align:center;">
+      <p style="font-size:13px;color:rgba(160,168,192,.6);">All tools are Excel files delivered instantly via Etsy. Compatible with Google Sheets. One-time purchase — no subscription.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── GEAR WE RECOMMEND ────────────────────────────────────────── -->
+<section class="section" id="gear">
+  <div class="wrap--narrow">
+    <div class="reveal">
+      <p class="section-label">Gear We Recommend</p>
+      <h2 class="section-title">Protect &amp; Organise Your Collection</h2>
+      <p class="section-body">The basics every serious TCG collector needs. We only recommend gear we'd actually use.</p>
+    </div>
+
+    <div class="gear-grid reveal">
+
+      <a href="https://www.amazon.com.au/s?k=card+sleeves+trading+card+game&tag=blasdigital-22" target="_blank" rel="noopener" class="gear-card">
+        <div class="gear-icon">🛡️</div>
+        <div class="gear-name">Card Sleeves</div>
+        <div class="gear-desc">Protect your cards with quality sleeves. Double-sleeving valuable cards is the collector standard for long-term protection.</div>
+        <span class="gear-cta">Shop on Amazon ↗</span>
+      </a>
+
+      <a href="https://www.amazon.com.au/s?k=9+pocket+card+binder+trading+cards&tag=blasdigital-22" target="_blank" rel="noopener" class="gear-card">
+        <div class="gear-icon">📒</div>
+        <div class="gear-name">Card Binder</div>
+        <div class="gear-desc">Keep your collection organised and protected. Side-loading 9-pocket binders stop cards from falling out during storage.</div>
+        <span class="gear-cta">Shop on Amazon ↗</span>
+      </a>
+
+      <a href="https://www.amazon.com.au/s?k=trading+card+storage+box&tag=blasdigital-22" target="_blank" rel="noopener" class="gear-card">
+        <div class="gear-icon">📦</div>
+        <div class="gear-name">Storage Box</div>
+        <div class="gear-desc">Bulk storage boxes are the most cost-effective way to house a large collection. Available in a range of card capacities.</div>
+        <span class="gear-cta">Shop on Amazon ↗</span>
+      </a>
+
+      <a href="https://www.amazon.com.au/s?k=rigid+top+loader+card+holder&tag=blasdigital-22" target="_blank" rel="noopener" class="gear-card">
+        <div class="gear-icon">💎</div>
+        <div class="gear-name">Top Loaders</div>
+        <div class="gear-desc">Rigid holders for high-value singles. Essential for safe posting and long-term protection of valuable cards.</div>
+        <span class="gear-cta">Shop on Amazon ↗</span>
+      </a>
+
+    </div>
+    <div style="margin-top:24px; padding:16px 20px; background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.2); border-radius:10px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <p style="font-size:13px; color:rgba(160,168,192,0.7); line-height:1.5;">
+        <strong style="color:var(--gold);">Amazon Associates Disclosure:</strong> As an Amazon Associate we earn from qualifying purchases at no extra cost to you. Always check current pricing and reviews on Amazon before purchasing.
+      </p>
+      <a href="/shop.html" style="white-space:nowrap; font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; border:1px solid var(--gold-dim); padding:8px 16px; border-radius:6px; background:rgba(201,168,76,0.06);">View Full Shop →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STORES ──────────────────────────────────────────────────── -->
+<section class="section section--alt" id="stores">
+  <div class="wrap--narrow">
+    <div class="reveal">
+      <p class="section-label">Our Stores</p>
+      <h2 class="section-title">Browse Our Full Range</h2>
+      <p class="section-body">Singles, sealed product, printables, and digital tools for TCG players and tabletop fans.</p>
+    </div>
+    <div class="stores-grid reveal">
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="store-card">
+        <div class="store-name">eBay Store</div>
+        <p class="store-desc">MTG singles, Pokemon, Yu-Gi-Oh, Lorcana and more. Updated regularly with new stock.</p>
+        <span class="store-tag">TCG Singles &amp; Sealed</span>
+      </a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="store-card">
+        <div class="store-name">Etsy — TCG Tools</div>
+        <p class="store-desc">Premium digital trackers, calculators, and planners for collectors and sellers.</p>
+        <span class="store-tag">Digital Downloads</span>
+      </a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="store-card">
+        <div class="store-name">BLAS Digital</div>
+        <p class="store-desc">Our creative studio. D&amp;D tools, Dungeon Master printables, and tabletop resources — also on Etsy.</p>
+        <span class="store-tag store-tag--purple">D&amp;D &amp; Tabletop</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────── -->
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">Cards on Cards on Cards</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
+        <a href="/" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Home</a>
+        <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Shop</a>
+        <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Blog</a>
+        <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Contact Us</a>
+        <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Etsy D&amp;D Tools</a>
+      </div>
+      <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ─────────────────────────────────────────────────── -->
+<script>
+// ── Scroll reveal ─────────────────────────────────────────────────────────
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); observer.unobserve(e.target); } }),
+  { threshold: 0.1 }
+);
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Sidebar active state ───────────────────────────────────────────────────
+const sidebarLinks = document.querySelectorAll('.sidebar-link[data-section]');
+const sectionEls   = ['coming-soon','download','premium-tools','gear','stores'].map(id => document.getElementById(id)).filter(Boolean);
+
+function updateSidebar() {
+  let current = sectionEls[0].id;
+  sectionEls.forEach(sec => {
+    if (sec.getBoundingClientRect().top <= 120) current = sec.id;
+  });
+  sidebarLinks.forEach(l => l.classList.toggle('active', l.dataset.section === current));
+}
+window.addEventListener('scroll', updateSidebar, { passive: true });
+updateSidebar();
+
+</script>
+</body>
+</html>
