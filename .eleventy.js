@@ -3,6 +3,9 @@ module.exports = function(eleventyConfig) {
   // Pass through static files unchanged
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/images");
+eleventyConfig.addPassthroughCopy({"*.html": "."});
+eleventyConfig.addPassthroughCopy({"c3-logo.png": "c3-logo.png"});
+eleventyConfig.addPassthroughCopy({"sitemap.xml": "sitemap.xml"});
 
   // Auto-collect all posts tagged "post"
 eleventyConfig.addGlobalData("eleventyComputed", {
