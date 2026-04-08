@@ -5,6 +5,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/images");
 
   // Auto-collect all posts tagged "post"
+eleventyConfig.addGlobalData("eleventyComputed", {
+  permalink: data => data.permalink || `/blog/${data.page.fileSlug.replace(/^p\d+-/, '')}/`
+});
   eleventyConfig.addCollection("post", function(collectionApi) {
     return collectionApi.getFilteredByTag("post").sort((a, b) => b.date - a.date);
   });
