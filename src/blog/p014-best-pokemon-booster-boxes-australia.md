@@ -1,6 +1,6 @@
 ---
-title: "Best Pokemon Booster Boxes to Buy in Australia Right Now"
-description: "Looking for the best Pokemon TCG booster box in Australia? This guide covers current sets on Amazon AU, what each offers collectors and players, and honest advice on what's worth buying."
+title: "Best Pokemon Booster Boxes in Australia 2026: Prices, Sets, and What to Buy"
+description: "Pokemon booster boxes in Australia run AU$140-175. This guide covers every current set on Amazon AU, who each one suits, and which is actually worth buying right now."
 date: 2026-04-07
 category: "buying-guides"
 tags:
@@ -137,6 +137,15 @@ Prices on Amazon AU shift based on stock levels and demand. Check the current li
 - [Pokemon TCG for Beginners: How to Start Playing in Australia](/blog/pokemon-tcg-beginners-guide-australia/)
 - [Are Pokemon Booster Boxes a Good Investment in Australia?](/blog/are-pokemon-booster-boxes-investment-australia/)
 - [Pokemon TCG vs MTG: Which Should You Start First in Australia?](/blog/pokemon-tcg-vs-mtg-australia/)
+
+</div>
+
+<div class="cta-block">
+
+**Free: Download the C3 TCG Collection Tracker**
+Track your Pokemon collection, log every set you own, and monitor card values over time. Free to download, and there is a 10% off coupon waiting for you.
+
+[Get the Free Tracker →](/tracker.html)
 
 </div>
 

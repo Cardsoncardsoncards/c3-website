@@ -1,6 +1,6 @@
 ---
-title: "What Is Magic: The Gathering? A Beginner's Guide for Australians"
-description: "Never heard of Magic: The Gathering or not sure where to start? This plain-English beginner's guide covers what the game is, how it works, and what you actually need to buy first in Australia."
+title: "What Is Magic: The Gathering? Plain-English Beginner's Guide for Australians"
+description: "MTG is the world's oldest trading card game, still in active print since 1993. Here is what it is, how it works, and exactly what an Australian beginner needs to buy first."
 date: 2026-04-07
 category: "beginner-guides"
 tags:
@@ -124,6 +124,15 @@ The barrier to your first game is low. A single Commander precon deck, a willing
 - [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
 - [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia/)
 - [Is Buying MTG Singles Smarter Than Booster Boxes in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)
+
+</div>
+
+<div class="cta-block">
+
+**Free: Download the C3 TCG Collection Tracker**
+Track your collection, monitor card values, and organise every set you own. Free to download, and there is a 10% off coupon waiting for you.
+
+[Get the Free Tracker →](/tracker.html)
 
 </div>
 

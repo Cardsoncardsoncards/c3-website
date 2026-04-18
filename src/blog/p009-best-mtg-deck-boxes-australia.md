@@ -1,6 +1,6 @@
 ---
-title: "Best MTG Deck Boxes for Protecting Your Cards on the Go"
-description: "A deck box is the simplest way to protect your MTG cards between games. This guide covers the best options available in Australia by deck size, sleeve type, and budget."
+title: "Best MTG Deck Boxes in Australia: Which Fits Your Sleeves and Deck Size"
+description: "Buying the wrong deck box for your sleeve setup is a common mistake. This guide covers the best options on Amazon AU by deck size, sleeve type, and budget."
 date: 2026-04-07
 category: "buying-guides"
 tags:
@@ -131,8 +131,17 @@ The value proposition of a deck box increases with: how often you transport your
 
 **Related guides:**
 - [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia/)
-- [MTG Card Sleeves: Which Are Best for Australian Conditions?](/blog/best-mtg-card-sleeves-australia/)
-- [The Best Card Binders for TCG Collections in Australia](/blog/best-card-binders-australia/)
+- [Best MTG Card Sleeves in Australia: Dragon Shield, KMC and Ultra Pro Compared](/blog/best-mtg-card-sleeves-australia/)
+- [Best TCG Card Storage Solutions in Australia](/blog/tcg-card-storage-solutions-australia/)
+
+</div>
+
+<div class="cta-block">
+
+**Free: Download the C3 TCG Collection Tracker**
+Track every deck you own, what sleeves are on each one, and your full collection value. Free to download, and there is a 10% off coupon waiting for you.
+
+[Get the Free Tracker →](/tracker.html)
 
 </div>
 

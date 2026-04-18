@@ -1,6 +1,6 @@
 ---
-title: "MTG Card Sleeves: Which Are Best for Australian Conditions?"
-description: "Not all card sleeves perform the same in Australia's climate. This guide compares the top MTG sleeve brands on durability, shuffle feel, and value — with honest advice for Australian players."
+title: "Best MTG Card Sleeves in Australia: Dragon Shield, KMC and Ultra Pro Compared"
+description: "Dragon Shield Matte is the top pick for Australian conditions. This guide compares the main sleeve brands on durability, price, and performance in heat and humidity."
 date: 2026-04-07
 category: "accessories"
 tags:
@@ -124,8 +124,17 @@ Match your sleeve investment to your play frequency and card values. A casual pl
 
 **Related guides:**
 - [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia/)
-- [Dragon Shield vs Ultra Pro Sleeves: Which Is Better?](/blog/dragon-shield-vs-ultra-pro/)
-- [Toploaders vs Magnetic Holders: Which Is Better for Card Protection?](/blog/toploaders-vs-magnetic-holders/)
+- [Best MTG Deck Boxes in Australia: Which Fits Your Sleeves and Deck Size](/blog/best-mtg-deck-boxes-australia/)
+- [Best TCG Card Sleeves in Australia: All Games Compared](/blog/best-tcg-card-sleeves-australia/)
+
+</div>
+
+<div class="cta-block">
+
+**Free: Download the C3 TCG Collection Tracker**
+Track which sleeves you have, which decks they are on, and monitor your full collection value. Free to download, and there is a 10% off coupon waiting for you.
+
+[Get the Free Tracker →](/tracker.html)
 
 </div>
 

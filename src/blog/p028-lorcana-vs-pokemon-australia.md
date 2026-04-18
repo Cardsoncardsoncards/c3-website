@@ -1,6 +1,6 @@
 ---
-title: "Lorcana vs Pokemon TCG: Which Is Better for Beginners in Australia?"
-description: "Choosing between Disney Lorcana and Pokemon TCG in Australia? This honest comparison covers gameplay, cost, community, and which game suits different types of players and collectors."
+title: "Lorcana vs Pokemon in Australia: Which Should You Start With?"
+description: "Pokemon has the bigger community. Lorcana has no rotation and stronger Disney collector appeal. Here is the honest breakdown to help you decide which suits you."
 date: 2026-04-07
 category: "product-comparisons"
 tags:
@@ -119,6 +119,15 @@ The practical starting advice: if you're genuinely uncertain, buy one Starter De
 - [What Is Disney Lorcana? The Complete Beginner's Guide for Australians](/blog/what-is-disney-lorcana-australia/)
 - [Pokemon TCG for Beginners: How to Start Playing in Australia](/blog/pokemon-tcg-beginners-guide-australia/)
 - [Which TCG Should You Start With in Australia? Honest Comparison](/blog/which-tcg-to-start-australia/)
+
+</div>
+
+<div class="cta-block">
+
+**Free: Download the C3 TCG Collection Tracker**
+Track your Lorcana and Pokemon collections in one place. Free to download, and there is a 10% off coupon waiting for you.
+
+[Get the Free Tracker →](/tracker.html)
 
 </div>
 
