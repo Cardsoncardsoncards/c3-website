@@ -33,36 +33,6 @@
       gtag('event', 'form_submit', { event_category: 'newsletter', event_label: 'signup' });
     }
   }, true);
-
-  // Outbound click tracking
-  document.addEventListener('click', function(e) {
-    var el = e.target.closest('a[href]');
-    if (!el) return;
-    var href = el.getAttribute('href') || '';
-
-    // Free tracker open
-    if (href.includes('docs.google.com/spreadsheets')) {
-      gtag('event', 'tracker_open', { event_category: 'outbound', event_label: 'free_tracker' });
-    }
-    // Etsy premium tools
-    else if (href.includes('etsy.com/au/listing')) {
-      var label = el.textContent.trim().substring(0, 60) || 'etsy_tool';
-      gtag('event', 'etsy_tool_click', { event_category: 'outbound', event_label: label });
-    }
-    // Etsy store (main store links, not individual listings)
-    else if (href.includes('blasdigital.etsy.com')) {
-      gtag('event', 'etsy_store_click', { event_category: 'outbound', event_label: 'blasdigital_store' });
-    }
-    // eBay store
-    else if (href.includes('ebay.com.au')) {
-      gtag('event', 'ebay_store_click', { event_category: 'outbound', event_label: 'c3_ebay_store' });
-    }
-    // Amazon affiliate gear
-    else if (href.includes('amazon.com.au')) {
-      var aLabel = el.querySelector('.gear-title') ? el.querySelector('.gear-title').textContent.trim() : href.split('k=')[1] || 'amazon_gear';
-      gtag('event', 'amazon_click', { event_category: 'outbound', event_label: aLabel });
-    }
-  });
 </script>
 <!-- MailerLite Universal -->
 <script>
@@ -482,6 +452,25 @@
   .sidebar-link.active .sidebar-dot { opacity: 1; }
   @media (max-width: 1200px) { .sidebar-nav { display: none; } }
 
+
+/* NAV COLOUR CLASSES - outline and font only */
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
+.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}
+.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
+.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
+.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
+.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+/* Active page override */
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+
 </style>
 </head>
 <body>
@@ -510,20 +499,19 @@
 <!-- ── NAV ────────────────────────────────────────────────────── -->
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">🃏 Cards on Cards on Cards</a>
+    <a href="/" class="nav-logo">
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
     <div class="nav-links">
-      <a href="/" class="nav-link nav-link--ebay" style="color:var(--silver);border-color:var(--border);">← Home</a>
-      <a href="/shop.html" class="nav-link nav-link--ebay" style="color:var(--silver);border-color:var(--border);">Shop</a>
-      <a href="/blog" class="nav-link nav-link--ebay" style="color:var(--silver);border-color:var(--border);">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        <span>eBay</span>
-      </a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--etsy" style="color:#F56400;border-color:rgba(245,100,0,.35)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span>Etsy</span>
-      </a>
-      <a href="/contact.html" class="nav-link nav-link--ebay" style="color:var(--silver);border-color:var(--border);">Contact Us</a>
+      <a href="/" class="nav-link nav-link--home">← Home</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker nav-link--active">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
 </nav>

@@ -4,16 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact | Cards on Cards on Cards</title>
-<meta name="description" content="Get in touch with Cards on Cards on Cards. Questions about products, your order, or the upcoming buylist.">
+<meta name="description" content="Get in touch with Cards on Cards on Cards. Questions about products, your order, or the buylist.">
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
-<!-- MailerLite Universal -->
-<script>
-(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);}(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml'));
-ml('account', '2220065');
-</script>
-<!-- End MailerLite Universal -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -30,6 +24,9 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
 .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
+.nav-link--gold{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
+.nav-link--active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
+.nav-link--etsy{color:var(--orange);border-color:rgba(245,100,0,.32);background:rgba(245,100,0,.05)}
 .page-hd{padding:56px 0 40px;text-align:center;position:relative;z-index:1}
 .page-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .page-h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,52px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:14px}
@@ -57,10 +54,12 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .contact-title{font-family:'Cinzel',serif;font-size:18px;font-weight:700;line-height:1.2}
 .contact-card--general .contact-title{color:var(--gold)}
 .contact-card--buylist .contact-title{color:#C0C0FF}
-.contact-body{font-size:13px;color:rgba(160,168,192,.65);line-height:1.6}
+.contact-body{font-size:13px;color:rgba(160,168,192,.65);line-height:1.6;flex:1}
 .contact-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:8px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .22s;margin-top:4px}
 .contact-btn--general{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold)}
 .contact-btn--general:hover{background:rgba(201,168,76,.2);border-color:var(--gold)}
+.contact-btn--buylist{background:rgba(107,107,255,.1);border:1px solid rgba(107,107,255,.35);color:#9898FF}
+.contact-btn--buylist:hover{background:rgba(107,107,255,.2);border-color:var(--purple)}
 .note-box{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;padding:20px 24px;max-width:760px;margin:0 auto 64px;font-size:13px;color:rgba(160,168,192,.55);line-height:1.7;text-align:center}
 .note-box strong{color:rgba(160,168,192,.8)}
 footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-index:1;margin-top:24px}
@@ -71,6 +70,8 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .footer-link:hover{color:var(--silver)}
 .footer-copy{font-size:11px;color:rgba(160,168,192,.25)}
 @media(max-width:640px){.contact-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
+
+/* NAV COLOUR CLASSES - outline and font only */
 .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
 .nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
 .nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
@@ -85,14 +86,9 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
 .nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
 .nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+/* Active page override */
 .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
-.contact-card--buylist .ml-embedded .ml-form-embedWrapper{background:transparent!important;border:none!important;padding:0!important;box-shadow:none!important}
-.contact-card--buylist .ml-embedded .ml-form-embedBody{padding:0!important}
-.contact-card--buylist .ml-embedded .ml-form-fieldRow input{background:rgba(255,255,255,.05)!important;border:1px solid rgba(107,107,255,.3)!important;color:#F0F2FF!important;border-radius:8px!important;}
-.contact-card--buylist .ml-embedded .ml-form-checkboxRow label{color:rgba(160,168,192,.8)!important;font-size:13px!important;}
-.contact-card--buylist .ml-embedded .ml-form-embedSubmit button{background:rgba(107,107,255,.15)!important;border:1px solid rgba(107,107,255,.4)!important;color:#9898FF!important;border-radius:8px!important;font-family:'DM Sans',sans-serif!important;width:100%!important;}
-.contact-card--buylist .ml-embedded .ml-form-embedSubmit button:hover{background:rgba(107,107,255,.3)!important;}
-.contact-card--buylist .ml-embedded .ml-form-successBody p{color:rgba(160,168,192,.8)!important;font-size:13px!important;}
+
 </style>
 </head>
 <body>
@@ -107,6 +103,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/" class="nav-link nav-link--home">← Home</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
@@ -131,15 +128,15 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <p class="contact-label">General Enquiries</p>
       <h2 class="contact-title">Have a question for us?</h2>
       <p class="contact-body">Questions about our eBay store, a specific product, shipping, or anything else — send us a message and we will respond as soon as we can.</p>
-      <a href="mailto:ccc.squadhelp@gmail.com" class="contact-btn contact-btn--general">Send a Message →</a>
+      <a href="/cdn-cgi/l/email-protection#eb888888c5989a9e8a8f838e879bab8c868a8287c5888486d4989e89818e889fd6ac8e858e998a87ced9dbae859a9e829992" class="contact-btn contact-btn--general">Send a Message →</a>
     </div>
 
     <div class="contact-card contact-card--buylist">
       <div class="contact-icon contact-icon--buylist">📋</div>
       <p class="contact-label">Buylist Coming Soon</p>
       <h2 class="contact-title">Buylist Interest</h2>
-      <p class="contact-body">We're building a buylist tool for Australian TCG players — a single place to compare what stores are paying for your cards. Register below and be first to know when it launches.</p>
-      <div class="ml-embedded" data-form="Y09SlC"></div>
+      <p class="contact-body">We're building a buylist tool for Australian TCG players — a single place to compare what stores are paying for your cards. Register your interest below and we'll keep you updated as it gets closer to launch.</p>
+      <a href="/cdn-cgi/l/email-protection#c3a0a0a0edb0b2b6a2a7aba6afb383a4aea2aaafeda0acaefcb0b6a1a9a6a0b7fe81b6bae6f1f3afaab0b7e6f1f3aaadb7a6b1a6b0b7" class="contact-btn contact-btn--buylist">Register Interest →</a>
     </div>
 
   </div>
@@ -157,13 +154,4 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/shop.html" class="footer-link">Shop</a>
       <a href="/blog" class="footer-link">Blog</a>
       <a href="/tracker.html" class="footer-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay Store</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy</a>
-      <a href="/contact.html" class="footer-link">Contact</a>
-    </div>
-    <p class="footer-copy">© 2026 Cards on Cards on Cards</p>
-  </div>
-</footer>
-
-</body>
-</html>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-lin
