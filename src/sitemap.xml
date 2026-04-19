@@ -33,10 +33,10 @@
     <priority>0.5</priority>
   </url>
 
-  <!-- Blog posts -->
+  <!-- Blog posts p001-p050 -->
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/what-is-mtg/</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -72,7 +72,7 @@
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/best-mtg-card-sleeves-australia/</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -84,7 +84,7 @@
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/best-mtg-deck-boxes-australia/</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -114,7 +114,7 @@
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/best-pokemon-booster-boxes-australia/</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -198,7 +198,7 @@
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/lorcana-vs-pokemon-australia/</loc>
-    <lastmod>2026-04-07</lastmod>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -334,153 +334,327 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Blog posts p051-p079 -->
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/mtg-secrets-of-strixhaven-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/mtg-secrets-of-strixhaven-best-cards-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/strixhaven-commander-decks-worth-pre-ordering-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/pokemon-perfect-order-best-cards-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/pokemon-destined-rivals-worth-buying-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/disney-lorcana-wilds-unknown-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/first-pixar-lorcana-wilds-unknown-collectors/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/one-piece-op10-royal-blood-best-cards-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/mtg-marvel-super-heroes-pre-order-australia/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/pokemon-destined-rivals-pre-order-guide-australia/</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/lorcana-wilds-unknown-pre-order-guide-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/best-tcg-pre-orders-australia-april-2026/</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/one-piece-op10-royal-blood-buying-guide-australia/</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/riftbound-unleashed-pre-order-guide-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/upcoming-tcg-releases-australia-april-june-2026/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/how-to-start-playing-dnd-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-dice-buyers-guide-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-miniatures-guide-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-starter-sets-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-core-books-guide-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-adventure-books-guide-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dm-screen-guide-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-battle-mats-guide-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-storage-bags-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-board-games-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/free-dm-tools-dnd-australia/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-tavern-scenes-resources/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/dnd-dungeon-puzzles-traps-guide/</loc>
-    <lastmod>2026-04-16</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cardsoncardsoncards.com.au/blog/tcg-collection-trackers-spreadsheet/</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog posts p080-p098 -->
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/where-to-sell-mtg-best-price-australia/</loc>
     <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/best-tcg-buylist-prices-australia/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/how-to-compare-tcg-buylist-offers-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/what-is-a-tcg-buylist-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/yugioh-tcg-beginners-guide-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/yugioh-booster-boxes-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/how-to-sell-yugioh-cards-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/dragon-ball-super-card-game-beginners-guide-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/dragon-ball-super-booster-boxes-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/how-to-sell-dragon-ball-super-cards-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/star-wars-unlimited-beginners-guide-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/star-wars-unlimited-booster-boxes-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/riftbound-card-game-beginners-guide-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/best-tcg-binders-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/best-tcg-deck-boxes-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/best-tcg-playmats-australia-deep-dive/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/how-to-find-dnd-group-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/best-dnd-apps-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/best-dnd-campaigns-beginners-australia/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog posts p099-p104 — buylist cluster -->
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/what-is-tcg-buylist-australia/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/where-to-sell-mtg-cards-best-price-australia/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/how-to-compare-buylist-offers-australia/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/tcg-buylist-aggregator-australia/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cardsoncardsoncards.com.au/blog/where-to-sell-pokemon-cards-australia-best-price/</loc>
+    <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -83,5 +83,24 @@
   </div>
 </footer>
 
+<script>
+document.addEventListener('click', function(e) {
+  var el = e.target.closest('a[href]');
+  if (!el) return;
+  var href = el.getAttribute('href') || '';
+  if (href.includes('docs.google.com/spreadsheets')) {
+    gtag('event', 'tracker_open', {event_category: 'outbound', event_label: 'free_tracker'});
+  } else if (href.includes('etsy.com/au/listing')) {
+    gtag('event', 'etsy_tool_click', {event_category: 'outbound', event_label: el.textContent.trim().substring(0, 60)});
+  } else if (href.includes('blasdigital.etsy.com')) {
+    gtag('event', 'etsy_store_click', {event_category: 'outbound', event_label: 'blasdigital_store'});
+  } else if (href.includes('ebay.com.au')) {
+    gtag('event', 'ebay_store_click', {event_category: 'outbound', event_label: 'c3_ebay_store'});
+  } else if (href.includes('amazon.com.au')) {
+    gtag('event', 'amazon_click', {event_category: 'outbound', event_label: href.substring(0, 80)});
+  }
+});
+</script>
+
 </body>
 </html>
