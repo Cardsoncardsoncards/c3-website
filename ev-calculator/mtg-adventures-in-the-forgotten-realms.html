@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MTG Adventures in the Forgotten Realms EV Calculator Australia | Cards on Cards on Cards</title>
+<meta name="description" content="Is the MTG Adventures in the Forgotten Realms booster box worth opening in Australia? Free expected value calculator in AUD using official pull rates and current Australian market prices.">
+<meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WR68HPE92S');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0C14;--deep:#111422;--card:#161929;--border:#252840;
+  --gold:#C9A84C;--gold-lit:#E8C86A;--gold-dim:#7A621E;
+  --silver:#A0A8C0;--white:#F0F2FF;--purple:#6B6BFF;
+  --blue:#4A9EFF;--green:#22C55E;--amber:#F59E0B;--red:#EF4444;
+  --orange:#F56400;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse 80% 40% at 50% -5%,rgba(201,168,76,.07) 0%,transparent 55%)}
+.wrap{max-width:860px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.aff-banner{background:rgba(201,168,76,.08);border-bottom:1px solid rgba(201,168,76,.22);padding:9px 24px;text-align:center;font-size:12.5px;color:rgba(160,168,192,.75);position:relative;z-index:99}
+.aff-banner strong{color:var(--gold)}
+nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:10px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
+.nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
+.nav-link--active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);position:relative;z-index:1}
+.page-hd{padding:40px 0 28px;position:relative;z-index:1}
+.page-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.page-h1{font-family:'Cinzel',serif;font-size:clamp(20px,3.2vw,38px);font-weight:900;color:var(--gold);line-height:1.15;margin-bottom:12px}
+.page-meta{font-size:12px;color:rgba(160,168,192,.5);margin-bottom:16px}
+.quick-answer{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.25);border-left:3px solid var(--gold);border-radius:8px;padding:18px 22px;margin-bottom:28px}
+.quick-answer-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.quick-answer p{font-size:14px;color:rgba(240,242,255,.8);line-height:1.65}
+.calc-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px}
+.calc-panel-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.calc-panel-title span{font-size:18px}
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.input-group{display:flex;flex-direction:column;gap:6px}
+.input-label{font-size:12px;font-weight:600;color:var(--silver);letter-spacing:.05em;text-transform:uppercase}
+.input-field{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;padding:11px 14px;font-size:14px;color:var(--white);font-family:'DM Sans',sans-serif;transition:border-color .2s;width:100%}
+.input-field:focus{outline:none;border-color:var(--gold-dim)}
+.pack-selector{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.pack-btn{padding:9px 18px;border-radius:7px;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);background:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.pack-btn:hover{color:var(--white);border-color:var(--silver)}
+.pack-btn.active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.08)}
+.calc-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0A0C14;font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:9px;cursor:pointer;transition:all .2s;margin-top:4px}
+.calc-btn:hover{opacity:.9;transform:translateY(-1px)}
+.results-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px;display:none}
+.results-panel.visible{display:block}
+.verdict-banner{border-radius:10px;padding:20px 24px;margin-bottom:24px;text-align:center}
+.verdict-banner.worth{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3)}
+.verdict-banner.borderline{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3)}
+.verdict-banner.avoid{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3)}
+.verdict-label{font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;margin-bottom:6px}
+.verdict-banner.worth .verdict-label{color:var(--green)}
+.verdict-banner.borderline .verdict-label{color:var(--amber)}
+.verdict-banner.avoid .verdict-label{color:var(--red)}
+.verdict-text{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,26px);font-weight:900;line-height:1.2}
+.verdict-banner.worth .verdict-text{color:var(--green)}
+.verdict-banner.borderline .verdict-text{color:var(--amber)}
+.verdict-banner.avoid .verdict-text{color:var(--red)}
+.verdict-sub{font-size:13px;margin-top:8px;opacity:.75}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
+.stat-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:16px 18px}
+.stat-label{font-size:11px;color:var(--silver);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+.stat-value{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--white)}
+.stat-value.positive{color:var(--green)}
+.stat-value.negative{color:var(--red)}
+.stat-value.neutral{color:var(--amber)}
+.cta-worth{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:20px 22px;margin-bottom:16px;display:none}
+.cta-avoid{background:rgba(107,107,255,.08);border:1px solid rgba(107,107,255,.25);border-radius:10px;padding:20px 22px;margin-bottom:16px;display:none}
+.cta-heading{font-size:13px;font-weight:700;color:var(--white);margin-bottom:12px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s}
+.cta-btn-amazon{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:var(--amber)}
+.cta-btn-amazon:hover{background:rgba(245,158,11,.25)}
+.cta-btn-ebay{background:rgba(107,107,255,.15);border:1px solid rgba(107,107,255,.4);color:#9898FF}
+.cta-btn-ebay:hover{background:rgba(107,107,255,.25)}
+.cta-btn-etsy{background:rgba(245,100,0,.12);border:1px solid rgba(245,100,0,.35);color:var(--orange)}
+.cta-btn-etsy:hover{background:rgba(245,100,0,.22)}
+.tracker-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px}
+.tracker-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.tracker-toggle-title{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);display:flex;align-items:center;gap:8px}
+.tracker-toggle-icon{font-size:18px;transition:transform .2s}
+.tracker-toggle-icon.open{transform:rotate(180deg)}
+.tracker-body{display:none;margin-top:22px}
+.tracker-body.visible{display:block}
+.tracker-desc{font-size:13px;color:rgba(240,242,255,.6);margin-bottom:20px;line-height:1.65}
+.tracker-row{display:grid;grid-template-columns:1fr 80px 80px;gap:12px;align-items:center;margin-bottom:12px;padding:12px 14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:8px}
+.tracker-rarity{font-size:13px;font-weight:600;color:var(--white)}
+.tracker-rarity-sub{font-size:11px;color:var(--silver);font-weight:400}
+.tracker-expected{font-size:13px;color:var(--silver);text-align:center}
+.tracker-input{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:14px;font-weight:600;color:var(--white);font-family:'DM Sans',sans-serif;text-align:center;width:100%}
+.tracker-input:focus{outline:none;border-color:var(--gold-dim)}
+.tracker-calc-btn{width:100%;padding:12px;background:rgba(107,107,255,.15);border:1px solid rgba(107,107,255,.35);color:#9898FF;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:8px;cursor:pointer;transition:all .2s;margin-top:8px}
+.tracker-calc-btn:hover{background:rgba(107,107,255,.25)}
+.tracker-results{margin-top:20px;padding:18px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px;display:none}
+.tracker-results.visible{display:block}
+.tracker-result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.tracker-result-row:last-child{border-bottom:none}
+.tracker-result-label{color:var(--silver)}
+.tracker-result-value{font-weight:700;font-family:'Cinzel',serif;font-size:15px}
+.tracker-share{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:12px;color:rgba(160,168,192,.5)}
+.tracker-share a{color:var(--gold);text-decoration:none}
+.tracker-share a:hover{text-decoration:underline}
+.content-section{margin-bottom:36px}
+.content-section h2{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.content-section h3{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);margin:18px 0 8px}
+.content-section p{font-size:14px;color:rgba(240,242,255,.72);line-height:1.75;margin-bottom:12px}
+.pull-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+.pull-table th{background:rgba(201,168,76,.08);color:var(--gold);font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:10px 14px;text-align:left;font-size:11px;border-bottom:1px solid rgba(201,168,76,.2)}
+.pull-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:rgba(240,242,255,.75)}
+.pull-table tr:hover td{background:rgba(255,255,255,.02)}
+.faq-section{margin-bottom:36px}
+.faq-section h2{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.faq-item{margin-bottom:14px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.faq-q{padding:14px 18px;font-size:14px;font-weight:600;color:var(--white);cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.02)}
+.faq-q:hover{background:rgba(255,255,255,.04)}
+.faq-icon{color:var(--gold);font-size:16px;transition:transform .2s;flex-shrink:0}
+.faq-a{display:none;padding:14px 18px;font-size:13.5px;color:rgba(240,242,255,.68);line-height:1.7;border-top:1px solid var(--border)}
+.faq-a.open{display:block}
+.aff-product{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:22px;margin-bottom:24px}
+.aff-product-title{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px}
+.aff-product-price{font-size:22px;font-weight:700;color:var(--gold);font-family:'Cinzel',serif;margin-bottom:8px}
+.aff-product-desc{font-size:13px;color:rgba(240,242,255,.6);margin-bottom:14px;line-height:1.65}
+.aff-product-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:var(--amber);border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s}
+.aff-product-btn:hover{background:rgba(245,158,11,.25)}
+.related-guides{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:32px}
+.related-guides-title{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.related-guides a{display:block;font-size:13.5px;color:rgba(240,242,255,.7);text-decoration:none;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);transition:color .2s}
+.related-guides a:last-child{border-bottom:none}
+.related-guides a:hover{color:var(--gold)}
+.disclaimer{padding:16px 20px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px;font-size:11px;color:rgba(160,168,192,.38);line-height:1.7;margin-bottom:24px}
+.disclaimer strong{color:rgba(160,168,192,.55)}
+footer{border-top:1px solid var(--border);padding:24px 0;margin-top:24px;position:relative;z-index:1}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:1140px;margin:0 auto;padding:0 24px}
+.footer-logo{font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--gold)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.28)}
+@media(max-width:640px){
+  .input-row{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+  .tracker-row{grid-template-columns:1fr 70px 70px}
+  .aff-product{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<div class="aff-banner">
+  <strong>Affiliate Disclosure:</strong> This post contains affiliate links. We may earn a commission if you purchase through these links, at no extra cost to you.
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">&#8592; Home</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--active">EV Calculator</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-hd">
+    <p class="page-eyebrow">MTG EV Calculator — Australia</p>
+    <h1 class="page-h1">MTG Adventures in the Forgotten Realms EV Calculator Australia</h1>
+    <p class="page-meta">Last updated: April 2026 | Pull rates: official Wizards data | Prices: AUD</p>
+  </div>
+
+  <div class="quick-answer">
+    <div class="quick-answer-label">Quick Answer</div>
+    <p>MTG Adventures in the Forgotten Realms released July 2021 as the first Dungeons and Dragons crossover set. The set features beloved D and D monsters, spells, and characters including Acererak the Archlich, Ellywick Tumblestrum, and the Dungeon mechanic. Several Commander staples and iconic D and D character cards drive ongoing AU secondary market demand. Run the calculator below for a current AUD verdict.</p>
+  </div>
+
+  <div class="calc-panel">
+    <div class="calc-panel-title"><span>&#x1F9EE;</span> Expected Value Calculator</div>
+    <div style="margin-bottom:14px">
+      <div class="input-label" style="margin-bottom:8px">How many packs are you opening?</div>
+      <div class="pack-selector">
+        <button class="pack-btn" onclick="setPacks(1, this)">1 Pack</button>
+        <button class="pack-btn active" onclick="setPacks(36, this)">Booster Box (36)</button>
+        <button class="pack-btn" onclick="setPacks(0, this)">Custom</button>
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label class="input-label" for="pack-count">Number of Packs</label>
+        <input class="input-field" type="number" id="pack-count" value="36" min="1" max="999" oninput="syncCustomPacks()">
+      </div>
+      <div class="input-group">
+        <label class="input-label" for="purchase-price">Your Purchase Price (AUD)</label>
+        <input class="input-field" type="number" id="purchase-price" value="155.00" step="0.01" min="0">
+      </div>
+    </div>
+    <button class="calc-btn" onclick="runCalculator()">Calculate Expected Value</button>
+  </div>
+
+  <div class="results-panel" id="results-panel">
+    <div class="verdict-banner" id="verdict-banner">
+      <div class="verdict-label" id="verdict-label">Verdict</div>
+      <div class="verdict-text" id="verdict-text"></div>
+      <div class="verdict-sub" id="verdict-sub"></div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-label">Total Expected Value</div><div class="stat-value" id="stat-ev">&#8212;</div></div>
+      <div class="stat-box"><div class="stat-label">Your Total Cost</div><div class="stat-value" id="stat-cost">&#8212;</div></div>
+      <div class="stat-box"><div class="stat-label">EV Per Pack</div><div class="stat-value" id="stat-ev-pack">&#8212;</div></div>
+      <div class="stat-box"><div class="stat-label">Cost Per Pack</div><div class="stat-value" id="stat-cost-pack">&#8212;</div></div>
+    </div>
+    <div class="cta-worth" id="cta-worth">
+      <div class="cta-heading">Based on this EV, the box looks worth opening. Grab it on Amazon AU now:</div>
+      <a href="https://www.amazon.com.au/dp/B096TPBST6?tag=blasdigital-22" target="_blank" rel="noopener" class="cta-btn cta-btn-amazon" onclick="trackClick('amazon_mtg-adventures-in-the-forgotten-realms_box')">
+        &#x1F6D2; Buy Adventures in the Forgotten Realms Play Booster Box &#8212; Amazon AU
+      </a>
+    </div>
+    <div class="cta-avoid" id="cta-avoid">
+      <div class="cta-heading">EV suggests buying singles is the smarter play. Find Adventures in the Forgotten Realms singles in the C3 eBay store:</div>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=ForgottenRealmsEV&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="cta-btn cta-btn-ebay" onclick="trackClick('ebay_mtg-adventures-in-the-forgotten-realms_singles')">
+        &#x1F0CF; Shop Adventures in the Forgotten Realms Singles &#8212; C3 eBay Store
+      </a>
+    </div>
+    <div style="margin-top:14px;padding:14px 18px;background:rgba(245,100,0,.06);border:1px solid rgba(245,100,0,.2);border-radius:9px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:4px">Want to track your actual pulls?</div>
+        <div style="font-size:12px;color:rgba(240,242,255,.55)">Our Booster Box ROI Calculator tracks expected vs actual across your whole box.</div>
+      </div>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="cta-btn cta-btn-etsy" style="white-space:nowrap" onclick="trackClick('etsy_roi_calc')">Get the ROI Calculator &#8212; AU$9.95</a>
+    </div>
+  </div>
+
+  <div class="tracker-panel">
+    <div class="tracker-toggle" onclick="toggleTracker()">
+      <div class="tracker-toggle-title"><span>&#x1F4CA;</span> Track Your Actual Pulls</div>
+      <div class="tracker-toggle-icon" id="tracker-icon">&#9660;</div>
+    </div>
+    <div class="tracker-body" id="tracker-body">
+      <p class="tracker-desc">Already opened your box? Enter how many cards you actually pulled in each rarity tier to see how your box compared to expected value. Results save in your browser.</p>
+      <div class="tracker-row" style="background:rgba(201,168,76,.04);border-color:rgba(201,168,76,.15)">
+        <div>
+          <div class="tracker-rarity">&#x1F31F; Mythic Rare</div>
+          <div class="tracker-rarity-sub">Expected per box: ~4.5 (1 per 8 packs)</div>
+        </div>
+        <div class="tracker-expected" style="font-size:11px;color:var(--silver)">Expected<br>~4.5</div>
+        <input class="tracker-input" type="number" id="pull-mythic" placeholder="0" min="0">
+      </div>
+      <div class="tracker-row">
+        <div>
+          <div class="tracker-rarity">&#x1F48E; Rare</div>
+          <div class="tracker-rarity-sub">Expected per box: ~36 (1 per pack minimum)</div>
+        </div>
+        <div class="tracker-expected" style="font-size:11px;color:var(--silver)">Expected<br>~36</div>
+        <input class="tracker-input" type="number" id="pull-rare" placeholder="0" min="0">
+      </div>
+      <div class="tracker-row">
+        <div>
+          <div class="tracker-rarity">✨ Classic Module Art Showcase</div>
+          <div class="tracker-rarity-sub">Expected per box: ~5</div>
+        </div>
+        <div class="tracker-expected" style="font-size:11px;color:var(--silver)">Expected<br>~5</div>
+        <input class="tracker-input" type="number" id="pull-special" placeholder="0" min="0">
+      </div>
+      <div class="tracker-row">
+        <div>
+          <div class="tracker-rarity">&#x26A1; Traditional Foil (any rarity)</div>
+          <div class="tracker-rarity-sub">Expected per box: ~7</div>
+        </div>
+        <div class="tracker-expected" style="font-size:11px;color:var(--silver)">Expected<br>~7</div>
+        <input class="tracker-input" type="number" id="pull-foil" placeholder="0" min="0">
+      </div>
+      <div class="input-group" style="margin-top:12px">
+        <label class="input-label" for="your-price-tracker">What did you pay for the box? (AUD)</label>
+        <input class="input-field" type="number" id="your-price-tracker" value="155.00" step="0.01">
+      </div>
+      <button class="tracker-calc-btn" onclick="runTracker()">Calculate My Actual EV</button>
+      <div class="tracker-results" id="tracker-results">
+        <div class="tracker-result-row">
+          <span class="tracker-result-label">Your estimated pull value</span>
+          <span class="tracker-result-value" id="tracker-pull-value">&#8212;</span>
+        </div>
+        <div class="tracker-result-row">
+          <span class="tracker-result-label">Expected value for your box size</span>
+          <span class="tracker-result-value" id="tracker-ev-ref">&#8212;</span>
+        </div>
+        <div class="tracker-result-row">
+          <span class="tracker-result-label">You were above/below EV</span>
+          <span class="tracker-result-value" id="tracker-variance">&#8212;</span>
+        </div>
+        <div class="tracker-result-row">
+          <span class="tracker-result-label">Profit / Loss vs purchase price</span>
+          <span class="tracker-result-value" id="tracker-pnl">&#8212;</span>
+        </div>
+        <div class="tracker-share" id="tracker-share-section">
+          Share your results: <a href="#" id="tracker-reddit-link" target="_blank" rel="noopener">Post to Reddit &#x2197;</a> | <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=TrackerShare&toolid=10001&mkevt=1" target="_blank" rel="noopener">Sell your pulls on C3 eBay &#x2197;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>How We Calculate EV for Australian Players</h2>
+    <p>Expected value (EV) in TCG is calculated by multiplying the pull rate of each card rarity by the average secondary market value of cards in that rarity tier, then summing across all cards in a pack and multiplying by the number of packs you are opening.</p>
+    <p>For Australian players, we use AUD-denominated prices sourced from the Australian secondary market rather than USD TCGPlayer prices, which can differ by 15 to 30 percent after currency conversion and import costs. Our AUD values are based on recent eBay Australia sold listings for cards in each rarity tier.</p>
+    <h3>Adventures in the Forgotten Realms Official Pull Rates (per pack)</h3>
+    <table class="pull-table">
+      <thead>
+        <tr>
+          <th>Rarity Tier</th>
+          <th>Pull Rate</th>
+          <th>Avg per Box (36 packs)</th>
+          <th>Est. Avg Value AUD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Mythic Rare</td><td>1 in 8 packs (12.5%)</td><td>~4.5</td><td>$8.00–$40.00+</td></tr>
+<tr><td>Rare</td><td>1 per pack minimum</td><td>~36</td><td>$0.80–$5.00</td></tr>
+<tr><td>Classic Module Art Showcase</td><td>~1 in 6 packs</td><td>~5</td><td>$5.00–$25.00+</td></tr>
+<tr><td>Traditional Foil</td><td>~1 in 5 packs</td><td>~7</td><td>Variable</td></tr>
+
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:rgba(160,168,192,.45);margin-top:-4px">Pull rates sourced from official Wizards of the Coast product information. AUD card values are estimates based on current Australian secondary market data and will change as the market evolves.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Is Adventures in the Forgotten Realms Worth Buying in Australia Right Now?</h2>
+    <p>Adventures in the Forgotten Realms was the first Standard-legal D and D crossover set and was received enthusiastically by the large overlap between MTG and D and D communities in Australia. The set introduces the Dungeon mechanic and features iconic D and D monsters including Beholders, Mind Flayers, and Liches. Acererak the Archlich saw competitive play in Legacy and Commander. The Classic Module Art showcase treatment pays tribute to original D and D module covers with distinctive retro artwork. As a 2021 set, pricing is settled.</p>
+    <p>If you are primarily interested in specific singles rather than the experience of opening packs, buying singles on eBay AU will almost always give better value than box EV suggests, because you pay only for the cards you actually want.</p>
+  </div>
+
+  <div class="aff-product">
+    <div class="aff-product-info">
+      <div class="aff-product-title">MTG Adventures in the Forgotten Realms &#8212; Play Booster Box (36 Packs)</div>
+      <div class="aff-product-price">AU$155.00</div>
+      <div class="aff-product-desc">36 Play Boosters, 14 MTG cards each. Free Prime delivery. Sold and shipped by Amazon AU.</div>
+      <a href="https://www.amazon.com.au/dp/B096TPBST6?tag=blasdigital-22" target="_blank" rel="noopener" class="aff-product-btn" onclick="trackClick('amazon_mtg-adventures-in-the-forgotten-realms_content')">
+        &#x1F6D2; View on Amazon AU &#x2197;
+      </a>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is Adventures in the Forgotten Realms worth opening in Australia?<span class="faq-icon">&#9660;</span></div>
+      <div class="faq-a">As a 2021 set, Forgotten Realms has settled secondary market pricing. The D and D crossover appeal drives collector demand for the Classic Module Art showcases. EV is moderate and predictable. Use the calculator above for a current assessment.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What are the chase cards in Adventures in the Forgotten Realms?<span class="faq-icon">&#9660;</span></div>
+      <div class="faq-a">Acererak the Archlich is the headline mythic with Legacy and Commander demand. Ellywick Tumblestrum and Xanathar Guild Kingpin are key Commander mythics. Classic Module Art showcase treatments of the Dungeon cards and iconic monster creatures command premiums in the AU secondary market.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the expected value of a Adventures in the Forgotten Realms booster box?<span class="faq-icon">&#9660;</span></div>
+      <div class="faq-a">Use the calculator above for a current AUD figure. EV shifts as secondary market prices settle after release. Run the calculator regularly as the market evolves.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Should I buy the Adventures in the Forgotten Realms box or buy singles?<span class="faq-icon">&#9660;</span></div>
+      <div class="faq-a">If you want specific cards, buying singles from the C3 eBay store is almost always more cost-efficient than opening packs. If you enjoy the experience of opening packs or are playing Limited, a box makes sense. Run the EV calculator and compare it to the cost of the singles you actually want.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How accurate is the EV calculation for Australian players?<span class="faq-icon">&#9660;</span></div>
+      <div class="faq-a">Our EV uses AUD secondary market prices from the Australian eBay market rather than USD TCGPlayer prices converted to AUD, which makes it more accurate for Australian buyers. However, EV is always an average estimate. Your individual box results will vary significantly from the expected value.</div>
+    </div>
+  </div>
+
+  <div class="related-guides">
+    <div class="related-guides-title">Related Guides</div>
+    <a href="/blog/best-mtg-booster-boxes-australia/">Best MTG Booster Boxes to Buy in Australia Right Now</a>
+    <a href="/blog/mtg-singles-vs-booster-boxes-australia/">MTG Singles vs Booster Boxes: Which Is Better Value in Australia?</a>
+    <a href="/blog/how-to-sell-mtg-cards-australia/">How to Sell MTG Cards in Australia for the Best Price</a>
+    <a href="/ev-calculator.html">&#8592; Back to All EV Calculators</a>
+  </div>
+
+  <p class="disclaimer">
+    <strong>EV Disclaimer:</strong> Expected value calculations are estimates only. Pull rates are based on official Wizards of the Coast data. Card values are based on recent Australian secondary market prices and change frequently. Actual results from opening packs will vary. This is not financial advice. Always verify current Amazon AU pricing before purchasing as prices fluctuate.
+  </p>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Cards on Cards on Cards</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <a href="/" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
+      <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Shop</a>
+      <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
+      <a href="/ev-calculator.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">EV Calculator</a>
+      <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact</a>
+    </div>
+    <p class="footer-copy">&#169; 2026 Cards on Cards on Cards.</p>
+  </div>
+</footer>
+
+<script>
+const SET_DATA = {
+  name: "Adventures in the Forgotten Realms",
+  game: "MTG",
+  amazonASIN: "B096TPBST6",
+  amazonPriceAUD: 155.0,
+  packsPerBox: 36,
+  cardsPerPack: 14,
+  pullRates: {
+    mythic: 0.125,
+    rare: 1.0,
+    rareBonus: 0.33,
+    foilRareMythic: 0.07,
+    foilAny: 0.20,
+    special: 0.17
+  },
+  avgValueAUD: {
+    mythic: 10.0,
+    rare: 1.4,
+    foilCommonUncommon: 0.50,
+    foilRareMythic: 5.5,
+    special: 6.0
+  }
+};
+
+function calcEVPerPack() {
+  const d = SET_DATA;
+  const mythicEV  = d.pullRates.mythic * d.avgValueAUD.mythic;
+  const rareEV    = (d.pullRates.rare + d.pullRates.rareBonus) * d.avgValueAUD.rare;
+  const foilEV    = (d.pullRates.foilRareMythic * d.avgValueAUD.foilRareMythic) +
+                    ((d.pullRates.foilAny - d.pullRates.foilRareMythic) * d.avgValueAUD.foilCommonUncommon);
+  const specialEV = d.pullRates.special * d.avgValueAUD.special;
+  return mythicEV + rareEV + foilEV + specialEV;
+}
+
+function setPacks(n, btn) {
+  document.querySelectorAll('.pack-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (n > 0) {
+    document.getElementById('pack-count').value = n;
+    document.getElementById('purchase-price').value =
+      n === 1 ? (SET_DATA.amazonPriceAUD / SET_DATA.packsPerBox).toFixed(2) : SET_DATA.amazonPriceAUD;
+  }
+}
+
+function syncCustomPacks() {
+  document.querySelectorAll('.pack-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.pack-btn')[2].classList.add('active');
+}
+
+function fmt(n) { return 'AU$' + n.toFixed(2); }
+
+function runCalculator() {
+  const packs = parseInt(document.getElementById('pack-count').value) || 36;
+  const cost  = parseFloat(document.getElementById('purchase-price').value) || SET_DATA.amazonPriceAUD;
+  const evPerPack   = calcEVPerPack();
+  const totalEV     = evPerPack * packs;
+  const costPerPack = cost / packs;
+  const ratio       = totalEV / cost;
+
+  let verdict, verdictClass, verdictSub;
+  if (ratio >= 0.90) {
+    verdict = '&#x2705; Worth Opening';
+    verdictClass = 'worth';
+    verdictSub = 'Expected value is strong relative to your cost. The numbers are in your favour.';
+  } else if (ratio >= 0.70) {
+    verdict = '&#x2696;&#xFE0F; Borderline';
+    verdictClass = 'borderline';
+    verdictSub = 'You are paying a moderate premium for the opening experience. Consider whether that is worth it to you.';
+  } else {
+    verdict = '&#x1F6AB; Avoid &#8212; Buy Singles';
+    verdictClass = 'avoid';
+    verdictSub = 'Expected value is significantly below cost. Buying the singles you want will give better value.';
+  }
+
+  const panel = document.getElementById('results-panel');
+  const banner = document.getElementById('verdict-banner');
+  banner.className = 'verdict-banner ' + verdictClass;
+  document.getElementById('verdict-label').textContent = 'Verdict for ' + packs + ' pack' + (packs > 1 ? 's' : '');
+  document.getElementById('verdict-text').innerHTML = verdict;
+  document.getElementById('verdict-sub').textContent = verdictSub;
+  document.getElementById('stat-ev').textContent = fmt(totalEV);
+  document.getElementById('stat-ev').className = 'stat-value';
+  document.getElementById('stat-cost').textContent = fmt(cost);
+  document.getElementById('stat-cost').className = 'stat-value';
+  document.getElementById('stat-ev-pack').textContent = fmt(evPerPack);
+  document.getElementById('stat-ev-pack').className = 'stat-value ' + (evPerPack >= costPerPack ? 'positive' : 'neutral');
+  document.getElementById('stat-cost-pack').textContent = fmt(costPerPack);
+  document.getElementById('stat-cost-pack').className = 'stat-value';
+  document.getElementById('cta-worth').style.display = (verdictClass === 'worth') ? 'block' : 'none';
+  document.getElementById('cta-avoid').style.display = (verdictClass !== 'worth') ? 'block' : 'none';
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  gtag('event', 'ev_calculator_run', { event_category: 'EV Calculator', event_label: 'Adventures in the Forgotten Realms', value: Math.round(totalEV) });
+  document.getElementById('your-price-tracker').value = cost;
+}
+
+function toggleTracker() {
+  document.getElementById('tracker-body').classList.toggle('visible');
+  document.getElementById('tracker-icon').classList.toggle('open');
+}
+
+function runTracker() {
+  const mythic  = parseInt(document.getElementById('pull-mythic').value)  || 0;
+  const rare    = parseInt(document.getElementById('pull-rare').value)    || 0;
+  const extra   = parseInt(document.getElementById('pull-special').value) || 0;
+  const foil    = parseInt(document.getElementById('pull-foil').value)    || 0;
+  const price   = parseFloat(document.getElementById('your-price-tracker').value) || SET_DATA.amazonPriceAUD;
+  const d = SET_DATA.avgValueAUD;
+  const pullValue = (mythic * d.mythic) + (rare * d.rare) + (extra * d.special) + (foil * d.foilCommonUncommon);
+  const packsOpened = parseInt(document.getElementById('pack-count').value) || SET_DATA.packsPerBox;
+  const evRef = calcEVPerPack() * packsOpened;
+  const variance = pullValue - evRef;
+  const pnl = pullValue - price;
+
+  document.getElementById('tracker-pull-value').textContent = fmt(pullValue);
+  document.getElementById('tracker-ev-ref').textContent = fmt(evRef);
+  const varEl = document.getElementById('tracker-variance');
+  varEl.textContent = (variance >= 0 ? '+' : '') + fmt(Math.abs(variance)) + ' ' + (variance >= 0 ? 'above' : 'below') + ' EV';
+  varEl.style.color = variance >= 0 ? 'var(--green)' : 'var(--red)';
+  const pnlEl = document.getElementById('tracker-pnl');
+  pnlEl.textContent = (pnl >= 0 ? '+' : '-') + fmt(Math.abs(pnl));
+  pnlEl.style.color = pnl >= 0 ? 'var(--green)' : 'var(--red)';
+
+  const redditText = encodeURIComponent(
+    `Opened an MTG Adventures in the Forgotten Realms box in Australia (AU$` + price + `). ` +
+    `Got ` + mythic + ` mythics, ` + rare + ` rares. ` +
+    `Estimated pull value: AU$` + pullValue.toFixed(2) + ` vs expected AU$` + evRef.toFixed(2) + `. ` +
+    `Used the C3 EV Calculator: https://cardsoncardsoncards.com.au/ev-calculator/mtg-adventures-in-the-forgotten-realms`
+  );
+  document.getElementById('tracker-reddit-link').href =
+    `https://www.reddit.com/r/magicTCG/submit?type=text&title=Forgotten+Realms+box+results+Australia&text=` + redditText;
+  document.getElementById('tracker-results').classList.add('visible');
+
+  try { localStorage.setItem('c3_afr_tracker', JSON.stringify({ mythic, rare, extra, foil, price, pullValue })); } catch(e) {}
+  gtag('event', 'pull_tracker_run', { event_category: 'Pull Tracker', event_label: 'Adventures in the Forgotten Realms', value: Math.round(pullValue) });
+}
+
+try {
+  const saved = JSON.parse(localStorage.getItem('c3_afr_tracker') || '{}');
+  if (saved.mythic !== undefined) {
+    document.getElementById('pull-mythic').value = saved.mythic;
+    document.getElementById('pull-rare').value   = saved.rare;
+    document.getElementById('pull-special').value = saved.extra || 0;
+    document.getElementById('pull-foil').value   = saved.foil || 0;
+    if (saved.price) document.getElementById('your-price-tracker').value = saved.price;
+  }
+} catch(e) {}
+
+function toggleFaq(el) {
+  const answer = el.nextElementSibling;
+  const icon   = el.querySelector('.faq-icon');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = '');
+  if (!isOpen) { answer.classList.add('open'); icon.style.transform = 'rotate(180deg)'; }
+}
+
+function trackClick(label) {
+  gtag('event', 'outbound_click', { event_category: 'EV Calculator', event_label: label });
+}
+document.querySelectorAll('a[href*="amazon"]').forEach(a => {
+  a.addEventListener('click', () => gtag('event', 'amazon_click', { event_category: 'outbound', event_label: a.href }));
+});
+document.querySelectorAll('a[href*="ebay"]').forEach(a => {
+  a.addEventListener('click', () => gtag('event', 'ebay_store_click', { event_category: 'outbound', event_label: a.href }));
+});
+document.querySelectorAll('a[href*="etsy"]').forEach(a => {
+  a.addEventListener('click', () => gtag('event', 'etsy_tool_click', { event_category: 'outbound', event_label: a.href }));
+});
+</script>
+</body>
+</html>

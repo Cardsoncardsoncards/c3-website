@@ -33,6 +33,36 @@
       gtag('event', 'form_submit', { event_category: 'newsletter', event_label: 'signup' });
     }
   }, true);
+
+  // Outbound click tracking
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('a[href]');
+    if (!el) return;
+    var href = el.getAttribute('href') || '';
+
+    // Free tracker open
+    if (href.includes('docs.google.com/spreadsheets')) {
+      gtag('event', 'tracker_open', { event_category: 'outbound', event_label: 'free_tracker' });
+    }
+    // Etsy premium tools
+    else if (href.includes('etsy.com/au/listing')) {
+      var label = el.textContent.trim().substring(0, 60) || 'etsy_tool';
+      gtag('event', 'etsy_tool_click', { event_category: 'outbound', event_label: label });
+    }
+    // Etsy store (main store links, not individual listings)
+    else if (href.includes('blasdigital.etsy.com')) {
+      gtag('event', 'etsy_store_click', { event_category: 'outbound', event_label: 'blasdigital_store' });
+    }
+    // eBay store
+    else if (href.includes('ebay.com.au')) {
+      gtag('event', 'ebay_store_click', { event_category: 'outbound', event_label: 'c3_ebay_store' });
+    }
+    // Amazon affiliate gear
+    else if (href.includes('amazon.com.au')) {
+      var aLabel = el.querySelector('.gear-title') ? el.querySelector('.gear-title').textContent.trim() : href.split('k=')[1] || 'amazon_gear';
+      gtag('event', 'amazon_click', { event_category: 'outbound', event_label: aLabel });
+    }
+  });
 </script>
 <!-- MailerLite Universal -->
 <script>

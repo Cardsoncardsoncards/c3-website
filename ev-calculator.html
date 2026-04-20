@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MTG Pack EV Calculator Australia | All Sets | Cards on Cards on Cards</title>
-<meta name="description" content="Calculate the expected value of any MTG booster box in AUD. 50+ sets covered from 2020 to 2026. Play Booster and Collector Booster EV for Australian players.">
-<meta property="og:title" content="MTG EV Calculator Australia | All Sets | Cards on Cards on Cards">
-<meta property="og:url" content="https://cardsoncardsoncards.com.au/ev-calculator.html">
+<title>MTG EV Calculator Australia | Is Your Booster Box Worth Opening? | Cards on Cards on Cards</title>
+<meta name="description" content="Free MTG pack expected value calculator for Australian players. Find out if your Magic: The Gathering booster box is worth opening in AUD. 40+ sets covered with official pull rates and current AU market prices.">
+<meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>
-  window.dataLayer=window.dataLayer||[];
+  window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js',new Date());gtag('config','G-WR68HPE92S');
+  gtag('js', new Date());
+  gtag('config', 'G-WR68HPE92S');
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -20,407 +20,727 @@
   --ink:#0A0C14;--deep:#111422;--card:#161929;--border:#252840;
   --gold:#C9A84C;--gold-lit:#E8C86A;--gold-dim:#7A621E;
   --silver:#A0A8C0;--white:#F0F2FF;--purple:#6B6BFF;
-  --blue:#4A9EFF;--orange:#F56400;--green:#3DD68C;--red:#FF4F6A;
-  --collector:#D4AF37;--sidebar-w:210px;
+  --blue:#4A9EFF;--green:#22C55E;--amber:#F59E0B;--red:#EF4444;
+  --orange:#F56400;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--ink);color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse 80% 45% at 50% -8%,rgba(201,168,76,.09) 0%,transparent 60%)}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse 80% 40% at 50% -5%,rgba(201,168,76,.07) 0%,transparent 55%)}
 .wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
-.aff-banner{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.18);padding:8px 24px;text-align:center;font-size:12px;color:rgba(160,168,192,.65);position:relative;z-index:99}
+.aff-banner{background:rgba(201,168,76,.08);border-bottom:1px solid rgba(201,168,76,.22);padding:9px 24px;text-align:center;font-size:12.5px;color:rgba(160,168,192,.75);position:relative;z-index:99}
 .aff-banner strong{color:var(--gold)}
-nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 24px;gap:12px}
+nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:10px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
 .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .nav-links::-webkit-scrollbar{display:none}
-.nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
 .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
-.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
-.page-hero{padding:40px 0 28px;text-align:center;position:relative;z-index:1}
-.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.hero-h1{font-family:'Cinzel',serif;font-size:clamp(26px,4.5vw,48px);font-weight:900;color:var(--gold);line-height:1.1;margin-bottom:12px}
-.hero-sub{font-size:15px;color:rgba(240,242,255,.52);max-width:580px;margin:0 auto 24px}
-.hero-stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:13px;color:var(--silver)}
-.hero-stats strong{color:var(--white)}
-.layout{display:flex;gap:0;max-width:1140px;margin:0 auto;min-height:600px;position:relative;z-index:1}
-.sidebar{width:var(--sidebar-w);flex-shrink:0;border-right:1px solid var(--border);padding:24px 18px}
-.sidebar-inner{position:sticky;top:72px;max-height:calc(100vh - 90px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-.filter-group{margin-bottom:24px}
-.filter-group-title{font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
-.filter-checks{display:flex;flex-direction:column;gap:6px}
-.filter-check{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--silver);cursor:pointer;transition:color .15s;padding:3px 0}
-.filter-check:hover{color:var(--white)}
-.filter-check input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0;cursor:pointer}
-.clear-btn{width:100%;margin-top:8px;padding:8px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--silver);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
-.clear-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.06)}
-.sidebar-divider{height:1px;background:var(--border);margin:20px 0}
-.result-count{font-size:12px;color:var(--silver);margin-bottom:4px}
-.result-count strong{color:var(--white)}
-.product-area{flex:1;min-width:0;padding:24px 28px 64px}
-.controls-bar{display:flex;gap:10px;margin-bottom:20px;align-items:center;flex-wrap:wrap}
-.search-wrap{position:relative;flex:1;min-width:200px}
-.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--silver);font-size:15px;pointer-events:none}
-.search-input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:10px 16px 10px 38px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--white);outline:none;transition:border-color .2s}
+.nav-link--active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);position:relative;z-index:1;margin:0}
+.page-hd{padding:44px 0 28px;position:relative;z-index:1}
+.page-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.page-h1{font-family:'Cinzel',serif;font-size:clamp(22px,3.5vw,42px);font-weight:900;color:var(--gold);line-height:1.1;margin-bottom:10px}
+.page-desc{font-size:14px;color:rgba(240,242,255,.55);max-width:600px;line-height:1.7}
+.info-strip{background:rgba(107,107,255,.06);border:1px solid rgba(107,107,255,.2);border-radius:10px;padding:18px 22px;margin-bottom:28px;font-size:13.5px;color:rgba(240,242,255,.7);line-height:1.7}
+.info-strip strong{color:var(--white)}
+.controls-bar{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.controls-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search-input{flex:1;min-width:180px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:14px;color:var(--white);font-family:'DM Sans',sans-serif}
+.search-input:focus{outline:none;border-color:var(--gold-dim)}
 .search-input::placeholder{color:rgba(160,168,192,.4)}
-.search-input:focus{border-color:var(--gold-dim)}
-.type-toggle{display:flex;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0}
-.type-btn{padding:9px 16px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;border:none;background:none;cursor:pointer;color:var(--silver);transition:all .2s;white-space:nowrap}
-.type-btn.active{background:rgba(201,168,76,.12);color:var(--gold)}
-.type-btn.active.collector-active{background:rgba(212,175,55,.12);color:var(--collector)}
-.set-list{display:flex;flex-direction:column}
-.set-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;padding:13px 16px;border-bottom:1px solid rgba(37,40,64,.7);text-decoration:none;transition:background .15s;position:relative}
-.set-row:first-of-type{border-top:1px solid rgba(37,40,64,.7)}
-.set-row:hover{background:rgba(255,255,255,.025)}
-.set-row.unavailable{opacity:.35;pointer-events:none}
-.set-row.coming-soon{opacity:.45;pointer-events:none}
-.set-row-left{display:flex;align-items:center;gap:12px;min-width:0}
-.set-year-pill{font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 8px;border-radius:4px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
-.set-name-wrap{min-width:0}
-.set-name{font-size:14px;font-weight:600;color:var(--white);line-height:1.3}
-.set-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px}
-.stag{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:3px;border:1px solid;white-space:nowrap}
-.stag-play{color:var(--purple);background:rgba(107,107,255,.08);border-color:rgba(107,107,255,.25)}
-.stag-collector{color:var(--collector);background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.3)}
-.stag-jumpstart{color:var(--green);background:rgba(61,214,140,.08);border-color:rgba(61,214,140,.25)}
-.stag-ub{color:var(--blue);background:rgba(74,158,255,.08);border-color:rgba(74,158,255,.25)}
-.stag-premium{color:var(--gold);background:rgba(201,168,76,.08);border-color:var(--gold-dim)}
-.stag-note{color:var(--silver);background:rgba(160,168,192,.05);border-color:rgba(160,168,192,.2)}
-.stag-coming{color:rgba(160,168,192,.5);background:transparent;border-color:rgba(160,168,192,.15)}
-.set-row-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.set-date{font-size:11px;color:rgba(160,168,192,.5);white-space:nowrap}
-.set-cta{font-size:11px;font-weight:700;letter-spacing:.04em;padding:7px 14px;border-radius:6px;border:1px solid var(--gold-dim);color:var(--gold);background:rgba(201,168,76,.06);white-space:nowrap;transition:all .15s}
-.set-row:hover .set-cta{background:rgba(201,168,76,.14);border-color:var(--gold)}
-.set-cta.cta-collector{border-color:rgba(212,175,55,.4);color:var(--collector);background:rgba(212,175,55,.06)}
-.set-row:hover .set-cta.cta-collector{background:rgba(212,175,55,.14)}
-.alpha-head{padding:7px 16px 4px;font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--gold-dim);border-bottom:1px solid rgba(37,40,64,.8);background:rgba(255,255,255,.01);position:sticky;top:0;z-index:4}
-.empty-state{text-align:center;padding:64px 24px;color:var(--silver)}
-.empty-state h3{font-family:'Cinzel',serif;color:var(--white);margin-bottom:10px;font-size:18px}
-.mobile-filter-bar{display:none;gap:6px;flex-wrap:wrap;padding:12px 16px 10px;border-bottom:1px solid var(--border);background:rgba(10,12,20,.6);position:relative;z-index:1}
-.mob-pill{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--silver);font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s}
-.mob-pill.active{background:rgba(201,168,76,.1);border-color:var(--gold-dim);color:var(--gold)}
-.methodology{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:14px;padding:28px 32px;margin:48px 0 0;position:relative;z-index:1}
-.methodology h2{font-family:'Cinzel',serif;font-size:18px;color:var(--gold);margin-bottom:14px}
-.methodology p{color:rgba(240,242,255,.65);font-size:14px;line-height:1.8;margin-bottom:10px}
-.bottom-panels{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0 0;position:relative;z-index:1}
-.panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px}
-.panel h2{font-family:'Cinzel',serif;font-size:16px;color:var(--gold);margin-bottom:8px}
-.panel p{font-size:13px;color:var(--silver);margin-bottom:16px;line-height:1.7}
-.panel-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:7px;border:1px solid var(--gold-dim);background:rgba(201,168,76,.08);color:var(--gold);font-size:12px;font-weight:600;text-decoration:none;transition:all .2s}
-.panel-btn:hover{background:rgba(201,168,76,.16);border-color:var(--gold)}
-footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;font-size:12px;color:rgba(160,168,192,.4);margin-top:64px;position:relative;z-index:1}
-footer a{color:rgba(160,168,192,.6);text-decoration:none}
-footer a:hover{color:var(--gold)}
-.hidden{display:none!important}
+.game-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.game-tab{padding:8px 14px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);background:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.game-tab:hover{color:var(--white);border-color:var(--silver)}
+.game-tab.active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.08)}
+.year-filters{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 16px}
+.year-filters-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);white-space:nowrap;margin-bottom:0}
+.year-check{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--silver);cursor:pointer;padding:2px 0}
+.year-check input{accent-color:var(--gold);cursor:pointer}
+.result-count{font-size:12px;color:rgba(160,168,192,.5);margin-bottom:16px}
+.result-count span{color:var(--gold);font-weight:700}
+.set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:48px}
+.set-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;text-decoration:none;transition:all .22s;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.set-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(201,168,76,.06),transparent);transition:opacity .22s}
+.set-card:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+.set-card:hover::before{opacity:1}
+.set-card--coming{opacity:.5;cursor:default;pointer-events:none}
+.set-card-game{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.set-card-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);line-height:1.3}
+.set-card-meta{font-size:12px;color:var(--silver);display:flex;gap:10px;flex-wrap:wrap}
+.set-card-verdict{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px}
+.verdict-worth{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.verdict-borderline{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+.verdict-avoid{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.verdict-soon{background:rgba(160,168,192,.08);color:var(--silver);border:1px solid rgba(160,168,192,.2)}
+.set-card-cta{font-size:12px;font-weight:600;color:var(--gold);margin-top:auto}
+.no-results{text-align:center;padding:40px;color:rgba(160,168,192,.5);font-size:14px;display:none}
+.disclaimer{padding:16px 20px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px;font-size:11px;color:rgba(160,168,192,.38);line-height:1.7;margin-bottom:24px}
+.disclaimer strong{color:rgba(160,168,192,.55)}
+footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;position:relative;z-index:1}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:1140px;margin:0 auto;padding:0 24px}
+.footer-logo{font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--gold)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.28)}
 @media(max-width:768px){
-  .sidebar{display:none}
-  .mobile-filter-bar{display:flex}
-  .product-area{padding:16px 16px 48px}
-  .bottom-panels{grid-template-columns:1fr}
-  .set-row{grid-template-columns:1fr}
-  .set-row-right{justify-content:flex-start;margin-top:6px}
-  .methodology{padding:20px}
+  .set-grid{grid-template-columns:1fr}
+  .controls-bar{flex-direction:column}
+  .game-tabs{gap:5px}
+  .game-tab{padding:7px 11px;font-size:10px}
 }
 </style>
 </head>
 <body>
 
 <div class="aff-banner">
-  <strong>Affiliate disclosure:</strong> C3 earns a commission on qualifying Amazon AU and eBay purchases at no extra cost to you.
+  <strong>Affiliate Disclosure:</strong> This page contains affiliate links. We may earn a commission if you purchase through these links, at no extra cost to you.
 </div>
 
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/c3-logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
       <span>Cards on Cards on Cards</span>
     </a>
     <div class="nav-links">
-      <a href="/" class="nav-link">Home</a>
+      <a href="/" class="nav-link">&#8592; Home</a>
       <a href="/shop.html" class="nav-link">Shop</a>
       <a href="/blog" class="nav-link">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--active">EV Calc</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3EVHub&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link">D&amp;D Tools ↗</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--active">EV Calculator</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
       <a href="/contact.html" class="nav-link">Contact</a>
     </div>
   </div>
 </nav>
 
-<div class="page-hero">
-  <p class="hero-eyebrow">Free Tool for Australian Players</p>
-  <h1 class="hero-h1">MTG Pack EV Calculator</h1>
-  <p class="hero-sub">Is your booster box worth opening? Calculate expected value in AUD across 50+ sets from 2020 to 2026. Play Booster and Collector Booster both covered.</p>
-  <div class="hero-stats">
-    <span><strong>50+</strong> sets covered</span>
-    <span><strong>2020 to 2026</strong> release range</span>
-    <span><strong>AUD pricing</strong> throughout</span>
-    <span><strong>Play and Collector</strong> Booster EV</span>
-  </div>
-</div>
-
-<!-- MOBILE YEAR FILTER PILLS -->
-<div class="mobile-filter-bar">
-  <button class="mob-pill active" data-mob="all" onclick="mobFilter(this)">All</button>
-  <button class="mob-pill" data-mob="2026" onclick="mobFilter(this)">2026</button>
-  <button class="mob-pill" data-mob="2025" onclick="mobFilter(this)">2025</button>
-  <button class="mob-pill" data-mob="2024" onclick="mobFilter(this)">2024</button>
-  <button class="mob-pill" data-mob="2023" onclick="mobFilter(this)">2023</button>
-  <button class="mob-pill" data-mob="2022" onclick="mobFilter(this)">2022</button>
-  <button class="mob-pill" data-mob="2021" onclick="mobFilter(this)">2021</button>
-  <button class="mob-pill" data-mob="2020" onclick="mobFilter(this)">2020</button>
-  <button class="mob-pill" data-mob="masters" onclick="mobFilter(this)">Masters</button>
-</div>
-
-<div class="layout">
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <div class="filter-group">
-        <span class="filter-group-title">Year of Release</span>
-        <p style="font-size:11px;color:rgba(160,168,192,.45);margin-bottom:8px">Select one or more years</p>
-        <div class="filter-checks">
-          <label class="filter-check"><input type="checkbox" value="2026" onchange="render()"> 2026</label>
-          <label class="filter-check"><input type="checkbox" value="2025" onchange="render()"> 2025</label>
-          <label class="filter-check"><input type="checkbox" value="2024" onchange="render()"> 2024</label>
-          <label class="filter-check"><input type="checkbox" value="2023" onchange="render()"> 2023</label>
-          <label class="filter-check"><input type="checkbox" value="2022" onchange="render()"> 2022</label>
-          <label class="filter-check"><input type="checkbox" value="2021" onchange="render()"> 2021</label>
-          <label class="filter-check"><input type="checkbox" value="2020" onchange="render()"> 2020</label>
-          <label class="filter-check"><input type="checkbox" value="masters" onchange="render()"> Masters / Premium</label>
-        </div>
-        <button class="clear-btn" onclick="clearAll()">Clear All Filters</button>
-      </div>
-
-      <div class="sidebar-divider"></div>
-
-      <div class="filter-group">
-        <span class="filter-group-title">Product Type</span>
-        <div class="filter-checks">
-          <label class="filter-check"><input type="checkbox" id="fPlay" onchange="render()"> Play Booster</label>
-          <label class="filter-check"><input type="checkbox" id="fCollector" onchange="render()"> Collector Booster</label>
-          <label class="filter-check"><input type="checkbox" id="fUB" onchange="render()"> Universes Beyond</label>
-          <label class="filter-check"><input type="checkbox" id="fJump" onchange="render()"> Jumpstart</label>
-          <label class="filter-check"><input type="checkbox" id="fPremium" onchange="render()"> Masters / Premium</label>
-        </div>
-      </div>
-
-      <div class="sidebar-divider"></div>
-      <div class="result-count" id="rCount"><strong>—</strong> sets shown</div>
-
-    </div>
-  </aside>
-
-  <div class="product-area">
-
-    <div class="controls-bar">
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="srch" placeholder="Search set name..." autocomplete="off" oninput="render()">
-      </div>
-      <div class="type-toggle">
-        <button class="type-btn active" id="btnPlay" onclick="switchView('play',this)">Play Booster EV</button>
-        <button class="type-btn" id="btnCol" onclick="switchView('collector',this)">Collector Booster EV</button>
-      </div>
-    </div>
-
-    <div class="set-list" id="setList"></div>
-    <div class="empty-state hidden" id="emptyState">
-      <h3>No sets match your filters</h3>
-      <p style="margin-bottom:16px">Try a different search or clear your filters.</p>
-      <button class="clear-btn" style="max-width:180px;margin:0 auto" onclick="clearAll()">Clear Filters</button>
-    </div>
-
-  </div>
-</div>
-
 <div class="wrap">
-  <div class="methodology">
-    <h2>How We Calculate EV for Australian Players</h2>
-    <p>Expected value (EV) is the average dollar return from opening a pack. We calculate it by multiplying the official pull rate for each rarity by the current AUD market value of cards at that rarity level, then summing across all pack slots. All pricing is in AUD, not USD conversions from US-focused sites.</p>
-    <p>Pull rates come from Wizards of the Coast's official published data. Card values are sourced from recent eBay AU sold listings and MTGGoldfish data converted at the live exchange rate. Play Booster and Collector Booster EV are calculated separately as they have completely different pack contents, pull rates, and price points. Toggle between both views above.</p>
-    <p>Each set page shows a data confidence rating. High means official pull rates and active AU sales history. Low means the AU market is thin or pull rates are community-sourced. EV is directional, not a guarantee. It helps you decide whether to open sealed product or buy the specific singles you need directly.</p>
+  <div class="page-hd">
+    <p class="page-eyebrow">Cards on Cards on Cards</p>
+    <h1 class="page-h1">MTG Booster Box EV Calculator — Australia</h1>
+    <p class="page-desc">Is your booster box worth opening? Expected value calculated in AUD using official pull rates and current Australian market prices. 43 MTG sets covered. Pokemon, Lorcana, and One Piece calculators coming soon.</p>
+  </div>
+</div>
+
+<div class="gold-divider"></div>
+
+<div class="wrap" style="margin-top:28px">
+
+  <div class="info-strip">
+    <strong>How this works:</strong> Select a set below to run the expected value calculation. We use official Wizards of the Coast pull rate data combined with current AUD secondary market card values to estimate what a booster box is worth opening versus buying singles. All prices in AUD.
   </div>
 
-  <div class="bottom-panels">
-    <div class="panel">
-      <h2>Can't Find Your Set?</h2>
-      <p>Request a set and we will add it. We cover all sets with active AU secondary market sales. If people are still buying and selling it sealed, it belongs here.</p>
-      <a href="/contact.html" class="panel-btn">Request a Set →</a>
+  <div class="controls-bar">
+    <div class="controls-top">
+      <input class="search-input" type="text" id="search-input" placeholder="Search sets..." oninput="filterSets()">
+      <div class="game-tabs" id="game-tabs">
+        <button class="game-tab active" data-game="all" onclick="setGame('all',this)">All Games</button>
+        <button class="game-tab" data-game="mtg" onclick="setGame('mtg',this)">&#9876;&#65039; MTG</button>
+        <button class="game-tab" data-game="pokemon" onclick="setGame('pokemon',this)">&#9889; Pokemon</button>
+        <button class="game-tab" data-game="lorcana" onclick="setGame('lorcana',this)">&#x1F3F0; Lorcana</button>
+        <button class="game-tab" data-game="onepiece" onclick="setGame('onepiece',this)">&#x2620;&#65039; One Piece</button>
+      </div>
     </div>
-    <div class="panel">
-      <h2>Get EV Alerts When New Sets Drop</h2>
-      <p>We notify you when new set calculators go live and when EV shifts significantly after release due to market movement.</p>
-      <div class="ml-embedded" data-form="mIFDGb"></div>
+    <div class="year-filters" id="year-filters">
+      <div class="year-filters-label">Filter by Year</div>
+        <label class="year-check"><input type="checkbox" value="2026" onchange="filterSets()"> 2026</label>
+        <label class="year-check"><input type="checkbox" value="2025" onchange="filterSets()"> 2025</label>
+        <label class="year-check"><input type="checkbox" value="2024" onchange="filterSets()"> 2024</label>
+        <label class="year-check"><input type="checkbox" value="2023" onchange="filterSets()"> 2023</label>
+        <label class="year-check"><input type="checkbox" value="2022" onchange="filterSets()"> 2022</label>
+        <label class="year-check"><input type="checkbox" value="2021" onchange="filterSets()"> 2021</label>
+        <label class="year-check"><input type="checkbox" value="2020" onchange="filterSets()"> 2020</label>
+        <label class="year-check"><input type="checkbox" value="2019" onchange="filterSets()"> 2019</label>
+        <label class="year-check"><input type="checkbox" value="2018" onchange="filterSets()"> 2018</label>
+        <label class="year-check"><input type="checkbox" value="2017" onchange="filterSets()"> 2017</label>
     </div>
   </div>
+
+  <div class="result-count" id="result-count"><span id="count-num">43</span> sets available</div>
+
+  <div class="set-grid" id="set-grid">
+
+    <a href="/ev-calculator/mtg-adventures-in-the-forgotten-realms.html" class="set-card" data-game="mtg" data-year="2021">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Adventures in the Forgotten Realms</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$155.00</span>
+        <span>2021</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-aetherdrift.html" class="set-card" data-game="mtg" data-year="2025">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Aetherdrift</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2025</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-assassins-creed.html" class="set-card" data-game="mtg" data-year="2024">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Assassin's Creed</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$180.00</span>
+        <span>2024</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-avatar-the-last-airbender.html" class="set-card" data-game="mtg" data-year="2025">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Avatar: The Last Airbender</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$180.00</span>
+        <span>2025</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-bloomburrow.html" class="set-card" data-game="mtg" data-year="2024">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Bloomburrow</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2024</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-commander-legends-2020.html" class="set-card" data-game="mtg" data-year="2020">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Commander Legends</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$155.00</span>
+        <span>2020</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-commander-legends-baldurs-gate.html" class="set-card" data-game="mtg" data-year="2022">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Commander Legends: Baldur's Gate</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$170.00</span>
+        <span>2022</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-commander-masters.html" class="set-card" data-game="mtg" data-year="2023">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Commander Masters</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$180.00</span>
+        <span>2023</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-core-set-2021.html" class="set-card" data-game="mtg" data-year="2020">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Core Set 2021</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$140.00</span>
+        <span>2020</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-dominaria-united.html" class="set-card" data-game="mtg" data-year="2022">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Dominaria United</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$160.00</span>
+        <span>2022</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-double-masters-2022.html" class="set-card" data-game="mtg" data-year="2022">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Double Masters 2022</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$180.00</span>
+        <span>2022</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-duskmourn.html" class="set-card" data-game="mtg" data-year="2024">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Duskmourn: House of Horror</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2024</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-edge-of-eternities.html" class="set-card" data-game="mtg" data-year="2025">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Edge of Eternities</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2025</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-final-fantasy.html" class="set-card" data-game="mtg" data-year="2025">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Final Fantasy</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2025</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-iconic-masters.html" class="set-card" data-game="mtg" data-year="2017">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Iconic Masters</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$160.00</span>
+        <span>2017</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-ikoria-lair-of-behemoths.html" class="set-card" data-game="mtg" data-year="2020">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Ikoria: Lair of Behemoths</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$145.00</span>
+        <span>2020</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-innistrad-crimson-vow.html" class="set-card" data-game="mtg" data-year="2021">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Innistrad: Crimson Vow</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$160.00</span>
+        <span>2021</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-innistrad-midnight-hunt.html" class="set-card" data-game="mtg" data-year="2021">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Innistrad: Midnight Hunt</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$160.00</span>
+        <span>2021</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-jumpstart-2020.html" class="set-card" data-game="mtg" data-year="2020">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Jumpstart</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$155.00</span>
+        <span>2020</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-kaldheim.html" class="set-card" data-game="mtg" data-year="2021">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Kaldheim</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$155.00</span>
+        <span>2021</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-kamigawa-neon-dynasty.html" class="set-card" data-game="mtg" data-year="2022">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Kamigawa: Neon Dynasty</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$180.00</span>
+        <span>2022</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-lord-of-the-rings.html" class="set-card" data-game="mtg" data-year="2023">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Lord of the Rings: Tales of Middle-earth</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2023</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-lorwyn-eclipsed.html" class="set-card" data-game="mtg" data-year="2026">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Lorwyn Eclipsed</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$180.00</span>
+        <span>2026</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-march-of-the-machine.html" class="set-card" data-game="mtg" data-year="2023">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">March of the Machine</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2023</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-modern-horizons-1.html" class="set-card" data-game="mtg" data-year="2019">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Modern Horizons</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$180.00</span>
+        <span>2019</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-modern-horizons-2.html" class="set-card" data-game="mtg" data-year="2021">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Modern Horizons 2</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$180.00</span>
+        <span>2021</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-modern-horizons-3.html" class="set-card" data-game="mtg" data-year="2024">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Modern Horizons 3</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2024</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-murders-at-karlov-manor.html" class="set-card" data-game="mtg" data-year="2024">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Murders at Karlov Manor</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2024</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-outlaws-of-thunder-junction.html" class="set-card" data-game="mtg" data-year="2024">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Outlaws of Thunder Junction</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2024</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-phyrexia-all-will-be-one.html" class="set-card" data-game="mtg" data-year="2023">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Phyrexia: All Will Be One</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$170.00</span>
+        <span>2023</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-secrets-of-strixhaven.html" class="set-card" data-game="mtg" data-year="2026">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Secrets of Strixhaven</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$259.95</span>
+        <span>2026</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-streets-of-new-capenna.html" class="set-card" data-game="mtg" data-year="2022">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Streets of New Capenna</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$155.00</span>
+        <span>2022</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-strixhaven-school-of-mages.html" class="set-card" data-game="mtg" data-year="2021">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Strixhaven: School of Mages</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$155.00</span>
+        <span>2021</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-tarkir-dragonstorm.html" class="set-card" data-game="mtg" data-year="2025">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Tarkir: Dragonstorm</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2025</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-tmnt.html" class="set-card" data-game="mtg" data-year="2026">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Teenage Mutant Ninja Turtles</div>
+      <div class="set-card-meta">
+        <span>30 packs</span>
+        <span>AU$150.00</span>
+        <span>2026</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-the-brothers-war.html" class="set-card" data-game="mtg" data-year="2022">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">The Brothers' War</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$160.00</span>
+        <span>2022</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-lost-caverns-of-ixalan.html" class="set-card" data-game="mtg" data-year="2023">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">The Lost Caverns of Ixalan</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2023</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-theros-beyond-death.html" class="set-card" data-game="mtg" data-year="2020">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Theros Beyond Death</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$145.00</span>
+        <span>2020</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-time-spiral-remastered.html" class="set-card" data-game="mtg" data-year="2021">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Time Spiral Remastered</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$170.00</span>
+        <span>2021</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-ultimate-masters.html" class="set-card" data-game="mtg" data-year="2018">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Ultimate Masters</div>
+      <div class="set-card-meta">
+        <span>24 packs</span>
+        <span>AU$180.00</span>
+        <span>2018</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-warhammer-40k.html" class="set-card" data-game="mtg" data-year="2022">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Warhammer 40,000</div>
+      <div class="set-card-meta">
+        <span>12 packs</span>
+        <span>AU$320.00</span>
+        <span>2022</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-wilds-of-eldraine.html" class="set-card" data-game="mtg" data-year="2023">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Wilds of Eldraine</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$180.00</span>
+        <span>2023</span>
+      </div>
+      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+    <a href="/ev-calculator/mtg-zendikar-rising.html" class="set-card" data-game="mtg" data-year="2020">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Zendikar Rising</div>
+      <div class="set-card-meta">
+        <span>36 packs</span>
+        <span>AU$155.00</span>
+        <span>2020</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+
+    <!-- Coming Soon MTG -->
+    <div class="set-card set-card--coming" data-game="mtg">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Marvel Super Heroes</div>
+      <div class="set-card-meta"><span>Jun 2026</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching at release</div>
+    </div>
+
+    <!-- Other Games Coming Soon -->
+    <div class="set-card set-card--coming" data-game="pokemon">
+      <div class="set-card-game">⚡ Pokemon TCG</div>
+      <div class="set-card-name">Destined Rivals</div>
+      <div class="set-card-meta"><span>Coming 30 May 2026</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching at release</div>
+    </div>
+    <div class="set-card set-card--coming" data-game="pokemon">
+      <div class="set-card-game">⚡ Pokemon TCG</div>
+      <div class="set-card-name">Scarlet &amp; Violet 151</div>
+      <div class="set-card-meta"><span>Legacy set</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching soon</div>
+    </div>
+    <div class="set-card set-card--coming" data-game="lorcana">
+      <div class="set-card-game">🏰 Disney Lorcana</div>
+      <div class="set-card-name">Wilds Unknown</div>
+      <div class="set-card-meta"><span>Releases 15 May 2026</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching at release</div>
+    </div>
+    <div class="set-card set-card--coming" data-game="onepiece">
+      <div class="set-card-game">☠️ One Piece TCG</div>
+      <div class="set-card-name">OP-10 Royal Blood</div>
+      <div class="set-card-meta"><span>Live now</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching soon</div>
+    </div>
+
+  </div>
+
+  <div class="no-results" id="no-results">No sets match your search. Try a different name or clear the filters.</div>
+
+  <p class="disclaimer">
+    <strong>EV Disclaimer:</strong> Expected value calculations are estimates based on official pull rates and current secondary market pricing. Actual results will vary. EV is calculated in AUD using published pull rate data and current Australian eBay secondary market prices. This is not financial advice. Always verify current Amazon AU pricing before purchasing as prices fluctuate.
+  </p>
+
 </div>
 
 <footer>
-  <div class="wrap">
-    <p style="margin-bottom:8px"><a href="/">Cards on Cards on Cards</a> | <a href="/blog">Blog</a> | <a href="/shop.html">Shop</a> | <a href="/tracker.html">Tracker</a> | <a href="/contact.html">Contact</a></p>
-    <p>cardsoncardsoncards.com.au participates in the Amazon Associates Program and eBay Partner Network. Commissions earned on qualifying purchases.</p>
+  <div class="footer-inner">
+    <div class="footer-logo">Cards on Cards on Cards</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <a href="/" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
+      <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Shop</a>
+      <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
+      <a href="/tracker.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
+      <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact</a>
+    </div>
+    <p class="footer-copy">&#169; 2026 Cards on Cards on Cards.</p>
   </div>
 </footer>
 
-<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v11" async></script>
 <script>
-const SETS=[
-  {n:"Adventures in the Forgotten Realms",y:2021,s:"mtg-adventures-forgotten-realms",play:1,col:1,ub:1,js:0,prem:0,date:"Jul 2021"},
-  {n:"Aetherdrift",                        y:2025,s:"mtg-aetherdrift",                 play:1,col:1,ub:0,js:0,prem:0,date:"Feb 2025"},
-  {n:"Assassin's Creed",                   y:2024,s:"mtg-assassins-creed",             play:1,col:1,ub:1,js:0,prem:0,date:"Jul 2024"},
-  {n:"Avatar: The Last Airbender",         y:2025,s:"mtg-avatar-last-airbender",       play:1,col:1,ub:1,js:0,prem:0,date:"Nov 2025"},
-  {n:"Bloomburrow",                        y:2024,s:"mtg-bloomburrow",                 play:1,col:1,ub:0,js:0,prem:0,date:"Aug 2024"},
-  {n:"Commander Legends",                  y:2020,s:"mtg-commander-legends",           play:1,col:1,ub:0,js:0,prem:0,date:"Nov 2020"},
-  {n:"Commander Legends: Battle for Baldur's Gate",y:2022,s:"mtg-baldurs-gate",        play:1,col:1,ub:1,js:0,prem:0,date:"Jun 2022"},
-  {n:"Commander Masters",                  y:2023,s:"mtg-commander-masters",           play:1,col:1,ub:0,js:0,prem:1,date:"Aug 2023"},
-  {n:"Core Set 2021",                      y:2020,s:"mtg-core-set-2021",               play:1,col:1,ub:0,js:0,prem:0,date:"Jul 2020"},
-  {n:"Dominaria United",                   y:2022,s:"mtg-dominaria-united",            play:1,col:1,ub:0,js:0,prem:0,date:"Sep 2022"},
-  {n:"Double Masters 2022",                y:2022,s:"mtg-double-masters-2022",         play:1,col:1,ub:0,js:0,prem:1,date:"Jul 2022"},
-  {n:"Duskmourn: House of Horror",         y:2024,s:"mtg-duskmourn",                   play:1,col:1,ub:0,js:0,prem:0,date:"Sep 2024"},
-  {n:"Edge of Eternities",                 y:2025,s:"mtg-edge-of-eternities",          play:1,col:1,ub:0,js:0,prem:0,date:"Aug 2025"},
-  {n:"Final Fantasy",                      y:2025,s:"mtg-final-fantasy",               play:1,col:1,ub:1,js:0,prem:0,date:"Jun 2025"},
-  {n:"Foundations Jumpstart",              y:2025,s:"mtg-foundations-jumpstart",       play:0,col:0,ub:0,js:1,prem:0,date:"Nov 2025"},
-  {n:"Iconic Masters",                     y:"masters",s:"mtg-iconic-masters",         play:1,col:0,ub:0,js:0,prem:1,date:"Nov 2017",note:"Draft only"},
-  {n:"Ikoria: Lair of Behemoths",          y:2020,s:"mtg-ikoria",                      play:1,col:1,ub:0,js:0,prem:0,date:"Apr 2020"},
-  {n:"Innistrad: Crimson Vow",             y:2021,s:"mtg-innistrad-crimson-vow",       play:1,col:1,ub:0,js:0,prem:0,date:"Nov 2021"},
-  {n:"Innistrad: Midnight Hunt",           y:2021,s:"mtg-innistrad-midnight-hunt",     play:1,col:1,ub:0,js:0,prem:0,date:"Sep 2021"},
-  {n:"Jumpstart",                          y:2020,s:"mtg-jumpstart-2020",              play:0,col:0,ub:0,js:1,prem:0,date:"Jul 2020"},
-  {n:"Kaldheim",                           y:2021,s:"mtg-kaldheim",                    play:1,col:1,ub:0,js:0,prem:0,date:"Feb 2021"},
-  {n:"Kamigawa: Neon Dynasty",             y:2022,s:"mtg-kamigawa-neon-dynasty",       play:1,col:1,ub:0,js:0,prem:0,date:"Feb 2022"},
-  {n:"Lord of the Rings: Tales of Middle-earth",y:2023,s:"mtg-lord-of-the-rings",      play:1,col:1,ub:1,js:0,prem:0,date:"Jun 2023"},
-  {n:"Lorwyn Eclipsed",                    y:2026,s:"mtg-lorwyn-eclipsed",             play:1,col:1,ub:0,js:0,prem:0,date:"Jan 2026"},
-  {n:"March of the Machine",               y:2023,s:"mtg-march-of-the-machine",        play:1,col:1,ub:0,js:0,prem:0,date:"Apr 2023"},
-  {n:"Marvel Super Heroes",               y:2026,s:"mtg-marvel-super-heroes",          play:1,col:1,ub:1,js:0,prem:0,date:"Jun 2026",soon:1},
-  {n:"Modern Horizons 1",                  y:"masters",s:"mtg-modern-horizons-1",      play:1,col:0,ub:0,js:0,prem:1,date:"Jun 2019",note:"Draft only"},
-  {n:"Modern Horizons 2",                  y:2021,s:"mtg-modern-horizons-2",           play:1,col:1,ub:0,js:0,prem:1,date:"Jun 2021"},
-  {n:"Modern Horizons 3",                  y:2024,s:"mtg-modern-horizons-3",           play:1,col:1,ub:0,js:0,prem:1,date:"Jun 2024"},
-  {n:"Murders at Karlov Manor",            y:2024,s:"mtg-murders-karlov-manor",        play:1,col:1,ub:0,js:0,prem:0,date:"Feb 2024"},
-  {n:"Outlaws of Thunder Junction",        y:2024,s:"mtg-outlaws-thunder-junction",    play:1,col:1,ub:0,js:0,prem:0,date:"Apr 2024"},
-  {n:"Phyrexia: All Will Be One",          y:2023,s:"mtg-phyrexia-all-will-be-one",    play:1,col:1,ub:0,js:0,prem:0,date:"Feb 2023"},
-  {n:"Secrets of Strixhaven",             y:2026,s:"mtg-secrets-of-strixhaven",        play:1,col:1,ub:0,js:0,prem:0,date:"Apr 2026"},
-  {n:"Streets of New Capenna",             y:2022,s:"mtg-streets-new-capenna",         play:1,col:1,ub:0,js:0,prem:0,date:"Apr 2022"},
-  {n:"Strixhaven: School of Mages",        y:2021,s:"mtg-strixhaven-school-mages",     play:1,col:1,ub:0,js:0,prem:0,date:"Apr 2021"},
-  {n:"Tarkir: Dragonstorm",               y:2025,s:"mtg-tarkir-dragonstorm",           play:1,col:1,ub:0,js:0,prem:0,date:"Apr 2025"},
-  {n:"Teenage Mutant Ninja Turtles",       y:2026,s:"mtg-tmnt",                        play:1,col:1,ub:1,js:0,prem:0,date:"Mar 2026"},
-  {n:"Theros Beyond Death",                y:2020,s:"mtg-theros-beyond-death",         play:1,col:1,ub:0,js:0,prem:0,date:"Jan 2020"},
-  {n:"The Brothers' War",                  y:2022,s:"mtg-brothers-war",                play:1,col:1,ub:0,js:0,prem:0,date:"Nov 2022"},
-  {n:"The Lost Caverns of Ixalan",         y:2023,s:"mtg-lost-caverns-ixalan",         play:1,col:1,ub:0,js:0,prem:0,date:"Nov 2023"},
-  {n:"Time Spiral Remastered",             y:2021,s:"mtg-time-spiral-remastered",      play:1,col:0,ub:0,js:0,prem:1,date:"Mar 2021",note:"Draft only"},
-  {n:"Ultimate Masters",                   y:"masters",s:"mtg-ultimate-masters",       play:1,col:1,ub:0,js:0,prem:1,date:"Dec 2018"},
-  {n:"Warhammer 40,000",                   y:2022,s:"mtg-warhammer-40k",               play:0,col:1,ub:1,js:0,prem:0,date:"Oct 2022",note:"Collector only"},
-  {n:"Wilds of Eldraine",                  y:2023,s:"mtg-wilds-of-eldraine",           play:1,col:1,ub:0,js:0,prem:0,date:"Sep 2023"},
-  {n:"Zendikar Rising",                    y:2020,s:"mtg-zendikar-rising",             play:1,col:1,ub:0,js:0,prem:0,date:"Sep 2020"},
-].sort((a,b)=>a.n.localeCompare(b.n));
+let activeGame = 'all';
 
-let view='play', mobY='all';
-
-function switchView(v,btn){
-  view=v;
-  document.querySelectorAll('.type-btn').forEach(b=>{b.classList.remove('active','collector-active');});
+function setGame(game, btn) {
+  activeGame = game;
+  document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  if(v==='collector') btn.classList.add('collector-active');
-  render();
+  filterSets();
 }
 
-function mobFilter(btn){
-  document.querySelectorAll('.mob-pill').forEach(p=>p.classList.remove('active'));
-  btn.classList.add('active');
-  mobY=btn.dataset.mob;
-  render();
-}
+function filterSets() {
+  const query = document.getElementById('search-input').value.toLowerCase().trim();
+  const checkedYears = Array.from(document.querySelectorAll('.year-check input:checked')).map(i => i.value);
+  const cards = document.querySelectorAll('#set-grid .set-card');
+  let visible = 0;
 
-function clearAll(){
-  document.querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false);
-  document.getElementById('srch').value='';
-  document.querySelectorAll('.mob-pill').forEach(p=>p.classList.remove('active'));
-  document.querySelector('.mob-pill[data-mob="all"]').classList.add('active');
-  mobY='all';
-  render();
-}
+  cards.forEach(card => {
+    const game = card.dataset.game || '';
+    const year = card.dataset.year || '';
+    const name = card.querySelector('.set-card-name') ? card.querySelector('.set-card-name').textContent.toLowerCase() : '';
+    const meta = card.querySelector('.set-card-meta') ? card.querySelector('.set-card-meta').textContent.toLowerCase() : '';
 
-function render(){
-  const list=document.getElementById('setList');
-  const empty=document.getElementById('emptyState');
-  const q=document.getElementById('srch').value.trim().toLowerCase();
-  const checkedYears=new Set([...document.querySelectorAll('.sidebar input[type=checkbox][value]')].filter(c=>c.checked).map(c=>c.value));
-  const fPlay=document.getElementById('fPlay').checked;
-  const fCol=document.getElementById('fCollector').checked;
-  const fUB=document.getElementById('fUB').checked;
-  const fJump=document.getElementById('fJump').checked;
-  const fPrem=document.getElementById('fPremium').checked;
-  const anyType=fPlay||fCol||fUB||fJump||fPrem;
+    const gameMatch = activeGame === 'all' || game === activeGame;
+    const yearMatch = checkedYears.length === 0 || checkedYears.includes(year);
+    const searchMatch = query === '' || name.includes(query) || meta.includes(query);
 
-  list.innerHTML='';
-  let count=0, lastLetter='';
-
-  SETS.forEach(set=>{
-    const yStr=String(set.y);
-    const yearOK=checkedYears.size===0||(checkedYears.has(yStr));
-    const mobOK=mobY==='all'||mobY===yStr;
-    const searchOK=q===''||set.n.toLowerCase().includes(q);
-    const typeOK=!anyType||
-      (fPlay&&set.play)||
-      (fCol&&set.col)||
-      (fUB&&set.ub)||
-      (fJump&&set.js)||
-      (fPrem&&set.prem);
-    if(!yearOK||!mobOK||!searchOK||!typeOK) return;
-
-    // Alpha header
-    const letter=set.n[0].toUpperCase();
-    if(letter!==lastLetter){
-      const h=document.createElement('div');
-      h.className='alpha-head';h.textContent=letter;
-      list.appendChild(h);lastLetter=letter;
+    if (gameMatch && yearMatch && searchMatch) {
+      card.style.display = '';
+      visible++;
+    } else {
+      card.style.display = 'none';
     }
-
-    // Has this booster type?
-    const hasView=view==='collector'?set.col:(set.play||set.js);
-    const isSoon=!!set.soon;
-
-    // Tags
-    let tags='';
-    if(set.play) tags+=`<span class="stag stag-play">Play</span>`;
-    if(set.js) tags+=`<span class="stag stag-jumpstart">Jumpstart</span>`;
-    if(set.col) tags+=`<span class="stag stag-collector">Collector</span>`;
-    if(set.ub) tags+=`<span class="stag stag-ub">Universes Beyond</span>`;
-    if(set.prem) tags+=`<span class="stag stag-premium">Premium / Masters</span>`;
-    if(set.note) tags+=`<span class="stag stag-note">${set.note}</span>`;
-    if(isSoon) tags+=`<span class="stag stag-coming">Coming Soon</span>`;
-
-    const ctaText=isSoon?'Coming Soon':(hasView?(view==='collector'?'Collector EV →':'Calculate EV →'):'Not Available');
-    const ctaClass=view==='collector'?'set-cta cta-collector':'set-cta';
-    const yearDisplay=set.y==='masters'?'Masters':String(set.y);
-
-    const row=document.createElement('a');
-    row.href=isSoon||!hasView?'javascript:void(0)':`/ev-calculator/${set.s}.html`;
-    row.className=`set-row${isSoon?' coming-soon':(!hasView?' unavailable':'')}`;
-    row.innerHTML=`
-      <div class="set-row-left">
-        <span class="set-year-pill">${yearDisplay}</span>
-        <div class="set-name-wrap">
-          <div class="set-name">${set.n}</div>
-          <div class="set-tags">${tags}</div>
-        </div>
-      </div>
-      <div class="set-row-right">
-        <span class="set-date">${set.date}</span>
-        <span class="${ctaClass}">${ctaText}</span>
-      </div>`;
-    list.appendChild(row);
-    count++;
   });
 
-  document.getElementById('rCount').innerHTML=`<strong>${count}</strong> sets shown`;
-  empty.classList.toggle('hidden',count>0);
-  list.classList.toggle('hidden',count===0);
+  document.getElementById('count-num').textContent = visible;
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
 }
 
-render();
+document.querySelectorAll('a[href*="amazon"]').forEach(a => {
+  a.addEventListener('click', () => gtag('event', 'amazon_click', { event_category: 'outbound', event_label: a.href }));
+});
+document.querySelectorAll('a[href*="ebay"]').forEach(a => {
+  a.addEventListener('click', () => gtag('event', 'ebay_store_click', { event_category: 'outbound', event_label: a.href }));
+});
 </script>
 </body>
 </html>
