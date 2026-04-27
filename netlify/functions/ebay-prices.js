@@ -55,7 +55,7 @@ exports.handler = async function(event, context) {
     const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
       '?q=card' +
       '&filter=sellers%3A%7Bcardsoncardsoncards%7D' +
-      '&sort=price' +
+      '&sort=-price' +
       '&limit=20';
 
     const searchResponse = await fetch(searchUrl, {
