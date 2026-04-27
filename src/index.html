@@ -202,19 +202,23 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 /* CAROUSEL */
 @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
-.carousel-section{margin:32px 0;padding:32px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px}
-.carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:6px}
-.carousel-title{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF;margin-bottom:16px}
-.carousel-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#252840 transparent;scroll-snap-type:x mandatory}
-.ebay-card{min-width:160px;max-width:160px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;flex-shrink:0;scroll-snap-align:start;transition:all .22s;text-decoration:none;display:flex;flex-direction:column}
-.ebay-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.ebay-card-img{width:100%;height:120px;object-fit:contain;background:#0d0f1a;padding:8px}
-.ebay-card-img-ph{width:100%;height:120px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:28px}
-.ebay-card-body{padding:9px 11px;flex:1;display:flex;flex-direction:column;gap:4px}
-.ebay-card-title{font-size:11px;color:#F0F2FF;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
-.ebay-card-price{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#C9A84C;margin-top:4px}
-.ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px}
-.skeleton{background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite}
+@keyframes carousel-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.carousel-section{margin:32px 0;padding:36px 32px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px;text-align:center}
+.carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:8px}
+.carousel-title{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:#F0F2FF;margin-bottom:24px;text-align:center}
+.carousel-outer{overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)}
+.carousel-track{display:flex;gap:16px;width:max-content;animation:none}
+.carousel-track.loaded{animation:carousel-scroll 40s linear infinite}
+.carousel-track:hover{animation-play-state:paused}
+.ebay-card{min-width:200px;max-width:200px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;flex-shrink:0;transition:all .22s;text-decoration:none;display:flex;flex-direction:column}
+.ebay-card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.5);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.ebay-card-img{width:100%;height:160px;object-fit:contain;background:#0d0f1a;padding:10px}
+.ebay-card-img-ph{width:100%;height:160px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:36px}
+.ebay-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:4px}
+.ebay-card-title{font-size:11px;color:#F0F2FF;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1;text-align:left}
+.ebay-card-price{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#C9A84C;margin-top:4px;text-align:left}
+.ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px;text-align:left}
+.skeleton{min-width:200px;height:260px;background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0}
 
 </style>
 </head>
@@ -258,17 +262,19 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   </div>
 
   <!-- EBAY CAROUSEL -->
-  <div class="carousel-section">
+  <div class="carousel-section" style="margin-left:-24px;margin-right:-24px;border-radius:0;border-left:none;border-right:none;padding:36px 0">
     <span class="carousel-eyebrow">Live from Our eBay Store</span>
     <h2 class="carousel-title">Top Listings Right Now</h2>
-    <div id="ebay-carousel-home" class="carousel-scroll">
-      <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0"></div>
-      <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.1s"></div>
-      <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.2s"></div>
-      <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.3s"></div>
-      <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.4s"></div>
+    <div class="carousel-outer">
+      <div id="ebay-carousel-home" class="carousel-track">
+        <div class="skeleton" style="animation-delay:0s"></div>
+        <div class="skeleton" style="animation-delay:.1s"></div>
+        <div class="skeleton" style="animation-delay:.2s"></div>
+        <div class="skeleton" style="animation-delay:.3s"></div>
+        <div class="skeleton" style="animation-delay:.4s"></div>
+      </div>
     </div>
-    <div style="text-align:right;margin-top:8px">
+    <div style="margin-top:14px">
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3HomeCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay &#x2197;</a>
     </div>
   </div>
@@ -372,6 +378,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 </div>
 
+
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">Cards on Cards on Cards</div>
@@ -389,28 +396,32 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 <script>
 (function(){
+  function buildCard(item){
+    return `<a href="${item.url}" target="_blank" rel="noopener sponsored" class="ebay-card" onclick="gtag('event','ebay_carousel_click',{item_id:'${item.id}',item_price:${item.price}})">
+      ${item.image ? `<img src="${item.image}" alt="${item.title.replace(/"/g,'&quot;')}" class="ebay-card-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
+      <div class="ebay-card-img-ph" style="${item.image ? 'display:none' : ''}">&#x1F0CF;</div>
+      <div class="ebay-card-body">
+        <div class="ebay-card-title">${item.title}</div>
+        <div class="ebay-card-price">AU$${item.price.toFixed(2)}</div>
+        <div class="ebay-card-cta">View on eBay &#x2197;</div>
+      </div>
+    </a>`;
+  }
   async function loadCarousel(){
     try{
       const res = await fetch('/.netlify/functions/ebay-prices');
       const data = await res.json();
-      const wrap = document.getElementById('ebay-carousel-home');
+      const track = document.getElementById('ebay-carousel-home');
       if(!data.listings || data.listings.length === 0){
-        wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store</a>.</p>';
+        track.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store</a>.</p>';
         return;
       }
-      wrap.innerHTML = data.listings.map(item=>`
-        <a href="${item.url}" target="_blank" rel="noopener sponsored" class="ebay-card" onclick="gtag('event','ebay_carousel_click',{item_id:'${item.id}',item_price:${item.price}})">
-          ${item.image ? `<img src="${item.image}" alt="${item.title.replace(/"/g,'&quot;')}" class="ebay-card-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
-          <div class="ebay-card-img-ph" style="${item.image ? 'display:none' : ''}">&#x1F0CF;</div>
-          <div class="ebay-card-body">
-            <div class="ebay-card-title">${item.title}</div>
-            <div class="ebay-card-price">AU$${item.price.toFixed(2)}</div>
-            <div class="ebay-card-cta">View on eBay &#x2197;</div>
-          </div>
-        </a>`).join('');
+      const cards = data.listings.map(buildCard).join('');
+      track.innerHTML = cards + cards;
+      track.classList.add('loaded');
     } catch(e){
-      const wrap = document.getElementById('ebay-carousel-home');
-      wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">Could not load listings. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store directly</a>.</p>';
+      const track = document.getElementById('ebay-carousel-home');
+      track.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">Could not load listings. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store directly</a>.</p>';
     }
   }
   loadCarousel();
