@@ -106,7 +106,7 @@ exports.handler = async function(event, context) {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Failed to fetch eBay listings', fallback: true })
+      body: JSON.stringify({ error: 'Failed to fetch eBay listings', fallback: true, detail: error.message })
     };
   }
 };
