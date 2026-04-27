@@ -1,5 +1,5 @@
 // Netlify Function: ebay-prices.js
-// Returns top 20 most expensive listings from the C3 eBay store for carousel display
+// Returns top 20 most expensive individual card listings from the C3 eBay store
 
 exports.handler = async function(event, context) {
   const headers = {
@@ -38,15 +38,18 @@ exports.handler = async function(event, context) {
       throw new Error('Failed to obtain eBay access token');
     }
 
-    // Step 2: Search seller listings sorted by price desc
-    // q=trading card matches all TCG singles and lots in the store
-    // categoryIds=2536 is Trading Card Games on eBay AU - helps surface rarer singles
+    // Step 2: category_ids=183454 = CCG Individual Cards
+    // Toys & Hobbies > Collectible Card Games > CCG Individual Cards
+    // Covers MTG, Pokemon, Lorcana, One Piece, Riftbound, Dragon Ball, Yu-Gi-Oh
+    // No q= keyword needed - category_ids satisfies Browse API requirement
     const filter = 'sellers%3A%7Bcardsoncardsoncards%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D';
     const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
-      '?q=trading%20card' +
+      '?category_ids=183454' +
       '&filter=' + filter +
       '&sort=-price' +
       '&limit=20';
+
+    console.log('Search URL:', searchUrl);
 
     const searchResponse = await fetch(searchUrl, {
       headers: {
@@ -75,7 +78,6 @@ exports.handler = async function(event, context) {
     });
 
     console.log('Returning', listings.length, 'listings. Top price:', listings[0] ? listings[0].price : 'none');
-
     return { statusCode: 200, headers, body: JSON.stringify({ listings: listings }) };
 
   } catch (error) {
