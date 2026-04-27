@@ -38,15 +38,15 @@ exports.handler = async function(event, context) {
       throw new Error('Failed to obtain eBay access token');
     }
 
-    // Step 2: Browse API requires q or category_ids - use q=card with seller filter
-    // TCG category on eBay AU: 2536 (Trading Card Games)
+    // Step 2: Search seller listings sorted by price desc
+    // q=trading card matches all TCG singles and lots in the store
+    // categoryIds=2536 is Trading Card Games on eBay AU - helps surface rarer singles
+    const filter = 'sellers%3A%7Bcardsoncardsoncards%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D';
     const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
-      '?q=card' +
-      '&filter=sellers%3A%7Bcardsoncardsoncards%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D' +
+      '?q=trading%20card' +
+      '&filter=' + filter +
       '&sort=-price' +
       '&limit=20';
-
-    console.log('Search URL:', searchUrl);
 
     const searchResponse = await fetch(searchUrl, {
       headers: {
@@ -61,14 +61,9 @@ exports.handler = async function(event, context) {
 
     if (!searchData.itemSummaries || searchData.itemSummaries.length === 0) {
       console.log('No items. Response:', JSON.stringify(searchData).substring(0, 500));
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ listings: [] })
-      };
+      return { statusCode: 200, headers, body: JSON.stringify({ listings: [] }) };
     }
 
-    // Step 3: Map to carousel format with EPN affiliate links
     const listings = searchData.itemSummaries.map(function(item) {
       const price = item.price ? parseFloat(item.price.value) : 0;
       const itemId = item.itemId || '';
@@ -76,29 +71,15 @@ exports.handler = async function(event, context) {
         '?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + campId +
         '&customid=C3Carousel&toolid=10001&mkevt=1';
       const image = item.image ? item.image.imageUrl : null;
-      return {
-        id: itemId,
-        title: item.title || '',
-        price: price,
-        url: epnUrl,
-        image: image
-      };
+      return { id: itemId, title: item.title || '', price: price, url: epnUrl, image: image };
     });
 
-    console.log('Returning', listings.length, 'listings. Top price: ' + (listings[0] ? listings[0].price : 'none'));
+    console.log('Returning', listings.length, 'listings. Top price:', listings[0] ? listings[0].price : 'none');
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ listings: listings })
-    };
+    return { statusCode: 200, headers, body: JSON.stringify({ listings: listings }) };
 
   } catch (error) {
     console.error('eBay carousel error:', error.message);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ listings: [], error: error.message })
-    };
+    return { statusCode: 500, headers, body: JSON.stringify({ listings: [], error: error.message }) };
   }
 };
