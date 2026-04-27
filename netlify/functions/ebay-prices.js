@@ -1,34 +1,23 @@
 // Netlify Function: ebay-prices.js
-// Fetches top 20 most expensive live listings from C3 eBay store
-// Credentials stored as Netlify environment variables - never in code
-
-const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
-let cache = { data: null, timestamp: 0 };
+// Returns top 20 most expensive listings from the C3 eBay store for carousel display
+// Credentials stored as Netlify environment variables
 
 exports.handler = async function(event, context) {
   const headers = {
-    'Access-Control-Allow-Origin': 'https://cardsoncardsoncards.com.au',
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Cache-Control': 'public, max-age=1800' // 30 min cache
   };
 
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
   }
 
-  // Return cached data if fresh
-  const now = Date.now();
-  if (cache.data && (now - cache.timestamp) < CACHE_DURATION) {
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify(cache.data)
-    };
-  }
-
   try {
     const clientId = process.env.EBAY_CLIENT_ID;
     const clientSecret = process.env.EBAY_CLIENT_SECRET;
+    const campId = process.env.EBAY_CAMPAIGN_ID || '5339146789';
 
     if (!clientId || !clientSecret) {
       throw new Error('eBay credentials not configured');
@@ -46,23 +35,22 @@ exports.handler = async function(event, context) {
     });
 
     const tokenData = await tokenResponse.json();
-
     if (!tokenData.access_token) {
       throw new Error('Failed to obtain eBay access token');
     }
 
-    // Step 2: Search C3 store listings sorted by price descending
+    // Step 2: Search by seller, sorted by price descending, limit 20
     const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
-      '?q=card' +
-      '&filter=sellers%3A%7Bcardsoncardsoncards%7D' +
+      '?filter=sellers:{cardsoncardsoncards},buyingOptions:{FIXED_PRICE}' +
       '&sort=-price' +
-      '&limit=20';
+      '&limit=20' +
+      '&fieldgroups=MATCHING_ITEMS';
 
     const searchResponse = await fetch(searchUrl, {
       headers: {
         'Authorization': `Bearer ${tokenData.access_token}`,
         'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU',
-        'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=5339146789`
+        'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${campId}`
       }
     });
 
@@ -72,41 +60,39 @@ exports.handler = async function(event, context) {
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ listings: [], count: 0 })
+        body: JSON.stringify({ listings: [] })
       };
     }
 
-    // Step 3: Map to clean listing objects
-    const listings = searchData.itemSummaries.map(item => ({
-      id: item.itemId,
-      title: item.title,
-      price: parseFloat(item.price.value),
-      currency: item.price.currency,
-      image: item.image ? item.image.imageUrl : null,
-      url: item.itemAffiliateWebUrl || item.itemWebUrl,
-      condition: item.condition || 'Not specified'
-    }));
+    // Step 3: Map to carousel-ready format with EPN affiliate links
+    const listings = searchData.itemSummaries.map(item => {
+      const price = item.price ? parseFloat(item.price.value) : 0;
+      const itemId = item.itemId || '';
+      // Build EPN affiliate URL
+      const epnUrl = `https://www.ebay.com.au/itm/${itemId}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${campId}&customid=C3Carousel&toolid=10001&mkevt=1`;
+      const image = item.image ? item.image.imageUrl : null;
 
-    // Sort by price descending (API sort not always reliable)
-    listings.sort((a, b) => b.price - a.price);
-
-    const result = { listings, count: listings.length };
-
-    // Update cache
-    cache = { data: result, timestamp: now };
+      return {
+        id: itemId,
+        title: item.title || '',
+        price: price,
+        url: epnUrl,
+        image: image
+      };
+    });
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(result)
+      body: JSON.stringify({ listings })
     };
 
   } catch (error) {
-    console.error('eBay API error:', error.message);
+    console.error('eBay carousel error:', error.message);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Failed to fetch eBay listings', fallback: true, detail: error.message })
+      body: JSON.stringify({ listings: [], error: error.message })
     };
   }
 };
