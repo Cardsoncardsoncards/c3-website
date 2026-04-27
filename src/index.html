@@ -9,6 +9,7 @@
 <meta property="og:url" content="https://cardsoncardsoncards.com.au">
 <meta property="og:type" content="website">
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -37,20 +38,25 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:radial-gradient(ellipse 80% 45% at 50% -8%,rgba(201,168,76,.09) 0%,transparent 60%),
     radial-gradient(ellipse 50% 30% at 80% 90%,rgba(107,107,255,.04) 0%,transparent 50%)}
 .wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* AFF BANNER */
+.aff-banner{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.18);padding:8px 24px;text-align:center;font-size:12px;color:rgba(160,168,192,.65);position:relative;z-index:99}
+.aff-banner strong{color:var(--gold)}
+
+/* NAV */
 nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
-.nav-logo{display:inline-flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap}
-.nav-logo img{width:28px;height:28px;border-radius:6px;flex-shrink:0}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
 .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
 .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
 .nav-link--gold{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
 .nav-link--gold:hover{background:rgba(201,168,76,.14);border-color:var(--gold)}
-.nav-link--purple{color:#9898FF;border-color:rgba(107,107,255,.3);background:rgba(107,107,255,.06)}
-.nav-link--purple:hover{background:rgba(107,107,255,.14);border-color:#9898FF}
 .nav-link--etsy{color:var(--orange);border-color:rgba(245,100,0,.32);background:rgba(245,100,0,.05)}
 .nav-link--etsy:hover{background:rgba(245,100,0,.14);border-color:var(--orange)}
+
+/* HERO */
 .hero{padding:72px 0 56px;position:relative;z-index:1;text-align:center}
 .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .hero-h1{font-family:'Cinzel',serif;font-size:clamp(32px,6vw,68px);font-weight:900;color:var(--gold);line-height:1.05;margin-bottom:16px}
@@ -61,73 +67,72 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .btn-gold:hover{background:var(--gold-lit);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
 .btn-ghost{background:none;color:var(--silver);border:1px solid var(--border)}
 .btn-ghost:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
-.trust-bar{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;padding:20px 0 40px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);margin:0 0 56px}
+
+/* TRUST BAR */
+.trust-bar{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;padding:20px 0 40px;border-bottom:1px solid var(--border);margin-bottom:56px}
 .trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(160,168,192,.6)}
 .trust-item strong{color:var(--white)}
 
-/* CAROUSEL */
-@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
-.carousel-section{margin-bottom:64px}
-.section-hd{margin-bottom:20px}
-.section-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
-.section-title{font-family:'Cinzel',serif;font-size:clamp(20px,3vw,30px);font-weight:700;color:var(--white)}
-.carousel-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;scroll-snap-type:x mandatory}
-.carousel-scroll::-webkit-scrollbar{height:4px}
-.carousel-scroll::-webkit-scrollbar-track{background:transparent}
-.carousel-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-.ebay-card{min-width:175px;max-width:175px;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;flex-shrink:0;scroll-snap-align:start;transition:all .22s;text-decoration:none;display:flex;flex-direction:column}
-.ebay-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.ebay-card-img{width:100%;height:130px;object-fit:contain;background:#0d0f1a;padding:8px}
-.ebay-card-img-ph{width:100%;height:130px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:32px}
-.ebay-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:4px}
-.ebay-card-title{font-size:11px;color:var(--white);line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
-.ebay-card-price{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);margin-top:4px}
-.ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px}
-.skeleton{background:var(--card);border:1px solid var(--border);border-radius:12px;animation:pulse 1.5s ease-in-out infinite}
-
-/* DESTINATIONS */
+/* DESTINATION CARDS */
 .destinations{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:64px}
+
+/* All cards base */
 .dest-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;transition:all .25s;position:relative;overflow:hidden;cursor:pointer}
 .dest-card--link{text-decoration:none}
 .dest-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:13px}
 .dest-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+
+/* Shop card */
 .dest-card--shop{border-color:rgba(201,168,76,.2)}
 .dest-card--shop::before{background:linear-gradient(135deg,rgba(201,168,76,.06),transparent)}
 .dest-card--shop:hover{border-color:rgba(201,168,76,.4)}
 .dest-card--shop:hover::before{opacity:1}
+
+/* eBay */
 .dest-card--ebay{border-color:rgba(107,107,255,.2)}
 .dest-card--ebay::before{background:linear-gradient(135deg,rgba(107,107,255,.06),transparent)}
 .dest-card--ebay:hover{border-color:rgba(107,107,255,.4)}
 .dest-card--ebay:hover::before{opacity:1}
+
+/* Blog */
 .dest-card--blog{border-color:rgba(74,158,255,.2)}
 .dest-card--blog::before{background:linear-gradient(135deg,rgba(74,158,255,.06),transparent)}
 .dest-card--blog:hover{border-color:rgba(74,158,255,.4)}
 .dest-card--blog:hover::before{opacity:1}
+
+/* Tracker */
 .dest-card--tracker{border-color:rgba(160,168,192,.15)}
 .dest-card--tracker::before{background:linear-gradient(135deg,rgba(160,168,192,.04),transparent)}
 .dest-card--tracker:hover{border-color:rgba(160,168,192,.3)}
 .dest-card--tracker:hover::before{opacity:1}
+
+/* DnD */
 .dest-card--dnd{border-color:rgba(245,100,0,.2);background:linear-gradient(135deg,#161929 70%,rgba(245,80,0,.04))}
 .dest-card--dnd::before{background:linear-gradient(135deg,rgba(245,100,0,.07),transparent)}
 .dest-card--dnd:hover{border-color:rgba(245,100,0,.45)}
 .dest-card--dnd:hover::before{opacity:1}
+
 .dest-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .dest-icon--shop{background:rgba(201,168,76,.1);color:var(--gold)}
 .dest-icon--ebay{background:rgba(107,107,255,.1);color:#9898FF}
 .dest-icon--blog{background:rgba(74,158,255,.1);color:var(--blue)}
 .dest-icon--tracker{background:rgba(160,168,192,.08);color:var(--silver)}
 .dest-icon--dnd{background:rgba(245,100,0,.1);color:var(--orange)}
+
 .dest-label{font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
 .dest-card--dnd .dest-label{color:var(--orange);opacity:.7}
 .dest-card--shop .dest-label{color:var(--gold);opacity:.7}
 .dest-card--ebay .dest-label{color:#9898FF;opacity:.7}
 .dest-card--blog .dest-label{color:var(--blue);opacity:.7}
+
 .dest-title{font-family:'Cinzel',serif;font-size:17px;font-weight:700;line-height:1.25}
 .dest-card--shop .dest-title{color:var(--gold)}
 .dest-card--ebay .dest-title{color:#C0C0FF}
 .dest-card--blog .dest-title{color:#A0C8FF}
 .dest-card--tracker .dest-title{color:var(--silver)}
 .dest-card--dnd .dest-title{color:#FFB380}
+
 .dest-body{font-size:13px;color:rgba(160,168,192,.65);line-height:1.55;flex:1}
 .dest-arrow{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.65;margin-top:4px}
 .dest-card--shop .dest-arrow{color:var(--gold)}
@@ -135,19 +140,30 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .dest-card--blog .dest-arrow{color:var(--blue)}
 .dest-card--tracker .dest-arrow{color:var(--silver)}
 .dest-card--dnd .dest-arrow{color:var(--orange)}
+
+/* DND SECTION LINKS */
 .dnd-section-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .dnd-section-link{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:7px;background:rgba(245,100,0,.08);border:1px solid rgba(245,100,0,.22);color:rgba(255,180,128,.85);text-decoration:none;transition:all .2s;letter-spacing:.02em}
 .dnd-section-link:hover{background:rgba(245,100,0,.17);border-color:rgba(245,100,0,.5);color:#FFB380;transform:translateY(-1px)}
 .dnd-section-link .link-icon{font-size:14px}
+
+/* TCG GRID */
+.section-hd{margin-bottom:28px}
+.section-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(20px,3vw,30px);font-weight:700;color:var(--white)}
 .tcg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:64px}
 .tcg-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;transition:all .2s}
 .tcg-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.35)}
 .tcg-icon{font-size:26px}
 .tcg-name{font-size:11px;font-weight:700;color:var(--white);line-height:1.25}
 .tcg-tag{font-size:9px;color:rgba(160,168,192,.4)}
+
+/* MISSION */
 .mission{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px;padding:32px;text-align:center;margin-bottom:64px}
 .mission-text{font-size:15px;color:rgba(240,242,255,.6);max-width:540px;margin:0 auto;line-height:1.7}
 .mission-text strong{color:var(--gold)}
+
+/* FOOTER */
 footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-index:1}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1100px;margin:0 auto;padding:0 24px}
 .footer-logo{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold)}
@@ -155,13 +171,50 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .footer-link{font-size:12px;color:rgba(160,168,192,.4);text-decoration:none;transition:color .2s}
 .footer-link:hover{color:var(--silver)}
 .footer-copy{font-size:11px;color:rgba(160,168,192,.25)}
+
 @media(max-width:640px){
   .hero{padding:48px 0 40px}
   .trust-bar{gap:20px}
   .destinations{grid-template-columns:1fr 1fr}
   .dest-card{padding:22px 18px}
 }
-@media(max-width:400px){.destinations{grid-template-columns:1fr}}
+@media(max-width:400px){
+  .destinations{grid-template-columns:1fr}
+}
+
+/* NAV COLOUR CLASSES - outline and font only */
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
+.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}
+.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
+.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
+.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
+.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+/* Active page override */
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+/* CAROUSEL */
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
+.carousel-section{margin:48px auto 32px;padding:32px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px;max-width:1100px}
+.carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:6px}
+.carousel-title{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF;margin-bottom:16px}
+.carousel-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#252840 transparent;scroll-snap-type:x mandatory}
+.ebay-card{min-width:160px;max-width:160px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;flex-shrink:0;scroll-snap-align:start;transition:all .22s;text-decoration:none;display:flex;flex-direction:column}
+.ebay-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.ebay-card-img{width:100%;height:120px;object-fit:contain;background:#0d0f1a;padding:8px}
+.ebay-card-img-ph{width:100%;height:120px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:28px}
+.ebay-card-body{padding:9px 11px;flex:1;display:flex;flex-direction:column;gap:4px}
+.ebay-card-title{font-size:11px;color:#F0F2FF;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.ebay-card-price{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#C9A84C;margin-top:4px}
+.ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px}
+.skeleton{background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite}
+
 </style>
 </head>
 <body>
@@ -169,17 +222,17 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/c3logo.png" alt="C3 Logo">
-      Cards on Cards on Cards
+      <img src="/c3logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
     </a>
     <div class="nav-links">
-      <a href="/shop.html" class="nav-link nav-link--gold">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--purple">EV Calc</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--etsy">D&amp;D Tools ↗</a>
-      <a href="/contact.html" class="nav-link">Contact</a>
+      <a href="/" class="nav-link nav-link--home nav-link--active">← Home</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
 </nav>
@@ -199,28 +252,9 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   <div class="trust-bar">
     <div class="trust-item"><span>✅</span><span>300+ products confirmed on Amazon AU</span></div>
     <div class="trust-item"><span>📦</span><span>Local + international shipping options</span></div>
-    <div class="trust-item"><span>⭐</span><span><strong>25,441</strong> eBay listings</span></div>
+    <div class="trust-item"><span>⭐</span><span><strong>23,000+</strong> eBay listings</span></div>
     <div class="trust-item"><span>🎲</span><span>D&amp;D tools from our Etsy store</span></div>
   </div>
-
-  <!-- EBAY CAROUSEL -->
-  <div class="carousel-section">
-    <div class="section-hd">
-      <span class="section-eyebrow">Live from Our eBay Store</span>
-      <h2 class="section-title">Top Singles Right Now</h2>
-    </div>
-    <div id="ebay-carousel" class="carousel-scroll">
-      <div class="skeleton" style="min-width:175px;height:230px;flex-shrink:0"></div>
-      <div class="skeleton" style="min-width:175px;height:230px;flex-shrink:0;animation-delay:.1s"></div>
-      <div class="skeleton" style="min-width:175px;height:230px;flex-shrink:0;animation-delay:.2s"></div>
-      <div class="skeleton" style="min-width:175px;height:230px;flex-shrink:0;animation-delay:.3s"></div>
-      <div class="skeleton" style="min-width:175px;height:230px;flex-shrink:0;animation-delay:.4s"></div>
-    </div>
-    <div style="text-align:right;margin-top:8px">
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Carousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:var(--gold);text-decoration:none;opacity:.7">View all 25,441 listings on eBay ↗</a>
-    </div>
-  </div>
-  <!-- END EBAY CAROUSEL -->
 
   <div class="destinations">
 
@@ -244,7 +278,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
           <h2 class="dest-title">Singles &amp; Sealed on eBay</h2>
         </div>
       </div>
-      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 25,441 listings across all major TCGs with Australian shipping.</p>
+      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 23,000+ listings across all major TCGs with Australian shipping.</p>
       <p class="dest-arrow">Visit Store ↗</p>
     </a>
 
@@ -260,6 +294,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <p class="dest-arrow">Read Articles →</p>
     </a>
 
+    <!-- D&D TOOLS — div not <a> to allow nested links -->
     <div class="dest-card dest-card--dnd" onclick="window.open('https://blasdigital.etsy.com','_blank')">
       <div style="display:flex;align-items:flex-start;gap:14px">
         <div class="dest-icon dest-icon--dnd">🎲</div>
@@ -270,9 +305,15 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       </div>
       <p class="dest-body">Printable D&amp;D tools from our Etsy store. Tavern mini-games to fill downtime, dungeon traps and puzzles, and DM toolkits to build adventures faster.</p>
       <div class="dnd-section-links" onclick="event.stopPropagation()">
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56813304" target="_blank" rel="noopener" class="dnd-section-link"><span class="link-icon">🍺</span> Tavern Games</a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=57106584" target="_blank" rel="noopener" class="dnd-section-link"><span class="link-icon">🗝️</span> Traps &amp; Puzzles</a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56829599" target="_blank" rel="noopener" class="dnd-section-link"><span class="link-icon">📋</span> DM Tools</a>
+        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56813304" target="_blank" rel="noopener" class="dnd-section-link">
+          <span class="link-icon">🍺</span> Tavern Games
+        </a>
+        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=57106584" target="_blank" rel="noopener" class="dnd-section-link">
+          <span class="link-icon">🗝️</span> Traps &amp; Puzzles
+        </a>
+        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56829599" target="_blank" rel="noopener" class="dnd-section-link">
+          <span class="link-icon">📋</span> DM Tools
+        </a>
       </div>
       <p class="dest-arrow" style="margin-top:6px">Visit Etsy Shop ↗</p>
     </div>
@@ -313,13 +354,58 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 </div>
 
+<!-- EBAY CAROUSEL -->
+<div class="carousel-section wrap">
+  <span class="carousel-eyebrow">Live from Our eBay Store</span>
+  <h2 class="carousel-title">Top Listings Right Now</h2>
+  <div id="ebay-carousel-home" class="carousel-scroll">
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0"></div>
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.1s"></div>
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.2s"></div>
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.3s"></div>
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.4s"></div>
+  </div>
+  <div style="text-align:right;margin-top:8px">
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3HomeCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay ↗</a>
+  </div>
+</div>
+<!-- END EBAY CAROUSEL -->
+<script>
+(function(){
+  async function loadCarousel(){
+    try{
+      const res = await fetch('/.netlify/functions/ebay-prices');
+      const data = await res.json();
+      const wrap = document.getElementById('ebay-carousel-home');
+      if(!data.listings || data.listings.length === 0){
+        wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store</a>.</p>';
+        return;
+      }
+      wrap.innerHTML = data.listings.map(item=>`
+        <a href="${item.url}" target="_blank" rel="noopener sponsored" class="ebay-card" onclick="gtag('event','ebay_carousel_click',{item_id:'${item.id}',item_price:${item.price}})">
+          ${item.image ? `<img src="${item.image}" alt="${item.title.replace(/"/g,'&quot;')}" class="ebay-card-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
+          <div class="ebay-card-img-ph" style="${item.image ? 'display:none' : ''}">&#x1F0CF;</div>
+          <div class="ebay-card-body">
+            <div class="ebay-card-title">${item.title}</div>
+            <div class="ebay-card-price">AU$${item.price.toFixed(2)}</div>
+            <div class="ebay-card-cta">View on eBay &#x2197;</div>
+          </div>
+        </a>`).join('');
+    } catch(e){
+      const wrap = document.getElementById('ebay-carousel-home');
+      wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">Could not load listings. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store directly</a>.</p>';
+    }
+  }
+  loadCarousel();
+})();
+</script>
+
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">Cards on Cards on Cards</div>
     <div class="footer-links">
       <a href="/shop.html" class="footer-link">Shop</a>
       <a href="/blog" class="footer-link">Blog</a>
-      <a href="/ev-calculator.html" class="footer-link">EV Calc</a>
       <a href="/tracker.html" class="footer-link">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy D&amp;D Tools</a>
@@ -328,36 +414,6 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
   </div>
 </footer>
-
-<script>
-(function(){
-  async function loadCarousel(){
-    try{
-      const res = await fetch('/.netlify/functions/ebay-prices');
-      const data = await res.json();
-      const wrap = document.getElementById('ebay-carousel');
-      if(!data.listings || data.listings.length === 0){
-        wrap.innerHTML='<p style="color:var(--silver);font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:var(--gold)">Visit our eBay store</a>.</p>';
-        return;
-      }
-      wrap.innerHTML = data.listings.map(item=>`
-        <a href="${item.url}" target="_blank" rel="noopener sponsored" class="ebay-card" onclick="gtag('event','ebay_carousel_click',{item_id:'${item.id}',item_price:${item.price}})">
-          ${item.image ? `<img src="${item.image}" alt="${item.title.replace(/"/g,'&quot;')}" class="ebay-card-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
-          <div class="ebay-card-img-ph" style="${item.image ? 'display:none' : ''}">🃏</div>
-          <div class="ebay-card-body">
-            <div class="ebay-card-title">${item.title}</div>
-            <div class="ebay-card-price">AU$${item.price.toFixed(2)}</div>
-            <div class="ebay-card-cta">View on eBay ↗</div>
-          </div>
-        </a>`).join('');
-    } catch(e){
-      const wrap = document.getElementById('ebay-carousel');
-      wrap.innerHTML='<p style="color:var(--silver);font-size:13px;padding:20px 0">Could not load listings. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:var(--gold)">Visit our eBay store directly</a>.</p>';
-    }
-  }
-  loadCarousel();
-})();
-</script>
 
 </body>
 </html>

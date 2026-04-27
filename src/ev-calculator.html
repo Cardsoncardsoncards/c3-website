@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCG Pack EV Calculator Australia | Is Your Booster Box Worth Opening? | Cards on Cards on Cards</title>
+<meta name="description" content="Free TCG pack expected value calculator for Australian players. Find out if your MTG, Pokemon, Lorcana or One Piece booster box is worth opening in AUD before you buy.">
+<meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WR68HPE92S');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0C14;--deep:#111422;--card:#161929;--border:#252840;
+  --gold:#C9A84C;--gold-lit:#E8C86A;--gold-dim:#7A621E;
+  --silver:#A0A8C0;--white:#F0F2FF;--purple:#6B6BFF;
+  --blue:#4A9EFF;--green:#22C55E;--amber:#F59E0B;--red:#EF4444;
+  --orange:#F56400;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse 80% 40% at 50% -5%,rgba(201,168,76,.07) 0%,transparent 55%)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* AFF BANNER */
+.aff-banner{background:rgba(201,168,76,.08);border-bottom:1px solid rgba(201,168,76,.22);padding:9px 24px;text-align:center;font-size:12.5px;color:rgba(160,168,192,.75);position:relative;z-index:99}
+.aff-banner strong{color:var(--gold)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:10px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
+.nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
+.nav-link--active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
+
+/* GOLD DIVIDER */
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);position:relative;z-index:1;margin:0}
+
+/* PAGE HERO */
+.page-hd{padding:44px 0 32px;position:relative;z-index:1}
+.page-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.page-h1{font-family:'Cinzel',serif;font-size:clamp(22px,3.5vw,42px);font-weight:900;color:var(--gold);line-height:1.1;margin-bottom:10px}
+.page-desc{font-size:14px;color:rgba(240,242,255,.55);max-width:600px;line-height:1.7}
+
+/* GAME FILTER TABS */
+.game-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 32px}
+.game-tab{padding:8px 18px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);background:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.game-tab:hover{color:var(--white);border-color:var(--silver)}
+.game-tab.active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.08)}
+
+/* SET GRID */
+.set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:48px}
+.set-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;text-decoration:none;transition:all .22s;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.set-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,rgba(201,168,76,.06),transparent);transition:opacity .22s}
+.set-card:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+.set-card:hover::before{opacity:1}
+.set-card--coming{opacity:.55;cursor:default;pointer-events:none}
+.set-card-game{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.set-card-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);line-height:1.3}
+.set-card-meta{font-size:12px;color:var(--silver);display:flex;gap:12px;flex-wrap:wrap}
+.set-card-verdict{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px}
+.verdict-worth{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.verdict-borderline{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+.verdict-avoid{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.verdict-soon{background:rgba(160,168,192,.08);color:var(--silver);border:1px solid rgba(160,168,192,.2)}
+.set-card-cta{font-size:12px;font-weight:600;color:var(--gold);margin-top:auto}
+
+/* SECTION HEADING */
+.section-heading{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gold);margin:32px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+
+/* INFO STRIP */
+.info-strip{background:rgba(107,107,255,.06);border:1px solid rgba(107,107,255,.2);border-radius:10px;padding:18px 22px;margin-bottom:32px;font-size:13.5px;color:rgba(240,242,255,.7);line-height:1.7}
+.info-strip strong{color:var(--white)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;position:relative;z-index:1}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:1140px;margin:0 auto;padding:0 24px}
+.footer-logo{font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--gold)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.28)}
+.disclaimer{margin:0;padding:16px 20px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px;font-size:11px;color:rgba(160,168,192,.38);line-height:1.7}
+.disclaimer strong{color:rgba(160,168,192,.55)}
+
+@media(max-width:768px){
+  .set-grid{grid-template-columns:1fr}
+  .game-tabs{gap:6px}
+  .game-tab{padding:7px 13px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<div class="aff-banner">
+  <strong>Affiliate Disclosure:</strong> This page contains affiliate links. We may earn a commission if you purchase through these links, at no extra cost to you.
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">← Home</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--active">EV Calculator</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-hd">
+    <p class="page-eyebrow">Cards on Cards on Cards</p>
+    <h1 class="page-h1">TCG Pack EV Calculator — Australia</h1>
+    <p class="page-desc">Find out if your booster box is worth opening in AUD before you buy. Expected value calculated using real Australian market data and official pull rates.</p>
+  </div>
+</div>
+
+<div class="gold-divider"></div>
+
+<div class="wrap" style="margin-top:28px">
+
+  <div class="info-strip">
+    <strong>How this works:</strong> Select a set below to run the expected value calculation. We use official Wizards and publisher pull rate data combined with current AUD card values to estimate what a booster box is worth opening versus buying singles. All prices in AUD.
+  </div>
+
+  <div class="game-tabs">
+    <button class="game-tab active" onclick="filterSets('all')">All Games</button>
+    <button class="game-tab" onclick="filterSets('mtg')">⚔️ MTG</button>
+    <button class="game-tab" onclick="filterSets('pokemon')">⚡ Pokemon</button>
+    <button class="game-tab" onclick="filterSets('lorcana')">🏰 Lorcana</button>
+    <button class="game-tab" onclick="filterSets('onepiece')">☠️ One Piece</button>
+    <button class="game-tab" onclick="filterSets('yugioh')">👁️ Yu-Gi-Oh</button>
+  </div>
+
+  <h2 class="section-heading">Current Sets</h2>
+
+  <div class="set-grid" id="set-grid">
+
+    <!-- MTG Strixhaven -->
+    <a href="/ev-calculator/mtg-strixhaven.html" class="set-card" data-game="mtg">
+      <div class="set-card-game">⚔️ Magic: The Gathering</div>
+      <div class="set-card-name">Secrets of Strixhaven</div>
+      <div class="set-card-meta">
+        <span>30 packs per box</span>
+        <span>AU$259.95</span>
+      </div>
+      <div class="set-card-verdict verdict-borderline">⚖️ Borderline — Calculate to confirm</div>
+      <div class="set-card-cta">Run the EV Calculator →</div>
+    </a>
+
+    <!-- Pokemon Coming Soon -->
+    <div class="set-card set-card--coming" data-game="pokemon">
+      <div class="set-card-game">⚡ Pokemon TCG</div>
+      <div class="set-card-name">Destined Rivals</div>
+      <div class="set-card-meta"><span>Coming 30 May 2026</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching at release</div>
+    </div>
+
+    <!-- Pokemon 151 Coming Soon -->
+    <div class="set-card set-card--coming" data-game="pokemon">
+      <div class="set-card-game">⚡ Pokemon TCG</div>
+      <div class="set-card-name">Scarlet &amp; Violet 151</div>
+      <div class="set-card-meta"><span>Legacy set</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching soon</div>
+    </div>
+
+    <!-- Lorcana Coming Soon -->
+    <div class="set-card set-card--coming" data-game="lorcana">
+      <div class="set-card-game">🏰 Disney Lorcana</div>
+      <div class="set-card-name">Wilds Unknown</div>
+      <div class="set-card-meta"><span>Releases 15 May 2026</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching at release</div>
+    </div>
+
+    <!-- One Piece Coming Soon -->
+    <div class="set-card set-card--coming" data-game="onepiece">
+      <div class="set-card-game">☠️ One Piece TCG</div>
+      <div class="set-card-name">OP-10 Royal Blood</div>
+      <div class="set-card-meta"><span>Live now</span></div>
+      <div class="set-card-verdict verdict-soon">🕐 Coming Soon</div>
+      <div class="set-card-cta">Calculator launching soon</div>
+    </div>
+
+  </div>
+
+  <p class="disclaimer">
+    <strong>EV Disclaimer:</strong> Expected value calculations are estimates based on official pull rates and current secondary market pricing. Actual results will vary. EV is calculated in AUD using a combination of published pull rate data and market price references converted to AUD at current exchange rates. This is not financial advice. Always check current Amazon AU pricing before purchasing as prices fluctuate.
+  </p>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Cards on Cards on Cards</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <a href="/" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
+      <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Shop</a>
+      <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
+      <a href="/tracker.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
+      <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Cards on Cards on Cards.</p>
+  </div>
+</footer>
+
+<script>
+// GA4 outbound click tracking
+document.querySelectorAll('a[href*="amazon"]').forEach(a => {
+  a.addEventListener('click', () => {
+    gtag('event', 'amazon_click', { event_category: 'outbound', event_label: a.href });
+  });
+});
+document.querySelectorAll('a[href*="ebay"]').forEach(a => {
+  a.addEventListener('click', () => {
+    gtag('event', 'ebay_store_click', { event_category: 'outbound', event_label: a.href });
+  });
+});
+
+// Game tab filter
+function filterSets(game) {
+  document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.set-card').forEach(card => {
+    if (game === 'all' || card.dataset.game === game) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

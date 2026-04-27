@@ -38,7 +38,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 /* NAV */
 nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:10px 0}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
-.nav-logo{display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
 .nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
@@ -186,6 +186,25 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 @media(max-width:400px){
   .product-grid{grid-template-columns:1fr}
 }
+
+/* NAV COLOUR CLASSES - outline and font only */
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
+.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}
+.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
+.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
+.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
+.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+/* Active page override */
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+
 </style>
 </head>
 <body>
@@ -196,16 +215,18 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3 Logo" style="width:28px;height:28px;border-radius:6px;flex-shrink:0"> Cards on Cards on Cards</a>
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
     <div class="nav-links">
-      <a href="/" class="nav-link">← Home</a>
-      <a href="/shop.html" class="nav-link nav-link--active">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link" style="color:#9898FF;border-color:rgba(107,107,255,.3);background:rgba(107,107,255,.06)">EV Calc</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--etsy">D&amp;D Tools ↗</a>
-      <a href="/contact.html" class="nav-link">Contact Us</a>
+      <a href="/" class="nav-link nav-link--home">← Home</a>
+      <a href="/shop.html" class="nav-link nav-link--shop nav-link--active">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
 </nav>
@@ -260,7 +281,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     <div class="product-grid">
 
       <!-- PRE-ORDERS: MTG Marvel Super Heroes — Jun 26 2026 -->
-      <a href="https://amzn.to/4vOVwzv" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
+      <a href="https://www.amazon.com.au/Magic-Gathering-Jumpstart-Boosters-Display/dp/B0GF4M5P4C?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
         <div class="product-img"><img src="https://m.media-amazon.com/images/I/81oYR5uNnkL._AC_SY300_SX300_QL70_ML2_.jpg" alt="MTG Marvel Super Heroes Play Booster Box (30 Packs)" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><span class="img-ph" style="display:none">📦</span></div>
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
@@ -922,7 +943,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     <div class="set-group" id="set-mtg-marvel" data-set="mtg-marvel">
       <h3 class="set-header">Marvel Super Heroes (Jun 26 2026) — Pre-Order</h3>
       <div class="product-grid">
-      <a href="https://amzn.to/4vOVwzv" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
+      <a href="https://www.amazon.com.au/Magic-Gathering-Jumpstart-Boosters-Display/dp/B0GF4M5P4C?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
         <div class="product-img"><img src="https://m.media-amazon.com/images/I/81oYR5uNnkL._AC_SY300_SX300_QL70_ML2_.jpg" alt="MTG Marvel Super Heroes Play Booster Box (30 Packs)" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><span class="img-ph" style="display:none">📦</span></div>
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
@@ -5250,34 +5271,40 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 </div>
 
 <!-- EBAY CAROUSEL -->
-<div style="max-width:1140px;margin:48px auto 0;padding:0 24px">
-  <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:8px">Live from Our eBay Store</p>
-  <h2 style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#F0F2FF;margin-bottom:16px">Top Singles Right Now</h2>
-  <div id="ebay-carousel-shop" style="display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#252840 transparent;scroll-snap-type:x mandatory">
-    <div style="min-width:175px;height:230px;background:#161929;border:1px solid #252840;border-radius:12px;flex-shrink:0;animation:pulse 1.5s ease-in-out infinite"></div>
-    <div style="min-width:175px;height:230px;background:#161929;border:1px solid #252840;border-radius:12px;flex-shrink:0;animation:pulse 1.5s ease-in-out infinite .1s"></div>
-    <div style="min-width:175px;height:230px;background:#161929;border:1px solid #252840;border-radius:12px;flex-shrink:0;animation:pulse 1.5s ease-in-out infinite .2s"></div>
-    <div style="min-width:175px;height:230px;background:#161929;border:1px solid #252840;border-radius:12px;flex-shrink:0;animation:pulse 1.5s ease-in-out infinite .3s"></div>
-    <div style="min-width:175px;height:230px;background:#161929;border:1px solid #252840;border-radius:12px;flex-shrink:0;animation:pulse 1.5s ease-in-out infinite .4s"></div>
-  </div>
-  <div style="text-align:right;margin-top:8px">
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3ShopCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay ↗</a>
-  </div>
-</div>
 <style>
 @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
-.ebay-card-shop{min-width:175px;max-width:175px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;flex-shrink:0;scroll-snap-align:start;transition:all .22s;text-decoration:none;display:flex;flex-direction:column}
-.ebay-card-shop:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.ebay-card-shop-img{width:100%;height:130px;object-fit:contain;background:#0d0f1a;padding:8px}
-.ebay-card-shop-ph{width:100%;height:130px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:32px}
-.ebay-card-shop-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:4px}
-.ebay-card-shop-title{font-size:11px;color:#F0F2FF;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
-.ebay-card-shop-price{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#C9A84C;margin-top:4px}
-.ebay-card-shop-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px}
+.carousel-section{margin:48px auto 32px;padding:32px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px;max-width:1100px}
+.carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:6px}
+.carousel-title{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF;margin-bottom:16px}
+.carousel-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#252840 transparent;scroll-snap-type:x mandatory}
+.ebay-card{min-width:160px;max-width:160px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;flex-shrink:0;scroll-snap-align:start;transition:all .22s;text-decoration:none;display:flex;flex-direction:column}
+.ebay-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.4);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.ebay-card-img{width:100%;height:120px;object-fit:contain;background:#0d0f1a;padding:8px}
+.ebay-card-img-ph{width:100%;height:120px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:28px}
+.ebay-card-body{padding:9px 11px;flex:1;display:flex;flex-direction:column;gap:4px}
+.ebay-card-title{font-size:11px;color:#F0F2FF;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.ebay-card-price{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#C9A84C;margin-top:4px}
+.ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px}
+.skeleton{background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite}
 </style>
+<div class="carousel-section">
+  <span class="carousel-eyebrow">Live from Our eBay Store</span>
+  <h2 class="carousel-title">Top Listings Right Now</h2>
+  <div id="ebay-carousel-shop" class="carousel-scroll">
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0"></div>
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.1s"></div>
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.2s"></div>
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.3s"></div>
+    <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.4s"></div>
+  </div>
+  <div style="text-align:right;margin-top:8px">
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3ShopCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay &#x2197;</a>
+  </div>
+</div>
+<!-- END EBAY CAROUSEL -->
 <script>
 (function(){
-  async function loadShopCarousel(){
+  async function loadCarousel(){
     try{
       const res = await fetch('/.netlify/functions/ebay-prices');
       const data = await res.json();
@@ -5287,13 +5314,13 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         return;
       }
       wrap.innerHTML = data.listings.map(item=>`
-        <a href="${item.url}" target="_blank" rel="noopener sponsored" class="ebay-card-shop" onclick="gtag('event','ebay_carousel_click',{item_id:'${item.id}',item_price:${item.price}})">
-          ${item.image ? `<img src="${item.image}" alt="${item.title.replace(/"/g,'&quot;')}" class="ebay-card-shop-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
-          <div class="ebay-card-shop-ph" style="${item.image ? 'display:none' : ''}">🃏</div>
-          <div class="ebay-card-shop-body">
-            <div class="ebay-card-shop-title">${item.title}</div>
-            <div class="ebay-card-shop-price">AU$${item.price.toFixed(2)}</div>
-            <div class="ebay-card-shop-cta">View on eBay ↗</div>
+        <a href="${item.url}" target="_blank" rel="noopener sponsored" class="ebay-card" onclick="gtag('event','ebay_carousel_click',{item_id:'${item.id}',item_price:${item.price}})">
+          ${item.image ? `<img src="${item.image}" alt="${item.title.replace(/"/g,'&quot;')}" class="ebay-card-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
+          <div class="ebay-card-img-ph" style="${item.image ? 'display:none' : ''}">&#x1F0CF;</div>
+          <div class="ebay-card-body">
+            <div class="ebay-card-title">${item.title}</div>
+            <div class="ebay-card-price">AU$${item.price.toFixed(2)}</div>
+            <div class="ebay-card-cta">View on eBay &#x2197;</div>
           </div>
         </a>`).join('');
     } catch(e){
@@ -5301,20 +5328,18 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">Could not load listings. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store directly</a>.</p>';
     }
   }
-  loadShopCarousel();
+  loadCarousel();
 })();
 </script>
-<!-- END EBAY CAROUSEL -->
 
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">Cards on Cards on Cards</div>
     <div style="display:flex;gap:16px;flex-wrap:wrap">
-      <a href="/" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
-      <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
-      <a href="/ev-calculator.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">EV Calc</a>
-      <a href="/tracker.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
-      <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact Us</a>
+      <a href="index.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
+      <a href="blog.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
+      <a href="tracker.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
+      <a href="contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact Us</a>
     </div>
     <p class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</p>
   </div>
