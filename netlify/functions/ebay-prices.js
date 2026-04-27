@@ -1,13 +1,12 @@
 // Netlify Function: ebay-prices.js
 // Returns top 20 most expensive listings from the C3 eBay store for carousel display
-// Credentials stored as Netlify environment variables
 
 exports.handler = async function(event, context) {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
-    'Cache-Control': 'public, max-age=1800' // 30 min cache
+    'Cache-Control': 'public, max-age=1800'
   };
 
   if (event.httpMethod === 'OPTIONS') {
@@ -36,42 +35,42 @@ exports.handler = async function(event, context) {
 
     const tokenData = await tokenResponse.json();
     if (!tokenData.access_token) {
+      console.error('Token response:', JSON.stringify(tokenData));
       throw new Error('Failed to obtain eBay access token');
     }
 
-    // Step 2: Search by seller, sorted by price descending, limit 20
-    const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
-      '?filter=sellers:{cardsoncardsoncards},buyingOptions:{FIXED_PRICE}' +
-      '&sort=-price' +
-      '&limit=20' +
-      '&fieldgroups=MATCHING_ITEMS';
+    // Step 2: Search by seller - braces and colons URL-encoded for eBay Browse API
+    const filter = 'sellers%3A%7Bcardsoncardsoncards%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D';
+    const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search?filter=' + filter + '&sort=-price&limit=20';
+
+    console.log('Search URL:', searchUrl);
 
     const searchResponse = await fetch(searchUrl, {
       headers: {
-        'Authorization': `Bearer ${tokenData.access_token}`,
+        'Authorization': 'Bearer ' + tokenData.access_token,
         'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU',
-        'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${campId}`
+        'X-EBAY-C-ENDUSERCTX': 'affiliateCampaignId=' + campId
       }
     });
 
     const searchData = await searchResponse.json();
+    console.log('Status:', searchResponse.status, '| Total:', searchData.total || 0);
 
     if (!searchData.itemSummaries || searchData.itemSummaries.length === 0) {
+      console.log('No items. Response:', JSON.stringify(searchData).substring(0, 500));
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ listings: [] })
+        body: JSON.stringify({ listings: [], debug: { total: searchData.total, warnings: searchData.warnings } })
       };
     }
 
-    // Step 3: Map to carousel-ready format with EPN affiliate links
-    const listings = searchData.itemSummaries.map(item => {
+    // Step 3: Map to carousel format with EPN affiliate links
+    const listings = searchData.itemSummaries.map(function(item) {
       const price = item.price ? parseFloat(item.price.value) : 0;
       const itemId = item.itemId || '';
-      // Build EPN affiliate URL
-      const epnUrl = `https://www.ebay.com.au/itm/${itemId}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${campId}&customid=C3Carousel&toolid=10001&mkevt=1`;
+      const epnUrl = 'https://www.ebay.com.au/itm/' + itemId + '?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + campId + '&customid=C3Carousel&toolid=10001&mkevt=1';
       const image = item.image ? item.image.imageUrl : null;
-
       return {
         id: itemId,
         title: item.title || '',
@@ -84,7 +83,7 @@ exports.handler = async function(event, context) {
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ listings })
+      body: JSON.stringify({ listings: listings })
     };
 
   } catch (error) {
