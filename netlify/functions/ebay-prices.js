@@ -23,11 +23,11 @@ exports.handler = async function(event, context) {
     }
 
     // Step 1: Get OAuth token
-    const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+    const credentials = Buffer.from(clientId + ':' + clientSecret).toString('base64');
     const tokenResponse = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${credentials}`,
+        'Authorization': 'Basic ' + credentials,
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
@@ -35,13 +35,16 @@ exports.handler = async function(event, context) {
 
     const tokenData = await tokenResponse.json();
     if (!tokenData.access_token) {
-      console.error('Token response:', JSON.stringify(tokenData));
       throw new Error('Failed to obtain eBay access token');
     }
 
-    // Step 2: Search by seller - braces and colons URL-encoded for eBay Browse API
-    const filter = 'sellers%3A%7Bcardsoncardsoncards%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D';
-    const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search?filter=' + filter + '&sort=-price&limit=20';
+    // Step 2: Browse API requires q or category_ids - use q=card with seller filter
+    // TCG category on eBay AU: 2536 (Trading Card Games)
+    const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
+      '?q=card' +
+      '&filter=sellers%3A%7Bcardsoncardsoncards%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D' +
+      '&sort=-price' +
+      '&limit=20';
 
     console.log('Search URL:', searchUrl);
 
@@ -61,7 +64,7 @@ exports.handler = async function(event, context) {
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ listings: [], debug: { total: searchData.total, warnings: searchData.warnings } })
+        body: JSON.stringify({ listings: [] })
       };
     }
 
@@ -69,7 +72,9 @@ exports.handler = async function(event, context) {
     const listings = searchData.itemSummaries.map(function(item) {
       const price = item.price ? parseFloat(item.price.value) : 0;
       const itemId = item.itemId || '';
-      const epnUrl = 'https://www.ebay.com.au/itm/' + itemId + '?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + campId + '&customid=C3Carousel&toolid=10001&mkevt=1';
+      const epnUrl = 'https://www.ebay.com.au/itm/' + itemId +
+        '?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + campId +
+        '&customid=C3Carousel&toolid=10001&mkevt=1';
       const image = item.image ? item.image.imageUrl : null;
       return {
         id: itemId,
@@ -79,6 +84,8 @@ exports.handler = async function(event, context) {
         image: image
       };
     });
+
+    console.log('Returning', listings.length, 'listings. Top price: ' + (listings[0] ? listings[0].price : 'none'));
 
     return {
       statusCode: 200,
