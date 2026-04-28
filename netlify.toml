@@ -10,7 +10,7 @@
 [[redirects]]
   from = "/cards"
   to = "/cards.html"
-  status = 200
+  status = 301
 
 # Card page routes - handled by serverless function
 [[redirects]]
