@@ -1,0 +1,81 @@
+[build]
+  command = "npm run build"
+  publish = "_site"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Vault hub page
+[[redirects]]
+  from = "/cards"
+  to = "/cards.html"
+  status = 200
+
+# Card page routes - handled by serverless function
+[[redirects]]
+  from = "/cards/mtg/random"
+  to = "/.netlify/functions/card-page"
+  status = 200
+
+[[redirects]]
+  from = "/cards/mtg/sets/:setSlug"
+  to = "/.netlify/functions/card-index"
+  status = 200
+
+[[redirects]]
+  from = "/cards/mtg/random-commander"
+  to = "/.netlify/functions/card-index"
+  status = 200
+
+[[redirects]]
+  from = "/cards/mtg/:slug+"
+  to = "/.netlify/functions/card-page"
+  status = 200
+
+[[redirects]]
+  from = "/cards/mtg"
+  to = "/.netlify/functions/card-index"
+  status = 200
+
+# API routes
+[[redirects]]
+  from = "/api/card-like"
+  to = "/.netlify/functions/card-api"
+  status = 200
+
+[[redirects]]
+  from = "/api/card-view"
+  to = "/.netlify/functions/card-api"
+  status = 200
+
+[[redirects]]
+  from = "/api/price-alert"
+  to = "/.netlify/functions/card-api"
+  status = 200
+
+[[redirects]]
+  from = "/api/collection-waitlist"
+  to = "/.netlify/functions/card-api"
+  status = 200
+
+[[redirects]]
+  from = "/api/sitemap-cards"
+  to = "/.netlify/functions/card-api"
+  status = 200
+
+[[redirects]]
+  from = "/api/random-commander"
+  to = "/.netlify/functions/card-api"
+  status = 200
+
+# Cache headers for static assets
+[[headers]]
+  for = "/c3logo.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
