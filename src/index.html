@@ -46,7 +46,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* NAV */
 nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
-.nav-logo{display:inline-flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
 .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
@@ -70,7 +70,7 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);margin:0 0 56px}
 
 /* TRUST BAR */
-.trust-bar{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;padding:20px 0 40px;border-bottom:1px solid var(--border);margin-bottom:56px}
+.trust-bar{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;padding:20px 0 40px;border-bottom:1px solid var(--border);margin-bottom:24px}
 .trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(160,168,192,.6)}
 .trust-item strong{color:var(--white)}
 
@@ -181,20 +181,93 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 @media(max-width:400px){
   .destinations{grid-template-columns:1fr}
 }
+
+/* NAV COLOUR CLASSES - outline and font only */
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
+.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}
+.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
+.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
+.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
+.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+/* Active page override */
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+
+/* CAROUSEL */
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
+@keyframes carousel-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.carousel-section{margin:32px 0;padding:36px 32px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px;text-align:center}
+.carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:8px}
+.carousel-title{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:#F0F2FF;margin-bottom:24px;text-align:center}
+.carousel-outer{overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)}
+.carousel-track{display:flex;gap:16px;width:max-content;animation:none}
+.carousel-track.loaded{animation:carousel-scroll 40s linear infinite}
+.carousel-track:hover{animation-play-state:paused}
+.ebay-card{min-width:200px;max-width:200px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;flex-shrink:0;transition:all .22s;text-decoration:none;display:flex;flex-direction:column}
+.ebay-card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.5);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.ebay-card-img{width:100%;height:160px;object-fit:contain;background:#0d0f1a;padding:10px}
+.ebay-card-img-ph{width:100%;height:160px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:36px}
+.ebay-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:4px}
+.ebay-card-title{font-size:11px;color:#F0F2FF;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1;text-align:left}
+.ebay-card-price{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#C9A84C;margin-top:4px;text-align:left}
+.ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px;text-align:left}
+.skeleton{min-width:200px;height:260px;background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0}
+
+
+/* CARD VAULT FEATURE BLOCK */
+.vault-feature{background:linear-gradient(135deg,rgba(201,168,76,.06) 0%,rgba(107,107,255,.04) 100%);border:1px solid rgba(201,168,76,.2);border-radius:16px;padding:40px 32px;margin:32px 0;text-align:center}
+.vault-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
+.vault-title{font-family:'Cinzel',serif;font-size:clamp(20px,4vw,32px);font-weight:900;color:var(--white);margin-bottom:10px;line-height:1.2}
+.vault-desc{font-size:14px;color:rgba(160,168,192,.6);margin-bottom:24px}
+.vault-search-wrap{display:flex;gap:8px;max-width:580px;margin:0 auto 16px}
+.vault-search-input{flex:1;background:rgba(10,12,20,.8);border:1px solid rgba(201,168,76,.3);border-radius:8px;color:var(--white);padding:12px 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.vault-search-input:focus{border-color:var(--gold)}
+.vault-search-input::placeholder{color:rgba(160,168,192,.4)}
+.vault-search-btn{background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:12px 20px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:background .2s}
+.vault-search-btn:hover{background:var(--gold-lit)}
+.vault-results{min-height:0;margin:0 auto 20px;max-width:700px}
+.vault-results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;text-align:left}
+.vault-card-result{background:rgba(22,25,41,.9);border:1px solid var(--border);border-radius:8px;padding:8px;text-decoration:none;transition:border-color .2s;display:block}
+.vault-card-result:hover{border-color:rgba(201,168,76,.4)}
+.vault-card-result img{width:100%;border-radius:5px;display:block}
+.vault-card-name{font-size:10px;color:var(--white);margin-top:5px;line-height:1.3;font-weight:600}
+.vault-card-price{font-size:11px;color:var(--gold);font-weight:700;margin-top:2px}
+.vault-card-result-placeholder{height:80px;background:rgba(255,255,255,.04);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(160,168,192,.3)}
+.vault-syncing{font-size:13px;color:rgba(160,168,192,.5);padding:12px 0}
+.vault-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.vault-cta-primary{background:var(--gold);color:var(--ink);padding:10px 22px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;transition:background .2s}
+.vault-cta-primary:hover{background:var(--gold-lit)}
+.vault-cta-secondary{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--silver);padding:10px 18px;border-radius:8px;font-size:13px;text-decoration:none;transition:all .2s}
+.vault-cta-secondary:hover{color:var(--white);border-color:var(--silver)}
+/* COMMANDER CAROUSEL */
+.commander-carousel-section{background:rgba(107,107,255,.04);border-top:1px solid rgba(107,107,255,.15);border-bottom:1px solid rgba(107,107,255,.15)}
+
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">🃏 Cards on Cards on Cards</a>
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
     <div class="nav-links">
-      <a href="/shop.html" class="nav-link nav-link--gold">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--etsy">D&amp;D Tools ↗</a>
-      <a href="/contact.html" class="nav-link">Contact Us</a>
+      <a href="/" class="nav-link nav-link--home nav-link--active">← Home</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/cards" class="nav-link" style="color:#a78bfa;border-color:rgba(167,139,250,.35)">Card Vault</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
 </nav>
@@ -214,9 +287,63 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   <div class="trust-bar">
     <div class="trust-item"><span>✅</span><span>300+ products confirmed on Amazon AU</span></div>
     <div class="trust-item"><span>📦</span><span>Local + international shipping options</span></div>
-    <div class="trust-item"><span>⭐</span><span><strong>23,000+</strong> eBay listings</span></div>
+    <div class="trust-item"><span>⭐</span><span><strong>25,000+</strong> eBay listings</span></div>
     <div class="trust-item"><span>🎲</span><span>D&amp;D tools from our Etsy store</span></div>
   </div>
+
+
+  <!-- CARD VAULT FEATURE BLOCK -->
+  <div class="vault-feature" id="card-vault-feature">
+    <div class="vault-feature-header">
+      <p class="vault-eyebrow">The C3 Card Vault</p>
+      <h2 class="vault-title">Every MTG Card. Priced for Australia.</h2>
+      <p class="vault-desc">Live AUD pricing, 90-day price history, and eBay AU buy links. Updated daily.</p>
+    </div>
+    <div class="vault-search-wrap">
+      <input type="text" id="vault-search-input" class="vault-search-input" placeholder="Search a card e.g. Lightning Bolt, Snapcaster Mage..." autocomplete="off" spellcheck="false">
+      <button class="vault-search-btn" onclick="vaultSearch()">Search</button>
+    </div>
+    <div id="vault-search-results" class="vault-results"></div>
+    <div class="vault-ctas">
+      <a href="/cards/mtg" class="vault-cta-primary">Browse All MTG Cards →</a>
+      <a href="/cards/mtg/random-commander" class="vault-cta-secondary">🎲 Random Commander</a>
+      <a href="/cards" class="vault-cta-secondary">All Games →</a>
+    </div>
+  </div>
+  <!-- END CARD VAULT FEATURE BLOCK -->
+
+  <!-- EBAY CAROUSEL -->
+  <div class="carousel-section" style="margin-left:-24px;margin-right:-24px;border-radius:0;border-left:none;border-right:none;padding:36px 0">
+    <span class="carousel-eyebrow">Live from Our eBay Store</span>
+    <h2 class="carousel-title">Top Listings Right Now</h2>
+    <div class="carousel-outer">
+      <div id="ebay-carousel-home" class="carousel-track">
+        <div class="skeleton" style="animation-delay:0s"></div>
+        <div class="skeleton" style="animation-delay:.1s"></div>
+        <div class="skeleton" style="animation-delay:.2s"></div>
+        <div class="skeleton" style="animation-delay:.3s"></div>
+        <div class="skeleton" style="animation-delay:.4s"></div>
+      </div>
+    </div>
+    <div style="margin-top:14px">
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3HomeCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay &#x2197;</a>
+    </div>
+  </div>
+  <!-- END EBAY CAROUSEL -->
+  <!-- COMMANDER CAROUSEL -->
+  <div class="carousel-section commander-carousel-section" id="commander-carousel-section" style="display:none;margin-left:-24px;margin-right:-24px;border-radius:0;border-left:none;border-right:none;padding:36px 0;margin-top:0">
+    <span class="carousel-eyebrow">Today's Featured Commanders</span>
+    <h2 class="carousel-title" style="cursor:pointer" onclick="window.location.href='/cards/mtg/random-commander'">Discover Your Next Commander <span style="font-size:16px;opacity:.5">→</span></h2>
+    <div class="carousel-outer">
+      <div id="commander-carousel-track" class="carousel-track"></div>
+    </div>
+    <div style="margin-top:14px">
+      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">Build your Commander deck →</a>
+    </div>
+  </div>
+  <!-- END COMMANDER CAROUSEL -->
+
+
 
   <div class="destinations">
 
@@ -240,7 +367,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
           <h2 class="dest-title">Singles &amp; Sealed on eBay</h2>
         </div>
       </div>
-      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 23,000+ listings across all major TCGs with Australian shipping.</p>
+      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 25,000+ listings across all major TCGs with Australian shipping.</p>
       <p class="dest-arrow">Visit Store ↗</p>
     </a>
 
@@ -316,6 +443,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 </div>
 
+
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">Cards on Cards on Cards</div>
@@ -325,11 +453,129 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/tracker.html" class="footer-link">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy D&amp;D Tools</a>
+      <a href="/cards" class="footer-link">Card Vault</a>
+      <a href="/legal.html" class="footer-link">Legal</a>
       <a href="/contact.html" class="footer-link">Contact Us</a>
     </div>
     <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
   </div>
+  <div style="max-width:1100px;margin:8px auto 0;padding:0 24px;font-size:11px;color:rgba(160,168,192,.28);line-height:1.6">Cards on Cards on Cards is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy. Not approved or endorsed by Wizards of the Coast. © Wizards of the Coast LLC. As an Amazon Associate and eBay Partner, we earn from qualifying purchases. <a href="/legal.html" style="color:rgba(160,168,192,.35)">Full disclaimer</a></div>
 </footer>
 
+<script>
+(function(){
+  function buildCard(item){
+    return `<a href="${item.url}" target="_blank" rel="noopener sponsored" class="ebay-card" onclick="gtag('event','ebay_carousel_click',{item_id:'${item.id}',item_price:${item.price}})">
+      ${item.image ? `<img src="${item.image}" alt="${item.title.replace(/"/g,'&quot;')}" class="ebay-card-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
+      <div class="ebay-card-img-ph" style="${item.image ? 'display:none' : ''}">&#x1F0CF;</div>
+      <div class="ebay-card-body">
+        <div class="ebay-card-title">${item.title}</div>
+        <div class="ebay-card-price">AU$${item.price.toFixed(2)}</div>
+        <div class="ebay-card-cta">View on eBay &#x2197;</div>
+      </div>
+    </a>`;
+  }
+  async function loadCarousel(){
+    try{
+      const res = await fetch('/.netlify/functions/ebay-prices');
+      const data = await res.json();
+      const track = document.getElementById('ebay-carousel-home');
+      if(!data.listings || data.listings.length === 0){
+        track.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store</a>.</p>';
+        return;
+      }
+      const cards = data.listings.map(buildCard).join('');
+      track.innerHTML = cards + cards;
+      track.classList.add('loaded');
+    } catch(e){
+      const track = document.getElementById('ebay-carousel-home');
+      track.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">Could not load listings. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store directly</a>.</p>';
+    }
+  }
+  loadCarousel();
+})();
+</script>
+
+
+<script>
+// ============================================================
+// CARD VAULT SEARCH
+// ============================================================
+const SUPA_URL = "https://owaroeqchreuffbyakqx.supabase.co";
+const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMTM4NTAsImV4cCI6MjA5Mjg4OTg1MH0.E6wP-CTfNzyfNbOy442eTg6DY0WOUe2M8PocgIQERXI";
+
+async function vaultSearch() {
+  const q = document.getElementById('vault-search-input').value.trim();
+  const results = document.getElementById('vault-search-results');
+  if (!q || q.length < 2) return;
+  results.innerHTML = '<p class="vault-syncing">Searching...</p>';
+  try {
+    const res = await fetch(
+      SUPA_URL + '/rest/v1/mtg_cards?name=ilike.*' + encodeURIComponent(q) + '*&select=slug,name,price_usd,image_uri_small&limit=8&price_usd=gte.0.01&order=price_usd.desc',
+      { headers: { 'apikey': SUPA_KEY } }
+    );
+    const cards = await res.json();
+    if (!Array.isArray(cards) || cards.length === 0) {
+      results.innerHTML = '<p class="vault-syncing">No cards found yet. The database syncs tonight — try again tomorrow morning.</p>';
+      return;
+    }
+    results.innerHTML = '<div class="vault-results-grid">' + cards.map(c => {
+      const aud = c.price_usd ? 'AU$' + (c.price_usd * 1.58).toFixed(2) : '';
+      return '<a href="/cards/mtg/' + (c.slug || '') + '" class="vault-card-result">'
+        + (c.image_uri_small ? '<img src="' + c.image_uri_small + '" alt="' + (c.name||'').replace(/"/g,'') + '" loading="lazy">' : '<div class="vault-card-result-placeholder">No image yet</div>')
+        + '<div class="vault-card-name">' + (c.name || '') + '</div>'
+        + (aud ? '<div class="vault-card-price">' + aud + '</div>' : '')
+        + '</a>';
+    }).join('') + '</div>';
+  } catch(e) {
+    results.innerHTML = '<p class="vault-syncing">Database syncing — check back tomorrow morning after the first sync.</p>';
+  }
+}
+
+document.getElementById('vault-search-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') vaultSearch();
+});
+
+// ============================================================
+// COMMANDER CAROUSEL
+// ============================================================
+async function loadCommanderCarousel() {
+  try {
+    // Fetch 20 random legendary creatures from Supabase, show 10
+    const res = await fetch(
+      SUPA_URL + '/rest/v1/mtg_cards?type_line=like.*Legendary+Creature*&select=slug,name,image_uri_small,color_identity,price_usd&price_usd=gte.0.01&limit=20&offset=' + Math.floor(Math.random() * 200),
+      { headers: { 'apikey': SUPA_KEY } }
+    );
+    const cards = await res.json();
+    if (!Array.isArray(cards) || cards.length === 0) return; // No data yet, section stays hidden
+
+    const section = document.getElementById('commander-carousel-section');
+    const track = document.getElementById('commander-carousel-track');
+    if (!section || !track) return;
+
+    // Build cards HTML - duplicate for infinite scroll
+    const html = cards.slice(0,10).map(c => {
+      const aud = c.price_usd ? 'AU$' + (c.price_usd * 1.58).toFixed(0) : '';
+      return '<a href="/cards/mtg/' + (c.slug || '') + '" class="ebay-card" style="text-decoration:none">'
+        + (c.image_uri_small
+            ? '<img src="' + c.image_uri_small + '" alt="' + (c.name||'').replace(/"/g,'') + '" class="ebay-card-img" loading="lazy" style="height:160px;object-fit:contain">'
+            : '<div class="ebay-card-img" style="height:160px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(160,168,192,.4)">Image coming</div>')
+        + '<p class="ebay-card-title" style="font-size:11px;margin-top:6px;color:#F0F2FF">' + (c.name || '') + '</p>'
+        + (aud ? '<p style="font-size:12px;color:#C9A84C;font-weight:700;margin-top:2px">' + aud + '</p>' : '')
+        + '</a>';
+    }).join('');
+    track.innerHTML = html + html; // Duplicate for seamless loop
+    track.classList.add('loaded');
+    section.style.display = ''; // Show the section
+  } catch(e) {
+    // Silently fail - section stays hidden
+  }
+}
+loadCommanderCarousel();
+</script>
+
+<!-- EPN Smart Links -->
+<script>window._epn = {campaign: 5339146789, smartPopover:false};</script>
+<script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>
 </body>
 </html>
