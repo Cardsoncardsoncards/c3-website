@@ -3,17 +3,36 @@ module.exports = function(eleventyConfig) {
   // Pass through static files unchanged
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/images");
-  eleventyConfig.addPassthroughCopy({"*.html": "."});
-  eleventyConfig.addPassthroughCopy({"c3-logo.png": "c3-logo.png"});
+  eleventyConfig.addPassthroughCopy({"src/c3logo.png": "c3logo.png"});
+  eleventyConfig.addPassthroughCopy({"src/c3-logo.png": "c3-logo.png"});
   eleventyConfig.addPassthroughCopy({"sitemap.xml": "sitemap.xml"});
   eleventyConfig.addPassthroughCopy({"ev-calculator": "ev-calculator"});
   eleventyConfig.addPassthroughCopy({"netlify": "netlify"});
   eleventyConfig.addPassthroughCopy({"netlify.toml": "netlify.toml"});
 
-  // Auto-collect all posts tagged "post"
+  // Passthrough src HTML files directly to _site root (bypasses Eleventy template processing)
+  // blog.html excluded — handled by blog.njk
+  eleventyConfig.addPassthroughCopy({"src/index.html": "index.html"});
+  eleventyConfig.addPassthroughCopy({"src/shop.html": "shop.html"});
+  eleventyConfig.addPassthroughCopy({"src/contact.html": "contact.html"});
+  eleventyConfig.addPassthroughCopy({"src/tracker.html": "tracker.html"});
+  eleventyConfig.addPassthroughCopy({"src/vip.html": "vip.html"});
+  eleventyConfig.addPassthroughCopy({"src/ev-calculator.html": "ev-calculator.html"});
+  eleventyConfig.addPassthroughCopy({"src/mtg-strixhaven.html": "mtg-strixhaven.html"});
+  eleventyConfig.addPassthroughCopy({"src/content-engine.html": "content-engine.html"});
+  eleventyConfig.addPassthroughCopy({"src/dashboard.html": "dashboard.html"});
+
+  // Only blog posts (tagged "post") use the permalink rule
   eleventyConfig.addGlobalData("eleventyComputed", {
-    permalink: data => data.permalink || `/blog/${data.page.fileSlug.replace(/^p\d+-/, '')}/`
+    permalink: data => {
+      if (data.permalink) return data.permalink;
+      if (data.tags && data.tags.includes('post')) {
+        return `/blog/${data.page.fileSlug.replace(/^p\d+-/, '')}/`;
+      }
+      return false;
+    }
   });
+
   eleventyConfig.addCollection("post", function(collectionApi) {
     return collectionApi.getFilteredByTag("post").sort((a, b) => b.date - a.date);
   });
