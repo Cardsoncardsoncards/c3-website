@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npx @11ty/eleventy --config=_eleventy.js"
   publish = "_site"
   functions = "netlify/functions"
 
