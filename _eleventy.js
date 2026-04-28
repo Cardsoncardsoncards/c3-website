@@ -21,6 +21,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/mtg-strixhaven.html": "mtg-strixhaven.html"});
   eleventyConfig.addPassthroughCopy({"src/content-engine.html": "content-engine.html"});
   eleventyConfig.addPassthroughCopy({"src/dashboard.html": "dashboard.html"});
+    eleventyConfig.addPassthroughCopy({"src/cards.html": "cards.html"});
+  eleventyConfig.addPassthroughCopy({"src/legal.html": "legal.html"});
   eleventyConfig.addPassthroughCopy({"src/cards.html": "cards.html"});
   eleventyConfig.addPassthroughCopy({"src/legal.html": "legal.html"});
 
