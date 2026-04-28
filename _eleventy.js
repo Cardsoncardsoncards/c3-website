@@ -1,5 +1,6 @@
 module.exports = function(eleventyConfig) {
-
+eleventyConfig.ignores.add("src/cards.html");
+  eleventyConfig.ignores.add("src/legal.html");
   // Pass through static files unchanged
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/images");
