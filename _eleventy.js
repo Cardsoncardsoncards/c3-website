@@ -10,8 +10,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"netlify": "netlify"});
   eleventyConfig.addPassthroughCopy({"netlify.toml": "netlify.toml"});
 
-  // Passthrough src HTML files directly to _site root (bypasses Eleventy template processing)
-  // blog.html excluded — handled by blog.njk
+  // Passthrough src HTML files directly to _site root
   eleventyConfig.addPassthroughCopy({"src/index.html": "index.html"});
   eleventyConfig.addPassthroughCopy({"src/shop.html": "shop.html"});
   eleventyConfig.addPassthroughCopy({"src/contact.html": "contact.html"});
@@ -21,6 +20,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/mtg-strixhaven.html": "mtg-strixhaven.html"});
   eleventyConfig.addPassthroughCopy({"src/content-engine.html": "content-engine.html"});
   eleventyConfig.addPassthroughCopy({"src/dashboard.html": "dashboard.html"});
+  eleventyConfig.addPassthroughCopy({"src/cards.html": "cards.html"});
+  eleventyConfig.addPassthroughCopy({"src/legal.html": "legal.html"});
 
   // Only blog posts (tagged "post") use the permalink rule
   eleventyConfig.addGlobalData("eleventyComputed", {
@@ -37,7 +38,6 @@ module.exports = function(eleventyConfig) {
     return collectionApi.getFilteredByTag("post").sort((a, b) => b.date - a.date);
   });
 
-  // Date filter: "3 April 2026"
   eleventyConfig.addFilter("dateDisplay", (dateObj) => {
     return new Date(dateObj).toLocaleDateString("en-AU", {
       day: "numeric",
@@ -46,12 +46,10 @@ module.exports = function(eleventyConfig) {
     });
   });
 
-  // ISO date for <time datetime="">
   eleventyConfig.addFilter("dateISO", (dateObj) => {
     return new Date(dateObj).toISOString().split("T")[0];
   });
 
-  // Maps category slug to CSS class
   eleventyConfig.addFilter("tagClass", (category) => {
     const map = {
       "buying-guides":"tag-guide","value-and-worth":"tag-guide",
@@ -62,7 +60,6 @@ module.exports = function(eleventyConfig) {
     return map[category] || "tag-guide";
   });
 
-  // Maps category slug to display label
   eleventyConfig.addFilter("tagLabel", (category) => {
     const map = {
       "buying-guides":"Buying Guide","value-and-worth":"Buying Guide",
