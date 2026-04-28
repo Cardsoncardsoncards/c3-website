@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The C3 Card Vault | MTG, Pokemon and TCG Card Prices in Australia</title>
+<meta name="description" content="Australia's only TCG card price vault. MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece and Riftbound card prices in AUD with live conversion, 90-day price history, and eBay AU buy links.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/cards">
+<meta property="og:title" content="The C3 Card Vault | TCG Card Prices Australia">
+<meta property="og:description" content="Every MTG card priced in Australian dollars. Live AUD conversion, 90-day price history, eBay AU buy links. More games coming soon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "The C3 Card Vault",
+  "description": "TCG card prices in AUD for Australian players",
+  "url": "https://cardsoncardsoncards.com.au/cards",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://cardsoncardsoncards.com.au"},
+      {"@type":"ListItem","position":2,"name":"The Card Vault","item":"https://cardsoncardsoncards.com.au/cards"}
+    ]
+  }
+}
+</script>
+<style>
+:root {
+  --bg: #080a0f;
+  --bg2: #0e1118;
+  --gold: #C9A84C;
+  --gold-lit: #E8C86A;
+  --gold-dim: #7A621E;
+  --silver: #A0A8C0;
+  --white: #F0F2FF;
+  --border: #1e2235;
+  --text2: #7a8099;
+
+  /* TCG door colours */
+  --mtg-primary: #9B1D20;
+  --mtg-secondary: #C4A028;
+  --pokemon-primary: #FFCC00;
+  --pokemon-secondary: #0075BE;
+  --yugioh-primary: #6B2D8B;
+  --yugioh-secondary: #C4A028;
+  --onepiece-primary: #D4001A;
+  --onepiece-secondary: #1A1A1A;
+  --lorcana-primary: #0189C4;
+  --lorcana-secondary: #F5B202;
+  --riftbound-primary: #C4A15B;
+  --riftbound-secondary: #548CB4;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Atmospheric background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,168,76,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(155,29,32,.06) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(1,137,196,.06) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(255,255,255,.004) 60px, rgba(255,255,255,.004) 61px);
+}
+
+/* Nav */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,10,15,.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--gold);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.nav-logo img { height: 32px; width: 32px; border-radius: 6px; }
+.nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  transition: all .2s;
+  border: 1px solid var(--border);
+  color: var(--silver);
+}
+.nav-link:hover { color: var(--white); border-color: var(--silver); background: rgba(255,255,255,.04); }
+.nav-link--active { color: var(--gold); border-color: var(--gold-dim); background: rgba(201,168,76,.08); }
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 64px 24px 40px;
+  position: relative;
+  z-index: 1;
+}
+.hero-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--gold-lit), var(--gold), #9a7a2a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(14px, 2vw, 20px);
+  font-weight: 400;
+  color: var(--silver);
+  letter-spacing: .1em;
+  margin-bottom: 24px;
+}
+.hero-desc {
+  font-size: 15px;
+  color: rgba(160,168,192,.6);
+  max-width: 540px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+/* Vault divider */
+.vault-divider {
+  width: 100%;
+  max-width: 400px;
+  height: 2px;
+  margin: 0 auto 48px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
+  position: relative;
+}
+.vault-divider::before, .vault-divider::after {
+  content: '◆';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 10px;
+}
+.vault-divider::before { left: 30%; }
+.vault-divider::after { right: 30%; }
+
+/* Vault doors grid */
+.vault-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+.vault-label {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 32px;
+}
+
+.doors-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .doors-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .doors-grid { grid-template-columns: 1fr; } }
+
+/* Individual vault door */
+.vault-door {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
+  cursor: pointer;
+}
+.vault-door:hover {
+  transform: translateY(-6px) scale(1.01);
+  text-decoration: none;
+}
+.vault-door--locked {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.6;
+}
+.vault-door--locked:hover { transform: none; }
+
+/* Door frame */
+.door-frame {
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 2px;
+  transition: border-color .3s, box-shadow .3s;
+}
+.vault-door:hover .door-frame {
+  box-shadow: 0 0 30px rgba(var(--glow-r), var(--glow-g), var(--glow-b), 0.4);
+}
+
+/* Door inner */
+.door-inner {
+  background: var(--bg2);
+  border-radius: 14px;
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Atmospheric door background */
+.door-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .12;
+  transition: opacity .3s;
+}
+.vault-door:hover .door-inner::before { opacity: .22; }
+
+/* Door bolt decorations */
+.door-bolts {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid rgba(255,255,255,.04);
+  border-radius: 10px;
+  pointer-events: none;
+}
+.door-bolts::before, .door-bolts::after {
+  content: '●';
+  position: absolute;
+  font-size: 8px;
+  opacity: .3;
+}
+.door-bolts::before { top: 6px; left: 8px; }
+.door-bolts::after { bottom: 6px; right: 8px; }
+
+/* Door content */
+.door-icon {
+  font-size: 48px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
+  position: relative;
+  z-index: 1;
+}
+.door-name {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  position: relative;
+  z-index: 1;
+  line-height: 1.2;
+}
+.door-tagline {
+  font-size: 12px;
+  color: rgba(160,168,192,.6);
+  letter-spacing: .05em;
+  position: relative;
+  z-index: 1;
+}
+.door-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+}
+.door-status--open {
+  background: rgba(201,168,76,.15);
+  border: 1px solid rgba(201,168,76,.4);
+  color: var(--gold);
+}
+.door-status--soon {
+  background: rgba(120,120,140,.1);
+  border: 1px solid rgba(120,120,140,.25);
+  color: var(--silver);
+}
+.door-arrow {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  font-size: 18px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity .2s, transform .2s;
+  z-index: 1;
+}
+.vault-door:not(.vault-door--locked):hover .door-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* MTG door */
+.door--mtg .door-frame {
+  border-color: var(--mtg-primary);
+  --glow-r: 155; --glow-g: 29; --glow-b: 32;
+}
+.door--mtg .door-inner::before {
+  background: radial-gradient(ellipse at 50% 0%, var(--mtg-primary), transparent 70%);
+}
+.door--mtg .door-name { color: #ff6b6b; }
+.door--mtg .door-arrow { color: #ff6b6b; }
+
+/* Pokemon door */
+.door--pokemon .door-frame {
+  border-color: var(--pokemon-primary);
+  --glow-r: 255; --glow-g: 204; --glow-b: 0;
+}
+.door--pokemon .door-inner::before {
+  background: radial-gradient(ellipse at 50% 0%, var(--pokemon-primary), transparent 70%);
+}
+.door--pokemon .door-name { color: #FFE066; }
+.door--pokemon .door-arrow { color: #FFE066; }
+
+/* Yu-Gi-Oh door */
+.door--yugioh .door-frame {
+  border-color: var(--yugioh-primary);
+  --glow-r: 107; --glow-g: 45; --glow-b: 139;
+}
+.door--yugioh .door-inner::before {
+  background: radial-gradient(ellipse at 50% 0%, var(--yugioh-primary), transparent 70%);
+}
+.door--yugioh .door-name { color: #c084fc; }
+.door--yugioh .door-arrow { color: #c084fc; }
+
+/* One Piece door */
+.door--onepiece .door-frame {
+  border-color: var(--onepiece-primary);
+  --glow-r: 212; --glow-g: 0; --glow-b: 26;
+}
+.door--onepiece .door-inner::before {
+  background: radial-gradient(ellipse at 50% 0%, var(--onepiece-primary), transparent 70%);
+}
+.door--onepiece .door-name { color: #ff7070; }
+.door--onepiece .door-arrow { color: #ff7070; }
+
+/* Lorcana door */
+.door--lorcana .door-frame {
+  border-color: var(--lorcana-primary);
+  --glow-r: 1; --glow-g: 137; --glow-b: 196;
+}
+.door--lorcana .door-inner::before {
+  background: radial-gradient(ellipse at 50% 0%, var(--lorcana-primary), transparent 70%);
+}
+.door--lorcana .door-name { color: #60d4f8; }
+.door--lorcana .door-arrow { color: #60d4f8; }
+
+/* Riftbound door */
+.door--riftbound .door-frame {
+  border-color: var(--riftbound-primary);
+  --glow-r: 196; --glow-g: 161; --glow-b: 91;
+}
+.door--riftbound .door-inner::before {
+  background: radial-gradient(ellipse at 50% 0%, var(--riftbound-primary), transparent 70%);
+}
+.door--riftbound .door-name { color: #e8c97a; }
+.door--riftbound .door-arrow { color: #e8c97a; }
+
+/* Feature strip */
+.features {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+.feature {
+  background: rgba(14,17,24,.8);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.feature-icon { font-size: 24px; margin-bottom: 8px; }
+.feature-title { font-family: 'Cinzel', serif; font-size: 13px; color: var(--gold); margin-bottom: 6px; }
+.feature-desc { font-size: 13px; color: rgba(160,168,192,.6); line-height: 1.6; }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--text2);
+  font-size: 12px;
+  position: relative;
+  z-index: 1;
+}
+footer a { color: var(--text2); margin: 0 10px; text-decoration: none; }
+footer a:hover { color: var(--silver); }
+.footer-disclaimer {
+  max-width: 900px;
+  margin: 16px auto 0;
+  font-size: 11px;
+  color: rgba(120,128,153,.5);
+  line-height: 1.7;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3 Logo">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calculator</a>
+      <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Cards on Cards on Cards</p>
+  <h1 class="hero-title">The Card Vault</h1>
+  <p class="hero-subtitle">Every Card. Priced for Australia.</p>
+  <p class="hero-desc">Australia's only TCG price guide with live AUD conversion, 90-day price history, eBay AU buy links, and daily updates. Choose your game below.</p>
+  <div class="vault-divider"></div>
+</section>
+
+<section class="vault-section">
+  <p class="vault-label">Choose Your Game — Enter the Vault</p>
+
+  <div class="doors-grid">
+
+    <!-- MTG — LIVE -->
+    <a href="/cards/mtg" class="vault-door door--mtg">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">🧙</div>
+          <div class="door-name">Magic:<br>The Gathering</div>
+          <div class="door-tagline">14,000+ cards · Updated daily</div>
+          <div class="door-status door-status--open">⚡ Live Now</div>
+          <div class="door-arrow">→</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Pokemon — Coming Soon -->
+    <div class="vault-door vault-door--locked door--pokemon">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">⚡</div>
+          <div class="door-name">Pokemon TCG</div>
+          <div class="door-tagline">15,000+ cards planned</div>
+          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yu-Gi-Oh — Coming Soon -->
+    <div class="vault-door vault-door--locked door--yugioh">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">👁</div>
+          <div class="door-name">Yu-Gi-Oh!</div>
+          <div class="door-tagline">12,000+ cards planned</div>
+          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- One Piece — Coming Soon -->
+    <div class="vault-door vault-door--locked door--onepiece">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">☠️</div>
+          <div class="door-name">One Piece TCG</div>
+          <div class="door-tagline">1,500+ cards planned</div>
+          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lorcana — Coming Soon -->
+    <div class="vault-door vault-door--locked door--lorcana">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">🏰</div>
+          <div class="door-name">Disney Lorcana</div>
+          <div class="door-tagline">700+ cards planned</div>
+          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Riftbound — Coming Soon -->
+    <div class="vault-door vault-door--locked door--riftbound">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">⚔️</div>
+          <div class="door-name">Riftbound</div>
+          <div class="door-tagline">League of Legends TCG</div>
+          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Feature strip -->
+<section class="features">
+  <div class="feature">
+    <div class="feature-icon">💰</div>
+    <div class="feature-title">Live AUD Pricing</div>
+    <div class="feature-desc">Every price converted to Australian dollars at the live exchange rate. Updated daily from Scryfall.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">📊</div>
+    <div class="feature-title">90-Day Price History</div>
+    <div class="feature-desc">See whether a card is near its 52-week high or low before you buy or sell.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🛒</div>
+    <div class="feature-title">eBay AU Buy Links</div>
+    <div class="feature-desc">Direct links to the cheapest Australian eBay listings for every card. C3 store checked first.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🎲</div>
+    <div class="feature-title">Random Commander</div>
+    <div class="feature-desc">Filter by colour and mana value. Find your next Commander deck inspiration instantly.</div>
+  </div>
+</section>
+
+<footer>
+  <p>
+    <a href="/">Home</a>
+    <a href="/cards">Card Vault</a>
+    <a href="/cards/mtg">MTG Cards</a>
+    <a href="/ev-calculator.html">EV Calculator</a>
+    <a href="/shop.html">Shop</a>
+    <a href="/blog">Blog</a>
+    <a href="/tracker.html">Free Tracker</a>
+    <a href="/legal.html">Legal &amp; Disclaimers</a>
+    <a href="/contact.html">Contact</a>
+  </p>
+  <div class="footer-disclaimer">
+    Cards on Cards on Cards is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy. Not approved or endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast &copy; Wizards of the Coast LLC. Card images and data sourced via the Scryfall API. Cards on Cards on Cards is not affiliated with, endorsed by, or sponsored by Wizards of the Coast, The Pokemon Company, Nintendo, Disney, Bandai, or Konami. As an Amazon Associate and eBay Partner, we earn from qualifying purchases.
+  </div>
+  <p style="margin-top:12px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+</footer>
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<!-- EPN Smart Links -->
+<script>window._epn = {campaign: 5339146789, smartPopover:false};</script>
+<script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>
+</body>
+</html>
