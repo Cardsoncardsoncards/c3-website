@@ -555,7 +555,7 @@ async function loadCommanderCarousel() {
 
     // Build cards HTML - duplicate for infinite scroll
     const html = cards.slice(0,10).map(c => {
-      const aud = c.price_usd ? 'AU$' + (c.price_usd * 1.58).toFixed(0) : '';
+      const aud = (c.price_usd && c.price_usd >= 0.5) ? 'AU$' + (c.price_usd * 1.58).toFixed(0) : '';
       return '<a href="/cards/mtg/' + (c.slug || '') + '" class="ebay-card" style="text-decoration:none">'
         + (c.image_uri_small
             ? '<img src="' + c.image_uri_small + '" alt="' + (c.name||'').replace(/"/g,'') + '" class="ebay-card-img" loading="lazy" style="height:160px;object-fit:contain">'
