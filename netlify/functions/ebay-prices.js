@@ -70,7 +70,8 @@ exports.handler = async function(event, context) {
     const listings = searchData.itemSummaries.map(function(item) {
       const price = item.price ? parseFloat(item.price.value) : 0;
       const itemId = item.itemId || '';
-      const epnUrl = 'https://www.ebay.com.au/itm/' + itemId +
+      const numericId = itemId.includes('|') ? itemId.split('|')[1] : itemId;
+      const epnUrl = 'https://www.ebay.com.au/itm/' + numericId +
         '?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + campId +
         '&customid=C3Carousel&toolid=10001&mkevt=1';
       const image = item.image ? item.image.imageUrl : null;
