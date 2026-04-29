@@ -148,8 +148,8 @@ function buildPriceChart(snapshots) {
 
 function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount }) {
   const legalities = formatLegalities(card.legalities);
-  const priceAud = card.price_usd ? (card.price_usd * (snapshots[0]?.aud_usd_rate || 1.58)) : null;
-  const priceAudFoil = card.price_usd_foil ? (card.price_usd_foil * (snapshots[0]?.aud_usd_rate || 1.58)) : null;
+  const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * 1.39 : null);
+  const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * 1.39 : null;
   const latestSnap = snapshots[snapshots.length - 1];
   const high52w = latestSnap?.price_52w_high_aud;
   const low52w = latestSnap?.price_52w_low_aud;
@@ -226,7 +226,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     "@type": "Product",
     "name": card.name,
     "description": card.oracle_text || `${card.name} Magic: The Gathering card`,
-    "image": card.image_uri,
+    "image": card.image_uri_normal || card.image_uri_small || '',
     "offers": {
       "@type": "Offer",
       "priceCurrency": "AUD",
@@ -257,7 +257,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}">
   <meta property="og:title" content="${card.name} Price Australia | Cards on Cards on Cards">
   <meta property="og:description" content="${priceAud ? `${card.name} — ${formatAUD(priceAud)} AUD. ` : ''}MTG card price guide for Australia.">
-  ${card.image_uri ? `<meta property="og:image" content="${card.image_uri}">` : ''}
+  ${(card.image_uri_normal || card.image_uri_small) ? `<meta property="og:image" content="${card.image_uri_normal || card.image_uri_small}">` : ''}
   <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
   ${productSchema ? `<script type="application/ld+json">${JSON.stringify(productSchema)}</script>` : ''}
   <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
@@ -426,7 +426,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
 
 <div class="card-header">
   <div class="card-image-wrap">
-    <img id="card-front" src="${card.image_uri || ''}" alt="${card.name}" width="240">
+    <img id="card-front" src="${card.image_uri_normal || card.image_uri_small || ''}" alt="${card.name}" width="240">
     ${isDoubleFaced && card.card_faces?.[1]?.image_uris?.normal ? `<img id="card-back" class="card-image-back" src="${card.card_faces[1].image_uris.normal}" alt="${card.name} back face" width="240" style="display:none">` : ''}
     ${isDoubleFaced ? `<button class="flip-btn" onclick="flipCard()">⟳ Flip Card</button>` : ''}
   </div>
@@ -456,7 +456,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
       </div>
       <div class="price-main" id="price-display">${priceAud ? formatAUD(priceAud) : 'Price N/A'}</div>
       <div class="price-main" id="price-foil-display" style="display:none;color:var(--accent2)">${priceAudFoil ? formatAUD(priceAudFoil) : ''}</div>
-      <div style="font-size:13px;color:var(--text2);font-family:sans-serif;margin-top:4px">USD ${card.price_usd ? `$${card.price_usd}` : 'N/A'} · Rate: 1 USD = ${(snapshots[0]?.aud_usd_rate || 1.58).toFixed(4)} AUD</div>
+      <div style="font-size:13px;color:var(--text2);font-family:sans-serif;margin-top:4px">USD ${card.price_usd ? `$${card.price_usd}` : 'N/A'} · Rate: 1 USD = 1.3900 AUD</div>
 
       ${(high52w || low52w) ? `
       <div class="price-stats">
@@ -475,9 +475,9 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     </div>
 
     <div class="cta-group">
-      ${primaryEbay.length > 0 ? `<a href="${primaryEbay[0].itemAffiliateWebUrl || ebayStoreUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">🛒 Buy on C3 eBay Store${primaryEbay[0].price ? ` — AU$${parseFloat(primaryEbay[0].price.value).toFixed(2)}` : ''}</a>` : `<a href="${ebayStoreUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">🛒 Search C3 eBay Store</a>`}
+      <a href="${ebayStoreUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">🛒 Search Our eBay Store →</a>
 
-      ${fallbackEbay.length > 0 ? `<a href="${fallbackEbay[0].itemAffiliateWebUrl || ebayAllUrl}" class="cta-btn cta-secondary" target="_blank" rel="noopener">🔍 Cheapest on eBay AU${fallbackEbay[0].price ? ` — AU$${parseFloat(fallbackEbay[0].price.value).toFixed(2)}` : ''}</a>` : `<a href="${ebayAllUrl}" class="cta-btn cta-secondary" target="_blank" rel="noopener">🔍 Find Cheapest on eBay AU</a>`}
+      <a href="${ebayAllUrl}" class="cta-btn cta-secondary" target="_blank" rel="noopener">🔍 Find Cheapest on eBay AU</a>
 
       ${card.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${card.amazon_asin}?tag=${AMAZON_TAG}" class="cta-btn cta-amazon" target="_blank" rel="noopener">📦 Buy Sealed on Amazon AU</a>` : ''}
 

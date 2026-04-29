@@ -48,7 +48,7 @@ function renderCardHub(sets, topCards) {
     <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
       ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text)">${c.name}</div>
-      <div style="font-size:12px;color:var(--accent);font-weight:bold">${c.price_usd ? `~AU$${(c.price_usd * 1.58).toFixed(0)}` : ''}</div>
+      <div style="font-size:12px;color:var(--accent);font-weight:bold">${c.price_usd ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.39).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
   return `<!DOCTYPE html>
@@ -165,7 +165,7 @@ function renderRandomCommander() {
   ${BASE_STYLES}
   <style>
     .color-btn{width:36px;height:36px;border-radius:50%;border:2px solid transparent;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-    .color-btn.selected{border-color:var(--text);transform:scale(1.1)}
+    .color-btn.selected{border-color:#f5a623;transform:scale(1.15);box-shadow:0 0 0 3px rgba(245,166,35,0.5);background-color:rgba(245,166,35,0.15) !important;color:#fff !important}
     #commander-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:none;max-width:500px;margin:0 auto}
     #commander-img{width:200px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.6)}
   </style>
@@ -261,17 +261,17 @@ async function generateCommander() {
     const res = await fetch('/api/random-commander?' + params);
     const data = await res.json();
     if (!data.slug) { alert('No commanders found with those filters. Try fewer restrictions.'); return; }
-    const cardRes = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?slug=eq.' + data.slug + '&select=name,type_line,image_uri,price_usd,slug', {
+    const cardRes = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?slug=eq.' + data.slug + '&select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug', {
       headers: { 'apikey': '${SUPABASE_ANON_KEY}' }
     });
     const cards = await cardRes.json();
     if (!cards[0]) return;
     const card = cards[0];
-    document.getElementById('commander-img').src = card.image_uri || '';
+    document.getElementById('commander-img').src = card.image_uri_normal || card.image_uri_small || '';
     document.getElementById('commander-img').alt = card.name;
     document.getElementById('commander-name').textContent = card.name;
     document.getElementById('commander-type').textContent = card.type_line || '';
-    document.getElementById('commander-price').textContent = card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A';
+    document.getElementById('commander-price').textContent = card.price_aud > 0 ? 'AU$' + parseFloat(card.price_aud).toFixed(2) : (card.price_usd ? '~AU$' + (card.price_usd * 1.39).toFixed(2) : 'Price N/A');
     document.getElementById('commander-link').href = '/cards/mtg/' + card.slug;
     document.getElementById('commander-card').style.display = 'block';
     document.getElementById('commander-card').scrollIntoView({ behavior: 'smooth' });
@@ -296,7 +296,7 @@ async function renderSetIndex(setSlug) {
     <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
       ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text2)">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text);line-height:1.2">${c.name}</div>
-      <div style="font-size:12px;color:var(--accent);font-weight:bold">${c.price_usd ? `~AU$${(c.price_usd * 1.58).toFixed(0)}` : ''}</div>
+      <div style="font-size:12px;color:var(--accent);font-weight:bold">${c.price_usd ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.39).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
   const hasEVCalc = ['stx','mh3','ltr','woe','mkm','otj','blb','dsk','fdn','dft','tdm'].includes(set.set_code);
@@ -353,7 +353,7 @@ export default async (req) => {
   if (path === '/cards/mtg' || path === '/cards/mtg/') {
     const [sets, topCards] = await Promise.all([
       supabaseGet('mtg_sets?order=release_date.desc&limit=200&digital=eq.false'),
-      supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd&price_usd=gte.10')
+      supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
     ]);
     return new Response(renderCardHub(sets, topCards), {
       headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=3600' }

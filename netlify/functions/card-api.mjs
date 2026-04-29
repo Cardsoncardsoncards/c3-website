@@ -1,9 +1,10 @@
 // netlify/functions/card-api.mjs
-// Handles: likes, views, price alerts, collection waitlist, dynamic sitemap
+// Handles: likes, views, price alerts, collection waitlist, random commander, sitemap
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
+const RESEND_API_KEY = Netlify.env.get('RESEND_API_KEY');
 
 async function supabasePost(table, data, useService = true) {
   const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
@@ -24,11 +25,7 @@ async function supabaseDelete(table, filter, useService = true) {
   const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
     method: 'DELETE',
-    headers: {
-      'apikey': key,
-      'Authorization': `Bearer ${key}`,
-      'Content-Type': 'application/json'
-    }
+    headers: { 'apikey': key, 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' }
   });
   return res;
 }
@@ -42,8 +39,7 @@ async function supabaseGet(path, useService = false) {
 }
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
-  status,
-  headers: { 'Content-Type': 'application/json' }
+  status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
 });
 
 // --- Like handler ---
@@ -51,7 +47,6 @@ async function handleLike(req) {
   const body = await req.json();
   const { scryfallId, sessionId } = body;
   if (!scryfallId || !sessionId) return json({ error: 'Missing fields' }, 400);
-
   if (req.method === 'POST') {
     await supabasePost('mtg_card_likes', { scryfall_id: scryfallId, session_id: sessionId });
     return json({ ok: true });
@@ -67,8 +62,7 @@ async function handleLike(req) {
 async function handleView(req) {
   const body = await req.json();
   const { scryfallId, sessionId } = body;
-  if (!scryfallId) return json({ ok: true }); // Silently ignore
-
+  if (!scryfallId) return json({ ok: true });
   await supabasePost('mtg_card_views', {
     scryfall_id: scryfallId,
     session_id: sessionId || null,
@@ -91,6 +85,33 @@ async function handlePriceAlert(req) {
     alert_type: 'below',
     is_active: true
   });
+
+  // Send confirmation email via Resend
+  if (RESEND_API_KEY) {
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'C3 Price Alerts <alerts@cardsoncardsoncards.com.au>',
+          to: [email],
+          subject: `Price alert set for ${cardName}`,
+          html: `<p>Hi,</p>
+<p>You will be notified when <strong>${cardName}</strong> drops below <strong>AU$${targetPriceAud}</strong>.</p>
+<p>We check prices daily. When the price drops we will email you straight away.</p>
+<p>You can browse more cards at <a href="https://cardsoncardsoncards.com.au/cards/mtg">cardsoncardsoncards.com.au</a></p>
+<p>The C3 Team</p>
+<p style="font-size:11px;color:#999">To unsubscribe from price alerts, reply to this email.</p>`
+        })
+      });
+    } catch (e) {
+      console.error('Resend error:', e.message);
+    }
+  }
+
   return json({ ok: true });
 }
 
@@ -99,7 +120,6 @@ async function handleWaitlist(req) {
   const body = await req.json();
   const { email, sourceCardId, sourceCardName } = body;
   if (!email) return json({ error: 'Email required' }, 400);
-
   await supabasePost('collection_waitlist', {
     email,
     source_card_id: sourceCardId || null,
@@ -114,11 +134,11 @@ async function handleSitemap() {
   const cards = await supabaseGet('mtg_cards?select=slug,updated_at&price_usd=gte.0.5&order=price_usd.desc&limit=50000');
   const sets = await supabaseGet('mtg_sets?select=set_slug,release_date&order=release_date.desc');
 
-  const cardUrls = cards.map(c =>
+  const cardUrls = (Array.isArray(cards) ? cards : []).map(c =>
     `<url><loc>https://cardsoncardsoncards.com.au/cards/mtg/${c.slug}</loc><lastmod>${(c.updated_at || '').split('T')[0]}</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>`
   ).join('');
 
-  const setUrls = sets.map(s =>
+  const setUrls = (Array.isArray(sets) ? sets : []).map(s =>
     `<url><loc>https://cardsoncardsoncards.com.au/cards/mtg/sets/${s.set_slug}</loc><lastmod>${s.release_date || '2026-01-01'}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`
   ).join('');
 
@@ -131,25 +151,28 @@ ${cardUrls}
 </urlset>`;
 
   return new Response(xml, {
-    headers: {
-      'Content-Type': 'application/xml',
-      'Cache-Control': 'public, s-maxage=86400'
-    }
+    headers: { 'Content-Type': 'application/xml', 'Cache-Control': 'public, s-maxage=86400' }
   });
 }
 
 // --- Random commander ---
+// FIX: select color_identity so filter works, narrow to Legendary Creatures only
 async function handleRandomCommander(req) {
   const url = new URL(req.url);
   const colors = url.searchParams.get('colors');
   const maxCmc = url.searchParams.get('maxCmc');
 
-  let query = `mtg_cards?select=slug&type_line=like.*Legendary*&limit=1000`;
+  let query = `mtg_cards?select=slug,color_identity,cmc&type_line=like.*Legendary*Creature*&limit=2000`;
   if (maxCmc) query += `&cmc=lte.${maxCmc}`;
 
   const cards = await supabaseGet(query);
+  if (!Array.isArray(cards) || cards.length === 0) return json({ slug: null });
+
   const filtered = colors
-    ? cards.filter(c => colors.split('').every(col => (c.color_identity || []).includes(col.toUpperCase())))
+    ? cards.filter(c => {
+        const ci = c.color_identity || [];
+        return colors.split('').every(col => ci.includes(col.toUpperCase()));
+      })
     : cards;
 
   if (!filtered.length) return json({ slug: null });
