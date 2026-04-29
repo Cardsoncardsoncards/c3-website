@@ -475,9 +475,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     </div>
 
     <div class="cta-group">
-      <a href="${ebayStoreUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">🛒 Search Our eBay Store →</a>
-
-      <a href="${ebayAllUrl}" class="cta-btn cta-secondary" target="_blank" rel="noopener">🔍 Find Cheapest on eBay AU</a>
+      <a href="${ebayAllUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">🔍 Find on eBay AU</a>
 
       ${card.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${card.amazon_asin}?tag=${AMAZON_TAG}" class="cta-btn cta-amazon" target="_blank" rel="noopener">📦 Buy Sealed on Amazon AU</a>` : ''}
 

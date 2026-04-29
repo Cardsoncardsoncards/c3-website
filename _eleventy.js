@@ -6,6 +6,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/c3logo.png": "c3logo.png"});
   eleventyConfig.addPassthroughCopy({"src/c3-logo.png": "c3-logo.png"});
   eleventyConfig.addPassthroughCopy({"sitemap.xml": "sitemap.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-index.xml": "sitemap-index.xml"});
   eleventyConfig.addPassthroughCopy({"ev-calculator": "ev-calculator"});
   eleventyConfig.addPassthroughCopy({"netlify": "netlify"});
   eleventyConfig.addPassthroughCopy({"netlify.toml": "netlify.toml"});

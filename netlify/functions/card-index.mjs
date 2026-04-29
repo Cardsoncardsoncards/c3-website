@@ -193,7 +193,7 @@ ${NAV}
     <div style="margin-bottom:24px">
       <p style="color:var(--text2);font-size:13px;margin-bottom:10px">Max Mana Value</p>
       <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-        ${[2,3,4,5,6,7,'Any'].map(v => `<button class="btn btn-secondary" style="padding:6px 14px;font-size:13px" data-cmc="${v}" onclick="setCmc(this,${v === 'Any' ? 99 : v})">${v}</button>`).join('')}
+        ${[2,3,4,5,6,7,'Any'].map(v => `<button class="btn btn-secondary cmc-btn" style="padding:6px 14px;font-size:13px" data-cmc="${v}" onclick="setCmc(this,${v === 'Any' ? 99 : v})">${v}</button>`).join('')}
       </div>
     </div>
 
@@ -246,7 +246,8 @@ function toggleColor(btn) {
 
 function setCmc(btn, val) {
   selectedCmc = val;
-  document.querySelectorAll('[data-cmc]').forEach(b => b.classList.remove('btn-primary'));
+  document.querySelectorAll('.cmc-btn').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-secondary'); });
+  btn.classList.remove('btn-secondary');
   btn.classList.add('btn-primary');
 }
 
