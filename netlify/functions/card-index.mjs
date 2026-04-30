@@ -8,10 +8,15 @@ const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 
 async function supabaseGet(path) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch(e) {
+    return [];
+  }
 }
 
 const NAV = `<nav style="background:#1a1d2e;border-bottom:1px solid #2d3254;padding:12px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
