@@ -247,6 +247,8 @@ ${NAV}
 </footer>
 
 <script>
+window.C3_SUPA_URL = '${SUPABASE_URL}';
+window.C3_SUPA_KEY = '${SUPABASE_ANON_KEY}';
 let selectedColors = [];
 let selectedCmc = 99;
 
@@ -312,8 +314,8 @@ async function generateCommander() {
 
     lastCommanderSlug = data.slug;
 
-    const cardRes = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?slug=eq.' + data.slug + '&select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug', {
-      headers: { 'apikey': '${SUPABASE_ANON_KEY}' }
+    const cardRes = await fetch(window.C3_SUPA_URL + '/rest/v1/mtg_cards?slug=eq.' + data.slug + '&select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug', {
+      headers: { 'apikey': window.C3_SUPA_KEY }
     });
     const cards = await cardRes.json();
     if (!cards[0]) return;
@@ -343,12 +345,17 @@ async function renderSetIndex(setSlug) {
   const set = sets[0];
   const cards = await supabaseGet(`mtg_cards?set_code=eq.${set.set_code}&order=price_usd.desc.nullslast&limit=300&select=slug,name,image_uri_small,price_usd,rarity,collector_number`);
 
-  const cardGrid = cards.map(c => `
-    <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
+  const cardGrid = cards.map(c => {
+    const audPrice = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * 1.58 : 0);
+    const priceDisplay = (c.price_usd && c.price_usd >= 3) ? `~AU$${audPrice.toFixed(0)}` : '';
+    const rarityColor = {mythic:'#f5a623',rare:'#a855f7',uncommon:'#6ba3be',common:'#9ca3af'}[c.rarity] || '#9ca3af';
+    return `<a href="/cards/mtg/${c.slug}" data-rarity="${c.rarity || ''}" data-price="${audPrice.toFixed(2)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s;position:relative" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
+      ${c.rarity ? `<div style="position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:${rarityColor}"></div>` : ''}
       ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text2)">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text);line-height:1.2">${c.name}</div>
-      <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.58).toFixed(0)}` : ''}</div>
-    </a>`).join('');
+      <div style="font-size:12px;color:var(--accent);font-weight:bold">${priceDisplay}</div>
+    </a>`;
+  }).join('');
 
   const hasEVCalc = ['stx','mh3','ltr','woe','mkm','otj','blb','dsk','fdn','dft','tdm'].includes(set.set_code);
 
@@ -377,9 +384,56 @@ ${NAV}
     <a href="/blog" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:8px">📖 Read Our Guides</a>
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px">
+  <!-- Filter Bar -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px;font-family:sans-serif">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em">Filter:</span>
+      <select id="filter-rarity" onchange="filterCards()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:12px">
+        <option value="">All Rarities</option>
+        <option value="mythic">Mythic</option>
+        <option value="rare">Rare</option>
+        <option value="uncommon">Uncommon</option>
+        <option value="common">Common</option>
+      </select>
+      <select id="filter-price" onchange="filterCards()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:12px">
+        <option value="">Any Price</option>
+        <option value="20">AU$20+</option>
+        <option value="10">AU$10+</option>
+        <option value="5">AU$5+</option>
+        <option value="1">AU$1+</option>
+      </select>
+      <button onclick="clearFilters()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer">Clear</button>
+      <span id="filter-count" style="font-size:12px;color:var(--text2);margin-left:auto"></span>
+    </div>
+  </div>
+
+  <div id="card-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px">
     ${cardGrid}
   </div>
+
+  <script>
+  function filterCards() {
+    const rarity = document.getElementById('filter-rarity').value;
+    const minPrice = parseFloat(document.getElementById('filter-price').value) || 0;
+    const cards = document.querySelectorAll('#card-grid > a');
+    let visible = 0;
+    cards.forEach(card => {
+      const cardRarity = card.dataset.rarity || '';
+      const cardPrice = parseFloat(card.dataset.price) || 0;
+      const rarityOk = !rarity || cardRarity === rarity;
+      const priceOk = cardPrice >= minPrice;
+      card.style.display = (rarityOk && priceOk) ? '' : 'none';
+      if (rarityOk && priceOk) visible++;
+    });
+    document.getElementById('filter-count').textContent = visible + ' cards shown';
+  }
+  function clearFilters() {
+    document.getElementById('filter-rarity').value = '';
+    document.getElementById('filter-price').value = '';
+    document.querySelectorAll('#card-grid > a').forEach(c => c.style.display = '');
+    document.getElementById('filter-count').textContent = '';
+  }
+  </script>
 
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:32px;text-align:center">
     💰 Want to sell your ${set.set_name} cards? <a href="/tracker.html">Join the C3 buylist waitlist</a>

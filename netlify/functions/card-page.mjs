@@ -167,35 +167,6 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const hasEVCalc = ['stx', 'mh3', 'ltr', 'woe', 'mkm', 'otj', 'blb', 'dsk', 'fdn', 'dft', 'tdm'].includes(card.set_code);
 
 
-  // Auto-generated context paragraph
-  const legalFormats = ['standard','pioneer','modern','legacy','vintage','commander'].filter(f => legalities[f] === 'legal');
-  const legalStr = legalFormats.length ? legalFormats.slice(0,3).map(f=>f.charAt(0).toUpperCase()+f.slice(1)).join(', ') + (legalFormats.length > 3 ? ' and more' : '') : 'no major formats';
-  const trendStr = (() => {
-    if (snapshots.length < 7) return '';
-    const recent = snapshots.slice(-7).map(s => parseFloat(s.price_aud || 0));
-    const avg = recent.reduce((a,b)=>a+b,0)/recent.length;
-    const first = recent[0], last = recent[recent.length-1];
-    if (last > first * 1.05) return ' The price has been trending up over the last week.';
-    if (last < first * 0.95) return ' The price has dipped recently — potentially a good buying window.';
-    return ' The price has been stable recently.';
-  })();
-  const edhStr = card.edhrec_rank ? (card.edhrec_rank <= 200 ? ' It is a Commander format staple.' : card.edhrec_rank <= 1000 ? ' It sees regular play in Commander.' : '') : '';
-  const contextPara = `<div class="card-context"><strong>${card.name}</strong> is a ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1)+' ' : ''}${card.type_line || 'card'} from <strong>${card.set_name}</strong>.${edhStr} Legal in ${legalStr}.${trendStr} Prices shown are estimates based on US market data (Scryfall/TCGPlayer) converted to AUD. <a href="${ebayAllUrl}" target="_blank" rel="noopener" style="color:var(--accent)">Check current eBay AU prices →</a></div>`;
-
-  
-  // Share bar
-  const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}`);
-  const shareText = encodeURIComponent(`${card.name} — ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
-  const shareBar = `<div class="share-bar">
-    <span class="share-bar-label">Share</span>
-    <button class="share-btn share-discord" onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
-    <a href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
-    <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
-    <a href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
-    <button class="share-btn share-copy" onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}').then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
-  </div>`;
-
   const legalityBadges = ['standard', 'pioneer', 'modern', 'legacy', 'vintage', 'commander']
     .map(fmt => {
       const status = legalities[fmt] || 'not_legal';
@@ -211,6 +182,33 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
 
   const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' mtg')}&campid=${EPN_CAMPID}`;
   const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}`;
+
+  // Auto-generated context paragraph (defined after ebayAllUrl)
+  const legalFormats = ['standard','pioneer','modern','legacy','vintage','commander'].filter(f => legalities[f] === 'legal');
+  const legalStr = legalFormats.length ? legalFormats.slice(0,3).map(f=>f.charAt(0).toUpperCase()+f.slice(1)).join(', ') + (legalFormats.length > 3 ? ' and more' : '') : 'no major formats';
+  const trendStr = (() => {
+    if (snapshots.length < 7) return '';
+    const recent = snapshots.slice(-7).map(s => parseFloat(s.price_aud || 0));
+    const first = recent[0], last = recent[recent.length-1];
+    if (last > first * 1.05) return ' The price has been trending up over the last week.';
+    if (last < first * 0.95) return ' The price has dipped recently — potentially a good buying window.';
+    return ' The price has been stable recently.';
+  })();
+  const edhStr = card.edhrec_rank ? (card.edhrec_rank <= 200 ? ' It is a Commander format staple.' : card.edhrec_rank <= 1000 ? ' It sees regular play in Commander.' : '') : '';
+  const contextPara = `<div class="card-context"><strong>${card.name}</strong> is a ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1)+' ' : ''}${card.type_line || 'card'} from <strong>${card.set_name}</strong>.${edhStr} Legal in ${legalStr}.${trendStr} Prices shown are estimates based on US market data (Scryfall/TCGPlayer) converted to AUD. <a href="${ebayAllUrl}" target="_blank" rel="noopener" style="color:var(--accent)">Check current eBay AU prices →</a></div>`;
+
+  // Share bar
+  const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}`);
+  const shareText = encodeURIComponent(`${card.name} — ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
+  const shareBar = `<div class="share-bar">
+    <span class="share-bar-label">Share</span>
+    <button class="share-btn share-discord" onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
+    <a href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
+    <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
+    <a href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
+    <button class="share-btn share-copy" onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}').then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
+  </div>`;
 
   const relatedCardsHTML = relatedCards.length > 0 ? `
   <section class="related-cards">
