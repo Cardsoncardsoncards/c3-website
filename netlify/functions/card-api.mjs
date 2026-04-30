@@ -32,10 +32,15 @@ async function supabaseDelete(table, filter, useService = true) {
 
 async function supabaseGet(path, useService = false) {
   const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
-  });
-  return res.json();
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+    });
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch(e) {
+    return [];
+  }
 }
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
@@ -162,7 +167,7 @@ async function handleRandomCommander(req) {
   const colors = url.searchParams.get('colors');
   const maxCmc = url.searchParams.get('maxCmc');
 
-  let query = `mtg_cards?select=slug,color_identity,cmc&type_line=like.*Legendary*Creature*&limit=2000`;
+  let query = `mtg_cards?select=slug,color_identity,cmc&type_line=like.*Legendary*Creature*&image_uri_normal=not.is.null&limit=2000`;
   if (maxCmc) query += `&cmc=lte.${maxCmc}`;
 
   const cards = await supabaseGet(query);
