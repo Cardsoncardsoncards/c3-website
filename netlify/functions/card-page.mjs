@@ -151,10 +151,11 @@ function buildPriceChart(snapshots) {
   </div>`;
 }
 
-function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount }) {
+function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved }) {
   const legalities = formatLegalities(card.legalities);
   const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * 1.58 : null);
   const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * 1.58 : null;
+  const priceAudEtched = card.price_usd_etched ? card.price_usd_etched * 1.58 : null;
   const latestSnap = snapshots[snapshots.length - 1];
   const high52w = latestSnap?.price_52w_high_aud;
   const low52w = latestSnap?.price_52w_low_aud;
@@ -163,7 +164,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const isReserved = card.reserved;
   const isDoubleFaced = card.card_faces && card.card_faces.length > 1;
   const blogPosts = card.related_blog_posts || [];
-  const setSlug = card.set_code;
+  const setSlug = setSlugResolved || card.set_code;
   const hasEVCalc = ['stx', 'mh3', 'ltr', 'woe', 'mkm', 'otj', 'blb', 'dsk', 'fdn', 'dft', 'tdm'].includes(card.set_code);
 
 
@@ -395,7 +396,22 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .keyword-badges { display: flex; flex-wrap: wrap; gap: 6px; }
     .keyword-badge { background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; font-size: 12px; font-family: sans-serif; }
 
-    /* Legalities */
+    /* Price rows */
+    .price-rows { display: flex; flex-direction: column; gap: 6px; margin-bottom: 4px; }
+    .price-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; font-family: sans-serif; }
+    .price-row--foil { border-color: rgba(124,106,245,.3); }
+    .price-row--etched { border-color: rgba(74,158,255,.3); }
+    .price-row-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text2); min-width: 60px; }
+    .price-row--foil .price-row-label { color: var(--accent2); }
+    .price-row--etched .price-row-label { color: var(--blue); }
+    .price-row-aud { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+    .price-row--foil .price-row-aud { color: var(--accent2); }
+    .price-row--etched .price-row-aud { color: var(--blue); }
+    .price-row-usd { font-size: 13px; color: var(--text2); }
+    .price-row-toggle { background: none; border: 1px solid var(--border); color: var(--text2); font-size: 10px; padding: 3px 8px; border-radius: 4px; cursor: pointer; transition: border-color .18s; font-family: sans-serif; white-space: nowrap; }
+    .price-row-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Foil toggle (keep for backwards compat) */
     .legality-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; }
     .legality-badge { border-radius: 8px; padding: 8px; text-align: center; font-family: sans-serif; font-size: 12px; }
     .legality-badge.legal { background: rgba(76,175,80,0.15); border: 1px solid rgba(76,175,80,0.4); }
@@ -527,70 +543,70 @@ ${contextPara}
       ${prevCard ? `<a href="/cards/mtg/${prevCard.slug}">← ${prevCard.name}</a>` : ''}
       <a href="/cards/mtg/sets/${setSlug}">All ${card.set_name} Cards</a>
       ${nextCard ? `<a href="/cards/mtg/${nextCard.slug}">${nextCard.name} →</a>` : ''}
-      <a href="/cards/mtg/random">Random Card</a>
+      <a href="/cards/mtg/random">🃏 Search Cards</a>
     </div>
 
     <div class="price-block">
 
-      <!-- Printing toggle: Non-Foil / Foil / Etched -->
-      <div class="foil-toggle">
-        <button class="active" onclick="showPrinting('nf',this)">Non-Foil</button>
-        ${priceAudFoil ? `<button onclick="showPrinting('foil',this)">Foil</button>` : ''}
-        ${card.price_usd_etched ? `<button onclick="showPrinting('etched',this)">Etched</button>` : ''}
+      <!-- All printings shown simultaneously -->
+      <div class="price-rows">
+        <div class="price-row price-row--nf">
+          <span class="price-row-label">Non-Foil</span>
+          <span class="price-row-aud">${priceAud ? formatAUD(priceAud) : 'N/A'}</span>
+          ${card.price_usd ? `<button class="price-row-toggle" onclick="toggleRowCurrency(this,'${parseFloat(card.price_usd).toFixed(2)}','${priceAud ? priceAud.toFixed(2) : ''}')">show USD</button>
+          <span class="price-row-usd" style="display:none">$${parseFloat(card.price_usd).toFixed(2)} USD</span>` : ''}
+        </div>
+        ${priceAudFoil ? `
+        <div class="price-row price-row--foil">
+          <span class="price-row-label">Foil</span>
+          <span class="price-row-aud">${formatAUD(priceAudFoil)}</span>
+          <button class="price-row-toggle" onclick="toggleRowCurrency(this,'${parseFloat(card.price_usd_foil).toFixed(2)}','${priceAudFoil.toFixed(2)}')">show USD</button>
+          <span class="price-row-usd" style="display:none">$${parseFloat(card.price_usd_foil).toFixed(2)} USD</span>
+        </div>` : ''}
+        ${priceAudEtched ? `
+        <div class="price-row price-row--etched">
+          <span class="price-row-label">Etched</span>
+          <span class="price-row-aud">${formatAUD(priceAudEtched)}</span>
+          <button class="price-row-toggle" onclick="toggleRowCurrency(this,'${parseFloat(card.price_usd_etched).toFixed(2)}','${priceAudEtched.toFixed(2)}')">show USD</button>
+          <span class="price-row-usd" style="display:none">$${parseFloat(card.price_usd_etched).toFixed(2)} USD</span>
+        </div>` : ''}
       </div>
 
-      <!-- Main price display -->
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:8px 0 4px">
-        <div class="price-main" id="price-display">${priceAud ? formatAUD(priceAud) : 'Price N/A'}</div>
-        <button id="currency-toggle" onclick="toggleCurrency()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:sans-serif;transition:border-color .18s" title="Switch between AUD and USD">AUD ⇄ USD</button>
+      <div style="font-size:11px;color:var(--text2);font-family:sans-serif;margin:8px 0 14px">
+        Scryfall estimate · USD converted at ~1.58 AUD/USD · Updated daily
       </div>
 
-      <!-- Currency label -->
-      <div id="currency-label" style="font-size:12px;color:var(--text2);font-family:sans-serif;margin-bottom:12px">
-        ${priceAud ? `Scryfall estimate · USD $${card.price_usd || 'N/A'} converted at ~1.58 AUD/USD` : ''}
-      </div>
-
-      <!-- 52-week range -->
       ${(high52w || low52w) ? `
       <div class="price-stats">
-        <div class="price-stat"><div class="price-stat-label">52W High</div><div class="price-stat-value" id="stat-high">${formatAUD(high52w) || 'N/A'}</div></div>
-        <div class="price-stat"><div class="price-stat-label">Current</div><div class="price-stat-value" id="stat-current">${formatAUD(priceAud) || 'N/A'}</div></div>
-        <div class="price-stat"><div class="price-stat-label">52W Low</div><div class="price-stat-value" id="stat-low">${formatAUD(low52w) || 'N/A'}</div></div>
+        <div class="price-stat"><div class="price-stat-label">52W High</div><div class="price-stat-value">${formatAUD(high52w) || 'N/A'}</div></div>
+        <div class="price-stat"><div class="price-stat-label">Current</div><div class="price-stat-value">${formatAUD(priceAud) || 'N/A'}</div></div>
+        <div class="price-stat"><div class="price-stat-label">52W Low</div><div class="price-stat-value">${formatAUD(low52w) || 'N/A'}</div></div>
       </div>` : ''}
 
-      <!-- Condition guide -->
-      ${priceAud ? `
-      <div class="condition-guide" id="condition-guide">
-        Condition: NM ${formatAUD(priceAud)} · LP ${formatAUD(priceAud * 0.80)} · Played ${formatAUD(priceAud * 0.60)}
-      </div>` : ''}
-
-      <!-- Playset -->
-      ${priceAud ? `<div class="price-4x" id="playset-line">4× playset = ${formatAUD(priceAud * 4)}</div>` : ''}
-
-      <!-- Verdict -->
+      ${priceAud ? `<div class="condition-guide">Condition: NM ${formatAUD(priceAud)} · LP ${formatAUD(priceAud * 0.80)} · Played ${formatAUD(priceAud * 0.60)}</div>` : ''}
+      ${priceAud ? `<div class="price-4x">4× playset = ${formatAUD(priceAud * 4)}</div>` : ''}
       ${verdict ? `<div class="verdict ${verdict.class}">📊 ${verdict.label} — ${verdict.advice}</div>` : ''}
 
-      <!-- Card Kingdom prices (loaded async) -->
+      <!-- Card Kingdom (async) -->
       <div id="ck-price-block" style="margin-top:14px;display:none">
         <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);font-family:sans-serif;margin-bottom:8px">US Market Reference (Card Kingdom)</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <div id="ck-retail" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:sans-serif;font-size:13px">
             <div style="color:var(--text2);font-size:11px;margin-bottom:2px">CK Retail (USD)</div>
-            <div style="font-weight:700;color:var(--text)">Loading...</div>
+            <div style="font-weight:700;color:var(--text)">—</div>
           </div>
           <div id="ck-buylist" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:sans-serif;font-size:13px">
             <div style="color:var(--text2);font-size:11px;margin-bottom:2px">CK Will Pay (USD)</div>
-            <div style="font-weight:700;color:var(--text)">Loading...</div>
+            <div style="font-weight:700;color:var(--text)">—</div>
           </div>
           <div id="ck-retail-aud" style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:10px 14px;font-family:sans-serif;font-size:13px">
             <div style="color:var(--text2);font-size:11px;margin-bottom:2px">CK Retail (~AUD)</div>
-            <div style="font-weight:700;color:var(--accent)">Loading...</div>
+            <div style="font-weight:700;color:var(--accent)">—</div>
           </div>
         </div>
         <div style="font-size:11px;color:var(--text2);font-family:sans-serif;margin-top:6px;opacity:.7">Card Kingdom prices are US market reference only. Not available for purchase through C3.</div>
       </div>
 
-      <!-- Price explanation -->
       <div class="price-disclaimer" style="margin-top:14px">
         <strong style="color:var(--text);font-size:12px">How this price works:</strong><br>
         The AUD price is a Scryfall USD estimate converted at ~1.58 AUD/USD. It reflects recent US market sales (TCGPlayer mid) and is updated daily. It is a reference, not a guaranteed buy or sell price. Australian eBay prices may vary.
@@ -600,11 +616,8 @@ ${contextPara}
 
     <div class="cta-group">
       <a href="${ebayAllUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">🔍 Find on eBay AU</a>
-
       ${card.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${card.amazon_asin}?tag=${AMAZON_TAG}" class="cta-btn cta-amazon" target="_blank" rel="noopener">📦 Buy Sealed on Amazon AU</a>` : ''}
-
       ${hasEVCalc ? `<a href="/ev-calculator.html#${card.set_code}" class="cta-btn cta-ev">📊 ${card.set_name} EV Calculator</a>` : ''}
-
       <button class="cta-btn cta-watch" id="watch-btn" onclick="toggleWatch('${card.scryfall_id}','${card.name.replace(/'/g,"\'")}')">
         <span id="watch-icon">☆</span> <span id="watch-label">Watch this card</span>
       </button>
@@ -625,8 +638,6 @@ ${contextPara}
       <a href="https://scryfall.com/card/${card.set_code}/${card.collector_number}" target="_blank" rel="noopener" style="color:var(--text2)">Card data via Scryfall ↗</a>
     </p>
   </div>` : ''}
-
-  <!-- Price Alert (coming soon - hidden) -->
 
   <!-- Card Details -->
   <div class="section">
@@ -668,15 +679,9 @@ ${contextPara}
   </div>
 
 
-  <div class="newsletter-inline">
-    <h4>📬 Weekly AUD Price Alerts</h4>
-    <p>Get notified when cards you're watching drop in price. Australian prices, no spam.</p>
-    <div class="newsletter-inline-form">
-      <input type="email" id="nl-email" placeholder="your@email.com">
-      <button onclick="subscribeNewsletter()">Subscribe Free</button>
-    </div>
-    <div id="nl-msg" style="font-size:12px;margin-top:6px;color:var(--text2)"></div>
-  </div>
+  <!-- Newsletter signup (coming soon - hidden)
+  <div class="newsletter-inline">...</div>
+  -->
   <div class="helpful-bar" id="helpful-bar">
     <span>Was this page helpful?</span>
     <button class="helpful-btn" onclick="voteHelpful(1,this)">👍 Yes</button>
@@ -716,17 +721,6 @@ ${blogHTML}
   </div>
 </div>
 
-<!-- Collection Waitlist Modal -->
-<div id="collection-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:999;align-items:center;justify-content:center">
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;max-width:400px;width:90%">
-    <h3 style="margin-bottom:12px">Collection Tracking — Coming Soon</h3>
-    <p style="font-size:14px;color:var(--text2);margin-bottom:16px;font-family:sans-serif">Join the waitlist and be first to track your collection on C3 with live AUD valuations.</p>
-    <input type="email" id="waitlist-email" placeholder="your@email.com" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:6px;margin-bottom:10px;font-size:14px">
-    <button onclick="joinWaitlist('${card.scryfall_id}','${card.name.replace(/'/g, "\\'")}')" style="width:100%;background:var(--accent);color:#000;border:none;padding:10px;border-radius:6px;font-weight:bold;cursor:pointer">Join Waitlist</button>
-    <button onclick="document.getElementById('collection-modal').style.display='none'" style="width:100%;background:none;border:none;color:var(--text2);margin-top:8px;cursor:pointer;font-size:13px">Cancel</button>
-    <div id="waitlist-msg" style="font-size:13px;margin-top:8px;font-family:sans-serif;text-align:center"></div>
-  </div>
-</div>
 
 <footer>
   <p style="margin-bottom:12px">
@@ -744,83 +738,24 @@ ${blogHTML}
 </footer>
 
 <script>
-// ── Price data (server-injected) ──
-const RATE = 1.58;
-const priceData = {
-  nf:      { usd: ${JSON.stringify(card.price_usd ? parseFloat(card.price_usd) : null)},      aud: ${JSON.stringify(priceAud)} },
-  foil:    { usd: ${JSON.stringify(card.price_usd_foil ? parseFloat(card.price_usd_foil) : null)}, aud: ${JSON.stringify(priceAudFoil)} },
-  etched:  { usd: ${JSON.stringify(card.price_usd_etched ? parseFloat(card.price_usd_etched) : null)}, aud: ${JSON.stringify(card.price_usd_etched ? card.price_usd_etched * 1.58 : null)} }
-};
-const high52w = ${JSON.stringify(high52w || null)};
-const low52w  = ${JSON.stringify(low52w || null)};
-
-let currentPrinting = 'nf';
-let showingAUD = true;
-
-function fmt(val, isAUD) {
-  if (!val) return 'N/A';
-  return isAUD
-    ? new Intl.NumberFormat('en-AU', { style:'currency', currency:'AUD' }).format(val)
-    : '$' + val.toFixed(2) + ' USD';
-}
-
-function updatePriceDisplay() {
-  const data = priceData[currentPrinting];
-  const val = showingAUD ? data.aud : data.usd;
-  const el = document.getElementById('price-display');
-  if (el) {
-    el.textContent = fmt(val, showingAUD);
-    el.style.color = currentPrinting === 'nf' ? 'var(--accent)' : 'var(--accent2)';
+// Per-row USD toggle
+function toggleRowCurrency(btn, usd, aud) {
+  const row = btn.closest('.price-row');
+  const audEl = row.querySelector('.price-row-aud');
+  const usdEl = row.querySelector('.price-row-usd');
+  const showing = btn.textContent.trim() === 'show AUD';
+  if (showing) {
+    audEl.style.display = '';
+    usdEl.style.display = 'none';
+    btn.textContent = 'show USD';
+  } else {
+    audEl.style.display = 'none';
+    usdEl.style.display = '';
+    btn.textContent = 'show AUD';
   }
-
-  // Currency label
-  const lbl = document.getElementById('currency-label');
-  if (lbl) {
-    if (showingAUD && data.usd) {
-      lbl.textContent = 'Scryfall estimate · USD $' + data.usd.toFixed(2) + ' converted at ~1.58 AUD/USD';
-    } else if (!showingAUD && data.usd) {
-      lbl.textContent = 'Scryfall USD estimate (TCGPlayer mid) · ~AUD ' + (data.usd * RATE).toFixed(2);
-    } else {
-      lbl.textContent = 'Price not available for this printing';
-    }
-  }
-
-  // Currency toggle button label
-  const toggleBtn = document.getElementById('currency-toggle');
-  if (toggleBtn) toggleBtn.textContent = showingAUD ? 'AUD ⇄ USD' : 'USD ⇄ AUD';
-
-  // 52-week stats (always AUD)
-  const statHigh = document.getElementById('stat-high');
-  const statLow  = document.getElementById('stat-low');
-  const statCurr = document.getElementById('stat-current');
-  if (statHigh && high52w) statHigh.textContent = showingAUD ? fmt(high52w, true) : fmt(high52w / RATE, false);
-  if (statLow  && low52w)  statLow.textContent  = showingAUD ? fmt(low52w, true)  : fmt(low52w / RATE, false);
-  if (statCurr && val)     statCurr.textContent = fmt(val, showingAUD);
-
-  // Condition guide
-  const cg = document.getElementById('condition-guide');
-  if (cg && val) {
-    cg.textContent = 'Condition: NM ' + fmt(val, showingAUD) + ' · LP ' + fmt(val * 0.80, showingAUD) + ' · Played ' + fmt(val * 0.60, showingAUD);
-  }
-
-  // Playset
-  const ps = document.getElementById('playset-line');
-  if (ps && val) ps.textContent = '4× playset = ' + fmt(val * 4, showingAUD);
 }
 
-function showPrinting(mode, btn) {
-  currentPrinting = mode;
-  document.querySelectorAll('.foil-toggle button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  updatePriceDisplay();
-}
-
-function toggleCurrency() {
-  showingAUD = !showingAUD;
-  updatePriceDisplay();
-}
-
-// ── Card Kingdom prices (async) ──
+// Card Kingdom prices (async)
 async function loadCKPrices() {
   const cardName = ${JSON.stringify(card.name)};
   try {
@@ -828,12 +763,11 @@ async function loadCKPrices() {
     if (!res.ok) return;
     const data = await res.json();
     if (!data || (!data.retail && !data.buylist)) return;
-
+    const RATE = 1.58;
     const block = document.getElementById('ck-price-block');
     const ckRetail = document.getElementById('ck-retail');
     const ckBuylist = document.getElementById('ck-buylist');
     const ckRetailAud = document.getElementById('ck-retail-aud');
-
     if (data.retail) {
       ckRetail.querySelector('div:last-child').textContent = '$' + parseFloat(data.retail).toFixed(2);
       ckRetailAud.querySelector('div:last-child').textContent = 'AU$' + (parseFloat(data.retail) * RATE).toFixed(2);
@@ -841,19 +775,14 @@ async function loadCKPrices() {
       ckRetail.querySelector('div:last-child').textContent = 'N/A';
       ckRetailAud.querySelector('div:last-child').textContent = 'N/A';
     }
-
     if (data.buylist) {
       ckBuylist.querySelector('div:last-child').textContent = '$' + parseFloat(data.buylist).toFixed(2);
     } else {
       ckBuylist.querySelector('div:last-child').textContent = 'N/A';
     }
-
-    if (block) block.style.display = '';
-  } catch(e) {
-    // Silently fail — CK block stays hidden
-  }
+    if (block && (data.retail || data.buylist)) block.style.display = '';
+  } catch(e) { /* silently fail */ }
 }
-
 loadCKPrices();
 
 // Double-faced card flip
@@ -938,25 +867,6 @@ function initWatch() {
   }
 }
 
-// Collection counter stub (UI hidden, keeping localStorage logic for future)
-const COLLECTION_KEY = 'c3_collection';
-let collection = JSON.parse(localStorage.getItem(COLLECTION_KEY) || '{}');
-
-// Newsletter subscribe
-async function subscribeNewsletter() {
-  const email = document.getElementById('nl-email').value.trim();
-  const msg = document.getElementById('nl-msg');
-  if (!email) { msg.textContent = 'Please enter your email.'; msg.style.color='var(--accent)'; return; }
-  try {
-    const res = await fetch('/api/newsletter', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({email})
-    });
-    msg.textContent = res.ok ? '✓ Subscribed! Check your inbox.' : 'Something went wrong. Try again.';
-    msg.style.color = res.ok ? '#4caf50' : '#f44';
-  } catch { msg.textContent = 'Something went wrong.'; msg.style.color='#f44'; }
-}
 
 // Helpful vote
 function voteHelpful(val, btn) {
@@ -1075,6 +985,7 @@ export default async (req, context) => {
     // Sealed products for this set (use set's amazon_asin if available)
     const setData = await supabaseGet(`mtg_sets?set_code=eq.${card.set_code}&limit=1`, false).catch(() => []);
     const sealedProducts = setData[0]?.amazon_asin ? [{ asin: setData[0].amazon_asin, name: `${card.set_name} Booster Box` }] : [];
+    const setSlugResolved = setData[0]?.set_slug || card.set_code;
 
     // Prev/next card by collector number
     const collNum = parseInt(card.collector_number) || 0;
@@ -1095,7 +1006,7 @@ export default async (req, context) => {
       console.error('eBay fetch error:', e.message);
     }
 
-    const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount });
+    const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved });
 
     return new Response(html, {
       status: 200,
