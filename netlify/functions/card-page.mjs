@@ -48,7 +48,12 @@ async function getEbayListing(cardName, token, fromStore = true) {
     }
   });
   const data = await res.json();
-  return data.itemSummaries || [];
+  const items = data.itemSummaries || [];
+  // Extract numeric itemId from Browse API format (v1|123456|0 -> 123456)
+  return items.map(item => ({
+    ...item,
+    itemId: item.itemId && item.itemId.includes('|') ? item.itemId.split('|')[1] : item.itemId
+  }));
 }
 
 function formatAUD(num) {
@@ -148,8 +153,8 @@ function buildPriceChart(snapshots) {
 
 function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount }) {
   const legalities = formatLegalities(card.legalities);
-  const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * 1.39 : null);
-  const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * 1.39 : null;
+  const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * 1.58 : null);
+  const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * 1.58 : null;
   const latestSnap = snapshots[snapshots.length - 1];
   const high52w = latestSnap?.price_52w_high_aud;
   const low52w = latestSnap?.price_52w_low_aud;
@@ -456,7 +461,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
       </div>
       <div class="price-main" id="price-display">${priceAud ? formatAUD(priceAud) : 'Price N/A'}</div>
       <div class="price-main" id="price-foil-display" style="display:none;color:var(--accent2)">${priceAudFoil ? formatAUD(priceAudFoil) : ''}</div>
-      <div style="font-size:13px;color:var(--text2);font-family:sans-serif;margin-top:4px">USD ${card.price_usd ? `$${card.price_usd}` : 'N/A'} · Rate: 1 USD = 1.3900 AUD</div>
+      <div style="font-size:13px;color:var(--text2);font-family:sans-serif;margin-top:4px">USD ${card.price_usd ? `$${card.price_usd}` : 'N/A'} · Rate: 1 USD = ~1.58 AUD</div>
 
       ${(high52w || low52w) ? `
       <div class="price-stats">
@@ -608,7 +613,17 @@ function showPrice(mode, btn) {
   document.querySelectorAll('.foil-toggle button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   const val = prices[mode];
-  document.getElementById('price-display').textContent = val ? new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD'}).format(val) : 'N/A';
+  const formatted = val ? new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD'}).format(val) : 'N/A';
+  const mainEl = document.getElementById('price-display');
+  const foilEl = document.getElementById('price-foil-display');
+  if (mode === 'nf') {
+    mainEl.style.display = '';
+    mainEl.textContent = formatted;
+    if (foilEl) foilEl.style.display = 'none';
+  } else {
+    mainEl.style.display = 'none';
+    if (foilEl) { foilEl.style.display = ''; foilEl.textContent = formatted; }
+  }
 }
 
 // Double-faced card flip
