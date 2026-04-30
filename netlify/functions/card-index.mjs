@@ -233,7 +233,7 @@ ${NAV}
   <div style="max-width:600px;margin:32px auto 0;text-align:left">
     <h3 style="margin-bottom:12px">Related Guides</h3>
     <div style="display:flex;flex-wrap:wrap;gap:10px">
-      <a href="/blog/best-mtg-commander-decks-australia/">Best MTG Commander Decks Australia</a>
+      <a href="/blog/mtg-commander-decks-australia/">Best MTG Commander Decks Australia</a>
       <a href="/blog/free-mtg-collection-tracker-australia/">Free MTG Collection Tracker</a>
       <a href="/cards/mtg">Browse All MTG Cards</a>
       <a href="/ev-calculator.html">EV Calculator</a>
@@ -268,17 +268,50 @@ function setCmc(btn, val) {
   btn.classList.add('btn-primary');
 }
 
+let lastCommanderSlug = null;
+
+function showMsg(text, color) {
+  let el = document.getElementById('commander-msg');
+  if (!el) {
+    el = document.createElement('p');
+    el.id = 'commander-msg';
+    el.style = 'text-align:center;font-size:14px;margin-top:16px;font-family:sans-serif';
+    document.querySelector('.filter-box').after(el);
+  }
+  el.textContent = text;
+  el.style.color = color || 'var(--text2)';
+}
+
 async function generateCommander() {
-  const btn = document.querySelector('[onclick="generateCommander()"]');
-  btn.textContent = '⏳ Finding commander...';
-  btn.disabled = true;
+  const btns = document.querySelectorAll('[onclick="generateCommander()"]');
+  btns.forEach(b => { b.textContent = '\u23f3 Finding commander...'; b.disabled = true; });
+  showMsg('', '');
   try {
     const params = new URLSearchParams();
     if (selectedColors.length) params.set('colors', selectedColors.join(''));
     if (selectedCmc < 99) params.set('maxCmc', selectedCmc);
-    const res = await fetch('/api/random-commander?' + params);
-    const data = await res.json();
-    if (!data.slug) { alert('No commanders found with those filters. Try fewer restrictions.'); return; }
+    if (lastCommanderSlug) params.set('exclude', lastCommanderSlug);
+
+    let res = await fetch('/api/random-commander?' + params);
+    let data = await res.json();
+
+    // Retry without CMC if no results found
+    if (!data.slug && selectedCmc < 99) {
+      const retryParams = new URLSearchParams();
+      if (selectedColors.length) retryParams.set('colors', selectedColors.join(''));
+      if (lastCommanderSlug) retryParams.set('exclude', lastCommanderSlug);
+      res = await fetch('/api/random-commander?' + retryParams);
+      data = await res.json();
+      if (data.slug) showMsg('No commanders at CMC ' + selectedCmc + ' \u2014 showing any mana value instead.', 'var(--text2)');
+    }
+
+    if (!data.slug) {
+      showMsg('No commanders found with those filters. Try fewer colour restrictions.', '#f5a623');
+      return;
+    }
+
+    lastCommanderSlug = data.slug;
+
     const cardRes = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?slug=eq.' + data.slug + '&select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug', {
       headers: { 'apikey': '${SUPABASE_ANON_KEY}' }
     });
@@ -289,12 +322,12 @@ async function generateCommander() {
     document.getElementById('commander-img').alt = card.name;
     document.getElementById('commander-name').textContent = card.name;
     document.getElementById('commander-type').textContent = card.type_line || '';
-    document.getElementById('commander-price').textContent = card.price_aud > 0 ? 'AU$' + parseFloat(card.price_aud).toFixed(2) : (card.price_usd ? '~AU$' + (card.price_usd * 1.39).toFixed(2) : 'Price N/A');
+    document.getElementById('commander-price').textContent = card.price_aud > 0 ? 'AU$' + parseFloat(card.price_aud).toFixed(2) : (card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A');
     document.getElementById('commander-link').href = '/cards/mtg/' + card.slug;
     document.getElementById('commander-card').style.display = 'block';
     document.getElementById('commander-card').scrollIntoView({ behavior: 'smooth' });
-  } catch(e) { alert('Something went wrong. Try again.'); }
-  finally { btn.textContent = '✨ Generate Commander'; btn.disabled = false; }
+  } catch(e) { showMsg('Something went wrong. Try again.', '#f44336'); }
+  finally { btns.forEach(b => { b.textContent = '\u2728 Generate Commander'; b.disabled = false; }); }
 }
 </script>
 <!-- GA4 -->
