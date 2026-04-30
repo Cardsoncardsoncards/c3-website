@@ -407,9 +407,11 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     /* Related carousels */
     .related-cards, .sealed-products { max-width: 1100px; margin: 0 auto 24px; padding: 0 24px; }
     .related-cards h2, .sealed-products h2 { font-size: 18px; margin-bottom: 16px; }
-    .card-carousel { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; animation: scroll-carousel 40s linear infinite; }
-    .card-carousel:hover { animation-play-state: paused; }
-    @keyframes scroll-carousel { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .card-carousel { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; cursor: grab; user-select: none; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+    .card-carousel:active { cursor: grabbing; }
+    .card-carousel::-webkit-scrollbar { height: 4px; }
+    .card-carousel::-webkit-scrollbar-track { background: transparent; }
+    .card-carousel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
     .mini-card { flex: 0 0 140px; scroll-snap-align: start; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 8px; text-align: center; transition: border-color 0.2s; }
     .mini-card:hover { border-color: var(--accent); text-decoration: none; }
     .mini-card img { width: 100%; border-radius: 6px; }
@@ -927,6 +929,15 @@ async function submitFeedback() {
 
 initWatch();
 initCollection();
+
+// Drag scroll for related cards carousel
+document.querySelectorAll('.card-carousel').forEach(el => {
+  let isDown = false, startX, scrollLeft;
+  el.addEventListener('mousedown', e => { isDown = true; el.classList.add('active'); startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; });
+  el.addEventListener('mouseleave', () => { isDown = false; el.classList.remove('active'); });
+  el.addEventListener('mouseup', () => { isDown = false; el.classList.remove('active'); });
+  el.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - el.offsetLeft; el.scrollLeft = scrollLeft - (x - startX) * 1.5; });
+});
 
 initLike();
 

@@ -154,7 +154,7 @@ async function searchCard() {
   const res = document.getElementById('search-results');
   res.innerHTML = '<p style="color:var(--text2)">Searching...</p>';
   try {
-    const data = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.*' + encodeURIComponent(q) + '*&limit=8&select=slug,name,price_usd,image_uri_small', {
+    const data = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&limit=8&select=slug,name,price_usd,image_uri_small&price_usd=gt.0&order=price_usd.desc', {
       headers: { 'apikey': '${SUPABASE_ANON_KEY}' }
     }).then(r => r.json());
     if (!data.length) { res.innerHTML = '<p style="color:var(--text2)">No cards found. <a href="https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(q + ' mtg') + '&campid=5339146789" target="_blank">Search eBay AU →</a></p>'; return; }
@@ -278,7 +278,9 @@ function showMsg(text, color) {
     el = document.createElement('p');
     el.id = 'commander-msg';
     el.style = 'text-align:center;font-size:14px;margin-top:16px;font-family:sans-serif';
-    document.querySelector('.filter-box').after(el);
+    const card = document.getElementById('commander-card');
+    if (card) card.before(el);
+    else document.querySelector('.wrap').appendChild(el);
   }
   el.textContent = text;
   el.style.color = color || 'var(--text2)';

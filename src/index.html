@@ -522,7 +522,7 @@ async function vaultSearch() {
   results.innerHTML = '<p class="vault-syncing">Searching...</p>';
   try {
     const res = await fetch(
-      SUPA_URL + '/rest/v1/mtg_cards?name=ilike.*' + encodeURIComponent(q) + '*&select=slug,name,price_usd,image_uri_small&limit=8&price_usd=gte.0.01&order=price_usd.desc',
+      SUPA_URL + '/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&select=slug,name,price_usd,image_uri_small&limit=8&price_usd=gt.0&price_usd=not.is.null&order=price_usd.desc',
       { headers: { 'apikey': SUPA_KEY } }
     );
     const cards = await res.json();
@@ -554,7 +554,7 @@ async function loadCommanderCarousel() {
   try {
     // Fetch 20 random legendary creatures from Supabase, show 10
     const res = await fetch(
-      SUPA_URL + '/rest/v1/mtg_cards?type_line=like.*Legendary+Creature*&select=slug,name,image_uri_small,color_identity,price_usd&price_usd=gte.0.01&limit=20&offset=' + Math.floor(Math.random() * 200),
+      SUPA_URL + '/rest/v1/mtg_cards?type_line=like.*Legendary+Creature*&select=slug,name,image_uri_small,color_identity,price_usd&price_usd=gt.0&price_usd=not.is.null&limit=20&offset=' + Math.floor(Math.random() * 200),
       { headers: { 'apikey': SUPA_KEY } }
     );
     const cards = await res.json();
