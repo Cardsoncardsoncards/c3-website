@@ -32,15 +32,10 @@ async function supabaseDelete(table, filter, useService = true) {
 
 async function supabaseGet(path, useService = false) {
   const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-      headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
-    });
-    const data = await res.json();
-    return Array.isArray(data) ? data : [];
-  } catch(e) {
-    return [];
-  }
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+  });
+  return res.json();
 }
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
@@ -166,6 +161,7 @@ async function handleRandomCommander(req) {
   const url = new URL(req.url);
   const colors = url.searchParams.get('colors');
   const maxCmc = url.searchParams.get('maxCmc');
+  const exclude = url.searchParams.get('exclude');
 
   let query = `mtg_cards?select=slug,color_identity,cmc&type_line=like.*Legendary*Creature*&image_uri_normal=not.is.null&limit=2000`;
   if (maxCmc) query += `&cmc=lte.${maxCmc}`;
@@ -173,16 +169,90 @@ async function handleRandomCommander(req) {
   const cards = await supabaseGet(query);
   if (!Array.isArray(cards) || cards.length === 0) return json({ slug: null });
 
-  const filtered = colors
+  let filtered = colors
     ? cards.filter(c => {
         const ci = c.color_identity || [];
         return colors.split('').every(col => ci.includes(col.toUpperCase()));
       })
     : cards;
 
+  // Exclude last shown card so Generate Another always returns something different
+  if (exclude && filtered.length > 1) {
+    filtered = filtered.filter(c => c.slug !== exclude);
+  }
+
   if (!filtered.length) return json({ slug: null });
   const pick = filtered[Math.floor(Math.random() * filtered.length)];
   return json({ slug: pick.slug });
+}
+
+
+// --- Feedback handler ---
+async function handleFeedback(req) {
+  const body = await req.json();
+  const { rating, text, email, page, cardName } = body;
+  if (!text && !rating) return json({ error: 'No content' }, 400);
+
+  // Send email via Resend
+  if (RESEND_API_KEY) {
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'C3 Feedback <alerts@cardsoncardsoncards.com.au>',
+          to: ['ccc.squadhelp@gmail.com'],
+          subject: `C3 Feedback${rating ? ' (' + '★'.repeat(rating) + ')' : ''} — ${page || 'unknown page'}`,
+          html: `
+            <h2>New C3 Feedback</h2>
+            <p><strong>Page:</strong> ${page || 'N/A'}</p>
+            ${cardName ? `<p><strong>Card:</strong> ${cardName}</p>` : ''}
+            ${rating ? `<p><strong>Rating:</strong> ${'★'.repeat(rating)}${'☆'.repeat(5-rating)} (${rating}/5)</p>` : ''}
+            ${text ? `<p><strong>Message:</strong><br>${text}</p>` : ''}
+            ${email ? `<p><strong>Reply to:</strong> <a href="mailto:${email}">${email}</a></p>` : '<p><em>No email provided</em></p>'}
+          `
+        })
+      });
+    } catch (e) {
+      console.error('Resend feedback error:', e.message);
+    }
+  }
+
+  return json({ ok: true });
+}
+
+
+// --- Newsletter subscribe ---
+async function handleNewsletter(req) {
+  const body = await req.json();
+  const { email } = body;
+  if (!email || !email.includes('@')) return json({ error: 'Invalid email' }, 400);
+
+  const MAILERLITE_KEY = Netlify.env.get('MAILERLITE_API_KEY');
+  if (!MAILERLITE_KEY) return json({ error: 'Not configured' }, 500);
+
+  try {
+    const res = await fetch('https://connect.mailerlite.com/api/subscribers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${MAILERLITE_KEY}`
+      },
+      body: JSON.stringify({ email, groups: ['mIFDGb'] })
+    });
+    if (res.ok || res.status === 200 || res.status === 201) {
+      return json({ ok: true });
+    }
+    const err = await res.text();
+    console.error('MailerLite error:', err);
+    return json({ error: 'Subscribe failed' }, 500);
+  } catch (e) {
+    console.error('Newsletter error:', e.message);
+    return json({ error: e.message }, 500);
+  }
 }
 
 // --- Main router ---
@@ -196,6 +266,8 @@ export default async (req) => {
   if (path === '/api/collection-waitlist' && req.method === 'POST') return handleWaitlist(req);
   if (path === '/api/sitemap-cards') return handleSitemap();
   if (path === '/api/random-commander') return handleRandomCommander(req);
+  if (path === '/api/feedback' && req.method === 'POST') return handleFeedback(req);
+  if (path === '/api/newsletter' && req.method === 'POST') return handleNewsletter(req);
 
   return json({ error: 'Not found' }, 404);
 };
@@ -207,6 +279,8 @@ export const config = {
     '/api/price-alert',
     '/api/collection-waitlist',
     '/api/sitemap-cards',
-    '/api/random-commander'
+    '/api/random-commander',
+    '/api/feedback',
+    '/api/newsletter'
   ]
 };

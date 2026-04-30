@@ -249,6 +249,14 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 /* COMMANDER CAROUSEL */
 .commander-carousel-section{background:rgba(107,107,255,.04);border-top:1px solid rgba(107,107,255,.15);border-bottom:1px solid rgba(107,107,255,.15)}
 
+
+.feedback-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:998;background:#C9A84C;color:#000;font-size:11px;font-weight:700;letter-spacing:.06em;padding:10px 8px;border-radius:8px 0 0 8px;cursor:pointer;writing-mode:vertical-rl;font-family:'DM Sans',sans-serif;border:none;transition:background .18s}
+.feedback-tab:hover{background:#E8C86A}
+.feedback-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center}
+.feedback-overlay.open{display:flex}
+.feedback-modal-box{background:#161929;border:1px solid #252840;border-radius:14px;padding:28px;max-width:420px;width:90%;font-family:'DM Sans',sans-serif}
+.fb-star{font-size:26px;cursor:pointer;opacity:.35;transition:opacity .15s;background:none;border:none;padding:0;color:#C9A84C}
+.fb-star.active{opacity:1}
 </style>
 </head>
 <body>
@@ -460,6 +468,9 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
   </div>
   <div style="max-width:1100px;margin:8px auto 0;padding:0 24px;font-size:11px;color:rgba(160,168,192,.28);line-height:1.6">Cards on Cards on Cards is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy. Not approved or endorsed by Wizards of the Coast. © Wizards of the Coast LLC. As an Amazon Associate and eBay Partner, we earn from qualifying purchases. <a href="/legal.html" style="color:rgba(160,168,192,.35)">Full disclaimer</a></div>
+  <div style="text-align:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border,#252840)">
+    <a href="https://www.instagram.com/cardsoncardsoncards" target="_blank" rel="noopener" style="font-size:12px;color:rgba(160,168,192,.6);text-decoration:none">📸 @cardsoncardsoncards on Instagram</a>
+  </div>
 </footer>
 
 <script>
@@ -577,5 +588,42 @@ loadCommanderCarousel();
 <!-- EPN Smart Links -->
 <script>window._epn = {campaign: 5339146789, smartPopover:false};</script>
 <script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>
+
+<button class="feedback-tab" onclick="document.getElementById('hp-feedback-overlay').classList.add('open')">Give Feedback</button>
+<div id="hp-feedback-overlay" class="feedback-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="feedback-modal-box">
+    <h3 style="margin-bottom:6px;color:#F0F2FF;font-size:17px">Share Your Feedback</h3>
+    <p style="font-size:13px;color:#9ba3c4;margin-bottom:14px">Help us build a better site for the Australian TCG community.</p>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="fb-star" onclick="setHPRating(1)">★</button>
+      <button class="fb-star" onclick="setHPRating(2)">★</button>
+      <button class="fb-star" onclick="setHPRating(3)">★</button>
+      <button class="fb-star" onclick="setHPRating(4)">★</button>
+      <button class="fb-star" onclick="setHPRating(5)">★</button>
+    </div>
+    <textarea id="hp-fb-text" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:10px;border-radius:8px;font-size:13px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:inherit" placeholder="What can we improve? What would you like to see?"></textarea>
+    <input type="email" id="hp-fb-email" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;font-family:inherit" placeholder="Email (optional)">
+    <button style="width:100%;background:#C9A84C;color:#000;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px" onclick="submitHPFeedback()">Send Feedback</button>
+    <button style="width:100%;background:none;border:none;color:#9ba3c4;margin-top:8px;cursor:pointer;font-size:12px" onclick="document.getElementById('hp-feedback-overlay').classList.remove('open')">Cancel</button>
+    <div id="hp-fb-msg" style="font-size:13px;margin-top:8px;text-align:center"></div>
+  </div>
+</div>
+<script>
+let hpRating=0;
+function setHPRating(v){hpRating=v;document.querySelectorAll('.fb-star').forEach((s,i)=>s.classList.toggle('active',i<v));}
+async function submitHPFeedback(){
+  const text=document.getElementById('hp-fb-text').value.trim();
+  const email=document.getElementById('hp-fb-email').value.trim();
+  const msg=document.getElementById('hp-fb-msg');
+  if(!text&&!hpRating){msg.textContent='Please add a rating or message.';msg.style.color='#C9A84C';return;}
+  try{
+    const res=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rating:hpRating,text,email,page:'/'})});
+    msg.textContent=res.ok?'✓ Thanks for your feedback!':'Something went wrong.';
+    msg.style.color=res.ok?'#4caf50':'#f44';
+    if(res.ok)setTimeout(()=>document.getElementById('hp-feedback-overlay').classList.remove('open'),2000);
+  }catch{msg.textContent='Something went wrong.';msg.style.color='#f44';}
+}
+</script>
+
 </body>
 </html>

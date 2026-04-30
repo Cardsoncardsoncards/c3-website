@@ -166,6 +166,36 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const setSlug = card.set_code;
   const hasEVCalc = ['stx', 'mh3', 'ltr', 'woe', 'mkm', 'otj', 'blb', 'dsk', 'fdn', 'dft', 'tdm'].includes(card.set_code);
 
+
+  // Auto-generated context paragraph
+  const legalFormats = ['standard','pioneer','modern','legacy','vintage','commander'].filter(f => legalities[f] === 'legal');
+  const legalStr = legalFormats.length ? legalFormats.slice(0,3).map(f=>f.charAt(0).toUpperCase()+f.slice(1)).join(', ') + (legalFormats.length > 3 ? ' and more' : '') : 'no major formats';
+  const trendStr = (() => {
+    if (snapshots.length < 7) return '';
+    const recent = snapshots.slice(-7).map(s => parseFloat(s.price_aud || 0));
+    const avg = recent.reduce((a,b)=>a+b,0)/recent.length;
+    const first = recent[0], last = recent[recent.length-1];
+    if (last > first * 1.05) return ' The price has been trending up over the last week.';
+    if (last < first * 0.95) return ' The price has dipped recently — potentially a good buying window.';
+    return ' The price has been stable recently.';
+  })();
+  const edhStr = card.edhrec_rank ? (card.edhrec_rank <= 200 ? ' It is a Commander format staple.' : card.edhrec_rank <= 1000 ? ' It sees regular play in Commander.' : '') : '';
+  const contextPara = \`<div class="card-context"><strong>\${card.name}</strong> is a \${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1)+' ' : ''}\${card.type_line || 'card'} from <strong>\${card.set_name}</strong>.\${edhStr} Legal in \${legalStr}.\${trendStr} Prices shown are estimates based on US market data (Scryfall/TCGPlayer) converted to AUD. <a href="\${ebayAllUrl}" target="_blank" rel="noopener" style="color:var(--accent)">Check current eBay AU prices →</a></div>\`;
+
+  
+  // Share bar
+  const pageUrl = encodeURIComponent(\`https://cardsoncardsoncards.com.au/cards/mtg/\${card.slug}\`);
+  const shareText = encodeURIComponent(\`\${card.name} — \${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)\`);
+  const shareBar = \`<div class="share-bar">
+    <span class="share-bar-label">Share</span>
+    <button class="share-btn share-discord" onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/mtg/\${card.slug}').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
+    <a href="https://reddit.com/submit?url=\${pageUrl}&title=\${shareText}" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
+    <a href="https://twitter.com/intent/tweet?text=\${shareText}&url=\${pageUrl}" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=\${pageUrl}" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
+    <a href="https://wa.me/?text=\${shareText}%20\${pageUrl}" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
+    <button class="share-btn share-copy" onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/mtg/\${card.slug}').then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
+  </div>\`;
+
   const legalityBadges = ['standard', 'pioneer', 'modern', 'legacy', 'vintage', 'commander']
     .map(fmt => {
       const status = legalities[fmt] || 'not_legal';
@@ -407,6 +437,52 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .buylist-cta { background: var(--bg3); border: 1px dashed var(--border); border-radius: 8px; padding: 16px; text-align: center; font-family: sans-serif; font-size: 14px; color: var(--text2); }
     .buylist-cta a { color: var(--accent); }
 
+
+    /* Share Bar */
+    .share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0;padding:16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-family:sans-serif}
+    .share-bar-label{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-right:4px;white-space:nowrap}
+    .share-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .share-btn:hover{transform:translateY(-1px);text-decoration:none;opacity:.9}
+    .share-discord{background:#5865F2;color:#fff}
+    .share-reddit{background:#FF4500;color:#fff}
+    .share-twitter{background:#000;color:#fff}
+    .share-facebook{background:#1877F2;color:#fff}
+    .share-whatsapp{background:#25D366;color:#fff}
+    .share-copy{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
+    .share-copy:hover{border-color:var(--accent);color:var(--accent)}
+    /* Feedback */
+    .feedback-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:998;background:var(--accent);color:#000;font-size:11px;font-weight:700;letter-spacing:.06em;padding:10px 8px;border-radius:8px 0 0 8px;cursor:pointer;writing-mode:vertical-rl;font-family:sans-serif;border:none;transition:background .18s}
+    .feedback-tab:hover{background:#E8C86A}
+    .feedback-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center}
+    .feedback-overlay.open{display:flex}
+    .feedback-modal{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;max-width:420px;width:90%;font-family:sans-serif}
+    .feedback-stars{display:flex;gap:8px;margin-bottom:14px}
+    .feedback-star{font-size:26px;cursor:pointer;opacity:.35;transition:opacity .15s;background:none;border:none;padding:0;color:var(--accent)}
+    .feedback-star.active{opacity:1}
+    /* Context paragraph */
+    .card-context{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;font-family:sans-serif;font-size:14px;line-height:1.7;color:var(--text2)}
+    .card-context strong{color:var(--text)}
+    /* Watch button */
+    .cta-watch{background:var(--bg3);border:1px solid var(--border);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+    .cta-watch:hover,.cta-watch.watching{border-color:#e91e8c;color:#e91e8c}
+    /* Collection counter */
+    .collection-counter{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-family:sans-serif;font-size:13px;margin-top:8px}
+    .counter-btn{background:var(--bg2);border:1px solid var(--border);color:var(--text);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:border-color .18s}
+    .counter-btn:hover{border-color:var(--accent);color:var(--accent)}
+    /* Helpful bar */
+    .helpful-bar{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.10);border-radius:8px;margin:20px 0;font-family:sans-serif;font-size:13px;color:var(--text2)}
+    .helpful-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .18s}
+    .helpful-btn:hover,.helpful-btn.voted{border-color:var(--accent);color:var(--accent)}
+    /* Newsletter inline */
+    .newsletter-inline{background:rgba(124,106,245,.08);border:1px solid rgba(124,106,245,.25);border-radius:10px;padding:18px 20px;margin:24px 0;font-family:sans-serif}
+    .newsletter-inline h4{font-size:14px;color:var(--accent2);margin-bottom:6px}
+    .newsletter-inline p{font-size:13px;color:var(--text2);margin-bottom:12px}
+    .newsletter-inline-form{display:flex;gap:8px;flex-wrap:wrap}
+    .newsletter-inline-form input{flex:1;min-width:180px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-size:13px}
+    .newsletter-inline-form button{background:var(--accent2);color:#fff;border:none;padding:8px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px}
+    /* Price disclaimer */
+    .price-disclaimer{font-size:11px;color:var(--text2);background:rgba(255,255,255,.03);border-radius:6px;padding:8px 12px;margin-top:8px;font-family:sans-serif;line-height:1.5}
+
     /* Footer */
     footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; color: var(--text2); font-size: 13px; font-family: sans-serif; }
     footer a { color: var(--text2); margin: 0 12px; }
@@ -429,6 +505,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   <a href="/">Home</a> › <a href="/cards/mtg">MTG Cards</a> › <a href="/cards/mtg/sets/${setSlug}">${card.set_name}</a> › ${card.name}
 </div>
 
+${contextPara}
 <div class="card-header">
   <div class="card-image-wrap">
     <img id="card-front" src="${card.image_uri_normal || card.image_uri_small || ''}" alt="${card.name}" width="240">
@@ -477,6 +554,10 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
       <div class="condition-guide">
         ${priceAud ? `Condition guide: NM ${formatAUD(priceAud)} · LP ${formatAUD(priceAud * 0.80)} · Played ${formatAUD(priceAud * 0.60)}` : ''}
       </div>
+      <div class="price-disclaimer">
+        Est. value based on US market data (Scryfall/TCGPlayer) converted at ~1.58 AUD/USD. eBay AU prices may differ.
+        <a href="${ebayAllUrl}" target="_blank" rel="noopener" style="color:var(--accent)">Check eBay AU live prices →</a>
+      </div>
     </div>
 
     <div class="cta-group">
@@ -486,14 +567,22 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
 
       ${hasEVCalc ? `<a href="/ev-calculator.html#${card.set_code}" class="cta-btn cta-ev">📊 ${card.set_name} EV Calculator</a>` : ''}
 
-      <button class="cta-btn cta-like" id="like-btn" onclick="toggleLike('${card.scryfall_id}')">
-        <span id="like-icon">♡</span> <span id="like-count">${likeCount}</span> likes
+      <button class="cta-btn cta-watch" id="watch-btn" onclick="toggleWatch('${card.scryfall_id}','${card.name.replace(/'/g,"\'")}')">
+        <span id="watch-icon">☆</span> <span id="watch-label">Watch this card</span>
       </button>
+      <div class="collection-counter">
+        <span style="color:var(--text2)">My copies:</span>
+        <button class="counter-btn" onclick="adjustCount(-1)">−</button>
+        <span id="copy-count" style="font-weight:700;min-width:20px;text-align:center">0</span>
+        <button class="counter-btn" onclick="adjustCount(1)">+</button>
+        <span id="copy-value" style="color:var(--accent);font-size:12px"></span>
+      </div>
 
       <button class="cta-btn cta-collection" onclick="document.getElementById('collection-modal').style.display='flex'">
         + Add to Collection (Coming Soon — Join Waitlist)
       </button>
     </div>
+    ${shareBar}
   </div>
 </div>
 
@@ -561,6 +650,21 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     <div class="legality-grid">${legalityBadges}</div>
   </div>
 
+
+  <div class="newsletter-inline">
+    <h4>📬 Weekly AUD Price Alerts</h4>
+    <p>Get notified when cards you're watching drop in price. Australian prices, no spam.</p>
+    <div class="newsletter-inline-form">
+      <input type="email" id="nl-email" placeholder="your@email.com">
+      <button onclick="subscribeNewsletter()">Subscribe Free</button>
+    </div>
+    <div id="nl-msg" style="font-size:12px;margin-top:6px;color:var(--text2)"></div>
+  </div>
+  <div class="helpful-bar" id="helpful-bar">
+    <span>Was this page helpful?</span>
+    <button class="helpful-btn" onclick="voteHelpful(1,this)">👍 Yes</button>
+    <button class="helpful-btn" onclick="voteHelpful(0,this)">👎 No</button>
+  </div>
 </div>
 
 ${relatedCardsHTML}
@@ -570,6 +674,28 @@ ${blogHTML}
 <div style="max-width:1100px;margin:0 auto 32px;padding:0 24px">
   <div class="buylist-cta">
     💰 Want to sell your ${card.name}? <a href="/tracker.html">Join the C3 buylist waitlist</a> and be first to know when we launch.
+  </div>
+</div>
+
+
+<!-- Feedback Tab -->
+<button class="feedback-tab" onclick="document.getElementById('feedback-overlay').classList.add('open')">Give Feedback</button>
+<div id="feedback-overlay" class="feedback-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="feedback-modal">
+    <h3 style="margin-bottom:6px;color:var(--text)">Share Your Feedback</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Help us build a better site for the Australian TCG community.</p>
+    <div class="feedback-stars" id="feedback-stars">
+      <button class="feedback-star" onclick="setFeedbackRating(1)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(2)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(3)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(4)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(5)">★</button>
+    </div>
+    <textarea id="feedback-text" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:sans-serif" placeholder="What can we improve? What features would you like?"></textarea>
+    <input type="email" id="feedback-email" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;font-family:sans-serif" placeholder="Email (optional — if you'd like a reply)">
+    <button style="width:100%;background:var(--accent);color:#000;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px" onclick="submitFeedback()">Send Feedback</button>
+    <button style="width:100%;background:none;border:none;color:var(--text2);margin-top:8px;cursor:pointer;font-size:12px" onclick="document.getElementById('feedback-overlay').classList.remove('open')">Cancel</button>
+    <div id="feedback-msg" style="font-size:13px;margin-top:8px;text-align:center;font-family:sans-serif"></div>
   </div>
 </div>
 
@@ -700,6 +826,109 @@ async function joinWaitlist(scryfallId, cardName) {
 
 // Track page view
 fetch('/api/card-view', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scryfallId: '${card.scryfall_id}', sessionId: getSession()}) }).catch(()=>{});
+
+
+// Watch this card
+const watchedCards = JSON.parse(localStorage.getItem('c3_watched') || '{}');
+function toggleWatch(scryfallId, cardName) {
+  const btn = document.getElementById('watch-btn');
+  const icon = document.getElementById('watch-icon');
+  const label = document.getElementById('watch-label');
+  if (watchedCards[scryfallId]) {
+    delete watchedCards[scryfallId];
+    btn.classList.remove('watching');
+    icon.textContent = '☆';
+    label.textContent = 'Watch this card';
+  } else {
+    watchedCards[scryfallId] = { name: cardName, addedAt: Date.now() };
+    btn.classList.add('watching');
+    icon.textContent = '★';
+    label.textContent = 'Watching';
+    if(typeof gtag !== 'undefined') gtag('event','card_watch',{card_name: cardName});
+  }
+  localStorage.setItem('c3_watched', JSON.stringify(watchedCards));
+}
+function initWatch() {
+  const btn = document.getElementById('watch-btn');
+  const icon = document.getElementById('watch-icon');
+  const label = document.getElementById('watch-label');
+  if (watchedCards['${card.scryfall_id}']) {
+    btn.classList.add('watching');
+    icon.textContent = '★';
+    label.textContent = 'Watching';
+  }
+}
+
+// Collection counter
+const COLLECTION_KEY = 'c3_collection';
+let collection = JSON.parse(localStorage.getItem(COLLECTION_KEY) || '{}');
+function adjustCount(delta) {
+  const current = collection['${card.scryfall_id}'] || 0;
+  const newVal = Math.max(0, current + delta);
+  collection['${card.scryfall_id}'] = newVal;
+  localStorage.setItem(COLLECTION_KEY, JSON.stringify(collection));
+  document.getElementById('copy-count').textContent = newVal;
+  const val = newVal > 0 && ${JSON.stringify(priceAud)} ? '= ' + new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD'}).format(newVal * ${JSON.stringify(priceAud || 0)}) : '';
+  document.getElementById('copy-value').textContent = val;
+}
+function initCollection() {
+  const count = collection['${card.scryfall_id}'] || 0;
+  document.getElementById('copy-count').textContent = count;
+  if (count > 0 && ${JSON.stringify(priceAud)}) {
+    document.getElementById('copy-value').textContent = '= ' + new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD'}).format(count * ${JSON.stringify(priceAud || 0)});
+  }
+}
+
+// Newsletter subscribe
+async function subscribeNewsletter() {
+  const email = document.getElementById('nl-email').value.trim();
+  const msg = document.getElementById('nl-msg');
+  if (!email) { msg.textContent = 'Please enter your email.'; msg.style.color='var(--accent)'; return; }
+  try {
+    const res = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email})
+    });
+    msg.textContent = res.ok ? '✓ Subscribed! Check your inbox.' : 'Something went wrong. Try again.';
+    msg.style.color = res.ok ? '#4caf50' : '#f44';
+  } catch { msg.textContent = 'Something went wrong.'; msg.style.color='#f44'; }
+}
+
+// Helpful vote
+function voteHelpful(val, btn) {
+  document.querySelectorAll('.helpful-btn').forEach(b => b.classList.remove('voted'));
+  btn.classList.add('voted');
+  btn.textContent = val === 1 ? '👍 Thanks!' : '👎 Noted';
+  if(typeof gtag !== 'undefined') gtag('event','page_helpful',{value:val,page:window.location.pathname});
+  setTimeout(()=>{const bar=document.getElementById('helpful-bar');if(bar)bar.innerHTML='<span style="color:var(--text2);font-size:13px;font-family:sans-serif">Thanks for the feedback!</span>';},800);
+}
+
+// Feedback widget
+let feedbackRating = 0;
+function setFeedbackRating(val) {
+  feedbackRating = val;
+  document.querySelectorAll('.feedback-star').forEach((s,i) => s.classList.toggle('active', i < val));
+}
+async function submitFeedback() {
+  const text = document.getElementById('feedback-text').value.trim();
+  const email = document.getElementById('feedback-email').value.trim();
+  const msg = document.getElementById('feedback-msg');
+  if (!text && !feedbackRating) { msg.textContent = 'Please add a rating or message.'; msg.style.color='var(--accent)'; return; }
+  try {
+    const res = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ rating: feedbackRating, text, email, page: window.location.pathname, cardName: '${card.name}' })
+    });
+    msg.textContent = res.ok ? '✓ Thanks! Your feedback helps us improve.' : 'Something went wrong.';
+    msg.style.color = res.ok ? '#4caf50' : '#f44';
+    if(res.ok) setTimeout(() => document.getElementById('feedback-overlay').classList.remove('open'), 2000);
+  } catch { msg.textContent = 'Something went wrong.'; msg.style.color='#f44'; }
+}
+
+initWatch();
+initCollection();
 
 initLike();
 

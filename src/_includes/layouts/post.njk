@@ -44,6 +44,30 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
 .ebay-card-price{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#C9A84C;margin-top:4px}
 .ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px}
 .skeleton{background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite}
+/* Share Bar */
+.share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:24px 0;padding:16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px}
+.share-bar-label{font-size:12px;color:#9ba3c4;text-transform:uppercase;letter-spacing:.08em;margin-right:4px;white-space:nowrap;font-family:sans-serif}
+.share-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .18s;white-space:nowrap;font-family:sans-serif}
+.share-btn:hover{transform:translateY(-1px);text-decoration:none;opacity:.9}
+.share-discord{background:#5865F2;color:#fff}
+.share-reddit{background:#FF4500;color:#fff}
+.share-twitter{background:#000;color:#fff}
+.share-facebook{background:#1877F2;color:#fff}
+.share-whatsapp{background:#25D366;color:#fff}
+.share-copy{background:#22263a;border:1px solid #2d3254;color:#e8eaf0}
+.share-copy:hover{border-color:#C9A84C;color:#C9A84C}
+/* Feedback */
+.feedback-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:998;background:#C9A84C;color:#000;font-size:11px;font-weight:700;letter-spacing:.06em;padding:10px 8px;border-radius:8px 0 0 8px;cursor:pointer;writing-mode:vertical-rl;font-family:sans-serif;border:none}
+.feedback-tab:hover{background:#E8C86A}
+.feedback-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center}
+.feedback-overlay.open{display:flex}
+.feedback-modal{background:#1a1d2e;border:1px solid #2d3254;border-radius:14px;padding:28px;max-width:420px;width:90%;font-family:sans-serif}
+.feedback-star{font-size:26px;cursor:pointer;opacity:.35;transition:opacity .15s;background:none;border:none;padding:0;color:#C9A84C}
+.feedback-star.active{opacity:1}
+/* Helpful */
+.helpful-bar{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.10);border-radius:8px;margin:24px 0;font-family:sans-serif;font-size:13px;color:#9ba3c4}
+.helpful-btn{background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .18s}
+.helpful-btn:hover,.helpful-btn.voted{border-color:#C9A84C;color:#C9A84C}
 </style>
 </head>
 <body>
@@ -82,6 +106,17 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     {% endif %}
   </header>
 
+
+  <div class="share-bar" id="post-share-bar">
+    <span class="share-bar-label">Share</span>
+    <button class="share-btn share-discord" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
+    <a id="share-reddit" href="#" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
+    <a id="share-twitter" href="#" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
+    <a id="share-facebook" href="#" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
+    <a id="share-whatsapp" href="#" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
+    <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
+  </div>
+
   <div class="post-body">
     {{ content | safe }}
   </div>
@@ -93,6 +128,22 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     <a href="{{ cta_product_url }}" target="_blank" rel="noopener sponsored" class="btn-gold">Check Price on Amazon AU →</a>
   </div>
   {% endif %}
+
+
+  <div class="helpful-bar" id="helpful-bar">
+    <span>Was this guide helpful?</span>
+    <button class="helpful-btn" onclick="voteHelpful(1,this)">👍 Yes</button>
+    <button class="helpful-btn" onclick="voteHelpful(0,this)">👎 Needs work</button>
+  </div>
+
+  <div class="share-bar">
+    <span class="share-bar-label">Share this guide</span>
+    <button class="share-btn share-discord" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
+    <a id="share-reddit-b" href="#" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
+    <a id="share-twitter-b" href="#" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
+    <a id="share-whatsapp-b" href="#" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
+    <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
+  </div>
 
   <!-- EBAY CAROUSEL -->
   <div class="carousel-section">
@@ -130,6 +181,7 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
         <a href="/tracker.html" class="footer-link">Tracker</a>
         <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
       </div>
+      <a href="https://www.instagram.com/cardsoncardsoncards" target="_blank" rel="noopener" style="font-size:12px;color:#9ba3c4;display:block;margin-bottom:8px">📸 Follow us on Instagram</a>
       <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
     </div>
   </div>
@@ -179,6 +231,72 @@ document.addEventListener('click', function(e) {
   }
   loadCarousel();
 })();
+</script>
+
+
+<!-- Feedback Tab -->
+<button class="feedback-tab" onclick="document.getElementById('feedback-overlay').classList.add('open')">Give Feedback</button>
+<div id="feedback-overlay" class="feedback-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="feedback-modal">
+    <h3 style="margin-bottom:6px;color:#f0f2ff;font-size:17px">Share Your Feedback</h3>
+    <p style="font-size:13px;color:#9ba3c4;margin-bottom:14px">Help us build a better site for the Australian TCG community.</p>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="feedback-star" onclick="setFeedbackRating(1)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(2)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(3)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(4)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(5)">★</button>
+    </div>
+    <textarea id="feedback-text" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:10px;border-radius:8px;font-size:13px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:sans-serif" placeholder="What can we improve? What guides would you like to see?"></textarea>
+    <input type="email" id="feedback-email" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;font-family:sans-serif" placeholder="Email (optional)">
+    <button style="width:100%;background:#C9A84C;color:#000;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px" onclick="submitFeedback()">Send Feedback</button>
+    <button style="width:100%;background:none;border:none;color:#9ba3c4;margin-top:8px;cursor:pointer;font-size:12px" onclick="document.getElementById('feedback-overlay').classList.remove('open')">Cancel</button>
+    <div id="feedback-msg" style="font-size:13px;margin-top:8px;text-align:center"></div>
+  </div>
+</div>
+
+<script>
+// Share bar dynamic URLs
+(function(){
+  const url = encodeURIComponent(window.location.href);
+  const title = encodeURIComponent(document.title);
+  ['share-reddit','share-reddit-b'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://reddit.com/submit?url='+url+'&title='+title; });
+  ['share-twitter','share-twitter-b'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://twitter.com/intent/tweet?text='+title+'&url='+url; });
+  ['share-whatsapp','share-whatsapp-b'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://wa.me/?text='+title+'%20'+url; });
+  ['share-facebook','share-facebook-b'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://www.facebook.com/sharer/sharer.php?u='+url; });
+})();
+
+// Helpful vote
+function voteHelpful(val, btn) {
+  document.querySelectorAll('.helpful-btn').forEach(b => b.classList.remove('voted'));
+  btn.classList.add('voted');
+  btn.textContent = val === 1 ? '👍 Thanks!' : '👎 Noted';
+  if(typeof gtag !== 'undefined') gtag('event','page_helpful',{value:val,page:window.location.pathname});
+  setTimeout(()=>{const bar=document.getElementById('helpful-bar');if(bar)bar.innerHTML='<span style="color:#9ba3c4;font-size:13px">Thanks! We use this to improve our guides.</span>';},800);
+}
+
+// Feedback widget
+let feedbackRating = 0;
+function setFeedbackRating(val) {
+  feedbackRating = val;
+  document.querySelectorAll('.feedback-star').forEach((s,i) => s.classList.toggle('active', i < val));
+}
+async function submitFeedback() {
+  const text = document.getElementById('feedback-text').value.trim();
+  const email = document.getElementById('feedback-email').value.trim();
+  const msg = document.getElementById('feedback-msg');
+  if (!text && !feedbackRating) { msg.textContent = 'Please add a rating or message.'; msg.style.color='#C9A84C'; return; }
+  try {
+    const res = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ rating: feedbackRating, text, email, page: window.location.pathname })
+    });
+    msg.textContent = res.ok ? '✓ Thanks for your feedback!' : 'Something went wrong.';
+    msg.style.color = res.ok ? '#4caf50' : '#f44';
+    if(res.ok) setTimeout(() => document.getElementById('feedback-overlay').classList.remove('open'), 2000);
+  } catch { msg.textContent = 'Something went wrong.'; msg.style.color='#f44'; }
+}
 </script>
 
 </body>
