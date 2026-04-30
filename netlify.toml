@@ -4,3 +4,27 @@
 
 [build.environment]
   NODE_VERSION = "22"
+[[redirects]]
+  from = "/blog/lorcana-booster-box-guide/"
+  to = "/blog/best-lorcana-booster-boxes-australia/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/one-piece-starter-guide/"
+  to = "/blog/one-piece-tcg-starter-deck-review-australia/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/pokemon-booster-box-guide/"
+  to = "/blog/best-pokemon-booster-boxes-australia/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/mtg-tmnt-australia-guide/"
+  to = "/blog/is-mtg-tmnt-worth-opening-australia/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/star-wars-unlimited-guide/"
+  to = "/blog/star-wars-unlimited-beginners-guide-australia/"
+  status = 301
