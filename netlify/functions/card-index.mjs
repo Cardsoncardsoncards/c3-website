@@ -53,7 +53,7 @@ function renderCardHub(sets, topCards) {
     <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
       ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text)">${c.name}</div>
-      <div style="font-size:12px;color:var(--accent);font-weight:bold">${c.price_usd ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.39).toFixed(0)}` : ''}</div>
+      <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.58).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
   return `<!DOCTYPE html>
@@ -120,12 +120,24 @@ ${NAV}
 
   <!-- Links to blog and tools -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:32px">
-    <h3 style="margin-bottom:12px">Related Guides</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:12px">
-      <a href="/blog/best-mtg-booster-boxes-australia/">Best MTG Booster Boxes Australia</a>
-      <a href="/blog/mtg-singles-vs-booster-boxes-australia/">Singles vs Booster Boxes</a>
-      <a href="/blog/how-to-sell-mtg-cards-australia/">How to Sell MTG Cards in Australia</a>
-      <a href="/ev-calculator.html">MTG EV Calculator</a>
+    <h3 style="margin-bottom:16px">Related Guides</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <a href="/blog/best-mtg-booster-boxes-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);text-decoration:none;display:block">
+        <div style="font-weight:bold;margin-bottom:4px;color:var(--accent)">Best MTG Booster Boxes in Australia</div>
+        <div style="font-size:13px;color:var(--text2)">Which boxes are worth opening right now and where to buy at the best price.</div>
+      </a>
+      <a href="/blog/mtg-singles-vs-booster-boxes-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);text-decoration:none;display:block">
+        <div style="font-weight:bold;margin-bottom:4px;color:var(--accent)">Singles vs Booster Boxes</div>
+        <div style="font-size:13px;color:var(--text2)">Should you buy the card you want directly or gamble on packs? The honest answer.</div>
+      </a>
+      <a href="/blog/how-to-sell-mtg-cards-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);text-decoration:none;display:block">
+        <div style="font-weight:bold;margin-bottom:4px;color:var(--accent)">How to Sell MTG Cards in Australia</div>
+        <div style="font-size:13px;color:var(--text2)">eBay, local stores, or buylist? Here is what actually gets you the best price.</div>
+      </a>
+      <a href="/ev-calculator.html" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);text-decoration:none;display:block">
+        <div style="font-weight:bold;margin-bottom:4px;color:var(--accent)">MTG EV Calculator</div>
+        <div style="font-size:13px;color:var(--text2)">Is your booster box worth opening? Calculate expected value before you crack it.</div>
+      </a>
     </div>
   </div>
 </div>
@@ -302,7 +314,7 @@ async function renderSetIndex(setSlug) {
     <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
       ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text2)">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text);line-height:1.2">${c.name}</div>
-      <div style="font-size:12px;color:var(--accent);font-weight:bold">${c.price_usd ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.39).toFixed(0)}` : ''}</div>
+      <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.58).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
   const hasEVCalc = ['stx','mh3','ltr','woe','mkm','otj','blb','dsk','fdn','dft','tdm'].includes(set.set_code);
