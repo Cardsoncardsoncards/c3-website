@@ -1,5 +1,6 @@
 // Netlify Function: ebay-prices.js
 // Returns top 20 most expensive individual card listings from the C3 eBay store
+// Strategy: paginate seller listings, filter client-side, sort, slice top 20
 
 exports.handler = async function(event, context) {
   const headers = {
@@ -17,6 +18,7 @@ exports.handler = async function(event, context) {
     const clientId = process.env.EBAY_CLIENT_ID;
     const clientSecret = process.env.EBAY_CLIENT_SECRET;
     const campId = process.env.EBAY_CAMPAIGN_ID || '5339146789';
+    const SELLER = 'cardsoncardsoncards';
 
     if (!clientId || !clientSecret) {
       throw new Error('eBay credentials not configured');
@@ -38,35 +40,80 @@ exports.handler = async function(event, context) {
       throw new Error('Failed to obtain eBay access token');
     }
 
-    // Step 2: q=card with seller filter (Browse API requires q= when using sellers filter)
-    // category_ids=183454 = CCG Individual Cards (kept as secondary scope)
-    // Covers MTG, Pokemon, Lorcana, One Piece, Riftbound, Dragon Ball, Yu-Gi-Oh
-    const filter = 'sellers%3A%7Bcardsoncardsoncards%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D';
-    const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
-      '?q=card' +
-      '&filter=' + filter +
-      '&sort=-price' +
-      '&limit=20';
+    // Step 2: Try multiple search strategies, log everything for diagnosis
+    const allListings = [];
+    const maxPages = 3;
+    const limitPerPage = 200;
 
-    console.log('Search URL:', searchUrl);
+    for (let page = 0; page < maxPages; page++) {
+      const offset = page * limitPerPage;
+      const filter = 'sellers%3A%7B' + SELLER + '%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D';
+      const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
+        '?q=a' +
+        '&filter=' + filter +
+        '&sort=-price' +
+        '&limit=' + limitPerPage +
+        '&offset=' + offset;
 
-    const searchResponse = await fetch(searchUrl, {
-      headers: {
-        'Authorization': 'Bearer ' + tokenData.access_token,
-        'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU',
-        'X-EBAY-C-ENDUSERCTX': 'affiliateCampaignId=' + campId
+      console.log('Page', page, 'URL:', searchUrl);
+
+      const searchResponse = await fetch(searchUrl, {
+        headers: {
+          'Authorization': 'Bearer ' + tokenData.access_token,
+          'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU',
+          'X-EBAY-C-ENDUSERCTX': 'affiliateCampaignId=' + campId
+        }
+      });
+
+      const searchData = await searchResponse.json();
+      console.log('Page', page, 'http:', searchResponse.status, '| total:', searchData.total || 0, '| returned:', (searchData.itemSummaries || []).length);
+
+      if (searchData.errors) {
+        console.log('eBay errors:', JSON.stringify(searchData.errors).substring(0, 500));
       }
-    });
 
-    const searchData = await searchResponse.json();
-    console.log('Status:', searchResponse.status, '| Total:', searchData.total || 0);
+      if (!searchData.itemSummaries || searchData.itemSummaries.length === 0) {
+        if (page === 0) {
+          console.log('First page empty. Full response:', JSON.stringify(searchData).substring(0, 1000));
+        }
+        break;
+      }
 
-    if (!searchData.itemSummaries || searchData.itemSummaries.length === 0) {
-      console.log('No items. Response:', JSON.stringify(searchData).substring(0, 500));
-      return { statusCode: 200, headers, body: JSON.stringify({ listings: [] }) };
+      if (page === 0 && searchData.itemSummaries.length > 0) {
+        const sample = searchData.itemSummaries[0];
+        console.log('First item seller:', sample.seller ? sample.seller.username : 'NO_SELLER_FIELD');
+        console.log('First item title:', (sample.title || '').substring(0, 80));
+      }
+
+      for (const item of searchData.itemSummaries) {
+        allListings.push(item);
+      }
+
+      if (searchData.itemSummaries.length < limitPerPage) {
+        break;
+      }
     }
 
-    const listings = searchData.itemSummaries.map(function(item) {
+    console.log('Total raw listings collected:', allListings.length);
+
+    // Client-side seller filter as safety net
+    const sellerListings = allListings.filter(function(item) {
+      if (!item.seller || !item.seller.username) return false;
+      return item.seller.username.toLowerCase() === SELLER.toLowerCase();
+    });
+
+    console.log('After seller filter:', sellerListings.length);
+
+    // Sort by price desc, take top 20
+    sellerListings.sort(function(a, b) {
+      const priceA = a.price ? parseFloat(a.price.value) : 0;
+      const priceB = b.price ? parseFloat(b.price.value) : 0;
+      return priceB - priceA;
+    });
+
+    const top20 = sellerListings.slice(0, 20);
+
+    const listings = top20.map(function(item) {
       const price = item.price ? parseFloat(item.price.value) : 0;
       const itemId = item.itemId || '';
       const epnUrl = 'https://www.ebay.com.au/itm/' + itemId +
