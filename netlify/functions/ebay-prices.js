@@ -38,13 +38,12 @@ exports.handler = async function(event, context) {
       throw new Error('Failed to obtain eBay access token');
     }
 
-    // Step 2: category_ids=183454 = CCG Individual Cards
-    // Toys & Hobbies > Collectible Card Games > CCG Individual Cards
+    // Step 2: q=card with seller filter (Browse API requires q= when using sellers filter)
+    // category_ids=183454 = CCG Individual Cards (kept as secondary scope)
     // Covers MTG, Pokemon, Lorcana, One Piece, Riftbound, Dragon Ball, Yu-Gi-Oh
-    // No q= keyword needed - category_ids satisfies Browse API requirement
     const filter = 'sellers%3A%7Bcardsoncardsoncards%7D%2CbuyingOptions%3A%7BFIXED_PRICE%7D';
     const searchUrl = 'https://api.ebay.com/buy/browse/v1/item_summary/search' +
-      '?category_ids=183454' +
+      '?q=card' +
       '&filter=' + filter +
       '&sort=-price' +
       '&limit=20';
@@ -70,8 +69,7 @@ exports.handler = async function(event, context) {
     const listings = searchData.itemSummaries.map(function(item) {
       const price = item.price ? parseFloat(item.price.value) : 0;
       const itemId = item.itemId || '';
-      const numericId = itemId.includes('|') ? itemId.split('|')[1] : itemId;
-      const epnUrl = 'https://www.ebay.com.au/itm/' + numericId +
+      const epnUrl = 'https://www.ebay.com.au/itm/' + itemId +
         '?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + campId +
         '&customid=C3Carousel&toolid=10001&mkevt=1';
       const image = item.image ? item.image.imageUrl : null;
