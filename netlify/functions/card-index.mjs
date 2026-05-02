@@ -62,7 +62,7 @@ function renderCardHub(sets, topCards) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>MTG Card Prices Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's only MTG price guide with live AUD conversion, 90-day price history, and eBay AU buy links.">
+  <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, 52-week price ranges, and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg">
   ${BASE_STYLES}
 </head>
@@ -70,7 +70,7 @@ function renderCardHub(sets, topCards) {
 ${NAV}
 <div class="wrap" style="padding-top:32px">
   <h1 style="font-size:32px;margin-bottom:8px">MTG Card Prices in Australia</h1>
-  <p style="color:var(--text2);margin-bottom:32px">Australia's first MTG price guide with live AUD pricing, 90-day price history, and direct eBay AU buy links. Updated daily.</p>
+  <p style="color:var(--text2);margin-bottom:32px">Australia's MTG price guide with live AUD pricing, 52-week price ranges, and direct eBay AU buy links. Updated daily.</p>
 
   <!-- Search -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
@@ -105,8 +105,8 @@ ${NAV}
   <!-- Feature callouts -->
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-bottom:32px">
     <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
-      <h3 style="color:var(--accent);margin-bottom:8px">📊 90-Day Price History</h3>
-      <p style="color:var(--text2);font-size:14px">Every card page shows AUD price trends so you know the best time to buy or sell.</p>
+      <h3 style="color:var(--accent);margin-bottom:8px">📚 Set Browser</h3>
+      <p style="color:var(--text2);font-size:14px">Browse every MTG set from Alpha to the latest release with all card prices in AUD.</p>
     </div>
     <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
       <h3 style="color:var(--accent);margin-bottom:8px">🛒 eBay AU Buy Links</h3>
@@ -367,7 +367,7 @@ async function renderSetIndex(setSlug) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${set.set_name} Card Prices Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Browse all ${set.set_name} card prices in AUD. ${cards.length} cards with live Australian pricing, eBay AU buy links, and 90-day price history.">
+  <meta name="description" content="Browse all ${set.set_name} card prices in AUD. ${cards.length} cards with live Australian pricing, eBay AU buy links, and 52-week price ranges.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/sets/${setSlug}">
   ${BASE_STYLES}
 </head>

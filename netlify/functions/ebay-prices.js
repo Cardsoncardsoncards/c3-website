@@ -1,141 +1,124 @@
 // Netlify Function: ebay-prices.js
-// Returns top chase cards from the latest MTG set, priced in AUD
-// Data: Scryfall (free, no auth) + Frankfurter (free FX, no auth)
-// Output shape preserved for backward compatibility with index.html and shop.html
-//
-// To switch sets when a new release drops, change the SET_CODE constant below.
-// Scryfall set codes: https://scryfall.com/sets
+// Returns top chase cards from the latest MTG set spotlight
+// Data: Scryfall (cards + USD price), Frankfurter (live USD->AUD FX)
+// No eBay API used (Buy API approval blocked at production scale)
+// Each card links to a search of the C3 eBay store with EPN tracking
+
+// To rotate to a new set when one releases:
+// 1. Update SET_QUERY (combined Scryfall query for the spotlight)
+// 2. Update DISPLAY_NAME (umbrella name shown in the carousel title)
+// 3. Update SEARCH_TERM (used in the eBay store search link)
+
+const SET_QUERY = '(set:sos or set:soa or set:soc)';
+const DISPLAY_NAME = 'Strixhaven';
+const SEARCH_TERM = 'strixhaven';
+const FALLBACK_FX = 1.55; // Used if Frankfurter call fails
+const TOP_N = 12;
+
+const EPN_CAMPID = '5339146789';
 
 exports.handler = async function(event, context) {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
-    'Cache-Control': 'public, max-age=3600' // 1 hour cache
+    'Cache-Control': 'public, max-age=3600'
   };
 
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
   }
 
-  // ============================================================
-  // CONFIG: Change SET_CODE when a new MTG set drops
-  // Verify codes at scryfall.com/sets
-  // Secrets of Strixhaven main set: 'sos' (released 2026-04-24, 368 cards)
-  // Companion sets: 'soc' (Commander precons), 'soa' (Mystical Archive)
-  // ============================================================
-  const SET_CODE = 'sos';
-  const SET_DISPLAY_NAME = 'Secrets of Strixhaven';
-  const TOP_N = 12;
-  const FALLBACK_USD_TO_AUD = 1.55;
-  const CAMPID = process.env.EBAY_CAMPAIGN_ID || '5339146789';
-  const STORE_SLUG = 'cardsoncardsoncards';
-
   try {
-    // Step 1: Get USD/AUD exchange rate from Frankfurter (free, no auth)
-    let usdToAud = FALLBACK_USD_TO_AUD;
+    // Step 1: Live USD -> AUD rate (Frankfurter, free, no auth)
+    let fx = FALLBACK_FX;
     try {
-      const fxResponse = await fetch('https://api.frankfurter.dev/v2/rate/USD/AUD');
-      if (fxResponse.ok) {
-        const fxData = await fxResponse.json();
-        if (fxData && typeof fxData.rate === 'number' && fxData.rate > 0) {
-          usdToAud = fxData.rate;
-          console.log('FX rate USD->AUD:', usdToAud);
+      const fxRes = await fetch('https://api.frankfurter.dev/v2/rate/USD/AUD');
+      if (fxRes.ok) {
+        const fxData = await fxRes.json();
+        if (fxData && fxData.rate && typeof fxData.rate === 'number') {
+          fx = fxData.rate;
         }
       }
     } catch (fxErr) {
-      console.log('FX fetch failed, using fallback rate:', FALLBACK_USD_TO_AUD, '| reason:', fxErr.message);
+      console.log('FX fetch failed, using fallback:', fxErr.message);
     }
+    console.log('USD->AUD rate:', fx);
 
-    // Step 2: Query Scryfall for cards in the set, sorted by USD price desc
-    // unique=cards collapses different printings of the same card to one entry
-    // order=usd + dir=desc gives us the most expensive first
-    const scryfallUrl = 'https://api.scryfall.com/cards/search' +
-      '?q=' + encodeURIComponent('set:' + SET_CODE) +
-      '&order=usd' +
-      '&dir=desc' +
-      '&unique=cards';
+    // Step 2: Scryfall search (all sub-sets in one query, sorted by USD desc)
+    const scryfallUrl = 'https://api.scryfall.com/cards/search'
+      + '?q=' + encodeURIComponent(SET_QUERY)
+      + '&order=usd&dir=desc&unique=cards';
 
-    console.log('Scryfall URL:', scryfallUrl);
-
-    const scryResponse = await fetch(scryfallUrl, {
-      headers: {
-        'User-Agent': 'C3-Cards/1.0 (cardsoncardsoncards.com.au)',
-        'Accept': 'application/json'
-      }
-    });
-
-    if (!scryResponse.ok) {
-      throw new Error('Scryfall HTTP ' + scryResponse.status);
+    const sfRes = await fetch(scryfallUrl);
+    if (!sfRes.ok) {
+      console.log('Scryfall HTTP error:', sfRes.status);
+      return { statusCode: 200, headers, body: JSON.stringify({ listings: [], setName: DISPLAY_NAME, setSearchTerm: SEARCH_TERM, error: 'scryfall_status_' + sfRes.status }) };
     }
-
-    const scryData = await scryResponse.json();
-    if (!scryData.data || !Array.isArray(scryData.data) || scryData.data.length === 0) {
-      console.log('Scryfall returned no cards for set:', SET_CODE);
-      return { statusCode: 200, headers, body: JSON.stringify({ listings: [] }) };
+    const sfData = await sfRes.json();
+    if (!sfData.data || !Array.isArray(sfData.data) || sfData.data.length === 0) {
+      console.log('Scryfall returned no cards for query:', SET_QUERY);
+      return { statusCode: 200, headers, body: JSON.stringify({ listings: [], setName: DISPLAY_NAME, setSearchTerm: SEARCH_TERM }) };
     }
-
-    console.log('Scryfall total cards in set:', scryData.total_cards || scryData.data.length);
 
     // Step 3: Filter to cards with valid USD prices, take top N
-    const priced = scryData.data.filter(function(card) {
-      if (!card.prices) return false;
-      const usd = parseFloat(card.prices.usd);
-      return !isNaN(usd) && usd > 0;
+    const priced = sfData.data.filter(function(c) {
+      return c.prices && c.prices.usd && parseFloat(c.prices.usd) > 0;
     });
-
-    console.log('Cards with USD prices:', priced.length);
-
     if (priced.length === 0) {
-      return { statusCode: 200, headers, body: JSON.stringify({ listings: [] }) };
+      console.log('No cards with USD prices in result set');
+      return { statusCode: 200, headers, body: JSON.stringify({ listings: [], setName: DISPLAY_NAME, setSearchTerm: SEARCH_TERM }) };
     }
 
-    const topCards = priced.slice(0, TOP_N);
+    const top = priced.slice(0, TOP_N);
 
-    // Step 4: Build listing objects matching the shape index.html and shop.html expect
-    // Existing frontend reads: id, title, price, url, image
-    // We slot AUD price into the existing price field so no frontend change needed
-    const listings = topCards.map(function(card) {
-      const usdPrice = parseFloat(card.prices.usd);
-      const audPrice = Math.round(usdPrice * usdToAud * 100) / 100;
-
-      // Best-effort image: prefer normal image_uris.normal, fall back to small or card_faces[0] for double-faced cards
+    const listings = top.map(function(card) {
+      const usd = parseFloat(card.prices.usd);
+      const aud = +(usd * fx).toFixed(2);
+      // Use small art crop if available, fall back to normal image
       let image = null;
-      if (card.image_uris && card.image_uris.normal) {
-        image = card.image_uris.normal;
-      } else if (card.image_uris && card.image_uris.small) {
-        image = card.image_uris.small;
-      } else if (card.card_faces && card.card_faces[0] && card.card_faces[0].image_uris && card.card_faces[0].image_uris.normal) {
-        image = card.card_faces[0].image_uris.normal;
+      if (card.image_uris) {
+        image = card.image_uris.normal || card.image_uris.large || card.image_uris.small || null;
+      } else if (card.card_faces && Array.isArray(card.card_faces) && card.card_faces[0] && card.card_faces[0].image_uris) {
+        // Double-faced cards put images on each face
+        image = card.card_faces[0].image_uris.normal || card.card_faces[0].image_uris.large || null;
       }
 
-      // Build store search URL with EPN tracking. eBay's store search will show
-      // matching listings if the store has them; if not, the same page offers
-      // a "search all eBay" option to the user.
-      const cardNameQuery = encodeURIComponent(card.name);
-      const epnUrl = 'https://www.ebay.com.au/str/' + STORE_SLUG +
-        '?_nkw=' + cardNameQuery +
-        '&mkcid=1&mkrid=705-53470-19255-0&siteid=15' +
-        '&campid=' + CAMPID +
-        '&customid=ChaseCarousel' +
-        '&toolid=10001&mkevt=1';
+      // Build EPN-tracked search URL into the C3 eBay store for this card name
+      const storeSearch = 'https://www.ebay.com.au/str/cardsoncardsoncards'
+        + '?_nkw=' + encodeURIComponent(card.name)
+        + '&mkcid=1&mkrid=705-53470-19255-0&siteid=15'
+        + '&campid=' + EPN_CAMPID
+        + '&customid=C3SpotlightCarousel&toolid=10001&mkevt=1';
 
-      // Use Scryfall card id as the listing id so GA4 events stay unique
       return {
-        id: card.id || '',
-        title: card.name + ' (' + SET_DISPLAY_NAME + ')',
-        price: audPrice,
-        url: epnUrl,
+        id: card.id,
+        title: card.name + ' (' + (card.set_name || DISPLAY_NAME) + ')',
+        price: aud,
+        url: storeSearch,
         image: image
       };
     });
 
-    console.log('Returning', listings.length, 'cards. Top:', listings[0] ? listings[0].title + ' @ AU$' + listings[0].price : 'none');
+    console.log('Returning', listings.length, 'listings. Top price AUD:', listings[0] ? listings[0].price : 'none');
 
-    return { statusCode: 200, headers, body: JSON.stringify({ listings: listings }) };
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        listings: listings,
+        setName: DISPLAY_NAME,
+        setSearchTerm: SEARCH_TERM,
+        fx: fx
+      })
+    };
 
   } catch (error) {
-    console.error('Chase carousel error:', error.message);
-    return { statusCode: 500, headers, body: JSON.stringify({ listings: [], error: error.message }) };
+    console.error('Spotlight carousel error:', error.message);
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ listings: [], setName: DISPLAY_NAME, setSearchTerm: SEARCH_TERM, error: error.message })
+    };
   }
 };

@@ -226,7 +226,6 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
-      <a href="/cards" class="nav-link" style="color:#a78bfa;border-color:rgba(167,139,250,.35)">Card Vault</a>
       <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
@@ -5293,8 +5292,8 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 .skeleton{min-width:200px;height:260px;background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0}
 </style>
 <div class="carousel-section">
-  <span class="carousel-eyebrow">Live from Our eBay Store</span>
-  <h2 class="carousel-title">Top Listings Right Now</h2>
+  <span class="carousel-eyebrow" id="carousel-eyebrow-shop">Latest Set Spotlight</span>
+  <h2 class="carousel-title" id="carousel-title-shop">Most Valuable Strixhaven Cards (AUD)</h2>
   <div class="carousel-outer">
     <div id="ebay-carousel-shop" class="carousel-track">
       <div class="skeleton" style="animation-delay:0s"></div>
@@ -5305,7 +5304,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     </div>
   </div>
   <div style="margin-top:14px">
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3ShopCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay &#x2197;</a>
+    <a id="carousel-store-link-shop" href="https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=strixhaven&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3ShopCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">Search Strixhaven on our eBay store &#x2197;</a>
   </div>
 </div>
 <!-- END EBAY CAROUSEL -->
@@ -5327,6 +5326,15 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       const res = await fetch('/.netlify/functions/ebay-prices');
       const data = await res.json();
       const track = document.getElementById('ebay-carousel-shop');
+      if(data.setName){
+        const title = document.getElementById('carousel-title-shop');
+        if(title) title.textContent = 'Most Valuable ' + data.setName + ' Cards (AUD)';
+        const link = document.getElementById('carousel-store-link-shop');
+        if(link && data.setSearchTerm){
+          link.href = 'https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=' + encodeURIComponent(data.setSearchTerm) + '&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3ShopCarousel&toolid=10001&mkevt=1';
+          link.textContent = 'Search ' + data.setName + ' on our eBay store \u2197';
+        }
+      }
       if(!data.listings || data.listings.length === 0){
         track.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store</a>.</p>';
         return;
@@ -5350,13 +5358,10 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="index.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
       <a href="blog.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
       <a href="tracker.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
-      <a href="/cards" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Card Vault</a>
-      <a href="/legal.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Legal</a>
       <a href="contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact Us</a>
     </div>
     <p class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</p>
   </div>
-  <p style="font-size:11px;color:rgba(160,168,192,.25);padding:0 24px;text-align:center;line-height:1.6;margin-top:8px">Cards on Cards on Cards is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy. Not approved or endorsed by Wizards of the Coast. © Wizards of the Coast LLC. As an Amazon Associate and eBay Partner, we earn from qualifying purchases. <a href="/legal.html" style="color:rgba(160,168,192,.3)">Full disclaimer</a></p>
 </footer>
 
 <script>
@@ -5471,8 +5476,5 @@ document.querySelectorAll('.contents-link, .set-jump-link').forEach(link => {
   });
 });
 </script>
-<!-- EPN Smart Links -->
-<script>window._epn = {campaign: 5339146789, smartPopover:false};</script>
-<script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>
 </body>
 </html>

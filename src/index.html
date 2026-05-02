@@ -220,43 +220,6 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px;text-align:left}
 .skeleton{min-width:200px;height:260px;background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0}
 
-
-/* CARD VAULT FEATURE BLOCK */
-.vault-feature{background:linear-gradient(135deg,rgba(201,168,76,.06) 0%,rgba(107,107,255,.04) 100%);border:1px solid rgba(201,168,76,.2);border-radius:16px;padding:40px 32px;margin:32px 0;text-align:center}
-.vault-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
-.vault-title{font-family:'Cinzel',serif;font-size:clamp(20px,4vw,32px);font-weight:900;color:var(--white);margin-bottom:10px;line-height:1.2}
-.vault-desc{font-size:14px;color:rgba(160,168,192,.6);margin-bottom:24px}
-.vault-search-wrap{display:flex;gap:8px;max-width:580px;margin:0 auto 16px}
-.vault-search-input{flex:1;background:rgba(10,12,20,.8);border:1px solid rgba(201,168,76,.3);border-radius:8px;color:var(--white);padding:12px 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
-.vault-search-input:focus{border-color:var(--gold)}
-.vault-search-input::placeholder{color:rgba(160,168,192,.4)}
-.vault-search-btn{background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:12px 20px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:background .2s}
-.vault-search-btn:hover{background:var(--gold-lit)}
-.vault-results{min-height:0;margin:0 auto 20px;max-width:700px}
-.vault-results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;text-align:left}
-.vault-card-result{background:rgba(22,25,41,.9);border:1px solid var(--border);border-radius:8px;padding:8px;text-decoration:none;transition:border-color .2s;display:block}
-.vault-card-result:hover{border-color:rgba(201,168,76,.4)}
-.vault-card-result img{width:100%;border-radius:5px;display:block}
-.vault-card-name{font-size:10px;color:var(--white);margin-top:5px;line-height:1.3;font-weight:600}
-.vault-card-price{font-size:11px;color:var(--gold);font-weight:700;margin-top:2px}
-.vault-card-result-placeholder{height:80px;background:rgba(255,255,255,.04);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(160,168,192,.3)}
-.vault-syncing{font-size:13px;color:rgba(160,168,192,.5);padding:12px 0}
-.vault-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.vault-cta-primary{background:var(--gold);color:var(--ink);padding:10px 22px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;transition:background .2s}
-.vault-cta-primary:hover{background:var(--gold-lit)}
-.vault-cta-secondary{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--silver);padding:10px 18px;border-radius:8px;font-size:13px;text-decoration:none;transition:all .2s}
-.vault-cta-secondary:hover{color:var(--white);border-color:var(--silver)}
-/* COMMANDER CAROUSEL */
-.commander-carousel-section{background:rgba(107,107,255,.04);border-top:1px solid rgba(107,107,255,.15);border-bottom:1px solid rgba(107,107,255,.15)}
-
-
-.feedback-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:998;background:#C9A84C;color:#000;font-size:11px;font-weight:700;letter-spacing:.06em;padding:10px 8px;border-radius:8px 0 0 8px;cursor:pointer;writing-mode:vertical-rl;font-family:'DM Sans',sans-serif;border:none;transition:background .18s}
-.feedback-tab:hover{background:#E8C86A}
-.feedback-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center}
-.feedback-overlay.open{display:flex}
-.feedback-modal-box{background:#161929;border:1px solid #252840;border-radius:14px;padding:28px;max-width:420px;width:90%;font-family:'DM Sans',sans-serif}
-.fb-star{font-size:26px;cursor:pointer;opacity:.35;transition:opacity .15s;background:none;border:none;padding:0;color:#C9A84C}
-.fb-star.active{opacity:1}
 </style>
 </head>
 <body>
@@ -274,7 +237,6 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
-      <a href="/cards" class="nav-link" style="color:#a78bfa;border-color:rgba(167,139,250,.35)">Card Vault</a>
       <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
@@ -283,47 +245,27 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 <div class="wrap">
 
   <div class="hero">
-    <p class="hero-eyebrow">Cards on Cards on Cards</p>
-    <h1 class="hero-h1">Your Australian<br>TCG Home Base</h1>
-    <p class="hero-sub">Sealed product on Amazon AU, singles on eBay, and D&amp;D tools for your next campaign. We found them so you don't have to.</p>
+    <p class="hero-eyebrow">Australian TCG Knowledge Base</p>
+    <h1 class="hero-h1">Card Prices, Buying Guides<br>and EV Tools, Made for Australia</h1>
+    <p class="hero-sub">96,000+ MTG cards with live AUD pricing. 150+ buying guides from a real Australian seller. Amazon AU, eBay AU, all in one place.</p>
     <div class="hero-cta-row">
-      <a href="/shop.html" class="btn btn-gold">Browse the Shop →</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="btn btn-ghost">eBay Singles ↗</a>
+      <a href="/cards/mtg" class="btn btn-gold">Browse the Card Vault →</a>
+      <a href="/blog" class="btn btn-gold">Read the Blog →</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="btn btn-ghost">Visit our eBay Store ↗</a>
     </div>
   </div>
 
   <div class="trust-bar">
+    <div class="trust-item"><span>⭐</span><span><strong>8,600+</strong> orders sold · 99.9% approval</span></div>
+    <div class="trust-item"><span>📊</span><span><strong>96,000+</strong> card prices in AUD</span></div>
+    <div class="trust-item"><span>📚</span><span><strong>150+</strong> buying guides for Australian collectors</span></div>
     <div class="trust-item"><span>✅</span><span>300+ products confirmed on Amazon AU</span></div>
-    <div class="trust-item"><span>📦</span><span>Local + international shipping options</span></div>
-    <div class="trust-item"><span>⭐</span><span><strong>25,000+</strong> eBay listings</span></div>
-    <div class="trust-item"><span>🎲</span><span>D&amp;D tools from our Etsy store</span></div>
   </div>
-
-
-  <!-- CARD VAULT FEATURE BLOCK -->
-  <div class="vault-feature" id="card-vault-feature">
-    <div class="vault-feature-header">
-      <p class="vault-eyebrow">The C3 Card Vault</p>
-      <h2 class="vault-title">Every MTG Card. Priced for Australia.</h2>
-      <p class="vault-desc">Live AUD pricing, 90-day price history, and eBay AU buy links. Updated daily.</p>
-    </div>
-    <div class="vault-search-wrap">
-      <input type="text" id="vault-search-input" class="vault-search-input" placeholder="Search a card e.g. Lightning Bolt, Snapcaster Mage..." autocomplete="off" spellcheck="false">
-      <button class="vault-search-btn" onclick="vaultSearch()">Search</button>
-    </div>
-    <div id="vault-search-results" class="vault-results"></div>
-    <div class="vault-ctas">
-      <a href="/cards/mtg" class="vault-cta-primary">Browse All MTG Cards →</a>
-      <a href="/cards/mtg/random-commander" class="vault-cta-secondary">🎲 Random Commander</a>
-      <a href="/cards" class="vault-cta-secondary">All Games →</a>
-    </div>
-  </div>
-  <!-- END CARD VAULT FEATURE BLOCK -->
 
   <!-- EBAY CAROUSEL -->
   <div class="carousel-section" style="margin-left:-24px;margin-right:-24px;border-radius:0;border-left:none;border-right:none;padding:36px 0">
-    <span class="carousel-eyebrow">Live from Our eBay Store</span>
-    <h2 class="carousel-title">Top Listings Right Now</h2>
+    <span class="carousel-eyebrow" id="carousel-eyebrow-home">Latest Set Spotlight</span>
+    <h2 class="carousel-title" id="carousel-title-home">Most Valuable Strixhaven Cards (AUD)</h2>
     <div class="carousel-outer">
       <div id="ebay-carousel-home" class="carousel-track">
         <div class="skeleton" style="animation-delay:0s"></div>
@@ -334,24 +276,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       </div>
     </div>
     <div style="margin-top:14px">
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3HomeCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay &#x2197;</a>
+      <a id="carousel-store-link-home" href="https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=strixhaven&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3HomeCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">Search Strixhaven on our eBay store &#x2197;</a>
     </div>
   </div>
   <!-- END EBAY CAROUSEL -->
-  <!-- COMMANDER CAROUSEL -->
-  <div class="carousel-section commander-carousel-section" id="commander-carousel-section" style="display:none;margin-left:-24px;margin-right:-24px;border-radius:0;border-left:none;border-right:none;padding:36px 0;margin-top:0">
-    <span class="carousel-eyebrow">Today's Featured Commanders</span>
-    <h2 class="carousel-title" style="cursor:pointer" onclick="window.location.href='/cards/mtg/random-commander'">Discover Your Next Commander <span style="font-size:16px;opacity:.5">→</span></h2>
-    <div class="carousel-outer">
-      <div id="commander-carousel-track" class="carousel-track"></div>
-    </div>
-    <div style="margin-top:14px">
-      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">Build your Commander deck →</a>
-    </div>
-  </div>
-  <!-- END COMMANDER CAROUSEL -->
-
-
 
   <div class="destinations">
 
@@ -461,15 +389,9 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/tracker.html" class="footer-link">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy D&amp;D Tools</a>
-      <a href="/cards" class="footer-link">Card Vault</a>
-      <a href="/legal.html" class="footer-link">Legal</a>
       <a href="/contact.html" class="footer-link">Contact Us</a>
     </div>
     <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
-  </div>
-  <div style="max-width:1100px;margin:8px auto 0;padding:0 24px;font-size:11px;color:rgba(160,168,192,.28);line-height:1.6">Cards on Cards on Cards is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy. Not approved or endorsed by Wizards of the Coast. © Wizards of the Coast LLC. As an Amazon Associate and eBay Partner, we earn from qualifying purchases. <a href="/legal.html" style="color:rgba(160,168,192,.35)">Full disclaimer</a></div>
-  <div style="text-align:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border,#252840)">
-    <a href="https://www.instagram.com/cardsoncardsoncards" target="_blank" rel="noopener" style="font-size:12px;color:rgba(160,168,192,.6);text-decoration:none">📸 @cardsoncardsoncards on Instagram</a>
   </div>
 </footer>
 
@@ -491,6 +413,16 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       const res = await fetch('/.netlify/functions/ebay-prices');
       const data = await res.json();
       const track = document.getElementById('ebay-carousel-home');
+      // Update dynamic title and store link if returned
+      if(data.setName){
+        const title = document.getElementById('carousel-title-home');
+        if(title) title.textContent = 'Most Valuable ' + data.setName + ' Cards (AUD)';
+        const link = document.getElementById('carousel-store-link-home');
+        if(link && data.setSearchTerm){
+          link.href = 'https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=' + encodeURIComponent(data.setSearchTerm) + '&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3HomeCarousel&toolid=10001&mkevt=1';
+          link.textContent = 'Search ' + data.setName + ' on our eBay store \u2197';
+        }
+      }
       if(!data.listings || data.listings.length === 0){
         track.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store</a>.</p>';
         return;
@@ -505,124 +437,6 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   }
   loadCarousel();
 })();
-</script>
-
-
-<script>
-// ============================================================
-// CARD VAULT SEARCH
-// ============================================================
-const SUPA_URL = "https://owaroeqchreuffbyakqx.supabase.co";
-const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMTM4NTAsImV4cCI6MjA5Mjg4OTg1MH0.E6wP-CTfNzyfNbOy442eTg6DY0WOUe2M8PocgIQERXI";
-
-async function vaultSearch() {
-  const q = document.getElementById('vault-search-input').value.trim();
-  const results = document.getElementById('vault-search-results');
-  if (!q || q.length < 2) return;
-  results.innerHTML = '<p class="vault-syncing">Searching...</p>';
-  try {
-    const res = await fetch(
-      SUPA_URL + '/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&select=slug,name,price_usd,image_uri_small&limit=8&price_usd=gt.0&price_usd=not.is.null&order=price_usd.desc',
-      { headers: { 'apikey': SUPA_KEY } }
-    );
-    const cards = await res.json();
-    if (!Array.isArray(cards) || cards.length === 0) {
-      results.innerHTML = '<p class="vault-syncing">No cards found yet. The database syncs tonight — try again tomorrow morning.</p>';
-      return;
-    }
-    results.innerHTML = '<div class="vault-results-grid">' + cards.map(c => {
-      const aud = c.price_usd ? 'AU$' + (c.price_usd * 1.58).toFixed(2) : '';
-      return '<a href="/cards/mtg/' + (c.slug || '') + '" class="vault-card-result">'
-        + (c.image_uri_small ? '<img src="' + c.image_uri_small + '" alt="' + (c.name||'').replace(/"/g,'') + '" loading="lazy">' : '<div class="vault-card-result-placeholder">No image yet</div>')
-        + '<div class="vault-card-name">' + (c.name || '') + '</div>'
-        + (aud ? '<div class="vault-card-price">' + aud + '</div>' : '')
-        + '</a>';
-    }).join('') + '</div>';
-  } catch(e) {
-    results.innerHTML = '<p class="vault-syncing">Database syncing — check back tomorrow morning after the first sync.</p>';
-  }
-}
-
-document.getElementById('vault-search-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') vaultSearch();
-});
-
-// ============================================================
-// COMMANDER CAROUSEL
-// ============================================================
-async function loadCommanderCarousel() {
-  try {
-    // Fetch 20 random legendary creatures from Supabase, show 10
-    const res = await fetch(
-      SUPA_URL + '/rest/v1/mtg_cards?type_line=like.*Legendary+Creature*&select=slug,name,image_uri_small,color_identity,price_usd&price_usd=gt.0&price_usd=not.is.null&limit=20&offset=' + Math.floor(Math.random() * 200),
-      { headers: { 'apikey': SUPA_KEY } }
-    );
-    const cards = await res.json();
-    if (!Array.isArray(cards) || cards.length === 0) return; // No data yet, section stays hidden
-
-    const section = document.getElementById('commander-carousel-section');
-    const track = document.getElementById('commander-carousel-track');
-    if (!section || !track) return;
-
-    // Build cards HTML - duplicate for infinite scroll
-    const html = cards.slice(0,10).map(c => {
-      const aud = (c.price_usd && c.price_usd >= 0.5) ? 'AU$' + (c.price_usd * 1.58).toFixed(0) : '';
-      return '<a href="/cards/mtg/' + (c.slug || '') + '" class="ebay-card" style="text-decoration:none">'
-        + (c.image_uri_small
-            ? '<img src="' + c.image_uri_small + '" alt="' + (c.name||'').replace(/"/g,'') + '" class="ebay-card-img" loading="lazy" style="height:160px;object-fit:contain">'
-            : '<div class="ebay-card-img" style="height:160px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(160,168,192,.4)">Image coming</div>')
-        + '<p class="ebay-card-title" style="font-size:11px;margin-top:6px;color:#F0F2FF">' + (c.name || '') + '</p>'
-        + (aud ? '<p style="font-size:12px;color:#C9A84C;font-weight:700;margin-top:2px">' + aud + '</p>' : '')
-        + '</a>';
-    }).join('');
-    track.innerHTML = html + html; // Duplicate for seamless loop
-    track.classList.add('loaded');
-    section.style.display = ''; // Show the section
-  } catch(e) {
-    // Silently fail - section stays hidden
-  }
-}
-loadCommanderCarousel();
-</script>
-
-<!-- EPN Smart Links -->
-<script>window._epn = {campaign: 5339146789, smartPopover:false};</script>
-<script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>
-
-<button class="feedback-tab" onclick="document.getElementById('hp-feedback-overlay').classList.add('open')">Give Feedback</button>
-<div id="hp-feedback-overlay" class="feedback-overlay" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="feedback-modal-box">
-    <h3 style="margin-bottom:6px;color:#F0F2FF;font-size:17px">Share Your Feedback</h3>
-    <p style="font-size:13px;color:#9ba3c4;margin-bottom:14px">Help us build a better site for the Australian TCG community.</p>
-    <div style="display:flex;gap:8px;margin-bottom:14px">
-      <button class="fb-star" onclick="setHPRating(1)">★</button>
-      <button class="fb-star" onclick="setHPRating(2)">★</button>
-      <button class="fb-star" onclick="setHPRating(3)">★</button>
-      <button class="fb-star" onclick="setHPRating(4)">★</button>
-      <button class="fb-star" onclick="setHPRating(5)">★</button>
-    </div>
-    <textarea id="hp-fb-text" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:10px;border-radius:8px;font-size:13px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:inherit" placeholder="What can we improve? What would you like to see?"></textarea>
-    <input type="email" id="hp-fb-email" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;font-family:inherit" placeholder="Email (optional)">
-    <button style="width:100%;background:#C9A84C;color:#000;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px" onclick="submitHPFeedback()">Send Feedback</button>
-    <button style="width:100%;background:none;border:none;color:#9ba3c4;margin-top:8px;cursor:pointer;font-size:12px" onclick="document.getElementById('hp-feedback-overlay').classList.remove('open')">Cancel</button>
-    <div id="hp-fb-msg" style="font-size:13px;margin-top:8px;text-align:center"></div>
-  </div>
-</div>
-<script>
-let hpRating=0;
-function setHPRating(v){hpRating=v;document.querySelectorAll('.fb-star').forEach((s,i)=>s.classList.toggle('active',i<v));}
-async function submitHPFeedback(){
-  const text=document.getElementById('hp-fb-text').value.trim();
-  const email=document.getElementById('hp-fb-email').value.trim();
-  const msg=document.getElementById('hp-fb-msg');
-  if(!text&&!hpRating){msg.textContent='Please add a rating or message.';msg.style.color='#C9A84C';return;}
-  try{
-    const res=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rating:hpRating,text,email,page:'/'})});
-    msg.textContent=res.ok?'✓ Thanks for your feedback!':'Something went wrong.';
-    msg.style.color=res.ok?'#4caf50':'#f44';
-    if(res.ok)setTimeout(()=>document.getElementById('hp-feedback-overlay').classList.remove('open'),2000);
-  }catch{msg.textContent='Something went wrong.';msg.style.color='#f44';}
-}
 </script>
 
 </body>
