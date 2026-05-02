@@ -95,14 +95,6 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
   .game-tabs{gap:6px}
   .game-tab{padding:7px 13px;font-size:11px}
 }
-
-.feedback-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:998;background:#C9A84C;color:#000;font-size:11px;font-weight:700;letter-spacing:.06em;padding:10px 8px;border-radius:8px 0 0 8px;cursor:pointer;writing-mode:vertical-rl;font-family:'DM Sans',sans-serif;border:none;transition:background .18s}
-.feedback-tab:hover{background:#E8C86A}
-.feedback-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center}
-.feedback-overlay.open{display:flex}
-.feedback-modal-box{background:#161929;border:1px solid #252840;border-radius:14px;padding:28px;max-width:420px;width:90%;font-family:'DM Sans',sans-serif}
-.fb-star{font-size:26px;cursor:pointer;opacity:.35;transition:opacity .15s;background:none;border:none;padding:0;color:#C9A84C}
-.fb-star.active{opacity:1}
 </style>
 </head>
 <body>
@@ -114,11 +106,12 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/c3logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
       <span>Cards on Cards on Cards</span>
     </a>
     <div class="nav-links">
       <a href="/" class="nav-link">← Home</a>
+      <a href="/cards" class="nav-link" style="color:var(--gold);border-color:rgba(201,168,76,.4)">Card Vault</a>
       <a href="/shop.html" class="nav-link">Shop</a>
       <a href="/blog" class="nav-link">Blog</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
@@ -159,7 +152,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
   <div class="set-grid" id="set-grid">
 
     <!-- MTG Strixhaven -->
-    <a href="/mtg-strixhaven.html" class="set-card" data-game="mtg">
+    <a href="/ev-calculator/mtg-strixhaven.html" class="set-card" data-game="mtg">
       <div class="set-card-game">⚔️ Magic: The Gathering</div>
       <div class="set-card-name">Secrets of Strixhaven</div>
       <div class="set-card-meta">
@@ -219,12 +212,13 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     <div class="footer-logo">Cards on Cards on Cards</div>
     <div style="display:flex;gap:16px;flex-wrap:wrap">
       <a href="/" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
+      <a href="/cards" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Card Vault</a>
       <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Shop</a>
       <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
       <a href="/tracker.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
       <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact</a>
     </div>
-    <a href="https://www.instagram.com/cardsoncardsoncards" target="_blank" rel="noopener" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">📸 @cardsoncardsoncards</a><p class="footer-copy">© 2026 Cards on Cards on Cards.</p>
+    <p class="footer-copy">© 2026 Cards on Cards on Cards.</p>
   </div>
 </footer>
 
@@ -254,42 +248,5 @@ function filterSets(game) {
   });
 }
 </script>
-
-<button class="feedback-tab" onclick="document.getElementById('ev-fb-overlay').classList.add('open')">Give Feedback</button>
-<div id="ev-fb-overlay" class="feedback-overlay" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="feedback-modal-box">
-    <h3 style="margin-bottom:6px;color:#F0F2FF;font-size:17px">Share Your Feedback</h3>
-    <p style="font-size:13px;color:#9ba3c4;margin-bottom:14px">Which sets would you like us to add? What can we improve?</p>
-    <div style="display:flex;gap:8px;margin-bottom:14px">
-      <button class="fb-star" onclick="setEVR(1)">★</button>
-      <button class="fb-star" onclick="setEVR(2)">★</button>
-      <button class="fb-star" onclick="setEVR(3)">★</button>
-      <button class="fb-star" onclick="setEVR(4)">★</button>
-      <button class="fb-star" onclick="setEVR(5)">★</button>
-    </div>
-    <textarea id="ev-fb-text" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:10px;border-radius:8px;font-size:13px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:sans-serif" placeholder="Which sets would you like added? Any issues?"></textarea>
-    <input type="email" id="ev-fb-email" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;font-family:sans-serif" placeholder="Email (optional)">
-    <button style="width:100%;background:#C9A84C;color:#000;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px" onclick="submitEVF()">Send Feedback</button>
-    <button style="width:100%;background:none;border:none;color:#9ba3c4;margin-top:8px;cursor:pointer;font-size:12px" onclick="document.getElementById('ev-fb-overlay').classList.remove('open')">Cancel</button>
-    <div id="ev-fb-msg" style="font-size:13px;margin-top:8px;text-align:center"></div>
-  </div>
-</div>
-<script>
-let evr=0;
-function setEVR(v){evr=v;document.querySelectorAll('.fb-star').forEach((s,i)=>s.classList.toggle('active',i<v));}
-async function submitEVF(){
-  const text=document.getElementById('ev-fb-text').value.trim();
-  const email=document.getElementById('ev-fb-email').value.trim();
-  const msg=document.getElementById('ev-fb-msg');
-  if(!text&&!evr){msg.textContent='Please add a rating or message.';msg.style.color='#C9A84C';return;}
-  try{
-    const res=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rating:evr,text,email,page:'/ev-calculator.html'})});
-    msg.textContent=res.ok?'✓ Thanks!':'Something went wrong.';
-    msg.style.color=res.ok?'#4caf50':'#f44';
-    if(res.ok)setTimeout(()=>document.getElementById('ev-fb-overlay').classList.remove('open'),2000);
-  }catch{msg.textContent='Something went wrong.';msg.style.color='#f44';}
-}
-</script>
-
 </body>
 </html>

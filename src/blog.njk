@@ -44,6 +44,9 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.92);backdrop-fil
 .cat-btn{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);background:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
 .cat-btn:hover{color:var(--white);border-color:var(--silver)}
 .cat-btn.active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.08)}
+.tcg-btn{padding:6px 14px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);background:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.tcg-btn:hover{color:var(--white);border-color:var(--silver)}
+.tcg-btn.active{color:#7ECBA1;border-color:rgba(126,203,161,.5);background:rgba(126,203,161,.08)}
 .gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);position:relative;z-index:1;margin:0}
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:56px}
 .blog-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:all .22s}
@@ -80,14 +83,14 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 <nav>
   <div class="nav-inner">
-    <a href="/index.html" class="nav-logo">🃏 Cards on Cards on Cards</a>
+    <a href="/" class="nav-logo">🃏 Cards on Cards on Cards</a>
     <div class="nav-links">
-      <a href="/index.html" class="nav-link">← Home</a>
+      <a href="/" class="nav-link">← Home</a>
+      <a href="/cards" class="nav-link">Card Vault</a>
       <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="/blog.html" class="nav-link nav-link--active">Blog</a>
+      <a href="/blog" class="nav-link nav-link--active">Blog</a>
       <a href="/tracker.html" class="nav-link">Free Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay Store</a>
-      <a href="/cards" class="nav-link" style="color:#a78bfa;border-color:rgba(167,139,250,.35)">Card Vault</a>
       <a href="/contact.html" class="nav-link">Contact Us</a>
     </div>
   </div>
@@ -103,17 +106,39 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   <div class="gold-divider"></div>
 
   <div class="cat-filter">
-<button class="cat-btn active" data-filter="all" onclick="filterPosts('all')">All</button>
+<button class="cat-btn active" data-filter="all" onclick="filterPosts('all')">All Categories</button>
 <button class="cat-btn" data-filter="buying-guides" onclick="filterPosts('buying-guides')">Buying Guides</button>
 <button class="cat-btn" data-filter="beginner-guides" onclick="filterPosts('beginner-guides')">Game Guides</button>
 <button class="cat-btn" data-filter="accessories" onclick="filterPosts('accessories')">Accessories</button>
 <button class="cat-btn" data-filter="tools-and-trackers" onclick="filterPosts('tools-and-trackers')">Free Tools</button>
   </div>
 
+  <div class="cat-filter" style="margin-top:-24px">
+<button class="tcg-btn active" data-tcg="all" onclick="filterByTcg('all')">All Games</button>
+<button class="tcg-btn" data-tcg="mtg" onclick="filterByTcg('mtg')">MTG</button>
+<button class="tcg-btn" data-tcg="pokemon" onclick="filterByTcg('pokemon')">Pokemon</button>
+<button class="tcg-btn" data-tcg="lorcana" onclick="filterByTcg('lorcana')">Lorcana</button>
+<button class="tcg-btn" data-tcg="one-piece" onclick="filterByTcg('one-piece')">One Piece</button>
+<button class="tcg-btn" data-tcg="yugioh" onclick="filterByTcg('yugioh')">Yu-Gi-Oh</button>
+<button class="tcg-btn" data-tcg="riftbound" onclick="filterByTcg('riftbound')">Riftbound</button>
+<button class="tcg-btn" data-tcg="dnd" onclick="filterByTcg('dnd')">D&amp;D</button>
+<button class="tcg-btn" data-tcg="general" onclick="filterByTcg('general')">General</button>
+  </div>
+
   <div class="blog-grid" id="blogGrid">
     {%- set sortedPosts = collections.post | reverse -%}
     {%- for post in sortedPosts %}
-    <a href="{{ post.url }}" class="blog-card reveal" data-category="{{ post.data.category }}">
+    {%- set postTcg = "general" -%}
+    {%- if "mtg" in post.data.tags -%}{%- set postTcg = "mtg" -%}{%- endif -%}
+    {%- if "pokemon" in post.data.tags -%}{%- set postTcg = "pokemon" -%}{%- endif -%}
+    {%- if "lorcana" in post.data.tags -%}{%- set postTcg = "lorcana" -%}{%- endif -%}
+    {%- if "one-piece" in post.data.tags -%}{%- set postTcg = "one-piece" -%}{%- endif -%}
+    {%- if "yugioh" in post.data.tags -%}{%- set postTcg = "yugioh" -%}{%- endif -%}
+    {%- if "riftbound" in post.data.tags -%}{%- set postTcg = "riftbound" -%}{%- endif -%}
+    {%- if "dragon-ball" in post.data.tags -%}{%- set postTcg = "dragon-ball" -%}{%- endif -%}
+    {%- if "star-wars-unlimited" in post.data.tags -%}{%- set postTcg = "star-wars-unlimited" -%}{%- endif -%}
+    {%- if "dnd" in post.data.tags -%}{%- set postTcg = "dnd" -%}{%- endif -%}
+    <a href="{{ post.url }}" class="blog-card reveal" data-category="{{ post.data.category }}" data-tcg="{{ postTcg }}">
       <div class="blog-card-img">{{ post.data.emoji | default("🃏") }}</div>
       <div class="blog-card-body">
         <div class="blog-card-meta">
@@ -143,38 +168,51 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="footer-inner">
       <div class="footer-logo">Cards on Cards on Cards</div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
-        <a href="/index.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
+        <a href="/" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
+        <a href="/cards" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Card Vault</a>
         <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Shop</a>
         <a href="/tracker.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
-        <a href="/cards" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Card Vault</a>
-        <a href="/legal.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Legal</a>
         <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact Us</a>
       </div>
       <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
     </div>
-    <div style="font-size:11px;color:rgba(160,168,192,.28);margin-top:8px;line-height:1.6;text-align:center">Cards on Cards on Cards is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy. Not approved or endorsed by Wizards of the Coast. © Wizards of the Coast LLC. As an Amazon Associate and eBay Partner, we earn from qualifying purchases. <a href="/legal.html" style="color:rgba(160,168,192,.35)">Full disclaimer</a></div>
   </div>
 </footer>
 
 <script>
-function filterPosts(cat) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.cat-btn[data-filter="' + cat + '"]').classList.add('active');
+let activeCategory = 'all';
+let activeTcg = 'all';
+
+function applyFilters() {
   const guideCategories = ['buying-guides','value-and-worth','product-comparisons','selling-and-money'];
   document.querySelectorAll('#blogGrid .blog-card').forEach(card => {
     const c = card.dataset.category;
-    const show = cat === 'all'
-      || c === cat
-      || (cat === 'buying-guides' && guideCategories.includes(c));
-    card.style.display = show ? 'flex' : 'none';
+    const t = card.dataset.tcg;
+    const catMatch = activeCategory === 'all'
+      || c === activeCategory
+      || (activeCategory === 'buying-guides' && guideCategories.includes(c));
+    const tcgMatch = activeTcg === 'all' || t === activeTcg;
+    card.style.display = (catMatch && tcgMatch) ? 'flex' : 'none';
   });
 }
+
+function filterPosts(cat) {
+  activeCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.cat-btn[data-filter="' + cat + '"]').classList.add('active');
+  applyFilters();
+}
+
+function filterByTcg(tcg) {
+  activeTcg = tcg;
+  document.querySelectorAll('.tcg-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tcg-btn[data-tcg="' + tcg + '"]').classList.add('active');
+  applyFilters();
+}
+
 const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){e.target.classList.add('in-view');obs.unobserve(e.target);} }), {threshold:0.06});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 
-<!-- EPN Smart Links -->
-<script>window._epn = {campaign: 5339146789, smartPopover:false};</script>
-<script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>
 </body>
 </html>
