@@ -7,6 +7,30 @@
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 
+// ── Inline mana symbol SVGs (no external dependency) ──────────────────
+// Minimal SVGs matching official MTG mana pip colours
+const MANA_SVG = {
+  W: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#F8F6D8" stroke="#C8C090" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#5A4A00">W</text></svg>`,
+  U: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C1D7E9" stroke="#7AAAC8" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#003366">U</text></svg>`,
+  B: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#3A3A3A" stroke="#888" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#DDD">B</text></svg>`,
+  R: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#E49977" stroke="#C06030" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#5A1000">R</text></svg>`,
+  G: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#A3C095" stroke="#508040" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#1A3A00">G</text></svg>`,
+  C: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C7C7C7" stroke="#999" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#444">C</text></svg>`,
+  0: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C7C7C7" stroke="#999" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#444">0</text></svg>`,
+  1: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C7C7C7" stroke="#999" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#444">1</text></svg>`,
+  2: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C7C7C7" stroke="#999" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#444">2</text></svg>`,
+  3: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C7C7C7" stroke="#999" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#444">3</text></svg>`,
+  4: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C7C7C7" stroke="#999" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#444">4</text></svg>`,
+  5: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C7C7C7" stroke="#999" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#444">5</text></svg>`,
+  '6plus': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#C7C7C7" stroke="#999" stroke-width="1"/><text x="8" y="12" text-anchor="middle" font-size="9" font-weight="bold" fill="#444">6+</text></svg>`,
+};
+// Wrap SVG string in a consistent sized container
+function manaPip(key, size = 16) {
+  const svg = MANA_SVG[key] || MANA_SVG['C'];
+  return `<span style="display:inline-block;width:${size}px;height:${size}px;vertical-align:middle" title="${key}">${svg}</span>`;
+}
+function manaFilterPip(key) { return manaPip(key, 18); }
+
 async function supabaseGet(path) {
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
@@ -47,7 +71,53 @@ const BASE_STYLES = `
 
 // MTG Card Hub Page
 function renderCardHub(sets, topCards) {
-  const setOptionsHTML = sets.map(s => `<option value="${s.set_slug}">${s.set_name} (${s.release_date?.slice(0,4) || ''})</option>`).join('');
+
+  // Group sets: parent sets (no parent_set_code) are top-level
+  // Sub-sets (have parent_set_code) are children of their parent
+  const parentMap = new Map();  // parent set_code -> parent set object
+  const childMap  = new Map();  // parent set_code -> array of child sets
+
+  sets.forEach(s => {
+    if (!s.parent_set_code) {
+      parentMap.set(s.set_code, s);
+    } else {
+      if (!childMap.has(s.parent_set_code)) childMap.set(s.parent_set_code, []);
+      childMap.get(s.parent_set_code).push(s);
+    }
+  });
+
+  // Sort parents A-Z
+  const sortedParents = [...parentMap.values()].sort((a,b) => a.set_name.localeCompare(b.set_name));
+
+  // Build the HTML for the set grid — parents show with sub-set count badge
+  // Clicking a parent goes to its set page; sub-sets are revealed on hover/click
+  const setListHTML = sortedParents.map(parent => {
+    const children = (childMap.get(parent.set_code) || []).sort((a,b) => a.set_name.localeCompare(b.set_name));
+    const childBadge = children.length ? `<span style="font-size:9px;background:rgba(201,168,76,.15);color:var(--gold);border-radius:4px;padding:1px 5px;margin-left:4px">+${children.length}</span>` : '';
+    const childrenHTML = children.length ? `
+      <div class="set-children" id="ch-${parent.set_code}" style="display:none;margin-top:4px;padding-left:10px;border-left:2px solid rgba(201,168,76,.2)">
+        ${children.map(c => `<a href="/cards/mtg/sets/${c.set_slug}" class="set-list-item set-child-item" data-name="${c.set_name.toLowerCase()}"
+          style="display:block;padding:5px 10px;text-decoration:none;font-size:11px;color:var(--text2);border-radius:4px;transition:color .15s"
+          onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'">${c.set_name}
+          <span style="font-size:10px;opacity:.5">${c.release_date?.slice(0,4)||''}</span>
+        </a>`).join('')}
+      </div>` : '';
+    return `<div class="set-parent-item" data-name="${parent.set_name.toLowerCase()}${children.map(c=>' '+c.set_name.toLowerCase()).join('')}">
+      <div style="display:flex;align-items:center;gap:4px">
+        <a href="/cards/mtg/sets/${parent.set_slug}" class="set-list-item"
+          style="flex:1;display:block;padding:7px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-decoration:none;font-size:12px;transition:border-color .15s"
+          onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+          <span style="color:var(--text);font-weight:600">${parent.set_name}</span>
+          <span style="color:var(--text2);font-size:10px;margin-left:6px">${parent.release_date?.slice(0,4)||''}</span>
+          ${childBadge}
+        </a>
+        ${children.length ? `<button onclick="toggleChildren('${parent.set_code}')" id="btn-${parent.set_code}"
+          style="background:none;border:1px solid var(--border);color:var(--text2);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0"
+          title="Show sub-sets">+</button>` : ''}
+      </div>
+      ${childrenHTML}
+    </div>`;
+  }).join('');
 
   const topCardHTML = topCards.map(c => `
     <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
@@ -104,13 +174,18 @@ ${NAV}
     </div>
   </div>
 
-  <!-- Browse by Set -->
+  <!-- Browse by Set — search + grouped alphabetical list -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
-    <h2 style="font-size:18px;margin-bottom:16px">Browse by Set</h2>
-    <select id="set-picker" style="width:100%;max-width:400px" onchange="if(this.value)window.location='/cards/mtg/sets/'+this.value">
-      <option value="">Select a set...</option>
-      ${setOptionsHTML}
-    </select>
+    <h2 style="font-size:18px;margin-bottom:12px">Browse by Set</h2>
+    <div style="margin-bottom:12px">
+      <input type="text" id="set-search" placeholder="Type a set name e.g. Strixhaven, Commander..."
+        style="width:100%;max-width:500px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box"
+        oninput="filterSets(this.value)" autocomplete="off">
+      <span style="font-size:11px;color:var(--text2);margin-left:12px">Sets with <span style="color:var(--gold)">+N</span> have sub-sets — click the + button to expand them</span>
+    </div>
+    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px;max-height:380px;overflow-y:auto;scrollbar-width:thin">
+      ${setListHTML}
+    </div>
   </div>
 
   <!-- Most Valuable Cards -->
@@ -181,6 +256,30 @@ async function searchCard() {
     res.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px">' +
       data.map(c => '<a href="/cards/mtg/' + c.slug + '" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block"><img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '"><div style="font-size:11px;margin-top:4px">' + c.name + '</div><div style="font-size:12px;color:var(--accent)">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.58).toFixed(0) : '') + '</div></a>').join('') + '</div>';
   } catch { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; }
+}
+
+function filterSets(query) {
+  const q = query.toLowerCase().trim();
+  const items = document.querySelectorAll('.set-parent-item');
+  items.forEach(item => {
+    const name = item.dataset.name || '';
+    const match = !q || name.includes(q);
+    item.style.display = match ? '' : 'none';
+    // If searching, auto-expand children so sub-set matches are visible
+    if (q && match) {
+      const children = item.querySelector('.set-children');
+      if (children) children.style.display = '';
+    }
+  });
+}
+
+function toggleChildren(setCode) {
+  const children = document.getElementById('ch-' + setCode);
+  const btn      = document.getElementById('btn-' + setCode);
+  if (!children) return;
+  const isOpen = children.style.display !== 'none';
+  children.style.display = isOpen ? 'none' : '';
+  if (btn) btn.textContent = isOpen ? '+' : '−';
 }
 </script>
 <!-- GA4 -->
@@ -405,17 +504,55 @@ async function generateCommander() {
 
 // Set Index Page — P2 rebuild with full filter system
 async function renderSetIndex(setSlug) {
-  const sets = await supabaseGet(`mtg_sets?set_slug=eq.${setSlug}&limit=1`);
+  const sets = await supabaseGet(`mtg_sets?set_slug=eq.${setSlug}&limit=1&select=set_code,set_name,set_type,release_date,card_count,amazon_asin,parent_set_code,set_slug`);
   if (!sets || !sets[0]) return null;
   const set = sets[0];
 
-  // Expanded SELECT: add color_identity, type_line, cmc for filters
-  const cards = await supabaseGet(
-    `mtg_cards?set_code=eq.${set.set_code}&order=price_usd.desc.nullslast&limit=400` +
-    `&select=slug,name,image_uri_small,price_usd,price_aud,rarity,collector_number,color_identity,type_line,cmc`
-  );
+  // Fetch related sets in parallel with cards:
+  // - Sub-sets of this set (this is a parent)
+  // - Sibling sets (share the same parent_set_code)
+  // - Parent set info (if this is a sub-set)
+  const [cards, subSets, siblingData] = await Promise.all([
+    supabaseGet(
+      `mtg_cards?set_code=eq.${set.set_code}&order=price_usd.desc.nullslast&limit=400` +
+      `&select=slug,name,image_uri_small,price_usd,price_aud,rarity,collector_number,color_identity,type_line,cmc`
+    ),
+    // Sub-sets where this is the parent
+    supabaseGet(`mtg_sets?parent_set_code=eq.${set.set_code}&select=set_code,set_name,set_slug,release_date&order=set_name.asc`),
+    // Siblings + parent — if this set has a parent_set_code
+    set.parent_set_code
+      ? supabaseGet(`mtg_sets?or=(set_code.eq.${set.parent_set_code},parent_set_code.eq.${set.parent_set_code})&select=set_code,set_name,set_slug,release_date&order=set_name.asc`)
+      : Promise.resolve([])
+  ]);
 
-  if (!cards || !cards.length) return null;
+  // Build related sets nav: parent + siblings + children
+  const relatedSets = [];
+
+  // If this is a sub-set: show parent and all siblings (excluding self)
+  if (set.parent_set_code && siblingData.length) {
+    const parent = siblingData.find(s => s.set_code === set.parent_set_code);
+    const siblings = siblingData.filter(s => s.set_code !== set.set_code && s.set_code !== set.parent_set_code);
+    if (parent) relatedSets.push({ ...parent, label: 'Parent' });
+    siblings.forEach(s => relatedSets.push({ ...s, label: 'Variant' }));
+  }
+
+  // If this is a parent: show its sub-sets
+  if (subSets.length) {
+    subSets.forEach(s => relatedSets.push({ ...s, label: 'Sub-set' }));
+  }
+
+  const relatedSetsHTML = relatedSets.length ? `
+    <div style="margin-bottom:24px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">Also in This Release</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        ${relatedSets.map(s => `<a href="/cards/mtg/sets/${s.set_slug}"
+          style="padding:6px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-decoration:none;font-size:11px;transition:border-color .15s"
+          onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+          <span style="color:var(--text2);font-size:9px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px">${s.label}</span>
+          <span style="color:var(--text);font-weight:600">${s.set_name}</span>
+        </a>`).join('')}
+      </div>
+    </div>` : '';
 
   // Helper: convert price_usd to AUD
   const toAud = (c) => {
@@ -474,13 +611,17 @@ async function renderSetIndex(setSlug) {
   // Main card grid HTML — data attributes for all filter dimensions
   const cardGrid = cards.map(c => {
     const aud = toAud(c);
-    const priceDisplay = aud >= 1 ? `~AU$${aud.toFixed(0)}` : '';
+    const priceDisplay = aud >= 0.50 ? `~AU$${aud.toFixed(0)}` : '<span style="color:rgba(160,168,192,.35);font-size:9px">no price</span>';
     const rc = rarityColour[c.rarity] || '#9ca3af';
     const ciArr = Array.isArray(c.color_identity) ? c.color_identity : [];
     const ciKey = colourKey(ciArr);
     const ciRaw = ciArr.join(',');
     const type = primaryType(c.type_line);
     const cmc = c.cmc || 0;
+    // Inline SVG pips — no external dependency
+    const pipsHtml = ciArr.length
+      ? ciArr.map(pip => manaPip(pip, 12)).join('')
+      : manaPip('C', 12);
     return `<a href="/cards/mtg/${c.slug}"
         class="card-item"
         data-rarity="${c.rarity || ''}"
@@ -490,10 +631,7 @@ async function renderSetIndex(setSlug) {
         data-type="${type}"
         data-cmc="${cmc}">
       <div class="card-rarity-dot" style="background:${rc}"></div>
-      <div class="card-colour-pips">${ciArr.length
-        ? ciArr.map(pip => `<img src="https://img.scryfall.com/symbology/${pip}.svg" alt="${pip}" class="mana-pip">`).join('')
-        : `<img src="https://img.scryfall.com/symbology/C.svg" alt="C" class="mana-pip">`
-      }</div>
+      <div class="card-colour-pips">${pipsHtml}</div>
       ${c.image_uri_small
         ? `<img src="${c.image_uri_small}" alt="${c.name}" class="card-img" loading="lazy">`
         : `<div class="card-img-ph">${c.name}</div>`}
@@ -591,60 +729,81 @@ ${NAV}
     <a href="https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(set.set_name)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3SetPage&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay ↗</a>
   </div>
 
+  <!-- Related sets (sub-sets, siblings, parent) -->
+  ${relatedSetsHTML}
+
   <!-- Context paragraph -->
   <div class="context-box">${contextText}</div>
 
-  <!-- Top 5 spotlight -->
-  <div style="margin-bottom:28px">
-    <p style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Most Valuable Cards</p>
-    <div class="spotlight-row">${top5HTML}</div>
+  <!-- Commander carousel for this set -->
+  <div style="margin-bottom:28px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:12px;padding:20px;overflow:hidden">
+    <p style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9898FF;margin-bottom:10px;text-align:center">Commanders in this Set</p>
+    <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)">
+      <div id="set-cmd-track" style="display:flex;gap:10px;width:max-content">
+        <div style="min-width:120px;height:170px;background:rgba(107,107,255,.08);border-radius:8px"></div>
+        <div style="min-width:120px;height:170px;background:rgba(107,107,255,.08);border-radius:8px"></div>
+        <div style="min-width:120px;height:170px;background:rgba(107,107,255,.08);border-radius:8px"></div>
+        <div style="min-width:120px;height:170px;background:rgba(107,107,255,.08);border-radius:8px"></div>
+      </div>
+    </div>
   </div>
+  <style>
+  @keyframes set-cmd-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .set-cmd-track-loaded{animation:set-cmd-scroll 45s linear infinite}
+  .set-cmd-track-loaded:hover{animation-play-state:paused}
+  .set-cmd-card{display:inline-flex;flex-direction:column;min-width:120px;max-width:130px;background:rgba(107,107,255,.06);border:1px solid rgba(107,107,255,.2);border-radius:8px;overflow:hidden;text-decoration:none;transition:all .2s;flex-shrink:0}
+  .set-cmd-card:hover{border-color:rgba(107,107,255,.5);transform:translateY(-2px)}
+  .set-cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
+  .set-cmd-card-body{padding:5px 7px 7px;display:flex;flex-direction:column;gap:2px}
+  .set-cmd-card-name{font-size:9px;font-weight:700;color:#C0C0FF;line-height:1.2}
+  .set-cmd-card-id{font-size:8px;color:rgba(160,168,192,.5)}
+  </style>
 
   <!-- Filter bar -->
   <div class="filter-bar">
 
-    <!-- Colour Identity -->
+    <!-- Colour Identity — multi-select toggle, AND logic -->
     <div class="filter-row">
       <span class="filter-label">Colour</span>
-      <button class="filter-btn colour-btn active" data-colour-filter="all" onclick="setColour(this,'all')">All</button>
-      <button class="filter-btn colour-btn" data-colour-filter="W" onclick="setColour(this,'W')"><img src="https://img.scryfall.com/symbology/W.svg" class="mana-pip-filter" alt="White"> White</button>
-      <button class="filter-btn colour-btn" data-colour-filter="U" onclick="setColour(this,'U')"><img src="https://img.scryfall.com/symbology/U.svg" class="mana-pip-filter" alt="Blue"> Blue</button>
-      <button class="filter-btn colour-btn" data-colour-filter="B" onclick="setColour(this,'B')"><img src="https://img.scryfall.com/symbology/B.svg" class="mana-pip-filter" alt="Black"> Black</button>
-      <button class="filter-btn colour-btn" data-colour-filter="R" onclick="setColour(this,'R')"><img src="https://img.scryfall.com/symbology/R.svg" class="mana-pip-filter" alt="Red"> Red</button>
-      <button class="filter-btn colour-btn" data-colour-filter="G" onclick="setColour(this,'G')"><img src="https://img.scryfall.com/symbology/G.svg" class="mana-pip-filter" alt="Green"> Green</button>
-      <button class="filter-btn colour-btn" data-colour-filter="C" onclick="setColour(this,'C')"><img src="https://img.scryfall.com/symbology/C.svg" class="mana-pip-filter" alt="Colourless"> Colourless</button>
-      <button class="filter-btn colour-btn" data-colour-filter="M" onclick="setColour(this,'M')">🌈 Multicolour</button>
+      <button class="filter-btn colour-btn active" data-colour-filter="all" onclick="toggleColour(this,'all')">All</button>
+      <button class="filter-btn colour-btn" data-colour-filter="W" onclick="toggleColour(this,'W')">${manaFilterPip('W')} White</button>
+      <button class="filter-btn colour-btn" data-colour-filter="U" onclick="toggleColour(this,'U')">${manaFilterPip('U')} Blue</button>
+      <button class="filter-btn colour-btn" data-colour-filter="B" onclick="toggleColour(this,'B')">${manaFilterPip('B')} Black</button>
+      <button class="filter-btn colour-btn" data-colour-filter="R" onclick="toggleColour(this,'R')">${manaFilterPip('R')} Red</button>
+      <button class="filter-btn colour-btn" data-colour-filter="G" onclick="toggleColour(this,'G')">${manaFilterPip('G')} Green</button>
+      <button class="filter-btn colour-btn" data-colour-filter="C" onclick="toggleColour(this,'C')">${manaFilterPip('C')} Colourless</button>
     </div>
 
-    <!-- Type -->
+    <!-- Type — multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Type</span>
-      <button class="filter-btn active" data-type-filter="all" onclick="setType(this,'all')">All</button>
-      <button class="filter-btn" data-type-filter="Creature" onclick="setType(this,'Creature')">Creature</button>
-      <button class="filter-btn" data-type-filter="Instant" onclick="setType(this,'Instant')">Instant</button>
-      <button class="filter-btn" data-type-filter="Sorcery" onclick="setType(this,'Sorcery')">Sorcery</button>
-      <button class="filter-btn" data-type-filter="Artifact" onclick="setType(this,'Artifact')">Artifact</button>
-      <button class="filter-btn" data-type-filter="Enchantment" onclick="setType(this,'Enchantment')">Enchantment</button>
-      <button class="filter-btn" data-type-filter="Planeswalker" onclick="setType(this,'Planeswalker')">Planeswalker</button>
-      <button class="filter-btn" data-type-filter="Land" onclick="setType(this,'Land')">Land</button>
-      <button class="filter-btn" data-type-filter="Battle" onclick="setType(this,'Battle')">Battle</button>
+      <button class="filter-btn active" data-type-filter="all" onclick="toggleType(this,'all')">All</button>
+      <button class="filter-btn" data-type-filter="Creature" onclick="toggleType(this,'Creature')">Creature</button>
+      <button class="filter-btn" data-type-filter="Instant" onclick="toggleType(this,'Instant')">Instant</button>
+      <button class="filter-btn" data-type-filter="Sorcery" onclick="toggleType(this,'Sorcery')">Sorcery</button>
+      <button class="filter-btn" data-type-filter="Artifact" onclick="toggleType(this,'Artifact')">Artifact</button>
+      <button class="filter-btn" data-type-filter="Enchantment" onclick="toggleType(this,'Enchantment')">Enchantment</button>
+      <button class="filter-btn" data-type-filter="Planeswalker" onclick="toggleType(this,'Planeswalker')">Planeswalker</button>
+      <button class="filter-btn" data-type-filter="Land" onclick="toggleType(this,'Land')">Land</button>
+      <button class="filter-btn" data-type-filter="Battle" onclick="toggleType(this,'Battle')">Battle</button>
     </div>
 
-    <!-- Rarity -->
+    <!-- Rarity — multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Rarity</span>
-      <button class="filter-btn active" data-rarity-filter="all" onclick="setRarity(this,'all')">All</button>
-      <button class="filter-btn" data-rarity-filter="mythic" onclick="setRarity(this,'mythic')" style="color:#f5a623;border-color:rgba(245,166,35,.3)">◆ Mythic</button>
-      <button class="filter-btn" data-rarity-filter="rare" onclick="setRarity(this,'rare')" style="color:#a855f7;border-color:rgba(168,85,247,.3)">◆ Rare</button>
-      <button class="filter-btn" data-rarity-filter="uncommon" onclick="setRarity(this,'uncommon')" style="color:#6ba3be;border-color:rgba(107,163,190,.3)">◆ Uncommon</button>
-      <button class="filter-btn" data-rarity-filter="common" onclick="setRarity(this,'common')" style="color:#9ca3af;border-color:rgba(156,163,175,.3)">◆ Common</button>
+      <button class="filter-btn active" data-rarity-filter="all" onclick="toggleRarity(this,'all')">All</button>
+      <button class="filter-btn" data-rarity-filter="mythic" onclick="toggleRarity(this,'mythic')" style="color:#f5a623;border-color:rgba(245,166,35,.3)">◆ Mythic</button>
+      <button class="filter-btn" data-rarity-filter="rare" onclick="toggleRarity(this,'rare')" style="color:#a855f7;border-color:rgba(168,85,247,.3)">◆ Rare</button>
+      <button class="filter-btn" data-rarity-filter="uncommon" onclick="toggleRarity(this,'uncommon')" style="color:#6ba3be;border-color:rgba(107,163,190,.3)">◆ Uncommon</button>
+      <button class="filter-btn" data-rarity-filter="common" onclick="toggleRarity(this,'common')" style="color:#9ca3af;border-color:rgba(156,163,175,.3)">◆ Common</button>
     </div>
 
-    <!-- Mana Value -->
+    <!-- Mana Value — multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Mana Value</span>
-      <button class="filter-btn active" data-cmc-filter="all" onclick="setCmc(this,'all')">All</button>
-      ${[0,1,2,3,4,5,6].map(n => `<button class="filter-btn" data-cmc-filter="${n}" onclick="setCmc(this,'${n}')">${n === 6 ? '6+' : n}<img src="https://img.scryfall.com/symbology/${n}.svg" class="mana-pip-filter" alt="${n}" style="margin-left:2px"></button>`).join('')}
+      <button class="filter-btn active" data-cmc-filter="all" onclick="toggleCmc(this,'all')">All</button>
+      ${[0,1,2,3,4,5].map(n => `<button class="filter-btn" data-cmc-filter="${n}" onclick="toggleCmc(this,'${n}')">${manaPip(String(n), 16)} ${n}</button>`).join('')}
+      <button class="filter-btn" data-cmc-filter="6" onclick="toggleCmc(this,'6')">${manaPip('6plus', 16)} 6+</button>
     </div>
 
     <!-- Sort + Price + Actions -->
@@ -705,42 +864,43 @@ ${NAV}
 </footer>
 
 <script>
-// ── State ──────────────────────────────────────────────────
-let activeColour = 'all';
-let activeType   = 'all';
-let activeRarity = 'all';
-let activeCmc    = 'all';
+// ── Multi-select filter state (Sets of values) ──────────────────────
+const selColours  = new Set(); // empty = all
+const selTypes    = new Set();
+const selRarities = new Set();
+const selCmcs     = new Set();
 
-// Rarity sort order
 const RARITY_ORDER = { mythic: 0, rare: 1, uncommon: 2, common: 3 };
 
-// ── Filter setters ─────────────────────────────────────────
-function setColour(btn, val) {
-  activeColour = val;
-  document.querySelectorAll('[data-colour-filter]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
-}
-function setType(btn, val) {
-  activeType = val;
-  document.querySelectorAll('[data-type-filter]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
-}
-function setRarity(btn, val) {
-  activeRarity = val;
-  document.querySelectorAll('[data-rarity-filter]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
-}
-function setCmc(btn, val) {
-  activeCmc = val;
-  document.querySelectorAll('[data-cmc-filter]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+// ── Generic multi-select toggle helper ──────────────────────────────
+function toggleFilter(btn, val, selSet, allAttr, filterAttr) {
+  if (val === 'all') {
+    selSet.clear();
+    document.querySelectorAll('[' + filterAttr + ']').forEach(b => b.classList.remove('active'));
+    document.querySelector('[' + filterAttr + '="all"]').classList.add('active');
+  } else {
+    // Remove "All" active state
+    document.querySelector('[' + filterAttr + '="all"]').classList.remove('active');
+    if (selSet.has(val)) {
+      selSet.delete(val);
+      btn.classList.remove('active');
+      if (selSet.size === 0) {
+        document.querySelector('[' + filterAttr + '="all"]').classList.add('active');
+      }
+    } else {
+      selSet.add(val);
+      btn.classList.add('active');
+    }
+  }
   applyFilters();
 }
 
-// ── Main filter + sort ─────────────────────────────────────
+function toggleColour(btn, val)  { toggleFilter(btn, val, selColours,  'data-colour-filter', 'data-colour-filter'); }
+function toggleType(btn, val)    { toggleFilter(btn, val, selTypes,    'data-type-filter',   'data-type-filter'); }
+function toggleRarity(btn, val)  { toggleFilter(btn, val, selRarities, 'data-rarity-filter', 'data-rarity-filter'); }
+function toggleCmc(btn, val)     { toggleFilter(btn, val, selCmcs,     'data-cmc-filter',    'data-cmc-filter'); }
+
+// ── Main filter + sort ───────────────────────────────────────────────
 function applyFilters() {
   const minPrice = parseFloat(document.getElementById('filter-price').value) || 0;
   const sortVal  = document.getElementById('sort-select').value;
@@ -749,24 +909,30 @@ function applyFilters() {
 
   let visible = 0;
   cards.forEach(card => {
-    const rarity  = card.dataset.rarity || '';
-    const price   = parseFloat(card.dataset.price) || 0;
-    const colour  = card.dataset.colour || 'C';
-    const colRaw  = card.dataset.colourRaw || '';
-    const type    = card.dataset.type || '';
-    const cmc     = parseInt(card.dataset.cmc, 10) || 0;
+    const rarity   = card.dataset.rarity || '';
+    const price    = parseFloat(card.dataset.price) || 0;
+    const colRaw   = (card.dataset.colourRaw || '').split(',').filter(Boolean);
+    const colKey   = card.dataset.colour || 'C';
+    const type     = card.dataset.type || '';
+    const cmc      = parseInt(card.dataset.cmc, 10) || 0;
 
-    // Colour filter: 'M' = multicolour, letter = that colour in raw list, 'all' = show all
-    const colOk =
-      activeColour === 'all' ? true :
-      activeColour === 'M'   ? colour === 'M' :
-                               colRaw.split(',').includes(activeColour);
+    // Colour: AND logic — card must contain ALL selected colours
+    const colOk = selColours.size === 0
+      ? true
+      : [...selColours].every(sc => sc === 'C' ? colKey === 'C' : colRaw.includes(sc));
 
-    const typeOk   = activeType   === 'all' || type === activeType;
-    const rarityOk = activeRarity === 'all' || rarity === activeRarity;
-    const cmcOk    = activeCmc    === 'all' || (activeCmc === '6' ? cmc >= 6 : cmc === parseInt(activeCmc, 10));
-    const priceOk  = price >= minPrice;
+    // Type: OR logic — card matches ANY selected type
+    const typeOk   = selTypes.size   === 0 || selTypes.has(type);
 
+    // Rarity: OR logic
+    const rarityOk = selRarities.size === 0 || selRarities.has(rarity);
+
+    // CMC: OR logic (6+ buckets all cmc >= 6)
+    const cmcOk    = selCmcs.size === 0 || [...selCmcs].some(sc =>
+      sc === '6' ? cmc >= 6 : cmc === parseInt(sc, 10)
+    );
+
+    const priceOk = price >= minPrice;
     const show = colOk && typeOk && rarityOk && cmcOk && priceOk;
     card.style.display = show ? '' : 'none';
     if (show) visible++;
@@ -775,43 +941,66 @@ function applyFilters() {
   document.getElementById('filter-count').textContent = visible + ' cards';
 
   // Sort visible cards
-  const visible_cards = cards.filter(c => c.style.display !== 'none');
-  visible_cards.sort((a, b) => {
+  const visCards = cards.filter(c => c.style.display !== 'none');
+  visCards.sort((a, b) => {
     const ap = parseFloat(a.dataset.price) || 0;
     const bp = parseFloat(b.dataset.price) || 0;
-    const aName = a.querySelector('.card-name')?.textContent || '';
-    const bName = b.querySelector('.card-name')?.textContent || '';
-    const aCmc  = parseInt(a.dataset.cmc, 10) || 0;
-    const bCmc  = parseInt(b.dataset.cmc, 10) || 0;
-    const aRar  = RARITY_ORDER[a.dataset.rarity] ?? 4;
-    const bRar  = RARITY_ORDER[b.dataset.rarity] ?? 4;
-
-    if (sortVal === 'price-desc') return bp - ap;
-    if (sortVal === 'price-asc')  return ap - bp;
-    if (sortVal === 'name-asc')   return aName.localeCompare(bName);
-    if (sortVal === 'name-desc')  return bName.localeCompare(aName);
-    if (sortVal === 'cmc-asc')    return aCmc - bCmc;
-    if (sortVal === 'rarity-desc') return aRar - bRar;
+    const an = a.querySelector('.card-name')?.textContent || '';
+    const bn = b.querySelector('.card-name')?.textContent || '';
+    const ac = parseInt(a.dataset.cmc, 10) || 0;
+    const bc = parseInt(b.dataset.cmc, 10) || 0;
+    const ar = RARITY_ORDER[a.dataset.rarity] ?? 4;
+    const br = RARITY_ORDER[b.dataset.rarity] ?? 4;
+    if (sortVal === 'price-desc')  return bp - ap;
+    if (sortVal === 'price-asc')   return ap - bp;
+    if (sortVal === 'name-asc')    return an.localeCompare(bn);
+    if (sortVal === 'name-desc')   return bn.localeCompare(an);
+    if (sortVal === 'cmc-asc')     return ac - bc;
+    if (sortVal === 'rarity-desc') return ar - br;
     return 0;
   });
-
-  // Re-append in sorted order (hidden cards stay hidden)
-  visible_cards.forEach(c => grid.appendChild(c));
+  visCards.forEach(c => grid.appendChild(c));
 }
 
 function clearFilters() {
-  activeColour = 'all'; activeType = 'all'; activeRarity = 'all'; activeCmc = 'all';
-  document.querySelectorAll('[data-colour-filter],[data-type-filter],[data-rarity-filter],[data-cmc-filter]')
-    .forEach(b => b.classList.remove('active'));
-  document.querySelector('[data-colour-filter="all"]').classList.add('active');
-  document.querySelector('[data-type-filter="all"]').classList.add('active');
-  document.querySelector('[data-rarity-filter="all"]').classList.add('active');
-  document.querySelector('[data-cmc-filter="all"]').classList.add('active');
+  selColours.clear(); selTypes.clear(); selRarities.clear(); selCmcs.clear();
+  ['data-colour-filter','data-type-filter','data-rarity-filter','data-cmc-filter'].forEach(attr => {
+    document.querySelectorAll('['+attr+']').forEach(b => b.classList.remove('active'));
+    document.querySelector('['+attr+'="all"]').classList.add('active');
+  });
   document.getElementById('filter-price').value = '0';
   document.getElementById('sort-select').value = 'price-desc';
   document.querySelectorAll('.card-item').forEach(c => c.style.display = '');
   document.getElementById('filter-count').textContent = '';
 }
+
+// ── Set commander carousel ───────────────────────────────────────────
+(function() {
+  function buildSetCmdCard(c) {
+    return '<a href="' + c.cardVaultUrl + '" class="set-cmd-card">'
+      + (c.image ? '<img src="' + c.image + '" alt="' + c.name.replace(/"/g,'&quot;') + '" loading="lazy">'
+                 : '<div style="aspect-ratio:745/1040;background:rgba(107,107,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px">🎲</div>')
+      + '<div class="set-cmd-card-body"><div class="set-cmd-card-name">' + c.name + '</div><div class="set-cmd-card-id">' + c.identityName + '</div></div></a>';
+  }
+  async function loadSetCommanders() {
+    const track = document.getElementById('set-cmd-track');
+    if (!track) return;
+    try {
+      const res  = await fetch('/.netlify/functions/commander-carousel?mode=set&limit=20');
+      const data = await res.json();
+      if (!data.commanders || data.commanders.length === 0) {
+        track.innerHTML = '<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders in this set.</p>';
+        return;
+      }
+      const html = data.commanders.map(buildSetCmdCard).join('');
+      track.innerHTML = html + html;
+      track.classList.add('set-cmd-track-loaded');
+    } catch(e) {
+      track.innerHTML = '';
+    }
+  }
+  loadSetCommanders();
+})();
 </script>
 
 <!-- GA4 -->
@@ -827,7 +1016,7 @@ export default async (req) => {
 
   if (path === '/cards/mtg' || path === '/cards/mtg/') {
     const [sets, topCards] = await Promise.all([
-      supabaseGet('mtg_sets?order=release_date.desc&limit=200&digital=eq.false'),
+      supabaseGet('mtg_sets?order=set_name.asc&limit=600&digital=eq.false'),
       supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
     ]);
     return new Response(renderCardHub(sets, topCards), {

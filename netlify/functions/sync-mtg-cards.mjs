@@ -98,6 +98,9 @@ export default async (req) => {
         icon_svg_uri: s.icon_svg_uri || null,
         scryfall_uri: s.scryfall_uri || null,
         set_slug: slugify(s.name),
+        parent_set_code: s.parent_set_code || null,
+        block_code: s.block_code || null,
+        block: s.block || null,
         updated_at: new Date().toISOString()
       }));
 
