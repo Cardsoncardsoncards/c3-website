@@ -407,7 +407,10 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .price-row-aud { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; color: var(--accent); }
     .price-row--foil .price-row-aud { color: var(--accent2); }
     .price-row--etched .price-row-aud { color: var(--blue); }
-    .price-row-usd { font-size: 13px; color: var(--text2); }
+    .price-row-usd { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700; color: var(--accent); display: none; }
+    .price-row--foil .price-row-usd { color: var(--accent2); }
+    .price-row--etched .price-row-usd { color: var(--blue); }
+    .price-row-usd-label { font-size: 11px; color: var(--text2); font-family: sans-serif; font-weight: 400; margin-left: 4px; }
     .price-row-toggle { background: none; border: 1px solid var(--border); color: var(--text2); font-size: 10px; padding: 3px 8px; border-radius: 4px; cursor: pointer; transition: border-color .18s; font-family: sans-serif; white-space: nowrap; }
     .price-row-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -554,21 +557,21 @@ ${contextPara}
           <span class="price-row-label">Non-Foil</span>
           <span class="price-row-aud">${priceAud ? formatAUD(priceAud) : 'N/A'}</span>
           ${card.price_usd ? `<button class="price-row-toggle" onclick="toggleRowCurrency(this,'${parseFloat(card.price_usd).toFixed(2)}','${priceAud ? priceAud.toFixed(2) : ''}')">show USD</button>
-          <span class="price-row-usd" style="display:none">$${parseFloat(card.price_usd).toFixed(2)} USD</span>` : ''}
+          <span class="price-row-usd">$${parseFloat(card.price_usd).toFixed(2)}<span class="price-row-usd-label">USD</span></span>` : ''}
         </div>
         ${priceAudFoil ? `
         <div class="price-row price-row--foil">
           <span class="price-row-label">Foil</span>
           <span class="price-row-aud">${formatAUD(priceAudFoil)}</span>
           <button class="price-row-toggle" onclick="toggleRowCurrency(this,'${parseFloat(card.price_usd_foil).toFixed(2)}','${priceAudFoil.toFixed(2)}')">show USD</button>
-          <span class="price-row-usd" style="display:none">$${parseFloat(card.price_usd_foil).toFixed(2)} USD</span>
+          <span class="price-row-usd">$${parseFloat(card.price_usd_foil).toFixed(2)}<span class="price-row-usd-label">USD</span></span>
         </div>` : ''}
         ${priceAudEtched ? `
         <div class="price-row price-row--etched">
           <span class="price-row-label">Etched</span>
           <span class="price-row-aud">${formatAUD(priceAudEtched)}</span>
           <button class="price-row-toggle" onclick="toggleRowCurrency(this,'${parseFloat(card.price_usd_etched).toFixed(2)}','${priceAudEtched.toFixed(2)}')">show USD</button>
-          <span class="price-row-usd" style="display:none">$${parseFloat(card.price_usd_etched).toFixed(2)} USD</span>
+          <span class="price-row-usd">$${parseFloat(card.price_usd_etched).toFixed(2)}<span class="price-row-usd-label">USD</span></span>
         </div>` : ''}
       </div>
 
@@ -745,12 +748,12 @@ function toggleRowCurrency(btn, usd, aud) {
   const usdEl = row.querySelector('.price-row-usd');
   const showing = btn.textContent.trim() === 'show AUD';
   if (showing) {
-    audEl.style.display = '';
+    audEl.style.display = 'inline';
     usdEl.style.display = 'none';
     btn.textContent = 'show USD';
   } else {
     audEl.style.display = 'none';
-    usdEl.style.display = '';
+    usdEl.style.display = 'inline';
     btn.textContent = 'show AUD';
   }
 }

@@ -87,8 +87,8 @@ ${NAV}
   <!-- Commander Spotlight Carousel -->
   <div style="margin-bottom:32px;padding:24px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:var(--radius);overflow:hidden">
     <div style="text-align:center;margin-bottom:20px">
-      <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#9898FF;margin-bottom:6px">Set Spotlight</p>
-      <h2 id="cmd-mtg-carousel-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text1);margin:0">Commanders from Secrets of Strixhaven</h2>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#9898FF;margin-bottom:6px">Commander Spotlight</p>
+      <h2 id="cmd-mtg-carousel-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text1);margin:0">Your Next Commander Awaits</h2>
     </div>
     <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)">
       <div id="cmd-mtg-carousel-track" class="cmd-track">
@@ -212,11 +212,16 @@ async function searchCard() {
     const titleEl=document.getElementById('cmd-mtg-carousel-title');
     if(!track)return;
     try{
-      const res=await fetch('/.netlify/functions/commander-carousel?mode=set&limit=20');
+      // mode=top returns 40 commanders — shuffle client-side so each load feels fresh
+      const res=await fetch('/.netlify/functions/commander-carousel?mode=top');
       const data=await res.json();
       if(!data.commanders||data.commanders.length===0){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders found.</p>';return;}
-      if(titleEl&&data.title)titleEl.textContent=data.title;
-      const html=data.commanders.map(buildCmdCard).join('');
+      // Fisher-Yates shuffle then take 20
+      const arr=[...data.commanders];
+      for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+      const twenty=arr.slice(0,20);
+      if(titleEl)titleEl.textContent='Your Next Commander Awaits';
+      const html=twenty.map(buildCmdCard).join('');
       track.innerHTML=html+html;
       track.classList.add('loaded');
     }catch(e){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">Could not load commanders.</p>';}
@@ -398,26 +403,116 @@ async function generateCommander() {
 </body></html>`;
 }
 
-// Set Index Page
+// Set Index Page — P2 rebuild with full filter system
 async function renderSetIndex(setSlug) {
   const sets = await supabaseGet(`mtg_sets?set_slug=eq.${setSlug}&limit=1`);
   if (!sets || !sets[0]) return null;
   const set = sets[0];
-  const cards = await supabaseGet(`mtg_cards?set_code=eq.${set.set_code}&order=price_usd.desc.nullslast&limit=300&select=slug,name,image_uri_small,price_usd,rarity,collector_number`);
 
-  const cardGrid = cards.map(c => {
-    const audPrice = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * 1.58 : 0);
-    const priceDisplay = (c.price_usd && c.price_usd >= 3) ? `~AU$${audPrice.toFixed(0)}` : '';
-    const rarityColor = {mythic:'#f5a623',rare:'#a855f7',uncommon:'#6ba3be',common:'#9ca3af'}[c.rarity] || '#9ca3af';
-    return `<a href="/cards/mtg/${c.slug}" data-rarity="${c.rarity || ''}" data-price="${audPrice.toFixed(2)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s;position:relative" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
-      ${c.rarity ? `<div style="position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:${rarityColor}"></div>` : ''}
-      ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text2)">${c.name}</div>`}
-      <div style="font-size:11px;margin-top:4px;color:var(--text);line-height:1.2">${c.name}</div>
-      <div style="font-size:12px;color:var(--accent);font-weight:bold">${priceDisplay}</div>
+  // Expanded SELECT: add color_identity, type_line, cmc for filters
+  const cards = await supabaseGet(
+    `mtg_cards?set_code=eq.${set.set_code}&order=price_usd.desc.nullslast&limit=400` +
+    `&select=slug,name,image_uri_small,price_usd,price_aud,rarity,collector_number,color_identity,type_line,cmc`
+  );
+
+  if (!cards || !cards.length) return null;
+
+  // Helper: convert price_usd to AUD
+  const toAud = (c) => {
+    if (c.price_aud && c.price_aud > 0) return parseFloat(c.price_aud);
+    if (c.price_usd && c.price_usd > 0) return parseFloat(c.price_usd) * 1.58;
+    return 0;
+  };
+
+  // Helper: extract primary card type from type_line
+  const primaryType = (typeLine) => {
+    if (!typeLine) return 'Other';
+    const tl = typeLine.toLowerCase();
+    if (tl.includes('land')) return 'Land';
+    if (tl.includes('creature')) return 'Creature';
+    if (tl.includes('planeswalker')) return 'Planeswalker';
+    if (tl.includes('instant')) return 'Instant';
+    if (tl.includes('sorcery')) return 'Sorcery';
+    if (tl.includes('enchantment')) return 'Enchantment';
+    if (tl.includes('artifact')) return 'Artifact';
+    if (tl.includes('battle')) return 'Battle';
+    return 'Other';
+  };
+
+  // Rarity colours and dots
+  const rarityColour = { mythic:'#f5a623', rare:'#a855f7', uncommon:'#6ba3be', common:'#9ca3af' };
+
+  // Colour identity key for data attribute: sorted WUBRG order, joined
+  const colourKey = (ci) => {
+    if (!ci || !ci.length) return 'C';
+    if (ci.length > 1) return 'M'; // multicolour
+    return ci[0];
+  };
+
+  // Top 5 spotlight — already sorted by price desc from query
+  const top5 = cards.filter(c => toAud(c) > 0).slice(0, 5);
+  const top5HTML = top5.map(c => {
+    const aud = toAud(c);
+    const rc = rarityColour[c.rarity] || '#9ca3af';
+    return `<a href="/cards/mtg/${c.slug}" class="spotlight-card">
+      <div class="spotlight-rarity-dot" style="background:${rc}"></div>
+      ${c.image_uri_small
+        ? `<img src="${c.image_uri_small}" alt="${c.name}" class="spotlight-img" loading="lazy">`
+        : `<div class="spotlight-img-ph">${c.name}</div>`}
+      <div class="spotlight-name">${c.name}</div>
+      <div class="spotlight-price">~AU$${aud.toFixed(0)}</div>
+      <div class="spotlight-cta">View Card →</div>
     </a>`;
   }).join('');
 
-  const hasEVCalc = ['stx','mh3','ltr','woe','mkm','otj','blb','dsk','fdn','dft','tdm'].includes(set.set_code);
+  // Context paragraph — top 2 named cards
+  const topTwo = cards.filter(c => toAud(c) > 0).slice(0, 2);
+  const contextText = topTwo.length >= 2
+    ? `${set.set_name} contains ${cards.length} cards. The most valuable in this set are <strong>${topTwo[0].name}</strong> at ~AU$${toAud(topTwo[0]).toFixed(0)} and <strong>${topTwo[1].name}</strong> at ~AU$${toAud(topTwo[1]).toFixed(0)}. Prices are updated daily and displayed in AUD.`
+    : `${set.set_name} contains ${cards.length} cards. Prices are updated daily and displayed in AUD.`;
+
+  // Main card grid HTML — data attributes for all filter dimensions
+  const cardGrid = cards.map(c => {
+    const aud = toAud(c);
+    const priceDisplay = aud >= 1 ? `~AU$${aud.toFixed(0)}` : '';
+    const rc = rarityColour[c.rarity] || '#9ca3af';
+    const ciArr = Array.isArray(c.color_identity) ? c.color_identity : [];
+    const ciKey = colourKey(ciArr);
+    const ciRaw = ciArr.join(',');
+    const type = primaryType(c.type_line);
+    const cmc = c.cmc || 0;
+    return `<a href="/cards/mtg/${c.slug}"
+        class="card-item"
+        data-rarity="${c.rarity || ''}"
+        data-price="${aud.toFixed(2)}"
+        data-colour="${ciKey}"
+        data-colour-raw="${ciRaw}"
+        data-type="${type}"
+        data-cmc="${cmc}">
+      <div class="card-rarity-dot" style="background:${rc}"></div>
+      <div class="card-colour-pips">${ciArr.length
+        ? ciArr.map(pip => `<img src="https://img.scryfall.com/symbology/${pip}.svg" alt="${pip}" class="mana-pip">`).join('')
+        : `<img src="https://img.scryfall.com/symbology/C.svg" alt="C" class="mana-pip">`
+      }</div>
+      ${c.image_uri_small
+        ? `<img src="${c.image_uri_small}" alt="${c.name}" class="card-img" loading="lazy">`
+        : `<div class="card-img-ph">${c.name}</div>`}
+      <div class="card-name">${c.name}</div>
+      <div class="card-price">${priceDisplay}</div>
+    </a>`;
+  }).join('');
+
+  const hasEVCalc = ['stx','sos','mh3','ltr','woe','mkm','otj','blb','dsk','fdn','dft','tdm'].includes(set.set_code);
+
+  // Schema.org CollectionPage JSON-LD
+  const schemaLD = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `${set.set_name} Card Prices Australia`,
+    "description": `All ${cards.length} cards from ${set.set_name} with current AUD prices. Updated daily.`,
+    "url": `https://cardsoncardsoncards.com.au/cards/mtg/sets/${setSlug}`,
+    "provider": { "@type": "Organization", "name": "Cards on Cards on Cards", "url": "https://cardsoncardsoncards.com.au" }
+  });
 
   return `<!DOCTYPE html>
 <html lang="en-AU">
@@ -425,85 +520,300 @@ async function renderSetIndex(setSlug) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${set.set_name} Card Prices Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Browse all ${set.set_name} card prices in AUD. ${cards.length} cards with live Australian pricing, eBay AU buy links, and 52-week price ranges.">
+  <meta name="description" content="Browse all ${cards.length} ${set.set_name} cards with live AUD pricing, colour identity filters, type filters and eBay AU buy links. Updated daily.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/sets/${setSlug}">
+  <script type="application/ld+json">${schemaLD}</script>
   ${BASE_STYLES}
+<style>
+/* ── Spotlight top-5 ── */
+.spotlight-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;margin-bottom:32px;scrollbar-width:thin}
+.spotlight-card{flex:0 0 150px;background:var(--bg2);border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s}
+.spotlight-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.spotlight-rarity-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%}
+.spotlight-img{width:100%;border-radius:6px;display:block}
+.spotlight-img-ph{height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text2)}
+.spotlight-name{font-size:10px;color:var(--text);margin-top:6px;line-height:1.3;font-weight:600}
+.spotlight-price{font-family:'Cinzel',serif;font-size:14px;color:var(--accent);font-weight:700;margin-top:3px}
+.spotlight-cta{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+/* ── Filter bar ── */
+.filter-bar{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px}
+.filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.filter-row:last-child{margin-bottom:0}
+.filter-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);min-width:90px;flex-shrink:0}
+.filter-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .18s;font-family:sans-serif;display:inline-flex;align-items:center;gap:4px}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(201,168,76,.1)}
+.filter-btn.colour-btn{padding:4px 8px}
+.filter-btn.colour-btn.active{box-shadow:0 0 0 2px var(--accent)}
+.mana-pip-filter{width:18px;height:18px;vertical-align:middle}
+.sort-select{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-family:sans-serif;cursor:pointer}
+.filter-actions{display:flex;align-items:center;gap:12px;margin-top:4px}
+.filter-count{font-size:12px;color:var(--text2)}
+.clear-btn{background:none;border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:sans-serif}
+.clear-btn:hover{border-color:#f44;color:#f44}
+/* ── Card grid ── */
+#card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.card-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color .2s;position:relative;text-decoration:none}
+.card-item:hover{border-color:var(--accent)}
+.card-rarity-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%}
+.card-colour-pips{position:absolute;top:5px;left:5px;display:flex;gap:1px;flex-wrap:wrap;max-width:36px}
+.mana-pip{width:12px;height:12px}
+.card-img{width:100%;border-radius:5px;display:block;margin-top:2px}
+.card-img-ph{height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text2)}
+.card-name{font-size:10px;margin-top:4px;color:var(--text);line-height:1.2}
+.card-price{font-size:11px;color:var(--accent);font-weight:700;margin-top:2px}
+/* ── Context box ── */
+.context-box{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.6}
+.context-box strong{color:var(--accent)}
+</style>
 </head>
 <body>
 ${NAV}
 <div class="wrap" style="padding-top:32px">
-  <div style="font-size:13px;color:var(--text2);margin-bottom:16px">
-    <a href="/">Home</a> › <a href="/cards/mtg">MTG Cards</a> › ${set.set_name}
-  </div>
-  <h1 style="font-size:28px;margin-bottom:8px">${set.set_name} Card Prices (AUD)</h1>
-  <p style="color:var(--text2);margin-bottom:24px">${cards.length} cards · Released ${set.release_date || 'N/A'} · Prices in AUD updated daily</p>
 
-  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px">
-    ${hasEVCalc ? `<a href="/ev-calculator.html#${set.set_code}" style="background:rgba(124,106,245,0.15);border:1px solid var(--accent2);color:var(--accent2);padding:10px 20px;border-radius:8px;font-weight:bold">📊 ${set.set_name} EV Calculator</a>` : ''}
-    ${set.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${set.amazon_asin}?tag=blasdigital-22" target="_blank" rel="noopener" style="background:#232f3e;border:1px solid #f90;color:#f90;padding:10px 20px;border-radius:8px;font-weight:bold">📦 Buy Sealed on Amazon AU</a>` : ''}
-    <a href="/blog" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:8px">📖 Read Our Guides</a>
+  <!-- Breadcrumb -->
+  <div style="font-size:12px;color:var(--text2);margin-bottom:16px">
+    <a href="/" style="color:var(--text2)">Home</a> ›
+    <a href="/cards" style="color:var(--text2)">Card Vault</a> ›
+    <a href="/cards/mtg" style="color:var(--text2)">MTG Cards</a> ›
+    <span style="color:var(--accent)">${set.set_name}</span>
   </div>
 
-  <!-- Filter Bar -->
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px;font-family:sans-serif">
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em">Filter:</span>
-      <select id="filter-rarity" onchange="filterCards()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:12px">
-        <option value="">All Rarities</option>
-        <option value="mythic">Mythic</option>
-        <option value="rare">Rare</option>
-        <option value="uncommon">Uncommon</option>
-        <option value="common">Common</option>
-      </select>
-      <select id="filter-price" onchange="filterCards()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:12px">
-        <option value="">Any Price</option>
-        <option value="20">AU$20+</option>
-        <option value="10">AU$10+</option>
-        <option value="5">AU$5+</option>
-        <option value="1">AU$1+</option>
-      </select>
-      <button onclick="clearFilters()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer">Clear</button>
-      <span id="filter-count" style="font-size:12px;color:var(--text2);margin-left:auto"></span>
+  <!-- Header -->
+  <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.set_name} <span style="color:var(--accent)">Card Prices</span></h1>
+  <p style="color:var(--text2);margin-bottom:20px;font-size:14px">${cards.length} cards · Released ${set.release_date ? new Date(set.release_date).toLocaleDateString('en-AU', {day:'numeric',month:'long',year:'numeric'}) : 'N/A'} · AUD prices updated daily</p>
+
+  <!-- CTAs row -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+    ${hasEVCalc ? `<a href="/ev-calculator.html#${set.set_code}" style="background:rgba(124,106,245,.15);border:1px solid var(--accent2);color:var(--accent2);padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📊 EV Calculator</a>` : ''}
+    ${set.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${set.amazon_asin}?tag=blasdigital-22" target="_blank" rel="noopener" style="background:#232f3e;border:1px solid #f90;color:#f90;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📦 Buy Sealed on Amazon AU</a>` : ''}
+    <a href="/blog" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:9px 16px;border-radius:8px;font-size:13px;text-decoration:none">📖 Buying Guides</a>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(set.set_name)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3SetPage&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay ↗</a>
+  </div>
+
+  <!-- Context paragraph -->
+  <div class="context-box">${contextText}</div>
+
+  <!-- Top 5 spotlight -->
+  <div style="margin-bottom:28px">
+    <p style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Most Valuable Cards</p>
+    <div class="spotlight-row">${top5HTML}</div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+
+    <!-- Colour Identity -->
+    <div class="filter-row">
+      <span class="filter-label">Colour</span>
+      <button class="filter-btn colour-btn active" data-colour-filter="all" onclick="setColour(this,'all')">All</button>
+      <button class="filter-btn colour-btn" data-colour-filter="W" onclick="setColour(this,'W')"><img src="https://img.scryfall.com/symbology/W.svg" class="mana-pip-filter" alt="White"> White</button>
+      <button class="filter-btn colour-btn" data-colour-filter="U" onclick="setColour(this,'U')"><img src="https://img.scryfall.com/symbology/U.svg" class="mana-pip-filter" alt="Blue"> Blue</button>
+      <button class="filter-btn colour-btn" data-colour-filter="B" onclick="setColour(this,'B')"><img src="https://img.scryfall.com/symbology/B.svg" class="mana-pip-filter" alt="Black"> Black</button>
+      <button class="filter-btn colour-btn" data-colour-filter="R" onclick="setColour(this,'R')"><img src="https://img.scryfall.com/symbology/R.svg" class="mana-pip-filter" alt="Red"> Red</button>
+      <button class="filter-btn colour-btn" data-colour-filter="G" onclick="setColour(this,'G')"><img src="https://img.scryfall.com/symbology/G.svg" class="mana-pip-filter" alt="Green"> Green</button>
+      <button class="filter-btn colour-btn" data-colour-filter="C" onclick="setColour(this,'C')"><img src="https://img.scryfall.com/symbology/C.svg" class="mana-pip-filter" alt="Colourless"> Colourless</button>
+      <button class="filter-btn colour-btn" data-colour-filter="M" onclick="setColour(this,'M')">🌈 Multicolour</button>
     </div>
+
+    <!-- Type -->
+    <div class="filter-row">
+      <span class="filter-label">Type</span>
+      <button class="filter-btn active" data-type-filter="all" onclick="setType(this,'all')">All</button>
+      <button class="filter-btn" data-type-filter="Creature" onclick="setType(this,'Creature')">Creature</button>
+      <button class="filter-btn" data-type-filter="Instant" onclick="setType(this,'Instant')">Instant</button>
+      <button class="filter-btn" data-type-filter="Sorcery" onclick="setType(this,'Sorcery')">Sorcery</button>
+      <button class="filter-btn" data-type-filter="Artifact" onclick="setType(this,'Artifact')">Artifact</button>
+      <button class="filter-btn" data-type-filter="Enchantment" onclick="setType(this,'Enchantment')">Enchantment</button>
+      <button class="filter-btn" data-type-filter="Planeswalker" onclick="setType(this,'Planeswalker')">Planeswalker</button>
+      <button class="filter-btn" data-type-filter="Land" onclick="setType(this,'Land')">Land</button>
+      <button class="filter-btn" data-type-filter="Battle" onclick="setType(this,'Battle')">Battle</button>
+    </div>
+
+    <!-- Rarity -->
+    <div class="filter-row">
+      <span class="filter-label">Rarity</span>
+      <button class="filter-btn active" data-rarity-filter="all" onclick="setRarity(this,'all')">All</button>
+      <button class="filter-btn" data-rarity-filter="mythic" onclick="setRarity(this,'mythic')" style="color:#f5a623;border-color:rgba(245,166,35,.3)">◆ Mythic</button>
+      <button class="filter-btn" data-rarity-filter="rare" onclick="setRarity(this,'rare')" style="color:#a855f7;border-color:rgba(168,85,247,.3)">◆ Rare</button>
+      <button class="filter-btn" data-rarity-filter="uncommon" onclick="setRarity(this,'uncommon')" style="color:#6ba3be;border-color:rgba(107,163,190,.3)">◆ Uncommon</button>
+      <button class="filter-btn" data-rarity-filter="common" onclick="setRarity(this,'common')" style="color:#9ca3af;border-color:rgba(156,163,175,.3)">◆ Common</button>
+    </div>
+
+    <!-- Mana Value -->
+    <div class="filter-row">
+      <span class="filter-label">Mana Value</span>
+      <button class="filter-btn active" data-cmc-filter="all" onclick="setCmc(this,'all')">All</button>
+      ${[0,1,2,3,4,5,6].map(n => `<button class="filter-btn" data-cmc-filter="${n}" onclick="setCmc(this,'${n}')">${n === 6 ? '6+' : n}<img src="https://img.scryfall.com/symbology/${n}.svg" class="mana-pip-filter" alt="${n}" style="margin-left:2px"></button>`).join('')}
+    </div>
+
+    <!-- Sort + Price + Actions -->
+    <div class="filter-row" style="justify-content:space-between">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <span class="filter-label">Sort</span>
+        <select class="sort-select" id="sort-select" onchange="applyFilters()">
+          <option value="price-desc">Price: High to Low</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="name-asc">Name: A to Z</option>
+          <option value="name-desc">Name: Z to A</option>
+          <option value="cmc-asc">Mana Value: Low to High</option>
+          <option value="rarity-desc">Rarity: Mythic first</option>
+        </select>
+        <span class="filter-label" style="margin-left:12px">Price</span>
+        <select class="sort-select" id="filter-price" onchange="applyFilters()">
+          <option value="0">Any Price</option>
+          <option value="1">AU$1+</option>
+          <option value="5">AU$5+</option>
+          <option value="10">AU$10+</option>
+          <option value="20">AU$20+</option>
+          <option value="50">AU$50+</option>
+        </select>
+      </div>
+      <div class="filter-actions">
+        <span class="filter-count" id="filter-count"></span>
+        <button class="clear-btn" onclick="clearFilters()">Reset All</button>
+      </div>
+    </div>
+
   </div>
 
-  <div id="card-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px">
-    ${cardGrid}
+  <!-- Card grid -->
+  <div id="card-grid">${cardGrid}</div>
+
+  <!-- Buylist CTA -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:36px;text-align:center">
+    <p style="font-size:15px;margin-bottom:8px">Pulled some ${set.set_name} cards worth selling?</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Join the C3 buylist waitlist and we will let you know when we start buying Australian TCG cards directly.</p>
+    <a href="/tracker.html" style="background:var(--accent);color:#0A0C14;padding:10px 24px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none">Join the Buylist Waitlist →</a>
   </div>
 
-  <script>
-  function filterCards() {
-    const rarity = document.getElementById('filter-rarity').value;
-    const minPrice = parseFloat(document.getElementById('filter-price').value) || 0;
-    const cards = document.querySelectorAll('#card-grid > a');
-    let visible = 0;
-    cards.forEach(card => {
-      const cardRarity = card.dataset.rarity || '';
-      const cardPrice = parseFloat(card.dataset.price) || 0;
-      const rarityOk = !rarity || cardRarity === rarity;
-      const priceOk = cardPrice >= minPrice;
-      card.style.display = (rarityOk && priceOk) ? '' : 'none';
-      if (rarityOk && priceOk) visible++;
-    });
-    document.getElementById('filter-count').textContent = visible + ' cards shown';
-  }
-  function clearFilters() {
-    document.getElementById('filter-rarity').value = '';
-    document.getElementById('filter-price').value = '';
-    document.querySelectorAll('#card-grid > a').forEach(c => c.style.display = '');
-    document.getElementById('filter-count').textContent = '';
-  }
-  </script>
-
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:32px;text-align:center">
-    💰 Want to sell your ${set.set_name} cards? <a href="/tracker.html">Join the C3 buylist waitlist</a>
-  </div>
 </div>
 
-<footer>
-  <p><a href="/">Home</a><a href="/cards/mtg">MTG Cards</a><a href="/ev-calculator.html">EV Calculator</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a></p>
-  <p style="margin-top:8px">© 2026 Cards on Cards on Cards</p>
+<footer style="border-top:1px solid var(--border);padding:24px 0;margin-top:48px">
+  <div style="max-width:1100px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px">
+    <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold)">Cards on Cards on Cards</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <a href="/" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
+      <a href="/cards" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Card Vault</a>
+      <a href="/cards/mtg" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">MTG Cards</a>
+      <a href="/ev-calculator.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">EV Calculator</a>
+      <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Shop</a>
+      <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
+    </div>
+    <div style="font-size:11px;color:rgba(160,168,192,.25)">© 2026 Cards on Cards on Cards</div>
+  </div>
 </footer>
+
+<script>
+// ── State ──────────────────────────────────────────────────
+let activeColour = 'all';
+let activeType   = 'all';
+let activeRarity = 'all';
+let activeCmc    = 'all';
+
+// Rarity sort order
+const RARITY_ORDER = { mythic: 0, rare: 1, uncommon: 2, common: 3 };
+
+// ── Filter setters ─────────────────────────────────────────
+function setColour(btn, val) {
+  activeColour = val;
+  document.querySelectorAll('[data-colour-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+function setType(btn, val) {
+  activeType = val;
+  document.querySelectorAll('[data-type-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+function setRarity(btn, val) {
+  activeRarity = val;
+  document.querySelectorAll('[data-rarity-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+function setCmc(btn, val) {
+  activeCmc = val;
+  document.querySelectorAll('[data-cmc-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// ── Main filter + sort ─────────────────────────────────────
+function applyFilters() {
+  const minPrice = parseFloat(document.getElementById('filter-price').value) || 0;
+  const sortVal  = document.getElementById('sort-select').value;
+  const grid     = document.getElementById('card-grid');
+  const cards    = Array.from(grid.querySelectorAll('.card-item'));
+
+  let visible = 0;
+  cards.forEach(card => {
+    const rarity  = card.dataset.rarity || '';
+    const price   = parseFloat(card.dataset.price) || 0;
+    const colour  = card.dataset.colour || 'C';
+    const colRaw  = card.dataset.colourRaw || '';
+    const type    = card.dataset.type || '';
+    const cmc     = parseInt(card.dataset.cmc, 10) || 0;
+
+    // Colour filter: 'M' = multicolour, letter = that colour in raw list, 'all' = show all
+    const colOk =
+      activeColour === 'all' ? true :
+      activeColour === 'M'   ? colour === 'M' :
+                               colRaw.split(',').includes(activeColour);
+
+    const typeOk   = activeType   === 'all' || type === activeType;
+    const rarityOk = activeRarity === 'all' || rarity === activeRarity;
+    const cmcOk    = activeCmc    === 'all' || (activeCmc === '6' ? cmc >= 6 : cmc === parseInt(activeCmc, 10));
+    const priceOk  = price >= minPrice;
+
+    const show = colOk && typeOk && rarityOk && cmcOk && priceOk;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  document.getElementById('filter-count').textContent = visible + ' cards';
+
+  // Sort visible cards
+  const visible_cards = cards.filter(c => c.style.display !== 'none');
+  visible_cards.sort((a, b) => {
+    const ap = parseFloat(a.dataset.price) || 0;
+    const bp = parseFloat(b.dataset.price) || 0;
+    const aName = a.querySelector('.card-name')?.textContent || '';
+    const bName = b.querySelector('.card-name')?.textContent || '';
+    const aCmc  = parseInt(a.dataset.cmc, 10) || 0;
+    const bCmc  = parseInt(b.dataset.cmc, 10) || 0;
+    const aRar  = RARITY_ORDER[a.dataset.rarity] ?? 4;
+    const bRar  = RARITY_ORDER[b.dataset.rarity] ?? 4;
+
+    if (sortVal === 'price-desc') return bp - ap;
+    if (sortVal === 'price-asc')  return ap - bp;
+    if (sortVal === 'name-asc')   return aName.localeCompare(bName);
+    if (sortVal === 'name-desc')  return bName.localeCompare(aName);
+    if (sortVal === 'cmc-asc')    return aCmc - bCmc;
+    if (sortVal === 'rarity-desc') return aRar - bRar;
+    return 0;
+  });
+
+  // Re-append in sorted order (hidden cards stay hidden)
+  visible_cards.forEach(c => grid.appendChild(c));
+}
+
+function clearFilters() {
+  activeColour = 'all'; activeType = 'all'; activeRarity = 'all'; activeCmc = 'all';
+  document.querySelectorAll('[data-colour-filter],[data-type-filter],[data-rarity-filter],[data-cmc-filter]')
+    .forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-colour-filter="all"]').classList.add('active');
+  document.querySelector('[data-type-filter="all"]').classList.add('active');
+  document.querySelector('[data-rarity-filter="all"]').classList.add('active');
+  document.querySelector('[data-cmc-filter="all"]').classList.add('active');
+  document.getElementById('filter-price').value = '0';
+  document.getElementById('sort-select').value = 'price-desc';
+  document.querySelectorAll('.card-item').forEach(c => c.style.display = '');
+  document.getElementById('filter-count').textContent = '';
+}
+</script>
+
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>

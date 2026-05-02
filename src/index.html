@@ -285,7 +285,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   <!-- COMMANDER CAROUSEL -->
   <div class="carousel-section" style="margin-left:-24px;margin-right:-24px;border-radius:0;border-left:none;border-right:none;padding:36px 0;border-top:1px solid rgba(107,107,255,.12);background:rgba(107,107,255,.03)">
     <span class="carousel-eyebrow" style="color:#9898FF">Commander Spotlight</span>
-    <h2 class="carousel-title" id="cmd-carousel-title">Top Commanders Right Now</h2>
+    <h2 class="carousel-title" id="cmd-carousel-title">Your Next Commander Awaits</h2>
     <div class="carousel-outer">
       <div id="cmd-carousel-track" class="carousel-track">
         <div class="skeleton" style="animation-delay:0s;min-width:160px;height:220px"></div>
@@ -492,14 +492,22 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     const track = document.getElementById('cmd-carousel-track');
     const titleEl = document.getElementById('cmd-carousel-title');
     try {
-      const res = await fetch('/.netlify/functions/commander-carousel?mode=top&limit=20');
+      // Fetch 40, shuffle client-side so each page load shows different commanders
+      const res = await fetch('/.netlify/functions/commander-carousel?mode=top');
       const data = await res.json();
       if (!data.commanders || data.commanders.length === 0) {
         track.innerHTML = '<p style="color:#A0A8C0;font-size:13px;padding:20px">Could not load commanders.</p>';
         return;
       }
-      if (titleEl && data.title) titleEl.textContent = data.title;
-      const cards = data.commanders.map(buildCmdCard).join('');
+      // Fisher-Yates shuffle then take 20
+      const arr = [...data.commanders];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      const twenty = arr.slice(0, 20);
+      if (titleEl) titleEl.textContent = 'Your Next Commander Awaits';
+      const cards = twenty.map(buildCmdCard).join('');
       track.innerHTML = cards + cards; // duplicate for seamless loop
       track.classList.add('loaded');
     } catch(e) {

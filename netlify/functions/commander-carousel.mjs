@@ -11,7 +11,7 @@
 
 const SET_QUERY = '(set:sos or set:soa or set:soc)';
 const SET_DISPLAY_NAME = 'Secrets of Strixhaven';
-const CACHE_SECONDS = 3600; // 1 hour
+const CACHE_SECONDS = 3600; // 1 hour — client shuffles for per-load variety
 
 const EPN_CAMPID = '5339146789';
 const EBAY_MKRID = '705-53470-19255-0';
@@ -121,7 +121,9 @@ export const handler = async function(event) {
 
   const params = event.queryStringParameters || {};
   const mode = params.mode || 'top';
-  const limit = Math.min(parseInt(params.limit || '20', 10), 40);
+  // For top mode: fetch 40 so client can shuffle and show 20 unique each load
+  // For set mode: fetch 20 (set has limited legendary creatures anyway)
+  const limit = mode === 'top' ? 40 : Math.min(parseInt(params.limit || '20', 10), 40);
 
   try {
     let query;
@@ -134,10 +136,9 @@ export const handler = async function(event) {
       displayTitle = `Commanders from ${SET_DISPLAY_NAME}`;
       customId = 'C3SetCmdCarousel';
     } else {
-      // Top commanders globally by EDHREC rank — this is the homepage carousel
-      // Using a broad filter: legal in commander, legendary creature, has EDHREC rank
+      // Top commanders globally — fetch 40, client shuffles to show 20 different each load
       query = 't:legendary t:creature f:commander';
-      displayTitle = 'Top Commanders Right Now';
+      displayTitle = 'Your Next Commander Awaits';
       customId = 'C3TopCmdCarousel';
     }
 
