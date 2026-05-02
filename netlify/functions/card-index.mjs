@@ -84,6 +84,26 @@ ${NAV}
     <div id="search-results" style="margin-top:16px"></div>
   </div>
 
+  <!-- Commander Spotlight Carousel -->
+  <div style="margin-bottom:32px;padding:24px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:var(--radius);overflow:hidden">
+    <div style="text-align:center;margin-bottom:20px">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#9898FF;margin-bottom:6px">Set Spotlight</p>
+      <h2 id="cmd-mtg-carousel-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text1);margin:0">Commanders from Secrets of Strixhaven</h2>
+    </div>
+    <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)">
+      <div id="cmd-mtg-carousel-track" class="cmd-track">
+        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s infinite"></div>
+        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .1s infinite"></div>
+        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .2s infinite"></div>
+        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .3s infinite"></div>
+        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .4s infinite"></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:14px">
+      <a href="/cards/mtg?page=random-commander" style="font-size:12px;color:#9898FF;text-decoration:none">Generate a random Commander → </a>
+    </div>
+  </div>
+
   <!-- Browse by Set -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
     <h2 style="font-size:18px;margin-bottom:16px">Browse by Set</h2>
@@ -166,6 +186,44 @@ async function searchCard() {
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+
+<style>
+@keyframes cmd-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.cmd-track{display:flex;gap:12px;width:max-content}
+.cmd-track.loaded{animation:cmd-scroll 50s linear infinite}
+.cmd-track:hover{animation-play-state:paused}
+.cmd-card{display:inline-flex;flex-direction:column;min-width:140px;max-width:155px;background:rgba(107,107,255,.06);border:1px solid rgba(107,107,255,.2);border-radius:10px;overflow:hidden;text-decoration:none;transition:all .22s;flex-shrink:0}
+.cmd-card:hover{transform:translateY(-3px);border-color:rgba(107,107,255,.5);box-shadow:0 8px 24px rgba(107,107,255,.15)}
+.cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
+.cmd-card-body{padding:7px 9px 9px;display:flex;flex-direction:column;gap:2px}
+.cmd-card-name{font-family:Cinzel,serif;font-size:9.5px;font-weight:700;color:#C0C0FF;line-height:1.3}
+.cmd-card-identity{font-size:9px;color:rgba(160,168,192,.5)}
+.cmd-card-cta{font-size:8.5px;font-weight:600;color:#9898FF;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+</style>
+<script>
+(function(){
+  function buildCmdCard(c){
+    return '<a href="'+c.cardVaultUrl+'" class="cmd-card">'
+      +(c.image?'<img src="'+c.image+'" alt="'+c.name.replace(/"/g,'&quot;')+'" loading="lazy">':'<div style="aspect-ratio:745/1040;background:rgba(107,107,255,.1);display:flex;align-items:center;justify-content:center;font-size:28px">🎲</div>')
+      +'<div class="cmd-card-body"><div class="cmd-card-name">'+c.name+'</div><div class="cmd-card-identity">'+c.identityName+'</div><div class="cmd-card-cta">View Card →</div></div></a>';
+  }
+  async function loadSetCommanders(){
+    const track=document.getElementById('cmd-mtg-carousel-track');
+    const titleEl=document.getElementById('cmd-mtg-carousel-title');
+    if(!track)return;
+    try{
+      const res=await fetch('/.netlify/functions/commander-carousel?mode=set&limit=20');
+      const data=await res.json();
+      if(!data.commanders||data.commanders.length===0){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders found.</p>';return;}
+      if(titleEl&&data.title)titleEl.textContent=data.title;
+      const html=data.commanders.map(buildCmdCard).join('');
+      track.innerHTML=html+html;
+      track.classList.add('loaded');
+    }catch(e){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">Could not load commanders.</p>';}
+  }
+  loadSetCommanders();
+})();
+</script>
 </body></html>`;
 }
 

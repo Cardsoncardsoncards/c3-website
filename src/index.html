@@ -282,6 +282,25 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   </div>
   <!-- END EBAY CAROUSEL -->
 
+  <!-- COMMANDER CAROUSEL -->
+  <div class="carousel-section" style="margin-left:-24px;margin-right:-24px;border-radius:0;border-left:none;border-right:none;padding:36px 0;border-top:1px solid rgba(107,107,255,.12);background:rgba(107,107,255,.03)">
+    <span class="carousel-eyebrow" style="color:#9898FF">Commander Spotlight</span>
+    <h2 class="carousel-title" id="cmd-carousel-title">Top Commanders Right Now</h2>
+    <div class="carousel-outer">
+      <div id="cmd-carousel-track" class="carousel-track">
+        <div class="skeleton" style="animation-delay:0s;min-width:160px;height:220px"></div>
+        <div class="skeleton" style="animation-delay:.1s;min-width:160px;height:220px"></div>
+        <div class="skeleton" style="animation-delay:.2s;min-width:160px;height:220px"></div>
+        <div class="skeleton" style="animation-delay:.3s;min-width:160px;height:220px"></div>
+        <div class="skeleton" style="animation-delay:.4s;min-width:160px;height:220px"></div>
+      </div>
+    </div>
+    <div style="margin-top:14px">
+      <a href="/cards/mtg?page=random-commander" style="font-size:12px;color:#9898FF;text-decoration:none;opacity:.8">Generate a random Commander for your next deck ↗</a>
+    </div>
+  </div>
+  <!-- END COMMANDER CAROUSEL -->
+
   <div class="destinations">
 
     <a href="/shop.html" class="dest-card dest-card--shop dest-card--link">
@@ -438,6 +457,57 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     }
   }
   loadCarousel();
+})();
+</script>
+
+<style>
+.cmd-card{display:inline-flex;flex-direction:column;min-width:160px;max-width:175px;background:#161929;border:1px solid rgba(107,107,255,.2);border-radius:10px;overflow:hidden;text-decoration:none;transition:all .22s;flex-shrink:0}
+.cmd-card:hover{transform:translateY(-4px);border-color:rgba(107,107,255,.5);box-shadow:0 10px 30px rgba(107,107,255,.15)}
+.cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
+.cmd-card-ph{width:100%;aspect-ratio:745/1040;background:#1e2235;display:flex;align-items:center;justify-content:center;font-size:32px}
+.cmd-card-body{padding:8px 10px 10px;flex:1;display:flex;flex-direction:column;gap:3px}
+.cmd-card-name{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:#C0C0FF;line-height:1.3}
+.cmd-card-identity{font-size:10px;color:rgba(160,168,192,.55)}
+.cmd-card-cta{font-size:9px;font-weight:600;color:#9898FF;letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+</style>
+
+<script>
+(function(){
+  function buildCmdCard(c){
+    const imgHtml = c.image
+      ? `<img src="${c.image}" alt="${c.name.replace(/"/g,'&quot;')}" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`
+      : '';
+    const phHtml = `<div class="cmd-card-ph" style="${c.image ? 'display:none' : ''}">🎲</div>`;
+    return `<a href="${c.cardVaultUrl}" class="cmd-card" onclick="gtag('event','commander_carousel_click',{commander:'${c.name.replace(/'/g,"\\'")}',identity:'${c.identityName}'})">
+      ${imgHtml}${phHtml}
+      <div class="cmd-card-body">
+        <div class="cmd-card-name">${c.name}</div>
+        <div class="cmd-card-identity">${c.identityName}</div>
+        <div class="cmd-card-cta">View Card →</div>
+      </div>
+    </a>`;
+  }
+
+  async function loadCommanderCarousel(){
+    const track = document.getElementById('cmd-carousel-track');
+    const titleEl = document.getElementById('cmd-carousel-title');
+    try {
+      const res = await fetch('/.netlify/functions/commander-carousel?mode=top&limit=20');
+      const data = await res.json();
+      if (!data.commanders || data.commanders.length === 0) {
+        track.innerHTML = '<p style="color:#A0A8C0;font-size:13px;padding:20px">Could not load commanders.</p>';
+        return;
+      }
+      if (titleEl && data.title) titleEl.textContent = data.title;
+      const cards = data.commanders.map(buildCmdCard).join('');
+      track.innerHTML = cards + cards; // duplicate for seamless loop
+      track.classList.add('loaded');
+    } catch(e) {
+      track.innerHTML = '<p style="color:#A0A8C0;font-size:13px;padding:20px">Could not load commanders.</p>';
+    }
+  }
+
+  loadCommanderCarousel();
 })();
 </script>
 
