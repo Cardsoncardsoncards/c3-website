@@ -542,19 +542,33 @@ function setCmc(btn, val) {
 }
 
 async function fetchOneCommander(exclude) {
+  // Query Supabase directly — pulls a candidate pool then random-picks client side
   const params = new URLSearchParams();
-  if (selectedColors.length) params.set('colors', selectedColors.join(''));
-  if (selectedCmc < 99) params.set('maxCmc', selectedCmc);
-  if (exclude && exclude.length) params.set('exclude', exclude.join(','));
-  const res = await fetch('/api/random-commander?' + params);
-  const data = await res.json();
-  if (!data.slug) return null;
-  const cardRes = await fetch(window.C3_SUPA_URL + '/rest/v1/mtg_cards?slug=eq.' + data.slug +
-    '&select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug', {
+  params.set('select', 'name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug,color_identity,cmc');
+  // Legendary Creatures only
+  params.append('type_line', 'ilike.*Legendary*Creature*');
+  // Skip digital-only printings
+  params.append('digital', 'eq.false');
+  // CMC filter
+  if (selectedCmc < 99) params.append('cmc', 'lte.' + selectedCmc);
+  // Exclude already-shown slugs
+  if (exclude && exclude.length) {
+    params.append('slug', 'not.in.(' + exclude.join(',') + ')');
+  }
+  // Colour identity: card colour identity must be contained by selected colours (subset match)
+  if (selectedColors.length) {
+    params.append('color_identity', 'cd.{' + selectedColors.join(',') + '}');
+  }
+  // Cap candidate pool — random pick happens client side
+  params.set('limit', '500');
+
+  const res = await fetch(window.C3_SUPA_URL + '/rest/v1/mtg_cards?' + params, {
     headers: { 'apikey': window.C3_SUPA_KEY }
   });
-  const cards = await cardRes.json();
-  return cards[0] || null;
+  if (!res.ok) return null;
+  const cards = await res.json();
+  if (!Array.isArray(cards) || cards.length === 0) return null;
+  return cards[Math.floor(Math.random() * cards.length)];
 }
 
 function cardHTML(card, index) {
@@ -562,11 +576,22 @@ function cardHTML(card, index) {
     ? 'AU$' + parseFloat(card.price_aud).toFixed(2)
     : card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A';
   const img = card.image_uri_normal || card.image_uri_small || '';
+  // Colour identity pips
+  const ci = Array.isArray(card.color_identity) ? card.color_identity : [];
+  const pipColours = { W:'#f9faf4', U:'#aae0fa', B:'#2a2a2a', R:'#f9aa8f', G:'#9bd3ae' };
+  const pipText    = { W:'#333',    U:'#003',    B:'#eee',    R:'#500',    G:'#030' };
+  const pipsHTML = ci.length
+    ? '<div style="display:flex;gap:4px;margin-bottom:8px">' + ci.map(c =>
+        '<span style="width:18px;height:18px;border-radius:50%;background:' + (pipColours[c]||'#888')
+        + ';color:' + (pipText[c]||'#fff') + ';font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">' + c + '</span>'
+      ).join('') + '</div>'
+    : '<div style="display:flex;gap:4px;margin-bottom:8px"><span style="width:18px;height:18px;border-radius:50%;background:#888;color:#fff;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">C</span></div>';
   return '<div class="cmd-result-card" id="card-slot-' + index + '">'
     + (img ? '<img src="' + img + '" alt="' + card.name.replace(/"/g,'&quot;') + '" class="cmd-result-img">' : '')
     + '<div class="cmd-result-body">'
     + '<div class="cmd-result-name">' + card.name + '</div>'
     + '<div class="cmd-result-type">' + (card.type_line || '') + '</div>'
+    + pipsHTML
     + '<div class="cmd-result-price">' + price + '</div>'
     + '<a href="/cards/mtg/' + card.slug + '" class="cmd-result-view" target="_blank">View Card \u2192</a>'
     + '<button class="cmd-regen-btn" onclick="regenOne(' + index + ')">\ud83d\udd04 Reroll this one</button>'
@@ -1163,7 +1188,7 @@ export default async (req) => {
 
   if (path === '/cards/mtg' || path === '/cards/mtg/') {
     const [sets, topCards] = await Promise.all([
-      supabaseGet('mtg_sets?order=set_name.asc&limit=600&digital=eq.false'),
+      supabaseGet('mtg_sets?order=set_name.asc&limit=1000&digital=eq.false'),
       supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
     ]);
     return new Response(renderCardHub(sets, topCards), {
