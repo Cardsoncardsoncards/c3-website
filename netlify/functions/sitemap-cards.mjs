@@ -53,42 +53,42 @@ export const handler = async (req) => {
   };
 
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.error('[sitemap-cards] SUPABASE_URL or SUPABASE_ANON_KEY env var is missing');
-    const fallback = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Error: missing Supabase environment variables -->
-</urlset>`;
-    return new Response(fallback, { status: 200, headers });
+    console.error('[sitemap-cards] missing env vars');
+    return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Error: missing env vars --></urlset>`, { status: 200, headers });
   }
 
   try {
-    let allCards = [];
-    let offset = 0;
-    let batch;
+    // Step 1: get total count
+    const countRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/mtg_cards?select=slug&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Prefer': 'count=exact'
+        }
+      }
+    );
+    const totalCount = parseInt(countRes.headers.get('content-range')?.split('/')[1] || '30000', 10);
+    console.log(`[sitemap-cards] total cards: ${totalCount}`);
 
-    do {
-      batch = await fetchCardSlugs(offset);
-      allCards = allCards.concat(batch);
-      offset += PAGE_SIZE;
-      if (allCards.length >= 49000) break;
-    } while (batch.length === PAGE_SIZE);
+    // Step 2: fetch all pages in parallel
+    const offsets = [];
+    for (let i = 0; i < totalCount; i += PAGE_SIZE) offsets.push(i);
 
-    console.log(`[sitemap-cards] generating ${allCards.length} card URLs (threshold: USD$${PRICE_THRESHOLD}+)`);
+    const batches = await Promise.all(offsets.map(offset => fetchCardSlugs(offset)));
+    const allCards = batches.flat();
+
+    console.log(`[sitemap-cards] fetched ${allCards.length} cards`);
 
     const today = new Date().toISOString().slice(0, 10);
-
     const urls = allCards
       .filter(c => c.slug && c.slug.trim() !== '')
       .map(c => {
         const lastmod = c.updated_at ? c.updated_at.slice(0, 10) : today;
         const price = parseFloat(c.price_usd) || 0;
         const priority = price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7';
-        return `  <url>
-    <loc>${SITE_URL}/cards/mtg/${c.slug}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>${priority}</priority>
-  </url>`;
+        return `  <url>\n    <loc>${SITE_URL}/cards/mtg/${c.slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
       })
       .join('\n');
 
@@ -96,7 +96,6 @@ export const handler = async (req) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- MTG card pages: ${allCards.length} cards with price >= USD$${PRICE_THRESHOLD} -->
   <!-- Generated: ${new Date().toISOString()} -->
-  <!-- To expand to all 96k cards: change PRICE_THRESHOLD to 0 in sitemap-cards.mjs -->
 ${urls}
 </urlset>`;
 
@@ -104,14 +103,4 @@ ${urls}
 
   } catch (err) {
     console.error('[sitemap-cards] error:', err.message);
-    const fallback = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Error generating card sitemap: ${err.message} -->
-</urlset>`;
-    return new Response(fallback, { status: 200, headers });
-  }
-};
-
-export const config = {
-  path: '/api/sitemap-cards'
-};
+    return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.
