@@ -542,33 +542,48 @@ function setCmc(btn, val) {
 }
 
 async function fetchOneCommander(exclude) {
-  // Query Supabase directly — pulls a candidate pool then random-picks client side
-  const params = new URLSearchParams();
-  params.set('select', 'name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug,color_identity,cmc');
-  // Legendary Creatures only
-  params.append('type_line', 'ilike.*Legendary*Creature*');
-  // Skip digital-only printings
-  params.append('digital', 'eq.false');
+  // Build PostgREST query manually — URLSearchParams URL-encodes special chars that PostgREST needs literal
+  const filters = [];
+  filters.push('select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug,color_identity,cmc');
+  // Legendary Creature filter — use 'like' with wildcards (case insensitive via ilike but we need URL-safe)
+  filters.push('type_line=ilike.*Legendary*Creature*');
+  // Skip digital
+  filters.push('digital=eq.false');
   // CMC filter
-  if (selectedCmc < 99) params.append('cmc', 'lte.' + selectedCmc);
-  // Exclude already-shown slugs
+  if (selectedCmc < 99) filters.push('cmc=lte.' + selectedCmc);
+  // Exclude already-shown slugs (only add filter if list is non-empty)
   if (exclude && exclude.length) {
-    params.append('slug', 'not.in.(' + exclude.join(',') + ')');
+    // PostgREST in.() needs comma-separated values, slugs are URL-safe already
+    filters.push('slug=not.in.(' + exclude.map(encodeURIComponent).join(',') + ')');
   }
-  // Colour identity: card colour identity must be contained by selected colours (subset match)
+  // Colour identity: card colour_identity must be contained by selected colours
   if (selectedColors.length) {
-    params.append('color_identity', 'cd.{' + selectedColors.join(',') + '}');
+    // PostgREST array contained-by: cd.{W,U} — braces stay literal
+    filters.push('color_identity=cd.{' + selectedColors.join(',') + '}');
   }
-  // Cap candidate pool — random pick happens client side
-  params.set('limit', '500');
+  filters.push('limit=500');
 
-  const res = await fetch(window.C3_SUPA_URL + '/rest/v1/mtg_cards?' + params, {
-    headers: { 'apikey': window.C3_SUPA_KEY }
-  });
-  if (!res.ok) return null;
-  const cards = await res.json();
-  if (!Array.isArray(cards) || cards.length === 0) return null;
-  return cards[Math.floor(Math.random() * cards.length)];
+  const queryString = filters.join('&');
+  const url = window.C3_SUPA_URL + '/rest/v1/mtg_cards?' + queryString;
+
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'apikey': window.C3_SUPA_KEY,
+        'Authorization': 'Bearer ' + window.C3_SUPA_KEY
+      }
+    });
+    if (!res.ok) {
+      console.error('Supabase request failed:', res.status, await res.text());
+      return null;
+    }
+    const cards = await res.json();
+    if (!Array.isArray(cards) || cards.length === 0) return null;
+    return cards[Math.floor(Math.random() * cards.length)];
+  } catch (err) {
+    console.error('Random commander fetch error:', err);
+    return null;
+  }
 }
 
 function cardHTML(card, index) {
@@ -608,19 +623,29 @@ async function generateAll() {
     '<div class="cmd-result-card" style="height:300px;background:var(--bg3);border-radius:12px;opacity:' + (0.4 + i*0.1) + '"></div>'
   ).join('');
   section.style.display = '';
-  const results = [];
-  const exclude = [];
-  for (let i = 0; i < selectedCount; i++) {
-    const card = await fetchOneCommander(exclude);
-    if (card) { results.push(card); exclude.push(card.slug); }
+  try {
+    const results = [];
+    const exclude = [];
+    for (let i = 0; i < selectedCount; i++) {
+      const card = await fetchOneCommander(exclude);
+      if (card) { results.push(card); exclude.push(card.slug); }
+    }
+    currentSlugs = results.map(c => c.slug);
+    if (results.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text2)">No commanders found with these filters. Try widening colour or mana value.</div>';
+    } else {
+      grid.innerHTML = results.map((c, i) => cardHTML(c, i)).join('');
+    }
+    section.scrollIntoView({ behavior: 'smooth' });
+    updateShareLinks(results);
+    pushUrlState();
+  } catch (err) {
+    console.error('Generate failed:', err);
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#f88">Something went wrong. Open DevTools console for details and report back.</div>';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '\u2728 Generate ' + selectedCount + ' Commander' + (selectedCount > 1 ? 's' : '');
   }
-  currentSlugs = results.map(c => c.slug);
-  grid.innerHTML = results.map((c, i) => cardHTML(c, i)).join('');
-  section.scrollIntoView({ behavior: 'smooth' });
-  updateShareLinks(results);
-  pushUrlState();
-  btn.disabled = false;
-  btn.textContent = '\u2728 Generate ' + selectedCount + ' Commander' + (selectedCount > 1 ? 's' : '');
 }
 
 async function regenOne(index) {
