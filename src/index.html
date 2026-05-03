@@ -74,84 +74,78 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(160,168,192,.6)}
 .trust-item strong{color:var(--white)}
 
-/* DESTINATION CARDS */
-.destinations{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:64px}
+/* HUB TILE GRID */
+.hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 40px}
+.hub-tile{background:var(--card);border-radius:14px;padding:22px 20px 18px;display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:all .25s;position:relative;overflow:hidden;cursor:pointer;border-width:1px;border-style:solid}
+.hub-tile::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:13px}
+.hub-tile:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.hub-tile:hover::before{opacity:1}
+.hub-tile-icon{font-size:22px;line-height:1}
+.hub-tile-label{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;opacity:.6}
+.hub-tile-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;line-height:1.25;flex:1}
+.hub-tile-desc{font-size:11.5px;color:rgba(160,168,192,.6);line-height:1.5}
+.hub-tile-cta{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-top:2px;opacity:.75}
 
-/* All cards base */
-.dest-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;transition:all .25s;position:relative;overflow:hidden;cursor:pointer}
-.dest-card--link{text-decoration:none}
-.dest-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:13px}
-.dest-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+/* Tile colour variants */
+.hub-tile--ebay{border-color:rgba(201,168,76,.25);background:linear-gradient(135deg,#161929,rgba(201,168,76,.04))}
+.hub-tile--ebay::before{background:linear-gradient(135deg,rgba(201,168,76,.08),transparent)}
+.hub-tile--ebay:hover{border-color:rgba(201,168,76,.5)}
+.hub-tile--ebay .hub-tile-label,.hub-tile--ebay .hub-tile-cta{color:var(--gold)}
+.hub-tile--ebay .hub-tile-title{color:var(--gold)}
 
-/* Shop card */
-.dest-card--shop{border-color:rgba(201,168,76,.2)}
-.dest-card--shop::before{background:linear-gradient(135deg,rgba(201,168,76,.06),transparent)}
-.dest-card--shop:hover{border-color:rgba(201,168,76,.4)}
-.dest-card--shop:hover::before{opacity:1}
+.hub-tile--vault{border-color:rgba(107,107,255,.25)}
+.hub-tile--vault::before{background:linear-gradient(135deg,rgba(107,107,255,.08),transparent)}
+.hub-tile--vault:hover{border-color:rgba(107,107,255,.5)}
+.hub-tile--vault .hub-tile-label,.hub-tile--vault .hub-tile-cta{color:#9898FF}
+.hub-tile--vault .hub-tile-title{color:#C0C0FF}
 
-/* eBay */
-.dest-card--ebay{border-color:rgba(107,107,255,.2)}
-.dest-card--ebay::before{background:linear-gradient(135deg,rgba(107,107,255,.06),transparent)}
-.dest-card--ebay:hover{border-color:rgba(107,107,255,.4)}
-.dest-card--ebay:hover::before{opacity:1}
+.hub-tile--shop{border-color:rgba(52,211,153,.2)}
+.hub-tile--shop::before{background:linear-gradient(135deg,rgba(52,211,153,.07),transparent)}
+.hub-tile--shop:hover{border-color:rgba(52,211,153,.45)}
+.hub-tile--shop .hub-tile-label,.hub-tile--shop .hub-tile-cta{color:#34D399}
+.hub-tile--shop .hub-tile-title{color:#6EE7B7}
 
-/* Blog */
-.dest-card--blog{border-color:rgba(74,158,255,.2)}
-.dest-card--blog::before{background:linear-gradient(135deg,rgba(74,158,255,.06),transparent)}
-.dest-card--blog:hover{border-color:rgba(74,158,255,.4)}
-.dest-card--blog:hover::before{opacity:1}
+.hub-tile--ev{border-color:rgba(251,146,60,.22)}
+.hub-tile--ev::before{background:linear-gradient(135deg,rgba(251,146,60,.07),transparent)}
+.hub-tile--ev:hover{border-color:rgba(251,146,60,.5)}
+.hub-tile--ev .hub-tile-label,.hub-tile--ev .hub-tile-cta{color:#FB923C}
+.hub-tile--ev .hub-tile-title{color:#FED7AA}
 
-/* Tracker */
-.dest-card--tracker{border-color:rgba(160,168,192,.15)}
-.dest-card--tracker::before{background:linear-gradient(135deg,rgba(160,168,192,.04),transparent)}
-.dest-card--tracker:hover{border-color:rgba(160,168,192,.3)}
-.dest-card--tracker:hover::before{opacity:1}
+.hub-tile--blog{border-color:rgba(74,158,255,.2)}
+.hub-tile--blog::before{background:linear-gradient(135deg,rgba(74,158,255,.07),transparent)}
+.hub-tile--blog:hover{border-color:rgba(74,158,255,.45)}
+.hub-tile--blog .hub-tile-label,.hub-tile--blog .hub-tile-cta{color:var(--blue)}
+.hub-tile--blog .hub-tile-title{color:#A0C8FF}
 
-/* DnD */
-.dest-card--dnd{border-color:rgba(245,100,0,.2);background:linear-gradient(135deg,#161929 70%,rgba(245,80,0,.04))}
-.dest-card--dnd::before{background:linear-gradient(135deg,rgba(245,100,0,.07),transparent)}
-.dest-card--dnd:hover{border-color:rgba(245,100,0,.45)}
-.dest-card--dnd:hover::before{opacity:1}
+.hub-tile--tracker{border-color:rgba(192,132,252,.2)}
+.hub-tile--tracker::before{background:linear-gradient(135deg,rgba(192,132,252,.07),transparent)}
+.hub-tile--tracker:hover{border-color:rgba(192,132,252,.45)}
+.hub-tile--tracker .hub-tile-label,.hub-tile--tracker .hub-tile-cta{color:#C084FC}
+.hub-tile--tracker .hub-tile-title{color:#DDD6FE}
 
-.dest-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.dest-icon--shop{background:rgba(201,168,76,.1);color:var(--gold)}
-.dest-icon--ebay{background:rgba(107,107,255,.1);color:#9898FF}
-.dest-icon--blog{background:rgba(74,158,255,.1);color:var(--blue)}
-.dest-icon--tracker{background:rgba(160,168,192,.08);color:var(--silver)}
-.dest-icon--dnd{background:rgba(245,100,0,.1);color:var(--orange)}
+.hub-tile--random{border-color:rgba(244,114,182,.2)}
+.hub-tile--random::before{background:linear-gradient(135deg,rgba(244,114,182,.07),transparent)}
+.hub-tile--random:hover{border-color:rgba(244,114,182,.45)}
+.hub-tile--random .hub-tile-label,.hub-tile--random .hub-tile-cta{color:#F472B6}
+.hub-tile--random .hub-tile-title{color:#FBCFE8}
 
-.dest-label{font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
-.dest-card--dnd .dest-label{color:var(--orange);opacity:.7}
-.dest-card--shop .dest-label{color:var(--gold);opacity:.7}
-.dest-card--ebay .dest-label{color:#9898FF;opacity:.7}
-.dest-card--blog .dest-label{color:var(--blue);opacity:.7}
+.hub-tile--dnd{border-color:rgba(245,100,0,.2)}
+.hub-tile--dnd::before{background:linear-gradient(135deg,rgba(245,100,0,.07),transparent)}
+.hub-tile--dnd:hover{border-color:rgba(245,100,0,.45)}
+.hub-tile--dnd .hub-tile-label,.hub-tile--dnd .hub-tile-cta{color:var(--orange)}
+.hub-tile--dnd .hub-tile-title{color:#FFB380}
 
-.dest-title{font-family:'Cinzel',serif;font-size:17px;font-weight:700;line-height:1.25}
-.dest-card--shop .dest-title{color:var(--gold)}
-.dest-card--ebay .dest-title{color:#C0C0FF}
-.dest-card--blog .dest-title{color:#A0C8FF}
-.dest-card--tracker .dest-title{color:var(--silver)}
-.dest-card--dnd .dest-title{color:#FFB380}
-
-.dest-body{font-size:13px;color:rgba(160,168,192,.65);line-height:1.55;flex:1}
-.dest-arrow{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.65;margin-top:4px}
-.dest-card--shop .dest-arrow{color:var(--gold)}
-.dest-card--ebay .dest-arrow{color:#9898FF}
-.dest-card--blog .dest-arrow{color:var(--blue)}
-.dest-card--tracker .dest-arrow{color:var(--silver)}
-.dest-card--dnd .dest-arrow{color:var(--orange)}
-
-/* DND SECTION LINKS */
-.dnd-section-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.dnd-section-link{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:7px;background:rgba(245,100,0,.08);border:1px solid rgba(245,100,0,.22);color:rgba(255,180,128,.85);text-decoration:none;transition:all .2s;letter-spacing:.02em}
-.dnd-section-link:hover{background:rgba(245,100,0,.17);border-color:rgba(245,100,0,.5);color:#FFB380;transform:translateY(-1px)}
-.dnd-section-link .link-icon{font-size:14px}
+.hub-tile--contact{border-color:rgba(148,163,184,.15)}
+.hub-tile--contact::before{background:linear-gradient(135deg,rgba(148,163,184,.05),transparent)}
+.hub-tile--contact:hover{border-color:rgba(148,163,184,.35)}
+.hub-tile--contact .hub-tile-label,.hub-tile--contact .hub-tile-cta{color:#94A3B8}
+.hub-tile--contact .hub-tile-title{color:#CBD5E1}
 
 /* TCG GRID */
 .section-hd{margin-bottom:28px}
 .section-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
 .section-title{font-family:'Cinzel',serif;font-size:clamp(20px,3vw,30px);font-weight:700;color:var(--white)}
-.tcg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:64px}
+.tcg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:64px}
 .tcg-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;transition:all .2s}
 .tcg-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.35)}
 .tcg-icon{font-size:26px}
@@ -175,11 +169,11 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 @media(max-width:640px){
   .hero{padding:48px 0 40px}
   .trust-bar{gap:20px}
-  .destinations{grid-template-columns:1fr 1fr}
-  .dest-card{padding:22px 18px}
+  .hub-grid{grid-template-columns:repeat(2,1fr)}
+  .tcg-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:400px){
-  .destinations{grid-template-columns:1fr}
+  .hub-grid{grid-template-columns:1fr}
 }
 
 /* NAV COLOUR CLASSES - outline and font only */
@@ -249,12 +243,88 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <p class="hero-eyebrow">Australian TCG Knowledge Base</p>
     <h1 class="hero-h1">Card Prices, Buying Guides<br>and EV Tools, Made for Australia</h1>
     <p class="hero-sub">96,000+ MTG cards with live AUD pricing. 150+ buying guides from a real Australian seller. Amazon AU, eBay AU, all in one place.</p>
-    <div class="hero-cta-row">
-      <a href="/cards" class="btn btn-gold">Browse the Card Vault →</a>
-      <a href="/blog" class="btn btn-gold">Read the Blog →</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="btn btn-ghost">Visit our eBay Store ↗</a>
+    <div class="hero-cta-row" style="margin-bottom:0">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(201,168,76,.5);margin:0">Where do you want to go?</p>
     </div>
   </div>
+
+  <!-- HUB TILE GRID -->
+  <div class="hub-grid">
+
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3HubGrid&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="hub-tile hub-tile--ebay">
+      <div class="hub-tile-icon">🏪</div>
+      <p class="hub-tile-label">eBay Store</p>
+      <div class="hub-tile-title">Buy Singles &amp; Sealed</div>
+      <p class="hub-tile-desc">25,000+ listings. Find the exact card you need with Australian shipping.</p>
+      <p class="hub-tile-cta">Visit Store ↗</p>
+    </a>
+
+    <a href="/cards/mtg" class="hub-tile hub-tile--vault">
+      <div class="hub-tile-icon">🗂️</div>
+      <p class="hub-tile-label">Card Vault</p>
+      <div class="hub-tile-title">96,000+ MTG Cards in AUD</div>
+      <p class="hub-tile-desc">Live AUD pricing on every MTG card. Search, filter, find value.</p>
+      <p class="hub-tile-cta">Open Card Vault →</p>
+    </a>
+
+    <a href="/shop.html" class="hub-tile hub-tile--shop">
+      <div class="hub-tile-icon">🃏</div>
+      <p class="hub-tile-label">TCG Shop</p>
+      <div class="hub-tile-title">Sealed Product on Amazon AU</div>
+      <p class="hub-tile-desc">Booster boxes, collector sets and commander decks — all confirmed on Amazon AU.</p>
+      <p class="hub-tile-cta">Shop Now →</p>
+    </a>
+
+    <a href="/ev-calculator.html" class="hub-tile hub-tile--ev">
+      <div class="hub-tile-icon">📊</div>
+      <p class="hub-tile-label">EV Calculator</p>
+      <div class="hub-tile-title">Is Your Box Worth Opening?</div>
+      <p class="hub-tile-desc">Expected value calculations for MTG booster boxes in AUD. Open or sell — know before you rip.</p>
+      <p class="hub-tile-cta">Calculate EV →</p>
+    </a>
+
+    <a href="/blog" class="hub-tile hub-tile--blog">
+      <div class="hub-tile-icon">📖</div>
+      <p class="hub-tile-label">Blog</p>
+      <div class="hub-tile-title">150+ Guides for Australian Players</div>
+      <p class="hub-tile-desc">Buying guides, set breakdowns and game introductions. Priced in AUD, written by a real seller.</p>
+      <p class="hub-tile-cta">Read Articles →</p>
+    </a>
+
+    <a href="/tracker.html" class="hub-tile hub-tile--tracker">
+      <div class="hub-tile-icon">📋</div>
+      <p class="hub-tile-label">Free Tracker</p>
+      <div class="hub-tile-title">Track Your Collection</div>
+      <p class="hub-tile-desc">Log sealed product, track booster box ROI, record what you've opened. Free download.</p>
+      <p class="hub-tile-cta">Get Free Tracker →</p>
+    </a>
+
+    <a href="/cards/mtg?page=random-commander" class="hub-tile hub-tile--random">
+      <div class="hub-tile-icon">🎲</div>
+      <p class="hub-tile-label">Commander Generator</p>
+      <div class="hub-tile-title">Find Your Next Commander</div>
+      <p class="hub-tile-desc">Stuck for a deck idea? Let the generator pick your next Commander at random.</p>
+      <p class="hub-tile-cta">Generate a Commander →</p>
+    </a>
+
+    <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="hub-tile hub-tile--dnd">
+      <div class="hub-tile-icon">🎲</div>
+      <p class="hub-tile-label">D&amp;D Tools · Etsy</p>
+      <div class="hub-tile-title">Run Better D&amp;D Sessions</div>
+      <p class="hub-tile-desc">Printable tavern games, dungeon traps, puzzles and DM toolkits from our Etsy store.</p>
+      <p class="hub-tile-cta">Visit Etsy Shop ↗</p>
+    </a>
+
+    <a href="/contact.html" class="hub-tile hub-tile--contact">
+      <div class="hub-tile-icon">✉️</div>
+      <p class="hub-tile-label">Contact</p>
+      <div class="hub-tile-title">Get in Touch</div>
+      <p class="hub-tile-desc">Buylist enquiries, wholesale, or just say hello. We read every message.</p>
+      <p class="hub-tile-cta">Contact Us →</p>
+    </a>
+
+  </div>
+  <!-- END HUB TILE GRID -->
 
   <div class="trust-bar">
     <div class="trust-item"><span>⭐</span><span><strong>8,600+</strong> orders sold · 99.9% approval</span></div>
@@ -298,87 +368,13 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div style="margin-top:14px">
       <div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:4px">
         <button onclick="pickRandomCommander()" style="display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:8px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;background:#6B6BFF;color:#F0F2FF;border:none;cursor:pointer;letter-spacing:.04em;transition:all .2s" onmouseover="this.style.background='#8585FF';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#6B6BFF';this.style.transform='translateY(0)'">🎲 Pick One Now</button>
-        <a href="/cards/mtg" style="font-size:12px;color:#9898FF;text-decoration:none;opacity:.8">Browse all Commanders in Card Vault ↗</a>
+        <a href="/cards/mtg?page=random-commander" style="font-size:12px;color:#9898FF;text-decoration:none;opacity:.8">🎲 Generate your own Commander →</a>
       </div>
     </div>
   </div>
   <!-- END COMMANDER CAROUSEL -->
 
-  <div class="destinations">
 
-    <a href="/shop.html" class="dest-card dest-card--shop dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--shop">🃏</div>
-        <div>
-          <p class="dest-label">TCG Shop</p>
-          <h2 class="dest-title">Sealed Product on Amazon AU</h2>
-        </div>
-      </div>
-      <p class="dest-body">Pokemon, MTG, One Piece, Lorcana, Dragon Ball, Star Wars Unlimited, Riftbound and Yu-Gi-Oh. Booster boxes, collector boxes, commander decks and accessories — all confirmed on Amazon AU.</p>
-      <p class="dest-arrow">Shop Now →</p>
-    </a>
-
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="dest-card dest-card--ebay dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--ebay">🏪</div>
-        <div>
-          <p class="dest-label">eBay Store</p>
-          <h2 class="dest-title">Singles &amp; Sealed on eBay</h2>
-        </div>
-      </div>
-      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 25,000+ listings across all major TCGs with Australian shipping.</p>
-      <p class="dest-arrow">Visit Store ↗</p>
-    </a>
-
-    <a href="/blog" class="dest-card dest-card--blog dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--blog">📖</div>
-        <div>
-          <p class="dest-label">Blog</p>
-          <h2 class="dest-title">Guides, Reviews &amp; Set Breakdowns</h2>
-        </div>
-      </div>
-      <p class="dest-body">Buying guides, booster box ROI breakdowns, game introductions and set reviews. Written for Australian players, priced in AUD.</p>
-      <p class="dest-arrow">Read Articles →</p>
-    </a>
-
-    <!-- D&D TOOLS — div not <a> to allow nested links -->
-    <div class="dest-card dest-card--dnd" onclick="window.open('https://blasdigital.etsy.com','_blank')">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--dnd">🎲</div>
-        <div>
-          <p class="dest-label">D&amp;D Tools · Etsy Store</p>
-          <h2 class="dest-title">Run Better D&amp;D Sessions</h2>
-        </div>
-      </div>
-      <p class="dest-body">Printable D&amp;D tools from our Etsy store. Tavern mini-games to fill downtime, dungeon traps and puzzles, and DM toolkits to build adventures faster.</p>
-      <div class="dnd-section-links" onclick="event.stopPropagation()">
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56813304" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">🍺</span> Tavern Games
-        </a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=57106584" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">🗝️</span> Traps &amp; Puzzles
-        </a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56829599" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">📋</span> DM Tools
-        </a>
-      </div>
-      <p class="dest-arrow" style="margin-top:6px">Visit Etsy Shop ↗</p>
-    </div>
-
-    <a href="/tracker.html" class="dest-card dest-card--tracker dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--tracker">📊</div>
-        <div>
-          <p class="dest-label">Collection Tracker</p>
-          <h2 class="dest-title">Track Your Collection</h2>
-        </div>
-      </div>
-      <p class="dest-body">Log your sealed product, track booster box ROI, and keep a record of what you've opened. Free download — no app required.</p>
-      <p class="dest-arrow">Open Tracker →</p>
-    </a>
-
-  </div>
 
   <div class="section-hd">
     <span class="section-eyebrow">What We Cover</span>
