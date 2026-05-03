@@ -14,23 +14,18 @@ const PRICE_THRESHOLD = 2.0;
 const PAGE_SIZE = 5000;
 
 async function fetchCardSlugs(offset = 0) {
-  const query = [
-    `mtg_cards`,
-    `?select=slug,price_usd,updated_at`,
-    `&price_usd=gte.${PRICE_THRESHOLD}`,
-    `&slug=not.is.null`,
-    `&order=price_usd.desc`,
-    `&limit=${PAGE_SIZE}`,
-    `&offset=${offset}`
-  ].join('');
+  const from = offset;
+  const to = offset + PAGE_SIZE - 1;
 
-  const url = `${SUPABASE_URL}/rest/v1/${query}`;
-  console.log('[sitemap-cards] fetching:', url.replace(SUPABASE_ANON_KEY, '[REDACTED]'));
+  const url = `${SUPABASE_URL}/rest/v1/mtg_cards?select=slug,price_usd,updated_at&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null&order=price_usd.desc`;
+  console.log(`[sitemap-cards] fetching range ${from}-${to}`);
 
   const res = await fetch(url, {
     headers: {
       'apikey': SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Range': `${from}-${to}`,
+      'Range-Unit': 'items'
     }
   });
 
@@ -41,7 +36,7 @@ async function fetchCardSlugs(offset = 0) {
   }
 
   const data = await res.json();
-  console.log(`[sitemap-cards] offset ${offset} returned ${Array.isArray(data) ? data.length : 'non-array: ' + JSON.stringify(data).slice(0, 200)}`);
+  console.log(`[sitemap-cards] range ${from}-${to} returned ${Array.isArray(data) ? data.length : 'non-array: ' + JSON.stringify(data).slice(0, 200)}`);
   return Array.isArray(data) ? data : [];
 }
 
@@ -61,18 +56,22 @@ export default async (req) => {
   }
 
   try {
-    // Step 1: get total count
+    // Step 1: get total count using Range header so content-range is returned
     const countRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/mtg_cards?select=slug&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
+      `${SUPABASE_URL}/rest/v1/mtg_cards?select=slug&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null`,
       {
         headers: {
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'count=exact'
+          'Prefer': 'count=exact',
+          'Range': '0-0',
+          'Range-Unit': 'items'
         }
       }
     );
-    const totalCount = parseInt(countRes.headers.get('content-range')?.split('/')[1] || '30000', 10);
+    const contentRange = countRes.headers.get('content-range');
+    console.log('[sitemap-cards] content-range header:', contentRange);
+    const totalCount = parseInt(contentRange?.split('/')[1] || '0', 10) || 30000;
     console.log(`[sitemap-cards] total cards: ${totalCount}`);
 
     // Step 2: fetch all pages in parallel
