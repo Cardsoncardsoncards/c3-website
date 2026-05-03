@@ -131,9 +131,18 @@ export const handler = async function(event) {
     let customId;
 
     if (mode === 'set') {
-      // Commanders from the current spotlight set, sorted by EDHREC rank
-      query = `${SET_QUERY} t:legendary t:creature`;
-      displayTitle = `Commanders from ${SET_DISPLAY_NAME}`;
+      // Use dynamic setcode param if provided (e.g. ?mode=set&setcode=2xm)
+      // Falls back to the hardcoded spotlight set if no setcode given
+      const setcode = params.setcode ? params.setcode.trim().toLowerCase() : null;
+      if (setcode) {
+        // Single set code — show all legendary creatures from this set
+        query = `set:${setcode} t:legendary t:creature`;
+        displayTitle = `Commanders in This Set`;
+      } else {
+        // Fallback: use the hardcoded spotlight set (Strixhaven)
+        query = `${SET_QUERY} t:legendary t:creature`;
+        displayTitle = `Commanders from ${SET_DISPLAY_NAME}`;
+      }
       customId = 'C3SetCmdCarousel';
     } else {
       // Top commanders globally — fetch 40, client shuffles to show 20 different each load

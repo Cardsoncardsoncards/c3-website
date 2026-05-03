@@ -736,7 +736,7 @@ ${NAV}
   <div class="context-box">${contextText}</div>
 
   <!-- Commander carousel for this set -->
-  <div style="margin-bottom:28px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:12px;padding:20px;overflow:hidden">
+  <div id="set-cmd-section" style="margin-bottom:28px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:12px;padding:20px;overflow:hidden">
     <p style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9898FF;margin-bottom:10px;text-align:center">Commanders in this Set</p>
     <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)">
       <div id="set-cmd-track" style="display:flex;gap:10px;width:max-content">
@@ -983,20 +983,23 @@ function clearFilters() {
       + '<div class="set-cmd-card-body"><div class="set-cmd-card-name">' + c.name + '</div><div class="set-cmd-card-id">' + c.identityName + '</div></div></a>';
   }
   async function loadSetCommanders() {
-    const track = document.getElementById('set-cmd-track');
+    const track   = document.getElementById('set-cmd-track');
+    const section = document.getElementById('set-cmd-section');
     if (!track) return;
     try {
-      const res  = await fetch('/.netlify/functions/commander-carousel?mode=set&limit=20');
+      // mode=set with this set's code — shows commanders from THIS set specifically
+      const res  = await fetch('/.netlify/functions/commander-carousel?mode=set&setcode=${set.set_code}&limit=20');
       const data = await res.json();
       if (!data.commanders || data.commanders.length === 0) {
-        track.innerHTML = '<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders in this set.</p>';
+        // Hide the whole section — no legendary creatures in this set
+        if (section) section.style.display = 'none';
         return;
       }
       const html = data.commanders.map(buildSetCmdCard).join('');
       track.innerHTML = html + html;
       track.classList.add('set-cmd-track-loaded');
     } catch(e) {
-      track.innerHTML = '';
+      if (section) section.style.display = 'none';
     }
   }
   loadSetCommanders();
