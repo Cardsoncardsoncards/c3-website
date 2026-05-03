@@ -402,7 +402,8 @@ function renderRandomCommander() {
     .share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text);font-size:13px;cursor:pointer;transition:all .2s;text-decoration:none;font-family:sans-serif}
     .share-btn:hover{border-color:var(--accent);color:var(--accent)}
     .share-btn.copied{border-color:#4caf50;color:#4caf50}
-    #results-section{display:none}
+    #results-section{visibility:hidden;height:0;overflow:hidden}
+    #results-section.visible{visibility:visible;height:auto;overflow:visible}
   </style>
 </head>
 <body>
@@ -621,7 +622,7 @@ async function generateAll() {
   grid.innerHTML = Array.from({length: selectedCount}, (_,i) =>
     '<div class="cmd-result-card" style="height:300px;background:var(--bg3);border-radius:12px;opacity:' + (0.4 + i*0.1) + '"></div>'
   ).join('');
-  section.style.display = '';
+  section.classList.add('visible');
   try {
     const fetched = await Promise.all(
       Array.from({length: selectedCount}, () => fetchOneCommander([]))
