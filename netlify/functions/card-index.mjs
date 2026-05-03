@@ -151,6 +151,14 @@ ${NAV}
     <div id="search-results" style="margin-top:16px"></div>
   </div>
 
+  <!-- Quick Access Badges -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px">
+    <a href="/cards/mtg/random-commander" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#f5a623,#e8940f);color:#000;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">🎲 Random Commander</a>
+    <a href="/ev-calculator.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#4a9eff,#2979d8);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">📊 EV Calculator</a>
+    <a href="/tracker.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#4caf50,#388e3c);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">📋 Free Tracker</a>
+    <a href="/shop.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#ff7043,#e64a19);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">🛒 Shop</a>
+  </div>
+
   <!-- Commander Spotlight Carousel -->
   <div style="margin-bottom:32px;padding:24px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:var(--radius);overflow:hidden">
     <div style="text-align:center;margin-bottom:20px">
@@ -387,6 +395,7 @@ function renderRandomCommander() {
     .cmc-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
     .cmc-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
     #results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:32px 0 24px}
+    @media(max-width:480px){#results-grid{grid-template-columns:repeat(2,1fr)}}
     .cmd-result-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;transition:border-color .2s}
     .cmd-result-card:hover{border-color:var(--accent)}
     .cmd-result-img{width:100%;display:block}
@@ -398,23 +407,62 @@ function renderRandomCommander() {
     .cmd-result-view:hover{background:var(--accent);color:#000}
     .cmd-regen-btn{width:100%;background:none;border:1px solid var(--border);color:var(--text2);border-radius:6px;padding:5px;font-size:11px;cursor:pointer;transition:all .2s}
     .cmd-regen-btn:hover{border-color:var(--accent);color:var(--accent)}
-    .share-bar{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;margin-bottom:32px}
-    .share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text);font-size:13px;cursor:pointer;transition:all .2s;text-decoration:none;font-family:sans-serif}
-    .share-btn:hover{border-color:var(--accent);color:var(--accent)}
-    .share-btn.copied{border-color:#4caf50;color:#4caf50}
+    .challenge-bar{background:linear-gradient(135deg,rgba(245,166,35,.12) 0%,rgba(124,106,245,.12) 100%);border:1px solid rgba(245,166,35,.35);border-radius:16px;padding:28px 24px;text-align:center;margin-bottom:32px;position:relative;overflow:hidden}
+    .challenge-bar::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(245,166,35,.15),transparent 70%);pointer-events:none}
+    .challenge-title{font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px;letter-spacing:-.02em}
+    .challenge-sub{font-size:14px;color:var(--text2);margin-bottom:20px;max-width:480px;margin-left:auto;margin-right:auto}
+    .sbtn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:all .15s;font-family:sans-serif}
+    .sbtn:hover{opacity:.88;transform:translateY(-1px)}
+    .sbtn-discord{background:#5865f2;color:#fff}
+    .sbtn-reddit{background:#ff4500;color:#fff}
+    .sbtn-twitter{background:#000;color:#fff}
+    .sbtn-whatsapp{background:#25d366;color:#fff}
+    .sbtn-copy{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
+    .sbtn-copy.copied{background:rgba(76,175,80,.15);border-color:#4caf50;color:#4caf50}
+    .share-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
     #results-section{visibility:hidden;height:0;overflow:hidden}
     #results-section.visible{visibility:visible;height:auto;overflow:visible}
+    .how-tip{background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text2);margin-top:10px;line-height:1.5}
+    .how-tip strong{color:var(--accent)}
+    .trust-bullets{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+    .trust-bullet{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text2)}
+    .trust-bullet span{font-size:16px}
+    .guide-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:block;transition:border-color .2s;border-left:3px solid transparent}
+    .guide-card:hover{border-color:var(--accent)}
+    .guide-card.g-amber{border-left-color:#f5a623}
+    .guide-card.g-blue{border-left-color:#4a9eff}
+    .guide-card.g-green{border-left-color:#4caf50}
+    .guide-card.g-purple{border-left-color:#7c6af5}
+    .guide-card-title{font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px}
+    .guide-card-desc{font-size:12px;color:var(--text2);line-height:1.4}
   </style>
 </head>
 <body>
 ${NAV}
 <div class="wrap" style="padding-top:32px">
   <div style="text-align:center;margin-bottom:32px">
-    <h1 style="font-size:32px;margin-bottom:8px">🎲 Random Commander Generator</h1>
-    <p style="color:var(--text2);max-width:560px;margin:0 auto">Roll up to 4 random Commanders at once. Filter by colour and mana value, regenerate any individual result, or challenge a friend with your pod.</p>
+    <div style="display:inline-block;background:linear-gradient(135deg,rgba(245,166,35,.15),rgba(124,106,245,.15));border:1px solid rgba(245,166,35,.3);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">3,000+ Legendary Creatures</div>
+    <h1 style="font-size:36px;margin-bottom:10px;font-weight:800;letter-spacing:-.02em">🎲 Random Commander Generator</h1>
+    <p style="color:var(--text2);max-width:560px;margin:0 auto;font-size:15px">Roll your next Commander build. Filter by colour and mana value, reroll any slot, then dare a friend to top it.</p>
+  </div>
+
+  <!-- Pre-generate challenge teaser -->
+  <div style="max-width:660px;margin:0 auto 20px;background:linear-gradient(90deg,rgba(124,106,245,.1),rgba(245,166,35,.08));border:1px solid rgba(124,106,245,.25);border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <span style="font-size:20px">⚔️</span>
+    <div style="flex:1;min-width:180px">
+      <div style="font-size:13px;font-weight:700;color:var(--text)">Roll your pod. Dare a friend.</div>
+      <div style="font-size:12px;color:var(--text2)">Generate 4 random Commanders and share the link — see who builds the better deck.</div>
+    </div>
   </div>
 
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;max-width:660px;margin:0 auto 32px">
+
+    <!-- Trust bullets -->
+    <div class="trust-bullets">
+      <div class="trust-bullet"><span>🎴</span> Pulls from 3,000+ legendary creatures</div>
+      <div class="trust-bullet"><span>💰</span> Live AUD prices shown</div>
+      <div class="trust-bullet"><span>🔄</span> Reroll any single slot</div>
+    </div>
 
     <div style="margin-bottom:22px">
       <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">How many Commanders?</p>
@@ -423,7 +471,7 @@ ${NAV}
       </div>
     </div>
 
-    <div style="margin-bottom:22px">
+    <div style="margin-bottom:6px">
       <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">Colour Identity (optional)</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="color-btn" style="background:#f9faf4;color:#333" data-color="W" onclick="toggleColor(this)" title="White">W</button>
@@ -432,16 +480,17 @@ ${NAV}
         <button class="color-btn" style="background:#f9aa8f;color:#500" data-color="R" onclick="toggleColor(this)" title="Red">R</button>
         <button class="color-btn" style="background:#9bd3ae;color:#030" data-color="G" onclick="toggleColor(this)" title="Green">G</button>
       </div>
+      <div class="how-tip">🎨 <strong>How colour filtering works:</strong> Selecting W + B shows commanders whose identity fits <em>within</em> those colours — so mono-white, mono-black, and Orzhov (W/B) commanders all appear. Leave blank to roll from all 5 colours.</div>
     </div>
 
-    <div style="margin-bottom:28px">
+    <div style="margin-bottom:28px;margin-top:18px">
       <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">Max Mana Value (optional)</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         ${[2,3,4,5,6,7,'Any'].map(v => `<button class="cmc-btn${v==='Any'?' active':''}" data-cmc="${v}" onclick="setCmc(this,${v==='Any'?99:v})">${v}</button>`).join('')}
       </div>
     </div>
 
-    <button class="btn btn-primary" id="generate-btn" style="font-size:16px;padding:14px;width:100%" onclick="generateAll()">
+    <button class="btn btn-primary" id="generate-btn" style="font-size:16px;padding:14px;width:100%;letter-spacing:.02em" onclick="generateAll()">
       ✨ Generate 4 Commanders
     </button>
   </div>
@@ -449,28 +498,45 @@ ${NAV}
   <div id="results-section">
     <div id="results-grid"></div>
 
-    <div style="text-align:center;margin-bottom:24px">
+    <div style="text-align:center;margin-bottom:28px">
       <button class="btn btn-secondary" style="padding:10px 28px" onclick="generateAll()">🎲 Generate All Again</button>
     </div>
 
-    <div class="share-bar">
-      <p style="font-size:12px;color:var(--text2);margin-bottom:14px;font-weight:700;text-transform:uppercase;letter-spacing:.08em">Challenge a Friend</p>
-      <p style="font-size:14px;color:var(--text);margin-bottom:16px">Think they can build a better deck with a random Commander? Send them this.</p>
-      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="share-btn" id="copy-btn" onclick="copyLink()">📋 Copy Link</button>
-        <a class="share-btn" id="twitter-btn" href="#" target="_blank" rel="noopener">🐦 Share on X</a>
-        <a class="share-btn" id="reddit-btn" href="#" target="_blank" rel="noopener">🤖 Share on Reddit</a>
+    <!-- Challenge a Friend — upgraded -->
+    <div class="challenge-bar">
+      <div style="font-size:32px;margin-bottom:8px">⚔️</div>
+      <div class="challenge-title">Think You Can Build Better?</div>
+      <div class="challenge-sub">Send your friend this exact Commander pod and see who builds the stronger deck. No excuses — same pool, best builder wins.</div>
+      <div class="share-row">
+        <button class="sbtn sbtn-discord" onclick="shareDiscord()">Discord</button>
+        <a class="sbtn sbtn-reddit" id="reddit-btn" href="#" target="_blank" rel="noopener">Reddit</a>
+        <a class="sbtn sbtn-twitter" id="twitter-btn" href="#" target="_blank" rel="noopener">𝕏 Twitter</a>
+        <a class="sbtn sbtn-whatsapp" id="whatsapp-btn" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="sbtn sbtn-copy" id="copy-btn" onclick="copyLink()">📋 Copy Link</button>
       </div>
     </div>
   </div>
 
-  <div style="max-width:660px;margin:0 auto 32px">
-    <h3 style="margin-bottom:12px;font-size:16px">Related Guides</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:10px">
-      <a href="/blog/mtg-commander-decks-australia/" style="padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px">Best MTG Commander Decks Australia</a>
-      <a href="/blog/free-mtg-collection-tracker-australia/" style="padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px">Free MTG Collection Tracker</a>
-      <a href="/cards/mtg" style="padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px">Browse All MTG Cards</a>
-      <a href="/ev-calculator.html" style="padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px">EV Calculator</a>
+  <!-- Related Guides — upgraded with coloured cards -->
+  <div style="max-width:900px;margin:0 auto 48px">
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Explore More</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+      <a href="/cards/mtg/random-commander" class="guide-card g-amber">
+        <div class="guide-card-title">🎲 Random Commander</div>
+        <div class="guide-card-desc">Roll again with different filters. Find your next build.</div>
+      </a>
+      <a href="/blog/mtg-commander-decks-australia/" class="guide-card g-purple">
+        <div class="guide-card-title">👑 Best Commander Decks AU</div>
+        <div class="guide-card-desc">Top-rated precons and budget builds available in Australia.</div>
+      </a>
+      <a href="/ev-calculator.html" class="guide-card g-blue">
+        <div class="guide-card-title">📊 EV Calculator</div>
+        <div class="guide-card-desc">Is your next booster box actually worth cracking?</div>
+      </a>
+      <a href="/cards/mtg" class="guide-card g-green">
+        <div class="guide-card-title">🃏 Browse All MTG Cards</div>
+        <div class="guide-card-desc">Search 96,000+ cards with live AUD pricing.</div>
+      </a>
     </div>
   </div>
 </div>
@@ -662,8 +728,21 @@ function updateShareLinks(results) {
     + (selectedColors.join('') || '') + '&cmc=' + selectedCmc + '&count=' + selectedCount + '&auto=1';
   const tweetText = encodeURIComponent('I just rolled ' + names + ' as my Commander pod. Can you beat it? Try the random generator: ' + url);
   const redditTitle = encodeURIComponent('Random Commander pod: ' + names + ' \u2014 try it yourself');
+  const waText = encodeURIComponent('Check out my random Commander pod: ' + names + '. Think you can build better? ' + url);
   document.getElementById('twitter-btn').href = 'https://twitter.com/intent/tweet?text=' + tweetText;
   document.getElementById('reddit-btn').href = 'https://www.reddit.com/submit?url=' + encodeURIComponent(url) + '&title=' + redditTitle;
+  document.getElementById('whatsapp-btn').href = 'https://wa.me/?text=' + waText;
+}
+
+function shareDiscord() {
+  const url = location.origin + '/cards/mtg/random-commander?colors='
+    + (selectedColors.join('') || '') + '&cmc=' + selectedCmc + '&count=' + selectedCount + '&auto=1';
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.querySelector('.sbtn-discord');
+    const orig = btn.textContent;
+    btn.textContent = '✅ Copied for Discord!';
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  });
 }
 
 function pushUrlState() {
