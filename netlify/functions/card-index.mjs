@@ -94,14 +94,7 @@ function renderCardHub(sets, topCards) {
   const setListHTML = sortedParents.map(parent => {
     const children = (childMap.get(parent.set_code) || []).sort((a,b) => a.set_name.localeCompare(b.set_name));
     const childBadge = children.length ? `<span style="font-size:9px;background:rgba(201,168,76,.15);color:var(--gold);border-radius:4px;padding:1px 5px;margin-left:4px">+${children.length}</span>` : '';
-    const childrenHTML = children.length ? `
-      <div class="set-children" id="ch-${parent.set_code}" style="display:none;margin-top:4px;padding-left:10px;border-left:2px solid rgba(201,168,76,.2)">
-        ${children.map(c => `<a href="/cards/mtg/sets/${c.set_slug}" class="set-list-item set-child-item" data-name="${c.set_name.toLowerCase()}"
-          style="display:block;padding:5px 10px;text-decoration:none;font-size:11px;color:var(--text2);border-radius:4px;transition:color .15s"
-          onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'">${c.set_name}
-          <span style="font-size:10px;opacity:.5">${c.release_date?.slice(0,4)||''}</span>
-        </a>`).join('')}
-      </div>` : '';
+    const childrenHTML = '';
     return `<div class="set-parent-item" data-name="${parent.set_name.toLowerCase()}${children.map(c=>' '+c.set_name.toLowerCase()).join('')}">
       <div style="display:flex;align-items:center;gap:4px">
         <a href="/cards/mtg/sets/${parent.set_slug}" class="set-list-item"
@@ -111,11 +104,10 @@ function renderCardHub(sets, topCards) {
           <span style="color:var(--text2);font-size:10px;margin-left:6px">${parent.release_date?.slice(0,4)||''}</span>
           ${childBadge}
         </a>
-        ${children.length ? `<button onclick="toggleChildren('${parent.set_code}')" id="btn-${parent.set_code}"
+        ${children.length ? `<button onclick="toggleChildren('${parent.set_code}','${parent.set_name.replace(/'/g,\"\\\\'\")}',${JSON.stringify(children.map(c=>({url:'/cards/mtg/sets/'+c.set_slug,label:c.set_name,year:c.release_date?.slice(0,4)||''})))})" id="btn-${parent.set_code}"
           style="background:none;border:1px solid var(--border);color:var(--text2);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0"
-          title="Show sub-sets">+</button>` : ''}
+          title="Show variants">+</button>` : ''}
       </div>
-      ${childrenHTML}
     </div>`;
   }).join('');
 
@@ -183,8 +175,15 @@ ${NAV}
         oninput="filterSets(this.value)" autocomplete="off">
       <span style="font-size:11px;color:var(--text2);margin-left:12px">Sets with <span style="color:var(--gold)">+N</span> have sub-sets — click the + button to expand them</span>
     </div>
-    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px;max-height:380px;overflow-y:auto;scrollbar-width:thin">
+    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px">
       ${setListHTML}
+    </div>
+    <div id=\"set-child-drawer\" style=\"display:none;margin-top:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px\">
+      <div style=\"display:flex;align-items:center;justify-content:space-between;margin-bottom:10px\">
+        <span id=\"set-drawer-title\" style=\"font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em\"></span>
+        <button onclick=\"closeDrawer()\" style=\"background:none;border:none;color:var(--text2);cursor:pointer;font-size:18px;line-height:1\">&times;</button>
+      </div>
+      <div id=\"set-drawer-items\" style=\"display:flex;gap:8px;flex-wrap:wrap\"></div>
     </div>
   </div>
 
@@ -273,13 +272,39 @@ function filterSets(query) {
   });
 }
 
-function toggleChildren(setCode) {
-  const children = document.getElementById('ch-' + setCode);
-  const btn      = document.getElementById('btn-' + setCode);
-  if (!children) return;
-  const isOpen = children.style.display !== 'none';
-  children.style.display = isOpen ? 'none' : '';
-  if (btn) btn.textContent = isOpen ? '+' : '−';
+let openSetCode = null;
+function toggleChildren(setCode, setName, childrenData) {
+  const drawer = document.getElementById('set-child-drawer');
+  const title  = document.getElementById('set-drawer-title');
+  const items  = document.getElementById('set-drawer-items');
+  const btn    = document.getElementById('btn-' + setCode);
+  if (openSetCode === setCode) {
+    drawer.style.display = 'none';
+    if (btn) btn.textContent = '+';
+    openSetCode = null;
+    return;
+  }
+  if (openSetCode) {
+    const prevBtn = document.getElementById('btn-' + openSetCode);
+    if (prevBtn) prevBtn.textContent = '+';
+  }
+  openSetCode = setCode;
+  title.textContent = setName + ' variants';
+  items.innerHTML = childrenData.map(c =>
+    '<a href="' + c.url + '" style="padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;text-decoration:none;font-size:12px;color:var(--text);transition:border-color .15s" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">' +
+    c.label + ' <span style="font-size:10px;color:var(--text2)">(' + c.year + ')</span></a>'
+  ).join('');
+  drawer.style.display = '';
+  if (btn) btn.textContent = '−';
+  drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function closeDrawer() {
+  document.getElementById('set-child-drawer').style.display = 'none';
+  if (openSetCode) {
+    const btn = document.getElementById('btn-' + openSetCode);
+    if (btn) btn.textContent = '+';
+  }
+  openSetCode = null;
 }
 </script>
 <!-- GA4 -->
@@ -339,66 +364,100 @@ function renderRandomCommander() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Random MTG Commander Generator Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Generate a random Magic: The Gathering Commander. Filter by colour identity and mana value. Find your next Commander deck inspiration.">
+  <meta name="description" content="Generate 1 to 4 random Magic: The Gathering Commanders. Filter by colour identity and mana value. Share your results with friends.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/random-commander">
   ${BASE_STYLES}
   <style>
-    .color-btn{width:36px;height:36px;border-radius:50%;border:2px solid transparent;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-    .color-btn.selected{border-color:#f5a623;transform:scale(1.15);box-shadow:0 0 0 3px rgba(245,166,35,0.5);background-color:rgba(245,166,35,0.15) !important;color:#fff !important}
-    #commander-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:none;max-width:500px;margin:0 auto}
-    #commander-img{width:200px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.6)}
+    .color-btn{width:38px;height:38px;border-radius:50%;border:2px solid transparent;cursor:pointer;font-size:15px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;transition:all .2s}
+    .color-btn.selected{border-color:#f5a623;transform:scale(1.15);box-shadow:0 0 0 3px rgba(245,166,35,.4)}
+    .count-btn{padding:6px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text2);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+    .count-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+    .cmc-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+    .cmc-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+    #results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:32px 0 24px}
+    .cmd-result-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;transition:border-color .2s}
+    .cmd-result-card:hover{border-color:var(--accent)}
+    .cmd-result-img{width:100%;display:block}
+    .cmd-result-body{padding:12px}
+    .cmd-result-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.3}
+    .cmd-result-type{font-size:11px;color:var(--text2);margin-bottom:6px}
+    .cmd-result-price{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:10px}
+    .cmd-result-view{display:block;text-align:center;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);border-radius:6px;padding:6px;font-size:12px;color:var(--accent);text-decoration:none;margin-bottom:8px;transition:all .2s}
+    .cmd-result-view:hover{background:var(--accent);color:#000}
+    .cmd-regen-btn{width:100%;background:none;border:1px solid var(--border);color:var(--text2);border-radius:6px;padding:5px;font-size:11px;cursor:pointer;transition:all .2s}
+    .cmd-regen-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .share-bar{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;margin-bottom:32px}
+    .share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text);font-size:13px;cursor:pointer;transition:all .2s;text-decoration:none;font-family:sans-serif}
+    .share-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .share-btn.copied{border-color:#4caf50;color:#4caf50}
+    #results-section{display:none}
   </style>
 </head>
 <body>
 ${NAV}
-<div class="wrap" style="padding-top:32px;text-align:center">
-  <h1 style="font-size:32px;margin-bottom:8px">🎲 Random Commander Generator</h1>
-  <p style="color:var(--text2);margin-bottom:32px;max-width:600px;margin-left:auto;margin-right:auto">Find your next Commander deck inspiration. Filter by colour identity and mana value, or go completely random.</p>
+<div class="wrap" style="padding-top:32px">
+  <div style="text-align:center;margin-bottom:32px">
+    <h1 style="font-size:32px;margin-bottom:8px">🎲 Random Commander Generator</h1>
+    <p style="color:var(--text2);max-width:560px;margin:0 auto">Roll up to 4 random Commanders at once. Filter by colour and mana value, regenerate any individual result, or challenge a friend with your pod.</p>
+  </div>
 
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;max-width:600px;margin:0 auto 32px">
-    <h2 style="font-size:18px;margin-bottom:20px">Filter (optional)</h2>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;max-width:660px;margin:0 auto 32px">
 
-    <div style="margin-bottom:20px">
-      <p style="color:var(--text2);font-size:13px;margin-bottom:10px">Colour Identity</p>
-      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button class="color-btn" style="background:#f9faf4;color:#000" data-color="W" onclick="toggleColor(this)" title="White">W</button>
-        <button class="color-btn" style="background:#aae0fa;color:#000" data-color="U" onclick="toggleColor(this)" title="Blue">U</button>
-        <button class="color-btn" style="background:#2a2a2a;color:#fff" data-color="B" onclick="toggleColor(this)" title="Black">B</button>
-        <button class="color-btn" style="background:#f9aa8f;color:#000" data-color="R" onclick="toggleColor(this)" title="Red">R</button>
-        <button class="color-btn" style="background:#9bd3ae;color:#000" data-color="G" onclick="toggleColor(this)" title="Green">G</button>
+    <div style="margin-bottom:22px">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">How many Commanders?</p>
+      <div style="display:flex;gap:8px">
+        ${[1,2,3,4].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
       </div>
     </div>
 
-    <div style="margin-bottom:24px">
-      <p style="color:var(--text2);font-size:13px;margin-bottom:10px">Max Mana Value</p>
-      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-        ${[2,3,4,5,6,7,'Any'].map(v => `<button class="btn btn-secondary cmc-btn" style="padding:6px 14px;font-size:13px" data-cmc="${v}" onclick="setCmc(this,${v === 'Any' ? 99 : v})">${v}</button>`).join('')}
+    <div style="margin-bottom:22px">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">Colour Identity (optional)</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="color-btn" style="background:#f9faf4;color:#333" data-color="W" onclick="toggleColor(this)" title="White">W</button>
+        <button class="color-btn" style="background:#aae0fa;color:#003" data-color="U" onclick="toggleColor(this)" title="Blue">U</button>
+        <button class="color-btn" style="background:#2a2a2a;color:#eee" data-color="B" onclick="toggleColor(this)" title="Black">B</button>
+        <button class="color-btn" style="background:#f9aa8f;color:#500" data-color="R" onclick="toggleColor(this)" title="Red">R</button>
+        <button class="color-btn" style="background:#9bd3ae;color:#030" data-color="G" onclick="toggleColor(this)" title="Green">G</button>
       </div>
     </div>
 
-    <button class="btn btn-primary" style="font-size:18px;padding:14px 40px;width:100%" onclick="generateCommander()">
-      ✨ Generate Commander
+    <div style="margin-bottom:28px">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">Max Mana Value (optional)</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        ${[2,3,4,5,6,7,'Any'].map(v => `<button class="cmc-btn${v==='Any'?' active':''}" data-cmc="${v}" onclick="setCmc(this,${v==='Any'?99:v})">${v}</button>`).join('')}
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="generate-btn" style="font-size:16px;padding:14px;width:100%" onclick="generateAll()">
+      ✨ Generate 4 Commanders
     </button>
   </div>
 
-  <div id="commander-card">
-    <img id="commander-img" src="" alt="">
-    <h2 id="commander-name" style="font-size:22px;margin:16px 0 4px"></h2>
-    <p id="commander-type" style="color:var(--text2);font-size:14px;margin-bottom:12px"></p>
-    <p id="commander-price" style="color:var(--accent);font-size:18px;font-weight:bold;margin-bottom:16px"></p>
-    <div style="display:flex;gap:10px;flex-direction:column">
-      <a id="commander-link" href="#" class="btn btn-primary">View Full Card Page →</a>
-      <button class="btn btn-secondary" onclick="generateCommander()">🎲 Generate Another</button>
+  <div id="results-section">
+    <div id="results-grid"></div>
+
+    <div style="text-align:center;margin-bottom:24px">
+      <button class="btn btn-secondary" style="padding:10px 28px" onclick="generateAll()">🎲 Generate All Again</button>
+    </div>
+
+    <div class="share-bar">
+      <p style="font-size:12px;color:var(--text2);margin-bottom:14px;font-weight:700;text-transform:uppercase;letter-spacing:.08em">Challenge a Friend</p>
+      <p style="font-size:14px;color:var(--text);margin-bottom:16px">Think they can build a better deck with a random Commander? Send them this.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="share-btn" id="copy-btn" onclick="copyLink()">📋 Copy Link</button>
+        <a class="share-btn" id="twitter-btn" href="#" target="_blank" rel="noopener">🐦 Share on X</a>
+        <a class="share-btn" id="reddit-btn" href="#" target="_blank" rel="noopener">🤖 Share on Reddit</a>
+      </div>
     </div>
   </div>
 
-  <div style="max-width:600px;margin:32px auto 0;text-align:left">
-    <h3 style="margin-bottom:12px">Related Guides</h3>
+  <div style="max-width:660px;margin:0 auto 32px">
+    <h3 style="margin-bottom:12px;font-size:16px">Related Guides</h3>
     <div style="display:flex;flex-wrap:wrap;gap:10px">
-      <a href="/blog/mtg-commander-decks-australia/">Best MTG Commander Decks Australia</a>
-      <a href="/blog/free-mtg-collection-tracker-australia/">Free MTG Collection Tracker</a>
-      <a href="/cards/mtg">Browse All MTG Cards</a>
-      <a href="/ev-calculator.html">EV Calculator</a>
+      <a href="/blog/mtg-commander-decks-australia/" style="padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px">Best MTG Commander Decks Australia</a>
+      <a href="/blog/free-mtg-collection-tracker-australia/" style="padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px">Free MTG Collection Tracker</a>
+      <a href="/cards/mtg" style="padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px">Browse All MTG Cards</a>
+      <a href="/ev-calculator.html" style="padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px">EV Calculator</a>
     </div>
   </div>
 </div>
@@ -411,8 +470,47 @@ ${NAV}
 <script>
 window.C3_SUPA_URL = '${SUPABASE_URL}';
 window.C3_SUPA_KEY = '${SUPABASE_ANON_KEY}';
+
 let selectedColors = [];
 let selectedCmc = 99;
+let selectedCount = 4;
+let currentSlugs = [];
+
+(function() {
+  const p = new URLSearchParams(location.search);
+  if (p.get('colors')) {
+    selectedColors = p.get('colors').split('');
+    document.querySelectorAll('.color-btn').forEach(b => {
+      if (selectedColors.includes(b.dataset.color)) b.classList.add('selected');
+    });
+  }
+  if (p.get('cmc') && p.get('cmc') !== '99') {
+    selectedCmc = parseInt(p.get('cmc'));
+    document.querySelectorAll('.cmc-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.cmc == selectedCmc);
+    });
+  }
+  if (p.get('count')) {
+    selectedCount = parseInt(p.get('count')) || 4;
+    document.querySelectorAll('.count-btn').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.count) === selectedCount);
+    });
+  }
+  updateGenerateBtn();
+  if (p.get('auto') === '1') generateAll();
+})();
+
+function setCount(btn, n) {
+  selectedCount = n;
+  document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateGenerateBtn();
+}
+
+function updateGenerateBtn() {
+  const btn = document.getElementById('generate-btn');
+  if (btn) btn.textContent = '\u2728 Generate ' + selectedCount + ' Commander' + (selectedCount > 1 ? 's' : '');
+}
 
 function toggleColor(btn) {
   const color = btn.dataset.color;
@@ -427,75 +525,109 @@ function toggleColor(btn) {
 
 function setCmc(btn, val) {
   selectedCmc = val;
-  document.querySelectorAll('.cmc-btn').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-secondary'); });
-  btn.classList.remove('btn-secondary');
-  btn.classList.add('btn-primary');
+  document.querySelectorAll('.cmc-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 }
 
-let lastCommanderSlug = null;
+async function fetchOneCommander(exclude) {
+  const params = new URLSearchParams();
+  if (selectedColors.length) params.set('colors', selectedColors.join(''));
+  if (selectedCmc < 99) params.set('maxCmc', selectedCmc);
+  if (exclude && exclude.length) params.set('exclude', exclude.join(','));
+  const res = await fetch('/api/random-commander?' + params);
+  const data = await res.json();
+  if (!data.slug) return null;
+  const cardRes = await fetch(window.C3_SUPA_URL + '/rest/v1/mtg_cards?slug=eq.' + data.slug +
+    '&select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug', {
+    headers: { 'apikey': window.C3_SUPA_KEY }
+  });
+  const cards = await cardRes.json();
+  return cards[0] || null;
+}
 
-function showMsg(text, color) {
-  let el = document.getElementById('commander-msg');
-  if (!el) {
-    el = document.createElement('p');
-    el.id = 'commander-msg';
-    el.style = 'text-align:center;font-size:14px;margin-top:16px;font-family:sans-serif';
-    const card = document.getElementById('commander-card');
-    if (card) card.before(el);
-    else document.querySelector('.wrap').appendChild(el);
+function cardHTML(card, index) {
+  const price = card.price_aud > 0
+    ? 'AU$' + parseFloat(card.price_aud).toFixed(2)
+    : card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A';
+  const img = card.image_uri_normal || card.image_uri_small || '';
+  return '<div class="cmd-result-card" id="card-slot-' + index + '">'
+    + (img ? '<img src="' + img + '" alt="' + card.name.replace(/"/g,'&quot;') + '" class="cmd-result-img">' : '')
+    + '<div class="cmd-result-body">'
+    + '<div class="cmd-result-name">' + card.name + '</div>'
+    + '<div class="cmd-result-type">' + (card.type_line || '') + '</div>'
+    + '<div class="cmd-result-price">' + price + '</div>'
+    + '<a href="/cards/mtg/' + card.slug + '" class="cmd-result-view" target="_blank">View Card \u2192</a>'
+    + '<button class="cmd-regen-btn" onclick="regenOne(' + index + ')">\ud83d\udd04 Reroll this one</button>'
+    + '</div></div>';
+}
+
+async function generateAll() {
+  const grid = document.getElementById('results-grid');
+  const section = document.getElementById('results-section');
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = true;
+  btn.textContent = '\u23f3 Rolling...';
+  grid.innerHTML = Array.from({length: selectedCount}, (_,i) =>
+    '<div class="cmd-result-card" style="height:300px;background:var(--bg3);border-radius:12px;opacity:' + (0.4 + i*0.1) + '"></div>'
+  ).join('');
+  section.style.display = '';
+  const results = [];
+  const exclude = [];
+  for (let i = 0; i < selectedCount; i++) {
+    const card = await fetchOneCommander(exclude);
+    if (card) { results.push(card); exclude.push(card.slug); }
   }
-  el.textContent = text;
-  el.style.color = color || 'var(--text2)';
+  currentSlugs = results.map(c => c.slug);
+  grid.innerHTML = results.map((c, i) => cardHTML(c, i)).join('');
+  section.scrollIntoView({ behavior: 'smooth' });
+  updateShareLinks(results);
+  pushUrlState();
+  btn.disabled = false;
+  btn.textContent = '\u2728 Generate ' + selectedCount + ' Commander' + (selectedCount > 1 ? 's' : '');
 }
 
-async function generateCommander() {
-  const btns = document.querySelectorAll('[onclick="generateCommander()"]');
-  btns.forEach(b => { b.textContent = '\u23f3 Finding commander...'; b.disabled = true; });
-  showMsg('', '');
-  try {
-    const params = new URLSearchParams();
-    if (selectedColors.length) params.set('colors', selectedColors.join(''));
-    if (selectedCmc < 99) params.set('maxCmc', selectedCmc);
-    if (lastCommanderSlug) params.set('exclude', lastCommanderSlug);
+async function regenOne(index) {
+  const slot = document.getElementById('card-slot-' + index);
+  if (!slot) return;
+  slot.style.opacity = '0.4';
+  const card = await fetchOneCommander([...currentSlugs]);
+  if (!card) { slot.style.opacity = '1'; return; }
+  currentSlugs[index] = card.slug;
+  slot.outerHTML = cardHTML(card, index);
+}
 
-    let res = await fetch('/api/random-commander?' + params);
-    let data = await res.json();
+function updateShareLinks(results) {
+  const names = results.map(c => c.name).join(', ');
+  const url = location.origin + '/cards/mtg/random-commander?colors='
+    + (selectedColors.join('') || '') + '&cmc=' + selectedCmc + '&count=' + selectedCount + '&auto=1';
+  const tweetText = encodeURIComponent('I just rolled ' + names + ' as my Commander pod. Can you beat it? Try the random generator: ' + url);
+  const redditTitle = encodeURIComponent('Random Commander pod: ' + names + ' \u2014 try it yourself');
+  document.getElementById('twitter-btn').href = 'https://twitter.com/intent/tweet?text=' + tweetText;
+  document.getElementById('reddit-btn').href = 'https://www.reddit.com/submit?url=' + encodeURIComponent(url) + '&title=' + redditTitle;
+}
 
-    // Retry without CMC if no results found
-    if (!data.slug && selectedCmc < 99) {
-      const retryParams = new URLSearchParams();
-      if (selectedColors.length) retryParams.set('colors', selectedColors.join(''));
-      if (lastCommanderSlug) retryParams.set('exclude', lastCommanderSlug);
-      res = await fetch('/api/random-commander?' + retryParams);
-      data = await res.json();
-      if (data.slug) showMsg('No commanders at CMC ' + selectedCmc + ' \u2014 showing any mana value instead.', 'var(--text2)');
-    }
+function pushUrlState() {
+  const params = new URLSearchParams();
+  if (selectedColors.length) params.set('colors', selectedColors.join(''));
+  if (selectedCmc < 99) params.set('cmc', selectedCmc);
+  params.set('count', selectedCount);
+  history.replaceState({}, '', '/cards/mtg/random-commander?' + params);
+}
 
-    if (!data.slug) {
-      showMsg('No commanders found with those filters. Try fewer colour restrictions.', '#f5a623');
-      return;
-    }
-
-    lastCommanderSlug = data.slug;
-
-    const cardRes = await fetch(window.C3_SUPA_URL + '/rest/v1/mtg_cards?slug=eq.' + data.slug + '&select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug', {
-      headers: { 'apikey': window.C3_SUPA_KEY }
-    });
-    const cards = await cardRes.json();
-    if (!cards[0]) return;
-    const card = cards[0];
-    document.getElementById('commander-img').src = card.image_uri_normal || card.image_uri_small || '';
-    document.getElementById('commander-img').alt = card.name;
-    document.getElementById('commander-name').textContent = card.name;
-    document.getElementById('commander-type').textContent = card.type_line || '';
-    document.getElementById('commander-price').textContent = card.price_aud > 0 ? 'AU$' + parseFloat(card.price_aud).toFixed(2) : (card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A');
-    document.getElementById('commander-link').href = '/cards/mtg/' + card.slug;
-    document.getElementById('commander-card').style.display = 'block';
-    document.getElementById('commander-card').scrollIntoView({ behavior: 'smooth' });
-  } catch(e) { showMsg('Something went wrong. Try again.', '#f44336'); }
-  finally { btns.forEach(b => { b.textContent = '\u2728 Generate Commander'; b.disabled = false; }); }
+function copyLink() {
+  const url = location.origin + '/cards/mtg/random-commander?colors='
+    + (selectedColors.join('') || '') + '&cmc=' + selectedCmc + '&count=' + selectedCount + '&auto=1';
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '\u2705 Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '\ud83d\udccb Copy Link'; btn.classList.remove('copied'); }, 2000);
+  });
 }
 </script>
+<style>
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.7}}
+</style>
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
