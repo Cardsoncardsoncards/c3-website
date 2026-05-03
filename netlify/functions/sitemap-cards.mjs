@@ -1,3 +1,6 @@
+export const config = {
+  path: "/api/sitemap-cards"
+};
 // netlify/functions/sitemap-cards.mjs
 // Generates a dynamic XML sitemap for individual MTG card pages
 // Phase 1: Only cards with price_usd >= 2.00 (~8,000-12,000 cards)
