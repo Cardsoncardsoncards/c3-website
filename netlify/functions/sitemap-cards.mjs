@@ -1,6 +1,6 @@
 // netlify/functions/sitemap-cards.mjs
 // Generates a dynamic XML sitemap for individual MTG card pages
-// Phase 1: Only cards with price_usd >= 2.00 (~8,000-12,000 cards)
+// Phase 1: Only cards with price_usd >= 2.00 (~24,000 cards confirmed via Supabase)
 // After 60 days of indexation data, raise PRICE_THRESHOLD to 0 to include all 96k cards
 //
 // This endpoint is referenced by sitemap-index.xml as /api/sitemap-cards
@@ -11,21 +11,22 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 
 const PRICE_THRESHOLD = 2.0;
-const PAGE_SIZE = 5000;
+const PAGE_SIZE = 1000; // Supabase REST enforced max per request
 
 async function fetchCardSlugs(offset = 0) {
-  const from = offset;
-  const to = offset + PAGE_SIZE - 1;
-
-  const url = `${SUPABASE_URL}/rest/v1/mtg_cards?select=slug,price_usd,updated_at&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null&order=price_usd.desc`;
-  console.log(`[sitemap-cards] fetching range ${from}-${to}`);
+  const url = `${SUPABASE_URL}/rest/v1/mtg_cards`
+    + `?select=slug,price_usd,updated_at`
+    + `&price_usd=gte.${PRICE_THRESHOLD}`
+    + `&slug=not.is.null`
+    + `&order=price_usd.desc`
+    + `&limit=${PAGE_SIZE}`
+    + `&offset=${offset}`;
 
   const res = await fetch(url, {
     headers: {
       'apikey': SUPABASE_ANON_KEY,
       'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      'Range': `${from}-${to}`,
-      'Range-Unit': 'items'
+      'Prefer': 'return=representation'
     }
   });
 
@@ -36,7 +37,8 @@ async function fetchCardSlugs(offset = 0) {
   }
 
   const data = await res.json();
-  console.log(`[sitemap-cards] range ${from}-${to} returned ${Array.isArray(data) ? data.length : 'non-array: ' + JSON.stringify(data).slice(0, 200)}`);
+  const count = Array.isArray(data) ? data.length : 0;
+  console.log(`[sitemap-cards] offset ${offset} returned ${count} rows`);
   return Array.isArray(data) ? data : [];
 }
 
@@ -56,32 +58,36 @@ export default async (req) => {
   }
 
   try {
-    // Step 1: get total count using Range header so content-range is returned
+    // Step 1: get exact count — no Range headers, just Prefer: count=exact
     const countRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/mtg_cards?select=slug&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null`,
+      `${SUPABASE_URL}/rest/v1/mtg_cards?select=id&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
       {
         headers: {
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'count=exact',
-          'Range': '0-0',
-          'Range-Unit': 'items'
+          'Prefer': 'count=exact'
         }
       }
     );
     const contentRange = countRes.headers.get('content-range');
-    console.log('[sitemap-cards] content-range header:', contentRange);
-    const totalCount = parseInt(contentRange?.split('/')[1] || '0', 10) || 30000;
-    console.log(`[sitemap-cards] total cards: ${totalCount}`);
+    console.log('[sitemap-cards] content-range:', contentRange);
 
-    // Step 2: fetch all pages in parallel
-    const offsets = [];
-    for (let i = 0; i < totalCount; i += PAGE_SIZE) offsets.push(i);
+    // content-range format: "0-0/24040" — extract total after the slash
+    const totalCount = (contentRange && contentRange.includes('/'))
+      ? parseInt(contentRange.split('/')[1], 10)
+      : 25000; // safe fallback slightly above actual count
 
-    const batches = await Promise.all(offsets.map(offset => fetchCardSlugs(offset)));
-    const allCards = batches.flat();
+    console.log(`[sitemap-cards] total cards to fetch: ${totalCount}`);
 
-    console.log(`[sitemap-cards] fetched ${allCards.length} cards`);
+    // Step 2: fetch pages sequentially — avoids hammering Supabase in parallel
+    const allCards = [];
+    for (let offset = 0; offset < totalCount; offset += PAGE_SIZE) {
+      const batch = await fetchCardSlugs(offset);
+      allCards.push(...batch);
+      if (batch.length < PAGE_SIZE) break; // reached last page early
+    }
+
+    console.log(`[sitemap-cards] fetched ${allCards.length} total cards`);
 
     const today = new Date().toISOString().slice(0, 10);
     const urls = allCards

@@ -4,6 +4,13 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+
+[functions."sitemap-cards"]
+  timeout = 30
+
 [[redirects]]
   from = "/blog/lorcana-booster-box-guide/"
   to = "/blog/best-lorcana-booster-boxes-australia/"
