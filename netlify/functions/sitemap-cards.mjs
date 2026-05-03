@@ -45,7 +45,7 @@ async function fetchCardSlugs(offset = 0) {
   return Array.isArray(data) ? data : [];
 }
 
-export const handler = async (req) => {
+export default async (req) => {
   const headers = {
     'Content-Type': 'application/xml; charset=utf-8',
     'Cache-Control': 'public, max-age=86400',
