@@ -569,8 +569,7 @@ async function fetchOneCommander(exclude) {
   try {
     const res = await fetch(url, {
       headers: {
-        'apikey': window.C3_SUPA_KEY,
-        'Authorization': 'Bearer ' + window.C3_SUPA_KEY
+        'apikey': window.C3_SUPA_KEY
       }
     });
     if (!res.ok) {
@@ -624,12 +623,10 @@ async function generateAll() {
   ).join('');
   section.style.display = '';
   try {
-    const results = [];
-    const exclude = [];
-    for (let i = 0; i < selectedCount; i++) {
-      const card = await fetchOneCommander(exclude);
-      if (card) { results.push(card); exclude.push(card.slug); }
-    }
+    const fetched = await Promise.all(
+      Array.from({length: selectedCount}, () => fetchOneCommander([]))
+    );
+    const results = fetched.filter(Boolean);
     currentSlugs = results.map(c => c.slug);
     if (results.length === 0) {
       grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text2)">No commanders found with these filters. Try widening colour or mana value.</div>';
