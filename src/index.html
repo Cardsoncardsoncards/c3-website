@@ -296,7 +296,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       </div>
     </div>
     <div style="margin-top:14px">
-      <a href="/cards/mtg?page=random-commander" style="font-size:12px;color:#9898FF;text-decoration:none;opacity:.8">Generate a random Commander for your next deck ↗</a>
+      <div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:4px">
+        <button onclick="pickRandomCommander()" style="display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:8px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;background:#6B6BFF;color:#F0F2FF;border:none;cursor:pointer;letter-spacing:.04em;transition:all .2s" onmouseover="this.style.background='#8585FF';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#6B6BFF';this.style.transform='translateY(0)'">🎲 Pick One Now</button>
+        <a href="/cards/mtg" style="font-size:12px;color:#9898FF;text-decoration:none;opacity:.8">Browse all Commanders in Card Vault ↗</a>
+      </div>
     </div>
   </div>
   <!-- END COMMANDER CAROUSEL -->
@@ -507,6 +510,26 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       }
       const twenty = arr.slice(0, 20);
       if (titleEl) titleEl.textContent = 'Your Next Commander Awaits';
+  window.pickRandomCommander = function() {
+    const cards = Array.from(document.querySelectorAll('#cmd-carousel-track a.cmd-card'));
+    if (!cards.length) return;
+    const track = document.getElementById('cmd-carousel-track');
+    if (track) track.style.animationPlayState = 'paused';
+    cards.forEach(c => { c.style.boxShadow = ''; c.style.transform = ''; c.style.borderColor = ''; });
+    const half = Math.floor(cards.length / 2);
+    const pool = half > 0 ? cards.slice(0, half) : cards;
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    picked.style.boxShadow = '0 0 0 3px #6B6BFF, 0 12px 40px rgba(107,107,255,.4)';
+    picked.style.transform = 'translateY(-6px) scale(1.04)';
+    picked.style.borderColor = '#6B6BFF';
+    picked.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    setTimeout(() => {
+      picked.style.boxShadow = '';
+      picked.style.transform = '';
+      picked.style.borderColor = '';
+      if (track) track.style.animationPlayState = '';
+    }, 2500);
+  };
       const cards = twenty.map(buildCmdCard).join('');
       track.innerHTML = cards + cards; // duplicate for seamless loop
       track.classList.add('loaded');
