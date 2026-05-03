@@ -54,7 +54,10 @@ export const handler = async (req) => {
 
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     console.error('[sitemap-cards] missing env vars');
-    return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Error: missing env vars --></urlset>`, { status: 200, headers });
+    return new Response(
+      '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Error: missing env vars --></urlset>',
+      { status: 200, headers }
+    );
   }
 
   try {
@@ -103,4 +106,13 @@ ${urls}
 
   } catch (err) {
     console.error('[sitemap-cards] error:', err.message);
-    return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.
+    return new Response(
+      '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Error: ' + err.message + ' --></urlset>',
+      { status: 200, headers }
+    );
+  }
+};
+
+export const config = {
+  path: '/api/sitemap-cards'
+};
