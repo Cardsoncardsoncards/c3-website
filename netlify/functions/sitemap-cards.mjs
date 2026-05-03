@@ -6,8 +6,8 @@
 // This endpoint is referenced by sitemap-index.xml as /api/sitemap-cards
 // Google caps individual sitemaps at 50,000 URLs — we stay well under that
 
-const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
-const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
+const SUPABASE_URL      = process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 
 const PRICE_THRESHOLD = 2.0;
@@ -24,7 +24,10 @@ async function fetchCardSlugs(offset = 0) {
     `&offset=${offset}`
   ].join('');
 
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${query}`, {
+  const url = `${SUPABASE_URL}/rest/v1/${query}`;
+  console.log('[sitemap-cards] fetching:', url.replace(SUPABASE_ANON_KEY, '[REDACTED]'));
+
+  const res = await fetch(url, {
     headers: {
       'apikey': SUPABASE_ANON_KEY,
       'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
@@ -32,11 +35,13 @@ async function fetchCardSlugs(offset = 0) {
   });
 
   if (!res.ok) {
-    console.error('Supabase error:', res.status);
+    const body = await res.text();
+    console.error('[sitemap-cards] Supabase error:', res.status, body.slice(0, 300));
     return [];
   }
 
   const data = await res.json();
+  console.log(`[sitemap-cards] offset ${offset} returned ${Array.isArray(data) ? data.length : 'non-array: ' + JSON.stringify(data).slice(0, 200)}`);
   return Array.isArray(data) ? data : [];
 }
 
@@ -46,6 +51,15 @@ export const handler = async (req) => {
     'Cache-Control': 'public, max-age=86400',
     'X-Robots-Tag': 'noindex'
   };
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.error('[sitemap-cards] SUPABASE_URL or SUPABASE_ANON_KEY env var is missing');
+    const fallback = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Error: missing Supabase environment variables -->
+</urlset>`;
+    return new Response(fallback, { status: 200, headers });
+  }
 
   try {
     let allCards = [];
@@ -59,7 +73,7 @@ export const handler = async (req) => {
       if (allCards.length >= 49000) break;
     } while (batch.length === PAGE_SIZE);
 
-    console.log(`sitemap-cards: generating ${allCards.length} card URLs (threshold: USD$${PRICE_THRESHOLD}+)`);
+    console.log(`[sitemap-cards] generating ${allCards.length} card URLs (threshold: USD$${PRICE_THRESHOLD}+)`);
 
     const today = new Date().toISOString().slice(0, 10);
 
@@ -89,7 +103,7 @@ ${urls}
     return new Response(xml, { status: 200, headers });
 
   } catch (err) {
-    console.error('sitemap-cards error:', err.message);
+    console.error('[sitemap-cards] error:', err.message);
     const fallback = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Error generating card sitemap: ${err.message} -->
