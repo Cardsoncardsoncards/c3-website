@@ -6,8 +6,8 @@
 // This endpoint is referenced by sitemap-index.xml as /api/sitemap-cards
 // Google caps individual sitemaps at 50,000 URLs — we stay well under that
 
-const SUPABASE_URL      = process.env.SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
+const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 
 const PRICE_THRESHOLD = 2.0;
