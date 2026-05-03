@@ -104,7 +104,12 @@ function renderCardHub(sets, topCards) {
           <span style="color:var(--text2);font-size:10px;margin-left:6px">${parent.release_date?.slice(0,4)||''}</span>
           ${childBadge}
         </a>
-        ${children.length ? `<button onclick="toggleChildren('${parent.set_code}','${parent.set_name.replace(/'/g,\"\\\\'\")}',${JSON.stringify(children.map(c=>({url:'/cards/mtg/sets/'+c.set_slug,label:c.set_name,year:c.release_date?.slice(0,4)||''})))})" id="btn-${parent.set_code}"
+        ${children.length ? `<button
+          id="btn-${parent.set_code}"
+          data-setcode="${parent.set_code}"
+          data-setname="${parent.set_name.replace(/"/g,'&quot;')}"
+          data-children="${JSON.stringify(children.map(c=>({url:'/cards/mtg/sets/'+c.set_slug,label:c.set_name,year:c.release_date?.slice(0,4)||''}))).replace(/"/g,'&quot;')}"
+          onclick="handleToggle(this)"
           style="background:none;border:1px solid var(--border);color:var(--text2);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0"
           title="Show variants">+</button>` : ''}
       </div>
@@ -272,12 +277,19 @@ function filterSets(query) {
   });
 }
 
+function handleToggle(btn) {
+  const setCode = btn.dataset.setcode;
+  const setName = btn.dataset.setname;
+  const childrenData = JSON.parse(btn.dataset.children.replace(/&quot;/g,'"'));
+  toggleChildren(setCode, setName, childrenData, btn);
+}
+
 let openSetCode = null;
-function toggleChildren(setCode, setName, childrenData) {
+function toggleChildren(setCode, setName, childrenData, btn) {
   const drawer = document.getElementById('set-child-drawer');
   const title  = document.getElementById('set-drawer-title');
   const items  = document.getElementById('set-drawer-items');
-  const btn    = document.getElementById('btn-' + setCode);
+  if (!btn) btn = document.getElementById('btn-' + setCode);
   if (openSetCode === setCode) {
     drawer.style.display = 'none';
     if (btn) btn.textContent = '+';
