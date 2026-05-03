@@ -1,5 +1,5 @@
 // netlify/functions/card-api.mjs
-// Handles: likes, views, price alerts, collection waitlist, random commander, sitemap
+// Handles: likes, views, price alerts, collection waitlist, random commander
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -129,32 +129,6 @@ async function handleWaitlist(req) {
   return json({ ok: true });
 }
 
-// --- Dynamic sitemap for card pages ---
-async function handleSitemap() {
-  const cards = await supabaseGet('mtg_cards?select=slug,updated_at&price_usd=gte.0.5&order=price_usd.desc&limit=50000');
-  const sets = await supabaseGet('mtg_sets?select=set_slug,release_date&order=release_date.desc');
-
-  const cardUrls = (Array.isArray(cards) ? cards : []).map(c =>
-    `<url><loc>https://cardsoncardsoncards.com.au/cards/mtg/${c.slug}</loc><lastmod>${(c.updated_at || '').split('T')[0]}</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>`
-  ).join('');
-
-  const setUrls = (Array.isArray(sets) ? sets : []).map(s =>
-    `<url><loc>https://cardsoncardsoncards.com.au/cards/mtg/sets/${s.set_slug}</loc><lastmod>${s.release_date || '2026-01-01'}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`
-  ).join('');
-
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://cardsoncardsoncards.com.au/cards/mtg</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-<url><loc>https://cardsoncardsoncards.com.au/cards/mtg/random-commander</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-${setUrls}
-${cardUrls}
-</urlset>`;
-
-  return new Response(xml, {
-    headers: { 'Content-Type': 'application/xml', 'Cache-Control': 'public, s-maxage=86400' }
-  });
-}
-
 // --- Random commander ---
 // FIX: select color_identity so filter works, narrow to Legendary Creatures only
 async function handleRandomCommander(req) {
@@ -264,7 +238,6 @@ export default async (req) => {
   if (path === '/api/card-view' && req.method === 'POST') return handleView(req);
   if (path === '/api/price-alert' && req.method === 'POST') return handlePriceAlert(req);
   if (path === '/api/collection-waitlist' && req.method === 'POST') return handleWaitlist(req);
-  if (path === '/api/sitemap-cards') return handleSitemap();
   if (path === '/api/random-commander') return handleRandomCommander(req);
   if (path === '/api/feedback' && req.method === 'POST') return handleFeedback(req);
   if (path === '/api/newsletter' && req.method === 'POST') return handleNewsletter(req);
@@ -278,7 +251,6 @@ export const config = {
     '/api/card-view',
     '/api/price-alert',
     '/api/collection-waitlist',
-    '/api/sitemap-cards',
     '/api/random-commander',
     '/api/feedback',
     '/api/newsletter'
