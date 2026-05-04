@@ -94,8 +94,12 @@ function renderCardHub(sets, topCards) {
   const setListHTML = sortedParents.map(parent => {
     const children = (childMap.get(parent.set_code) || []).sort((a,b) => a.set_name.localeCompare(b.set_name));
     const childBadge = children.length ? `<span style="font-size:9px;background:rgba(201,168,76,.15);color:var(--gold);border-radius:4px;padding:1px 5px;margin-left:4px">+${children.length}</span>` : '';
-    const childrenHTML = '';
-    return `<div class="set-parent-item" data-name="${parent.set_name.toLowerCase()}${children.map(c=>' '+c.set_name.toLowerCase()).join('')}">
+    // Escape set names for safe HTML attribute injection — apostrophes and quotes both escaped
+    const safeParentName = parent.set_name.toLowerCase().replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    const safeChildNames = children.map(c => ' ' + c.set_name.toLowerCase().replace(/"/g,'&quot;').replace(/'/g,'&#39;')).join('');
+    const safeDataName = safeParentName + safeChildNames;
+    const childrenJSON = JSON.stringify(children.map(c=>({url:'/cards/mtg/sets/'+c.set_slug,label:c.set_name.replace(/'/g,'&#39;'),year:c.release_date?.slice(0,4)||''}))).replace(/"/g,'&quot;');
+    return `<div class="set-parent-item" data-name="${safeDataName}">
       <div style="display:flex;align-items:center;gap:4px">
         <a href="/cards/mtg/sets/${parent.set_slug}" class="set-list-item"
           style="flex:1;display:block;padding:7px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-decoration:none;font-size:12px;transition:border-color .15s"
@@ -107,8 +111,8 @@ function renderCardHub(sets, topCards) {
         ${children.length ? `<button
           id="btn-${parent.set_code}"
           data-setcode="${parent.set_code}"
-          data-setname="${parent.set_name.replace(/"/g,'&quot;')}"
-          data-children="${JSON.stringify(children.map(c=>({url:'/cards/mtg/sets/'+c.set_slug,label:c.set_name,year:c.release_date?.slice(0,4)||''}))).replace(/"/g,'&quot;')}"
+          data-setname="${parent.set_name.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}"
+          data-children="${childrenJSON}"
           onclick="handleToggle(this)"
           style="background:none;border:1px solid var(--border);color:var(--text2);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0"
           title="Show variants">+</button>` : ''}
@@ -934,48 +938,33 @@ async function renderSetIndex(setSlug) {
   <script type="application/ld+json">${schemaLD}</script>
   ${BASE_STYLES}
 <style>
-/* ── Set page header ── */
-.set-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:20px 24px 0}
-.set-header-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
-@media(max-width:700px){.set-header-inner{grid-template-columns:1fr}}
-.set-header-left h1{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,32px);margin-bottom:6px}
-.set-header-left h1 span{color:var(--accent)}
-.set-stat-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;font-family:sans-serif}
-.set-stat{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text2)}
-.set-stat strong{color:var(--text);font-size:13px}
-.set-ctas{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:18px}
-.set-cta{padding:7px 14px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;transition:opacity .18s;white-space:nowrap}
-.set-cta:hover{opacity:.85;text-decoration:none}
-.set-cta-ev{background:rgba(124,106,245,.15);border:1px solid var(--accent2);color:var(--accent2)}
-.set-cta-amazon{background:#232f3e;border:1px solid #f90;color:#f90}
-.set-cta-ebay{background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa}
-.set-cta-blog{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
-/* Top cards in header */
-.set-top-cards{display:flex;gap:8px;align-items:flex-end;padding-bottom:20px}
-@media(max-width:700px){.set-top-cards{display:none}}
-.set-top-card{text-decoration:none;text-align:center;flex-shrink:0;transition:transform .18s}
-.set-top-card:hover{transform:translateY(-3px);text-decoration:none}
-.set-top-card img{width:64px;border-radius:6px;display:block;box-shadow:0 4px 16px rgba(0,0,0,.5)}
-.set-top-card-price{font-size:10px;font-weight:700;color:var(--accent);margin-top:3px;font-family:sans-serif}
-/* ── Sticky filter bar ── */
-.filter-bar-wrap{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:10px 0}
-.filter-bar{max-width:1100px;margin:0 auto;padding:0 24px}
-.filter-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:7px}
+/* ── Spotlight top-5 ── */
+.spotlight-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;margin-bottom:32px;scrollbar-width:thin}
+.spotlight-card{flex:0 0 150px;background:var(--bg2);border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s}
+.spotlight-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.spotlight-rarity-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%}
+.spotlight-img{width:100%;border-radius:6px;display:block}
+.spotlight-img-ph{height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text2)}
+.spotlight-name{font-size:10px;color:var(--text);margin-top:6px;line-height:1.3;font-weight:600}
+.spotlight-price{font-family:'Cinzel',serif;font-size:14px;color:var(--accent);font-weight:700;margin-top:3px}
+.spotlight-cta{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+/* ── Filter bar ── */
+.filter-bar{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px}
+.filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .filter-row:last-child{margin-bottom:0}
-.filter-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);min-width:80px;flex-shrink:0}
-.filter-btn{padding:4px 9px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;font-family:sans-serif;display:inline-flex;align-items:center;gap:3px}
+.filter-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);min-width:90px;flex-shrink:0}
+.filter-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .18s;font-family:sans-serif;display:inline-flex;align-items:center;gap:4px}
 .filter-btn:hover{border-color:var(--accent);color:var(--accent)}
 .filter-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(201,168,76,.1)}
-.filter-btn.colour-btn{padding:3px 7px}
+.filter-btn.colour-btn{padding:4px 8px}
 .filter-btn.colour-btn.active{box-shadow:0 0 0 2px var(--accent)}
-.mana-pip-filter{width:16px;height:16px;vertical-align:middle}
-.sort-select{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 9px;border-radius:6px;font-size:11px;font-family:sans-serif;cursor:pointer}
-.filter-actions{display:flex;align-items:center;gap:10px}
+.mana-pip-filter{width:18px;height:18px;vertical-align:middle}
+.sort-select{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-family:sans-serif;cursor:pointer}
+.filter-actions{display:flex;align-items:center;gap:12px;margin-top:4px}
 .filter-count{font-size:12px;color:var(--text2)}
-.clear-btn{background:none;border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:sans-serif}
+.clear-btn{background:none;border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:sans-serif}
 .clear-btn:hover{border-color:#f44;color:#f44}
 /* ── Card grid ── */
-.grid-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
 #card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
 .card-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color .2s;position:relative;text-decoration:none}
 .card-item:hover{border-color:var(--accent)}
@@ -986,70 +975,45 @@ async function renderSetIndex(setSlug) {
 .card-img-ph{height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text2)}
 .card-name{font-size:10px;margin-top:4px;color:var(--text);line-height:1.2}
 .card-price{font-size:11px;color:var(--accent);font-weight:700;margin-top:2px}
-/* ── Related sets ── */
-.related-sets-wrap{max-width:1100px;margin:12px auto 0;padding:0 24px}
-/* ── Context accordion ── */
-.context-accordion{max-width:1100px;margin:28px auto 0;padding:0 24px 48px}
-.context-accordion-btn{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;text-align:left;color:var(--text2);font-size:13px;font-family:sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:border-color .18s}
-.context-accordion-btn:hover{border-color:var(--accent);color:var(--text)}
-.context-accordion-body{display:none;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);border-top:none;border-radius:0 0 8px 8px;padding:16px 20px;font-size:13px;color:var(--text2);line-height:1.6}
-.context-accordion-body strong{color:var(--accent)}
-.context-accordion-body.open{display:block}
-/* Commander carousel */
-.cmd-carousel-wrap{max-width:1100px;margin:16px auto 0;padding:0 24px}
-@keyframes set-cmd-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.set-cmd-track-loaded{animation:set-cmd-scroll 45s linear infinite}
-.set-cmd-track-loaded:hover{animation-play-state:paused}
-.set-cmd-card{display:inline-flex;flex-direction:column;min-width:120px;max-width:130px;background:rgba(107,107,255,.06);border:1px solid rgba(107,107,255,.2);border-radius:8px;overflow:hidden;text-decoration:none;transition:all .2s;flex-shrink:0}
-.set-cmd-card:hover{border-color:rgba(107,107,255,.5);transform:translateY(-2px)}
-.set-cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
-.set-cmd-card-body{padding:5px 7px 7px;display:flex;flex-direction:column;gap:2px}
-.set-cmd-card-name{font-size:9px;font-weight:700;color:#C0C0FF;line-height:1.2}
-.set-cmd-card-id{font-size:8px;color:rgba(160,168,192,.5)}
+/* ── Context box ── */
+.context-box{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.6}
+.context-box strong{color:var(--accent)}
 </style>
 </head>
 <body>
 ${NAV}
+<div class="wrap" style="padding-top:32px">
 
-<!-- Compact set header -->
-<div class="set-header">
-  <div class="set-header-inner">
-    <div class="set-header-left">
-      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;font-family:sans-serif">
-        <a href="/cards/mtg" style="color:var(--text2);text-decoration:none" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'">← MTG Card Vault</a>
-        <span style="margin:0 6px">›</span>
-        <span style="color:var(--accent)">${set.set_name}</span>
-      </div>
-      <h1>${set.set_name} <span>Card Prices</span></h1>
-      <div class="set-stat-row">
-        <div class="set-stat"><strong>${cards.length}</strong> cards</div>
-        <div class="set-stat">Released <strong>${set.release_date ? new Date(set.release_date).toLocaleDateString('en-AU',{month:'short',year:'numeric'}) : 'N/A'}</strong></div>
-        ${set.set_type ? `<div class="set-stat"><strong>${set.set_type.replace(/_/g,' ')}</strong></div>` : ''}
-        ${top5[0] ? `<div class="set-stat">Top card <strong style="color:var(--accent)">~AU$${toAud(top5[0]).toFixed(0)}</strong></div>` : ''}
-      </div>
-      <div class="set-ctas">
-        ${hasEVCalc ? `<a href="/ev-calculator.html#${set.set_code}" class="set-cta set-cta-ev">📊 EV Calc</a>` : ''}
-        ${set.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${set.amazon_asin}?tag=blasdigital-22" target="_blank" rel="noopener" class="set-cta set-cta-amazon">📦 Amazon AU</a>` : ''}
-        <a href="https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(set.set_name)}&campid=5339146789" target="_blank" rel="noopener" class="set-cta set-cta-ebay">🛒 eBay Singles</a>
-        <a href="/blog" class="set-cta set-cta-blog">📖 Guides</a>
-      </div>
-    </div>
-    <div class="set-top-cards">
-      ${top5.slice(0,5).map(c => `
-      <a href="/cards/mtg/${c.slug}" class="set-top-card" title="${c.name} — ~AU$${toAud(c).toFixed(0)}">
-        ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}">` : `<div style="width:64px;height:90px;background:var(--bg3);border-radius:6px"></div>`}
-        <div class="set-top-card-price">~AU$${toAud(c).toFixed(0)}</div>
-      </a>`).join('')}
-    </div>
+  <!-- Breadcrumb -->
+  <div style="font-size:12px;color:var(--text2);margin-bottom:16px">
+    <a href="/" style="color:var(--text2)">Home</a> ›
+    <a href="/cards" style="color:var(--text2)">Card Vault</a> ›
+    <a href="/cards/mtg" style="color:var(--text2)">MTG Cards</a> ›
+    <span style="color:var(--accent)">${set.set_name}</span>
   </div>
-</div>
 
-${relatedSetsHTML ? `<div class="related-sets-wrap">${relatedSetsHTML}</div>` : ''}
+  <!-- Header -->
+  <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.set_name} <span style="color:var(--accent)">Card Prices</span></h1>
+  <p style="color:var(--text2);margin-bottom:20px;font-size:14px">${cards.length} cards · Released ${set.release_date ? new Date(set.release_date).toLocaleDateString('en-AU', {day:'numeric',month:'long',year:'numeric'}) : 'N/A'} · AUD prices updated daily</p>
 
-<div class="cmd-carousel-wrap">
-  <div id="set-cmd-section" style="background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:12px;padding:16px;overflow:hidden">
-    <p style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9898FF;margin-bottom:10px">Commanders in this Set</p>
-    <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent)">
+  <!-- CTAs row -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+    ${hasEVCalc ? `<a href="/ev-calculator.html#${set.set_code}" style="background:rgba(124,106,245,.15);border:1px solid var(--accent2);color:var(--accent2);padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📊 EV Calculator</a>` : ''}
+    ${set.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${set.amazon_asin}?tag=blasdigital-22" target="_blank" rel="noopener" style="background:#232f3e;border:1px solid #f90;color:#f90;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📦 Buy Sealed on Amazon AU</a>` : ''}
+    <a href="/blog" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:9px 16px;border-radius:8px;font-size:13px;text-decoration:none">📖 Buying Guides</a>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(set.set_name)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3SetPage&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay ↗</a>
+  </div>
+
+  <!-- Related sets (sub-sets, siblings, parent) -->
+  ${relatedSetsHTML}
+
+  <!-- Context paragraph -->
+  <div class="context-box">${contextText}</div>
+
+  <!-- Commander carousel for this set -->
+  <div id="set-cmd-section" style="margin-bottom:28px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:12px;padding:20px;overflow:hidden">
+    <p style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9898FF;margin-bottom:10px;text-align:center">Commanders in this Set</p>
+    <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)">
       <div id="set-cmd-track" style="display:flex;gap:10px;width:max-content">
         <div style="min-width:120px;height:170px;background:rgba(107,107,255,.08);border-radius:8px"></div>
         <div style="min-width:120px;height:170px;background:rgba(107,107,255,.08);border-radius:8px"></div>
@@ -1058,11 +1022,22 @@ ${relatedSetsHTML ? `<div class="related-sets-wrap">${relatedSetsHTML}</div>` : 
       </div>
     </div>
   </div>
-</div>
+  <style>
+  @keyframes set-cmd-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .set-cmd-track-loaded{animation:set-cmd-scroll 45s linear infinite}
+  .set-cmd-track-loaded:hover{animation-play-state:paused}
+  .set-cmd-card{display:inline-flex;flex-direction:column;min-width:120px;max-width:130px;background:rgba(107,107,255,.06);border:1px solid rgba(107,107,255,.2);border-radius:8px;overflow:hidden;text-decoration:none;transition:all .2s;flex-shrink:0}
+  .set-cmd-card:hover{border-color:rgba(107,107,255,.5);transform:translateY(-2px)}
+  .set-cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
+  .set-cmd-card-body{padding:5px 7px 7px;display:flex;flex-direction:column;gap:2px}
+  .set-cmd-card-name{font-size:9px;font-weight:700;color:#C0C0FF;line-height:1.2}
+  .set-cmd-card-id{font-size:8px;color:rgba(160,168,192,.5)}
+  </style>
 
-<!-- Sticky filter bar -->
-<div class="filter-bar-wrap">
+  <!-- Filter bar -->
   <div class="filter-bar">
+
+    <!-- Colour Identity — multi-select toggle, AND logic -->
     <div class="filter-row">
       <span class="filter-label">Colour</span>
       <button class="filter-btn colour-btn active" data-colour-filter="all" onclick="toggleColour(this,'all')">All</button>
@@ -1073,6 +1048,8 @@ ${relatedSetsHTML ? `<div class="related-sets-wrap">${relatedSetsHTML}</div>` : 
       <button class="filter-btn colour-btn" data-colour-filter="G" onclick="toggleColour(this,'G')">${manaFilterPip('G')} Green</button>
       <button class="filter-btn colour-btn" data-colour-filter="C" onclick="toggleColour(this,'C')">${manaFilterPip('C')} Colourless</button>
     </div>
+
+    <!-- Type — multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Type</span>
       <button class="filter-btn active" data-type-filter="all" onclick="toggleType(this,'all')">All</button>
@@ -1083,7 +1060,10 @@ ${relatedSetsHTML ? `<div class="related-sets-wrap">${relatedSetsHTML}</div>` : 
       <button class="filter-btn" data-type-filter="Enchantment" onclick="toggleType(this,'Enchantment')">Enchantment</button>
       <button class="filter-btn" data-type-filter="Planeswalker" onclick="toggleType(this,'Planeswalker')">Planeswalker</button>
       <button class="filter-btn" data-type-filter="Land" onclick="toggleType(this,'Land')">Land</button>
+      <button class="filter-btn" data-type-filter="Battle" onclick="toggleType(this,'Battle')">Battle</button>
     </div>
+
+    <!-- Rarity — multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Rarity</span>
       <button class="filter-btn active" data-rarity-filter="all" onclick="toggleRarity(this,'all')">All</button>
@@ -1092,24 +1072,28 @@ ${relatedSetsHTML ? `<div class="related-sets-wrap">${relatedSetsHTML}</div>` : 
       <button class="filter-btn" data-rarity-filter="uncommon" onclick="toggleRarity(this,'uncommon')" style="color:#6ba3be;border-color:rgba(107,163,190,.3)">◆ Uncommon</button>
       <button class="filter-btn" data-rarity-filter="common" onclick="toggleRarity(this,'common')" style="color:#9ca3af;border-color:rgba(156,163,175,.3)">◆ Common</button>
     </div>
+
+    <!-- Mana Value — multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Mana Value</span>
       <button class="filter-btn active" data-cmc-filter="all" onclick="toggleCmc(this,'all')">All</button>
       ${[0,1,2,3,4,5].map(n => `<button class="filter-btn" data-cmc-filter="${n}" onclick="toggleCmc(this,'${n}')">${manaPip(String(n), 16)} ${n}</button>`).join('')}
       <button class="filter-btn" data-cmc-filter="6" onclick="toggleCmc(this,'6')">${manaPip('6plus', 16)} 6+</button>
     </div>
+
+    <!-- Sort + Price + Actions -->
     <div class="filter-row" style="justify-content:space-between">
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
         <span class="filter-label">Sort</span>
         <select class="sort-select" id="sort-select" onchange="applyFilters()">
           <option value="price-desc">Price: High to Low</option>
           <option value="price-asc">Price: Low to High</option>
-          <option value="name-asc">Name: A–Z</option>
-          <option value="name-desc">Name: Z–A</option>
+          <option value="name-asc">Name: A to Z</option>
+          <option value="name-desc">Name: Z to A</option>
           <option value="cmc-asc">Mana Value: Low to High</option>
           <option value="rarity-desc">Rarity: Mythic first</option>
         </select>
-        <span class="filter-label" style="margin-left:8px">Price</span>
+        <span class="filter-label" style="margin-left:12px">Price</span>
         <select class="sort-select" id="filter-price" onchange="applyFilters()">
           <option value="0">Any Price</option>
           <option value="1">AU$1+</option>
@@ -1121,28 +1105,22 @@ ${relatedSetsHTML ? `<div class="related-sets-wrap">${relatedSetsHTML}</div>` : 
       </div>
       <div class="filter-actions">
         <span class="filter-count" id="filter-count"></span>
-        <button class="clear-btn" onclick="clearFilters()">Reset</button>
+        <button class="clear-btn" onclick="clearFilters()">Reset All</button>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Card grid -->
-<div class="grid-wrap">
+  </div>
+
+  <!-- Card grid -->
   <div id="card-grid">${cardGrid}</div>
+
+  <!-- Buylist CTA -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:36px;text-align:center">
     <p style="font-size:15px;margin-bottom:8px">Pulled some ${set.set_name} cards worth selling?</p>
     <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Join the C3 buylist waitlist and we will let you know when we start buying Australian TCG cards directly.</p>
     <a href="/tracker.html" style="background:var(--accent);color:#0A0C14;padding:10px 24px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none">Join the Buylist Waitlist →</a>
   </div>
-</div>
 
-<!-- Context accordion -->
-<div class="context-accordion">
-  <button class="context-accordion-btn" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.acc-arrow').textContent=this.nextElementSibling.classList.contains('open')?'▲':'▼'">
-    <span>About ${set.set_name}</span><span class="acc-arrow">▼</span>
-  </button>
-  <div class="context-accordion-body">${contextText}</div>
 </div>
 
 <footer style="border-top:1px solid var(--border);padding:24px 0;margin-top:48px">
