@@ -325,11 +325,18 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .card-image-back { display: none; }
     .flip-btn { display: none; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-top: 10px; width: 100%; font-family: sans-serif; }
     ${isDoubleFaced ? '.flip-btn { display: block; }' : ''}
-    /* Version switcher */
-    .version-switcher { margin: 12px 0 0; font-family: sans-serif; }
-    .version-switcher label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text2); display: block; margin-bottom: 6px; }
-    .version-switcher select { width: 100%; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; }
-    .version-switcher select:hover { border-color: var(--accent); }
+    /* Version switcher — now a carousel */
+    .printings-carousel-wrap { margin: 16px 0 0; }
+    .printings-carousel-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text2); display: block; margin-bottom: 10px; text-align: center; font-family: sans-serif; }
+    .printings-track { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 0 8px; scrollbar-width: none; justify-content: flex-start; }
+    .printings-track::-webkit-scrollbar { display: none; }
+    .printing-thumb { flex: 0 0 60px; scroll-snap-align: center; cursor: pointer; border-radius: 6px; border: 2px solid transparent; transition: all .18s; opacity: .55; position: relative; }
+    .printing-thumb:hover { opacity: .85; }
+    .printing-thumb.active { border-color: var(--accent); opacity: 1; box-shadow: 0 0 0 2px rgba(245,166,35,.3); }
+    .printing-thumb img { width: 100%; border-radius: 5px; display: block; pointer-events: none; }
+    /* Active printing info */
+    .printing-info { margin-top: 10px; text-align: center; font-family: sans-serif; font-size: 12px; color: var(--text2); min-height: 36px; transition: opacity .18s; }
+    .printing-info strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 2px; }
     /* Card info below image */
     .card-info { max-width: 860px; margin: 0 auto; padding: 0 24px; }
 
@@ -538,11 +545,26 @@ ${contextPara}
     ${isDoubleFaced && card.card_faces?.[1]?.image_uris?.normal ? `<img id="card-back" class="card-image-back" src="${card.card_faces[1].image_uris.normal}" alt="${card.name} back face" width="300" style="display:none">` : ''}
     ${isDoubleFaced ? `<button class="flip-btn" onclick="flipCard()">⟳ Flip Card</button>` : ''}
     ${otherPrintings && otherPrintings.length > 1 ? `
-    <div class="version-switcher">
-      <label>Other Printings (${otherPrintings.length})</label>
-      <select onchange="if(this.value)window.location='/cards/mtg/'+this.value">
-        ${otherPrintings.map(p => `<option value="${p.slug}" ${p.slug === card.slug ? 'selected' : ''}>${p.set_name} (${p.release_date ? p.release_date.slice(0,4) : '?'}) · ${p.rarity ? p.rarity.charAt(0).toUpperCase()+p.rarity.slice(1) : ''} #${p.collector_number}</option>`).join('')}
-      </select>
+    <div class="printings-carousel-wrap">
+      <span class="printings-carousel-label">${otherPrintings.length} Printings — click to switch</span>
+      <div class="printings-track" id="printings-track">
+        ${otherPrintings.map((p, i) => `
+        <div class="printing-thumb${p.scryfall_id === card.scryfall_id ? ' active' : ''}"
+          data-idx="${i}"
+          data-img="${p.image_uri_normal || p.image_uri_small || ''}"
+          data-set="${p.set_name.replace(/"/g,'&quot;')}"
+          data-collector="${p.collector_number}"
+          data-rarity="${p.rarity || ''}"
+          data-price="${p.price_aud > 0 ? 'AU$' + parseFloat(p.price_aud).toFixed(2) : p.price_usd ? '~AU$' + (p.price_usd * 1.58).toFixed(2) : ''}"
+          onclick="switchPrinting(this)"
+          title="${p.set_name} #${p.collector_number}">
+          <img src="${p.image_uri_small || p.image_uri_normal || ''}" alt="${p.set_name} #${p.collector_number}" loading="lazy">
+        </div>`).join('')}
+      </div>
+      <div class="printing-info" id="printing-info">
+        <strong>${card.set_name}</strong>
+        #${card.collector_number} · ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1) : ''}${card.price_aud > 0 ? ' · AU$' + parseFloat(card.price_aud).toFixed(2) : card.price_usd ? ' · ~AU$' + (card.price_usd * 1.58).toFixed(2) : ''}
+      </div>
     </div>` : ''}
   </div>
 </div>
@@ -755,6 +777,41 @@ ${blogHTML}
 </footer>
 
 <script>
+// Printings carousel — switch hero image and info on thumb click
+function switchPrinting(thumb) {
+  const track = document.getElementById('printings-track');
+  const info = document.getElementById('printing-info');
+  const heroImg = document.getElementById('card-front');
+  // Update active state
+  track.querySelectorAll('.printing-thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+  // Swap hero image with fade
+  const newImg = thumb.dataset.img;
+  if (newImg && heroImg) {
+    heroImg.style.opacity = '0';
+    heroImg.style.transition = 'opacity .18s';
+    setTimeout(() => {
+      heroImg.src = newImg;
+      heroImg.onload = () => { heroImg.style.opacity = '1'; };
+      // If image already cached, onload may not fire
+      if (heroImg.complete) heroImg.style.opacity = '1';
+    }, 180);
+  }
+  // Update info text
+  if (info) {
+    info.style.opacity = '0';
+    setTimeout(() => {
+      const price = thumb.dataset.price ? ' · ' + thumb.dataset.price : '';
+      const rarity = thumb.dataset.rarity ? thumb.dataset.rarity.charAt(0).toUpperCase() + thumb.dataset.rarity.slice(1) : '';
+      info.innerHTML = '<strong>' + thumb.dataset.set + '</strong>#' + thumb.dataset.collector + ' · ' + rarity + price;
+      info.style.opacity = '1';
+      info.style.transition = 'opacity .18s';
+    }, 180);
+  }
+  // Scroll thumb into view in the track
+  thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
 // Per-row USD toggle
 function toggleRowCurrency(btn, usd, aud) {
   const row = btn.closest('.price-row');
@@ -986,8 +1043,8 @@ export default async (req, context) => {
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,collector_number&order=collector_number.asc`, false),
       supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}`, false),
-      // Other printings — same card name, different sets. Encode quotes to handle commas in names.
-      supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=slug,set_name,release_date,rarity,collector_number&order=release_date.desc&limit=80`, false)
+      // Other printings — same card name, different sets/variants. scryfall_id is unique per printing.
+      supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=scryfall_id,slug,set_name,released_at,rarity,collector_number,image_uri_normal,image_uri_small,price_usd,price_aud&order=released_at.desc&limit=80`, false)
     ]);
 
     const snapshotData = snapshots.status === 'fulfilled' ? snapshots.value : [];
