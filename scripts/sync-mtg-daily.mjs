@@ -1,12 +1,13 @@
 // scripts/sync-mtg-daily.mjs
 // Runs daily via GitHub Actions
-// Streams Scryfall bulk data, upserts to mtg_cards, mtg_sets, mtg_price_snapshots
-// Schema-matched to live Supabase as of 4 May 2026
-// Tuned for Supabase free tier (8s statement timeout)
+// Smart sync: only upserts cards where the data has changed (via content hash).
+// Always inserts daily price snapshots.
+// Schema-matched to live Supabase as of 4 May 2026.
 
 import { createClient } from '@supabase/supabase-js';
 import { createWriteStream, existsSync, unlinkSync, createReadStream } from 'fs';
 import { pipeline as streamPipeline } from 'stream/promises';
+import { createHash } from 'crypto';
 
 import streamChainPkg from 'stream-chain';
 import streamJsonPkg from 'stream-json';
@@ -18,12 +19,15 @@ const { streamArray } = streamArrayPkg;
 // --- Config ---
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
-const CARD_BATCH_SIZE = 100;          // Reduced from 250 to stay under 8s statement timeout
-const SNAPSHOT_BATCH_SIZE = 250;       // Snapshots are smaller rows
+const FORCE_FULL_SYNC = process.env.FORCE_FULL_SYNC === 'true';
+
+const CARD_BATCH_SIZE = 100;
+const SNAPSHOT_BATCH_SIZE = 250;
 const SET_BATCH_SIZE = 100;
-const BATCH_PAUSE_MS = 250;            // Prevent connection pool exhaustion
+const HASH_FETCH_BATCH = 1000;
+const BATCH_PAUSE_MS = 250;
 const MIN_SNAPSHOT_USD = 0.50;
-const MAX_RETRIES = 2;                 // Plus the initial attempt = 3 total tries
+const MAX_RETRIES = 2;
 const TEMP_FILE = 'scryfall-bulk.json';
 
 if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
@@ -75,7 +79,74 @@ async function downloadBulkFile() {
   console.log('Bulk file saved.');
 }
 
-function buildCardRow(card, audRate) {
+// Compute a stable hash from a Scryfall card. Excludes prices (those go in snapshots, not cards).
+function computeCardHash(card) {
+  const sigParts = [
+    card.id,
+    card.name,
+    card.set,
+    card.set_name,
+    card.collector_number,
+    card.rarity,
+    card.type_line || '',
+    card.oracle_text || card.card_faces?.[0]?.oracle_text || '',
+    card.mana_cost || '',
+    card.cmc ?? 0,
+    (card.colors || []).join(','),
+    (card.color_identity || []).join(','),
+    card.image_uris?.normal || card.card_faces?.[0]?.image_uris?.normal || '',
+    card.released_at || '',
+    card.layout || '',
+    (card.finishes || []).join(','),
+    card.edhrec_rank || '',
+    card.flavor_text || '',
+    card.power || '',
+    card.toughness || '',
+    card.loyalty || '',
+    card.artist || '',
+    JSON.stringify(card.legalities || {}),
+    card.frame || '',
+    card.border_color || ''
+  ];
+  return createHash('sha256').update(sigParts.join('|')).digest('hex').substring(0, 16);
+}
+
+// Pull all existing hashes from Supabase. Returns Map<scryfall_id, data_hash>.
+async function fetchExistingHashes() {
+  console.log('Fetching existing card hashes...');
+  const hashes = new Map();
+  let from = 0;
+  let totalFetched = 0;
+
+  while (true) {
+    const { data, error } = await supabase
+      .from('mtg_cards')
+      .select('scryfall_id, data_hash')
+      .range(from, from + HASH_FETCH_BATCH - 1);
+
+    if (error) {
+      console.error('Hash fetch error:', error.message);
+      throw error;
+    }
+
+    if (!data || data.length === 0) break;
+
+    for (const row of data) {
+      hashes.set(row.scryfall_id, row.data_hash);
+    }
+
+    totalFetched += data.length;
+    process.stdout.write(`\rFetched ${totalFetched} existing hashes`);
+
+    if (data.length < HASH_FETCH_BATCH) break;
+    from += HASH_FETCH_BATCH;
+  }
+
+  console.log(`\n${hashes.size} existing cards in DB`);
+  return hashes;
+}
+
+function buildCardRow(card, audRate, dataHash) {
   const priceUsd = parseFloat(card.prices?.usd || 0) || null;
   const priceUsdFoil = parseFloat(card.prices?.usd_foil || 0) || null;
   const priceEur = parseFloat(card.prices?.eur || 0) || null;
@@ -163,6 +234,7 @@ function buildCardRow(card, audRate) {
     life_modifier: card.life_modifier || null,
     foil: hasFoil,
     nonfoil: hasNonfoil,
+    data_hash: dataHash,
     updated_at: new Date().toISOString()
   };
 }
@@ -206,7 +278,6 @@ function buildSetRow(card) {
   };
 }
 
-// Upsert with retry/backoff. Returns { upserted, failed }.
 async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
   if (!rows.length) return { upserted: 0, failed: 0 };
 
@@ -218,7 +289,7 @@ async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
     }
 
     if (attempt < MAX_RETRIES) {
-      const backoff = (attempt + 1) * 2000; // 2s, then 4s
+      const backoff = (attempt + 1) * 2000;
       console.warn(`\n${label} batch failed (attempt ${attempt + 1}/${MAX_RETRIES + 1}): ${error.message}. Retrying in ${backoff}ms...`);
       await sleep(backoff);
     } else {
@@ -235,6 +306,7 @@ async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
 async function main() {
   const startTime = Date.now();
   console.log('=== MTG Daily Sync ===');
+  console.log(`Mode: ${FORCE_FULL_SYNC ? 'FULL (forced)' : 'INCREMENTAL'}`);
 
   const audRate = await getExchangeRate();
   console.log('AUD rate:', audRate);
@@ -245,6 +317,9 @@ async function main() {
     console.log('Reusing existing bulk file:', TEMP_FILE);
   }
 
+  // Pull existing hashes (skipped on full sync)
+  const existingHashes = FORCE_FULL_SYNC ? new Map() : await fetchExistingHashes();
+
   const today = new Date().toISOString().split('T')[0];
 
   let cardBatch = [];
@@ -253,6 +328,7 @@ async function main() {
 
   let totalProcessed = 0;
   let totalSkipped = 0;
+  let totalUnchanged = 0;
   let totalCardsUpserted = 0;
   let totalCardsFailed = 0;
   let totalSnapshotsUpserted = 0;
@@ -271,6 +347,7 @@ async function main() {
     cardStream.on('data', async ({ value: card }) => {
       totalProcessed++;
 
+      // Filters
       if (card.digital) { totalSkipped++; return; }
       if (card.lang && card.lang !== 'en') { totalSkipped++; return; }
       if (['token', 'emblem', 'art_series', 'reversible_card'].includes(card.layout)) {
@@ -279,14 +356,25 @@ async function main() {
       }
       if (!card.id || !card.name || !card.set) { totalSkipped++; return; }
 
+      // Capture set
       if (!setsMap.has(card.set)) {
         setsMap.set(card.set, buildSetRow(card));
       }
 
-      cardBatch.push(buildCardRow(card, audRate));
-
+      // Always queue snapshot (for daily price history)
       const snap = buildSnapshotRow(card, audRate, today);
       if (snap) allSnapshots.push(snap);
+
+      // Compare hash. If unchanged, skip the card upsert.
+      const newHash = computeCardHash(card);
+      const oldHash = existingHashes.get(card.id);
+
+      if (!FORCE_FULL_SYNC && oldHash === newHash) {
+        totalUnchanged++;
+        return;
+      }
+
+      cardBatch.push(buildCardRow(card, audRate, newHash));
 
       if (cardBatch.length >= CARD_BATCH_SIZE) {
         cardStream.pause();
@@ -297,8 +385,8 @@ async function main() {
         totalCardsFailed += failed;
         batchCount++;
 
-        if (batchCount % 10 === 0) {
-          process.stdout.write(`\rProcessed: ${totalProcessed} | Upserted: ${totalCardsUpserted} | Failed: ${totalCardsFailed} | Snapshots queued: ${allSnapshots.length}`);
+        if (batchCount % 5 === 0) {
+          process.stdout.write(`\rProcessed: ${totalProcessed} | Unchanged: ${totalUnchanged} | Upserted: ${totalCardsUpserted} | Failed: ${totalCardsFailed} | Snapshots: ${allSnapshots.length}`);
         }
 
         await sleep(BATCH_PAUSE_MS);
@@ -331,8 +419,9 @@ async function main() {
     totalSnapshotsUpserted += upserted;
     totalSnapshotsFailed += failed;
 
-    if ((i / SNAPSHOT_BATCH_SIZE) % 10 === 0) {
-      process.stdout.write(`\rSnapshots upserted: ${totalSnapshotsUpserted} / ${allSnapshots.length}`);
+    const batchNum = Math.floor(i / SNAPSHOT_BATCH_SIZE);
+    if (batchNum % 10 === 0) {
+      process.stdout.write(`\rSnapshots: ${totalSnapshotsUpserted} / ${allSnapshots.length}`);
     }
 
     await sleep(BATCH_PAUSE_MS);
@@ -359,8 +448,10 @@ async function main() {
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   console.log('\n=== Sync complete ===');
+  console.log(`Mode:                ${FORCE_FULL_SYNC ? 'FULL' : 'INCREMENTAL'}`);
   console.log(`Processed:           ${totalProcessed}`);
-  console.log(`Skipped:             ${totalSkipped}`);
+  console.log(`Skipped (filters):   ${totalSkipped}`);
+  console.log(`Unchanged (skipped): ${totalUnchanged}`);
   console.log(`Cards upserted:      ${totalCardsUpserted}`);
   console.log(`Cards failed:        ${totalCardsFailed}`);
   console.log(`Snapshots upserted:  ${totalSnapshotsUpserted}`);
@@ -369,7 +460,6 @@ async function main() {
   console.log(`Sets failed:         ${setsFailed}`);
   console.log(`Elapsed:             ${elapsed}s`);
 
-  // Exit with non-zero if anything failed completely (so GitHub Actions shows red)
   if (totalCardsFailed > 0 || totalSnapshotsFailed > 0 || setsFailed > 0) {
     console.error('Some batches failed permanently. See log above.');
     process.exit(1);

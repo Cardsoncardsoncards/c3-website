@@ -6,6 +6,15 @@ on:
     - cron: '0 3 * * *'
   workflow_dispatch:
     # Allows manual trigger from the Actions tab
+    inputs:
+      force_full_sync:
+        description: 'Force full sync (rewrite all cards, ignore hashes)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   sync:
@@ -28,4 +37,5 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          FORCE_FULL_SYNC: ${{ github.event.inputs.force_full_sync || 'false' }}
         run: node scripts/sync-mtg-daily.mjs
