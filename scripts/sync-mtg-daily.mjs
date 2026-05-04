@@ -26,8 +26,9 @@ const SNAPSHOT_BATCH_SIZE = 250;
 const SET_BATCH_SIZE = 100;
 const HASH_FETCH_BATCH = 1000;
 const BATCH_PAUSE_MS = 250;
+const HASH_FETCH_PAUSE_MS = 100;
 const MIN_SNAPSHOT_USD = 0.50;
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 3;
 const TEMP_FILE = 'scryfall-bulk.json';
 
 if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
@@ -79,7 +80,7 @@ async function downloadBulkFile() {
   console.log('Bulk file saved.');
 }
 
-// Compute a stable hash from a Scryfall card. Excludes prices (those go in snapshots, not cards).
+// Compute a stable hash from a Scryfall card. Excludes prices (those go in snapshots).
 function computeCardHash(card) {
   const sigParts = [
     card.id,
@@ -111,35 +112,58 @@ function computeCardHash(card) {
   return createHash('sha256').update(sigParts.join('|')).digest('hex').substring(0, 16);
 }
 
-// Pull all existing hashes from Supabase. Returns Map<scryfall_id, data_hash>.
+// Fetch one page of hashes using cursor-based pagination (where scryfall_id > lastId).
+// Indexed on scryfall_id (unique) so this is a fast index range scan.
+async function fetchHashPage(lastId) {
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    let query = supabase
+      .from('mtg_cards')
+      .select('scryfall_id, data_hash')
+      .order('scryfall_id', { ascending: true })
+      .limit(HASH_FETCH_BATCH);
+
+    if (lastId !== null) {
+      query = query.gt('scryfall_id', lastId);
+    }
+
+    const { data, error } = await query;
+
+    if (!error) return data || [];
+
+    if (attempt < MAX_RETRIES) {
+      const backoff = (attempt + 1) * 2000;
+      console.warn(`\nHash fetch retry ${attempt + 1}/${MAX_RETRIES} (after id=${lastId}): ${error.message}. Waiting ${backoff}ms...`);
+      await sleep(backoff);
+    } else {
+      console.error(`\nHash fetch FAILED after ${MAX_RETRIES + 1} attempts: ${error.message}`);
+      throw error;
+    }
+  }
+  return [];
+}
+
+// Pull all existing hashes from Supabase using cursor pagination.
 async function fetchExistingHashes() {
-  console.log('Fetching existing card hashes...');
+  console.log('Fetching existing card hashes (cursor-based)...');
   const hashes = new Map();
-  let from = 0;
+  let lastId = null;
   let totalFetched = 0;
 
   while (true) {
-    const { data, error } = await supabase
-      .from('mtg_cards')
-      .select('scryfall_id, data_hash')
-      .range(from, from + HASH_FETCH_BATCH - 1);
+    const page = await fetchHashPage(lastId);
+    if (page.length === 0) break;
 
-    if (error) {
-      console.error('Hash fetch error:', error.message);
-      throw error;
-    }
-
-    if (!data || data.length === 0) break;
-
-    for (const row of data) {
+    for (const row of page) {
       hashes.set(row.scryfall_id, row.data_hash);
     }
 
-    totalFetched += data.length;
+    totalFetched += page.length;
     process.stdout.write(`\rFetched ${totalFetched} existing hashes`);
 
-    if (data.length < HASH_FETCH_BATCH) break;
-    from += HASH_FETCH_BATCH;
+    lastId = page[page.length - 1].scryfall_id;
+
+    if (page.length < HASH_FETCH_BATCH) break;
+    await sleep(HASH_FETCH_PAUSE_MS);
   }
 
   console.log(`\n${hashes.size} existing cards in DB`);
@@ -317,7 +341,6 @@ async function main() {
     console.log('Reusing existing bulk file:', TEMP_FILE);
   }
 
-  // Pull existing hashes (skipped on full sync)
   const existingHashes = FORCE_FULL_SYNC ? new Map() : await fetchExistingHashes();
 
   const today = new Date().toISOString().split('T')[0];
@@ -347,7 +370,6 @@ async function main() {
     cardStream.on('data', async ({ value: card }) => {
       totalProcessed++;
 
-      // Filters
       if (card.digital) { totalSkipped++; return; }
       if (card.lang && card.lang !== 'en') { totalSkipped++; return; }
       if (['token', 'emblem', 'art_series', 'reversible_card'].includes(card.layout)) {
@@ -356,16 +378,13 @@ async function main() {
       }
       if (!card.id || !card.name || !card.set) { totalSkipped++; return; }
 
-      // Capture set
       if (!setsMap.has(card.set)) {
         setsMap.set(card.set, buildSetRow(card));
       }
 
-      // Always queue snapshot (for daily price history)
       const snap = buildSnapshotRow(card, audRate, today);
       if (snap) allSnapshots.push(snap);
 
-      // Compare hash. If unchanged, skip the card upsert.
       const newHash = computeCardHash(card);
       const oldHash = existingHashes.get(card.id);
 
@@ -398,7 +417,6 @@ async function main() {
     cardStream.on('error', reject);
   });
 
-  // Flush remaining cards
   if (cardBatch.length) {
     const { upserted, failed } = await upsertBatchWithRetry('mtg_cards', cardBatch, 'scryfall_id', 'cards-final');
     totalCardsUpserted += upserted;
