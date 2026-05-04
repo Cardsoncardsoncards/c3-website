@@ -151,7 +151,7 @@ function buildPriceChart(snapshots) {
   </div>`;
 }
 
-function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings = [] }) {
+function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings }) {
   const legalities = formatLegalities(card.legalities);
   const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * 1.58 : null);
   const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * 1.58 : null;
@@ -181,8 +181,8 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const primaryEbay = ebayStoreListings.length > 0 ? ebayStoreListings : ebayAllListings;
   const fallbackEbay = ebayStoreListings.length > 0 ? ebayAllListings : [];
 
-  const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' ' + card.set_name + ' mtg')}&campid=${EPN_CAMPID}`;
-  const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' ' + card.set_name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}`;
+  const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' mtg')}&campid=${EPN_CAMPID}`;
+  const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}`;
 
   // Auto-generated context paragraph (defined after ebayAllUrl)
   const legalFormats = ['standard','pioneer','modern','legacy','vintage','commander'].filter(f => legalities[f] === 'legal');
@@ -317,20 +317,25 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .breadcrumb { padding: 12px 24px; font-size: 13px; color: var(--text2); font-family: sans-serif; }
     .breadcrumb a { color: var(--text2); }
 
-    /* Card header */
-    .card-header { display: grid; grid-template-columns: auto 1fr; gap: 32px; max-width: 1100px; margin: 32px auto; padding: 0 24px; align-items: start; }
-    @media (max-width: 700px) { .card-header { grid-template-columns: 1fr; } }
-
-    .card-image-wrap { position: relative; width: 240px; }
-    @media (max-width: 700px) { .card-image-wrap { width: 100%; max-width: 280px; margin: 0 auto; } }
-    .card-image-wrap img { width: 100%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.6); }
+    /* Card hero — single column, image centred */
+    .card-hero { max-width: 860px; margin: 0 auto 32px; padding: 0 24px; }
+    .card-image-wrap { position: relative; width: 300px; margin: 0 auto 20px; }
+    @media (max-width: 500px) { .card-image-wrap { width: 240px; } }
+    .card-image-wrap img { width: 100%; border-radius: 14px; box-shadow: 0 12px 48px rgba(0,0,0,0.7); display: block; }
     .card-image-back { display: none; }
-    .flip-btn { display: none; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-top: 8px; width: 100%; }
+    .flip-btn { display: none; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-top: 10px; width: 100%; font-family: sans-serif; }
     ${isDoubleFaced ? '.flip-btn { display: block; }' : ''}
+    /* Version switcher */
+    .version-switcher { margin: 12px 0 0; font-family: sans-serif; }
+    .version-switcher label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text2); display: block; margin-bottom: 6px; }
+    .version-switcher select { width: 100%; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; }
+    .version-switcher select:hover { border-color: var(--accent); }
+    /* Card info below image */
+    .card-info { max-width: 860px; margin: 0 auto; padding: 0 24px; }
 
-    .card-info h1 { font-size: 28px; font-weight: bold; margin-bottom: 4px; }
-    .card-meta { color: var(--text2); font-size: 14px; font-family: sans-serif; margin-bottom: 16px; }
-    .card-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .card-info h1 { font-size: 32px; font-weight: bold; margin-bottom: 4px; text-align: center; }
+    .card-meta { color: var(--text2); font-size: 14px; font-family: sans-serif; margin-bottom: 16px; text-align: center; }
+    .card-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; justify-content: center; }
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-family: sans-serif; font-weight: 600; }
     .badge-reserved { background: #7c1f1f; color: #ffcccc; }
     .badge-rarity-mythic { background: #7a3a00; color: #ffcc88; }
@@ -338,16 +343,6 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .badge-rarity-uncommon { background: #1a2a3a; color: #aaccee; }
     .badge-rarity-common { background: #222; color: #aaa; }
     .badge-edhrec { background: var(--bg3); color: var(--accent2); border: 1px solid var(--accent2); }
-
-    /* Version switcher dropdown */
-    .version-switcher { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 16px; font-family: sans-serif; }
-    .version-switcher-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); margin-bottom: 8px; }
-    .version-switcher-select { width: 100%; padding: 10px 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; font-family: sans-serif; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A0A8C0' d='M6 9L1 4h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
-    .version-switcher-select:hover { border-color: var(--accent); }
-    .version-switcher-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(245,166,35,0.2); }
-    .version-switcher-select option { background: var(--bg3); color: var(--text); padding: 8px; }
-    .version-switcher-select option:disabled { color: var(--accent); font-weight: 700; }
-    .version-switcher-tip { font-size: 11px; color: var(--text2); margin-top: 6px; line-height: 1.4; }
 
     /* Price block */
     .price-block { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
@@ -535,43 +530,39 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
 </div>
 
 ${contextPara}
-<div class="card-header">
+
+<!-- Card Hero -->
+<div class="card-hero">
   <div class="card-image-wrap">
-    <img id="card-front" src="${card.image_uri_normal || card.image_uri_small || ''}" alt="${card.name}" width="240">
-    ${isDoubleFaced && card.card_faces?.[1]?.image_uris?.normal ? `<img id="card-back" class="card-image-back" src="${card.card_faces[1].image_uris.normal}" alt="${card.name} back face" width="240" style="display:none">` : ''}
+    <img id="card-front" src="${card.image_uri_normal || card.image_uri_small || ''}" alt="${card.name}" width="300">
+    ${isDoubleFaced && card.card_faces?.[1]?.image_uris?.normal ? `<img id="card-back" class="card-image-back" src="${card.card_faces[1].image_uris.normal}" alt="${card.name} back face" width="300" style="display:none">` : ''}
     ${isDoubleFaced ? `<button class="flip-btn" onclick="flipCard()">⟳ Flip Card</button>` : ''}
+    ${otherPrintings && otherPrintings.length > 1 ? `
+    <div class="version-switcher">
+      <label>Other Printings (${otherPrintings.length})</label>
+      <select onchange="if(this.value)window.location='/cards/mtg/'+this.value">
+        ${otherPrintings.map(p => `<option value="${p.slug}" ${p.slug === card.slug ? 'selected' : ''}>${p.set_name} (${p.release_date ? p.release_date.slice(0,4) : '?'}) · ${p.rarity ? p.rarity.charAt(0).toUpperCase()+p.rarity.slice(1) : ''} #${p.collector_number}</option>`).join('')}
+      </select>
+    </div>` : ''}
+  </div>
+</div>
+
+<div class="card-info">
+  <h1>${card.name}</h1>
+  <div class="card-meta">${card.type_line || ''} · ${card.set_name} · ${card.rarity ? card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1) : ''} · Artist: ${card.artist || 'Unknown'}</div>
+
+  <div class="card-badges">
+    ${isReserved ? '<span class="badge badge-reserved">🔒 Reserved List</span>' : ''}
+    ${card.rarity ? `<span class="badge badge-rarity-${card.rarity}">${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)}</span>` : ''}
+    ${edhrecLabel ? `<span class="badge badge-edhrec">⚔️ ${edhrecLabel}</span>` : ''}
   </div>
 
-  <div class="card-info">
-    <h1>${card.name}</h1>
-    <div class="card-meta">${card.type_line || ''} · ${card.set_name} · ${card.rarity ? card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1) : ''} · Artist: ${card.artist || 'Unknown'}</div>
-
-    ${otherPrintings.length > 1 ? `
-    <div class="version-switcher">
-      <label for="version-select" class="version-switcher-label">📚 ${otherPrintings.length} printings of this card</label>
-      <select id="version-select" class="version-switcher-select" onchange="if(this.value)window.location.href=this.value">
-        ${otherPrintings.map(p => {
-          const isCurrent = p.slug === card.slug;
-          const audPrice = p.price_usd ? `AU$${(parseFloat(p.price_usd) * 1.58).toFixed(2)}` : 'Price N/A';
-          const finishLabel = p.full_art ? ' · Full Art' : (p.border_color === 'borderless' ? ' · Borderless' : (p.promo ? ' · Promo' : ''));
-          return `<option value="/cards/mtg/${p.slug}"${isCurrent ? ' selected' : ''}${isCurrent ? ' disabled' : ''}>${p.set_name}${finishLabel} — ${audPrice}${isCurrent ? ' (viewing)' : ''}</option>`;
-        }).join('')}
-      </select>
-      <div class="version-switcher-tip">Switch printings to see set-specific prices and eBay listings</div>
-    </div>` : ''}
-
-    <div class="card-badges">
-      ${isReserved ? '<span class="badge badge-reserved">🔒 Reserved List</span>' : ''}
-      ${card.rarity ? `<span class="badge badge-rarity-${card.rarity}">${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)}</span>` : ''}
-      ${edhrecLabel ? `<span class="badge badge-edhrec">⚔️ ${edhrecLabel}</span>` : ''}
-    </div>
-
-    <div class="card-nav">
-      ${prevCard ? `<a href="/cards/mtg/${prevCard.slug}">← ${prevCard.name}</a>` : ''}
-      <a href="/cards/mtg/sets/${setSlug}">All ${card.set_name} Cards</a>
-      ${nextCard ? `<a href="/cards/mtg/${nextCard.slug}">${nextCard.name} →</a>` : ''}
-      <a href="/cards/mtg/random">🃏 Search Cards</a>
-    </div>
+  <div class="card-nav">
+    ${prevCard ? `<a href="/cards/mtg/${prevCard.slug}">← ${prevCard.name}</a>` : ''}
+    <a href="/cards/mtg/sets/${setSlug}">All ${card.set_name} Cards</a>
+    ${nextCard ? `<a href="/cards/mtg/${nextCard.slug}">${nextCard.name} →</a>` : ''}
+    <a href="/cards/mtg/random">🃏 Search Cards</a>
+  </div>
 
     <div class="price-block">
 
@@ -650,7 +641,6 @@ ${contextPara}
       </button>
     </div>
     ${shareBar}
-  </div>
 </div>
 
 <div class="card-sections">
@@ -996,7 +986,8 @@ export default async (req, context) => {
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,collector_number&order=collector_number.asc`, false),
       supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}`, false),
-      supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=slug,set_code,set_name,collector_number,price_usd,price_usd_foil,price_usd_etched,frame,border_color,full_art,promo,finishes,set_release_date&order=set_release_date.desc&limit=100`, false)
+      // Other printings — same card name, different sets. Encode quotes to handle commas in names.
+      supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=slug,set_name,release_date,rarity,collector_number&order=release_date.desc&limit=80`, false)
     ]);
 
     const snapshotData = snapshots.status === 'fulfilled' ? snapshots.value : [];

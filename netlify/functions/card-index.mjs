@@ -394,8 +394,8 @@ function renderRandomCommander() {
     .count-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
     .cmc-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
     .cmc-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
-    #results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:32px 0 24px}
-    @media(max-width:480px){#results-grid{grid-template-columns:repeat(2,1fr)}}
+    #results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,220px));gap:16px;margin:32px 0 24px;justify-content:center}
+    @media(max-width:480px){#results-grid{grid-template-columns:repeat(2,1fr);justify-content:unset}}
     .cmd-result-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;transition:border-color .2s}
     .cmd-result-card:hover{border-color:var(--accent)}
     .cmd-result-img{width:100%;display:block}
@@ -435,21 +435,13 @@ function renderRandomCommander() {
     .guide-card.g-purple{border-left-color:#7c6af5}
     .guide-card-title{font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px}
     .guide-card-desc{font-size:12px;color:var(--text2);line-height:1.4}
-    /* Deal-in animation — cards slide from right and flip face-up */
-    @keyframes dealIn{0%{transform:translateX(120px) rotateY(90deg);opacity:0}60%{transform:translateX(-6px) rotateY(-8deg);opacity:1}80%{transform:translateX(3px) rotateY(4deg)}100%{transform:translateX(0) rotateY(0deg);opacity:1}}
-    @keyframes regenIn{0%{transform:scale(.88) rotateY(90deg);opacity:0}70%{transform:scale(1.04) rotateY(-6deg);opacity:1}100%{transform:scale(1) rotateY(0deg);opacity:1}}
-    .cmd-result-card.deal-in{animation:dealIn .45s cubic-bezier(.22,.68,0,1.2) both}
-    .cmd-result-card.regen-in{animation:regenIn .4s cubic-bezier(.22,.68,0,1.2) both}
-    /* Skeleton shimmer while waiting */
-    @keyframes cmdShimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
-    .cmd-skeleton{background:linear-gradient(90deg,var(--bg3) 25%,rgba(255,255,255,.04) 50%,var(--bg3) 75%);background-size:800px 100%;animation:cmdShimmer 1.4s infinite linear;border-radius:12px;min-height:300px}
   </style>
 </head>
 <body>
 ${NAV}
 <div class="wrap" style="padding-top:32px">
   <div style="text-align:center;margin-bottom:32px">
-    <div style="display:inline-block;background:linear-gradient(135deg,rgba(245,166,35,.15),rgba(124,106,245,.15));border:1px solid rgba(245,166,35,.3);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">10,000+ Legendary Creatures</div>
+    <div style="display:inline-block;background:linear-gradient(135deg,rgba(245,166,35,.15),rgba(124,106,245,.15));border:1px solid rgba(245,166,35,.3);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">3,000+ Legendary Creatures</div>
     <h1 style="font-size:36px;margin-bottom:10px;font-weight:800;letter-spacing:-.02em">🎲 Random Commander Generator</h1>
     <p style="color:var(--text2);max-width:560px;margin:0 auto;font-size:15px">Roll your next Commander build. Filter by colour and mana value, reroll any slot, then dare a friend to top it.</p>
   </div>
@@ -467,7 +459,7 @@ ${NAV}
 
     <!-- Trust bullets -->
     <div class="trust-bullets">
-      <div class="trust-bullet"><span>🎴</span> Pulls from 10,000+ legendary creatures</div>
+      <div class="trust-bullet"><span>🎴</span> Pulls from 3,000+ legendary creatures</div>
       <div class="trust-bullet"><span>💰</span> Live AUD prices shown</div>
       <div class="trust-bullet"><span>🔄</span> Reroll any single slot</div>
     </div>
@@ -617,55 +609,35 @@ function setCmc(btn, val) {
 }
 
 async function fetchOneCommander(exclude) {
-  // Build PostgREST query — no leading wildcard on type_line so the btree index can be used
+  // Build PostgREST query manually — URLSearchParams URL-encodes special chars that PostgREST needs literal
   const filters = [];
   filters.push('select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug,color_identity,cmc');
-  // Prefix match only — 'Legendary Creature%' uses the btree index, avoids full table scan
-  filters.push('type_line=ilike.Legendary Creature*');
-  // Skip digital cards
+  // Legendary Creature filter — use 'like' with wildcards (case insensitive via ilike but we need URL-safe)
+  filters.push('type_line=ilike.*Legendary*Creature*');
+  // Skip digital
   filters.push('digital=eq.false');
   // CMC filter
   if (selectedCmc < 99) filters.push('cmc=lte.' + selectedCmc);
-  // Exclude already-shown slugs
+  // Exclude already-shown slugs (only add filter if list is non-empty)
   if (exclude && exclude.length) {
+    // PostgREST in.() needs comma-separated values, slugs are URL-safe already
     filters.push('slug=not.in.(' + exclude.map(encodeURIComponent).join(',') + ')');
   }
-  // Colour identity: cd.{} uses the GIN index on color_identity text[]
+  // Colour identity: card colour_identity must be contained by selected colours
   if (selectedColors.length) {
+    // PostgREST array contained-by: cd.{W,U} — braces stay literal
     filters.push('color_identity=cd.{' + selectedColors.join(',') + '}');
   }
-  // Random offset gives variety without loading thousands of rows.
-  // First fetch the count so we can pick a valid offset.
-  const countFilters = filters.slice(1); // same filters minus select
-  const countUrl = window.C3_SUPA_URL + '/rest/v1/mtg_cards?'
-    + countFilters.join('&')
-    + '&select=slug'
-    + '&limit=1'
-    + '&offset=0';
-
-  let pool = 200; // fallback
-  try {
-    const countRes = await fetch(window.C3_SUPA_URL + '/rest/v1/mtg_cards?'
-      + countFilters.join('&') + '&select=slug&limit=200', {
-      headers: { 'apikey': window.C3_SUPA_KEY, 'Prefer': 'count=exact' }
-    });
-    const countHeader = countRes.headers.get('content-range');
-    if (countHeader) {
-      const total = parseInt(countHeader.split('/')[1], 10);
-      if (!isNaN(total) && total > 0) pool = total;
-    }
-  } catch(e) { /* use fallback pool */ }
-
-  const offset = Math.floor(Math.random() * Math.min(pool, 2000));
-  filters.push('limit=1');
-  filters.push('offset=' + offset);
+  filters.push('limit=500');
 
   const queryString = filters.join('&');
   const url = window.C3_SUPA_URL + '/rest/v1/mtg_cards?' + queryString;
 
   try {
     const res = await fetch(url, {
-      headers: { 'apikey': window.C3_SUPA_KEY }
+      headers: {
+        'apikey': window.C3_SUPA_KEY
+      }
     });
     if (!res.ok) {
       console.error('Supabase request failed:', res.status, await res.text());
@@ -673,14 +645,14 @@ async function fetchOneCommander(exclude) {
     }
     const cards = await res.json();
     if (!Array.isArray(cards) || cards.length === 0) return null;
-    return cards[0];
+    return cards[Math.floor(Math.random() * cards.length)];
   } catch (err) {
     console.error('Random commander fetch error:', err);
     return null;
   }
 }
 
-function cardHTML(card, index, animClass) {
+function cardHTML(card, index) {
   const price = card.price_aud > 0
     ? 'AU$' + parseFloat(card.price_aud).toFixed(2)
     : card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A';
@@ -695,9 +667,7 @@ function cardHTML(card, index, animClass) {
         + ';color:' + (pipText[c]||'#fff') + ';font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">' + c + '</span>'
       ).join('') + '</div>'
     : '<div style="display:flex;gap:4px;margin-bottom:8px"><span style="width:18px;height:18px;border-radius:50%;background:#888;color:#fff;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">C</span></div>';
-  const anim = animClass || 'deal-in';
-  const delay = typeof index === 'number' ? (index * 0.15) + 's' : '0s';
-  return '<div class="cmd-result-card ' + anim + '" id="card-slot-' + index + '" style="animation-delay:' + delay + '">'
+  return '<div class="cmd-result-card" id="card-slot-' + index + '">'
     + (img ? '<img src="' + img + '" alt="' + card.name.replace(/"/g,'&quot;') + '" class="cmd-result-img">' : '')
     + '<div class="cmd-result-body">'
     + '<div class="cmd-result-name">' + card.name + '</div>'
@@ -715,9 +685,8 @@ async function generateAll() {
   const btn = document.getElementById('generate-btn');
   btn.disabled = true;
   btn.textContent = '\u23f3 Rolling...';
-  // Shimmer skeletons while fetching — more polished than static grey blocks
   grid.innerHTML = Array.from({length: selectedCount}, (_,i) =>
-    '<div class="cmd-skeleton" style="animation-delay:' + (i * 0.08) + 's"></div>'
+    '<div class="cmd-result-card" style="height:300px;background:var(--bg3);border-radius:12px;opacity:' + (0.4 + i*0.1) + '"></div>'
   ).join('');
   section.classList.add('visible');
   try {
@@ -729,8 +698,7 @@ async function generateAll() {
     if (results.length === 0) {
       grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text2)">No commanders found with these filters. Try widening colour or mana value.</div>';
     } else {
-      // Render cards — deal-in animation with staggered delays
-      grid.innerHTML = results.map((c, i) => cardHTML(c, i, 'deal-in')).join('');
+      grid.innerHTML = results.map((c, i) => cardHTML(c, i)).join('');
     }
     section.scrollIntoView({ behavior: 'smooth' });
     updateShareLinks(results);
@@ -747,17 +715,11 @@ async function generateAll() {
 async function regenOne(index) {
   const slot = document.getElementById('card-slot-' + index);
   if (!slot) return;
-  // Quick fade out, then replace with shimmer while fetching
-  slot.style.transition = 'opacity .15s';
-  slot.style.opacity = '0';
-  setTimeout(() => {
-    slot.outerHTML = '<div class="cmd-skeleton" id="card-slot-' + index + '" style="min-height:300px"></div>';
-  }, 150);
+  slot.style.opacity = '0.4';
   const card = await fetchOneCommander([...currentSlugs]);
-  const target = document.getElementById('card-slot-' + index);
-  if (!card) { if (target) target.outerHTML = '<div class="cmd-result-card" id="card-slot-' + index + '" style="min-height:300px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:12px">No result — try again</div>'; return; }
+  if (!card) { slot.style.opacity = '1'; return; }
   currentSlugs[index] = card.slug;
-  if (target) target.outerHTML = cardHTML(card, index, 'regen-in');
+  slot.outerHTML = cardHTML(card, index);
 }
 
 function updateShareLinks(results) {
@@ -1018,12 +980,16 @@ async function renderSetIndex(setSlug) {
 ${NAV}
 <div class="wrap" style="padding-top:32px">
 
-  <!-- Breadcrumb -->
-  <div style="font-size:12px;color:var(--text2);margin-bottom:16px">
-    <a href="/" style="color:var(--text2)">Home</a> ›
-    <a href="/cards" style="color:var(--text2)">Card Vault</a> ›
-    <a href="/cards/mtg" style="color:var(--text2)">MTG Cards</a> ›
-    <span style="color:var(--accent)">${set.set_name}</span>
+  <!-- Back navigation -->
+  <div style="margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <a href="/cards/mtg" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text2);text-decoration:none;transition:all .18s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+      ← MTG Card Vault
+    </a>
+    <div style="font-size:12px;color:var(--text2)">
+      <a href="/" style="color:var(--text2)">Home</a> ›
+      <a href="/cards/mtg" style="color:var(--text2)">MTG Cards</a> ›
+      <span style="color:var(--accent)">${set.set_name}</span>
+    </div>
   </div>
 
   <!-- Header -->
