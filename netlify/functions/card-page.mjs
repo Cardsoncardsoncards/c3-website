@@ -317,36 +317,35 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .breadcrumb { padding: 12px 24px; font-size: 13px; color: var(--text2); font-family: sans-serif; }
     .breadcrumb a { color: var(--text2); }
 
-    /* Card hero — single column, image centred */
-    .card-hero { max-width: 860px; margin: 0 auto 32px; padding: 0 24px; }
-    .card-image-wrap { position: relative; width: 300px; margin: 0 auto 20px; }
-    @media (max-width: 500px) { .card-image-wrap { width: 240px; } }
+    /* Card layout — two column: image left, info right */
+    .card-layout { display: grid; grid-template-columns: 300px 1fr; gap: 32px; max-width: 1100px; margin: 24px auto 0; padding: 0 24px; align-items: start; }
+    @media (max-width: 720px) { .card-layout { grid-template-columns: 1fr; } }
+    .card-image-col { position: sticky; top: 20px; }
+    .card-image-wrap { position: relative; width: 100%; }
+    @media (max-width: 720px) { .card-image-col { position: static; } .card-image-wrap { max-width: 300px; margin: 0 auto; } }
     .card-image-wrap img { width: 100%; border-radius: 14px; box-shadow: 0 12px 48px rgba(0,0,0,0.7); display: block; }
     .card-image-back { display: none; }
     .flip-btn { display: none; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-top: 10px; width: 100%; font-family: sans-serif; }
     ${isDoubleFaced ? '.flip-btn { display: block; }' : ''}
-    /* Version switcher — now a carousel */
-    .printings-carousel-wrap { margin: 16px 0 0; }
-    .printings-carousel-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text2); display: block; margin-bottom: 10px; text-align: center; font-family: sans-serif; }
+    /* Printings carousel — full width below both columns */
+    .printings-outer { max-width: 1100px; margin: 20px auto 0; padding: 0 24px; }
+    .printings-carousel-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+    .printings-carousel-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text2); display: block; margin-bottom: 10px; font-family: sans-serif; }
     .printings-scroll-row { display: flex; align-items: center; gap: 6px; }
     .printings-arrow { flex-shrink: 0; background: var(--bg3); border: 1px solid var(--border); color: var(--text2); width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all .18s; font-family: sans-serif; padding: 0; }
     .printings-arrow:hover { border-color: var(--accent); color: var(--accent); }
-    .printings-arrow:disabled { opacity: .25; cursor: default; }
-    .printings-track { flex: 1; display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 0 8px; scrollbar-width: none; }
+    .printings-track { flex: 1; display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 0 4px; scrollbar-width: none; }
     .printings-track::-webkit-scrollbar { display: none; }
-    .printing-thumb { flex: 0 0 60px; scroll-snap-align: center; cursor: pointer; border-radius: 6px; border: 2px solid transparent; transition: all .18s; opacity: .55; position: relative; }
-    .printing-thumb:hover { opacity: .85; }
-    .printing-thumb.active { border-color: var(--accent); opacity: 1; box-shadow: 0 0 0 2px rgba(245,166,35,.3); }
-    .printing-thumb img { width: 100%; border-radius: 5px; display: block; pointer-events: none; }
-    /* Active printing info */
-    .printing-info { margin-top: 10px; text-align: center; font-family: sans-serif; font-size: 12px; color: var(--text2); min-height: 36px; transition: opacity .18s; }
-    .printing-info strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 2px; }
-    /* Card info below image */
-    .card-info { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-    .card-info h1 { font-size: 32px; font-weight: bold; margin-bottom: 4px; text-align: center; }
-    .card-meta { color: var(--text2); font-size: 14px; font-family: sans-serif; margin-bottom: 16px; text-align: center; }
-    .card-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; justify-content: center; }
+    .printing-thumb { flex: 0 0 56px; scroll-snap-align: center; cursor: pointer; border-radius: 6px; border: 2px solid transparent; transition: all .18s; opacity: .5; }
+    .printing-thumb:hover { opacity: .8; }
+    .printing-thumb.active { border-color: var(--accent); opacity: 1; box-shadow: 0 0 0 2px rgba(245,166,35,.25); }
+    .printing-thumb img { width: 100%; border-radius: 4px; display: block; pointer-events: none; }
+    .printing-info { margin-top: 8px; font-family: sans-serif; font-size: 12px; color: var(--text2); }
+    .printing-info strong { color: var(--text); font-size: 13px; margin-right: 6px; }
+    /* Card info column */
+    .card-info h1 { font-size: 28px; font-weight: bold; margin-bottom: 4px; }
+    .card-meta { color: var(--text2); font-size: 14px; font-family: sans-serif; margin-bottom: 12px; }
+    .card-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-family: sans-serif; font-weight: 600; }
     .badge-reserved { background: #7c1f1f; color: #ffcccc; }
     .badge-rarity-mythic { background: #7a3a00; color: #ffcc88; }
@@ -542,64 +541,35 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
 
 ${contextPara}
 
-<!-- Card Hero -->
-<div class="card-hero">
-  <div class="card-image-wrap">
-    <img id="card-front" src="${card.image_uri_normal || card.image_uri_small || ''}" alt="${card.name}" width="300">
-    ${isDoubleFaced && card.card_faces?.[1]?.image_uris?.normal ? `<img id="card-back" class="card-image-back" src="${card.card_faces[1].image_uris.normal}" alt="${card.name} back face" width="300" style="display:none">` : ''}
-    ${isDoubleFaced ? `<button class="flip-btn" onclick="flipCard()">⟳ Flip Card</button>` : ''}
-    ${otherPrintings && otherPrintings.length > 1 ? `
-    <div class="printings-carousel-wrap">
-      <span class="printings-carousel-label">${otherPrintings.length} Printings — click to switch</span>
-      <div class="printings-scroll-row">
-        <button class="printings-arrow" id="arrow-prev" onclick="scrollPrintings(-1)" aria-label="Previous printing">&#8249;</button>
-        <div class="printings-track" id="printings-track">
-          ${otherPrintings.map((p, i) => {
-            const audNF = p.price_aud > 0 ? 'AU$' + parseFloat(p.price_aud).toFixed(2) : p.price_usd ? '~AU$' + (p.price_usd * 1.58).toFixed(2) : '';
-            const audFoil = p.price_usd_foil ? '~AU$' + (p.price_usd_foil * 1.58).toFixed(2) : '';
-            return `
-          <div class="printing-thumb${p.scryfall_id === card.scryfall_id ? ' active' : ''}"
-            data-idx="${i}"
-            data-img="${p.image_uri_normal || p.image_uri_small || ''}"
-            data-set="${p.set_name.replace(/"/g,'&quot;')}"
-            data-collector="${p.collector_number}"
-            data-rarity="${p.rarity || ''}"
-            data-price-nf="${audNF}"
-            data-price-foil="${audFoil}"
-            data-price-usd-nf="${p.price_usd ? parseFloat(p.price_usd).toFixed(2) : ''}"
-            data-price-usd-foil="${p.price_usd_foil ? parseFloat(p.price_usd_foil).toFixed(2) : ''}"
-            onclick="switchPrinting(this)"
-            title="${p.set_name} #${p.collector_number}">
-            <img src="${p.image_uri_small || p.image_uri_normal || ''}" alt="${p.set_name} #${p.collector_number}" loading="lazy">
-          </div>`;
-          }).join('')}
-        </div>
-        <button class="printings-arrow" id="arrow-next" onclick="scrollPrintings(1)" aria-label="Next printing">&#8250;</button>
-      </div>
-      <div class="printing-info" id="printing-info">
-        <strong>${card.set_name}</strong>
-        #${card.collector_number} · ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1) : ''}${card.price_aud > 0 ? ' · AU$' + parseFloat(card.price_aud).toFixed(2) : card.price_usd ? ' · ~AU$' + (card.price_usd * 1.58).toFixed(2) : ''}
-      </div>
-    </div>` : ''}
-  </div>
-</div>
+<!-- Two-column card layout -->
+<div class="card-layout">
 
-<div class="card-info">
-  <h1>${card.name}</h1>
-  <div class="card-meta">${card.type_line || ''} · ${card.set_name} · ${card.rarity ? card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1) : ''} · Artist: ${card.artist || 'Unknown'}</div>
-
-  <div class="card-badges">
-    ${isReserved ? '<span class="badge badge-reserved">🔒 Reserved List</span>' : ''}
-    ${card.rarity ? `<span class="badge badge-rarity-${card.rarity}">${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)}</span>` : ''}
-    ${edhrecLabel ? `<span class="badge badge-edhrec">⚔️ ${edhrecLabel}</span>` : ''}
+  <!-- Left: image, sticky -->
+  <div class="card-image-col">
+    <div class="card-image-wrap">
+      <img id="card-front" src="${card.image_uri_normal || card.image_uri_small || ''}" alt="${card.name}" width="300">
+      ${isDoubleFaced && card.card_faces?.[1]?.image_uris?.normal ? `<img id="card-back" class="card-image-back" src="${card.card_faces[1].image_uris.normal}" alt="${card.name} back face" width="300" style="display:none">` : ''}
+      ${isDoubleFaced ? `<button class="flip-btn" onclick="flipCard()">⟳ Flip Card</button>` : ''}
+    </div>
   </div>
 
-  <div class="card-nav">
-    ${prevCard ? `<a href="/cards/mtg/${prevCard.slug}">← ${prevCard.name}</a>` : ''}
-    <a href="/cards/mtg/sets/${setSlug}">All ${card.set_name} Cards</a>
-    ${nextCard ? `<a href="/cards/mtg/${nextCard.slug}">${nextCard.name} →</a>` : ''}
-    <a href="/cards/mtg/random">🃏 Search Cards</a>
-  </div>
+  <!-- Right: all card info and pricing -->
+  <div class="card-info">
+    <h1>${card.name}</h1>
+    <div class="card-meta">${card.type_line || ''} · ${card.set_name} · ${card.rarity ? card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1) : ''} · Artist: ${card.artist || 'Unknown'}</div>
+
+    <div class="card-badges">
+      ${isReserved ? '<span class="badge badge-reserved">🔒 Reserved List</span>' : ''}
+      ${card.rarity ? `<span class="badge badge-rarity-${card.rarity}">${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)}</span>` : ''}
+      ${edhrecLabel ? `<span class="badge badge-edhrec">⚔️ ${edhrecLabel}</span>` : ''}
+    </div>
+
+    <div class="card-nav">
+      ${prevCard ? `<a href="/cards/mtg/${prevCard.slug}">← ${prevCard.name}</a>` : ''}
+      <a href="/cards/mtg/sets/${setSlug}">All ${card.set_name} Cards</a>
+      ${nextCard ? `<a href="/cards/mtg/${nextCard.slug}">${nextCard.name} →</a>` : ''}
+      <a href="/cards/mtg/random">🃏 Search Cards</a>
+    </div>
 
     <div class="price-block">
 
@@ -678,7 +648,44 @@ ${contextPara}
       </button>
     </div>
     ${shareBar}
-</div>
+  </div><!-- end .card-info -->
+</div><!-- end .card-layout -->
+
+<!-- Printings carousel — full width below both columns -->
+${otherPrintings && otherPrintings.length > 1 ? `
+<div class="printings-outer">
+  <div class="printings-carousel-wrap">
+    <span class="printings-carousel-label">${otherPrintings.length} Printings — click to switch</span>
+    <div class="printings-scroll-row">
+      <button class="printings-arrow" id="arrow-prev" onclick="scrollPrintings(-1)" aria-label="Previous printing">&#8249;</button>
+      <div class="printings-track" id="printings-track">
+        ${otherPrintings.map((p, i) => {
+          const audNF = p.price_aud > 0 ? 'AU$' + parseFloat(p.price_aud).toFixed(2) : p.price_usd ? '~AU$' + (p.price_usd * 1.58).toFixed(2) : '';
+          const audFoil = p.price_usd_foil ? '~AU$' + (p.price_usd_foil * 1.58).toFixed(2) : '';
+          return `<div class="printing-thumb${p.scryfall_id === card.scryfall_id ? ' active' : ''}"
+            data-idx="${i}"
+            data-img="${p.image_uri_normal || p.image_uri_small || ''}"
+            data-set="${p.set_name.replace(/"/g,'&quot;')}"
+            data-collector="${p.collector_number}"
+            data-rarity="${p.rarity || ''}"
+            data-price-nf="${audNF}"
+            data-price-foil="${audFoil}"
+            data-price-usd-nf="${p.price_usd ? parseFloat(p.price_usd).toFixed(2) : ''}"
+            data-price-usd-foil="${p.price_usd_foil ? parseFloat(p.price_usd_foil).toFixed(2) : ''}"
+            onclick="switchPrinting(this)"
+            title="${p.set_name} #${p.collector_number}">
+            <img src="${p.image_uri_small || p.image_uri_normal || ''}" alt="${p.set_name} #${p.collector_number}" loading="lazy">
+          </div>`;
+        }).join('')}
+      </div>
+      <button class="printings-arrow" id="arrow-next" onclick="scrollPrintings(1)" aria-label="Next printing">&#8250;</button>
+    </div>
+    <div class="printing-info" id="printing-info">
+      <strong>${card.set_name}</strong>
+      #${card.collector_number} · ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1) : ''}${card.price_aud > 0 ? ' · AU$' + parseFloat(card.price_aud).toFixed(2) : card.price_usd ? ' · ~AU$' + (card.price_usd * 1.58).toFixed(2) : ''}
+    </div>
+  </div>
+</div>` : ''}
 
 <div class="card-sections">
 
