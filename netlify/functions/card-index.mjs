@@ -394,8 +394,9 @@ function renderRandomCommander() {
     .count-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
     .cmc-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
     .cmc-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
-    #results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:32px 0 24px}
-    @media(max-width:480px){#results-grid{grid-template-columns:repeat(2,1fr)}}
+    #results-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:32px 0 24px;max-width:840px;margin-left:auto;margin-right:auto}
+    #results-grid > *{flex:0 0 198px;max-width:198px}
+    @media(max-width:480px){#results-grid > *{flex:0 0 calc(50% - 8px);max-width:calc(50% - 8px)}}
     .cmd-result-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;transition:border-color .2s}
     .cmd-result-card:hover{border-color:var(--accent)}
     .cmd-result-img{width:100%;display:block}

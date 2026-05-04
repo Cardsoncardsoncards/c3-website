@@ -151,7 +151,7 @@ function buildPriceChart(snapshots) {
   </div>`;
 }
 
-function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved }) {
+function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings = [] }) {
   const legalities = formatLegalities(card.legalities);
   const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * 1.58 : null);
   const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * 1.58 : null;
@@ -181,8 +181,8 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const primaryEbay = ebayStoreListings.length > 0 ? ebayStoreListings : ebayAllListings;
   const fallbackEbay = ebayStoreListings.length > 0 ? ebayAllListings : [];
 
-  const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' mtg')}&campid=${EPN_CAMPID}`;
-  const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}`;
+  const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' ' + card.set_name + ' mtg')}&campid=${EPN_CAMPID}`;
+  const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' ' + card.set_name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}`;
 
   // Auto-generated context paragraph (defined after ebayAllUrl)
   const legalFormats = ['standard','pioneer','modern','legacy','vintage','commander'].filter(f => legalities[f] === 'legal');
@@ -338,6 +338,16 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .badge-rarity-uncommon { background: #1a2a3a; color: #aaccee; }
     .badge-rarity-common { background: #222; color: #aaa; }
     .badge-edhrec { background: var(--bg3); color: var(--accent2); border: 1px solid var(--accent2); }
+
+    /* Version switcher dropdown */
+    .version-switcher { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 16px; font-family: sans-serif; }
+    .version-switcher-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); margin-bottom: 8px; }
+    .version-switcher-select { width: 100%; padding: 10px 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; font-family: sans-serif; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A0A8C0' d='M6 9L1 4h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    .version-switcher-select:hover { border-color: var(--accent); }
+    .version-switcher-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(245,166,35,0.2); }
+    .version-switcher-select option { background: var(--bg3); color: var(--text); padding: 8px; }
+    .version-switcher-select option:disabled { color: var(--accent); font-weight: 700; }
+    .version-switcher-tip { font-size: 11px; color: var(--text2); margin-top: 6px; line-height: 1.4; }
 
     /* Price block */
     .price-block { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
@@ -535,6 +545,20 @@ ${contextPara}
   <div class="card-info">
     <h1>${card.name}</h1>
     <div class="card-meta">${card.type_line || ''} · ${card.set_name} · ${card.rarity ? card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1) : ''} · Artist: ${card.artist || 'Unknown'}</div>
+
+    ${otherPrintings.length > 1 ? `
+    <div class="version-switcher">
+      <label for="version-select" class="version-switcher-label">📚 ${otherPrintings.length} printings of this card</label>
+      <select id="version-select" class="version-switcher-select" onchange="if(this.value)window.location.href=this.value">
+        ${otherPrintings.map(p => {
+          const isCurrent = p.slug === card.slug;
+          const audPrice = p.price_usd ? `AU$${(parseFloat(p.price_usd) * 1.58).toFixed(2)}` : 'Price N/A';
+          const finishLabel = p.full_art ? ' · Full Art' : (p.border_color === 'borderless' ? ' · Borderless' : (p.promo ? ' · Promo' : ''));
+          return `<option value="/cards/mtg/${p.slug}"${isCurrent ? ' selected' : ''}${isCurrent ? ' disabled' : ''}>${p.set_name}${finishLabel} — ${audPrice}${isCurrent ? ' (viewing)' : ''}</option>`;
+        }).join('')}
+      </select>
+      <div class="version-switcher-tip">Switch printings to see set-specific prices and eBay listings</div>
+    </div>` : ''}
 
     <div class="card-badges">
       ${isReserved ? '<span class="badge badge-reserved">🔒 Reserved List</span>' : ''}
@@ -967,17 +991,19 @@ export default async (req, context) => {
     const card = cards[0];
 
     // Parallel fetches for all supporting data
-    const [snapshots, relatedData, prevNextData, likeData] = await Promise.allSettled([
+    const [snapshots, relatedData, prevNextData, likeData, printingsData] = await Promise.allSettled([
       supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=90`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,collector_number&order=collector_number.asc`, false),
-      supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}`, false)
+      supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}`, false),
+      supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=slug,set_code,set_name,collector_number,price_usd,price_usd_foil,price_usd_etched,frame,border_color,full_art,promo,finishes,set_release_date&order=set_release_date.desc&limit=100`, false)
     ]);
 
     const snapshotData = snapshots.status === 'fulfilled' ? snapshots.value : [];
     const allSetCards = relatedData.status === 'fulfilled' ? relatedData.value : [];
     const prevNextCards = prevNextData.status === 'fulfilled' ? prevNextData.value : [];
     const likeCount = likeData.status === 'fulfilled' ? (likeData.value[0]?.total_likes || 0) : 0;
+    const otherPrintings = printingsData.status === 'fulfilled' ? printingsData.value : [];
 
     // Split related cards: top 5 by price + 5 random (no duplicates)
     const topFive = allSetCards.slice(0, 5);
@@ -1009,7 +1035,7 @@ export default async (req, context) => {
       console.error('eBay fetch error:', e.message);
     }
 
-    const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved });
+    const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings });
 
     return new Response(html, {
       status: 200,
