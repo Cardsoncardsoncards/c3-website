@@ -4,13 +4,15 @@
   "description": "Cards on Cards on Cards - Eleventy blog",
   "scripts": {
     "start": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "sync:mtg": "node scripts/sync-mtg-daily.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.105.1",
+    "stream-chain": "^2.2.5",
     "stream-json": "^1.7.3"
   }
 }
