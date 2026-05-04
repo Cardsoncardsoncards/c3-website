@@ -2,12 +2,12 @@
 // Runs daily via GitHub Actions
 // Streams Scryfall bulk data, upserts to mtg_cards, mtg_sets, mtg_price_snapshots
 // Schema-matched to live Supabase as of 4 May 2026
+// Tuned for Supabase free tier (8s statement timeout)
 
 import { createClient } from '@supabase/supabase-js';
 import { createWriteStream, existsSync, unlinkSync, createReadStream } from 'fs';
 import { pipeline as streamPipeline } from 'stream/promises';
 
-// CommonJS interop for stream-chain and stream-json
 import streamChainPkg from 'stream-chain';
 import streamJsonPkg from 'stream-json';
 import streamArrayPkg from 'stream-json/streamers/StreamArray.js';
@@ -18,10 +18,12 @@ const { streamArray } = streamArrayPkg;
 // --- Config ---
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
-const CARD_BATCH_SIZE = 250;
-const SNAPSHOT_BATCH_SIZE = 500;
+const CARD_BATCH_SIZE = 100;          // Reduced from 250 to stay under 8s statement timeout
+const SNAPSHOT_BATCH_SIZE = 250;       // Snapshots are smaller rows
 const SET_BATCH_SIZE = 100;
+const BATCH_PAUSE_MS = 250;            // Prevent connection pool exhaustion
 const MIN_SNAPSHOT_USD = 0.50;
+const MAX_RETRIES = 2;                 // Plus the initial attempt = 3 total tries
 const TEMP_FILE = 'scryfall-bulk.json';
 
 if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
@@ -32,6 +34,8 @@ if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
 const supabase = createClient(SUPABASE_URL, SUPABASE_SECRET_KEY);
 
 // --- Helpers ---
+
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 function slugify(name) {
   return name
@@ -202,14 +206,28 @@ function buildSetRow(card) {
   };
 }
 
-async function upsertBatch(table, rows, conflictKey) {
-  if (!rows.length) return 0;
-  const { error } = await supabase.from(table).upsert(rows, { onConflict: conflictKey });
-  if (error) {
-    console.error(`Upsert error on ${table}:`, error.message);
-    return 0;
+// Upsert with retry/backoff. Returns { upserted, failed }.
+async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
+  if (!rows.length) return { upserted: 0, failed: 0 };
+
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    const { error } = await supabase.from(table).upsert(rows, { onConflict: conflictKey });
+
+    if (!error) {
+      return { upserted: rows.length, failed: 0 };
+    }
+
+    if (attempt < MAX_RETRIES) {
+      const backoff = (attempt + 1) * 2000; // 2s, then 4s
+      console.warn(`\n${label} batch failed (attempt ${attempt + 1}/${MAX_RETRIES + 1}): ${error.message}. Retrying in ${backoff}ms...`);
+      await sleep(backoff);
+    } else {
+      console.error(`\n${label} batch FAILED after ${MAX_RETRIES + 1} attempts: ${error.message}`);
+      return { upserted: 0, failed: rows.length };
+    }
   }
-  return rows.length;
+
+  return { upserted: 0, failed: rows.length };
 }
 
 // --- Main ---
@@ -230,13 +248,16 @@ async function main() {
   const today = new Date().toISOString().split('T')[0];
 
   let cardBatch = [];
-  let snapshotBatch = [];
+  const allSnapshots = [];
   const setsMap = new Map();
 
   let totalProcessed = 0;
-  let totalCardsUpserted = 0;
-  let totalSnapshotsUpserted = 0;
   let totalSkipped = 0;
+  let totalCardsUpserted = 0;
+  let totalCardsFailed = 0;
+  let totalSnapshotsUpserted = 0;
+  let totalSnapshotsFailed = 0;
+  let batchCount = 0;
 
   console.log('Streaming cards...');
 
@@ -265,15 +286,22 @@ async function main() {
       cardBatch.push(buildCardRow(card, audRate));
 
       const snap = buildSnapshotRow(card, audRate, today);
-      if (snap) snapshotBatch.push(snap);
+      if (snap) allSnapshots.push(snap);
 
       if (cardBatch.length >= CARD_BATCH_SIZE) {
         cardStream.pause();
         const toFlush = cardBatch;
         cardBatch = [];
-        const inserted = await upsertBatch('mtg_cards', toFlush, 'scryfall_id');
-        totalCardsUpserted += inserted;
-        process.stdout.write(`\rProcessed: ${totalProcessed} | Cards upserted: ${totalCardsUpserted} | Snapshots queued: ${snapshotBatch.length}`);
+        const { upserted, failed } = await upsertBatchWithRetry('mtg_cards', toFlush, 'scryfall_id', 'cards');
+        totalCardsUpserted += upserted;
+        totalCardsFailed += failed;
+        batchCount++;
+
+        if (batchCount % 10 === 0) {
+          process.stdout.write(`\rProcessed: ${totalProcessed} | Upserted: ${totalCardsUpserted} | Failed: ${totalCardsFailed} | Snapshots queued: ${allSnapshots.length}`);
+        }
+
+        await sleep(BATCH_PAUSE_MS);
         cardStream.resume();
       }
     });
@@ -282,35 +310,70 @@ async function main() {
     cardStream.on('error', reject);
   });
 
+  // Flush remaining cards
   if (cardBatch.length) {
-    totalCardsUpserted += await upsertBatch('mtg_cards', cardBatch, 'scryfall_id');
+    const { upserted, failed } = await upsertBatchWithRetry('mtg_cards', cardBatch, 'scryfall_id', 'cards-final');
+    totalCardsUpserted += upserted;
+    totalCardsFailed += failed;
     cardBatch = [];
   }
 
-  console.log('\nFlushing snapshots...');
+  console.log(`\n\nCards complete. Flushing ${allSnapshots.length} snapshots...`);
 
-  for (let i = 0; i < snapshotBatch.length; i += SNAPSHOT_BATCH_SIZE) {
-    const slice = snapshotBatch.slice(i, i + SNAPSHOT_BATCH_SIZE);
-    totalSnapshotsUpserted += await upsertBatch('mtg_price_snapshots', slice, 'scryfall_id,snapshot_date');
+  for (let i = 0; i < allSnapshots.length; i += SNAPSHOT_BATCH_SIZE) {
+    const slice = allSnapshots.slice(i, i + SNAPSHOT_BATCH_SIZE);
+    const { upserted, failed } = await upsertBatchWithRetry(
+      'mtg_price_snapshots',
+      slice,
+      'scryfall_id,snapshot_date',
+      `snapshots-${i}`
+    );
+    totalSnapshotsUpserted += upserted;
+    totalSnapshotsFailed += failed;
+
+    if ((i / SNAPSHOT_BATCH_SIZE) % 10 === 0) {
+      process.stdout.write(`\rSnapshots upserted: ${totalSnapshotsUpserted} / ${allSnapshots.length}`);
+    }
+
+    await sleep(BATCH_PAUSE_MS);
   }
 
-  console.log('Flushing sets...');
+  console.log('\n\nFlushing sets...');
 
   const setRows = Array.from(setsMap.values());
+  let setsUpserted = 0;
+  let setsFailed = 0;
   for (let i = 0; i < setRows.length; i += SET_BATCH_SIZE) {
-    await upsertBatch('mtg_sets', setRows.slice(i, i + SET_BATCH_SIZE), 'set_code');
+    const { upserted, failed } = await upsertBatchWithRetry(
+      'mtg_sets',
+      setRows.slice(i, i + SET_BATCH_SIZE),
+      'set_code',
+      'sets'
+    );
+    setsUpserted += upserted;
+    setsFailed += failed;
+    await sleep(BATCH_PAUSE_MS);
   }
 
   try { unlinkSync(TEMP_FILE); } catch {}
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   console.log('\n=== Sync complete ===');
-  console.log(`Processed: ${totalProcessed}`);
-  console.log(`Skipped:   ${totalSkipped}`);
-  console.log(`Cards:     ${totalCardsUpserted}`);
-  console.log(`Snapshots: ${totalSnapshotsUpserted}`);
-  console.log(`Sets:      ${setRows.length}`);
-  console.log(`Elapsed:   ${elapsed}s`);
+  console.log(`Processed:           ${totalProcessed}`);
+  console.log(`Skipped:             ${totalSkipped}`);
+  console.log(`Cards upserted:      ${totalCardsUpserted}`);
+  console.log(`Cards failed:        ${totalCardsFailed}`);
+  console.log(`Snapshots upserted:  ${totalSnapshotsUpserted}`);
+  console.log(`Snapshots failed:    ${totalSnapshotsFailed}`);
+  console.log(`Sets upserted:       ${setsUpserted}`);
+  console.log(`Sets failed:         ${setsFailed}`);
+  console.log(`Elapsed:             ${elapsed}s`);
+
+  // Exit with non-zero if anything failed completely (so GitHub Actions shows red)
+  if (totalCardsFailed > 0 || totalSnapshotsFailed > 0 || setsFailed > 0) {
+    console.error('Some batches failed permanently. See log above.');
+    process.exit(1);
+  }
 }
 
 main().catch(err => {
