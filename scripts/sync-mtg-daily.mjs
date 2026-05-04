@@ -6,9 +6,14 @@
 import { createClient } from '@supabase/supabase-js';
 import { createWriteStream, existsSync, unlinkSync, createReadStream } from 'fs';
 import { pipeline as streamPipeline } from 'stream/promises';
-import { chain } from 'stream-chain';
-import { parser } from 'stream-json';
-import { streamArray } from 'stream-json/streamers/StreamArray.js';
+
+// CommonJS interop for stream-chain and stream-json
+import streamChainPkg from 'stream-chain';
+import streamJsonPkg from 'stream-json';
+import streamArrayPkg from 'stream-json/streamers/StreamArray.js';
+const { chain } = streamChainPkg;
+const { parser } = streamJsonPkg;
+const { streamArray } = streamArrayPkg;
 
 // --- Config ---
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -73,7 +78,6 @@ function buildCardRow(card, audRate) {
   const priceTix = parseFloat(card.prices?.tix || 0) || null;
   const priceAud = priceUsd ? Math.round(priceUsd * audRate * 100) / 100 : 0;
 
-  // Image URIs - handle double-faced cards
   let imageUri = null, imageUriSmall = null, imageUriArtCrop = null, imageUriBorderCrop = null;
   if (card.image_uris) {
     imageUri = card.image_uris.normal || null;
@@ -87,7 +91,6 @@ function buildCardRow(card, audRate) {
     imageUriBorderCrop = card.card_faces[0].image_uris.border_crop || null;
   }
 
-  // Foil/nonfoil flags from finishes array
   const finishes = card.finishes || [];
   const hasFoil = finishes.includes('foil') || finishes.includes('etched');
   const hasNonfoil = finishes.includes('nonfoil');
@@ -247,7 +250,6 @@ async function main() {
     cardStream.on('data', async ({ value: card }) => {
       totalProcessed++;
 
-      // Filter rules
       if (card.digital) { totalSkipped++; return; }
       if (card.lang && card.lang !== 'en') { totalSkipped++; return; }
       if (['token', 'emblem', 'art_series', 'reversible_card'].includes(card.layout)) {
@@ -256,19 +258,15 @@ async function main() {
       }
       if (!card.id || !card.name || !card.set) { totalSkipped++; return; }
 
-      // Capture set
       if (!setsMap.has(card.set)) {
         setsMap.set(card.set, buildSetRow(card));
       }
 
-      // Card row
       cardBatch.push(buildCardRow(card, audRate));
 
-      // Snapshot row (only if priced)
       const snap = buildSnapshotRow(card, audRate, today);
       if (snap) snapshotBatch.push(snap);
 
-      // Flush card batch
       if (cardBatch.length >= CARD_BATCH_SIZE) {
         cardStream.pause();
         const toFlush = cardBatch;
@@ -284,7 +282,6 @@ async function main() {
     cardStream.on('error', reject);
   });
 
-  // Flush remaining cards
   if (cardBatch.length) {
     totalCardsUpserted += await upsertBatch('mtg_cards', cardBatch, 'scryfall_id');
     cardBatch = [];
@@ -292,7 +289,6 @@ async function main() {
 
   console.log('\nFlushing snapshots...');
 
-  // Flush snapshots in batches
   for (let i = 0; i < snapshotBatch.length; i += SNAPSHOT_BATCH_SIZE) {
     const slice = snapshotBatch.slice(i, i + SNAPSHOT_BATCH_SIZE);
     totalSnapshotsUpserted += await upsertBatch('mtg_price_snapshots', slice, 'scryfall_id,snapshot_date');
@@ -305,7 +301,6 @@ async function main() {
     await upsertBatch('mtg_sets', setRows.slice(i, i + SET_BATCH_SIZE), 'set_code');
   }
 
-  // Cleanup
   try { unlinkSync(TEMP_FILE); } catch {}
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
