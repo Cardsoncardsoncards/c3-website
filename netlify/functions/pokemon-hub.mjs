@@ -35,12 +35,11 @@ export default async (req) => {
   });
 
   const setListHTML = sets.length ? sets.map(s => `
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;min-width:0"
+    <a href="/cards/pokemon?set=${encodeURIComponent(s.name)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;min-width:0;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--poke-yellow)'" onmouseout="this.style.borderColor='var(--border)'"
          data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
-      <a href="/cards/pokemon/sets/${s.id}" style="flex:1;font-size:13px;color:var(--text);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onmouseover="this.style.color='var(--poke-yellow)'" onmouseout="this.style.color='var(--text)'">
-        ${s.name}${s.release_date ? `<span style="font-size:10px;color:var(--text2);margin-left:6px">${s.release_date.slice(0,4)}</span>` : ''}
-      </a>
-    </div>`).join('') : '<div style="color:var(--text2);font-size:14px;padding:20px">Sets loading — check back after tonight\'s sync.</div>';
+      ${s.logo_uri ? `<img src="${s.logo_uri}" alt="${s.name}" style="height:28px;object-fit:contain;flex-shrink:0">` : ''}
+      <span style="flex:1;font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}</span>
+    </a>`).join('') : '<div style="color:var(--text2);font-size:14px;padding:20px">Sets loading — check back after tonight\'s sync.</div>';
 
   const topCardHTML = topCards.map(c => `
     <a href="/cards/pokemon/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color .2s" onmouseover="this.style.borderColor='var(--poke-yellow)'" onmouseout="this.style.borderColor='var(--border)'">

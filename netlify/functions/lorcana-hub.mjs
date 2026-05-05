@@ -27,13 +27,12 @@ export default async (req) => {
 
   const hasData = sets.length > 0 || topCards.length > 0;
 
-  const setListHTML = sets.length ? sets.map(s => `
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px"
-         data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
-      <a href="/cards/lorcana/sets/${s.code}" style="flex:1;font-size:13px;color:var(--text);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" onmouseover="this.style.color='var(--lorcana-blue)'" onmouseout="this.style.color='var(--text)'">
-        ${s.name}${s.released_at ? `<span style="font-size:10px;color:var(--text2);margin-left:6px">${s.released_at.slice(0,4)}</span>` : ''}
-      </a>
-    </div>`).join('') : '<div style="color:var(--text2);font-size:14px;padding:20px">Sets loading — check back after tonight\'s sync.</div>';
+  const setListHTML = sets.length ? sets.map(s => {
+    const setSlug = s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    return `<a href="/cards/lorcana?set=${encodeURIComponent(s.name)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--lorcana-blue)'" onmouseout="this.style.borderColor='var(--border)'" data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
+      <span style="flex:1;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.name}${s.released_at ? `<span style="font-size:10px;color:var(--text2);margin-left:6px">${s.released_at.slice(0,4)}</span>` : ''}</span>
+    </a>`;
+  }).join('') : '<div style="color:var(--text2);font-size:14px;padding:20px">Sets loading — check back after tonight\'s sync.</div>';
 
   const topCardHTML = topCards.map(c => {
     const inkColour = INK_COLOURS[c.ink] || '#888';
