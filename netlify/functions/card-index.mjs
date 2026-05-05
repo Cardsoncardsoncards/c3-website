@@ -94,12 +94,8 @@ function renderCardHub(sets, topCards) {
   const setListHTML = sortedParents.map(parent => {
     const children = (childMap.get(parent.set_code) || []).sort((a,b) => a.set_name.localeCompare(b.set_name));
     const childBadge = children.length ? `<span style="font-size:9px;background:rgba(201,168,76,.15);color:var(--gold);border-radius:4px;padding:1px 5px;margin-left:4px">+${children.length}</span>` : '';
-    // Escape set names for safe HTML attribute injection — apostrophes and quotes both escaped
-    const safeParentName = parent.set_name.toLowerCase().replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-    const safeChildNames = children.map(c => ' ' + c.set_name.toLowerCase().replace(/"/g,'&quot;').replace(/'/g,'&#39;')).join('');
-    const safeDataName = safeParentName + safeChildNames;
-    const childrenJSON = JSON.stringify(children.map(c=>({url:'/cards/mtg/sets/'+c.set_slug,label:c.set_name.replace(/'/g,'&#39;'),year:c.release_date?.slice(0,4)||''}))).replace(/"/g,'&quot;');
-    return `<div class="set-parent-item" data-name="${safeDataName}">
+    const childrenHTML = '';
+    return `<div class="set-parent-item" data-name="${parent.set_name.toLowerCase()}${children.map(c=>' '+c.set_name.toLowerCase()).join('')}">
       <div style="display:flex;align-items:center;gap:4px">
         <a href="/cards/mtg/sets/${parent.set_slug}" class="set-list-item"
           style="flex:1;display:block;padding:7px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-decoration:none;font-size:12px;transition:border-color .15s"
@@ -111,8 +107,8 @@ function renderCardHub(sets, topCards) {
         ${children.length ? `<button
           id="btn-${parent.set_code}"
           data-setcode="${parent.set_code}"
-          data-setname="${parent.set_name.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}"
-          data-children="${childrenJSON}"
+          data-setname="${parent.set_name.replace(/"/g,'&quot;')}"
+          data-children="${JSON.stringify(children.map(c=>({url:'/cards/mtg/sets/'+c.set_slug,label:c.set_name,year:c.release_date?.slice(0,4)||''}))).replace(/"/g,'&quot;')}"
           onclick="handleToggle(this)"
           style="background:none;border:1px solid var(--border);color:var(--text2);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0"
           title="Show variants">+</button>` : ''}
@@ -398,7 +394,7 @@ function renderRandomCommander() {
     .count-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
     .cmc-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
     .cmc-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
-    #results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:32px 0 24px}
+    #results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin:32px 0 24px;max-width:1100px;margin-left:auto;margin-right:auto}
     @media(max-width:480px){#results-grid{grid-template-columns:repeat(2,1fr)}}
     .cmd-result-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;transition:border-color .2s}
     .cmd-result-card:hover{border-color:var(--accent)}
@@ -471,7 +467,7 @@ ${NAV}
     <div style="margin-bottom:22px">
       <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">How many Commanders?</p>
       <div style="display:flex;gap:8px">
-        ${[1,2,3,4].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
+        ${[1,2,3,4,5,6].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
       </div>
     </div>
 
@@ -613,35 +609,30 @@ function setCmc(btn, val) {
 }
 
 async function fetchOneCommander(exclude) {
-  // Build PostgREST query manually — URLSearchParams URL-encodes special chars that PostgREST needs literal
+  // Query mtg_commanders materialised view — pre-filtered to legendary creatures only
+  // GIN index on color_identity makes colour queries ~10ms instead of 22,000ms
   const filters = [];
-  filters.push('select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug,color_identity,cmc');
-  // Legendary Creature filter — use 'like' with wildcards (case insensitive via ilike but we need URL-safe)
-  filters.push('type_line=ilike.*Legendary*Creature*');
-  // Skip digital
-  filters.push('digital=eq.false');
+  filters.push('select=name,type_line,image_uri,price_usd,slug,color_identity,cmc,set_name');
   // CMC filter
   if (selectedCmc < 99) filters.push('cmc=lte.' + selectedCmc);
-  // Exclude already-shown slugs (only add filter if list is non-empty)
+  // Price filter — only cards with a known price
+  filters.push('price_usd=gt.0');
+  // Exclude already-shown slugs
   if (exclude && exclude.length) {
-    // PostgREST in.() needs comma-separated values, slugs are URL-safe already
     filters.push('slug=not.in.(' + exclude.map(encodeURIComponent).join(',') + ')');
   }
   // Colour identity: card colour_identity must be contained by selected colours
   if (selectedColors.length) {
-    // PostgREST array contained-by: cd.{W,U} — braces stay literal
     filters.push('color_identity=cd.{' + selectedColors.join(',') + '}');
   }
   filters.push('limit=500');
 
   const queryString = filters.join('&');
-  const url = window.C3_SUPA_URL + '/rest/v1/mtg_cards?' + queryString;
+  const url = window.C3_SUPA_URL + '/rest/v1/mtg_commanders?' + queryString;
 
   try {
     const res = await fetch(url, {
-      headers: {
-        'apikey': window.C3_SUPA_KEY
-      }
+      headers: { 'apikey': window.C3_SUPA_KEY }
     });
     if (!res.ok) {
       console.error('Supabase request failed:', res.status, await res.text());
@@ -657,10 +648,10 @@ async function fetchOneCommander(exclude) {
 }
 
 function cardHTML(card, index) {
-  const price = card.price_aud > 0
-    ? 'AU$' + parseFloat(card.price_aud).toFixed(2)
-    : card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A';
-  const img = card.image_uri_normal || card.image_uri_small || '';
+  const price = card.price_usd > 0
+    ? '~AU$' + (card.price_usd * 1.58).toFixed(2)
+    : 'Price N/A';
+  const img = card.image_uri || '';
   // Colour identity pips
   const ci = Array.isArray(card.color_identity) ? card.color_identity : [];
   const pipColours = { W:'#f9faf4', U:'#aae0fa', B:'#2a2a2a', R:'#f9aa8f', G:'#9bd3ae' };

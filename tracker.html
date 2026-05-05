@@ -91,27 +91,27 @@
   /* ── NAV ── */
   nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(10,12,20,0.88);
+    background: rgba(10,12,20,0.92);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 16px 0;
+    padding: 10px 0;
   }
   .nav-inner {
     display: flex; align-items: center; justify-content: space-between;
     max-width: 960px; margin: 0 auto; padding: 0 24px;
   }
   .nav-logo {
-    display: flex; align-items: center; gap: 10px;
-    font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700;
-    letter-spacing: 0.12em; color: var(--gold); text-decoration: none; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.1em; color: var(--gold); text-decoration: none; text-transform: uppercase;
   }
-  .nav-logo img { height: 36px; width: 36px; border-radius: 6px; object-fit: cover; }
+  .nav-logo img { height: 28px; width: 28px; border-radius: 5px; object-fit: cover; }
   .nav-logo span { color: var(--gold); font-weight: 700; }
-  .nav-links { display: flex; gap: 8px; }
+  .nav-links { display: flex; gap: 4px; }
   .nav-link {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500;
-    text-decoration: none; letter-spacing: 0.04em;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.03em;
     transition: all 0.2s ease; border: 1px solid transparent;
   }
   .nav-link--ebay  { color: var(--silver); border-color: var(--border); }
@@ -519,74 +519,51 @@
 <!-- ── HERO ───────────────────────────────────────────────────── -->
 <section class="hero">
   <div class="wrap--narrow">
-    <div class="hero-eyebrow">Free — No Credit Card Required</div>
+    <div class="hero-eyebrow">Free Download Below</div>
     <h1 class="hero-title">
-      Your Cards Are Worth<br>
-      <span class="gold">More Than You Think.</span>
+      Your Cards Are Worth More<br>
+      <span class="gold">Than You Think.</span>
     </h1>
     <p class="hero-subtitle">Find Out in 10 Minutes</p>
     <p class="hero-desc">
-      Most Australian TCG players have AU$200 to AU$1,000 in cards sitting in binders they've never properly valued. This free tracker changes that — and tells you exactly what to sell, hold, or trade.
+      Drop your collection into our free tracker and see exactly what you own, what it's worth, and what to sell first.
+      Works for MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh and more — right out of the box.
     </p>
-    <div class="hero-tcgs">
-      <span class="tcg-badge">Magic</span>
-      <span class="tcg-badge">Pokémon</span>
-      <span class="tcg-badge">Yu-Gi-Oh</span>
-      <span class="tcg-badge">Lorcana</span>
-      <span class="tcg-badge">One Piece</span>
-      <span class="tcg-badge">Dragon Ball Super</span>
-      <span class="tcg-badge">Star Wars</span>
-      <span class="tcg-badge">+ More</span>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px;animation:fadeSlideDown 0.6s 0.35s ease both;">
+      <a href="#download" class="btn btn--gold" style="font-size:15px;padding:14px 28px;">Get Free Tracker Now</a>
+      <a href="/cards/mtg" class="btn btn--outline" style="font-size:15px;padding:14px 28px;">Browse Card Prices</a>
     </div>
-    <div style="margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <a href="#download" class="btn btn--gold" style="padding:14px 32px;font-size:15px;border-radius:10px;background:linear-gradient(135deg,#C9A84C,#A8843A);color:#0A0C14;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px">
-        ↓ Get Free Tracker Now
-      </a>
-      <a href="/cards/mtg" style="padding:14px 28px;font-size:14px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(160,168,192,.3);color:rgba(240,242,255,.75);text-decoration:none;display:inline-flex;align-items:center;gap:8px">
-        Browse Card Prices →
-      </a>
+    <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap;border:1px solid var(--border);border-radius:12px;overflow:hidden;animation:fadeSlideDown 0.6s 0.45s ease both;">
+      <div style="flex:1;min-width:120px;padding:16px 20px;text-align:center;border-right:1px solid var(--border);background:rgba(201,168,76,0.04);">
+        <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">96,000+</div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(160,168,192,0.6);margin-top:3px;">MTG Cards</div>
+      </div>
+      <div style="flex:1;min-width:120px;padding:16px 20px;text-align:center;border-right:1px solid var(--border);">
+        <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">25k+</div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(160,168,192,0.6);margin-top:3px;">eBay Listings</div>
+      </div>
+      <div style="flex:1;min-width:120px;padding:16px 20px;text-align:center;border-right:1px solid var(--border);background:rgba(201,168,76,0.04);">
+        <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">7+</div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(160,168,192,0.6);margin-top:3px;">TCGs — More Coming</div>
+      </div>
+      <div style="flex:1;min-width:120px;padding:16px 20px;text-align:center;">
+        <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--success);">Free</div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(160,168,192,0.6);margin-top:3px;">No Catch</div>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="gold-divider"></div>
 
-<!-- ── SOCIAL PROOF BAR ─────────────────────────────────────────── -->
-<section style="padding:28px 0;background:rgba(22,25,41,.6);border-bottom:1px solid var(--border);position:relative;z-index:1">
-  <div class="wrap">
-    <div style="display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap">
-      <div style="text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:var(--gold)">96,000+</div>
-        <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--silver);margin-top:2px">MTG Cards Tracked</div>
-      </div>
-      <div style="width:1px;height:40px;background:var(--border)"></div>
-      <div style="text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:var(--gold)">24k+</div>
-        <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--silver);margin-top:2px">eBay Listings</div>
-      </div>
-      <div style="width:1px;height:40px;background:var(--border)"></div>
-      <div style="text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:var(--gold)">7 TCGs</div>
-        <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--silver);margin-top:2px">Supported</div>
-      </div>
-      <div style="width:1px;height:40px;background:var(--border)"></div>
-      <div style="text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:var(--gold)">Free</div>
-        <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--silver);margin-top:2px">No Catch</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ── COMING SOON ─────────────────────────────────────────────── -->
 <section class="section section--alt" id="coming-soon">
   <div class="wrap--narrow">
     <div class="reveal">
       <p class="section-label">Coming Soon</p>
-      <h2 class="section-title">Something Big is Coming<br>for AU TCG Players</h2>
+      <h2 class="section-title">We're Building a Service<br>That Pays You for Your Cards</h2>
       <p class="section-body">
-        We're building a suite of tools designed specifically for the Australian TCG community —
-        sellers, collectors, and players all in one place.
+        The C3 Buylist is in development. One place to see what every major Australian store is paying for your cards — no calling around, no guessing.
       </p>
     </div>
 
@@ -596,29 +573,29 @@
 
       <div class="platform-features">
         <div class="platform-feat">
-          <div class="platform-feat-icon">📅</div>
-          <div class="platform-feat-title">TCG Events Calendar</div>
-          <div class="platform-feat-desc">One place for every local tournament, prerelease, and game night across all card games in Australia.</div>
+          <div class="platform-feat-icon">💸</div>
+          <div class="platform-feat-title">Instant Buylist Quotes</div>
+          <div class="platform-feat-desc">See what Australian stores are paying for your cards in real time. No phone calls, no manual checking.</div>
         </div>
         <div class="platform-feat">
           <div class="platform-feat-icon">📊</div>
-          <div class="platform-feat-title">Buylist Intelligence</div>
-          <div class="platform-feat-desc">See what stores near you are paying for your cards without calling around or checking multiple sites.</div>
+          <div class="platform-feat-title">Side-by-Side Comparison</div>
+          <div class="platform-feat-desc">Compare store offers in one view. Know which store pays the most for each card before you sell.</div>
         </div>
         <div class="platform-feat">
           <div class="platform-feat-icon">🔔</div>
-          <div class="platform-feat-title">Market Alerts</div>
-          <div class="platform-feat-desc">Get notified when a card or sealed product hits your target price — buy and sell at the right time.</div>
+          <div class="platform-feat-title">Price Alerts</div>
+          <div class="platform-feat-desc">Get notified when a card hits your target sell price. Buy and sell at the right time, not by guessing.</div>
         </div>
         <div class="platform-feat">
           <div class="platform-feat-icon">🇦🇺</div>
           <div class="platform-feat-title">Built for Australia</div>
-          <div class="platform-feat-desc">Designed around Australian stores, local events, and the AU TCG community. Not an afterthought.</div>
+          <div class="platform-feat-desc">AU stores, AU prices, AU dollars. Not a US tool with an AU flag slapped on it.</div>
         </div>
       </div>
 
       <div class="signup-nudge">
-        ◈ Sign up below for news and updates as the buylist gets closer to launch. The free tracker is also waiting for you below.
+        ◈ Sign up below to join the waitlist and get the free tracker while you wait.
       </div>
     </div>
   </div>
@@ -631,13 +608,23 @@
     <div class="reveal">
       <p class="section-label">Free Download</p>
       <h2 class="section-title">Your Free TCG Collection Tracker</h2>
-      <p class="section-body">A Google Sheets tracker built for collectors who actually sell. Drop your details below and get instant access.</p>
+      <p class="section-body">A Google Sheets tracker built for collectors who actually sell. Sign up below to join the buylist waitlist and get instant access.</p>
     </div>
 
     <div class="download-card reveal">
+
+      <!-- Value callout -->
+      <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:16px 20px;margin-bottom:28px;display:flex;align-items:center;gap:14px;">
+        <div style="font-size:28px;flex-shrink:0;">📦</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px;">Collectors Often Find AU$300+ They Forgot</div>
+          <div style="font-size:13px;color:rgba(160,168,192,0.7);line-height:1.5;">Cards get acquired and forgotten fast. The tracker shows you what you actually own — and what it's worth selling today.</div>
+        </div>
+      </div>
+
       <div class="feature-list">
         <div class="feature-item">Collection inventory with auto profit/loss</div>
-        <div class="feature-item">Works across all major TCGs</div>
+        <div class="feature-item">Works across all 7 major TCGs</div>
         <div class="feature-item">Wishlist with priority ranking</div>
         <div class="feature-item">200 card capacity (free version)</div>
         <div class="feature-item">Instant Google Sheets access</div>
@@ -645,8 +632,8 @@
       </div>
 
       <!-- MailerLite embedded form -->
-      <div class="form-section-label">Get your free tracker</div>
-      <div class="form-section-sub">Sign up to be the first to know when the C3 Buylist goes live — and get instant access to the free tracker while you wait.</div>
+      <div class="form-section-label">Get instant access</div>
+      <div class="form-section-sub">Get your free tracker now. You'll also be first to know when the C3 Buylist launches in Australia.</div>
       <div class="ml-embedded" data-form="mIFDGb"></div>
 
       <!-- Post-signup download note (always visible below form) -->
@@ -666,6 +653,30 @@
           Once open: File → Make a Copy to save it to your own Google Drive.
         </p>
       </div>
+
+      <!-- Internal links grid -->
+      <div style="margin-top:32px;border-top:1px solid var(--border);padding-top:28px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(160,168,192,0.4);margin-bottom:14px;">More C3 Tools</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <a href="/cards/mtg" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:18px;">🃏</span>
+            <div><div style="font-size:13px;font-weight:600;color:var(--white);">MTG Card Vault</div><div style="font-size:11px;color:rgba(160,168,192,0.5);">96,000+ cards with prices</div></div>
+          </a>
+          <a href="/cards/mtg/random-commander" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:18px;">🎲</span>
+            <div><div style="font-size:13px;font-weight:600;color:var(--white);">Random Commander</div><div style="font-size:11px;color:rgba(160,168,192,0.5);">Find your next deck</div></div>
+          </a>
+          <a href="/ev-calculator.html" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:18px;">📈</span>
+            <div><div style="font-size:13px;font-weight:600;color:var(--white);">EV Calculator</div><div style="font-size:11px;color:rgba(160,168,192,0.5);">Open or sell sealed?</div></div>
+          </a>
+          <a href="/blog" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:18px;">📝</span>
+            <div><div style="font-size:13px;font-weight:600;color:var(--white);">TCG Blog</div><div style="font-size:11px;color:rgba(160,168,192,0.5);">200+ guides and reviews</div></div>
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
