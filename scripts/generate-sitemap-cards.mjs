@@ -16,21 +16,16 @@ const OUT_DIR      = '.'; // write to repo root — passthrough to _site
 
 import { writeFileSync } from 'fs';
 
+// Cursor-based pagination — avoids Supabase timeout on large offsets
+// Uses id > last_seen_id pattern which uses the primary key index efficiently
 async function fetchAll(table, select, filters = '') {
   const allRows = [];
-  let offset = 0;
+  let lastId = null;
+  let page = 0;
 
-  // Get total count first
-  const countRes = await fetch(
-    `${SUPABASE_URL}/rest/v1/${table}?select=id&${filters}&limit=1`,
-    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact' } }
-  );
-  const contentRange = countRes.headers.get('content-range') || '';
-  const total = contentRange.includes('/') ? parseInt(contentRange.split('/')[1]) : 100000;
-  console.log(`  ${table}: ${total} total rows`);
-
-  while (offset < total) {
-    const url = `${SUPABASE_URL}/rest/v1/${table}?select=${select}&${filters}&limit=${PAGE_SIZE}&offset=${offset}`;
+  while (true) {
+    const cursorFilter = lastId ? `&id=gt.${lastId}` : '';
+    const url = `${SUPABASE_URL}/rest/v1/${table}?select=${select}&${filters}${cursorFilter}&order=id.asc&limit=${PAGE_SIZE}`;
     const res = await fetch(url, {
       headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
     });
@@ -38,8 +33,10 @@ async function fetchAll(table, select, filters = '') {
     const rows = await res.json();
     if (!Array.isArray(rows) || rows.length === 0) break;
     allRows.push(...rows);
-    offset += rows.length;
+    lastId = rows[rows.length - 1].id;
+    page++;
     if (rows.length < PAGE_SIZE) break;
+    if (page % 10 === 0) console.log(`  ${table}: fetched ${allRows.length} rows...`);
   }
   return allRows;
 }
@@ -61,8 +58,8 @@ async function generateMtgSitemap() {
   console.log('Generating MTG card sitemap...');
   const cards = await fetchAll(
     'mtg_cards',
-    'slug,price_usd,updated_at',
-    'price_usd=gte.0.25&slug=not.is.null&order=price_usd.desc'
+    'id,slug,price_usd,updated_at',
+    'price_usd=gte.0.25&slug=not.is.null'
   );
 
   const urls = cards
@@ -86,8 +83,8 @@ async function generatePokemonSitemap() {
   try {
     const cards = await fetchAll(
       'pokemon_cards',
-      'slug,updated_at',
-      'slug=not.is.null&image_uri=not.is.null&order=updated_at.desc'
+      'id,slug,updated_at',
+      'slug=not.is.null&image_uri=not.is.null'
     );
     if (!cards.length) { console.log('  Pokemon: no cards yet, skipping'); return 0; }
 
@@ -113,8 +110,8 @@ async function generateLorcanaSitemap() {
   try {
     const cards = await fetchAll(
       'lorcana_cards',
-      'slug,updated_at',
-      'slug=not.is.null&image_uri=not.is.null&order=updated_at.desc'
+      'id,slug,updated_at',
+      'slug=not.is.null&image_uri=not.is.null'
     );
     if (!cards.length) { console.log('  Lorcana: no cards yet, skipping'); return 0; }
 
@@ -140,8 +137,8 @@ async function generateYugiohSitemap() {
   try {
     const cards = await fetchAll(
       'yugioh_cards',
-      'slug,updated_at',
-      'slug=not.is.null&image_uri=not.is.null&order=updated_at.desc'
+      'id,slug,updated_at',
+      'slug=not.is.null&image_uri=not.is.null'
     );
     if (!cards.length) { console.log('  YuGiOh: no cards yet, skipping'); return 0; }
 
