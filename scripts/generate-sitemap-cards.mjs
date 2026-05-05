@@ -1,0 +1,206 @@
+// scripts/generate-sitemap-cards.mjs
+// Runs at build time (before Eleventy) via npm run build
+// Fetches all MTG card slugs from Supabase and writes sitemap-cards.xml
+// Also writes sitemap-pokemon.xml, sitemap-lorcana.xml, sitemap-yugioh.xml
+// This replaces the timing-out Netlify Function approach
+//
+// Price thresholds (balance SEO value vs crawl budget):
+//   MTG: $0.25 USD (~50k cards)
+//   Pokemon/Lorcana/YuGiOh: any card with an image
+
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY;
+const SITE_URL     = 'https://cardsoncardsoncards.com.au';
+const PAGE_SIZE    = 1000;
+const OUT_DIR      = '.'; // write to repo root — passthrough to _site
+
+import { writeFileSync } from 'fs';
+
+async function fetchAll(table, select, filters = '') {
+  const allRows = [];
+  let offset = 0;
+
+  // Get total count first
+  const countRes = await fetch(
+    `${SUPABASE_URL}/rest/v1/${table}?select=id&${filters}&limit=1`,
+    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact' } }
+  );
+  const contentRange = countRes.headers.get('content-range') || '';
+  const total = contentRange.includes('/') ? parseInt(contentRange.split('/')[1]) : 100000;
+  console.log(`  ${table}: ${total} total rows`);
+
+  while (offset < total) {
+    const url = `${SUPABASE_URL}/rest/v1/${table}?select=${select}&${filters}&limit=${PAGE_SIZE}&offset=${offset}`;
+    const res = await fetch(url, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    if (!res.ok) throw new Error(`Supabase ${table} fetch failed: ${res.status}`);
+    const rows = await res.json();
+    if (!Array.isArray(rows) || rows.length === 0) break;
+    allRows.push(...rows);
+    offset += rows.length;
+    if (rows.length < PAGE_SIZE) break;
+  }
+  return allRows;
+}
+
+function buildSitemap(urls, comment) {
+  const today = new Date().toISOString().split('T')[0];
+  const urlXml = urls.map(({ loc, lastmod, priority }) =>
+    `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod || today}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>${priority || '0.7'}</priority>\n  </url>`
+  ).join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- ${comment} — Generated: ${new Date().toISOString()} -->
+${urlXml}
+</urlset>`;
+}
+
+async function generateMtgSitemap() {
+  console.log('Generating MTG card sitemap...');
+  const cards = await fetchAll(
+    'mtg_cards',
+    'slug,price_usd,updated_at',
+    'price_usd=gte.0.25&slug=not.is.null&order=price_usd.desc'
+  );
+
+  const urls = cards
+    .filter(c => c.slug && c.slug.trim())
+    .map(c => {
+      const price = parseFloat(c.price_usd) || 0;
+      return {
+        loc: `${SITE_URL}/cards/mtg/${c.slug}`,
+        lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
+        priority: price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7'
+      };
+    });
+
+  writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, buildSitemap(urls, `MTG card pages: ${urls.length} cards at USD$0.25+`));
+  console.log(`  MTG: ${urls.length} URLs written to sitemap-cards.xml`);
+  return urls.length;
+}
+
+async function generatePokemonSitemap() {
+  console.log('Generating Pokemon card sitemap...');
+  try {
+    const cards = await fetchAll(
+      'pokemon_cards',
+      'slug,updated_at',
+      'slug=not.is.null&image_uri=not.is.null&order=updated_at.desc'
+    );
+    if (!cards.length) { console.log('  Pokemon: no cards yet, skipping'); return 0; }
+
+    const urls = cards
+      .filter(c => c.slug && c.slug.trim())
+      .map(c => ({
+        loc: `${SITE_URL}/cards/pokemon/${c.slug}`,
+        lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
+        priority: '0.7'
+      }));
+
+    writeFileSync(`${OUT_DIR}/sitemap-pokemon.xml`, buildSitemap(urls, `Pokemon card pages: ${urls.length} cards`));
+    console.log(`  Pokemon: ${urls.length} URLs written to sitemap-pokemon.xml`);
+    return urls.length;
+  } catch (e) {
+    console.log(`  Pokemon sitemap skipped: ${e.message}`);
+    return 0;
+  }
+}
+
+async function generateLorcanaSitemap() {
+  console.log('Generating Lorcana card sitemap...');
+  try {
+    const cards = await fetchAll(
+      'lorcana_cards',
+      'slug,updated_at',
+      'slug=not.is.null&image_uri=not.is.null&order=updated_at.desc'
+    );
+    if (!cards.length) { console.log('  Lorcana: no cards yet, skipping'); return 0; }
+
+    const urls = cards
+      .filter(c => c.slug && c.slug.trim())
+      .map(c => ({
+        loc: `${SITE_URL}/cards/lorcana/${c.slug}`,
+        lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
+        priority: '0.7'
+      }));
+
+    writeFileSync(`${OUT_DIR}/sitemap-lorcana.xml`, buildSitemap(urls, `Lorcana card pages: ${urls.length} cards`));
+    console.log(`  Lorcana: ${urls.length} URLs written to sitemap-lorcana.xml`);
+    return urls.length;
+  } catch (e) {
+    console.log(`  Lorcana sitemap skipped: ${e.message}`);
+    return 0;
+  }
+}
+
+async function generateYugiohSitemap() {
+  console.log('Generating Yu-Gi-Oh card sitemap...');
+  try {
+    const cards = await fetchAll(
+      'yugioh_cards',
+      'slug,updated_at',
+      'slug=not.is.null&image_uri=not.is.null&order=updated_at.desc'
+    );
+    if (!cards.length) { console.log('  YuGiOh: no cards yet, skipping'); return 0; }
+
+    const urls = cards
+      .filter(c => c.slug && c.slug.trim())
+      .map(c => ({
+        loc: `${SITE_URL}/cards/yugioh/${c.slug}`,
+        lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
+        priority: '0.7'
+      }));
+
+    writeFileSync(`${OUT_DIR}/sitemap-yugioh.xml`, buildSitemap(urls, `Yu-Gi-Oh card pages: ${urls.length} cards`));
+    console.log(`  Yu-Gi-Oh: ${urls.length} URLs written to sitemap-yugioh.xml`);
+    return urls.length;
+  } catch (e) {
+    console.log(`  YuGiOh sitemap skipped: ${e.message}`);
+    return 0;
+  }
+}
+
+async function updateSitemapIndex(counts) {
+  const today = new Date().toISOString().split('T')[0];
+  const sitemaps = [
+    { loc: `${SITE_URL}/sitemap.xml`, label: 'static pages and blog posts' },
+    { loc: `${SITE_URL}/sitemap-cards.xml`, label: `${counts.mtg} MTG card pages` },
+  ];
+
+  if (counts.pokemon > 0) sitemaps.push({ loc: `${SITE_URL}/sitemap-pokemon.xml`, label: `${counts.pokemon} Pokemon card pages` });
+  if (counts.lorcana > 0) sitemaps.push({ loc: `${SITE_URL}/sitemap-lorcana.xml`, label: `${counts.lorcana} Lorcana card pages` });
+  if (counts.yugioh > 0)  sitemaps.push({ loc: `${SITE_URL}/sitemap-yugioh.xml`, label: `${counts.yugioh} Yu-Gi-Oh card pages` });
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Generated: ${new Date().toISOString()} -->
+${sitemaps.map(s => `  <!-- ${s.label} -->\n  <sitemap>\n    <loc>${s.loc}</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>`).join('\n')}
+</sitemapindex>`;
+
+  writeFileSync(`${OUT_DIR}/sitemap-index.xml`, xml);
+  console.log(`Updated sitemap-index.xml with ${sitemaps.length} sitemaps`);
+}
+
+async function main() {
+  console.log('=== Sitemap Generation Start ===', new Date().toISOString());
+
+  if (!SUPABASE_URL || !SUPABASE_KEY) {
+    console.error('Missing SUPABASE_URL or key — writing empty MTG sitemap as fallback');
+    writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Build-time generation failed: missing env vars --></urlset>');
+    return;
+  }
+
+  const mtg     = await generateMtgSitemap();
+  const pokemon  = await generatePokemonSitemap();
+  const lorcana  = await generateLorcanaSitemap();
+  const yugioh   = await generateYugiohSitemap();
+
+  await updateSitemapIndex({ mtg, pokemon, lorcana, yugioh });
+
+  const total = mtg + pokemon + lorcana + yugioh;
+  console.log(`=== Sitemap Generation Complete === Total URLs: ${total}`);
+}
+
+main().catch(err => { console.error('Sitemap generation failed:', err.message); process.exit(0); }); // exit 0 — don't block build

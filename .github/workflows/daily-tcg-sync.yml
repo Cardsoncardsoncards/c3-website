@@ -1,0 +1,81 @@
+name: Daily TCG Sync (Pokemon + Lorcana + Yu-Gi-Oh)
+
+on:
+  schedule:
+    # 4am UTC daily — 2pm AEST, offset from MTG sync (3am UTC) to avoid contention
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      force_full_sync:
+        description: 'Force full re-sync of all cards (ignores hash diffing)'
+        required: false
+        default: 'false'
+      tcg:
+        description: 'Which TCG to sync (pokemon / lorcana / yugioh / all)'
+        required: false
+        default: 'all'
+
+jobs:
+  sync-pokemon:
+    name: Sync Pokemon Cards
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'schedule' ||
+      github.event.inputs.tcg == 'all' ||
+      github.event.inputs.tcg == 'pokemon'
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Pokemon sync
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          FORCE_FULL_SYNC: ${{ github.event.inputs.force_full_sync || 'false' }}
+        run: node scripts/sync-pokemon-daily.mjs
+
+  sync-lorcana:
+    name: Sync Lorcana Cards
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'schedule' ||
+      github.event.inputs.tcg == 'all' ||
+      github.event.inputs.tcg == 'lorcana'
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Lorcana sync
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/sync-lorcana-daily.mjs
+
+  sync-yugioh:
+    name: Sync Yu-Gi-Oh Cards
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'schedule' ||
+      github.event.inputs.tcg == 'all' ||
+      github.event.inputs.tcg == 'yugioh'
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Yu-Gi-Oh sync
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/sync-yugioh-daily.mjs
