@@ -9,16 +9,16 @@ const EPN_CAMPID        = '5339146789';
 // Sets from TCGdex that are non-standard and add no value to the browser
 const JUNK_SETS = new Set([
   'w promotional', 'jumbo cards', 'sample', 'best of game',
-  'poke card creator pack', 'poké card creator pack', 'poke card creator',
+  'poke card creator pack', 'poke card creator',
   'ex trainer kit (latias)', 'ex trainer kit (latios)',
   'ex trainer kit latias', 'ex trainer kit latios',
   'ex trainer kit 2 (plusle)', 'ex trainer kit 2 (minun)',
   'ex trainer kit 2 plusle', 'ex trainer kit 2 minun',
   'pikachu world collection 2010', 'pikachu world collection 2012',
-  'southern islands', 'birthday pikachu', 'mcdonald's collection 2021',
-  'mcdonald's collection 2022', 'mcdonald's collection 2023',
-  'mcdonald's collection 2024', 'play! pokemon prizes',
-  'staff promos', 'worlds 2023',
+  'southern islands', 'birthday pikachu',
+  'mcdonald collection 2021', 'mcdonald collection 2022',
+  'mcdonald collection 2023', 'mcdonald collection 2024',
+  'play! pokemon prizes', 'staff promos', 'worlds 2023',
 ]);
 
 async function supabaseGet(path) {
