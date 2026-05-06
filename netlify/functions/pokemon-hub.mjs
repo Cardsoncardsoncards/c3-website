@@ -6,6 +6,14 @@ const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 
+// Sets from TCGdex that are non-standard and add no value to the browser
+const JUNK_SETS = new Set([
+  'w promotional', 'jumbo cards', 'sample', 'best of game',
+  'poke card creator pack', 'ex trainer kit (latias)', 'ex trainer kit (latios)',
+  'ex trainer kit latias', 'ex trainer kit latios', 'pikachu world collection 2010',
+  'pikachu world collection 2012', 'southern islands'
+]);
+
 async function supabaseGet(path) {
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
@@ -19,31 +27,33 @@ async function supabaseGet(path) {
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
-  const [sets, topCards] = await Promise.all([
-    supabaseGet('pokemon_sets?order=release_date.desc&limit=200'),
+  const [allSets, topCards] = await Promise.all([
+    supabaseGet('pokemon_sets?order=release_date.desc&limit=300'),
     supabaseGet('pokemon_cards?order=price_usd.desc&price_usd=gt.0&image_uri=not.is.null&limit=20&select=slug,name,image_uri,price_usd,set_name,rarity')
   ]);
 
-  const hasData = sets.length > 0 || topCards.length > 0;
-
-  // Group sets by series
-  const seriesMap = new Map();
-  sets.forEach(s => {
-    const series = s.series || 'Other';
-    if (!seriesMap.has(series)) seriesMap.set(series, []);
-    seriesMap.get(series).push(s);
+  // Filter out junk sets: must have a logo_uri OR a real recognisable name
+  // Rule: exclude sets with no logo AND name matches known junk list
+  const sets = allSets.filter(s => {
+    const nameLower = (s.name || '').toLowerCase().trim();
+    if (JUNK_SETS.has(nameLower)) return false;
+    // Also exclude sets with no logo and very short/generic names
+    if (!s.logo_uri && nameLower.length < 4) return false;
+    return true;
   });
+
+  const hasData = sets.length > 0 || topCards.length > 0;
 
   const setListHTML = sets.length ? sets.map(s => `
     <a href="/cards/pokemon?set=${encodeURIComponent(s.name)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;min-width:0;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--poke-yellow)'" onmouseout="this.style.borderColor='var(--border)'"
          data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
-      ${s.logo_uri ? `<img src="${s.logo_uri}" alt="${s.name}" style="height:28px;object-fit:contain;flex-shrink:0">` : ''}
+      ${s.logo_uri ? `<img src="${s.logo_uri}" alt="${s.name}" style="height:28px;object-fit:contain;flex-shrink:0" loading="lazy" onerror="this.style.display='none'">` : `<span style="display:inline-block;width:28px;height:28px;background:var(--bg3);border-radius:4px;flex-shrink:0"></span>`}
       <span style="flex:1;font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}</span>
     </a>`).join('') : '<div style="color:var(--text2);font-size:14px;padding:20px">Sets loading — check back after tonight\'s sync.</div>';
 
   const topCardHTML = topCards.map(c => `
     <a href="/cards/pokemon/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color .2s" onmouseover="this.style.borderColor='var(--poke-yellow)'" onmouseout="this.style.borderColor='var(--border)'">
-      ${c.image_uri ? `<img src="${c.image_uri}" alt="${c.name}" style="width:100%;border-radius:6px;max-height:160px;object-fit:contain">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
+      ${c.image_uri ? `<img src="${c.image_uri}" alt="${c.name}" style="width:100%;border-radius:6px;max-height:160px;object-fit:contain" loading="lazy">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text);line-height:1.3">${c.name}</div>
       ${c.rarity ? `<div style="font-size:10px;color:var(--text2)">${c.rarity}</div>` : ''}
       <div style="font-size:12px;color:var(--poke-yellow);font-weight:700">${c.price_usd ? `~AU$${(c.price_usd*1.58).toFixed(0)}` : ''}</div>
@@ -207,7 +217,7 @@ async function searchCard() {
     if (!cards.length) { results.innerHTML = '<div style="color:var(--text2);font-size:13px">No cards found.</div>'; return; }
     results.innerHTML = cards.map(c => \`
       <a href="/cards/pokemon/\${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color .2s" onmouseover="this.style.borderColor='var(--poke-yellow)'" onmouseout="this.style.borderColor='var(--border)'">
-        \${c.image_uri ? \`<img src="\${c.image_uri}" alt="\${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain">\` : ''}
+        \${c.image_uri ? \`<img src="\${c.image_uri}" alt="\${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain" loading="lazy">\` : ''}
         <div style="font-size:11px;margin-top:4px;color:var(--text);line-height:1.3">\${c.name}</div>
         <div style="font-size:10px;color:var(--text2)">\${c.set_name||''}</div>
         <div style="font-size:12px;color:var(--poke-yellow);font-weight:700">\${c.price_usd ? '~AU$'+(c.price_usd*1.58).toFixed(2) : ''}</div>
