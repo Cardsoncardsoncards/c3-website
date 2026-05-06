@@ -28,7 +28,7 @@ export default async (req) => {
   const hasData = sets.length > 0 || topCards.length > 0;
 
   const setListHTML = sets.length ? sets.map(s => {
-    return `<a href="/cards/lorcana?set=${encodeURIComponent(s.name)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--lorcana-blue)'" onmouseout="this.style.borderColor='var(--border)'" data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
+    return `<a href="/cards/lorcana/sets/${encodeURIComponent(s.set_code || s.id)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--lorcana-blue)'" onmouseout="this.style.borderColor='var(--border)'" data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
       <span style="flex:1;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.name}${s.released_at ? `<span style="font-size:10px;color:var(--text2);margin-left:6px">${s.released_at.slice(0,4)}</span>` : ''}</span>
     </a>`;
   }).join('') : '<div style="color:var(--text2);font-size:14px;padding:20px">Sets loading — check back after tonight\'s sync.</div>';

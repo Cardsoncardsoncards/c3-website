@@ -52,7 +52,7 @@ export default async (req) => {
   const hasData = sets.length > 0 || topCards.length > 0;
 
   const setListHTML = sets.length ? sets.map(s => `
-    <a href="/cards/pokemon?set=${encodeURIComponent(s.name)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;min-width:0;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--poke-yellow)'" onmouseout="this.style.borderColor='var(--border)'"
+    <a href="/cards/pokemon/sets/${encodeURIComponent(s.id)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;min-width:0;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--poke-yellow)'" onmouseout="this.style.borderColor='var(--border)'"
          data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
       ${s.logo_uri ? `<img src="${s.logo_uri}" alt="${s.name}" style="height:28px;object-fit:contain;flex-shrink:0" loading="lazy" onerror="this.style.display='none'">` : `<span style="display:inline-block;width:28px;height:28px;background:var(--bg3);border-radius:4px;flex-shrink:0"></span>`}
       <span style="flex:1;font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}</span>

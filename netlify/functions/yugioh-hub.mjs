@@ -33,7 +33,7 @@ export default async (req) => {
   const topArchetypes = [...archMap.entries()].sort((a,b) => b[1]-a[1]).slice(0,12).map(([name]) => name);
 
   const setListHTML = sets.length ? sets.map(s => `
-    <a href="/cards/yugioh?set=${encodeURIComponent(s.set_name)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--ygo-gold)'" onmouseout="this.style.borderColor='var(--border)'"
+    <a href="/cards/yugioh/sets/${encodeURIComponent(s.set_code)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--ygo-gold)'" onmouseout="this.style.borderColor='var(--border)'"
          data-name="${s.set_name.toLowerCase().replace(/"/g,'&quot;')}">
       <div style="font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.set_name}
         ${s.tcg_date ? `<span style="font-size:10px;color:var(--text2);margin-left:6px">${s.tcg_date.slice(0,4)}</span>` : ''}
