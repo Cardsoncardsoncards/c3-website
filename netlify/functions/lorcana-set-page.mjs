@@ -170,7 +170,7 @@ export default async (req) => {
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
       <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7a8099;min-width:90px">Rarity</span>
       <button class="filt-btn active" data-rarity-filter="all" onclick="setFilter('rarity','all',this)">All</button>
-      ${rarities.map(r => `<button class="filt-btn" data-rarity-filter="${r.toLowerCase()}" onclick="setFilter('rarity','${r.toLowerCase().replace(/'/g,'\\'')}',this)">${r}</button>`).join('')}
+      ${rarities.map(r => { const rs = r.toLowerCase().replace(/[^a-z0-9 ]/g,''); return `<button class="filt-btn" data-rarity-filter="${rs}" onclick="setFilter('rarity','${rs}',this)">${r}</button>`; }).join('')}
     </div>` : '';
 
   const releaseDate = set.released_at ? new Date(set.released_at).toLocaleDateString('en-AU', {day:'numeric',month:'long',year:'numeric'}) : null;
