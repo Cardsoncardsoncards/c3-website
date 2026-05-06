@@ -59,7 +59,7 @@ async function getEbayToken() {
 
 async function getEbayListings(cardName, token) {
   const q = encodeURIComponent(`${cardName} yugioh`);
-  const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${q}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=price&limit=8`;
+  const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${q}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=price&limit=6`;
   const res = await fetch(url, {
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -77,12 +77,14 @@ async function getEbayListings(cardName, token) {
 export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/yugioh/', '').replace(/^\/|\/$/g, '');
-  // Don't handle set pages - let set page function handle those
-  if (slug.startsWith('sets/')) return new Response('Not found', { status: 404, headers });
-
   if (!slug) return new Response('Not found', { status: 404 });
 
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
+
+  // Route guard: /cards/yugioh/sets/* is handled by yugioh-set-page function
+  if (slug.startsWith('sets/')) {
+    return new Response('Not found', { status: 404, headers });
+  }
 
   try {
     const cards = await supabaseGet(`yugioh_cards?slug=eq.${encodeURIComponent(slug)}&limit=1`);
@@ -231,21 +233,16 @@ export default async (req) => {
   </style>
 </head>
 <body>
-<nav style="background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)">
-  <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:#C9A84C;text-transform:uppercase">
-      <img src="/c3logo.png" alt="C3" style="height:28px;width:28px;border-radius:5px;object-fit:cover;flex-shrink:0">
-      <span>Cards on Cards on Cards</span>
-    </a>
-    <div style="display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
-      <a href="/" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(160,196,255,.35);color:#A0C4FF;white-space:nowrap">&#8592; Home</a>
-      <a href="/cards" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Card Vault</a>
-      <a href="/cards/yugioh" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(200,163,50,.35);color:#c8a332;background:rgba(200,163,50,.08);white-space:nowrap">Yu-Gi-Oh</a>
-      <a href="/cards/mtg" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap">MTG</a>
-      <a href="/calendar" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(248,113,113,.35);color:#F87171;white-space:nowrap">Calendar</a>
-      <a href="/generators" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(34,211,238,.35);color:#22D3EE;white-space:nowrap">Generators</a>
-      <a href="/shop.html" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Shop</a>
-      <a href="/tracker.html" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(192,132,252,.35);color:#C084FC;white-space:nowrap">Tracker</a>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Cards on Cards on Cards</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">← Home</a>
+      <a href="/cards/mtg" class="nav-link">MTG</a>
+      <a href="/cards/yugioh" class="nav-link active">Yu-Gi-Oh</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
     </div>
   </div>
 </nav>
@@ -281,19 +278,7 @@ export default async (req) => {
     </div>` : ''}
 
     <div class="price-block">
-        <div class="price-label">Current Price (AUD)</div>
-        ${priceAud
-          ? `<div class="price-main">~AU$${priceAud.toFixed(2)}</div>
-             <div class="price-usd">US$${parseFloat(card.price_usd).toFixed(2)} converted at 1.58 &middot; Source: CardMarket/TCGPlayer</div>
-             <div style="margin-top:8px;font-size:12px;color:var(--text2);line-height:1.5">Estimated AUD price based on USD market data. Actual AU prices vary. Check eBay AU sold listings for the most accurate Australian value.</div>`
-          : ebayListings.length && ebayListings[0].price?.value
-            ? `<div class="price-main" style="font-size:26px">From AU$${parseFloat(ebayListings[0].price.value).toFixed(2)}</div>
-               <div class="price-usd">Current Buy It Now listing on eBay AU &middot; Not a confirmed sold price</div>
-               <div style="margin-top:8px;font-size:12px;color:var(--text2);line-height:1.5">No third-party market price data is available for this card. The price shown is the lowest current Buy It Now listing on eBay AU. Check recent eBay AU sold listings for actual market value in Australia.</div>`
-            : `<div class="price-main" style="color:var(--text2);font-size:20px">Check eBay AU</div>
-               <div style="margin-top:8px;font-size:12px;color:var(--text2);line-height:1.5">Price data is not yet available for this card. Use the Buy on eBay AU button below to see current Australian listings and recent sold prices.</div>`
-        }
-      </div>
+      <div class="price-label">Current Price (AUD)</div>
       ${priceAud
         ? `<div class="price-main">~AU$${priceAud.toFixed(2)}</div>
            <div class="price-usd">US$${parseFloat(card.price_usd).toFixed(2)} TCGplayer · Converted at 1.58 AUD</div>`
