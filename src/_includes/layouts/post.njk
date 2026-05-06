@@ -12,24 +12,28 @@
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/post.css">
 <style>
-/* NAV OVERRIDES FOR CONSISTENCY */
 nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !important}
 .nav-logo{display:inline-flex !important;align-items:center !important;gap:9px !important;white-space:nowrap !important}
 .nav-logo img{width:28px;height:28px;border-radius:6px;flex-shrink:0}
 .nav-links{flex-wrap:nowrap !important;overflow-x:auto !important;scrollbar-width:none !important}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{white-space:nowrap !important}
-.nav-link--gold{color:#C9A84C !important;border-color:#7A621E !important;background:rgba(201,168,76,.06) !important}
-.nav-link--gold:hover{background:rgba(201,168,76,.14) !important;border-color:#C9A84C !important}
-.nav-link--purple{color:#9898FF !important;border-color:rgba(107,107,255,.3) !important;background:rgba(107,107,255,.06) !important}
-.nav-link--purple:hover{background:rgba(107,107,255,.14) !important;border-color:#9898FF !important}
-.nav-link--etsy{color:#F56400 !important;border-color:rgba(245,100,0,.32) !important;background:rgba(245,100,0,.05) !important}
-.nav-link--etsy:hover{background:rgba(245,100,0,.14) !important;border-color:#F56400 !important}
-/* CAROUSEL */
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--shop{color:#C9A84C !important;border-color:rgba(201,168,76,.35) !important}.nav-link--shop:hover{color:#E8C86A !important;border-color:#C9A84C !important;background:rgba(201,168,76,.06) !important}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.06)}
+.nav-link--ev{color:#FB923C !important;border-color:rgba(251,146,60,.35) !important}.nav-link--ev:hover{color:#FDBA74 !important;border-color:#FB923C !important;background:rgba(251,146,60,.06) !important}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316 !important;border-color:rgba(249,115,22,.35) !important;background:rgba(249,115,22,.05) !important}.nav-link--dnd:hover{color:#FB923C !important;border-color:#F97316 !important;background:rgba(249,115,22,.14) !important}
+.nav-link--active{color:#E8C86A !important;border-color:#C9A84C !important;background:rgba(201,168,76,.10) !important}
 @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
 .carousel-section{margin:48px 0 32px;padding:32px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px}
 .carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:6px}
@@ -44,7 +48,6 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
 .ebay-card-price{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#C9A84C;margin-top:4px}
 .ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px}
 .skeleton{background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite}
-/* Share Bar */
 .share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:24px 0;padding:16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px}
 .share-bar-label{font-size:12px;color:#9ba3c4;text-transform:uppercase;letter-spacing:.08em;margin-right:4px;white-space:nowrap;font-family:sans-serif}
 .share-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .18s;white-space:nowrap;font-family:sans-serif}
@@ -56,7 +59,6 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
 .share-whatsapp{background:#25D366;color:#fff}
 .share-copy{background:#22263a;border:1px solid #2d3254;color:#e8eaf0}
 .share-copy:hover{border-color:#C9A84C;color:#C9A84C}
-/* Feedback */
 .feedback-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:998;background:#C9A84C;color:#000;font-size:11px;font-weight:700;letter-spacing:.06em;padding:10px 8px;border-radius:8px 0 0 8px;cursor:pointer;writing-mode:vertical-rl;font-family:sans-serif;border:none}
 .feedback-tab:hover{background:#E8C86A}
 .feedback-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center}
@@ -64,7 +66,6 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
 .feedback-modal{background:#1a1d2e;border:1px solid #2d3254;border-radius:14px;padding:28px;max-width:420px;width:90%;font-family:sans-serif}
 .feedback-star{font-size:26px;cursor:pointer;opacity:.35;transition:opacity .15s;background:none;border:none;padding:0;color:#C9A84C}
 .feedback-star.active{opacity:1}
-/* Helpful */
 .helpful-bar{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.10);border-radius:8px;margin:24px 0;font-family:sans-serif;font-size:13px;color:#9ba3c4}
 .helpful-btn{background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .18s}
 .helpful-btn:hover,.helpful-btn.voted{border-color:#C9A84C;color:#C9A84C}
@@ -79,12 +80,16 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
       Cards on Cards on Cards
     </a>
     <div class="nav-links">
-      <a href="/shop.html" class="nav-link nav-link--gold">Shop</a>
-      <a href="/blog" class="nav-link nav-link--active">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--purple">EV Calc</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--etsy">D&amp;D Tools ↗</a>
+      <a href="/" class="nav-link nav-link--home">← Home</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog nav-link--active">Blog</a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools &#x2197;</a>
       <a href="/contact.html" class="nav-link">Contact</a>
     </div>
   </div>
@@ -106,12 +111,11 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     {% endif %}
   </header>
 
-
   <div class="share-bar" id="post-share-bar">
     <span class="share-bar-label">Share</span>
     <button class="share-btn share-discord" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
     <a id="share-reddit" href="#" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
-    <a id="share-twitter" href="#" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
+    <a id="share-twitter" href="#" target="_blank" rel="noopener" class="share-btn share-twitter">Twitter</a>
     <a id="share-facebook" href="#" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
     <a id="share-whatsapp" href="#" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
     <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
@@ -129,7 +133,6 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
   </div>
   {% endif %}
 
-
   <div class="helpful-bar" id="helpful-bar">
     <span>Was this guide helpful?</span>
     <button class="helpful-btn" onclick="voteHelpful(1,this)">👍 Yes</button>
@@ -140,12 +143,11 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     <span class="share-bar-label">Share this guide</span>
     <button class="share-btn share-discord" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
     <a id="share-reddit-b" href="#" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
-    <a id="share-twitter-b" href="#" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
+    <a id="share-twitter-b" href="#" target="_blank" rel="noopener" class="share-btn share-twitter">Twitter</a>
     <a id="share-whatsapp-b" href="#" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
     <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
   </div>
 
-  <!-- EBAY CAROUSEL -->
   <div class="carousel-section">
     <span class="carousel-eyebrow">Live from Our eBay Store</span>
     <h2 class="carousel-title">Top Listings Right Now</h2>
@@ -157,10 +159,9 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
       <div class="skeleton" style="min-width:160px;height:215px;flex-shrink:0;animation-delay:.4s"></div>
     </div>
     <div style="text-align:right;margin-top:8px">
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3PostCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay ↗</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3PostCarousel&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="font-size:12px;color:#C9A84C;text-decoration:none;opacity:.7">View all listings on eBay &#x2197;</a>
     </div>
   </div>
-  <!-- END EBAY CAROUSEL -->
 
   <div class="post-nav">
     <a href="/blog" class="post-back">← Back to Blog</a>
@@ -175,14 +176,16 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
       <div class="footer-logo">Cards on Cards on Cards</div>
       <div class="footer-links">
         <a href="/" class="footer-link">Home</a>
+        <a href="/cards" class="footer-link">Card Vault</a>
         <a href="/shop.html" class="footer-link">Shop</a>
         <a href="/blog" class="footer-link">Blog</a>
+        <a href="/calendar" class="footer-link">Calendar</a>
+        <a href="/generators" class="footer-link">Generators</a>
         <a href="/ev-calculator.html" class="footer-link">EV Calc</a>
         <a href="/tracker.html" class="footer-link">Tracker</a>
         <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
       </div>
-      <a href="https://www.instagram.com/cardsoncardsoncards" target="_blank" rel="noopener" style="font-size:12px;color:#9ba3c4;display:block;margin-bottom:8px">📸 Follow us on Instagram</a>
-      <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
+      <div class="footer-copy">&copy; 2026 Cards on Cards on Cards. All rights reserved.</div>
     </div>
   </div>
 </footer>
@@ -194,8 +197,6 @@ document.addEventListener('click', function(e) {
   var href = el.getAttribute('href') || '';
   if (href.includes('docs.google.com/spreadsheets')) {
     gtag('event', 'tracker_open', {event_category: 'outbound', event_label: 'free_tracker'});
-  } else if (href.includes('etsy.com/au/listing')) {
-    gtag('event', 'etsy_tool_click', {event_category: 'outbound', event_label: el.textContent.trim().substring(0, 60)});
   } else if (href.includes('blasdigital.etsy.com')) {
     gtag('event', 'etsy_store_click', {event_category: 'outbound', event_label: 'blasdigital_store'});
   } else if (href.includes('ebay.com.au')) {
@@ -233,19 +234,17 @@ document.addEventListener('click', function(e) {
 })();
 </script>
 
-
-<!-- Feedback Tab -->
 <button class="feedback-tab" onclick="document.getElementById('feedback-overlay').classList.add('open')">Give Feedback</button>
 <div id="feedback-overlay" class="feedback-overlay" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="feedback-modal">
     <h3 style="margin-bottom:6px;color:#f0f2ff;font-size:17px">Share Your Feedback</h3>
     <p style="font-size:13px;color:#9ba3c4;margin-bottom:14px">Help us build a better site for the Australian TCG community.</p>
     <div style="display:flex;gap:8px;margin-bottom:14px">
-      <button class="feedback-star" onclick="setFeedbackRating(1)">★</button>
-      <button class="feedback-star" onclick="setFeedbackRating(2)">★</button>
-      <button class="feedback-star" onclick="setFeedbackRating(3)">★</button>
-      <button class="feedback-star" onclick="setFeedbackRating(4)">★</button>
-      <button class="feedback-star" onclick="setFeedbackRating(5)">★</button>
+      <button class="feedback-star" onclick="setFeedbackRating(1)">⭐</button>
+      <button class="feedback-star" onclick="setFeedbackRating(2)">⭐</button>
+      <button class="feedback-star" onclick="setFeedbackRating(3)">⭐</button>
+      <button class="feedback-star" onclick="setFeedbackRating(4)">⭐</button>
+      <button class="feedback-star" onclick="setFeedbackRating(5)">⭐</button>
     </div>
     <textarea id="feedback-text" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:10px;border-radius:8px;font-size:13px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:sans-serif" placeholder="What can we improve? What guides would you like to see?"></textarea>
     <input type="email" id="feedback-email" style="width:100%;background:#22263a;border:1px solid #2d3254;color:#e8eaf0;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;font-family:sans-serif" placeholder="Email (optional)">
@@ -256,7 +255,6 @@ document.addEventListener('click', function(e) {
 </div>
 
 <script>
-// Share bar dynamic URLs
 (function(){
   const url = encodeURIComponent(window.location.href);
   const title = encodeURIComponent(document.title);
@@ -266,7 +264,6 @@ document.addEventListener('click', function(e) {
   ['share-facebook','share-facebook-b'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://www.facebook.com/sharer/sharer.php?u='+url; });
 })();
 
-// Helpful vote
 function voteHelpful(val, btn) {
   document.querySelectorAll('.helpful-btn').forEach(b => b.classList.remove('voted'));
   btn.classList.add('voted');
@@ -275,7 +272,6 @@ function voteHelpful(val, btn) {
   setTimeout(()=>{const bar=document.getElementById('helpful-bar');if(bar)bar.innerHTML='<span style="color:#9ba3c4;font-size:13px">Thanks! We use this to improve our guides.</span>';},800);
 }
 
-// Feedback widget
 let feedbackRating = 0;
 function setFeedbackRating(val) {
   feedbackRating = val;

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TCG Release Calendar 2026-2027 Australia | Cards on Cards on Cards</title>
+<meta name="description" content="Every TCG release date for Australia in 2026 and 2027. MTG, Pokemon, Lorcana, Yu-Gi-Oh, One Piece, Riftbound, Dragon Ball Super, Star Wars Unlimited and more. Updated regularly.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/calendar">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "TCG Release Calendar 2026-2027 Australia",
+  "description": "Every TCG release date for Australia in 2026 and 2027.",
+  "url": "https://cardsoncardsoncards.com.au/calendar",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://cardsoncardsoncards.com.au"},
+      {"@type":"ListItem","position":2,"name":"TCG Release Calendar","item":"https://cardsoncardsoncards.com.au/calendar"}
+    ]
+  }
+}
+</script>
+<style>
+:root{
+  --bg:#080a0f;--bg2:#0e1118;--bg3:#141720;
+  --gold:#C9A84C;--gold-dim:rgba(201,168,76,.15);
+  --silver:#A0A8C0;--white:#F0F2FF;
+  --border:#1e2235;--text2:#7a8099;
+  --radius:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+
+nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
+.nav-logo{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-link{padding:6px 11px;border-radius:6px;font-size:11.5px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);transition:all .2s}
+.nav-link:hover,.nav-link.active{color:var(--white);border-color:var(--gold);color:var(--gold)}
+
+.hero{padding:52px 24px 40px;text-align:center;max-width:800px;margin:0 auto}
+h1{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,40px);font-weight:700;color:var(--gold);margin-bottom:10px}
+.hero-sub{font-size:15px;color:var(--text2);margin-bottom:32px}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+
+/* Filters */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;padding:16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
+.filter-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;font-weight:600;align-self:center;margin-right:4px}
+.filter-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--silver);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.filter-btn:hover{border-color:var(--silver);color:var(--white)}
+.filter-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+
+/* Month headers */
+.month-header{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--silver);margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.month-count{font-size:11px;color:var(--text2);font-family:'DM Sans',sans-serif;font-weight:400}
+
+/* Release rows */
+.release-row{display:grid;grid-template-columns:100px 1fr auto;gap:12px;align-items:start;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;transition:border-color .2s}
+.release-row:hover{border-color:rgba(201,168,76,.3)}
+.release-row.priority-high{border-left:3px solid var(--gold)}
+.release-row.priority-veryhigh{border-left:3px solid #4ade80}
+
+.release-date{font-size:13px;font-weight:600;color:var(--white);white-space:nowrap}
+.release-date-sub{font-size:11px;color:var(--text2);margin-top:2px}
+
+.release-main{}
+.release-game{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.release-name{font-size:14px;font-weight:600;color:var(--white);margin-bottom:3px}
+.release-type{font-size:11px;color:var(--text2)}
+.release-prerelease{font-size:11px;color:var(--text2);margin-top:3px}
+
+.release-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end;min-width:80px}
+.badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.badge-confirmed{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ade80}
+.badge-estimated{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24}
+.badge-announced{background:rgba(160,168,192,.1);border:1px solid rgba(160,168,192,.3);color:#a0a8c0}
+.badge-tbc{background:rgba(160,168,192,.08);border:1px solid rgba(160,168,192,.2);color:#7a8099}
+
+.ebay-link{font-size:11px;color:var(--gold);padding:4px 10px;border:1px solid var(--gold-dim);border-radius:6px;white-space:nowrap;transition:all .2s}
+.ebay-link:hover{background:var(--gold-dim);text-decoration:none}
+
+.no-results{text-align:center;padding:60px 24px;color:var(--text2);font-size:15px}
+
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px}
+footer a{color:var(--text2);margin:0 8px}
+
+@media(max-width:600px){
+  .release-row{grid-template-columns:1fr;gap:8px}
+  .release-actions{flex-direction:row;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Cards on Cards on Cards</a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/cards" class="nav-link">Card Vault</a>
+    <a href="/shop.html" class="nav-link">Shop</a>
+    <a href="/blog" class="nav-link">Blog</a>
+    <a href="/calendar" class="nav-link active">Calendar</a>
+    <a href="/contact.html" class="nav-link">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>TCG Release Calendar</h1>
+  <p class="hero-sub">Every confirmed and upcoming TCG release date for Australia — 2026 and 2027. Updated regularly. Prices in AUD.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="filter-bar">
+    <span class="filter-label">Game</span>
+    <button class="filter-btn active" data-game="all" onclick="filterGame(this)">All Games</button>
+    <button class="filter-btn" data-game="mtg" onclick="filterGame(this)">MTG</button>
+    <button class="filter-btn" data-game="pokemon" onclick="filterGame(this)">Pokemon</button>
+    <button class="filter-btn" data-game="lorcana" onclick="filterGame(this)">Lorcana</button>
+    <button class="filter-btn" data-game="onepiece" onclick="filterGame(this)">One Piece</button>
+    <button class="filter-btn" data-game="yugioh" onclick="filterGame(this)">Yu-Gi-Oh</button>
+    <button class="filter-btn" data-game="riftbound" onclick="filterGame(this)">Riftbound</button>
+    <button class="filter-btn" data-game="starwars" onclick="filterGame(this)">Star Wars</button>
+    <button class="filter-btn" data-game="dbz" onclick="filterGame(this)">Dragon Ball</button>
+    <button class="filter-btn" data-game="other" onclick="filterGame(this)">Other TCGs</button>
+  </div>
+
+  <div id="calendar-body"></div>
+
+</div>
+
+<footer>
+  <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/tracker.html">Tracker</a><a href="/contact.html">Contact</a></p>
+  <p style="margin-top:8px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Release dates are best estimates for Australia. Always verify with your local game store. Confirmed = official source. Estimated = retailer or distributor data.</p>
+</footer>
+
+<script>
+const RELEASES = [
+  {date:'2026-05-08',game:'riftbound',gameLabel:'Riftbound',gameCss:'riftbound',name:'Unleashed',type:'Main booster set',prerelease:'Pre-release: 1-7 May 2026',status:'confirmed',priority:'high',ebayQuery:'Riftbound Unleashed'},
+  {date:'2026-05-08',game:'lorcana',gameLabel:'Disney Lorcana',gameCss:'lorcana',name:'Wilds Unknown',type:'LGS release',prerelease:'LGS release 8 May, wide retail 15 May',status:'confirmed',priority:'high',ebayQuery:'Lorcana Wilds Unknown'},
+  {date:'2026-05-15',game:'lorcana',gameLabel:'Disney Lorcana',gameCss:'lorcana',name:'Wilds Unknown',type:'Wide retail release',prerelease:'',status:'confirmed',priority:'high',ebayQuery:'Lorcana Wilds Unknown'},
+  {date:'2026-05-15',game:'other',gameLabel:'Digimon Card Game',gameCss:'other',name:'ST-23 Beatbreak / ST-24 Data Squad',type:'Starter decks',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'Digimon ST-23 ST-24'},
+  {date:'2026-05-22',game:'other',gameLabel:'Digimon Card Game',gameCss:'other',name:'Dual Revolution (BT-25)',type:'Booster set',prerelease:'Pre-release: 15 May 2026',status:'confirmed',priority:'medium',ebayQuery:'Digimon BT-25 Dual Revolution'},
+  {date:'2026-05-22',game:'pokemon',gameLabel:'Pokemon TCG',gameCss:'pokemon',name:'Mega Evolution: Chaos Rising',type:'Main expansion',prerelease:'Pre-release: 9-17 May 2026',status:'confirmed',priority:'high',ebayQuery:'Pokemon Mega Evolution Chaos Rising'},
+  {date:'2026-05-29',game:'other',gameLabel:'Flesh and Blood',gameCss:'other',name:'Armory Deck: Zyggy',type:'Armory deck',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'FAB Armory Deck Zyggy'},
+  {date:'2026-06-04',game:'yugioh',gameLabel:'Yu-Gi-Oh! TCG',gameCss:'yugioh',name:'Battles of Legend: Glorious Gallery',type:'Booster set',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'Yu-Gi-Oh Battles of Legend Glorious Gallery'},
+  {date:'2026-06-05',game:'other',gameLabel:'Flesh and Blood',gameCss:'other',name:'Omens of the Third Age',type:'Booster set',prerelease:'Pre-release: 29 May - 4 Jun 2026',status:'confirmed',priority:'high',ebayQuery:'FAB Omens of the Third Age'},
+  {date:'2026-06-12',game:'onepiece',gameLabel:'One Piece Card Game',gameCss:'onepiece',name:'OP-16 The Time of Battle',type:'Booster set',prerelease:'',status:'confirmed',priority:'high',ebayQuery:'One Piece OP-16 Time of Battle'},
+  {date:'2026-06-12',game:'dbz',gameLabel:'Dragon Ball Super FW',gameCss:'dbz',name:'Cross Force (FB10)',type:'Booster set',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'Dragon Ball Super Cross Force FB10'},
+  {date:'2026-06-26',game:'mtg',gameLabel:'Magic: The Gathering',gameCss:'mtg',name:'Marvel Super Heroes',type:'Main set',prerelease:'Pre-release: 19-25 Jun 2026',status:'confirmed',priority:'veryhigh',ebayQuery:'MTG Marvel Super Heroes'},
+  {date:'2026-07-03',game:'yugioh',gameLabel:'Yu-Gi-Oh! TCG',gameCss:'yugioh',name:'Chaos Origins',type:'Booster set',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'Yu-Gi-Oh Chaos Origins'},
+  {date:'2026-07-03',game:'other',gameLabel:'Digimon Card Game',gameCss:'other',name:'Digital World Shambala (EX-12)',type:'Extra booster',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'Digimon EX-12 Shambala'},
+  {date:'2026-07-17',game:'pokemon',gameLabel:'Pokemon TCG',gameCss:'pokemon',name:'Mega Evolution: Pitch Black',type:'Main expansion',prerelease:'Pre-release: 4-12 Jul 2026',status:'confirmed',priority:'veryhigh',ebayQuery:'Pokemon Mega Evolution Pitch Black'},
+  {date:'2026-07-17',game:'starwars',gameLabel:'Star Wars: Unlimited',gameCss:'starwars',name:'Ashes of the Empire',type:'Booster set',prerelease:'Pre-release: approx 1 week prior',status:'estimated',priority:'high',ebayQuery:'Star Wars Unlimited Ashes of the Empire'},
+  {date:'2026-07-24',game:'lorcana',gameLabel:'Disney Lorcana',gameCss:'lorcana',name:'Attack of the Vine',type:'Wide retail release',prerelease:'Pre-release: 17 Jul 2026',status:'confirmed',priority:'high',ebayQuery:'Lorcana Attack of the Vine'},
+  {date:'2026-07-24',game:'other',gameLabel:'Gundam Card Game',gameCss:'other',name:'Freedom Ascension (GD05)',type:'Anniversary booster',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'Gundam Card Game GD05 Freedom Ascension'},
+  {date:'2026-07-30',game:'other',gameLabel:'Palworld TCG',gameCss:'other',name:'Palworld TCG Launch Set',type:'New TCG launch',prerelease:'',status:'announced',priority:'low',ebayQuery:'Palworld TCG'},
+  {date:'2026-07-31',game:'riftbound',gameLabel:'Riftbound',gameCss:'riftbound',name:'Vendetta',type:'Main booster set',prerelease:'Pre-release: 24-30 Jul 2026',status:'confirmed',priority:'high',ebayQuery:'Riftbound Vendetta'},
+  {date:'2026-07-31',game:'other',gameLabel:'Cardfight!! Vanguard',gameCss:'other',name:'SS15: The Legendary Vanguards',type:'Special series',prerelease:'',status:'estimated',priority:'low',ebayQuery:'Vanguard SS15 Legendary Vanguards'},
+  {date:'2026-08-07',game:'other',gameLabel:'Flesh and Blood',gameCss:'other',name:'Mastery Pack Warrior',type:'Mastery pack',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'FAB Mastery Pack Warrior'},
+  {date:'2026-08-07',game:'other',gameLabel:'Flesh and Blood',gameCss:'other',name:'Armory Deck: Olympia',type:'Armory deck',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'FAB Armory Deck Olympia'},
+  {date:'2026-08-14',game:'mtg',gameLabel:'Magic: The Gathering',gameCss:'mtg',name:'The Hobbit',type:'Universes Beyond main set',prerelease:'Pre-release: approx 7-13 Aug 2026',status:'confirmed',priority:'veryhigh',ebayQuery:'MTG The Hobbit'},
+  {date:'2026-08-21',game:'dbz',gameLabel:'Dragon Ball Super FW',gameCss:'dbz',name:'Story Booster 01 (ST01)',type:'Story booster',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'Dragon Ball Super Story Booster ST01'},
+  {date:'2026-08-28',game:'onepiece',gameLabel:'One Piece Card Game',gameCss:'onepiece',name:'OP-17 The World\'s Strongest Warriors',type:'Booster set',prerelease:'',status:'estimated',priority:'veryhigh',ebayQuery:'One Piece OP-17'},
+  {date:'2026-08-28',game:'other',gameLabel:'Cardfight!! Vanguard',gameCss:'other',name:'DZ-BT15 Strike of Illusionary Shadows',type:'Booster pack',prerelease:'',status:'confirmed',priority:'low',ebayQuery:'Vanguard DZ-BT15'},
+  {date:'2026-10-01',game:'other',gameLabel:'Cyberpunk TCG',gameCss:'other',name:'Welcome to Night City',type:'New TCG launch',prerelease:'Second wave Q4 2026',status:'estimated',priority:'medium',ebayQuery:'Cyberpunk TCG Night City'},
+  {date:'2026-10-02',game:'mtg',gameLabel:'Magic: The Gathering',gameCss:'mtg',name:'Reality Fracture',type:'Main set',prerelease:'Pre-release: approx 1 week prior',status:'confirmed',priority:'high',ebayQuery:'MTG Reality Fracture'},
+  {date:'2026-10-23',game:'riftbound',gameLabel:'Riftbound',gameCss:'riftbound',name:'Radiance',type:'Main booster set',prerelease:'Pre-release: 16-22 Oct 2026',status:'confirmed',priority:'high',ebayQuery:'Riftbound Radiance'},
+  {date:'2026-10-23',game:'other',gameLabel:'Gundam Card Game',gameCss:'other',name:'Stardust Trails / Mobile Suit Gundam ZZ (GD06)',type:'Booster set',prerelease:'',status:'confirmed',priority:'medium',ebayQuery:'Gundam Card Game GD06'},
+  {date:'2026-10-30',game:'onepiece',gameLabel:'One Piece Card Game',gameCss:'onepiece',name:'Mini Case Set Vol.3 (TS-03)',type:'Collector product',prerelease:'',status:'estimated',priority:'low',ebayQuery:'One Piece TS-03 Mini Case'},
+  {date:'2026-10-31',game:'dbz',gameLabel:'Dragon Ball Super FW',gameCss:'dbz',name:'Brightness of Hope (FB11)',type:'Booster pack',prerelease:'',status:'announced',priority:'medium',ebayQuery:'Dragon Ball Super FB11'},
+  {date:'2026-10-31',game:'lorcana',gameLabel:'Disney Lorcana',gameCss:'lorcana',name:"Illumineer's Quest: The Great Hunny Rescue",type:'Co-op quest product',prerelease:'',status:'estimated',priority:'medium',ebayQuery:"Lorcana Illumineer's Quest Hunny"},
+  {date:'2026-11-15',game:'starwars',gameLabel:'Star Wars: Unlimited',gameCss:'starwars',name:'Homeworlds',type:'Booster set',prerelease:'TBC',status:'announced',priority:'medium',ebayQuery:'Star Wars Unlimited Homeworlds'},
+  {date:'2026-11-20',game:'mtg',gameLabel:'Magic: The Gathering',gameCss:'mtg',name:'Star Trek',type:'Universes Beyond set',prerelease:'Pre-release: approx 1 week prior',status:'confirmed',priority:'veryhigh',ebayQuery:'MTG Star Trek'},
+  {date:'2026-12-01',game:'lorcana',gameLabel:'Disney Lorcana',gameCss:'lorcana',name:'Hyperia City / Pixar Coco',type:'Main set',prerelease:'TBC',status:'announced',priority:'high',ebayQuery:'Lorcana Hyperia City Coco'},
+  {date:'2026-12-01',game:'other',gameLabel:'Sorcery: Contested Realm',gameCss:'other',name:'Avatar of the Realm',type:'Booster set',prerelease:'TBC',status:'announced',priority:'low',ebayQuery:'Sorcery TCG Avatar of the Realm'},
+  {date:'2026-12-01',game:'other',gameLabel:'Digimon Card Game',gameCss:'other',name:'BT-27 / ST-25 / ST-26',type:'Booster and starter decks',prerelease:'TBC',status:'tbc',priority:'medium',ebayQuery:'Digimon BT-27'},
+  {date:'2027-01-01',game:'other',gameLabel:'Digimon Card Game',gameCss:'other',name:'EX-14',type:'Extra booster',prerelease:'TBC',status:'tbc',priority:'low',ebayQuery:'Digimon EX-14'},
+];
+
+// Game colour mapping
+const GAME_COLOURS = {
+  mtg:'#C9A84C', pokemon:'#FFCC00', lorcana:'#0189C4',
+  onepiece:'#e03030', yugioh:'#8040c0', riftbound:'#5865F2',
+  starwars:'#ffe81f', dbz:'#ff6600', other:'#A0A8C0'
+};
+
+const EPN_CAMPID = '5339146789';
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-AU', {day:'numeric', month:'short'});
+}
+
+function formatMonthYear(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-AU', {month:'long', year:'numeric'});
+}
+
+function getMonthKey(dateStr) {
+  return dateStr.slice(0,7);
+}
+
+function badgeHTML(status) {
+  const map = {
+    confirmed:'<span class="badge badge-confirmed">Confirmed</span>',
+    estimated:'<span class="badge badge-estimated">Estimated</span>',
+    announced:'<span class="badge badge-announced">Announced</span>',
+    tbc:'<span class="badge badge-tbc">TBC</span>'
+  };
+  return map[status] || map.tbc;
+}
+
+function ebayURL(query) {
+  return `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(query)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+}
+
+function priorityClass(p) {
+  if (p === 'veryhigh') return 'priority-veryhigh';
+  if (p === 'high') return 'priority-high';
+  return '';
+}
+
+let activeGame = 'all';
+
+function filterGame(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeGame = btn.dataset.game;
+  render();
+}
+
+function render() {
+  const filtered = activeGame === 'all'
+    ? RELEASES
+    : RELEASES.filter(r => r.game === activeGame);
+
+  if (!filtered.length) {
+    document.getElementById('calendar-body').innerHTML = '<div class="no-results">No releases found for that filter.</div>';
+    return;
+  }
+
+  // Group by month
+  const groups = new Map();
+  filtered.forEach(r => {
+    const key = getMonthKey(r.date);
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(r);
+  });
+
+  let html = '';
+  groups.forEach((releases, monthKey) => {
+    const label = formatMonthYear(monthKey + '-01');
+    html += `<div class="month-header">${label} <span class="month-count">${releases.length} release${releases.length !== 1 ? 's' : ''}</span></div>`;
+    releases.forEach(r => {
+      const colour = GAME_COLOURS[r.game] || '#A0A8C0';
+      html += `
+      <div class="release-row ${priorityClass(r.priority)}" data-game="${r.game}">
+        <div>
+          <div class="release-date">${formatDate(r.date)}</div>
+          <div class="release-date-sub">AU date</div>
+        </div>
+        <div class="release-main">
+          <div class="release-game" style="color:${colour}">${r.gameLabel}</div>
+          <div class="release-name">${r.name}</div>
+          <div class="release-type">${r.type}</div>
+          ${r.prerelease ? `<div class="release-prerelease">${r.prerelease}</div>` : ''}
+        </div>
+        <div class="release-actions">
+          ${badgeHTML(r.status)}
+          <a href="${ebayURL(r.ebayQuery)}" target="_blank" rel="noopener sponsored" class="ebay-link">Shop eBay ↗</a>
+        </div>
+      </div>`;
+    });
+  });
+
+  document.getElementById('calendar-body').innerHTML = html;
+}
+
+render();
+</script>
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+</body>
+</html>

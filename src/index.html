@@ -123,6 +123,8 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .hub-tile--tracker .hub-tile-label,.hub-tile--tracker .hub-tile-cta{color:#C084FC}
 .hub-tile--tracker .hub-tile-title{color:#DDD6FE}
 
+.hub-tile--calendar{border-color:rgba(248,113,113,.2)}.hub-tile--calendar::before{background:linear-gradient(135deg,rgba(248,113,113,.06),transparent)}.hub-tile--calendar:hover{border-color:rgba(248,113,113,.45)}.hub-tile--calendar:hover::before{opacity:1}.hub-tile--calendar .hub-tile-label,.hub-tile--calendar .hub-tile-cta{color:#F87171}.hub-tile--calendar .hub-tile-title{color:#FCA5A5}
+.hub-tile--quiz{border-color:rgba(34,211,238,.2)}.hub-tile--quiz::before{background:linear-gradient(135deg,rgba(34,211,238,.06),transparent)}.hub-tile--quiz:hover{border-color:rgba(34,211,238,.45)}.hub-tile--quiz:hover::before{opacity:1}.hub-tile--quiz .hub-tile-label,.hub-tile--quiz .hub-tile-cta{color:#22D3EE}.hub-tile--quiz .hub-tile-title{color:#67E8F9}
 .hub-tile--random{border-color:rgba(244,114,182,.2)}
 .hub-tile--random::before{background:linear-gradient(135deg,rgba(244,114,182,.07),transparent)}
 .hub-tile--random:hover{border-color:rgba(244,114,182,.45)}
@@ -214,6 +216,8 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .ebay-card-cta{font-size:10px;color:rgba(160,168,192,.5);margin-top:2px;text-align:left}
 .skeleton{min-width:200px;height:260px;background:#161929;border:1px solid #252840;border-radius:12px;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0}
 
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.06)}
 </style>
 </head>
 <body>
@@ -299,7 +303,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <p class="hub-tile-cta">Get Free Tracker →</p>
     </a>
 
-    <a href="/cards/mtg?page=random-commander" class="hub-tile hub-tile--random">
+    <a href="/generators" class="hub-tile hub-tile--random">
       <div class="hub-tile-icon">🎲</div>
       <p class="hub-tile-label">Commander Generator</p>
       <div class="hub-tile-title">Find Your Next Commander</div>

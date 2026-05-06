@@ -3,6 +3,7 @@
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
+const EPN_CAMPID        = '5339146789';
 
 async function supabaseGet(path) {
   try {
@@ -14,7 +15,6 @@ async function supabaseGet(path) {
   } catch(e) { return []; }
 }
 
-// Lorcana ink colours
 const INK_COLOURS = { Amber:'#f5a623', Amethyst:'#7c3aed', Emerald:'#059669', Ruby:'#dc2626', Sapphire:'#2563eb', Steel:'#6b7280' };
 
 export default async (req) => {
@@ -28,7 +28,6 @@ export default async (req) => {
   const hasData = sets.length > 0 || topCards.length > 0;
 
   const setListHTML = sets.length ? sets.map(s => {
-    const setSlug = s.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
     return `<a href="/cards/lorcana?set=${encodeURIComponent(s.name)}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--lorcana-blue)'" onmouseout="this.style.borderColor='var(--border)'" data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
       <span style="flex:1;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.name}${s.released_at ? `<span style="font-size:10px;color:var(--text2);margin-left:6px">${s.released_at.slice(0,4)}</span>` : ''}</span>
     </a>`;
@@ -38,13 +37,15 @@ export default async (req) => {
     const inkColour = INK_COLOURS[c.ink] || '#888';
     const fullName = c.version ? `${c.name} — ${c.version}` : c.name;
     return `<a href="/cards/lorcana/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color .2s;border-top:2px solid ${inkColour}" onmouseover="this.style.borderColor='${inkColour}'" onmouseout="this.style.borderColor='var(--border)';this.style.borderTopColor='${inkColour}'">
-      ${c.image_uri ? `<img src="${c.image_uri}" alt="${fullName}" style="width:100%;border-radius:6px;max-height:160px;object-fit:contain">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
+      ${c.image_uri ? `<img src="${c.image_uri}" alt="${fullName}" style="width:100%;border-radius:6px;max-height:160px;object-fit:contain" loading="lazy">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
       <div style="font-size:10px;color:${inkColour};margin-top:4px;font-weight:700">${c.ink || ''}</div>
       <div style="font-size:11px;color:var(--text);line-height:1.3">${c.name}</div>
       ${c.version ? `<div style="font-size:10px;color:var(--text2)">${c.version}</div>` : ''}
       <div style="font-size:12px;color:var(--lorcana-gold);font-weight:700">${c.price_usd ? `~AU$${(c.price_usd*1.58).toFixed(0)}` : ''}</div>
     </a>`;
   }).join('');
+
+  const ebayStoreURL = `https://www.ebay.com.au/sch/i.html?_nkw=lorcana&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
@@ -54,6 +55,7 @@ export default async (req) => {
   <title>Disney Lorcana Card Prices Australia | Cards on Cards on Cards</title>
   <meta name="description" content="Browse Disney Lorcana card prices in AUD. Australia's Lorcana price guide with live AUD conversion and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana">
+  <link rel="icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -69,9 +71,8 @@ export default async (req) => {
     .nav-link{font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);color:var(--text2);transition:all .2s}
     .nav-link:hover{color:var(--text);border-color:var(--text2);text-decoration:none}
     .nav-link.active{color:var(--lorcana-blue);border-color:var(--lorcana-blue);background:rgba(1,137,196,.06)}
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(1,137,196,.06),transparent 60%),radial-gradient(ellipse 40% 30% at 80% 80%,rgba(245,178,2,.04),transparent 50%)}
     .hero{padding:48px 24px 40px;text-align:center;position:relative;z-index:1}
-    h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,44px);font-weight:700;color:var(--text);margin-bottom:12px}
+    h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,48px);font-weight:700;color:var(--text);margin-bottom:12px}
     h1 span{color:var(--lorcana-gold)}
     .hero-sub{font-size:16px;color:var(--text2);max-width:600px;margin:0 auto 32px}
     .stat-bar{display:flex;gap:0;justify-content:center;border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:480px;margin:0 auto 40px}
@@ -87,7 +88,6 @@ export default async (req) => {
     .btn{display:inline-block;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:opacity .2s}
     .btn:hover{opacity:.85;text-decoration:none}
     .btn-primary{background:var(--lorcana-blue);color:#fff}
-    .btn-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
     .ink-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
     .ink-btn{padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .2s;background:none}
     .ink-btn.active{border-color:currentColor;background:rgba(255,255,255,.06)}
@@ -99,6 +99,9 @@ export default async (req) => {
     footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:13px;color:var(--text2);margin-top:48px}
     footer a{color:var(--text2);margin:0 8px}
     #search-results{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+  
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.06)}
   </style>
 </head>
 <body>
@@ -111,6 +114,8 @@ export default async (req) => {
       <a href="/cards/pokemon" class="nav-link">Pokemon</a>
       <a href="/cards/lorcana" class="nav-link active">Lorcana</a>
       <a href="/cards/yugioh" class="nav-link">Yu-Gi-Oh</a>
+            <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
       <a href="/shop.html" class="nav-link">Shop</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
     </div>
@@ -132,23 +137,9 @@ export default async (req) => {
 
   <div class="quick-links">
     <a href="/tracker.html" class="quick-link" style="background:linear-gradient(135deg,#0189C4,#0070a8);color:#fff">📋 Free Tracker</a>
+    <a href="${ebayStoreURL}" target="_blank" rel="noopener sponsored" class="quick-link" style="background:var(--bg2);border:1px solid var(--border);color:var(--text)">🛒 Shop Lorcana on eBay ↗</a>
     <a href="/blog/is-disney-lorcana-worth-starting-2026-australia/" class="quick-link" style="background:var(--bg2);border:1px solid var(--border);color:var(--text)">Is Lorcana Worth It? →</a>
     <a href="/blog/best-lorcana-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border:1px solid var(--border);color:var(--text)">Best Booster Boxes →</a>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Search Lorcana Cards</div>
-    <div class="ink-filter">
-      ${Object.entries(INK_COLOURS).map(([ink, colour]) =>
-        `<button class="ink-btn" style="color:${colour}" onclick="filterByInk('${ink}',this)">${ink}</button>`
-      ).join('')}
-      <button class="ink-btn" style="color:var(--text2)" onclick="clearInk(this)">All Inks</button>
-    </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <input type="text" id="card-search" placeholder="Card name e.g. Elsa, Moana..." onkeyup="if(event.key==='Enter')searchCard()">
-      <button class="btn btn-primary" onclick="searchCard()">Search</button>
-    </div>
-    <div id="search-results"></div>
   </div>
 
   ${topCards.length ? `
@@ -156,6 +147,21 @@ export default async (req) => {
     <div class="section-title">Most Valuable Lorcana Cards (AUD)</div>
     <div class="top-cards-grid">${topCardHTML}</div>
   </div>` : ''}
+
+  <div class="section">
+    <div class="section-title">Search Lorcana Cards</div>
+    <div class="ink-filter">
+      ${Object.entries(INK_COLOURS).map(([ink, colour]) =>
+        `<button class="ink-btn" style="color:${colour}" onclick="filterByInk('${ink}',this)">${ink}</button>`
+      ).join('')}
+      <button class="ink-btn active" style="color:var(--text2)" onclick="clearInk(this)">All Inks</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <input type="text" id="card-search" placeholder="Card name e.g. Elsa, Moana..." onkeyup="if(event.key==='Enter')searchCard()">
+      <button class="btn btn-primary" onclick="searchCard()">Search</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
 
   <div class="section">
     <div class="section-title">Browse by Set</div>
@@ -167,7 +173,7 @@ export default async (req) => {
   <div style="text-align:center;padding:40px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:28px">
     <div style="font-size:32px;margin-bottom:12px">🏰</div>
     <h2 style="font-size:20px;margin-bottom:8px;color:var(--lorcana-gold)">Lorcana Cards Syncing</h2>
-    <p style="color:var(--text2);font-size:14px;max-width:400px;margin:0 auto 20px">The first Lorcana sync is running overnight. Check back tomorrow — all sets will be live.</p>
+    <p style="color:var(--text2);font-size:14px;max-width:400px;margin:0 auto 20px">The first Lorcana sync is running overnight. Check back tomorrow.</p>
     <a href="/tracker.html" class="btn btn-primary">Get the Free Tracker →</a>
   </div>` : ''}
 
@@ -224,7 +230,7 @@ async function searchCard() {
       const colour = inkColours[c.ink] || '#888';
       const fullName = c.version ? c.name + ' — ' + c.version : c.name;
       return \`<a href="/cards/lorcana/\${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-top:2px solid \${colour};border-radius:8px;padding:8px;text-align:center;display:block">
-        \${c.image_uri ? \`<img src="\${c.image_uri}" alt="\${fullName}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain">\` : ''}
+        \${c.image_uri ? \`<img src="\${c.image_uri}" alt="\${fullName}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain" loading="lazy">\` : ''}
         <div style="font-size:10px;color:\${colour};margin-top:4px;font-weight:700">\${c.ink||''}</div>
         <div style="font-size:11px;color:var(--text);line-height:1.3">\${c.name}</div>
         \${c.version ? \`<div style="font-size:10px;color:var(--text2)">\${c.version}</div>\` : ''}

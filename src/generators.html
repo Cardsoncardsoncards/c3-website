@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TCG Random Generators Australia | Cards on Cards on Cards</title>
+<meta name="description" content="Free TCG random generators for Australian players. Random Commander for MTG, random card generators for Pokemon, Yu-Gi-Oh, Lorcana and more. Filterable by colour, type, archetype and ink.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/generators">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"TCG Random Generators Australia","description":"Free random card and commander generators for MTG, Pokemon, Yu-Gi-Oh, Lorcana and more.","url":"https://cardsoncardsoncards.com.au/generators"}
+</script>
+<style>
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--gold-dim:rgba(201,168,76,.15);--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{text-decoration:none}
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35);background:rgba(34,211,238,.06)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.10)}
+.nav-link--ev{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--ev:hover{color:#FDBA74;border-color:#FB923C;background:rgba(251,146,60,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+
+.hero{padding:52px 24px 44px;text-align:center;max-width:700px;margin:0 auto}
+h1{font-family:'Cinzel',serif;font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--white);margin-bottom:10px}
+h1 span{color:#22D3EE}
+.hero-sub{font-size:15px;color:var(--text2);margin-bottom:0}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+
+.section-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);margin-bottom:20px;margin-top:48px}
+.generator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+
+.gen-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:12px;transition:all .25s;position:relative;overflow:hidden}
+.gen-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:11px}
+.gen-card:hover::before{opacity:1}
+.gen-card--live{cursor:pointer}
+.gen-card--live:hover{transform:translateY(-3px)}
+.gen-card--soon{opacity:.55}
+.gen-card--mtg{border-color:rgba(201,168,76,.3)}.gen-card--mtg::before{background:linear-gradient(135deg,rgba(201,168,76,.06),transparent)}
+.gen-card--pokemon{border-color:rgba(255,204,0,.25)}.gen-card--pokemon::before{background:linear-gradient(135deg,rgba(255,204,0,.05),transparent)}
+.gen-card--yugioh{border-color:rgba(107,45,139,.4)}.gen-card--yugioh::before{background:linear-gradient(135deg,rgba(107,45,139,.08),transparent)}
+.gen-card--lorcana{border-color:rgba(1,137,196,.3)}.gen-card--lorcana::before{background:linear-gradient(135deg,rgba(1,137,196,.06),transparent)}
+.gen-card--onepiece{border-color:rgba(220,48,48,.25)}.gen-card--onepiece::before{background:linear-gradient(135deg,rgba(220,48,48,.05),transparent)}
+.gen-card--starwars{border-color:rgba(255,232,31,.2)}.gen-card--starwars::before{background:linear-gradient(135deg,rgba(255,232,31,.04),transparent)}
+.gen-card--dbz{border-color:rgba(255,102,0,.25)}.gen-card--dbz::before{background:linear-gradient(135deg,rgba(255,102,0,.05),transparent)}
+.gen-card--riftbound{border-color:rgba(88,101,242,.3)}.gen-card--riftbound::before{background:linear-gradient(135deg,rgba(88,101,242,.06),transparent)}
+
+.gen-game{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.gen-title{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:var(--white)}
+.gen-desc{font-size:13px;color:var(--text2);line-height:1.5}
+.gen-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.05em;align-self:flex-start}
+.gen-badge--live{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.3);color:#4ade80}
+.gen-badge--soon{background:rgba(160,168,192,.08);border:1px solid rgba(160,168,192,.2);color:#7a8099}
+.gen-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s;align-self:flex-start;margin-top:4px}
+.gen-cta:hover{opacity:.85;text-decoration:none}
+
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px}
+footer a{color:var(--text2);margin:0 8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3-logo.png" alt="C3" style="height:28px;width:28px;border-radius:5px;object-fit:cover;flex-shrink:0">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link nav-link--home">← Home</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators nav-link--active">Generators</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&D Tools ↗</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>TCG <span>Random Generators</span></h1>
+  <p class="hero-sub">Stuck for a deck idea? Let the generator decide. Filter by colour, type, archetype or ink and discover your next obsession.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="section-label">Live Now</div>
+  <div class="generator-grid">
+
+    <div class="gen-card gen-card--mtg gen-card--live" onclick="window.location='/cards/mtg/random-commander'">
+      <div class="gen-game" style="color:#C9A84C">Magic: The Gathering</div>
+      <div class="gen-title">Random Commander Generator</div>
+      <div class="gen-desc">Generate 1 to 4 random legendary creatures for a Commander pod. Filter by colour identity and mana value. Share your results and challenge friends.</div>
+      <span class="gen-badge gen-badge--live">Live — 10,000+ commanders</span>
+      <a href="/cards/mtg/random-commander" class="gen-cta" style="background:linear-gradient(135deg,#7A621E,#C9A84C);color:#0A0C14">🎲 Generate Commanders →</a>
+    </div>
+
+    <div class="gen-card gen-card--mtg gen-card--live" onclick="window.location='/cards/mtg'">
+      <div class="gen-game" style="color:#C9A84C">Magic: The Gathering</div>
+      <div class="gen-title">Random MTG Card</div>
+      <div class="gen-desc">Pull a completely random MTG card from the full 96,000+ card database. Filter by colour, type, rarity and set to narrow your draw. Use the Random Card button on the MTG hub.</div>
+      <span class="gen-badge gen-badge--live">Live — 96,000+ cards</span>
+      <a href="/cards/mtg" class="gen-cta" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C">🃏 Random MTG Card →</a>
+    </div>
+
+  </div>
+
+  <div class="section-label">Coming Soon — Syncing Data</div>
+  <div class="generator-grid">
+
+    <div class="gen-card gen-card--pokemon gen-card--soon">
+      <div class="gen-game" style="color:#FFCC00">Pokemon TCG</div>
+      <div class="gen-title">Random Pokemon Card</div>
+      <div class="gen-desc">Draw a random Pokemon card from 130,000+ cards across all sets. Filter by Type (Fire, Water, Psychic...) and Rarity to narrow your pull.</div>
+      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    </div>
+
+    <div class="gen-card gen-card--yugioh gen-card--soon">
+      <div class="gen-game" style="color:#c8a332">Yu-Gi-Oh! TCG</div>
+      <div class="gen-title">Random Yu-Gi-Oh Card</div>
+      <div class="gen-desc">Draw a random card from 12,000+ Yu-Gi-Oh cards. Filter by Attribute (Light, Dark, Fire...), card Type, and Archetype.</div>
+      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    </div>
+
+    <div class="gen-card gen-card--lorcana gen-card--soon">
+      <div class="gen-game" style="color:#0189C4">Disney Lorcana</div>
+      <div class="gen-title">Random Lorcana Card</div>
+      <div class="gen-desc">Draw a random Lorcana card from 1,000+ cards. Filter by Ink colour (Amber, Amethyst, Emerald, Ruby, Sapphire, Steel) and Rarity.</div>
+      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    </div>
+
+    <div class="gen-card gen-card--onepiece gen-card--soon">
+      <div class="gen-game" style="color:#e03030">One Piece Card Game</div>
+      <div class="gen-title">Random One Piece Card</div>
+      <div class="gen-desc">Draw a random card from the One Piece TCG. Filter by Colour and Card Type (Character, Event, Stage).</div>
+      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    </div>
+
+    <div class="gen-card gen-card--starwars gen-card--soon">
+      <div class="gen-game" style="color:#ffe81f">Star Wars: Unlimited</div>
+      <div class="gen-title">Random Star Wars Card</div>
+      <div class="gen-desc">Draw a random Star Wars: Unlimited card. Filter by Aspect (Vigilance, Command, Aggression, Cunning, Villainy, Heroism) and Rarity.</div>
+      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    </div>
+
+    <div class="gen-card gen-card--dbz gen-card--soon">
+      <div class="gen-game" style="color:#ff6600">Dragon Ball Super CG</div>
+      <div class="gen-title">Random Dragon Ball Card</div>
+      <div class="gen-desc">Draw a random card from the Dragon Ball Super Card Game. Filter by Colour and Card Category.</div>
+      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    </div>
+
+    <div class="gen-card gen-card--riftbound gen-card--soon">
+      <div class="gen-game" style="color:#5865F2">Riftbound</div>
+      <div class="gen-title">Random Riftbound Card</div>
+      <div class="gen-desc">Draw a random card from the Riftbound: League of Legends TCG. Filter by Champion and Card Type as data becomes available.</div>
+      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    </div>
+
+  </div>
+
+  <div style="background:rgba(34,211,238,.04);border:1px solid rgba(34,211,238,.15);border-radius:var(--radius);padding:24px;margin-top:48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#22D3EE;margin-bottom:4px">Which TCG should I start?</div>
+      <div style="font-size:13px;color:var(--text2)">Not sure which game is right for you? Take the 5-question quiz and get a personalised recommendation.</div>
+    </div>
+    <a href="/quiz" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.3);color:#22D3EE;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">Take the Quiz →</a>
+  </div>
+
+</div>
+
+<footer>
+  <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/calendar">Calendar</a><a href="/quiz">TCG Quiz</a><a href="/tracker.html">Tracker</a><a href="/contact.html">Contact</a></p>
+  <p style="margin-top:8px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+</footer>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+</body>
+</html>

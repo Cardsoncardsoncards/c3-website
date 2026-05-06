@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which TCG Should I Start? Quiz Australia | Cards on Cards on Cards</title>
+<meta name="description" content="Not sure which trading card game to start in Australia? Take our 5-question quiz and get a personalised recommendation with starter product links and AUD pricing.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/quiz">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--gold-dim:rgba(201,168,76,.15);--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{text-decoration:none}
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.06)}
+.nav-link--ev{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--ev:hover{color:#FDBA74;border-color:#FB923C;background:rgba(251,146,60,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+
+.wrap{max-width:680px;margin:0 auto;padding:0 24px 80px}
+.hero{padding:52px 0 40px;text-align:center}
+h1{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,38px);font-weight:700;color:var(--white);margin-bottom:10px}
+h1 span{color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--text2)}
+
+/* Quiz */
+.quiz-container{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.quiz-progress{height:3px;background:var(--border);position:relative}
+.quiz-progress-bar{height:100%;background:var(--gold);transition:width .4s ease;width:0%}
+.quiz-step{padding:32px;display:none}
+.quiz-step.active{display:block}
+.step-num{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.step-q{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:24px;line-height:1.3}
+.options{display:grid;gap:10px}
+.option{padding:14px 18px;border-radius:9px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;text-align:left}
+.option:hover{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.option.selected{border-color:var(--gold);background:rgba(201,168,76,.10);color:var(--gold)}
+.option-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center}
+.option-text{font-size:14px;font-weight:500}
+.option-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;border-top:1px solid var(--border)}
+.btn{padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s;letter-spacing:.03em}
+.btn-primary{background:var(--gold);color:#0A0C14}
+.btn-primary:hover{background:#E8C86A}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--silver)}
+.btn-secondary:hover{border-color:var(--silver);color:var(--white)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+
+/* Results */
+#result{display:none;padding:32px}
+.result-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.result-game{font-family:'Cinzel',serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.result-why{font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.6}
+.result-actions{display:flex;flex-direction:column;gap:10px}
+.result-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s}
+.result-cta:hover{opacity:.85;text-decoration:none}
+.result-share{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.share-label{font-size:12px;color:var(--text2);margin-bottom:10px}
+.share-btns{display:flex;gap:8px;flex-wrap:wrap}
+.share-btn{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--silver);transition:all .2s}
+.share-btn:hover{border-color:var(--silver);color:var(--white)}
+.retake{margin-top:16px;font-size:13px;color:var(--text2);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0;text-decoration:underline;text-underline-offset:3px}
+.retake:hover{color:var(--white)}
+
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:48px}
+footer a{color:var(--text2);margin:0 8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3-logo.png" alt="C3" style="height:28px;width:28px;border-radius:5px;object-fit:cover;flex-shrink:0">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link nav-link--home">← Home</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&D Tools ↗</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Which <span>TCG</span> Should I Start?</h1>
+    <p class="hero-sub">5 quick questions. Get a personalised recommendation for the Australian TCG market.</p>
+  </div>
+
+  <div class="quiz-container">
+    <div class="quiz-progress"><div class="quiz-progress-bar" id="progress-bar"></div></div>
+
+    <!-- Q1: Budget -->
+    <div class="quiz-step active" data-step="1">
+      <div class="step-num">Question 1 of 5</div>
+      <div class="step-q">What's your monthly budget for TCG?</div>
+      <div class="options">
+        <div class="option" data-q="1" data-v="low" onclick="selectOption(this)"><span class="option-icon">💸</span><div><div class="option-text">Under AU$30</div><div class="option-sub">Casual — just getting started</div></div></div>
+        <div class="option" data-q="1" data-v="mid" onclick="selectOption(this)"><span class="option-icon">💰</span><div><div class="option-text">AU$30 to AU$100</div><div class="option-sub">Regular player budget</div></div></div>
+        <div class="option" data-q="1" data-v="high" onclick="selectOption(this)"><span class="option-icon">💎</span><div><div class="option-text">AU$100 to AU$300</div><div class="option-sub">Serious hobbyist</div></div></div>
+        <div class="option" data-q="1" data-v="max" onclick="selectOption(this)"><span class="option-icon">🏆</span><div><div class="option-text">AU$300+</div><div class="option-sub">Competitive or collector</div></div></div>
+      </div>
+    </div>
+
+    <!-- Q2: Play style -->
+    <div class="quiz-step" data-step="2">
+      <div class="step-num">Question 2 of 5</div>
+      <div class="step-q">How do you want to play?</div>
+      <div class="options">
+        <div class="option" data-q="2" data-v="competitive" onclick="selectOption(this)"><span class="option-icon">⚔️</span><div><div class="option-text">Competitive — I want to win tournaments</div><div class="option-sub">Weekly store events, regional play</div></div></div>
+        <div class="option" data-q="2" data-v="casual" onclick="selectOption(this)"><span class="option-icon">🍺</span><div><div class="option-text">Casual — kitchen table with friends</div><div class="option-sub">No pressure, just fun games</div></div></div>
+        <div class="option" data-q="2" data-v="collector" onclick="selectOption(this)"><span class="option-icon">🗃️</span><div><div class="option-text">Collector — I love the cards themselves</div><div class="option-sub">Alt arts, foils, full sets</div></div></div>
+        <div class="option" data-q="2" data-v="both" onclick="selectOption(this)"><span class="option-icon">🎯</span><div><div class="option-text">Mix of competitive and casual</div><div class="option-sub">Play to win but enjoy the hobby</div></div></div>
+      </div>
+    </div>
+
+    <!-- Q3: Theme preference -->
+    <div class="quiz-step" data-step="3">
+      <div class="step-num">Question 3 of 5</div>
+      <div class="step-q">Which themes appeal to you most?</div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="fantasy" onclick="selectOption(this)"><span class="option-icon">🧙</span><div><div class="option-text">High fantasy — wizards, dragons, ancient worlds</div></div></div>
+        <div class="option" data-q="3" data-v="anime" onclick="selectOption(this)"><span class="option-icon">⚡</span><div><div class="option-text">Anime and manga — creatures, monsters, energy</div></div></div>
+        <div class="option" data-q="3" data-v="disney" onclick="selectOption(this)"><span class="option-icon">🏰</span><div><div class="option-text">Disney and family — classic characters, nostalgia</div></div></div>
+        <div class="option" data-q="3" data-v="scifi" onclick="selectOption(this)"><span class="option-icon">🚀</span><div><div class="option-text">Sci-fi, action, and adventure — space, battles, heroes</div></div></div>
+      </div>
+    </div>
+
+    <!-- Q4: Time investment -->
+    <div class="quiz-step" data-step="4">
+      <div class="step-num">Question 4 of 5</div>
+      <div class="step-q">How much time do you want to invest in learning?</div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="quick" onclick="selectOption(this)"><span class="option-icon">⚡</span><div><div class="option-text">I want to play in under an hour</div><div class="option-sub">Learn the basics and go</div></div></div>
+        <div class="option" data-q="4" data-v="medium" onclick="selectOption(this)"><span class="option-icon">📖</span><div><div class="option-text">A few days of learning is fine</div><div class="option-sub">I like knowing the rules properly</div></div></div>
+        <div class="option" data-q="4" data-v="deep" onclick="selectOption(this)"><span class="option-icon">🧠</span><div><div class="option-text">I enjoy deep strategic games</div><div class="option-sub">The more complex the better</div></div></div>
+      </div>
+    </div>
+
+    <!-- Q5: Solo or group -->
+    <div class="quiz-step" data-step="5">
+      <div class="step-num">Question 5 of 5</div>
+      <div class="step-q">Who are you playing with?</div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="solo" onclick="selectOption(this)"><span class="option-icon">🧍</span><div><div class="option-text">Just me for now — finding opponents later</div></div></div>
+        <div class="option" data-q="5" data-v="friend" onclick="selectOption(this)"><span class="option-icon">👥</span><div><div class="option-text">One friend or partner</div><div class="option-sub">Head to head games</div></div></div>
+        <div class="option" data-q="5" data-v="group" onclick="selectOption(this)"><span class="option-icon">🎲</span><div><div class="option-text">A group — 3 to 6 players</div><div class="option-sub">Multiplayer is the goal</div></div></div>
+        <div class="option" data-q="5" data-v="family" onclick="selectOption(this)"><span class="option-icon">👨‍👩‍👧</span><div><div class="option-text">Family including kids</div><div class="option-sub">Kid-friendly is important</div></div></div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="result">
+      <div id="result-inner"></div>
+    </div>
+
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="btn btn-secondary" id="btn-back" onclick="goBack()" disabled>← Back</button>
+      <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>Next →</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/generators">Generators</a><a href="/quiz">TCG Quiz</a><a href="/tracker.html">Tracker</a><a href="/contact.html">Contact</a></p>
+  <p style="margin-top:8px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+</footer>
+
+<script>
+const TOTAL = 5;
+let current = 1;
+const answers = {};
+
+const RESULTS = {
+  mtg: {
+    name: 'Magic: The Gathering',
+    colour: '#C9A84C',
+    badge: 'Deep strategy · 30 years of cards',
+    why: "MTG matches your profile perfectly. It's the deepest strategy TCG ever made, with formats for every style from kitchen table Commander to high-level competitive. The Australian player base is massive, stores run events weekly, and the secondary market means you can buy exactly the cards you want without relying on luck.",
+    starter: 'A Commander Precon deck (AU$65-80) is the best starting point — 100 cards ready to play immediately.',
+    shopLink: '/shop.html#mtg',
+    blogLink: '/blog/what-is-mtg/',
+    cardLink: '/cards/mtg',
+    ebayQuery: 'MTG Commander precon'
+  },
+  pokemon: {
+    name: 'Pokemon TCG',
+    colour: '#FFCC00',
+    badge: 'Iconic · Beginner friendly · Huge community',
+    why: "Pokemon TCG is the world's most popular trading card game and for good reason. The rules are simple enough to learn in 20 minutes but the competitive scene runs deep. Collector appeal is massive — alternate art cards and rare pulls make every pack exciting. The AU community is enormous.",
+    starter: 'A Pokemon TCG Battle Deck (AU$20-30) gets you a ready-to-play 60-card deck immediately.',
+    shopLink: '/shop.html#pokemon',
+    blogLink: '/blog/pokemon-tcg-beginners-guide-australia/',
+    cardLink: '/cards/pokemon',
+    ebayQuery: 'Pokemon TCG starter deck australia'
+  },
+  lorcana: {
+    name: 'Disney Lorcana',
+    colour: '#0189C4',
+    badge: 'Disney magic · Family friendly · Gorgeous art',
+    why: "Disney Lorcana is the perfect match. If Disney characters matter to you or you're playing with family, nothing else comes close. The rules are approachable in 30 minutes and the card art featuring iconic Disney and Pixar characters is genuinely beautiful. New sets release regularly with exciting themes.",
+    starter: 'A Lorcana Starter Set (AU$20-25) includes two ready-to-play decks — perfect for two players.',
+    shopLink: '/shop.html#lorcana',
+    blogLink: '/blog/what-is-disney-lorcana-australia/',
+    cardLink: '/cards/lorcana',
+    ebayQuery: 'Disney Lorcana starter set australia'
+  },
+  yugioh: {
+    name: 'Yu-Gi-Oh! TCG',
+    colour: '#c8a332',
+    badge: 'Anime classic · Fast games · Deep strategy',
+    why: "Yu-Gi-Oh is the right call for anime fans who want fast, intense gameplay. Games are typically 20-30 minutes and the combo-heavy playstyle rewards learning the meta deeply. If you grew up with the anime this game will hit differently. The OCG format gives access to Japanese releases too.",
+    starter: 'A Yu-Gi-Oh Structure Deck (AU$15-20) is a complete 41-card deck designed for beginners.',
+    shopLink: '/shop.html#yugioh',
+    blogLink: '/blog/yugioh-tcg-beginners-guide-australia/',
+    cardLink: '/cards/yugioh',
+    ebayQuery: 'Yugioh structure deck australia'
+  },
+  onepiece: {
+    name: 'One Piece Card Game',
+    colour: '#e03030',
+    badge: 'Anime action · Fast growing · Great art',
+    why: "One Piece TCG is perfect for fans of the manga and anime who want a fast-paced competitive game. The game has exploded in Australia since launch and features stunning card art. Starter decks get you playing immediately and the community is young and enthusiastic.",
+    starter: 'A One Piece Starter Deck (AU$25-35) includes a 51-card ready-to-play deck.',
+    shopLink: '/shop.html#onepiece',
+    blogLink: '/blog/one-piece-card-game-australia-beginners-guide/',
+    cardLink: '/cards',
+    ebayQuery: 'One Piece card game starter deck australia'
+  },
+  starwars: {
+    name: 'Star Wars: Unlimited',
+    colour: '#ffe81f',
+    badge: 'Star Wars IP · Strategic · Growing AU scene',
+    why: "Star Wars: Unlimited is the pick for sci-fi and Star Wars fans. The game launched in 2024 to strong reception with balanced gameplay and great card art. If you love the Star Wars universe and want a strategic two-player game with a growing competitive scene in Australia, this is your game.",
+    starter: 'A Star Wars Unlimited Starter Set (AU$30-40) includes two pre-built decks.',
+    shopLink: '/shop.html#starwars',
+    blogLink: '/blog/star-wars-unlimited-beginners-guide-australia/',
+    cardLink: '/cards',
+    ebayQuery: 'Star Wars Unlimited starter deck australia'
+  },
+  riftbound: {
+    name: 'Riftbound',
+    colour: '#5865F2',
+    badge: 'League of Legends · New · Ground floor opportunity',
+    why: "Riftbound is the League of Legends TCG from Riot Games. If you're a LoL player, this is your game. Being this early in a TCG has real upside — ground-floor pricing, growing community, and Riot's marketing machine behind it. Unleashed launched May 2026 and the AU scene is just forming.",
+    starter: 'A Riftbound Starter Set is the best entry point while the game is new.',
+    shopLink: '/shop.html#riftbound',
+    blogLink: '/blog/riftbound-card-game-beginners-guide-australia/',
+    cardLink: '/cards',
+    ebayQuery: 'Riftbound TCG australia'
+  },
+  dbz: {
+    name: 'Dragon Ball Super Card Game',
+    colour: '#ff6600',
+    badge: 'Dragon Ball IP · Anime fans · Fusion World',
+    why: "Dragon Ball Super Card Game Fusion World is the current live format and it's a solid pick for Dragon Ball fans who want a fast-paced competitive game. The IP is iconic, the art is spectacular, and Fusion World has simplified the rules compared to the original game making it easier to get into.",
+    starter: 'A Fusion World Starter Deck (AU$25-35) is the best entry point.',
+    shopLink: '/shop.html',
+    blogLink: '/blog/dragon-ball-super-card-game-beginners-guide-australia/',
+    cardLink: '/cards',
+    ebayQuery: 'Dragon Ball Super Fusion World starter deck australia'
+  }
+};
+
+function score() {
+  const s = { mtg:0, pokemon:0, lorcana:0, yugioh:0, onepiece:0, starwars:0, riftbound:0, dbz:0 };
+  const a = answers;
+
+  // Budget
+  if (a[1]==='low') { s.pokemon+=3; s.lorcana+=3; s.yugioh+=2; s.onepiece+=2; }
+  if (a[1]==='mid') { s.pokemon+=2; s.mtg+=2; s.yugioh+=2; s.lorcana+=2; s.starwars+=1; }
+  if (a[1]==='high') { s.mtg+=3; s.pokemon+=2; s.onepiece+=2; s.starwars+=2; s.riftbound+=1; }
+  if (a[1]==='max') { s.mtg+=4; s.pokemon+=3; s.yugioh+=2; s.onepiece+=2; }
+
+  // Play style
+  if (a[2]==='competitive') { s.mtg+=3; s.yugioh+=3; s.pokemon+=2; s.onepiece+=2; s.starwars+=1; }
+  if (a[2]==='casual') { s.mtg+=3; s.pokemon+=2; s.lorcana+=2; s.dbz+=1; }
+  if (a[2]==='collector') { s.pokemon+=4; s.lorcana+=3; s.mtg+=2; s.riftbound+=2; }
+  if (a[2]==='both') { s.mtg+=3; s.pokemon+=2; s.yugioh+=2; s.onepiece+=1; }
+
+  // Theme
+  if (a[3]==='fantasy') { s.mtg+=5; s.lorcana+=1; }
+  if (a[3]==='anime') { s.pokemon+=4; s.yugioh+=4; s.onepiece+=3; s.dbz+=4; }
+  if (a[3]==='disney') { s.lorcana+=6; }
+  if (a[3]==='scifi') { s.starwars+=5; s.riftbound+=3; s.onepiece+=1; }
+
+  // Time
+  if (a[4]==='quick') { s.pokemon+=2; s.lorcana+=2; s.yugioh+=1; }
+  if (a[4]==='medium') { s.mtg+=2; s.pokemon+=2; s.starwars+=2; s.onepiece+=2; }
+  if (a[4]==='deep') { s.mtg+=3; s.yugioh+=2; }
+
+  // Group
+  if (a[5]==='solo') { s.mtg+=1; s.pokemon+=1; }
+  if (a[5]==='friend') { s.mtg+=1; s.yugioh+=1; s.starwars+=2; s.lorcana+=1; }
+  if (a[5]==='group') { s.mtg+=3; s.pokemon+=1; }
+  if (a[5]==='family') { s.pokemon+=3; s.lorcana+=4; }
+
+  return Object.entries(s).sort((a,b)=>b[1]-a[1])[0][0];
+}
+
+function selectOption(el) {
+  const q = el.dataset.q;
+  document.querySelectorAll(`[data-q="${q}"]`).forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[parseInt(q)] = el.dataset.v;
+  document.getElementById('btn-next').disabled = false;
+}
+
+function updateProgress() {
+  const pct = ((current-1)/TOTAL)*100;
+  document.getElementById('progress-bar').style.width = pct+'%';
+  document.getElementById('btn-back').disabled = current === 1;
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.disabled = !answers[current];
+  if (current === TOTAL) {
+    nextBtn.textContent = 'See My Result →';
+  } else {
+    nextBtn.textContent = 'Next →';
+  }
+}
+
+function goNext() {
+  if (!answers[current]) return;
+  if (current === TOTAL) {
+    showResult();
+    return;
+  }
+  document.querySelector(`[data-step="${current}"]`).classList.remove('active');
+  current++;
+  document.querySelector(`[data-step="${current}"]`).classList.add('active');
+  updateProgress();
+}
+
+function goBack() {
+  if (current === 1) return;
+  document.querySelector(`[data-step="${current}"]`).classList.remove('active');
+  current--;
+  document.querySelector(`[data-step="${current}"]`).classList.add('active');
+  updateProgress();
+}
+
+function showResult() {
+  const gameKey = score();
+  const r = RESULTS[gameKey];
+  document.querySelectorAll('.quiz-step').forEach(s=>s.style.display='none');
+  document.getElementById('quiz-nav').style.display='none';
+  document.getElementById('progress-bar').style.width='100%';
+
+  const ebayURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(r.ebayQuery)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
+
+  document.getElementById('result-inner').innerHTML = `
+    <span class="result-badge" style="background:${r.colour}22;border:1px solid ${r.colour}55;color:${r.colour}">${r.badge}</span>
+    <div class="result-game" style="color:${r.colour}">${r.name}</div>
+    <div class="result-why">${r.why}</div>
+    <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2)">
+      <strong style="color:var(--white);display:block;margin-bottom:4px">Where to start in Australia</strong>
+      ${r.starter}
+    </div>
+    <div class="result-actions">
+      <a href="${r.shopLink}" class="result-cta" style="background:linear-gradient(135deg,${r.colour}33,${r.colour}22);border:1px solid ${r.colour}55;color:${r.colour}">🛒 Shop ${r.name} on C3 →</a>
+      <a href="${ebayURL}" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">🏪 Buy Starters on eBay AU ↗</a>
+      <a href="${r.blogLink}" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 Read the Beginners Guide →</a>
+      <a href="${r.cardLink}" class="result-cta" style="background:rgba(160,168,192,.06);border:1px solid var(--border);color:var(--silver)">🃏 Browse Card Prices →</a>
+    </div>
+    <div class="result-share">
+      <div class="share-label">Share your result</div>
+      <div class="share-btns">
+        <button class="share-btn" onclick="shareTwitter('${r.name}')">Twitter/X</button>
+        <button class="share-btn" onclick="shareReddit('${r.name}')">Reddit</button>
+        <button class="share-btn" onclick="copyResult('${r.name}')">Copy Link</button>
+      </div>
+    </div>
+    <button class="retake" onclick="retakeQuiz()">Take the quiz again</button>
+  `;
+  document.getElementById('result').style.display='block';
+}
+
+function shareTwitter(game) {
+  const text = encodeURIComponent(`I got ${game} on the C3 TCG quiz! Which TCG should you start? cardsoncardsoncards.com.au/quiz`);
+  window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+}
+
+function shareReddit(game) {
+  const text = encodeURIComponent(`Got ${game} on the C3 TCG Quiz — which game should Australian TCG beginners start?`);
+  const url = encodeURIComponent('https://cardsoncardsoncards.com.au/quiz');
+  window.open(`https://www.reddit.com/submit?title=${text}&url=${url}`, '_blank');
+}
+
+function copyResult(game) {
+  navigator.clipboard.writeText(`I got ${game} on the C3 TCG Quiz! Take it yourself: https://cardsoncardsoncards.com.au/quiz`).then(()=>{
+    alert('Copied to clipboard!');
+  });
+}
+
+function retakeQuiz() {
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  current = 1;
+  document.getElementById('result').style.display='none';
+  document.querySelectorAll('.quiz-step').forEach((s,i)=>{
+    s.style.display='';
+    s.classList.toggle('active', i===0);
+  });
+  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  document.getElementById('quiz-nav').style.display='';
+  updateProgress();
+}
+
+updateProgress();
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+</body>
+</html>

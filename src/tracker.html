@@ -91,27 +91,27 @@
   /* ── NAV ── */
   nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(10,12,20,0.92);
+    background: rgba(10,12,20,0.88);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 10px 0;
+    padding: 16px 0;
   }
   .nav-inner {
     display: flex; align-items: center; justify-content: space-between;
     max-width: 960px; margin: 0 auto; padding: 0 24px;
   }
   .nav-logo {
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
-    letter-spacing: 0.1em; color: var(--gold); text-decoration: none; text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700;
+    letter-spacing: 0.12em; color: var(--gold); text-decoration: none; text-transform: uppercase;
   }
-  .nav-logo img { height: 28px; width: 28px; border-radius: 5px; object-fit: cover; }
+  .nav-logo img { height: 36px; width: 36px; border-radius: 6px; object-fit: cover; }
   .nav-logo span { color: var(--gold); font-weight: 700; }
-  .nav-links { display: flex; gap: 4px; }
+  .nav-links { display: flex; gap: 8px; }
   .nav-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
-    text-decoration: none; letter-spacing: 0.03em;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.04em;
     transition: all 0.2s ease; border: 1px solid transparent;
   }
   .nav-link--ebay  { color: var(--silver); border-color: var(--border); }
@@ -471,6 +471,19 @@
 /* Active page override */
 .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
 
+
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.06)}
+.nav-link--ev{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--ev:hover{color:#FDBA74;border-color:#FB923C;background:rgba(251,146,60,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
 </style>
 </head>
 <body>
@@ -507,6 +520,8 @@
       <a href="/" class="nav-link nav-link--home">← Home</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
       <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker nav-link--active">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
@@ -521,35 +536,23 @@
   <div class="wrap--narrow">
     <div class="hero-eyebrow">Free Download Below</div>
     <h1 class="hero-title">
-      Your Cards Are Worth More<br>
-      <span class="gold">Than You Think.</span>
+      Track Every Card.<br>
+      <span class="gold">Know Your Numbers.</span>
     </h1>
-    <p class="hero-subtitle">Find Out in 10 Minutes</p>
+    <p class="hero-subtitle">Cards on Cards on Cards</p>
     <p class="hero-desc">
-      Drop your collection into our free tracker and see exactly what you own, what it's worth, and what to sell first.
-      Works for MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh and more — right out of the box.
+      You scanned the insert. Here's the free TCG Collection Tracker we promised.
+      Works for every game, right out of the box.
     </p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px;animation:fadeSlideDown 0.6s 0.35s ease both;">
-      <a href="#download" class="btn btn--gold" style="font-size:15px;padding:14px 28px;">Get Free Tracker Now</a>
-      <a href="/cards/mtg" class="btn btn--outline" style="font-size:15px;padding:14px 28px;">Browse Card Prices</a>
-    </div>
-    <div style="display:flex;gap:0;justify-content:center;flex-wrap:wrap;border:1px solid var(--border);border-radius:12px;overflow:hidden;animation:fadeSlideDown 0.6s 0.45s ease both;">
-      <div style="flex:1;min-width:120px;padding:16px 20px;text-align:center;border-right:1px solid var(--border);background:rgba(201,168,76,0.04);">
-        <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">96,000+</div>
-        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(160,168,192,0.6);margin-top:3px;">MTG Cards</div>
-      </div>
-      <div style="flex:1;min-width:120px;padding:16px 20px;text-align:center;border-right:1px solid var(--border);">
-        <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">25k+</div>
-        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(160,168,192,0.6);margin-top:3px;">eBay Listings</div>
-      </div>
-      <div style="flex:1;min-width:120px;padding:16px 20px;text-align:center;border-right:1px solid var(--border);background:rgba(201,168,76,0.04);">
-        <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);">7+</div>
-        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(160,168,192,0.6);margin-top:3px;">TCGs — More Coming</div>
-      </div>
-      <div style="flex:1;min-width:120px;padding:16px 20px;text-align:center;">
-        <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--success);">Free</div>
-        <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(160,168,192,0.6);margin-top:3px;">No Catch</div>
-      </div>
+    <div class="hero-tcgs">
+      <span class="tcg-badge">Magic</span>
+      <span class="tcg-badge">Pokémon</span>
+      <span class="tcg-badge">Yu-Gi-Oh</span>
+      <span class="tcg-badge">Lorcana</span>
+      <span class="tcg-badge">One Piece</span>
+      <span class="tcg-badge">Flesh &amp; Blood</span>
+      <span class="tcg-badge">Digimon</span>
+      <span class="tcg-badge">+ More</span>
     </div>
   </div>
 </section>
@@ -561,9 +564,10 @@
   <div class="wrap--narrow">
     <div class="reveal">
       <p class="section-label">Coming Soon</p>
-      <h2 class="section-title">We're Building a Service<br>That Pays You for Your Cards</h2>
+      <h2 class="section-title">Something Big is Coming<br>for AU TCG Players</h2>
       <p class="section-body">
-        The C3 Buylist is in development. One place to see what every major Australian store is paying for your cards — no calling around, no guessing.
+        We're building a suite of tools designed specifically for the Australian TCG community —
+        sellers, collectors, and players all in one place.
       </p>
     </div>
 
@@ -573,29 +577,29 @@
 
       <div class="platform-features">
         <div class="platform-feat">
-          <div class="platform-feat-icon">💸</div>
-          <div class="platform-feat-title">Instant Buylist Quotes</div>
-          <div class="platform-feat-desc">See what Australian stores are paying for your cards in real time. No phone calls, no manual checking.</div>
+          <div class="platform-feat-icon">📅</div>
+          <div class="platform-feat-title">TCG Events Calendar</div>
+          <div class="platform-feat-desc">One place for every local tournament, prerelease, and game night across all card games in Australia.</div>
         </div>
         <div class="platform-feat">
           <div class="platform-feat-icon">📊</div>
-          <div class="platform-feat-title">Side-by-Side Comparison</div>
-          <div class="platform-feat-desc">Compare store offers in one view. Know which store pays the most for each card before you sell.</div>
+          <div class="platform-feat-title">Buylist Intelligence</div>
+          <div class="platform-feat-desc">See what stores near you are paying for your cards without calling around or checking multiple sites.</div>
         </div>
         <div class="platform-feat">
           <div class="platform-feat-icon">🔔</div>
-          <div class="platform-feat-title">Price Alerts</div>
-          <div class="platform-feat-desc">Get notified when a card hits your target sell price. Buy and sell at the right time, not by guessing.</div>
+          <div class="platform-feat-title">Market Alerts</div>
+          <div class="platform-feat-desc">Get notified when a card or sealed product hits your target price — buy and sell at the right time.</div>
         </div>
         <div class="platform-feat">
           <div class="platform-feat-icon">🇦🇺</div>
           <div class="platform-feat-title">Built for Australia</div>
-          <div class="platform-feat-desc">AU stores, AU prices, AU dollars. Not a US tool with an AU flag slapped on it.</div>
+          <div class="platform-feat-desc">Designed around Australian stores, local events, and the AU TCG community. Not an afterthought.</div>
         </div>
       </div>
 
       <div class="signup-nudge">
-        ◈ Sign up below to join the waitlist and get the free tracker while you wait.
+        ◈ Sign up below for news and updates as the buylist gets closer to launch. The free tracker is also waiting for you below.
       </div>
     </div>
   </div>
@@ -608,23 +612,13 @@
     <div class="reveal">
       <p class="section-label">Free Download</p>
       <h2 class="section-title">Your Free TCG Collection Tracker</h2>
-      <p class="section-body">A Google Sheets tracker built for collectors who actually sell. Sign up below to join the buylist waitlist and get instant access.</p>
+      <p class="section-body">A Google Sheets tracker built for collectors who actually sell. Drop your details below and get instant access.</p>
     </div>
 
     <div class="download-card reveal">
-
-      <!-- Value callout -->
-      <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:16px 20px;margin-bottom:28px;display:flex;align-items:center;gap:14px;">
-        <div style="font-size:28px;flex-shrink:0;">📦</div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px;">Collectors Often Find AU$300+ They Forgot</div>
-          <div style="font-size:13px;color:rgba(160,168,192,0.7);line-height:1.5;">Cards get acquired and forgotten fast. The tracker shows you what you actually own — and what it's worth selling today.</div>
-        </div>
-      </div>
-
       <div class="feature-list">
         <div class="feature-item">Collection inventory with auto profit/loss</div>
-        <div class="feature-item">Works across all 7 major TCGs</div>
+        <div class="feature-item">Works across all major TCGs</div>
         <div class="feature-item">Wishlist with priority ranking</div>
         <div class="feature-item">200 card capacity (free version)</div>
         <div class="feature-item">Instant Google Sheets access</div>
@@ -632,8 +626,8 @@
       </div>
 
       <!-- MailerLite embedded form -->
-      <div class="form-section-label">Get instant access</div>
-      <div class="form-section-sub">Get your free tracker now. You'll also be first to know when the C3 Buylist launches in Australia.</div>
+      <div class="form-section-label">Get your free tracker</div>
+      <div class="form-section-sub">Sign up to be the first to know when the C3 Buylist goes live — and get instant access to the free tracker while you wait.</div>
       <div class="ml-embedded" data-form="mIFDGb"></div>
 
       <!-- Post-signup download note (always visible below form) -->
@@ -653,30 +647,6 @@
           Once open: File → Make a Copy to save it to your own Google Drive.
         </p>
       </div>
-
-      <!-- Internal links grid -->
-      <div style="margin-top:32px;border-top:1px solid var(--border);padding-top:28px;">
-        <div style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(160,168,192,0.4);margin-bottom:14px;">More C3 Tools</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <a href="/cards/mtg" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-            <span style="font-size:18px;">🃏</span>
-            <div><div style="font-size:13px;font-weight:600;color:var(--white);">MTG Card Vault</div><div style="font-size:11px;color:rgba(160,168,192,0.5);">96,000+ cards with prices</div></div>
-          </a>
-          <a href="/cards/mtg/random-commander" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-            <span style="font-size:18px;">🎲</span>
-            <div><div style="font-size:13px;font-weight:600;color:var(--white);">Random Commander</div><div style="font-size:11px;color:rgba(160,168,192,0.5);">Find your next deck</div></div>
-          </a>
-          <a href="/ev-calculator.html" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-            <span style="font-size:18px;">📈</span>
-            <div><div style="font-size:13px;font-weight:600;color:var(--white);">EV Calculator</div><div style="font-size:11px;color:rgba(160,168,192,0.5);">Open or sell sealed?</div></div>
-          </a>
-          <a href="/blog" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-            <span style="font-size:18px;">📝</span>
-            <div><div style="font-size:13px;font-weight:600;color:var(--white);">TCG Blog</div><div style="font-size:11px;color:rgba(160,168,192,0.5);">200+ guides and reviews</div></div>
-          </a>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>

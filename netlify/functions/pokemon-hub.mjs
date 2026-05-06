@@ -9,9 +9,16 @@ const EPN_CAMPID        = '5339146789';
 // Sets from TCGdex that are non-standard and add no value to the browser
 const JUNK_SETS = new Set([
   'w promotional', 'jumbo cards', 'sample', 'best of game',
-  'poke card creator pack', 'ex trainer kit (latias)', 'ex trainer kit (latios)',
-  'ex trainer kit latias', 'ex trainer kit latios', 'pikachu world collection 2010',
-  'pikachu world collection 2012', 'southern islands'
+  'poke card creator pack', 'poké card creator pack', 'poke card creator',
+  'ex trainer kit (latias)', 'ex trainer kit (latios)',
+  'ex trainer kit latias', 'ex trainer kit latios',
+  'ex trainer kit 2 (plusle)', 'ex trainer kit 2 (minun)',
+  'ex trainer kit 2 plusle', 'ex trainer kit 2 minun',
+  'pikachu world collection 2010', 'pikachu world collection 2012',
+  'southern islands', 'birthday pikachu', 'mcdonald's collection 2021',
+  'mcdonald's collection 2022', 'mcdonald's collection 2023',
+  'mcdonald's collection 2024', 'play! pokemon prizes',
+  'staff promos', 'worlds 2023',
 ]);
 
 async function supabaseGet(path) {
@@ -109,6 +116,9 @@ export default async (req) => {
     footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:13px;color:var(--text2);margin-top:48px}
     footer a{color:var(--text2);margin:0 8px}
     #search-results{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+  
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.06)}
   </style>
 </head>
 <body>
@@ -121,6 +131,8 @@ export default async (req) => {
       <a href="/cards/pokemon" class="nav-link active">Pokemon</a>
       <a href="/cards/lorcana" class="nav-link">Lorcana</a>
       <a href="/cards/yugioh" class="nav-link">Yu-Gi-Oh</a>
+            <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
       <a href="/shop.html" class="nav-link">Shop</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
     </div>
@@ -142,10 +154,16 @@ export default async (req) => {
 
   <div class="quick-links">
     <a href="/tracker.html" class="quick-link" style="background:linear-gradient(135deg,#FFCC00,#f0b800);color:#000">📋 Free Tracker</a>
-    <a href="/shop.html" class="quick-link" style="background:linear-gradient(135deg,#0075BE,#005fa3);color:#fff">🛒 Shop</a>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=pokemon+cards&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1" target="_blank" rel="noopener sponsored" class="quick-link" style="background:var(--bg2);border:1px solid var(--border);color:var(--text)">🛒 Shop Pokemon on eBay ↗</a>
     <a href="/blog/best-pokemon-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border:1px solid var(--border);color:var(--text)">📦 Best Booster Boxes →</a>
     <a href="/blog/pokemon-tcg-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border:1px solid var(--border);color:var(--text)">📖 Beginners Guide →</a>
   </div>
+
+  ${topCards.length ? `
+  <div class="section">
+    <div class="section-title">Most Valuable Pokemon Cards (AUD)</div>
+    <div class="top-cards-grid">${topCardHTML}</div>
+  </div>` : ''}
 
   <div class="section">
     <div class="section-title">Search Pokemon Cards</div>
@@ -155,12 +173,6 @@ export default async (req) => {
     </div>
     <div id="search-results"></div>
   </div>
-
-  ${topCards.length ? `
-  <div class="section">
-    <div class="section-title">Most Valuable Pokemon Cards (AUD)</div>
-    <div class="top-cards-grid">${topCardHTML}</div>
-  </div>` : ''}
 
   <div class="section">
     <div class="section-title">Browse by Set</div>
