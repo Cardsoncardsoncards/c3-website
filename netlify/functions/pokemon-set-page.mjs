@@ -79,7 +79,7 @@ export default async (req) => {
 
   const [sets, cards, ebayToken] = await Promise.all([
     supabaseGet(`pokemon_sets?id=eq.${encodeURIComponent(setId)}&limit=1`),
-    supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(setId)}&order=price_usd.desc.nullslast&limit=400&select=slug,name,image_uri,price_usd,rarity,number,supertype`),
+    supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(setId)}&order=price_usd.desc.nullslast&limit=400&select=slug,name,image_uri,price_usd,number`),
     getEbayToken()
   ]);
 
@@ -94,7 +94,7 @@ export default async (req) => {
   const pricedCards = cards.filter(c => toAud(c) > 0);
   const top5 = pricedCards.slice(0, 5);
   const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();
-  const types = [...new Set(cards.map(c => c.supertype).filter(Boolean))].sort();
+  const types = []; // category and rarity columns have no data in pokemon_cards
 
   const topTwo = pricedCards.slice(0, 2);
   const contextText = topTwo.length >= 2
@@ -116,7 +116,7 @@ export default async (req) => {
     const aud = toAud(c);
     const priceDisplay = aud >= 0.50 ? `~AU$${aud.toFixed(0)}` : `<span style="color:rgba(160,168,192,.35);font-size:9px">no price</span>`;
     const rc = getRarityColour(c.rarity);
-    return `<a href="/cards/pokemon/${c.slug}" class="card-item" data-rarity="${(c.rarity||'').toLowerCase()}" data-price="${aud.toFixed(2)}" data-type="${c.supertype||''}">
+    return `<a href="/cards/pokemon/${c.slug}" class="card-item" data-price="${aud.toFixed(2)}">
       <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${rc}"></div>
       ${c.image_uri ? `<img src="${c.image_uri}" alt="${c.name}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${c.name}</div>`}
       <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${c.name}</div>
@@ -151,14 +151,14 @@ export default async (req) => {
       <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(255,204,0,.12);border:1px solid rgba(255,204,0,.3);color:#FFCC00;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Shop ${set.name} on eBay AU ↗</a>
     </div>`;
 
-  const rarityFilterHTML = rarities.length ? `
+  const rarityFilterHTML = '' && rarities.length ? `
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
       <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7a8099;min-width:90px">Rarity</span>
       <button class="filt-btn active" data-rarity-filter="all" onclick="setFilter('rarity','all',this)">All</button>
       ${rarities.map(r => { const rs = r.toLowerCase().replace(/[^a-z0-9 ]/g,''); return `<button class="filt-btn" data-rarity-filter="${rs}" onclick="setFilter('rarity','${rs}',this)">${r}</button>`; }).join('')}
     </div>` : '';
 
-  const typeFilterHTML = types.length > 1 ? `
+  const typeFilterHTML = '' && types.length > 1 ? `
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
       <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7a8099;min-width:90px">Type</span>
       <button class="filt-btn active" data-type-filter="all" onclick="setFilter('type','all',this)">All</button>

@@ -63,6 +63,9 @@ function loreIcons(lore) {
 export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/lorcana/', '').replace(/^\/|\/$/g, '');
+  // Don't handle set pages - let set page function handle those
+  if (slug.startsWith('sets/')) return new Response('Not found', { status: 404, headers });
+
   if (!slug) return new Response('Not found', { status: 404 });
 
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };

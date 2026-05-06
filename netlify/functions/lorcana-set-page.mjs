@@ -76,21 +76,14 @@ export default async (req) => {
   if (!setCode) return new Response('Not found', { status: 404, headers });
 
   // Try to find set by set_code, fall back to id
-  const [sets, cardsByCode, ebayToken] = await Promise.all([
-    supabaseGet(`lorcana_sets?set_code=eq.${encodeURIComponent(setCode)}&limit=1`).then(r => r.length ? r : supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setCode)}&limit=1`)),
-    supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(setCode)}&order=price_usd.desc.nullslast&limit=300&select=slug,name,version,image_uri,price_usd,rarity,ink,collector_number,card_text`),
+  const [sets, ebayToken] = await Promise.all([
+    supabaseGet(`lorcana_sets?code=eq.${encodeURIComponent(setCode)}&limit=1`).then(r => r.length ? r : supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setCode)}&limit=1`)),
     getEbayToken()
   ]);
 
-  // Also try by set_id if set_code lookup succeeded
-  let cards = cardsByCode;
   let set = sets && sets[0];
-
-  if (set && cards.length === 0) {
-    // Try fetching cards by set name
-    const byName = await supabaseGet(`lorcana_cards?set_name=eq.${encodeURIComponent(set.name)}&order=price_usd.desc.nullslast&limit=300&select=slug,name,version,image_uri,price_usd,rarity,ink,collector_number,card_text`);
-    if (byName.length > 0) cards = byName;
-  }
+  // Fetch cards using the set's UUID id (set_id on lorcana_cards = lorcana_sets.id)
+  let cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=price_usd.desc.nullslast&limit=300&select=slug,name,version,image_uri,price_usd,rarity,ink,collector_number,card_text`) : [];
 
   if (!set) return new Response('Set not found', { status: 404, headers });
 

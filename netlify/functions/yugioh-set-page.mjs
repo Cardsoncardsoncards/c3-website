@@ -76,9 +76,8 @@ export default async (req) => {
   if (!sets || !sets[0]) return new Response('Set not found', { status: 404, headers });
   const set = sets[0];
 
-  const [cards] = await Promise.all([
-    supabaseGet(`yugioh_cards?set_name=eq.${encodeURIComponent(set.set_name)}&order=price_usd.desc.nullslast&limit=300&select=slug,name,image_uri,image_uri_small,price_usd,rarity,type,attribute,archetype`)
-  ]);
+  // yugioh_cards has no set linkage column - cannot filter by set
+  const cards = [];
 
   const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.set_name+' yugioh')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.set_name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
