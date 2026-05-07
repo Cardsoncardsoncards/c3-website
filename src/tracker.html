@@ -471,19 +471,6 @@
 /* Active page override */
 .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
 
-
-.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
-.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
-.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
-.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
-.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
-.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.06)}
-.nav-link--ev{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--ev:hover{color:#FDBA74;border-color:#FB923C;background:rgba(251,146,60,.06)}
-.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
-.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
-.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
-.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
-.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
 </style>
 </head>
 <body>
@@ -520,12 +507,13 @@
       <a href="/" class="nav-link nav-link--home">← Home</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
       <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker nav-link--active">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/calendar" class="nav-link" style="color:#F87171;border-color:rgba(248,113,113,.3)">Calendar</a>
+      <a href="/generators" class="nav-link" style="color:#22D3EE;border-color:rgba(34,211,238,.3)">Generators</a>
+      <a href="/cards" class="nav-link" style="color:#A78BFA;border-color:rgba(167,139,250,.3)">Card Vault</a>
       <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
@@ -541,8 +529,7 @@
     </h1>
     <p class="hero-subtitle">Cards on Cards on Cards</p>
     <p class="hero-desc">
-      You scanned the insert. Here's the free TCG Collection Tracker we promised.
-      Works for every game, right out of the box.
+      Free for every Australian TCG player. Works across every game, right out of the box. No app required.
     </p>
     <div class="hero-tcgs">
       <span class="tcg-badge">Magic</span>
@@ -550,7 +537,7 @@
       <span class="tcg-badge">Yu-Gi-Oh</span>
       <span class="tcg-badge">Lorcana</span>
       <span class="tcg-badge">One Piece</span>
-      <span class="tcg-badge">Flesh &amp; Blood</span>
+      <span class="tcg-badge">Riftbound</span>
       <span class="tcg-badge">Digimon</span>
       <span class="tcg-badge">+ More</span>
     </div>
@@ -563,43 +550,66 @@
 <section class="section section--alt" id="coming-soon">
   <div class="wrap--narrow">
     <div class="reveal">
-      <p class="section-label">Coming Soon</p>
-      <h2 class="section-title">Something Big is Coming<br>for AU TCG Players</h2>
+      <p class="section-label">The C3 Platform</p>
+      <h2 class="section-title">Australia's TCG Hub<br>is Live and Growing</h2>
       <p class="section-body">
-        We're building a suite of tools designed specifically for the Australian TCG community —
-        sellers, collectors, and players all in one place.
+        The Card Vault is live with 250,000+ cards across 4 TCGs. The release calendar, EV Calculator,
+        and Random Commander generator are all live. And there is more coming.
       </p>
     </div>
 
+    <!-- TRUST BAR -->
+    <div class="reveal" style="display:flex;flex-wrap:wrap;gap:12px;margin:24px 0;justify-content:center">
+      <div style="flex:1;min-width:140px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.18);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--gold)">96,000+</div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">MTG Cards</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:rgba(255,204,0,.04);border:1px solid rgba(255,204,0,.15);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#FFCC00">107,000+</div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">Pokemon Cards</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:rgba(192,132,252,.04);border:1px solid rgba(192,132,252,.15);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#C084FC">9,999</div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">Yu-Gi-Oh Cards</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:rgba(56,189,248,.04);border:1px solid rgba(56,189,248,.15);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#38BDF8">2,911</div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">Lorcana Cards</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:rgba(74,222,128,.04);border:1px solid rgba(74,222,128,.15);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#4ADE80">25,441</div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">eBay Listings</div>
+      </div>
+    </div>
+
     <div class="platform-card reveal">
-      <div class="coming-badge">In Development</div>
-      <div style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);padding:4px 13px;border:1px solid rgba(201,168,76,.3);border-radius:100px;margin-bottom:20px;background:rgba(201,168,76,.05);">◆ Free Tracker Below</div>
+      <div class="coming-badge">Live Now</div>
 
       <div class="platform-features">
         <div class="platform-feat">
+          <div class="platform-feat-icon">🃏</div>
+          <div class="platform-feat-title">Card Vault</div>
+          <div class="platform-feat-desc">250,000+ cards across MTG, Pokemon, Yu-Gi-Oh and Lorcana. Live AUD pricing and eBay AU buy links on every card.</div>
+        </div>
+        <div class="platform-feat">
           <div class="platform-feat-icon">📅</div>
-          <div class="platform-feat-title">TCG Events Calendar</div>
-          <div class="platform-feat-desc">One place for every local tournament, prerelease, and game night across all card games in Australia.</div>
+          <div class="platform-feat-title">TCG Release Calendar</div>
+          <div class="platform-feat-desc">Every confirmed release date and tournament for Australian players. Riftbound, MTG, Pokemon, One Piece and more.</div>
         </div>
         <div class="platform-feat">
           <div class="platform-feat-icon">📊</div>
-          <div class="platform-feat-title">Buylist Intelligence</div>
-          <div class="platform-feat-desc">See what stores near you are paying for your cards without calling around or checking multiple sites.</div>
+          <div class="platform-feat-title">EV Calculator</div>
+          <div class="platform-feat-desc">Know the expected value of any MTG set before you open a box. Australian prices, real data.</div>
         </div>
         <div class="platform-feat">
-          <div class="platform-feat-icon">🔔</div>
-          <div class="platform-feat-title">Market Alerts</div>
-          <div class="platform-feat-desc">Get notified when a card or sealed product hits your target price — buy and sell at the right time.</div>
-        </div>
-        <div class="platform-feat">
-          <div class="platform-feat-icon">🇦🇺</div>
-          <div class="platform-feat-title">Built for Australia</div>
-          <div class="platform-feat-desc">Designed around Australian stores, local events, and the AU TCG community. Not an afterthought.</div>
+          <div class="platform-feat-icon">🎲</div>
+          <div class="platform-feat-title">Random Commander</div>
+          <div class="platform-feat-desc">Filter 10,000+ MTG commanders by colour identity and CMC. Find your next deck instantly.</div>
         </div>
       </div>
 
       <div class="signup-nudge">
-        ◈ Sign up below for news and updates as the buylist gets closer to launch. The free tracker is also waiting for you below.
+        ◈ Sign up below to get the free tracker and stay updated as more games and features go live.
       </div>
     </div>
   </div>
