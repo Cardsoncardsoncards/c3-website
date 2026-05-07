@@ -443,7 +443,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 (async () => {
   try {
     const SUPA_URL = 'https://owaroeqchreuffbyakqx.supabase.co';
-    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMwNzQ4MjIsImV4cCI6MjA1ODY1MDgyMn0.tBGKBDSMj-xOYkMPo_GkMkGbNT04XKIZ3l2D9G_c0sM';
+    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMTM4NTAsImV4cCI6MjA5Mjg4OTg1MH0.E6wP-CTfNzyfNbOy442eTg6DY0WOUe2M8PocgIQERXI';
     // order=random() not supported by PostgREST REST API — fetch by price desc and shuffle client-side
     const params = 'type_line=ilike.*Legendary*Creature*&image_uri_small=not.is.null&price_usd=gt.2&select=slug,name,image_uri_small,type_line,color_identity,price_usd&order=price_usd.desc&limit=60';
     const res = await fetch(`${SUPA_URL}/rest/v1/mtg_cards?${params}`, {
