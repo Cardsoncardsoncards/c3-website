@@ -260,6 +260,19 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .c-card-name{font-size:11px;color:var(--white);font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .c-card-sub{font-size:10px;color:rgba(160,168,192,.6)}
 .c-card-price{font-size:12px;color:var(--gold);font-weight:700;margin-top:2px}
+/* RELEASE TICKER */
+.release-ticker{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.15);padding:0;overflow:hidden;height:36px;display:flex;align-items:center;position:relative}
+.release-ticker::before,.release-ticker::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+.release-ticker::before{left:0;background:linear-gradient(to right,var(--ink),transparent)}
+.release-ticker::after{right:0;background:linear-gradient(to left,var(--ink),transparent)}
+.ticker-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);white-space:nowrap;padding:0 16px 0 20px;flex-shrink:0;z-index:3}
+.ticker-track{display:flex;gap:0;animation:tickerScroll 50s linear infinite;flex-shrink:0}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;white-space:nowrap;font-size:11px;color:rgba(240,242,255,.7);border-left:1px solid rgba(201,168,76,.15)}
+.ticker-item strong{color:var(--white);font-weight:600}
+.ticker-game{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border-radius:3px;flex-shrink:0}
+
 @media(max-width:640px){.vault-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -284,6 +297,32 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     </div>
   </div>
 </nav>
+
+<!-- RELEASE TICKER STRIP -->
+<div class="release-ticker">
+  <span class="ticker-label">📅 Upcoming</span>
+  <div class="ticker-track" id="relTicker">
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> · May 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(255,204,0,.15);color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> · May 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</span><strong>Final Fantasy</strong> · Jun 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(255,60,60,.15);color:#ff7777">One Piece</span><strong>OP-12</strong> · Jun 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(255,204,0,.15);color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> · Jul 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(74,158,255,.15);color:#4A9EFF">Lorcana</span><strong>Upcoming Chapter</strong> · 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> · Aug 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(107,107,255,.15);color:#9898FF">Yu-Gi-Oh</span><strong>Upcoming Set</strong> · Q3 2026</span>
+    <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar →</a></span>
+    <!-- duplicated for seamless loop -->
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> · May 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(255,204,0,.15);color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> · May 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</span><strong>Final Fantasy</strong> · Jun 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(255,60,60,.15);color:#ff7777">One Piece</span><strong>OP-12</strong> · Jun 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(255,204,0,.15);color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> · Jul 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(74,158,255,.15);color:#4A9EFF">Lorcana</span><strong>Upcoming Chapter</strong> · 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> · Aug 2026</span>
+    <span class="ticker-item"><span class="ticker-game" style="background:rgba(107,107,255,.15);color:#9898FF">Yu-Gi-Oh</span><strong>Upcoming Set</strong> · Q3 2026</span>
+    <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar →</a></span>
+  </div>
+</div>
 
 <div class="wrap">
 
@@ -323,7 +362,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <div class="c-card" style="width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;color:rgba(160,168,192,.4);font-size:12px">Loading commanders...</div>
     </div>
     <div style="text-align:center;margin-top:12px">
-      <a href="/cards/mtg?page=random-commander" class="btn btn-ghost" style="font-size:13px">Generate a random Commander →</a>
+      <a href="/cards/mtg/random-commander" class="btn btn-ghost" style="font-size:13px">Generate a random Commander →</a>
     </div>
   </div>
 
@@ -378,25 +417,6 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
   </div>
 
-  <!-- UPCOMING RELEASES CAROUSEL -->
-  <div class="section-hd">
-    <span class="section-eyebrow">What's Coming</span>
-    <h2 class="section-title">Upcoming TCG Releases</h2>
-  </div>
-  <div class="carousel-section" style="margin-bottom:16px">
-    <div class="carousel-track" id="relTrack">
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</div><div class="rel-name">Tarkir: Dragonstorm</div><div class="rel-date">May 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(255,204,0,.15);color:#FFCC00">Pokemon</div><div class="rel-name">Destined Rivals</div><div class="rel-date">May 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</div><div class="rel-name">Final Fantasy</div><div class="rel-date">Jun 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(255,60,60,.15);color:#ff6b6b">One Piece</div><div class="rel-name">OP-12</div><div class="rel-date">Jun 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(255,204,0,.15);color:#FFCC00">Pokemon</div><div class="rel-name">Z-A TCG</div><div class="rel-date">Jul 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(74,158,255,.15);color:#4A9EFF">Lorcana</div><div class="rel-name">Upcoming Chapter</div><div class="rel-date">2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</div><div class="rel-name">Edge of Eternities</div><div class="rel-date">Aug 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(107,107,255,.15);color:#9898FF">Yu-Gi-Oh</div><div class="rel-name">Upcoming Set</div><div class="rel-date">Q3 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card rel-card--cta"><div style="font-size:22px;margin-bottom:6px">📅</div><div style="font-size:12px;font-weight:700;color:var(--gold)">Full Release Calendar</div><div style="font-size:10px;color:rgba(160,168,192,.5);margin-top:3px">AU + US dates →</div></a>
-    </div>
-  </div>
-
   <div class="mission">
     <p class="section-eyebrow" style="margin-bottom:12px">Our Approach</p>
     <p class="mission-text">We manually confirm every product on amazon.com.au before it goes live. <strong>We found them so you don't have to.</strong> Every click earns a small commission that keeps the site running — at no extra cost to you.</p>
@@ -421,21 +441,14 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 
 <script>
-// Release calendar carousel auto-scroll
+// Ticker pause on hover/touch
 (function(){
-  var track = document.getElementById('relTrack');
-  if (!track) return;
-  track.innerHTML += track.innerHTML;
-  var pos = 0, paused = false;
-  track.addEventListener('mouseenter', function(){ paused = true; });
-  track.addEventListener('mouseleave', function(){ paused = false; });
-  track.addEventListener('touchstart', function(){ paused = true; }, {passive:true});
-  track.addEventListener('touchend', function(){ setTimeout(function(){ paused = false; }, 2000); }, {passive:true});
-  function tick(){
-    if (!paused){ pos += 0.5; if (pos >= track.scrollWidth / 2) pos = 0; track.style.transform = 'translateX(-' + pos + 'px)'; }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+  var ticker = document.getElementById('relTicker');
+  if (!ticker) return;
+  ticker.addEventListener('mouseenter', function(){ ticker.style.animationPlayState = 'paused'; });
+  ticker.addEventListener('mouseleave', function(){ ticker.style.animationPlayState = 'running'; });
+  ticker.addEventListener('touchstart', function(){ ticker.style.animationPlayState = 'paused'; }, {passive:true});
+  ticker.addEventListener('touchend', function(){ setTimeout(function(){ ticker.style.animationPlayState = 'running'; }, 2000); }, {passive:true});
 })();
 </script>
 <script>
