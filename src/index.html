@@ -337,11 +337,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   </div>
 
   <div class="trust-bar">
-    <div class="trust-item"><span>🃏</span><span><strong>96,000+</strong> MTG cards</span></div>
-    <div class="trust-item"><span>⚡</span><span><strong>107,000+</strong> Pokemon cards</span></div>
-    <div class="trust-item"><span>👁</span><span><strong>9,999</strong> Yu-Gi-Oh cards</span></div>
-    <div class="trust-item"><span>🏰</span><span><strong>2,911</strong> Lorcana cards</span></div>
-    <div class="trust-item"><span>🛒</span><span><strong>25,441</strong> eBay listings</span></div>
+    <div class="trust-item"><span>🃏</span><span><strong>250,000+</strong> cards tracked in AUD</span></div>
+    <div class="trust-item"><span>📖</span><span><strong>247+</strong> TCG guides and reviews</span></div>
+    <div class="trust-item"><span>⭐</span><span><strong>25,000+</strong> eBay listings</span></div>
+    <div class="trust-item"><span>🔄</span><span>Prices updated <strong>daily</strong></span></div>
   </div>
 
   <!-- Card Vault Hub Navigation -->
@@ -356,7 +355,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
   <!-- Commander Spotlight Carousel -->
   <div class="carousel-section" id="commander-carousel">
-    <p class="carousel-eyebrow">Commander Spotlight</p>
+    <p class="carousel-eyebrow">MTG Commander Spotlight</p>
     <p class="carousel-heading">Your Next Commander Awaits</p>
     <div class="carousel-track" id="carousel-track-inner">
       <div class="c-card" style="width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;color:rgba(160,168,192,.4);font-size:12px">Loading commanders...</div>
@@ -455,7 +454,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 // Commander Carousel — calls Netlify function (server-side, no auth needed client-side)
 (async () => {
   try {
-    const res = await fetch('/api/commander-carousel?mode=top&limit=40');
+    const res = await fetch('/.netlify/functions/commander-carousel?mode=top&limit=40');
     if (!res.ok) { console.warn('Carousel fetch failed:', res.status); return; }
     const data = await res.json();
     let commanders = data.commanders || [];
