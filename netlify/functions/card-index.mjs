@@ -159,6 +159,26 @@ ${NAV}
     <a href="/shop.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#ff7043,#e64a19);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">🛒 Shop</a>
   </div>
 
+  <!-- Latest Set Spotlight: Secrets of Strixhaven -->
+  <div style="margin-bottom:32px;padding:24px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.18);border-radius:var(--radius);overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Latest Set</p>
+        <h2 style="font-family:'Cinzel',serif;font-size:18px;color:var(--text1);margin:0">Most Valuable in Secrets of Strixhaven</h2>
+      </div>
+      <a href="/cards/mtg/sets/secrets-of-strixhaven" style="font-size:12px;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,.3);padding:6px 12px;border-radius:6px;white-space:nowrap">Browse Full Set →</a>
+    </div>
+    <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent)">
+      <div id="sos-carousel-track" class="cmd-track">
+        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s infinite"></div>
+        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s .1s infinite"></div>
+        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s .2s infinite"></div>
+        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s .3s infinite"></div>
+        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s .4s infinite"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Commander Spotlight Carousel -->
   <div style="margin-bottom:32px;padding:24px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:var(--radius);overflow:hidden">
     <div style="text-align:center;margin-bottom:20px">
@@ -175,29 +195,26 @@ ${NAV}
       </div>
     </div>
     <div style="text-align:center;margin-top:14px">
-      <a href="/cards/mtg?page=random-commander" style="font-size:12px;color:#9898FF;text-decoration:none">Generate a random Commander → </a>
+      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF;text-decoration:none">Generate a random Commander →</a>
     </div>
   </div>
 
-  <!-- Browse by Set — search + grouped alphabetical list -->
+  <!-- Browse by Set — typeahead autocomplete -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
     <h2 style="font-size:18px;margin-bottom:12px">Browse by Set</h2>
-    <div style="margin-bottom:12px">
-      <input type="text" id="set-search" placeholder="Type a set name e.g. Strixhaven, Commander..."
-        style="width:100%;max-width:500px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box"
-        oninput="filterSets(this.value)" autocomplete="off">
-      <span style="font-size:11px;color:var(--text2);margin-left:12px">Sets with <span style="color:var(--gold)">+N</span> have sub-sets — click the + button to expand them</span>
-    </div>
-    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px">
-      ${setListHTML}
-    </div>
-    <div id=\"set-child-drawer\" style=\"display:none;margin-top:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px\">
-      <div style=\"display:flex;align-items:center;justify-content:space-between;margin-bottom:10px\">
-        <span id=\"set-drawer-title\" style=\"font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em\"></span>
-        <button onclick=\"closeDrawer()\" style=\"background:none;border:none;color:var(--text2);cursor:pointer;font-size:18px;line-height:1\">&times;</button>
+    <div style="position:relative;max-width:500px">
+      <input type="text" id="set-search"
+        placeholder="Type a set name e.g. Strixhaven, Commander..."
+        style="width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;outline:none"
+        autocomplete="off" spellcheck="false"
+        oninput="filterSets(this.value)"
+        onkeydown="handleSetKey(event)"
+        onfocus="if(this.value.length>=1)showDropdown(this.value)">
+      <div id="set-dropdown"
+        style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg3);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;max-height:320px;overflow-y:auto;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.4)">
       </div>
-      <div id=\"set-drawer-items\" style=\"display:flex;gap:8px;flex-wrap:wrap\"></div>
     </div>
+    <p style="font-size:11px;color:var(--text2);margin-top:8px">Start typing to search all ${sortedParents.length} MTG sets alphabetically</p>
   </div>
 
   <!-- Most Valuable Cards -->
@@ -271,19 +288,95 @@ async function searchCard() {
 }
 
 function filterSets(query) {
+  // Kept for compatibility but now handled by typeahead below
+}
+
+// ── Set typeahead autocomplete ──────────────────────────────────────────────
+const ALL_SETS = ${JSON.stringify(sortedParents.map(s => ({
+  name: s.set_name,
+  year: s.release_date?.slice(0,4) || '',
+  url: '/cards/mtg/sets/' + s.set_slug
+})))};
+
+let dropdownIdx = -1;
+
+function filterSets(query) {
   const q = query.toLowerCase().trim();
-  const items = document.querySelectorAll('.set-parent-item');
-  items.forEach(item => {
-    const name = item.dataset.name || '';
-    const match = !q || name.includes(q);
-    item.style.display = match ? '' : 'none';
-    // If searching, auto-expand children so sub-set matches are visible
-    if (q && match) {
-      const children = item.querySelector('.set-children');
-      if (children) children.style.display = '';
-    }
+  const dd = document.getElementById('set-dropdown');
+  if (!q) { dd.style.display = 'none'; dropdownIdx = -1; return; }
+  showDropdown(q);
+}
+
+function showDropdown(q) {
+  const dd = document.getElementById('set-dropdown');
+  const matches = ALL_SETS.filter(s => s.name.toLowerCase().includes(q)).slice(0, 12);
+  if (!matches.length) { dd.style.display = 'none'; return; }
+  dd.innerHTML = matches.map((s, i) =>
+    \`<div class="set-dd-item" data-url="\${s.url}" data-idx="\${i}"
+      style="padding:10px 14px;cursor:pointer;font-size:13px;color:var(--text);border-bottom:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;align-items:center"
+      onmouseover="highlightItem(\${i})"
+      onclick="navigateToSet('\${s.url}')">
+      <span>\${s.name}</span>
+      <span style="color:var(--text2);font-size:11px">\${s.year}</span>
+    </div>\`
+  ).join('');
+  dd.style.display = 'block';
+  dropdownIdx = -1;
+}
+
+function highlightItem(idx) {
+  dropdownIdx = idx;
+  document.querySelectorAll('.set-dd-item').forEach((el, i) => {
+    el.style.background = i === idx ? 'rgba(201,168,76,.12)' : '';
+    el.style.color = i === idx ? 'var(--gold)' : 'var(--text)';
   });
 }
+
+function handleSetKey(e) {
+  const items = document.querySelectorAll('.set-dd-item');
+  if (!items.length) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); dropdownIdx = Math.min(dropdownIdx + 1, items.length - 1); highlightItem(dropdownIdx); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); dropdownIdx = Math.max(dropdownIdx - 1, 0); highlightItem(dropdownIdx); }
+  else if (e.key === 'Enter' && dropdownIdx >= 0) { e.preventDefault(); navigateToSet(items[dropdownIdx].dataset.url); }
+  else if (e.key === 'Escape') { document.getElementById('set-dropdown').style.display = 'none'; dropdownIdx = -1; }
+}
+
+function navigateToSet(url) {
+  window.location.href = url;
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#set-search') && !e.target.closest('#set-dropdown')) {
+    const dd = document.getElementById('set-dropdown');
+    if (dd) dd.style.display = 'none';
+  }
+});
+
+// ── Secrets of Strixhaven top cards carousel ────────────────────────────────
+(async function() {
+  try {
+    const SUPA_URL = '${SUPABASE_URL}';
+    const SUPA_KEY = '${SUPABASE_ANON_KEY}';
+    const res = await fetch(
+      SUPA_URL + '/rest/v1/mtg_cards?set_code=in.(sos,soa,soc)&price_usd=gte.5&image_uri_small=not.is.null&select=slug,name,image_uri_small,price_usd,price_aud,set_code&order=price_usd.desc&limit=30',
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } }
+    );
+    if (!res.ok) return;
+    const cards = await res.json();
+    if (!Array.isArray(cards) || !cards.length) return;
+    const track = document.getElementById('sos-carousel-track');
+    if (!track) return;
+    const html = cards.map(c => {
+      const aud = c.price_aud > 0 ? parseFloat(c.price_aud).toFixed(0) : (c.price_usd * 1.58).toFixed(0);
+      return '<a href="/cards/mtg/' + c.slug + '" style="display:block;min-width:120px;text-decoration:none;text-align:center">'
+        + '<img src="' + c.image_uri_small + '" alt="' + c.name.replace(/"/g,'&quot;') + '" loading="lazy" style="width:120px;border-radius:6px;display:block;margin:0 auto">'
+        + '<div style="font-size:11px;color:var(--text);margin-top:4px;padding:0 4px;line-height:1.3">' + c.name + '</div>'
+        + '<div style="font-size:12px;color:var(--gold);font-weight:700">~AU$' + aud + '</div>'
+        + '</a>';
+    }).join('');
+    track.innerHTML = html + html;
+  } catch(e) {}
+})();
 
 function handleToggle(btn) {
   const setCode = btn.dataset.setcode;
