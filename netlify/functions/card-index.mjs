@@ -123,22 +123,15 @@ function renderCardHub(sets, topCards, sosCards = []) {
       <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.58).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
-  // SOS carousel HTML — server rendered, no client fetch, no auth needed
+  // SOS carousel built server-side — no client fetch, no auth, no template conflicts
   const sosHTML = (sosCards || []).map(c => {
     const aud = (c.price_aud > 0 ? parseFloat(c.price_aud) : parseFloat(c.price_usd || 0) * 1.58).toFixed(0);
     return '<a href="/cards/mtg/' + c.slug + '" style="display:block;min-width:120px;flex-shrink:0;text-decoration:none;text-align:center">'
-      + '<img src="' + (c.image_uri_small || '') + '" alt="" loading="lazy" style="width:120px;border-radius:6px;display:block;margin:0 auto">'
-      + '<div style="font-size:11px;color:var(--text);margin-top:4px;padding:0 4px;line-height:1.3;max-width:120px">' + c.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
+      + (c.image_uri_small ? '<img src="' + c.image_uri_small + '" alt="" loading="lazy" style="width:120px;border-radius:6px;display:block;margin:0 auto">' : '')
+      + '<div style="font-size:11px;color:var(--text);margin-top:4px;padding:0 4px;line-height:1.3;max-width:120px">' + c.name.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
       + '<div style="font-size:12px;color:#C9A84C;font-weight:700">~AU$' + aud + '</div>'
       + '</a>';
   }).join('');
-
-  // Set data as JSON for client typeahead — injected via JSON element not inline var
-  const setDataJSON = JSON.stringify((sortedParents || []).map(s => ({
-    n: s.set_name,
-    y: s.release_date ? s.release_date.slice(0, 4) : '',
-    u: '/cards/mtg/sets/' + s.set_slug
-  })));
 
   return `<!DOCTYPE html>
 <html lang="en-AU">
@@ -176,11 +169,8 @@ ${NAV}
     <a href="/shop.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#ff7043,#e64a19);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">🛒 Shop</a>
   </div>
 
-  <!-- Set data for typeahead — injected as JSON, not inline JS var -->
-  <script type="application/json" id="set-data">${setDataJSON}</script>
-
   ${sosHTML ? `
-  <!-- Latest Set: Secrets of Strixhaven top cards -->
+  <!-- Latest Set: Secrets of Strixhaven -->
   <div style="margin-bottom:32px;padding:24px;background:rgba(201,168,76,.04);border:1px solid #7A621E;border-radius:var(--radius);overflow:hidden">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
       <div>
@@ -210,26 +200,26 @@ ${NAV}
       </div>
     </div>
     <div style="text-align:center;margin-top:14px">
-      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF;text-decoration:none">Generate a random Commander →</a>
+      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF;text-decoration:none">Generate a random Commander → </a>
     </div>
   </div>
 
-  <!-- Browse by Set — typeahead dropdown -->
+  <!-- Browse by Set — search + grouped alphabetical list -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
     <h2 style="font-size:18px;margin-bottom:6px">Browse by Set</h2>
-    <p style="color:var(--text2);font-size:13px;margin-bottom:14px">Search all ${sortedParents.length} MTG sets — type to filter, click to browse</p>
-    <div style="position:relative;max-width:520px">
-      <div style="position:relative">
-        <input type="text" id="set-search"
-          placeholder="e.g. Strixhaven, Commander, Dominaria..."
-          style="width:100%;padding:10px 14px 10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;outline:none"
-          autocomplete="off" spellcheck="false"
-          oninput="doSetSearch(this.value)"
-          onkeydown="setKeyNav(event)"
-          onfocus="if(this.value.length>0)doSetSearch(this.value)"
-          onblur="setTimeout(function(){var d=document.getElementById('set-dd');if(d)d.style.display='none'},150)">
-      </div>
-      <div id="set-dd" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg3);border:1px solid var(--border);border-radius:8px;max-height:300px;overflow-y:auto;z-index:50;box-shadow:0 8px 32px #000a"></div>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:12px">All ${sortedParents.length} MTG sets — type to filter</p>
+    <input type="text" id="set-search" placeholder="e.g. Strixhaven, Commander, Dominaria..."
+      style="width:100%;max-width:520px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;margin-bottom:12px;display:block"
+      oninput="filterSets(this.value)" autocomplete="off" spellcheck="false">
+    <div id="set-list" style="column-count:3;column-gap:8px;max-height:400px;overflow-y:auto">
+      ${sortedParents.map(s =>
+        '<a href="/cards/mtg/sets/' + s.set_slug + '" class="set-list-link"'
+        + ' style="display:block;padding:5px 0;font-size:13px;color:var(--text);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"'
+        + ' onmouseover="this.style.color=\'#C9A84C\'" onmouseout="this.style.color=\'var(--text)\'"'
+        + ' data-name="' + s.set_name.toLowerCase().replace(/"/g,'&quot;') + '">'
+        + s.set_name
+        + '</a>'
+      ).join('')}
     </div>
   </div>
 
@@ -303,56 +293,12 @@ async function searchCard() {
   } catch { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; }
 }
 
-function filterSets(query) { doSetSearch(query); }
-
-// Set typeahead — reads data from <script type="application/json"> element
-// This avoids injecting a large JSON blob as a JS variable (prevents syntax errors)
-var SET_DATA = null;
-function getSetData() {
-  if (SET_DATA) return SET_DATA;
-  try {
-    var el = document.getElementById('set-data');
-    SET_DATA = el ? JSON.parse(el.textContent) : [];
-  } catch(e) { SET_DATA = []; }
-  return SET_DATA;
-}
-
-var ddIdx = -1;
-
-function doSetSearch(q) {
-  q = (q || '').trim().toLowerCase();
-  var dd = document.getElementById('set-dd');
-  if (!dd) return;
-  if (!q) { dd.style.display = 'none'; ddIdx = -1; return; }
-  var data = getSetData();
-  var matches = data.filter(function(s){ return s.n.toLowerCase().indexOf(q) >= 0; }).slice(0, 14);
-  if (!matches.length) { dd.style.display = 'none'; return; }
-  dd.innerHTML = matches.map(function(s, i) {
-    return '<a href="' + s.u + '" class="sdd-item" data-idx="' + i + '" '
-      + 'style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;text-decoration:none;color:var(--text);font-size:13px;border-bottom:1px solid #2d3254"'
-      + ' onmouseover="this.style.background=\'#1e2038\';this.style.color=\'#C9A84C\'"'
-      + ' onmouseout="this.style.background=\'\';this.style.color=\'var(--text)\'">'
-      + '<span>' + s.n.replace(/</g,'&lt;') + '</span>'
-      + '<span style="color:var(--text2);font-size:11px">' + s.y + '</span>'
-      + '</a>';
-  }).join('');
-  dd.style.display = 'block';
-  ddIdx = -1;
-}
-
-function setKeyNav(e) {
-  var items = document.querySelectorAll('.sdd-item');
-  if (!items.length) return;
-  if (e.key === 'ArrowDown') { e.preventDefault(); ddIdx = Math.min(ddIdx + 1, items.length - 1); highlightDD(); }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); ddIdx = Math.max(ddIdx - 1, 0); highlightDD(); }
-  else if (e.key === 'Enter' && ddIdx >= 0) { e.preventDefault(); window.location.href = items[ddIdx].href; }
-  else if (e.key === 'Escape') { var d = document.getElementById('set-dd'); if(d) d.style.display = 'none'; ddIdx = -1; }
-}
-
-function highlightDD() {
-  document.querySelectorAll('.sdd-item').forEach(function(el, i) {
-    el.style.background = i === ddIdx ? '#1e2038' : '';
-    el.style.color = i === ddIdx ? '#C9A84C' : 'var(--text)';
+function filterSets(query) {
+  var q = (query || '').trim().toLowerCase();
+  var links = document.querySelectorAll('.set-list-link');
+  links.forEach(function(el) {
+    var name = el.getAttribute('data-name') || '';
+    el.style.display = (!q || name.indexOf(q) >= 0) ? '' : 'none';
   });
 }
 
