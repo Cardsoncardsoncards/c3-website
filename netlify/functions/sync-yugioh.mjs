@@ -87,7 +87,7 @@ export default async (req) => {
     const allSets = [];
     let page = 1;
     while (true) {
-      const data = await tcgapiGet(`/sets?game=${GAME_SLUG}&per_page=100&page=${page}`);
+      const data = await tcgapiGet(`/games/${GAME_SLUG}/sets?per_page=100&page=${page}`);
       const sets = data.data || [];
       allSets.push(...sets);
       console.log(`[sync-yugioh] Sets page ${page}: ${sets.length} sets`);
@@ -158,6 +158,7 @@ export default async (req) => {
 
       // Build rows
       const cardRows = [];
+      const slugsSeen = new Set();
       const snapRows = [];
 
       for (const card of setCards) {
@@ -165,7 +166,9 @@ export default async (req) => {
         const marketPrice = price.market_price || null;
         const lowPrice = price.low_price || null;
         const foilPrice = price.foil_market_price || null;
-        const slug = slugify(card.clean_name || card.name, card.number);
+        let slug = slugify(card.clean_name || card.name, card.number);
+        if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
+        slugsSeen.add(slug);
 
         cardRows.push({
           id:                card.id,
