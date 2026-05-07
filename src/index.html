@@ -158,15 +158,6 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .tcg-name{font-size:11px;font-weight:700;color:var(--white);line-height:1.25}
 .tcg-tag{font-size:9px;color:rgba(160,168,192,.4)}
 
-.rel-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 14px;min-width:170px;flex-shrink:0;text-decoration:none;display:flex;flex-direction:column;gap:5px;transition:border-color .2s,transform .2s}
-.rel-card:hover{border-color:rgba(201,168,76,.35);transform:translateY(-2px)}
-.rel-card--cta{background:rgba(201,168,76,.04);border-color:rgba(201,168,76,.2);justify-content:center;align-items:center;text-align:center;min-width:150px}
-.rel-card--cta:hover{border-color:var(--gold)}
-.rel-game-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:4px;width:fit-content}
-.rel-name{font-size:13px;font-weight:700;color:var(--white);line-height:1.3;margin-top:2px}
-.rel-date{font-size:11px;color:var(--gold);font-weight:600}
-.rel-type{font-size:10px;color:rgba(160,168,192,.4)}
-
 /* MISSION */
 .mission{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px;padding:32px;text-align:center;margin-bottom:64px}
 .mission-text{font-size:15px;color:rgba(240,242,255,.6);max-width:540px;margin:0 auto;line-height:1.7}
@@ -378,23 +369,19 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
   </div>
 
-  <!-- UPCOMING RELEASES CAROUSEL -->
   <div class="section-hd">
-    <span class="section-eyebrow">What's Coming</span>
-    <h2 class="section-title">Upcoming TCG Releases</h2>
+    <span class="section-eyebrow">What We Cover</span>
+    <h2 class="section-title">All the Games That Matter</h2>
   </div>
-  <div class="carousel-section" style="margin-bottom:16px">
-    <div class="carousel-track" id="relTrack">
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</div><div class="rel-name">Tarkir: Dragonstorm</div><div class="rel-date">May 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(255,204,0,.15);color:#FFCC00">Pokemon</div><div class="rel-name">Destined Rivals</div><div class="rel-date">May 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</div><div class="rel-name">Final Fantasy</div><div class="rel-date">Jun 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(255,60,60,.15);color:#ff6b6b">One Piece</div><div class="rel-name">OP-12</div><div class="rel-date">Jun 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(255,204,0,.15);color:#FFCC00">Pokemon</div><div class="rel-name">Z-A TCG</div><div class="rel-date">Jul 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(74,158,255,.15);color:#4A9EFF">Lorcana</div><div class="rel-name">Upcoming Chapter</div><div class="rel-date">2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(201,168,76,.15);color:#C9A84C">MTG</div><div class="rel-name">Edge of Eternities</div><div class="rel-date">Aug 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card"><div class="rel-game-tag" style="background:rgba(107,107,255,.15);color:#9898FF">Yu-Gi-Oh</div><div class="rel-name">Upcoming Set</div><div class="rel-date">Q3 2026</div><div class="rel-type">Booster Set</div></a>
-      <a href="/calendar" class="rel-card rel-card--cta"><div style="font-size:22px;margin-bottom:6px">📅</div><div style="font-size:12px;font-weight:700;color:var(--gold)">Full Release Calendar</div><div style="font-size:10px;color:rgba(160,168,192,.5);margin-top:3px">AU + US dates →</div></a>
-    </div>
+  <div class="tcg-grid">
+    <a href="/shop.html#pokemon" class="tcg-card"><span class="tcg-icon">⚡</span><div class="tcg-name">Pokémon TCG</div><span class="tcg-tag">Scarlet &amp; Violet era</span></a>
+    <a href="/shop.html#mtg" class="tcg-card"><span class="tcg-icon">⚔️</span><div class="tcg-name">Magic: The Gathering</div><span class="tcg-tag">Standard + Commander</span></a>
+    <a href="/shop.html#onepiece" class="tcg-card"><span class="tcg-icon">☠️</span><div class="tcg-name">One Piece TCG</div><span class="tcg-tag">EN &amp; JP versions</span></a>
+    <a href="/shop.html#lorcana" class="tcg-card"><span class="tcg-icon">🏰</span><div class="tcg-name">Disney Lorcana</div><span class="tcg-tag">All chapters</span></a>
+    <a href="/shop.html#dragonball" class="tcg-card"><span class="tcg-icon">🐉</span><div class="tcg-name">Dragon Ball Super TCG</div><span class="tcg-tag">Fusion World era</span></a>
+    <a href="/shop.html#starwars" class="tcg-card"><span class="tcg-icon">✨</span><div class="tcg-name">Star Wars Unlimited</div><span class="tcg-tag">All sets</span></a>
+    <a href="/shop.html#riftbound" class="tcg-card"><span class="tcg-icon">🎮</span><div class="tcg-name">Riftbound</div><span class="tcg-tag">League of Legends TCG</span></a>
+    <a href="/shop.html#yugioh" class="tcg-card"><span class="tcg-icon">👁️</span><div class="tcg-name">Yu-Gi-Oh!</div><span class="tcg-tag">Recent sets</span></a>
   </div>
 
   <div class="mission">
@@ -421,55 +408,30 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 
 <script>
-// Release calendar carousel auto-scroll
-(function(){
-  var track = document.getElementById('relTrack');
-  if (!track) return;
-  track.innerHTML += track.innerHTML;
-  var pos = 0, paused = false;
-  track.addEventListener('mouseenter', function(){ paused = true; });
-  track.addEventListener('mouseleave', function(){ paused = false; });
-  track.addEventListener('touchstart', function(){ paused = true; }, {passive:true});
-  track.addEventListener('touchend', function(){ setTimeout(function(){ paused = false; }, 2000); }, {passive:true});
-  function tick(){
-    if (!paused){ pos += 0.5; if (pos >= track.scrollWidth / 2) pos = 0; track.style.transform = 'translateX(-' + pos + 'px)'; }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
-</script>
-<script>
 // Commander Carousel
 (async () => {
   try {
     const SUPA_URL = 'https://owaroeqchreuffbyakqx.supabase.co';
-    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMTM4NTAsImV4cCI6MjA5Mjg4OTg1MH0.E6wP-CTfNzyfNbOy442eTg6DY0WOUe2M8PocgIQERXI';
-    // order=random() not supported by PostgREST REST API — fetch by price desc and shuffle client-side
-    const params = 'type_line=ilike.*Legendary*Creature*&image_uri_small=not.is.null&price_usd=gt.2&select=slug,name,image_uri_small,type_line,color_identity,price_usd&order=price_usd.desc&limit=60';
+    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMwNzQ4MjIsImV4cCI6MjA1ODY1MDgyMn0.tBGKBDSMj-xOYkMPo_GkMkGbNT04XKIZ3l2D9G_c0sM';
+    const params = 'type_line=ilike.*Legendary*Creature*&image_uri=not.is.null&price_usd=gt.0&select=slug,name,image_uri,type_line,color_identity,price_usd&order=random()&limit=20';
     const res = await fetch(`${SUPA_URL}/rest/v1/mtg_cards?${params}`, {
       headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
     });
-    if (!res.ok) { console.warn('Carousel fetch failed:', res.status); return; }
-    let cards = await res.json();
-    if (!Array.isArray(cards) || !cards.length) return;
-    // Shuffle client-side for variety on each page load
-    for (let i = cards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [cards[i], cards[j]] = [cards[j], cards[i]];
-    }
-    cards = cards.slice(0, 20);
+    const cards = await res.json();
+    if (!cards || !cards.length) return;
     const items = cards.map(c => {
       const ci = (c.color_identity||[]).join('');
+      const label = ci ? ci : 'C';
       return `<a href="/cards/mtg/${c.slug}" class="c-card">
-        <img src="${c.image_uri_small}" alt="${c.name}" loading="lazy" onerror="this.style.display='none'">
+        <img src="${c.image_uri}" alt="${c.name}" loading="lazy" onerror="this.style.display='none'">
         <div class="c-card-name">${c.name}</div>
-        <div class="c-card-sub">${ci || 'Colourless'}</div>
-        <div class="c-card-price">${c.price_usd ? '~AU$'+(parseFloat(c.price_usd)*1.58).toFixed(0) : ''}</div>
+        <div class="c-card-sub">${label || 'Colourless'}</div>
+        <div class="c-card-price">${c.price_usd ? '~AU$'+(c.price_usd*1.58).toFixed(0) : ''}</div>
       </a>`;
     }).join('');
     const track = document.getElementById('carousel-track-inner');
     if (track) track.innerHTML = items + items;
-  } catch(e) { console.warn('Carousel error', e); }
+  } catch(e) { console.log('Carousel error', e); }
 })();
 </script>
 </body>

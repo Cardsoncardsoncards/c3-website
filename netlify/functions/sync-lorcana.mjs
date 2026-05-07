@@ -1,79 +1,53 @@
 // netlify/functions/sync-lorcana.mjs
 // Scheduled: daily at 4:30am UTC (2:30pm AEST)
-// Game: Disney Lorcana | Slug: lorcana-tcg (confirmed tcgapi.dev/games)
-// Tables: lorcana_sets, lorcana_cards, lorcana_price_snapshots
-//
-// Credit budget per full sync (Pro tier, 10,000/day):
-//   Sets:        1 page   =    1 credit
-//   Cards:      ~29 pages =   29 credits
-//   Bulk prices: ceil(2889 / 500) = 6 calls x 250 = 1,500 credits
-//   Total:      ~1,530 credits — well within daily limit
+// Fetches all Lorcana sets + cards + prices from tcgapi.dev Pro
+// Upserts into lorcana_sets, lorcana_cards, lorcana_price_snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const GAME_SLUG            = 'lorcana-tcg';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
-const SAFE_FLOOR           = 500;   // abort if credits drop to or below this
-const BULK_SIZE            = 500;   // max ids per bulk/prices call (Pro limit)
-const SNAP_MIN_USD         = 0.50;  // only snapshot cards worth >= this
+const RATE_LIMIT_BUFFER    = 200;
 
-let creditsLeft = 10000; // updated from X-RateLimit-Remaining header each call
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// --- Helpers ---
 
 function slugify(name, number) {
-  const base = (name || '').toLowerCase()
+  const base = name
+    .toLowerCase()
     .replace(/['']/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-  const num = (number || '').replace(/[^a-z0-9]/gi, '-').toLowerCase().replace(/^-+|-+$/g, '');
-  return num ? `${base}-${num}` : base;
+  return number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
 }
 
-async function getAudRate() {
+async function getExchangeRate() {
   try {
-    const r = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-    const d = await r.json();
-    return d.rates?.AUD || 1.58;
-  } catch { return 1.58; }
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const data = await res.json();
+    return data.rates?.AUD || 1.58;
+  } catch {
+    return 1.58;
+  }
 }
 
-async function apiGet(path) {
-  // Pre-flight credit check
-  if (creditsLeft <= SAFE_FLOOR) {
-    throw new Error(`Credits at safe floor (${creditsLeft}). Stopping.`);
-  }
-
+async function tcgapiGet(path) {
   const res = await fetch(`${TCGAPI_BASE}${path}`, {
-    headers: { 'X-API-Key': TCGAPI_KEY, 'Accept': 'application/json' }
+    headers: { 'X-API-Key': TCGAPI_KEY }
   });
-
-  // Always read header first — present even on errors
-  const hdr = res.headers.get('X-RateLimit-Remaining');
-  if (hdr !== null) creditsLeft = parseInt(hdr, 10);
-
-  if (res.status === 429) {
-    const reset = res.headers.get('X-RateLimit-Reset') || 'midnight UTC';
-    throw new Error(`429 rate limit exceeded. Resets: ${reset}. Credits: ${creditsLeft}`);
-  }
-
   if (!res.ok) {
-    const txt = await res.text();
-    throw new Error(`API ${res.status} on ${path}: ${txt.slice(0, 200)}`);
+    const err = await res.text();
+    throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
-
   const data = await res.json();
-
-  // Fallback: read from body if header was absent
-  if (hdr === null && data.rate_limit?.daily_remaining != null) {
-    creditsLeft = data.rate_limit.daily_remaining;
+  const remaining = data.rate_limit?.daily_remaining ?? 9999;
+  if (remaining < RATE_LIMIT_BUFFER) {
+    throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
-
   return data;
 }
 
-async function dbUpsert(table, rows) {
+async function supabaseUpsert(table, rows) {
   if (!rows.length) return;
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
     method: 'POST',
@@ -87,137 +61,159 @@ async function dbUpsert(table, rows) {
   });
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`DB upsert ${table} failed: ${err.slice(0, 300)}`);
+    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
+// --- Main ---
 
 export default async (req) => {
-  console.log('[sync-lorcana] Starting');
-  if (!TCGAPI_KEY) return new Response('TCGAPI_KEY missing', { status: 500 });
-  if (!SUPABASE_SERVICE_KEY) return new Response('SUPABASE_SERVICE_KEY missing', { status: 500 });
+  console.log('[sync-lorcana] Starting...');
+  const start = Date.now();
 
-  const t0 = Date.now();
+  if (!TCGAPI_KEY) {
+    console.error('[sync-lorcana] TCGAPI_KEY not set');
+    return new Response('TCGAPI_KEY missing', { status: 500 });
+  }
 
   try {
-    const audRate = await getAudRate();
+    const audRate = await getExchangeRate();
     console.log(`[sync-lorcana] AUD rate: ${audRate}`);
 
-    // 1. Fetch all sets
+    // Step 1: Fetch all sets
+    console.log('[sync-lorcana] Fetching sets...');
     const allSets = [];
     let page = 1;
     while (true) {
-      const d = await apiGet(`/games/${GAME_SLUG}/sets?per_page=100&page=${page}`);
-      allSets.push(...(d.data || []));
-      console.log(`[sync-lorcana] Sets page ${page}: ${(d.data||[]).length} (credits: ${creditsLeft})`);
-      if (!d.meta?.has_more) break;
+      const data = await tcgapiGet(`/games/${GAME_SLUG}/sets?per_page=100&page=${page}`);
+      const sets = data.data || [];
+      allSets.push(...sets);
+      if (sets.length < 100) break;
       page++;
     }
-    console.log(`[sync-lorcana] ${allSets.length} sets found`);
+    console.log(`[sync-lorcana] Found ${allSets.length} sets`);
 
-    // 2. Upsert sets
+    // Step 2: Upsert sets
     const setRows = allSets.map(s => ({
-      id: s.id, name: s.name,
-      slug: s.slug || slugify(s.name, ''),
+      id:           s.id,
+      name:         s.name,
+      slug:         s.slug || slugify(s.name, null),
       abbreviation: s.abbreviation || null,
       release_date: s.release_date || null,
-      card_count: s.card_count || 0,
-      game_slug: GAME_SLUG,
-      updated_at: new Date().toISOString()
+      card_count:   s.card_count || 0,
+      game_slug:    GAME_SLUG,
+      updated_at:   new Date().toISOString()
     }));
-    for (let i = 0; i < setRows.length; i += 100) await dbUpsert('lorcana_sets', setRows.slice(i, i + 100));
-    console.log(`[sync-lorcana] ${setRows.length} sets upserted`);
 
-    // 3. Fetch all card metadata across all sets (no prices yet)
-    const allCards = [];
-    const cardSetMap = new Map();
+    for (let i = 0; i < setRows.length; i += 100) {
+      await supabaseUpsert('lorcana_sets', setRows.slice(i, i + 100));
+    }
+    console.log(`[sync-lorcana] Upserted ${setRows.length} sets`);
+
+    // Step 3: For each set, fetch cards
+    const today = new Date().toISOString().split('T')[0];
+    let totalCards = 0;
+    let totalSnaps = 0;
+
     for (const set of allSets) {
-      let cp = 1;
+      console.log(`[sync-lorcana] Syncing set: ${set.name} (id:${set.id})`);
+      const setCards = [];
+      let cardPage = 1;
+
       while (true) {
-        const d = await apiGet(`/sets/${set.id}/cards?per_page=100&page=${cp}`);
-        for (const c of (d.data || [])) { allCards.push(c); cardSetMap.set(c.id, set); }
-        if (!d.meta?.has_more) break;
-        cp++;
+        const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
+        const cards = data.data || [];
+        setCards.push(...cards);
+        if (cards.length < 100) break;
+        cardPage++;
       }
-    }
-    console.log(`[sync-lorcana] ${allCards.length} cards fetched (credits: ${creditsLeft})`);
 
-    // 4. Bulk prices for all cards
-    const estimatedCost = Math.ceil(allCards.length * 0.5);
-    if (creditsLeft - estimatedCost < SAFE_FLOOR) {
-      throw new Error(`Insufficient credits for bulk prices. Need ~${estimatedCost}, have ${creditsLeft}`);
-    }
+      if (!setCards.length) continue;
 
-    const priceMap = new Map();
-    const ids = allCards.map(c => c.id);
-    for (let i = 0; i < ids.length; i += BULK_SIZE) {
-      const batch = ids.slice(i, i + BULK_SIZE);
-      const d = await apiGet(`/bulk/prices?ids=${batch.join(',')}`);
-      for (const p of (d.data || [])) priceMap.set(p.card_id, p);
-      console.log(`[sync-lorcana] Prices batch ${Math.floor(i/BULK_SIZE)+1}/${Math.ceil(ids.length/BULK_SIZE)} (credits: ${creditsLeft})`);
-    }
+      // Fetch bulk prices
+      const cardIds = setCards.map(c => c.id);
+      const priceMap = new Map();
 
-    // 5. Build card rows + snapshot rows
-    const today = new Date().toISOString().slice(0, 10);
-    const slugsSeen = new Set();
-    const cardRows = [], snapRows = [];
+      for (let i = 0; i < cardIds.length; i += 500) {
+        const batch = cardIds.slice(i, i + 500);
+        try {
+          const priceData = await tcgapiGet(`/bulk/prices?ids=${batch.join(',')}`);
+          const prices = priceData.data || [];
+          for (const p of prices) {
+            priceMap.set(p.card_id, p);
+          }
+        } catch (e) {
+          console.error(`[sync-lorcana] Bulk price fetch failed for set ${set.id}:`, e.message);
+        }
+      }
 
-    for (const c of allCards) {
-      const set = cardSetMap.get(c.id);
-      const p = priceMap.get(c.id) || {};
-      const mp = p.market_price ?? null;
-      const lp = p.low_price ?? null;
-      const fp = p.foil_market_price ?? null;
+      // Build rows
+      const cardRows = [];
+      const slugsSeen = new Set();
+      const snapRows = [];
 
-      let slug = slugify(c.clean_name || c.name, c.number);
-      if (slugsSeen.has(slug)) slug = `${slug}-${c.id}`;
-      slugsSeen.add(slug);
+      for (const card of setCards) {
+        const price = priceMap.get(card.id) || {};
+        const marketPrice = price.market_price || null;
+        const lowPrice = price.low_price || null;
+        const foilPrice = price.foil_market_price || null;
+        let slug = slugify(card.clean_name || card.name, card.number);
+        if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
+        slugsSeen.add(slug);
 
-      cardRows.push({
-        id: c.id,
-        tcgplayer_id: c.tcgplayer_id || null,
-        name: c.name,
-        clean_name: c.clean_name || null,
-        slug,
-        number: c.number || null,
-        rarity: c.rarity || null,
-        image_url: c.image_url || null,
-        tcgplayer_url: c.tcgplayer_url || null,
-        set_id: set.id,
-        set_name: set.name,
-        game_slug: GAME_SLUG,
-        custom_attributes: c.custom_attributes || null,   // raw object, NOT stringified
-        market_price: mp,
-        low_price: lp,
-        foil_market_price: fp,
-        price_aud: mp != null ? parseFloat((mp * audRate).toFixed(2)) : null,
-        foil_price_aud: fp != null ? parseFloat((fp * audRate).toFixed(2)) : null,
-        aud_rate: audRate,
-        price_change_24h: p.price_change_24h ?? null,
-        price_change_7d: null,  // not available in bulk prices endpoint
-        last_price_update: p.last_updated_at || null,
-        updated_at: new Date().toISOString()
-      });
-
-      if (mp != null && mp >= SNAP_MIN_USD) {
-        snapRows.push({
-          card_id: c.id,
-          snapshot_date: today,
-          market_price: mp,
-          low_price: lp,
-          foil_price: fp,
-          price_aud: parseFloat((mp * audRate).toFixed(2)),
-          aud_rate: audRate
+        cardRows.push({
+          id:                card.id,
+          tcgplayer_id:      card.tcgplayer_id || null,
+          name:              card.name,
+          clean_name:        card.clean_name || null,
+          slug:              slug,
+          number:            card.number || null,
+          rarity:            card.rarity || null,
+          image_url:         card.image_url || null,
+          tcgplayer_url:     card.tcgplayer_url || null,
+          set_id:            set.id,
+          set_name:          set.name,
+          game_slug:         GAME_SLUG,
+          custom_attributes: card.custom_attributes ? JSON.stringify(card.custom_attributes) : null,
+          market_price:      marketPrice,
+          low_price:         lowPrice,
+          foil_market_price: foilPrice,
+          price_aud:         marketPrice ? parseFloat((marketPrice * audRate).toFixed(2)) : null,
+          foil_price_aud:    foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
+          aud_rate:          audRate,
+          price_change_24h:  price.price_change_24h || null,
+          price_change_7d:   null,
+          last_price_update: price.last_updated_at || null,
+          updated_at:        new Date().toISOString()
         });
+
+        if (marketPrice && marketPrice >= 0.50) {
+          snapRows.push({
+            card_id:       card.id,
+            snapshot_date: today,
+            market_price:  marketPrice,
+            low_price:     lowPrice,
+            foil_price:    foilPrice,
+            price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
+            aud_rate:      audRate
+          });
+        }
       }
+
+      for (let i = 0; i < cardRows.length; i += 200) {
+        await supabaseUpsert('lorcana_cards', cardRows.slice(i, i + 200));
+      }
+      for (let i = 0; i < snapRows.length; i += 500) {
+        await supabaseUpsert('lorcana_price_snapshots', snapRows.slice(i, i + 500));
+      }
+
+      totalCards += cardRows.length;
+      totalSnaps += snapRows.length;
+      console.log(`[sync-lorcana] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
-    for (let i = 0; i < cardRows.length; i += 200) await dbUpsert('lorcana_cards', cardRows.slice(i, i + 200));
-    for (let i = 0; i < snapRows.length; i += 500) await dbUpsert('lorcana_price_snapshots', snapRows.slice(i, i + 500));
-
-    const secs = ((Date.now() - t0) / 1000).toFixed(1);
-    console.log(`[sync-lorcana] Done: ${cardRows.length} cards, ${snapRows.length} snapshots, ${secs}s, credits remaining: ${creditsLeft}`);
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    console.log(`[sync-lorcana] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response('OK', { status: 200 });
 
   } catch (err) {

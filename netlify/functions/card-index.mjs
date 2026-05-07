@@ -123,21 +123,20 @@ function renderCardHub(sets, topCards, sosCards = []) {
       <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.58).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
-  // SOS carousel — rendered server-side, no client fetch needed
-  const sosHTML = sosCards.map(c => {
-    const aud = (c.price_aud > 0 ? parseFloat(c.price_aud) : parseFloat(c.price_usd) * 1.58).toFixed(0);
-    const safeName = c.name.replace(/'/g, '\\&#39;').replace(/"/g, '&quot;');
-    return `<a href="/cards/mtg/${c.slug}" style="display:block;min-width:120px;flex-shrink:0;text-decoration:none;text-align:center">`
-      + `<img src="${c.image_uri_small}" alt="${safeName}" loading="lazy" style="width:120px;border-radius:6px;display:block;margin:0 auto">`
-      + `<div style="font-size:11px;color:var(--text);margin-top:4px;padding:0 4px;line-height:1.3;max-width:120px">${c.name}</div>`
-      + `<div style="font-size:12px;color:var(--gold);font-weight:700">~AU$${aud}</div>`
-      + `</a>`;
+  // SOS carousel HTML — server rendered, no client fetch, no auth needed
+  const sosHTML = (sosCards || []).map(c => {
+    const aud = (c.price_aud > 0 ? parseFloat(c.price_aud) : parseFloat(c.price_usd || 0) * 1.58).toFixed(0);
+    return '<a href="/cards/mtg/' + c.slug + '" style="display:block;min-width:120px;flex-shrink:0;text-decoration:none;text-align:center">'
+      + '<img src="' + (c.image_uri_small || '') + '" alt="" loading="lazy" style="width:120px;border-radius:6px;display:block;margin:0 auto">'
+      + '<div style="font-size:11px;color:var(--text);margin-top:4px;padding:0 4px;line-height:1.3;max-width:120px">' + c.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
+      + '<div style="font-size:12px;color:#C9A84C;font-weight:700">~AU$' + aud + '</div>'
+      + '</a>';
   }).join('');
 
-  // Set data as JSON for client-side typeahead — injected once, no client fetch
-  const setDataJSON = JSON.stringify(sortedParents.map(s => ({
+  // Set data as JSON for client typeahead — injected via JSON element not inline var
+  const setDataJSON = JSON.stringify((sortedParents || []).map(s => ({
     n: s.set_name,
-    y: s.release_date ? s.release_date.slice(0,4) : '',
+    y: s.release_date ? s.release_date.slice(0, 4) : '',
     u: '/cards/mtg/sets/' + s.set_slug
   })));
 
@@ -177,17 +176,20 @@ ${NAV}
     <a href="/shop.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#ff7043,#e64a19);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">🛒 Shop</a>
   </div>
 
-  <!-- Secrets of Strixhaven Top Cards Carousel -->
-  ${sosHTML.length ? `
-  <div style="margin-bottom:32px;padding:24px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.18);border-radius:var(--radius);overflow:hidden">
+  <!-- Set data for typeahead — injected as JSON, not inline JS var -->
+  <script type="application/json" id="set-data">${setDataJSON}</script>
+
+  ${sosHTML ? `
+  <!-- Latest Set: Secrets of Strixhaven top cards -->
+  <div style="margin-bottom:32px;padding:24px;background:rgba(201,168,76,.04);border:1px solid #7A621E;border-radius:var(--radius);overflow:hidden">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
       <div>
-        <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Latest Set</p>
+        <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;margin-bottom:4px">Latest Set</p>
         <h2 style="font-family:'Cinzel',serif;font-size:18px;color:var(--text1);margin:0">Most Valuable in Secrets of Strixhaven</h2>
       </div>
-      <a href="/cards/mtg/sets/secrets-of-strixhaven" style="font-size:12px;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,.3);padding:6px 14px;border-radius:6px;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(201,168,76,.08)'" onmouseout="this.style.background='none'">Browse Full Set →</a>
+      <a href="/cards/mtg/sets/secrets-of-strixhaven" style="font-size:12px;color:#C9A84C;text-decoration:none;border:1px solid #7A621E;padding:6px 14px;border-radius:6px;white-space:nowrap">Browse Full Set →</a>
     </div>
-    <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent)">
+    <div style="overflow:hidden;mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent)">
       <div id="sos-track" class="cmd-track">${sosHTML}${sosHTML}</div>
     </div>
   </div>` : ''}
@@ -214,21 +216,20 @@ ${NAV}
 
   <!-- Browse by Set — typeahead dropdown -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
-    <h2 style="font-size:18px;margin-bottom:8px">Browse by Set</h2>
+    <h2 style="font-size:18px;margin-bottom:6px">Browse by Set</h2>
     <p style="color:var(--text2);font-size:13px;margin-bottom:14px">Search all ${sortedParents.length} MTG sets — type to filter, click to browse</p>
     <div style="position:relative;max-width:520px">
       <div style="position:relative">
-        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:14px;pointer-events:none">🔍</span>
         <input type="text" id="set-search"
           placeholder="e.g. Strixhaven, Commander, Dominaria..."
-          style="width:100%;padding:10px 14px 10px 36px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;outline:none;transition:border-color .2s"
+          style="width:100%;padding:10px 14px 10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;outline:none"
           autocomplete="off" spellcheck="false"
           oninput="doSetSearch(this.value)"
           onkeydown="setKeyNav(event)"
           onfocus="if(this.value.length>0)doSetSearch(this.value)"
-          onblur="setTimeout(function(){document.getElementById('set-dd').style.display='none'},150)">
+          onblur="setTimeout(function(){var d=document.getElementById('set-dd');if(d)d.style.display='none'},150)">
       </div>
-      <div id="set-dd" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg3);border:1px solid var(--border);border-radius:8px;max-height:300px;overflow-y:auto;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.5)"></div>
+      <div id="set-dd" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg3);border:1px solid var(--border);border-radius:8px;max-height:300px;overflow-y:auto;z-index:50;box-shadow:0 8px 32px #000a"></div>
     </div>
   </div>
 
@@ -304,21 +305,34 @@ async function searchCard() {
 
 function filterSets(query) { doSetSearch(query); }
 
-var SET_DATA = ${setDataJSON};
+// Set typeahead — reads data from <script type="application/json"> element
+// This avoids injecting a large JSON blob as a JS variable (prevents syntax errors)
+var SET_DATA = null;
+function getSetData() {
+  if (SET_DATA) return SET_DATA;
+  try {
+    var el = document.getElementById('set-data');
+    SET_DATA = el ? JSON.parse(el.textContent) : [];
+  } catch(e) { SET_DATA = []; }
+  return SET_DATA;
+}
+
 var ddIdx = -1;
 
 function doSetSearch(q) {
-  q = q.trim().toLowerCase();
+  q = (q || '').trim().toLowerCase();
   var dd = document.getElementById('set-dd');
+  if (!dd) return;
   if (!q) { dd.style.display = 'none'; ddIdx = -1; return; }
-  var matches = SET_DATA.filter(function(s){ return s.n.toLowerCase().indexOf(q) >= 0; }).slice(0, 14);
+  var data = getSetData();
+  var matches = data.filter(function(s){ return s.n.toLowerCase().indexOf(q) >= 0; }).slice(0, 14);
   if (!matches.length) { dd.style.display = 'none'; return; }
   dd.innerHTML = matches.map(function(s, i) {
     return '<a href="' + s.u + '" class="sdd-item" data-idx="' + i + '" '
-      + 'style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;text-decoration:none;color:var(--text);font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);transition:background .12s"'
-      + ' onmouseover="this.style.background=\'rgba(201,168,76,.1)\';this.style.color=\'var(--gold)\'"'
+      + 'style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;text-decoration:none;color:var(--text);font-size:13px;border-bottom:1px solid #2d3254"'
+      + ' onmouseover="this.style.background=\'#1e2038\';this.style.color=\'#C9A84C\'"'
       + ' onmouseout="this.style.background=\'\';this.style.color=\'var(--text)\'">'
-      + '<span>' + s.n + '</span>'
+      + '<span>' + s.n.replace(/</g,'&lt;') + '</span>'
       + '<span style="color:var(--text2);font-size:11px">' + s.y + '</span>'
       + '</a>';
   }).join('');
@@ -332,13 +346,13 @@ function setKeyNav(e) {
   if (e.key === 'ArrowDown') { e.preventDefault(); ddIdx = Math.min(ddIdx + 1, items.length - 1); highlightDD(); }
   else if (e.key === 'ArrowUp') { e.preventDefault(); ddIdx = Math.max(ddIdx - 1, 0); highlightDD(); }
   else if (e.key === 'Enter' && ddIdx >= 0) { e.preventDefault(); window.location.href = items[ddIdx].href; }
-  else if (e.key === 'Escape') { document.getElementById('set-dd').style.display = 'none'; ddIdx = -1; }
+  else if (e.key === 'Escape') { var d = document.getElementById('set-dd'); if(d) d.style.display = 'none'; ddIdx = -1; }
 }
 
 function highlightDD() {
   document.querySelectorAll('.sdd-item').forEach(function(el, i) {
-    el.style.background = i === ddIdx ? 'rgba(201,168,76,.12)' : '';
-    el.style.color = i === ddIdx ? 'var(--gold)' : 'var(--text)';
+    el.style.background = i === ddIdx ? '#1e2038' : '';
+    el.style.color = i === ddIdx ? '#C9A84C' : 'var(--text)';
   });
 }
 
