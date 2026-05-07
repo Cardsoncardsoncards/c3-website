@@ -11,16 +11,17 @@
 [functions."sitemap-cards"]
   timeout = 30
 
-
+# Security headers — applied to all routes
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
+    X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://epnt.ebay.com https://fonts.googleapis.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://api.scryfall.com https://assets.tcgdex.net; frame-src 'self' https://tally.so; object-src 'none'; base-uri 'self'"
+    X-XSS-Protection = "1; mode=block"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://tally.so; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.scryfall.io https://c1.scryfall.com https://*.tcgplayer.com https://tcgplayer-cdn.tcgplayer.com https://product-images.tcgplayer.com https://images.pokemontcg.io https://assets.tcgdex.net https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://api.exchangerate-api.com https://api.tcgapi.dev; frame-src https://tally.so; object-src 'none'; base-uri 'self'"
 
 [[redirects]]
   from = "/blog/lorcana-booster-box-guide/"

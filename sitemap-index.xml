@@ -2,10 +2,30 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://cardsoncardsoncards.com.au/sitemap.xml</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-05-07</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://cardsoncardsoncards.com.au/api/sitemap-cards</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-05-07</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-pokemon</loc>
+    <lastmod>2026-05-07</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-yugioh</loc>
+    <lastmod>2026-05-07</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-lorcana</loc>
+    <lastmod>2026-05-07</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-onepiece</loc>
+    <lastmod>2026-05-07</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-riftbound</loc>
+    <lastmod>2026-05-07</lastmod>
   </sitemap>
 </sitemapindex>

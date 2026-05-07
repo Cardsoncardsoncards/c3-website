@@ -39,7 +39,7 @@ async function supabaseGet(path, useService = false) {
 }
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
-  status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+  status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://cardsoncardsoncards.com.au' }
 });
 
 // --- Like handler ---
