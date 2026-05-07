@@ -70,7 +70,7 @@ const BASE_STYLES = `
   </style>`;
 
 // MTG Card Hub Page
-function renderCardHub(sets, topCards) {
+function renderCardHub(sets, topCards, sosCards = []) {
 
   // Group sets: parent sets (no parent_set_code) are top-level
   // Sub-sets (have parent_set_code) are children of their parent
@@ -123,6 +123,24 @@ function renderCardHub(sets, topCards) {
       <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.58).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
+  // SOS carousel — rendered server-side, no client fetch needed
+  const sosHTML = sosCards.map(c => {
+    const aud = (c.price_aud > 0 ? parseFloat(c.price_aud) : parseFloat(c.price_usd) * 1.58).toFixed(0);
+    const safeName = c.name.replace(/'/g, '\\&#39;').replace(/"/g, '&quot;');
+    return `<a href="/cards/mtg/${c.slug}" style="display:block;min-width:120px;flex-shrink:0;text-decoration:none;text-align:center">`
+      + `<img src="${c.image_uri_small}" alt="${safeName}" loading="lazy" style="width:120px;border-radius:6px;display:block;margin:0 auto">`
+      + `<div style="font-size:11px;color:var(--text);margin-top:4px;padding:0 4px;line-height:1.3;max-width:120px">${c.name}</div>`
+      + `<div style="font-size:12px;color:var(--gold);font-weight:700">~AU$${aud}</div>`
+      + `</a>`;
+  }).join('');
+
+  // Set data as JSON for client-side typeahead — injected once, no client fetch
+  const setDataJSON = JSON.stringify(sortedParents.map(s => ({
+    n: s.set_name,
+    y: s.release_date ? s.release_date.slice(0,4) : '',
+    u: '/cards/mtg/sets/' + s.set_slug
+  })));
+
   return `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -159,25 +177,20 @@ ${NAV}
     <a href="/shop.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#ff7043,#e64a19);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">🛒 Shop</a>
   </div>
 
-  <!-- Latest Set Spotlight: Secrets of Strixhaven -->
+  <!-- Secrets of Strixhaven Top Cards Carousel -->
+  ${sosHTML.length ? `
   <div style="margin-bottom:32px;padding:24px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.18);border-radius:var(--radius);overflow:hidden">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
       <div>
         <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Latest Set</p>
         <h2 style="font-family:'Cinzel',serif;font-size:18px;color:var(--text1);margin:0">Most Valuable in Secrets of Strixhaven</h2>
       </div>
-      <a href="/cards/mtg/sets/secrets-of-strixhaven" style="font-size:12px;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,.3);padding:6px 12px;border-radius:6px;white-space:nowrap">Browse Full Set →</a>
+      <a href="/cards/mtg/sets/secrets-of-strixhaven" style="font-size:12px;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,.3);padding:6px 14px;border-radius:6px;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(201,168,76,.08)'" onmouseout="this.style.background='none'">Browse Full Set →</a>
     </div>
     <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent)">
-      <div id="sos-carousel-track" class="cmd-track">
-        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s infinite"></div>
-        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s .1s infinite"></div>
-        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s .2s infinite"></div>
-        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s .3s infinite"></div>
-        <div style="min-width:120px;height:170px;background:rgba(201,168,76,.06);border-radius:8px;animation:shimmer 1.5s .4s infinite"></div>
-      </div>
+      <div id="sos-track" class="cmd-track">${sosHTML}${sosHTML}</div>
     </div>
-  </div>
+  </div>` : ''}
 
   <!-- Commander Spotlight Carousel -->
   <div style="margin-bottom:32px;padding:24px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:var(--radius);overflow:hidden">
@@ -199,22 +212,24 @@ ${NAV}
     </div>
   </div>
 
-  <!-- Browse by Set — typeahead autocomplete -->
+  <!-- Browse by Set — typeahead dropdown -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
-    <h2 style="font-size:18px;margin-bottom:12px">Browse by Set</h2>
-    <div style="position:relative;max-width:500px">
-      <input type="text" id="set-search"
-        placeholder="Type a set name e.g. Strixhaven, Commander..."
-        style="width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;outline:none"
-        autocomplete="off" spellcheck="false"
-        oninput="filterSets(this.value)"
-        onkeydown="handleSetKey(event)"
-        onfocus="if(this.value.length>=1)showDropdown(this.value)">
-      <div id="set-dropdown"
-        style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg3);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;max-height:320px;overflow-y:auto;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+    <h2 style="font-size:18px;margin-bottom:8px">Browse by Set</h2>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:14px">Search all ${sortedParents.length} MTG sets — type to filter, click to browse</p>
+    <div style="position:relative;max-width:520px">
+      <div style="position:relative">
+        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:14px;pointer-events:none">🔍</span>
+        <input type="text" id="set-search"
+          placeholder="e.g. Strixhaven, Commander, Dominaria..."
+          style="width:100%;padding:10px 14px 10px 36px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;outline:none;transition:border-color .2s"
+          autocomplete="off" spellcheck="false"
+          oninput="doSetSearch(this.value)"
+          onkeydown="setKeyNav(event)"
+          onfocus="if(this.value.length>0)doSetSearch(this.value)"
+          onblur="setTimeout(function(){document.getElementById('set-dd').style.display='none'},150)">
       </div>
+      <div id="set-dd" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg3);border:1px solid var(--border);border-radius:8px;max-height:300px;overflow-y:auto;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.5)"></div>
     </div>
-    <p style="font-size:11px;color:var(--text2);margin-top:8px">Start typing to search all ${sortedParents.length} MTG sets alphabetically</p>
   </div>
 
   <!-- Most Valuable Cards -->
@@ -287,96 +302,45 @@ async function searchCard() {
   } catch { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; }
 }
 
-function filterSets(query) {
-  // Kept for compatibility but now handled by typeahead below
-}
+function filterSets(query) { doSetSearch(query); }
 
-// ── Set typeahead autocomplete ──────────────────────────────────────────────
-const ALL_SETS = ${JSON.stringify(sortedParents.map(s => ({
-  name: s.set_name,
-  year: s.release_date?.slice(0,4) || '',
-  url: '/cards/mtg/sets/' + s.set_slug
-})))};
+var SET_DATA = ${setDataJSON};
+var ddIdx = -1;
 
-let dropdownIdx = -1;
-
-function filterSets(query) {
-  const q = query.toLowerCase().trim();
-  const dd = document.getElementById('set-dropdown');
-  if (!q) { dd.style.display = 'none'; dropdownIdx = -1; return; }
-  showDropdown(q);
-}
-
-function showDropdown(q) {
-  const dd = document.getElementById('set-dropdown');
-  const matches = ALL_SETS.filter(s => s.name.toLowerCase().includes(q)).slice(0, 12);
+function doSetSearch(q) {
+  q = q.trim().toLowerCase();
+  var dd = document.getElementById('set-dd');
+  if (!q) { dd.style.display = 'none'; ddIdx = -1; return; }
+  var matches = SET_DATA.filter(function(s){ return s.n.toLowerCase().indexOf(q) >= 0; }).slice(0, 14);
   if (!matches.length) { dd.style.display = 'none'; return; }
-  dd.innerHTML = matches.map((s, i) =>
-    \`<div class="set-dd-item" data-url="\${s.url}" data-idx="\${i}"
-      style="padding:10px 14px;cursor:pointer;font-size:13px;color:var(--text);border-bottom:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;align-items:center"
-      onmouseover="highlightItem(\${i})"
-      onclick="navigateToSet('\${s.url}')">
-      <span>\${s.name}</span>
-      <span style="color:var(--text2);font-size:11px">\${s.year}</span>
-    </div>\`
-  ).join('');
+  dd.innerHTML = matches.map(function(s, i) {
+    return '<a href="' + s.u + '" class="sdd-item" data-idx="' + i + '" '
+      + 'style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;text-decoration:none;color:var(--text);font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);transition:background .12s"'
+      + ' onmouseover="this.style.background=\'rgba(201,168,76,.1)\';this.style.color=\'var(--gold)\'"'
+      + ' onmouseout="this.style.background=\'\';this.style.color=\'var(--text)\'">'
+      + '<span>' + s.n + '</span>'
+      + '<span style="color:var(--text2);font-size:11px">' + s.y + '</span>'
+      + '</a>';
+  }).join('');
   dd.style.display = 'block';
-  dropdownIdx = -1;
+  ddIdx = -1;
 }
 
-function highlightItem(idx) {
-  dropdownIdx = idx;
-  document.querySelectorAll('.set-dd-item').forEach((el, i) => {
-    el.style.background = i === idx ? 'rgba(201,168,76,.12)' : '';
-    el.style.color = i === idx ? 'var(--gold)' : 'var(--text)';
+function setKeyNav(e) {
+  var items = document.querySelectorAll('.sdd-item');
+  if (!items.length) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); ddIdx = Math.min(ddIdx + 1, items.length - 1); highlightDD(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); ddIdx = Math.max(ddIdx - 1, 0); highlightDD(); }
+  else if (e.key === 'Enter' && ddIdx >= 0) { e.preventDefault(); window.location.href = items[ddIdx].href; }
+  else if (e.key === 'Escape') { document.getElementById('set-dd').style.display = 'none'; ddIdx = -1; }
+}
+
+function highlightDD() {
+  document.querySelectorAll('.sdd-item').forEach(function(el, i) {
+    el.style.background = i === ddIdx ? 'rgba(201,168,76,.12)' : '';
+    el.style.color = i === ddIdx ? 'var(--gold)' : 'var(--text)';
   });
 }
-
-function handleSetKey(e) {
-  const items = document.querySelectorAll('.set-dd-item');
-  if (!items.length) return;
-  if (e.key === 'ArrowDown') { e.preventDefault(); dropdownIdx = Math.min(dropdownIdx + 1, items.length - 1); highlightItem(dropdownIdx); }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); dropdownIdx = Math.max(dropdownIdx - 1, 0); highlightItem(dropdownIdx); }
-  else if (e.key === 'Enter' && dropdownIdx >= 0) { e.preventDefault(); navigateToSet(items[dropdownIdx].dataset.url); }
-  else if (e.key === 'Escape') { document.getElementById('set-dropdown').style.display = 'none'; dropdownIdx = -1; }
-}
-
-function navigateToSet(url) {
-  window.location.href = url;
-}
-
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('#set-search') && !e.target.closest('#set-dropdown')) {
-    const dd = document.getElementById('set-dropdown');
-    if (dd) dd.style.display = 'none';
-  }
-});
-
-// ── Secrets of Strixhaven top cards carousel ────────────────────────────────
-(async function() {
-  try {
-    const SUPA_URL = '${SUPABASE_URL}';
-    const SUPA_KEY = '${SUPABASE_ANON_KEY}';
-    const res = await fetch(
-      SUPA_URL + '/rest/v1/mtg_cards?set_code=in.(sos,soa,soc)&price_usd=gte.5&image_uri_small=not.is.null&select=slug,name,image_uri_small,price_usd,price_aud,set_code&order=price_usd.desc&limit=30',
-      { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } }
-    );
-    if (!res.ok) return;
-    const cards = await res.json();
-    if (!Array.isArray(cards) || !cards.length) return;
-    const track = document.getElementById('sos-carousel-track');
-    if (!track) return;
-    const html = cards.map(c => {
-      const aud = c.price_aud > 0 ? parseFloat(c.price_aud).toFixed(0) : (c.price_usd * 1.58).toFixed(0);
-      return '<a href="/cards/mtg/' + c.slug + '" style="display:block;min-width:120px;text-decoration:none;text-align:center">'
-        + '<img src="' + c.image_uri_small + '" alt="' + c.name.replace(/"/g,'&quot;') + '" loading="lazy" style="width:120px;border-radius:6px;display:block;margin:0 auto">'
-        + '<div style="font-size:11px;color:var(--text);margin-top:4px;padding:0 4px;line-height:1.3">' + c.name + '</div>'
-        + '<div style="font-size:12px;color:var(--gold);font-weight:700">~AU$' + aud + '</div>'
-        + '</a>';
-    }).join('');
-    track.innerHTML = html + html;
-  } catch(e) {}
-})();
 
 function handleToggle(btn) {
   const setCode = btn.dataset.setcode;
@@ -1377,11 +1341,12 @@ export default async (req) => {
   const path = url.pathname;
 
   if (path === '/cards/mtg' || path === '/cards/mtg/') {
-    const [sets, topCards] = await Promise.all([
+    const [sets, topCards, sosCards] = await Promise.all([
       supabaseGet('mtg_sets?order=set_name.asc&limit=1000&digital=eq.false'),
-      supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
+      supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10'),
+      supabaseGet('mtg_cards?set_code=in.(sos,soa,soc)&price_usd=gte.3&image_uri_small=not.is.null&select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=30')
     ]);
-    return new Response(renderCardHub(sets, topCards), {
+    return new Response(renderCardHub(sets, topCards, sosCards), {
       headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=3600' }
     });
   }
