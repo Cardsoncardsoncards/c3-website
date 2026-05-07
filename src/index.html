@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cards on Cards on Cards | Australian TCG Hub — Shop, Sell, Play</title>
-<meta name="description" content="Australia's TCG hub. Find sealed product on Amazon AU, buy singles on eBay, track your collection, and sharpen your next D&D session.">
+<title>Cards on Cards on Cards | Australian TCG Price Guide and Card Vault</title>
+<meta name="description" content="Australia's TCG price guide. 250,000+ cards across MTG, Pokemon, Lorcana and Yu-Gi-Oh with live AUD pricing, eBay AU buy links, and daily updates.">
 <meta property="og:title" content="Cards on Cards on Cards | Australian TCG Hub">
 <meta property="og:url" content="https://cardsoncardsoncards.com.au">
 <meta property="og:type" content="website">
@@ -200,6 +200,58 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 /* Active page override */
 .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
 
+
+/* CARD VAULT ADDITIONS */
+.hub-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.hub-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;border:1px solid var(--border);color:var(--silver);transition:all .2s}
+.hub-link:hover{color:var(--white);border-color:var(--silver);text-decoration:none}
+.hub-link--mtg{color:#A78BFA;border-color:rgba(167,139,250,.3)}
+.hub-link--mtg:hover{background:rgba(167,139,250,.08);border-color:#A78BFA}
+.hub-link--pokemon{color:#FFCC00;border-color:rgba(255,204,0,.3)}
+.hub-link--pokemon:hover{background:rgba(255,204,0,.08);border-color:#FFCC00}
+.hub-link--lorcana{color:#38BDF8;border-color:rgba(56,189,248,.3)}
+.hub-link--lorcana:hover{background:rgba(56,189,248,.08);border-color:#38BDF8}
+.hub-link--yugioh{color:#C084FC;border-color:rgba(192,132,252,.3)}
+.hub-link--yugioh:hover{background:rgba(192,132,252,.08);border-color:#C084FC}
+.hub-link--calendar{color:#F87171;border-color:rgba(248,113,113,.3)}
+.hub-link--calendar:hover{background:rgba(248,113,113,.08);border-color:#F87171}
+.hub-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.3)}
+.hub-link--generators:hover{background:rgba(34,211,238,.08);border-color:#22D3EE}
+
+/* VAULT DOORS */
+.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:48px}
+.vault-door{display:block;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-decoration:none;transition:all .25s;position:relative;overflow:hidden}
+.vault-door::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--door-colour,var(--gold));opacity:.6;transition:opacity .25s}
+.vault-door:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4);border-color:var(--door-colour,var(--gold));text-decoration:none}
+.vault-door:hover::before{opacity:1}
+.vault-door--locked{opacity:.65;cursor:default}
+.vault-door--locked:hover{transform:none;box-shadow:none}
+.door-icon{font-size:28px;margin-bottom:10px}
+.door-name{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px}
+.door-tagline{font-size:12px;color:rgba(160,168,192,.6);margin-bottom:10px}
+.door-status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px}
+.door-status--open{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ADE80}
+.door-status--soon{background:rgba(120,120,140,.08);border:1px solid rgba(120,120,140,.2);color:var(--silver)}
+.door-arrow{position:absolute;right:18px;bottom:18px;font-size:16px;opacity:0;transition:opacity .2s,transform .2s;transform:translateX(-4px)}
+.vault-door:not(.vault-door--locked):hover .door-arrow{opacity:1;transform:translateX(0)}
+
+/* CAROUSEL */
+.carousel-section{margin:-8px -24px 40px;overflow:hidden;position:relative}
+.carousel-section::before,.carousel-section::after{content:'';position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none}
+.carousel-section::before{left:0;background:linear-gradient(to right,var(--ink),transparent)}
+.carousel-section::after{right:0;background:linear-gradient(to left,var(--ink),transparent)}
+.carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;padding:0 24px}
+.carousel-heading{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:16px;padding:0 24px}
+.carousel-track{display:flex;gap:14px;padding:4px 24px 12px;animation:scrollTrack 45s linear infinite}
+.carousel-track:hover{animation-play-state:paused}
+@keyframes scrollTrack{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.c-card{flex-shrink:0;width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .22s;display:block}
+.c-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 20px rgba(201,168,76,.15);text-decoration:none}
+.c-card img{width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px}
+.c-card-name{font-size:11px;color:var(--white);font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-card-sub{font-size:10px;color:rgba(160,168,192,.6)}
+.c-card-price{font-size:12px;color:var(--gold);font-weight:700;margin-top:2px}
+@media(max-width:640px){.vault-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -226,96 +278,94 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
 <div class="wrap">
 
-  <div class="hero">
+  <div class="hero" style="padding:56px 0 36px;text-align:center">
     <p class="hero-eyebrow">Cards on Cards on Cards</p>
-    <h1 class="hero-h1">Your Australian<br>TCG Home Base</h1>
-    <p class="hero-sub">Sealed product on Amazon AU, singles on eBay, and D&amp;D tools for your next campaign. We found them so you don't have to.</p>
+    <h1 class="hero-h1" style="font-size:clamp(28px,5vw,60px)">The Australian<br><span style="color:var(--gold)">TCG Card Vault</span></h1>
+    <p class="hero-sub">250,000+ cards across MTG, Pokemon, Lorcana and Yu-Gi-Oh. Live AUD pricing, eBay AU buy links, updated daily.</p>
     <div class="hero-cta-row">
-      <a href="/shop.html" class="btn btn-gold">Browse the Shop →</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="btn btn-ghost">eBay Singles ↗</a>
+      <a href="/cards" class="btn btn-gold">Open the Card Vault →</a>
+      <a href="/ev-calculator.html" class="btn btn-ghost">EV Calculator</a>
     </div>
   </div>
 
   <div class="trust-bar">
-    <div class="trust-item"><span>✅</span><span>300+ products confirmed on Amazon AU</span></div>
-    <div class="trust-item"><span>📦</span><span>Local + international shipping options</span></div>
-    <div class="trust-item"><span>⭐</span><span><strong>23,000+</strong> eBay listings</span></div>
-    <div class="trust-item"><span>🎲</span><span>D&amp;D tools from our Etsy store</span></div>
+    <div class="trust-item"><span>🃏</span><span><strong>96,000+</strong> MTG cards</span></div>
+    <div class="trust-item"><span>⚡</span><span><strong>107,000+</strong> Pokemon cards</span></div>
+    <div class="trust-item"><span>👁</span><span><strong>9,999</strong> Yu-Gi-Oh cards</span></div>
+    <div class="trust-item"><span>🏰</span><span><strong>2,911</strong> Lorcana cards</span></div>
+    <div class="trust-item"><span>🛒</span><span><strong>25,441</strong> eBay listings</span></div>
   </div>
 
-  <div class="destinations">
+  <!-- Card Vault Hub Navigation -->
+  <div class="hub-nav">
+    <a href="/cards/mtg" class="hub-link hub-link--mtg">⚔️ MTG Cards</a>
+    <a href="/cards/pokemon" class="hub-link hub-link--pokemon">⚡ Pokemon Cards</a>
+    <a href="/cards/lorcana" class="hub-link hub-link--lorcana">🏰 Lorcana Cards</a>
+    <a href="/cards/yugioh" class="hub-link hub-link--yugioh">👁 Yu-Gi-Oh Cards</a>
+    <a href="/calendar" class="hub-link hub-link--calendar">📅 Release Calendar</a>
+    <a href="/generators" class="hub-link hub-link--generators">🎲 Card Generators</a>
+  </div>
 
-    <a href="/shop.html" class="dest-card dest-card--shop dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--shop">🃏</div>
-        <div>
-          <p class="dest-label">TCG Shop</p>
-          <h2 class="dest-title">Sealed Product on Amazon AU</h2>
-        </div>
-      </div>
-      <p class="dest-body">Pokemon, MTG, One Piece, Lorcana, Dragon Ball, Star Wars Unlimited, Riftbound and Yu-Gi-Oh. Booster boxes, collector boxes, commander decks and accessories — all confirmed on Amazon AU.</p>
-      <p class="dest-arrow">Shop Now →</p>
+  <!-- Commander Spotlight Carousel -->
+  <div class="carousel-section" id="commander-carousel">
+    <p class="carousel-eyebrow">Commander Spotlight</p>
+    <p class="carousel-heading">Your Next Commander Awaits</p>
+    <div class="carousel-track" id="carousel-track-inner">
+      <div class="c-card" style="width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;color:rgba(160,168,192,.4);font-size:12px">Loading commanders...</div>
+    </div>
+    <div style="text-align:center;margin-top:12px">
+      <a href="/cards/mtg?page=random-commander" class="btn btn-ghost" style="font-size:13px">Generate a random Commander →</a>
+    </div>
+  </div>
+
+  <!-- Vault Doors -->
+  <div class="vault-grid">
+
+    <a href="/cards/mtg" class="vault-door" style="--door-colour:#A78BFA">
+      <div class="door-icon">🧙</div>
+      <div class="door-name">Magic: The Gathering</div>
+      <div class="door-tagline">96,000+ cards · Updated daily</div>
+      <div class="door-status door-status--open">⚡ Live Now</div>
+      <div class="door-arrow">→</div>
     </a>
 
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="dest-card dest-card--ebay dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--ebay">🏪</div>
-        <div>
-          <p class="dest-label">eBay Store</p>
-          <h2 class="dest-title">Singles &amp; Sealed on eBay</h2>
-        </div>
-      </div>
-      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 23,000+ listings across all major TCGs with Australian shipping.</p>
-      <p class="dest-arrow">Visit Store ↗</p>
+    <a href="/cards/pokemon" class="vault-door" style="--door-colour:#FFCC00">
+      <div class="door-icon">⚡</div>
+      <div class="door-name">Pokemon TCG</div>
+      <div class="door-tagline">107,000+ cards · Updated daily</div>
+      <div class="door-status door-status--open">⚡ Live Now</div>
+      <div class="door-arrow">→</div>
     </a>
 
-    <a href="/blog" class="dest-card dest-card--blog dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--blog">📖</div>
-        <div>
-          <p class="dest-label">Blog</p>
-          <h2 class="dest-title">Guides, Reviews &amp; Set Breakdowns</h2>
-        </div>
-      </div>
-      <p class="dest-body">Buying guides, booster box ROI breakdowns, game introductions and set reviews. Written for Australian players, priced in AUD.</p>
-      <p class="dest-arrow">Read Articles →</p>
+    <a href="/cards/lorcana" class="vault-door" style="--door-colour:#38BDF8">
+      <div class="door-icon">🏰</div>
+      <div class="door-name">Disney Lorcana</div>
+      <div class="door-tagline">2,911 cards · Updated daily</div>
+      <div class="door-status door-status--open">⚡ Live Now</div>
+      <div class="door-arrow">→</div>
     </a>
 
-    <!-- D&D TOOLS — div not <a> to allow nested links -->
-    <div class="dest-card dest-card--dnd" onclick="window.open('https://blasdigital.etsy.com','_blank')">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--dnd">🎲</div>
-        <div>
-          <p class="dest-label">D&amp;D Tools · Etsy Store</p>
-          <h2 class="dest-title">Run Better D&amp;D Sessions</h2>
-        </div>
-      </div>
-      <p class="dest-body">Printable D&amp;D tools from our Etsy store. Tavern mini-games to fill downtime, dungeon traps and puzzles, and DM toolkits to build adventures faster.</p>
-      <div class="dnd-section-links" onclick="event.stopPropagation()">
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56813304" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">🍺</span> Tavern Games
-        </a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=57106584" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">🗝️</span> Traps &amp; Puzzles
-        </a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56829599" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">📋</span> DM Tools
-        </a>
-      </div>
-      <p class="dest-arrow" style="margin-top:6px">Visit Etsy Shop ↗</p>
+    <a href="/cards/yugioh" class="vault-door" style="--door-colour:#C084FC">
+      <div class="door-icon">👁</div>
+      <div class="door-name">Yu-Gi-Oh!</div>
+      <div class="door-tagline">9,999 cards · Updated daily</div>
+      <div class="door-status door-status--open">⚡ Live Now</div>
+      <div class="door-arrow">→</div>
+    </a>
+
+    <div class="vault-door vault-door--locked" style="--door-colour:#F97316">
+      <div class="door-icon">☠️</div>
+      <div class="door-name">One Piece TCG</div>
+      <div class="door-tagline">6,600+ cards coming</div>
+      <div class="door-status door-status--soon">🔒 Coming Soon</div>
     </div>
 
-    <a href="/tracker.html" class="dest-card dest-card--tracker dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--tracker">📊</div>
-        <div>
-          <p class="dest-label">Collection Tracker</p>
-          <h2 class="dest-title">Track Your Collection</h2>
-        </div>
-      </div>
-      <p class="dest-body">Log your sealed product, track booster box ROI, and keep a record of what you've opened. Free download — no app required.</p>
-      <p class="dest-arrow">Open Tracker →</p>
-    </a>
+    <div class="vault-door vault-door--locked" style="--door-colour:#EF4444">
+      <div class="door-icon">⚔️</div>
+      <div class="door-name">Riftbound</div>
+      <div class="door-tagline">800+ cards · League of Legends TCG</div>
+      <div class="door-status door-status--soon">🔒 Coming Soon</div>
+    </div>
 
   </div>
 
@@ -356,5 +406,33 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   </div>
 </footer>
 
+
+<script>
+// Commander Carousel
+(async () => {
+  try {
+    const SUPA_URL = 'https://owaroeqchreuffbyakqx.supabase.co';
+    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMwNzQ4MjIsImV4cCI6MjA1ODY1MDgyMn0.tBGKBDSMj-xOYkMPo_GkMkGbNT04XKIZ3l2D9G_c0sM';
+    const params = 'type_line=ilike.*Legendary*Creature*&image_uri=not.is.null&price_usd=gt.0&select=slug,name,image_uri,type_line,color_identity,price_usd&order=random()&limit=20';
+    const res = await fetch(`${SUPA_URL}/rest/v1/mtg_cards?${params}`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+    });
+    const cards = await res.json();
+    if (!cards || !cards.length) return;
+    const items = cards.map(c => {
+      const ci = (c.color_identity||[]).join('');
+      const label = ci ? ci : 'C';
+      return `<a href="/cards/mtg/${c.slug}" class="c-card">
+        <img src="${c.image_uri}" alt="${c.name}" loading="lazy" onerror="this.style.display='none'">
+        <div class="c-card-name">${c.name}</div>
+        <div class="c-card-sub">${label || 'Colourless'}</div>
+        <div class="c-card-price">${c.price_usd ? '~AU$'+(c.price_usd*1.58).toFixed(0) : ''}</div>
+      </a>`;
+    }).join('');
+    const track = document.getElementById('carousel-track-inner');
+    if (track) track.innerHTML = items + items;
+  } catch(e) { console.log('Carousel error', e); }
+})();
+</script>
 </body>
 </html>
