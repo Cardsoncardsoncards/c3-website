@@ -5,16 +5,18 @@ title: TCG Blog Australia
 description: TCG buying guides, booster box reviews, accessory comparisons, and game introductions for Australian players. Pokemon, MTG, One Piece, Lorcana and more.
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TCG Blog Australia | Buying Guides, Set Reviews & Game Guides | Cards on Cards on Cards</title>
+<title>TCG Blog Australia | Buying Guides, Set Reviews &amp; Game Guides | Cards on Cards on Cards</title>
 <meta name="description" content="{{ description }}">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/blog">
 <meta property="og:title" content="TCG Blog | Cards on Cards on Cards">
 <meta property="og:description" content="{{ description }}">
-<meta property="og:url" content="https://cardsoncardsoncards.com.au/blog.html">
+<meta property="og:url" content="https://cardsoncardsoncards.com.au/blog">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-logo.png">
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
@@ -27,24 +29,66 @@ html{scroll-behavior:smooth}
 body{background:var(--ink);color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse 80% 40% at 50% -5%,rgba(201,168,76,.07) 0%,transparent 55%),repeating-linear-gradient(60deg,transparent,transparent 40px,rgba(255,255,255,.008) 40px,rgba(255,255,255,.008) 41px)}
 .wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
-nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 0}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px}
-.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase}
-.nav-links{display:flex;gap:4px;flex-wrap:wrap}
-.nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:6px;font-size:11.5px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver)}
+
+/* AFF BANNER */
+.aff-banner{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.18);padding:8px 24px;text-align:center;font-size:12px;color:rgba(160,168,192,.65);position:relative;z-index:99}
+.aff-banner strong{color:var(--gold)}
+.aff-banner a{color:var(--gold-dim);text-decoration:underline}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
 .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
-.nav-link--gold{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.06)}
-.nav-link--active{color:var(--gold);border-color:var(--gold-dim)}
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
+.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
+.nav-link--ev{color:#C9A84C;border-color:rgba(201,168,76,.25)}
+.nav-link--ev:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}
+.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
+.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
+.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
+.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+
+/* PAGE HEADER */
 .page-hd{padding:56px 0 40px;text-align:center;position:relative;z-index:1}
 .page-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .page-h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,52px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:12px}
 .page-h1 .gold{color:var(--gold)}
 .page-desc{font-size:14.5px;color:rgba(240,242,255,.5);max-width:500px;margin:0 auto}
-.cat-filter{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:28px 0 48px;padding:0 8px}
+
+/* FILTER ROWS */
+.filter-section{margin:28px 0 16px;padding:0 8px}
+.filter-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(160,168,192,.4);margin-bottom:8px;text-align:center}
+.cat-filter{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
 .cat-btn{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);background:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
 .cat-btn:hover{color:var(--white);border-color:var(--silver)}
 .cat-btn.active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,.08)}
-.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);position:relative;z-index:1;margin:0}
+/* TCG game filter colours */
+.cat-btn[data-game="mtg"].active{color:#9B4DCA;border-color:rgba(155,77,202,.5);background:rgba(155,77,202,.08)}
+.cat-btn[data-game="pokemon"].active{color:#FFCC00;border-color:rgba(255,204,0,.5);background:rgba(255,204,0,.06)}
+.cat-btn[data-game="lorcana"].active{color:#0189C4;border-color:rgba(1,137,196,.5);background:rgba(1,137,196,.06)}
+.cat-btn[data-game="onepiece"].active{color:#D4001A;border-color:rgba(212,0,26,.5);background:rgba(212,0,26,.06)}
+.cat-btn[data-game="yugioh"].active{color:#A855F7;border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.06)}
+.cat-btn[data-game="riftbound"].active{color:#C89B3C;border-color:rgba(200,155,60,.5);background:rgba(200,155,60,.06)}
+.cat-btn[data-game="dnd"].active{color:#F97316;border-color:rgba(249,115,22,.5);background:rgba(249,115,22,.06)}
+.filter-divider{width:100%;height:1px;background:var(--border);margin:8px 0 16px}
+
+/* GOLD DIVIDER */
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);position:relative;z-index:1;margin:0 0 0}
+
+/* BLOG GRID */
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:56px}
 .blog-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:all .22s}
 .blog-card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.28);box-shadow:0 12px 36px rgba(0,0,0,.5)}
@@ -60,36 +104,59 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.92);backdrop-fil
 .tag-review{color:#4A9EFF;border:1px solid rgba(74,158,255,.3);background:rgba(74,158,255,.07)}
 .tag-game{color:#4ABA7A;border:1px solid rgba(74,186,122,.3);background:rgba(74,186,122,.07)}
 .tag-accessory{color:var(--silver);border:1px solid var(--border);background:rgba(160,168,192,.05)}
+.tag-tool{color:#C084FC;border:1px solid rgba(192,132,252,.3);background:rgba(192,132,252,.05)}
 .post-date{font-size:11px;color:rgba(160,168,192,.4);letter-spacing:.05em}
+
+/* NO RESULTS */
+.no-results{text-align:center;padding:48px 24px;color:rgba(160,168,192,.4);font-size:14px;display:none;grid-column:1/-1}
+.no-results.visible{display:block}
+
+/* CTA STRIP */
 .cta-strip{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin:0 0 56px}
 .cta-strip h3{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:var(--white);margin-bottom:5px}
 .cta-strip p{font-size:13px;color:rgba(160,168,192,.65)}
 .btn-gold{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:8px;font-size:12.5px;font-weight:600;font-family:'DM Sans',sans-serif;text-decoration:none;background:linear-gradient(135deg,var(--gold),#A8843A);color:#0A0C14;transition:all .2s}
 .btn-gold:hover{background:linear-gradient(135deg,var(--gold-lit),var(--gold));transform:translateY(-1px)}
+
+/* FOOTER */
 footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-index:1}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .footer-logo{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold)}
-.footer-copy{font-size:11px;color:rgba(160,168,192,.28)}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-link{font-size:12px;color:rgba(160,168,192,.4);text-decoration:none;transition:color .2s}
+.footer-link:hover{color:var(--silver)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.25);width:100%;text-align:center;padding-top:4px}
+
+/* REVEAL */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
 .reveal.in-view{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
 @media(max-width:820px){.blog-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:540px){.blog-grid{grid-template-columns:1fr}.cta-strip{flex-direction:column}.footer-inner{flex-direction:column;text-align:center}}
+@media(max-width:540px){.blog-grid{grid-template-columns:1fr}.cta-strip{flex-direction:column}.footer-inner{flex-direction:column;text-align:center}.footer-links{justify-content:center}}
 </style>
 </head>
 <body>
 
+<div class="aff-banner">
+  This site contains affiliate links. We may earn a commission when you click and buy — at no extra cost to you. <a href="/legal.html">Full disclosure</a>
+</div>
+
 <nav>
   <div class="nav-inner">
-    <a href="/index.html" class="nav-logo">🃏 Cards on Cards on Cards</a>
+    <a href="/" class="nav-logo">
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
     <div class="nav-links">
       <a href="/" class="nav-link nav-link--home">← Home</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
       <a href="/blog" class="nav-link nav-link--blog nav-link--active">Blog</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
-      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay Store</a>
-      <a href="/contact.html" class="nav-link">Contact Us</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
 </nav>
@@ -103,18 +170,33 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
   <div class="gold-divider"></div>
 
-  <div class="cat-filter">
-<button class="cat-btn active" data-filter="all" onclick="filterPosts('all')">All</button>
-<button class="cat-btn" data-filter="buying-guides" onclick="filterPosts('buying-guides')">Buying Guides</button>
-<button class="cat-btn" data-filter="beginner-guides" onclick="filterPosts('beginner-guides')">Game Guides</button>
-<button class="cat-btn" data-filter="accessories" onclick="filterPosts('accessories')">Accessories</button>
-<button class="cat-btn" data-filter="tools-and-trackers" onclick="filterPosts('tools-and-trackers')">Free Tools</button>
+  <div class="filter-section">
+    <div class="filter-label">Filter by content type</div>
+    <div class="cat-filter" id="catFilter">
+      <button class="cat-btn active" data-filter="all" onclick="applyFilters()">All</button>
+      <button class="cat-btn" data-filter="buying-guides" onclick="applyFilters()">Buying Guides</button>
+      <button class="cat-btn" data-filter="beginner-guides" onclick="applyFilters()">Game Guides</button>
+      <button class="cat-btn" data-filter="accessories" onclick="applyFilters()">Accessories</button>
+      <button class="cat-btn" data-filter="tools-and-trackers" onclick="applyFilters()">Free Tools</button>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-label">Filter by game</div>
+    <div class="cat-filter" id="gameFilter">
+      <button class="cat-btn active" data-game="all" onclick="applyFilters()">All Games</button>
+      <button class="cat-btn" data-game="mtg" onclick="applyFilters()">⚔️ MTG</button>
+      <button class="cat-btn" data-game="pokemon" onclick="applyFilters()">⚡ Pokémon</button>
+      <button class="cat-btn" data-game="lorcana" onclick="applyFilters()">🏰 Lorcana</button>
+      <button class="cat-btn" data-game="onepiece" onclick="applyFilters()">☠️ One Piece</button>
+      <button class="cat-btn" data-game="yugioh" onclick="applyFilters()">👁️ Yu-Gi-Oh</button>
+      <button class="cat-btn" data-game="riftbound" onclick="applyFilters()">🎮 Riftbound</button>
+      <button class="cat-btn" data-game="dnd" onclick="applyFilters()">🎲 D&amp;D</button>
+    </div>
   </div>
 
   <div class="blog-grid" id="blogGrid">
     {%- set sortedPosts = collections.post | reverse -%}
     {%- for post in sortedPosts %}
-    <a href="{{ post.url }}" class="blog-card reveal" data-category="{{ post.data.category }}">
+    <a href="{{ post.url }}" class="blog-card reveal" data-category="{{ post.data.category }}" data-game="{{ post.data.game | default('general') }}">
       <div class="blog-card-img">{{ post.data.emoji | default("🃏") }}</div>
       <div class="blog-card-body">
         <div class="blog-card-meta">
@@ -127,6 +209,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       </div>
     </a>
     {%- endfor %}
+    <div class="no-results" id="noResults">No posts match the selected filters. Try a different combination.</div>
   </div>
 
   <div class="cta-strip reveal">
@@ -143,31 +226,70 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   <div class="wrap">
     <div class="footer-inner">
       <div class="footer-logo">Cards on Cards on Cards</div>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
-        <a href="/index.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
-        <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Shop</a>
-        <a href="/tracker.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
-        <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact Us</a>
+      <div class="footer-links">
+        <a href="/" class="footer-link">Home</a>
+        <a href="/shop.html" class="footer-link">Shop</a>
+        <a href="/blog" class="footer-link">Blog</a>
+        <a href="/tracker.html" class="footer-link">Tracker</a>
+        <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay Store</a>
+        <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy D&amp;D Tools</a>
+        <a href="/contact.html" class="footer-link">Contact Us</a>
+        <a href="/legal.html" class="footer-link">Legal &amp; Affiliates</a>
       </div>
-      <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
+      <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved. We earn commissions from affiliate links at no extra cost to you. <a href="/legal.html" style="color:inherit;text-decoration:underline">Affiliate Disclosure</a></div>
     </div>
   </div>
 </footer>
 
 <script>
-function filterPosts(cat) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.cat-btn[data-filter="' + cat + '"]').classList.add('active');
-  const guideCategories = ['buying-guides','value-and-worth','product-comparisons','selling-and-money'];
-  document.querySelectorAll('#blogGrid .blog-card').forEach(card => {
-    const c = card.dataset.category;
-    const show = cat === 'all'
-      || c === cat
-      || (cat === 'buying-guides' && guideCategories.includes(c));
-    card.style.display = show ? 'flex' : 'none';
+function applyFilters() {
+  // Read active category
+  const activeCat = document.querySelector('#catFilter .cat-btn.active')?.dataset.filter || 'all';
+  const activeGame = document.querySelector('#gameFilter .cat-btn.active')?.dataset.game || 'all';
+
+  // Update clicked button active state
+  document.querySelectorAll('#catFilter .cat-btn').forEach(b => {
+    if (event && b === event.target) {
+      document.querySelectorAll('#catFilter .cat-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    }
   });
+  document.querySelectorAll('#gameFilter .cat-btn').forEach(b => {
+    if (event && b === event.target) {
+      document.querySelectorAll('#gameFilter .cat-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    }
+  });
+
+  // Re-read after update
+  const cat = document.querySelector('#catFilter .cat-btn.active')?.dataset.filter || 'all';
+  const game = document.querySelector('#gameFilter .cat-btn.active')?.dataset.game || 'all';
+
+  const guideCategories = ['buying-guides','value-and-worth','product-comparisons','selling-and-money'];
+  let visibleCount = 0;
+
+  document.querySelectorAll('#blogGrid .blog-card').forEach(card => {
+    const c = card.dataset.category || '';
+    const g = card.dataset.game || 'general';
+
+    const catMatch = cat === 'all' || c === cat || (cat === 'buying-guides' && guideCategories.includes(c));
+    const gameMatch = game === 'all' || g === game;
+
+    if (catMatch && gameMatch) {
+      card.style.display = 'flex';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  const noResults = document.getElementById('noResults');
+  if (noResults) noResults.classList.toggle('visible', visibleCount === 0);
 }
-const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){e.target.classList.add('in-view');obs.unobserve(e.target);} }), {threshold:0.06});
+
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){e.target.classList.add('in-view');obs.unobserve(e.target);}
+}), {threshold:0.06});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 
