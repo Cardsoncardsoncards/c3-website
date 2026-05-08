@@ -413,7 +413,7 @@ function renderRandomCommander() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Random MTG Commander Generator Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Generate 1 to 4 random Magic: The Gathering Commanders. Filter by colour identity and mana value. Share your results with friends.">
+  <meta name="description" content="Generate 1 to 6 random Magic: The Gathering Commanders. Filter by colour identity and mana value. Share your results with friends.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/random-commander">
   ${BASE_STYLES}
   <style>
@@ -480,7 +480,7 @@ ${NAV}
     <span style="font-size:20px">⚔️</span>
     <div style="flex:1;min-width:180px">
       <div style="font-size:13px;font-weight:700;color:var(--text)">Roll your pod. Dare a friend.</div>
-      <div style="font-size:12px;color:var(--text2)">Generate 4 random Commanders and share the link — see who builds the better deck.</div>
+      <div style="font-size:12px;color:var(--text2)">Generate up to 6 random Commanders and share the link — see who builds the better deck.</div>
     </div>
   </div>
 
@@ -496,7 +496,7 @@ ${NAV}
     <div style="margin-bottom:22px">
       <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">How many Commanders?</p>
       <div style="display:flex;gap:8px">
-        ${[1,2,3,4].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
+        ${[1,2,3,4,5,6].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
       </div>
     </div>
 
