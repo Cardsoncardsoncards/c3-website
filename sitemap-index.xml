@@ -28,4 +28,12 @@
     <loc>https://cardsoncardsoncards.com.au/api/sitemap-riftbound</loc>
     <lastmod>2026-05-09</lastmod>
   </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-starwars</loc>
+    <lastmod>2026-05-09</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-dragonball</loc>
+    <lastmod>2026-05-09</lastmod>
+  </sitemap>
 </sitemapindex>
