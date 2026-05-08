@@ -3,22 +3,28 @@
 // Fetches all Pokemon sets + cards + prices from tcgapi.dev Pro
 // Upserts into pokemon_sets, pokemon_cards, pokemon_price_snapshots
 
-const SUPABASE_URL        = Netlify.env.get('SUPABASE_URL');
+const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
-const TCGAPI_KEY          = Netlify.env.get('TCGAPI_KEY');
-const GAME_SLUG           = 'pokemon';
-const TCGAPI_BASE         = 'https://api.tcgapi.dev/v1';
-const RATE_LIMIT_BUFFER   = 200; // stop if daily_remaining drops below this
+const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
+const GAME_SLUG            = 'pokemon';
+const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
+const RATE_LIMIT_BUFFER    = 200; // stop if daily_remaining drops below this
+const MAX_PAGES            = 50;  // hard cap on pagination to prevent runaway loops
 
 // --- Helpers ---
 
-function slugify(name, number) {
+function slugify(name, number, setAbbr) {
   const base = name
     .toLowerCase()
     .replace(/['']/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-  return number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
+  const withNumber = number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
+  // Always prefix with set abbreviation to prevent cross-set slug collisions
+  const prefix = setAbbr
+    ? setAbbr.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+    : null;
+  return prefix ? `${prefix}-${withNumber}` : withNumber;
 }
 
 async function getExchangeRate() {
@@ -40,8 +46,8 @@ async function tcgapiGet(path) {
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
   const data = await res.json();
-  // Check remaining quota — abort if running low
-  const remaining = data.rate_limit?.daily_remaining ?? 9999;
+  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
+  const remaining = data.rate_limit?.daily_remaining ?? 0;
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
@@ -72,6 +78,11 @@ export default async (req) => {
   console.log('[sync-pokemon] Starting...');
   const start = Date.now();
 
+  // Validate env vars first
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.error('[sync-pokemon] Missing Supabase env vars');
+    return new Response('Supabase env vars missing', { status: 500 });
+  }
   if (!TCGAPI_KEY) {
     console.error('[sync-pokemon] TCGAPI_KEY not set');
     return new Response('TCGAPI_KEY missing', { status: 500 });
@@ -81,11 +92,11 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-pokemon] AUD rate: ${audRate}`);
 
-    // Step 1: Fetch all sets
+    // Step 1: Fetch all sets (hard cap at MAX_PAGES)
     console.log('[sync-pokemon] Fetching sets...');
     const allSets = [];
     let page = 1;
-    while (true) {
+    while (page <= MAX_PAGES) {
       const data = await tcgapiGet(`/games/${GAME_SLUG}/sets?per_page=100&page=${page}`);
       const sets = data.data || [];
       allSets.push(...sets);
@@ -98,7 +109,7 @@ export default async (req) => {
     const setRows = allSets.map(s => ({
       id:           s.id,
       name:         s.name,
-      slug:         s.slug || slugify(s.name, null),
+      slug:         s.slug || slugify(s.name, null, null),
       abbreviation: s.abbreviation || null,
       release_date: s.release_date || null,
       card_count:   s.card_count || 0,
@@ -121,7 +132,8 @@ export default async (req) => {
       const setCards = [];
       let cardPage = 1;
 
-      while (true) {
+      // Hard cap on card pages per set
+      while (cardPage <= MAX_PAGES) {
         const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
         const cards = data.data || [];
         setCards.push(...cards);
@@ -131,7 +143,7 @@ export default async (req) => {
 
       if (!setCards.length) continue;
 
-      // Step 4: Fetch bulk prices for this set's cards (500 per request)
+      // Fetch bulk prices for this set's cards (500 per request)
       const cardIds = setCards.map(c => c.id);
       const priceMap = new Map();
 
@@ -144,14 +156,17 @@ export default async (req) => {
             priceMap.set(p.card_id, p);
           }
         } catch (e) {
+          // Re-throw rate limit errors — do not swallow them
+          if (e.message.includes('Rate limit low')) throw e;
           console.error(`[sync-pokemon] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
 
-      // Step 5: Build card rows
+      // Build card rows
       const cardRows = [];
       const slugsSeen = new Set();
       const snapRows = [];
+      const setAbbr = set.abbreviation || set.slug || String(set.id);
 
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
@@ -159,7 +174,7 @@ export default async (req) => {
         const lowPrice = price.low_price || null;
         const foilPrice = price.foil_market_price || null;
 
-        let slug = slugify(card.clean_name || card.name, card.number);
+        let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
 
@@ -228,4 +243,4 @@ export default async (req) => {
   }
 };
 
-export const config = { schedule: '0 4 * * *' };
+export const config = { schedule: '0 6 * * *' };

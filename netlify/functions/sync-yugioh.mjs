@@ -3,6 +3,7 @@
 // Fetches all Yu-Gi-Oh sets + cards + prices from tcgapi.dev Pro
 // Upserts into yugioh_sets, yugioh_cards, yugioh_price_snapshots
 // Note: Yu-Gi-Oh has 45k+ cards across 610 sets — largest non-MTG catalogue
+// Incremental mode: skips sets that already have cards in Supabase (saves ~1,100 credits/day)
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -10,16 +11,22 @@ const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const GAME_SLUG            = 'yugioh';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
+const MAX_PAGES            = 50; // hard cap on pagination to prevent runaway loops
 
 // --- Helpers ---
 
-function slugify(name, number) {
+function slugify(name, number, setAbbr) {
   const base = name
     .toLowerCase()
     .replace(/['']/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-  return number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
+  const withNumber = number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
+  // Always prefix with set abbreviation to prevent cross-set slug collisions
+  const prefix = setAbbr
+    ? setAbbr.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+    : null;
+  return prefix ? `${prefix}-${withNumber}` : withNumber;
 }
 
 async function getExchangeRate() {
@@ -41,7 +48,8 @@ async function tcgapiGet(path) {
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
   const data = await res.json();
-  const remaining = data.rate_limit?.daily_remaining ?? 9999;
+  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
+  const remaining = data.rate_limit?.daily_remaining ?? 0;
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
@@ -66,12 +74,36 @@ async function supabaseUpsert(table, rows) {
   }
 }
 
+// Fetch set_ids that already have cards in Supabase (used for incremental sync)
+async function getAlreadySyncedSetIds() {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id&limit=10000`,
+    {
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+      }
+    }
+  );
+  if (!res.ok) {
+    console.error('[sync-yugioh] Could not fetch synced set IDs, will do full sync');
+    return new Set();
+  }
+  const rows = await res.json();
+  return new Set(rows.map(r => r.set_id));
+}
+
 // --- Main ---
 
 export default async (req) => {
   console.log('[sync-yugioh] Starting...');
   const start = Date.now();
 
+  // Validate env vars first
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.error('[sync-yugioh] Missing Supabase env vars');
+    return new Response('Supabase env vars missing', { status: 500 });
+  }
   if (!TCGAPI_KEY) {
     console.error('[sync-yugioh] TCGAPI_KEY not set');
     return new Response('TCGAPI_KEY missing', { status: 500 });
@@ -81,12 +113,16 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-yugioh] AUD rate: ${audRate}`);
 
-    // Step 1: Fetch all sets
+    // Fetch already-synced set IDs for incremental mode
+    const syncedSetIds = await getAlreadySyncedSetIds();
+    console.log(`[sync-yugioh] ${syncedSetIds.size} sets already synced — will skip these`);
+
+    // Step 1: Fetch all sets (hard cap at MAX_PAGES)
     // Yu-Gi-Oh has 610 sets — needs multiple pages at 100 per page
     console.log('[sync-yugioh] Fetching sets...');
     const allSets = [];
     let page = 1;
-    while (true) {
+    while (page <= MAX_PAGES) {
       const data = await tcgapiGet(`/games/${GAME_SLUG}/sets?per_page=100&page=${page}`);
       const sets = data.data || [];
       allSets.push(...sets);
@@ -96,11 +132,11 @@ export default async (req) => {
     }
     console.log(`[sync-yugioh] Found ${allSets.length} sets total`);
 
-    // Step 2: Upsert sets
+    // Step 2: Upsert sets (all sets, not just new ones — set metadata may change)
     const setRows = allSets.map(s => ({
       id:           s.id,
       name:         s.name,
-      slug:         s.slug || slugify(s.name, null),
+      slug:         s.slug || slugify(s.name, null, null),
       abbreviation: s.abbreviation || null,
       release_date: s.release_date || null,
       card_count:   s.card_count || 0,
@@ -114,22 +150,30 @@ export default async (req) => {
     console.log(`[sync-yugioh] Upserted ${setRows.length} sets`);
 
     // Step 3: For each set, fetch cards + prices
-    // Yu-Gi-Oh is large — log progress every 50 sets
+    // Skip sets already synced (incremental mode)
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
     let setCount = 0;
+    let skippedCount = 0;
 
     for (const set of allSets) {
+      // Incremental: skip sets that already have cards
+      if (syncedSetIds.has(set.id)) {
+        skippedCount++;
+        continue;
+      }
+
       setCount++;
-      if (setCount % 50 === 0) {
-        console.log(`[sync-yugioh] Progress: ${setCount}/${allSets.length} sets processed, ${totalCards} cards so far`);
+      if (setCount % 10 === 0) {
+        console.log(`[sync-yugioh] Progress: ${setCount} new sets processed, ${skippedCount} skipped, ${totalCards} cards so far`);
       }
 
       const setCards = [];
       let cardPage = 1;
 
-      while (true) {
+      // Hard cap on card pages per set
+      while (cardPage <= MAX_PAGES) {
         const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
         const cards = data.data || [];
         setCards.push(...cards);
@@ -152,6 +196,8 @@ export default async (req) => {
             priceMap.set(p.card_id, p);
           }
         } catch (e) {
+          // Re-throw rate limit errors — do not swallow them
+          if (e.message.includes('Rate limit low')) throw e;
           console.error(`[sync-yugioh] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
@@ -160,13 +206,14 @@ export default async (req) => {
       const cardRows = [];
       const slugsSeen = new Set();
       const snapRows = [];
+      const setAbbr = set.abbreviation || set.slug || String(set.id);
 
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
         const marketPrice = price.market_price || null;
         const lowPrice = price.low_price || null;
         const foilPrice = price.foil_market_price || null;
-        let slug = slugify(card.clean_name || card.name, card.number);
+        let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
 
@@ -219,10 +266,11 @@ export default async (req) => {
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
+      console.log(`[sync-yugioh] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-yugioh] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-yugioh] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response('OK', { status: 200 });
 
   } catch (err) {
