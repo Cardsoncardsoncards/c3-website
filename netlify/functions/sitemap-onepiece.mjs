@@ -11,10 +11,10 @@ const PAGE_SIZE         = 1000;
 
 async function fetchSlugs(offset = 0) {
   const url = `${SUPABASE_URL}/rest/v1/onepiece_cards`
-    + `?select=slug,price_usd,updated_at`
-    + `&price_usd=gte.${PRICE_THRESHOLD}`
+    + `?select=slug,market_price,updated_at`
+    + `&market_price=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
-    + `&order=price_usd.desc`
+    + `&order=market_price.desc`
     + `&limit=${PAGE_SIZE}`
     + `&offset=${offset}`;
   try {
@@ -47,7 +47,7 @@ export default async (req) => {
 
   try {
     const countRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/onepiece_cards?select=id&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
+      `${SUPABASE_URL}/rest/v1/onepiece_cards?select=id&market_price=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
       {
         headers: {
           'apikey': SUPABASE_ANON_KEY,
@@ -79,7 +79,7 @@ export default async (req) => {
       .filter(c => c.slug && c.slug.trim() !== '')
       .map(c => {
         const lastmod = c.updated_at ? c.updated_at.slice(0, 10) : today;
-        const price = parseFloat(c.price_usd) || 0;
+        const price = parseFloat(c.market_price) || 0;
         const priority = price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7';
         return `  <url>\n    <loc>${SITE_URL}/cards/onepiece/${c.slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
       })

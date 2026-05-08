@@ -93,8 +93,8 @@ export default async (req) => {
 
     const [relatedCards, ebayToken] = await Promise.all([
       card.archetype
-        ? supabaseGet(`yugioh_cards?archetype=eq.${encodeURIComponent(card.archetype)}&slug=neq.${encodeURIComponent(slug)}&image_uri=not.is.null&limit=12&order=price_usd.desc`).catch(() => [])
-        : supabaseGet(`yugioh_cards?type=eq.${encodeURIComponent(card.type||'')}&slug=neq.${encodeURIComponent(slug)}&image_uri=not.is.null&limit=12&order=price_usd.desc`).catch(() => []),
+        ? supabaseGet(`yugioh_cards?archetype=eq.${encodeURIComponent(card.archetype)}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=market_price.desc`).catch(() => [])
+        : supabaseGet(`yugioh_cards?type=eq.${encodeURIComponent(card.type||'')}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=market_price.desc`).catch(() => []),
       (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null)
     ]);
 
@@ -102,7 +102,7 @@ export default async (req) => {
       ? await getEbayListings(card.name, ebayToken).catch(() => [])
       : [];
 
-    const priceAud = card.price_usd ? (card.price_usd * 1.58) : null;
+    const priceAud = card.market_price ? (card.market_price * 1.58) : null;
     const typeAccent = getTypeAccent(card.type);
     const attrColour = ATTR_COLOURS[card.attribute] || '#888';
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/yugioh/${card.slug}`);
@@ -122,7 +122,7 @@ export default async (req) => {
       "@context": "https://schema.org", "@type": "Product",
       "name": card.name,
       "description": card.description?.slice(0,200) || `${card.name} Yu-Gi-Oh card`,
-      "image": card.image_uri || '',
+      "image": card.image_url || '',
       "offers": { "@type": "Offer", "priceCurrency": "AUD", "price": priceAud.toFixed(2), "availability": "https://schema.org/InStock", "url": `https://cardsoncardsoncards.com.au/cards/yugioh/${card.slug}` }
     } : null;
 
@@ -134,9 +134,9 @@ export default async (req) => {
       <div class="card-carousel">
         ${relatedCards.map(c => `
           <a href="/cards/yugioh/${c.slug}" class="mini-card">
-            ${c.image_uri_small || c.image_uri ? `<img src="${c.image_uri_small||c.image_uri}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:6px">` : ''}
+            ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:6px">` : ''}
             <div class="mini-card-name">${c.name}</div>
-            ${c.price_usd ? `<div class="mini-card-price">~AU$${(c.price_usd*1.58).toFixed(2)}</div>` : ''}
+            ${c.market_price ? `<div class="mini-card-price">~AU$${(c.market_price*1.58).toFixed(2)}</div>` : ''}
           </a>`).join('')}
       </div>
     </section>` : '';
@@ -170,7 +170,7 @@ export default async (req) => {
   <meta name="description" content="${card.name}${card.type ? ` (${card.type})` : ''} Yu-Gi-Oh card${priceAud ? ` — ~AU$${priceAud.toFixed(2)}` : ''}. ${card.description?.slice(0,100) || 'View price, card details, and buy on eBay AU.'}">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/yugioh/${card.slug}">
   <meta property="og:title" content="${card.name} | Yu-Gi-Oh Price AU | Cards on Cards on Cards">
-  ${card.image_uri ? `<meta property="og:image" content="${card.image_uri}">` : ''}
+  ${card.image_url ? `<meta property="og:image" content="${card.image_url}">` : ''}
   <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
   ${productSchema ? `<script type="application/ld+json">${JSON.stringify(productSchema)}</script>` : ''}
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -254,8 +254,8 @@ export default async (req) => {
 <div class="card-hero">
   <div class="card-image-col">
     <div class="card-image-wrap">
-      ${card.image_uri
-        ? `<img src="${card.image_uri}" alt="${card.name} Yu-Gi-Oh card" loading="eager">`
+      ${card.image_url
+        ? `<img src="${card.image_url}" alt="${card.name} Yu-Gi-Oh card" loading="eager">`
         : `<div style="width:100%;padding-bottom:145%;background:var(--bg2);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text2)">No image</div>`}
     </div>
   </div>
@@ -281,7 +281,7 @@ export default async (req) => {
       <div class="price-label">Current Price (AUD)</div>
       ${priceAud
         ? `<div class="price-main">~AU$${priceAud.toFixed(2)}</div>
-           <div class="price-usd">US$${parseFloat(card.price_usd).toFixed(2)} TCGplayer · Converted at 1.58 AUD</div>`
+           <div class="price-usd">US$${parseFloat(card.market_price).toFixed(2)} TCGplayer · Converted at 1.58 AUD</div>`
         : `<div class="price-main" style="color:var(--text2);font-size:20px">Check eBay AU</div>
            <div class="price-usd">Price data not yet available</div>`}
     </div>

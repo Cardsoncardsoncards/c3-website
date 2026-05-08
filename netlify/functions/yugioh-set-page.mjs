@@ -83,7 +83,7 @@ export default async (req) => {
   const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.set_name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayListings = await getEbayListings(`${set.set_name} yugioh card`, ebayToken);
 
-  const toAud = (c) => c.price_usd && c.price_usd > 0 ? parseFloat(c.price_usd) * 1.58 : 0;
+  const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * 1.58 : 0;
   const pricedCards = cards.filter(c => toAud(c) > 0);
   const top5 = pricedCards.slice(0, 5);
   const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();
@@ -99,7 +99,7 @@ export default async (req) => {
     const ac = ATTR_COLOURS[c.attribute] || '#c8a332';
     return `<a href="/cards/yugioh/${c.slug}" style="flex:0 0 150px;background:#0e1118;border:1px solid rgba(200,163,50,.25);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s;display:block" onmouseover="this.style.borderColor='#c8a332';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(200,163,50,.25)';this.style.transform='none'">
       ${c.attribute ? `<div style="position:absolute;top:6px;left:6px;background:${ac};color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px">${c.attribute}</div>` : ''}
-      ${(c.image_uri_small||c.image_uri) ? `<img src="${c.image_uri_small||c.image_uri}" alt="${c.name}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${c.name}</div>`}
+      ${(c.image_url) ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${c.name}</div>`}
       <div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">${c.name}</div>
       <div style="font-family:'Cinzel',serif;font-size:14px;color:#c8a332;font-weight:700;margin-top:3px">~AU$${aud.toFixed(0)}</div>
     </a>`;
@@ -111,7 +111,7 @@ export default async (req) => {
     const ac = ATTR_COLOURS[c.attribute] || '#888';
     return `<a href="/cards/yugioh/${c.slug}" class="card-item" data-rarity="${(c.rarity||'').toLowerCase()}" data-attr="${(c.attribute||'').toLowerCase()}" data-price="${aud.toFixed(2)}">
       <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${ac}"></div>
-      ${(c.image_uri_small||c.image_uri) ? `<img src="${c.image_uri_small||c.image_uri}" alt="${c.name}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${c.name}</div>`}
+      ${(c.image_url) ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${c.name}</div>`}
       <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${c.name}</div>
       <div style="font-size:11px;color:#c8a332;font-weight:700;margin-top:2px">${priceDisplay}</div>
     </a>`;

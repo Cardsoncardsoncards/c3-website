@@ -78,7 +78,7 @@ export default async (req) => {
     const card = cards[0];
 
     const [relatedCards, ebayToken] = await Promise.all([
-      supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_uri=not.is.null&limit=12&order=collector_number.asc`).catch(() => []),
+      supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=collector_number.asc`).catch(() => []),
       (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null)
     ]);
 
@@ -86,7 +86,7 @@ export default async (req) => {
       ? await getEbayListings(card.name, card.version, ebayToken).catch(() => [])
       : [];
 
-    const priceAud = card.price_usd ? (card.price_usd * 1.58) : null;
+    const priceAud = card.market_price ? (card.market_price * 1.58) : null;
     const inkColour = INK_COLOURS[card.ink] || { bg: '#888', text: '#fff' };
     const fullName = card.version ? `${card.name} — ${card.version}` : card.name;
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/lorcana/${card.slug}`);
@@ -107,7 +107,7 @@ export default async (req) => {
       "@context": "https://schema.org", "@type": "Product",
       "name": fullName,
       "description": card.card_text || `${fullName} — ${card.rarity} Lorcana card from ${card.set_name}`,
-      "image": card.image_uri || '',
+      "image": card.image_url || '',
       "offers": { "@type": "Offer", "priceCurrency": "AUD", "price": priceAud.toFixed(2), "availability": "https://schema.org/InStock", "url": `https://cardsoncardsoncards.com.au/cards/lorcana/${card.slug}` }
     } : null;
 
@@ -117,9 +117,9 @@ export default async (req) => {
       <div class="card-carousel">
         ${relatedCards.map(c => `
           <a href="/cards/lorcana/${c.slug}" class="mini-card">
-            ${c.image_uri ? `<img src="${c.image_uri}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:6px">` : `<div style="height:80px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text2)">${c.name}</div>`}
+            ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:6px">` : `<div style="height:80px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text2)">${c.name}</div>`}
             <div class="mini-card-name">${c.name}${c.version ? `<br><span style="opacity:.6">${c.version}</span>` : ''}</div>
-            ${c.price_usd ? `<div class="mini-card-price">~AU$${(c.price_usd*1.58).toFixed(2)}</div>` : ''}
+            ${c.market_price ? `<div class="mini-card-price">~AU$${(c.market_price*1.58).toFixed(2)}</div>` : ''}
           </a>`).join('')}
       </div>
     </section>` : '';
@@ -153,7 +153,7 @@ export default async (req) => {
   <meta name="description" content="${fullName} (${card.rarity || 'Lorcana'}) from ${card.set_name}${priceAud ? ` — ~AU$${priceAud.toFixed(2)}` : ''}. View price, card details, and buy on eBay AU. Australia's Lorcana price guide.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana/${card.slug}">
   <meta property="og:title" content="${fullName} | ${card.set_name} Lorcana | Cards on Cards on Cards">
-  ${card.image_uri ? `<meta property="og:image" content="${card.image_uri}">` : ''}
+  ${card.image_url ? `<meta property="og:image" content="${card.image_url}">` : ''}
   <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
   ${productSchema ? `<script type="application/ld+json">${JSON.stringify(productSchema)}</script>` : ''}
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -236,8 +236,8 @@ export default async (req) => {
 <div class="card-hero">
   <div class="card-image-col">
     <div class="card-image-wrap">
-      ${card.image_uri
-        ? `<img src="${card.image_uri}" alt="${fullName} Lorcana card" loading="eager">`
+      ${card.image_url
+        ? `<img src="${card.image_url}" alt="${fullName} Lorcana card" loading="eager">`
         : `<div style="width:100%;padding-bottom:140%;background:var(--bg2);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--text2)">No image</div>`}
     </div>
     ${card.collector_number ? `<p style="text-align:center;font-size:12px;color:var(--text2);margin-top:10px">${card.set_name} · #${card.collector_number}</p>` : ''}
@@ -255,7 +255,7 @@ export default async (req) => {
       <div class="price-label">Current Price (AUD)</div>
       ${priceAud
         ? `<div class="price-main">~AU$${priceAud.toFixed(2)}</div>
-           <div class="price-usd">US$${parseFloat(card.price_usd).toFixed(2)} · Converted at 1.58 AUD</div>`
+           <div class="price-usd">US$${parseFloat(card.market_price).toFixed(2)} · Converted at 1.58 AUD</div>`
         : `<div class="price-main" style="color:var(--text2);font-size:20px">Check eBay AU</div>
            <div class="price-usd">Price data not yet available</div>`}
     </div>

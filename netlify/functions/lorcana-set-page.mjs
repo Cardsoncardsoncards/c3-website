@@ -83,7 +83,7 @@ export default async (req) => {
 
   let set = sets && sets[0];
   // Fetch cards using the set's UUID id (set_id on lorcana_cards = lorcana_sets.id)
-  let cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=price_usd.desc.nullslast&limit=300&select=slug,name,version,image_uri,price_usd,rarity,ink,collector_number,card_text`) : [];
+  let cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,card_text`) : [];
 
   if (!set) return new Response('Set not found', { status: 404, headers });
 
@@ -91,7 +91,7 @@ export default async (req) => {
   const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' lorcana booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayListings = await getEbayListings(`${set.name} lorcana card`, ebayToken);
 
-  const toAud = (c) => c.price_usd && c.price_usd > 0 ? parseFloat(c.price_usd) * 1.58 : 0;
+  const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * 1.58 : 0;
   const pricedCards = cards.filter(c => toAud(c) > 0);
   const top5 = pricedCards.slice(0, 5);
   const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();
@@ -108,7 +108,7 @@ export default async (req) => {
     const ink = INK_COLOURS[c.ink] || { bg:'#888', text:'#fff' };
     return `<a href="/cards/lorcana/${c.slug}" style="flex:0 0 150px;background:#0e1118;border:1px solid rgba(1,137,196,.25);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s;display:block" onmouseover="this.style.borderColor='#0189C4';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(1,137,196,.25)';this.style.transform='none'">
       <div style="position:absolute;top:6px;left:6px;background:${ink.bg};color:${ink.text};font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase">${c.ink||''}</div>
-      ${c.image_uri ? `<img src="${c.image_uri}" alt="${fullName}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
+      ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
       <div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">${fullName}</div>
       <div style="font-family:'Cinzel',serif;font-size:14px;color:#0189C4;font-weight:700;margin-top:3px">~AU$${aud.toFixed(0)}</div>
     </a>`;
@@ -121,7 +121,7 @@ export default async (req) => {
     const ink = INK_COLOURS[c.ink] || { bg:'#888' };
     return `<a href="/cards/lorcana/${c.slug}" class="card-item" data-rarity="${(c.rarity||'').toLowerCase()}" data-ink="${(c.ink||'').toLowerCase()}" data-price="${aud.toFixed(2)}">
       <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${ink.bg}"></div>
-      ${c.image_uri ? `<img src="${c.image_uri}" alt="${fullName}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
+      ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
       <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${fullName}</div>
       <div style="font-size:11px;color:#0189C4;font-weight:700;margin-top:2px">${priceDisplay}</div>
     </a>`;

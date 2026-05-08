@@ -110,7 +110,7 @@ export default async (req) => {
 
     // Parallel: related cards from same set, eBay listings
     const [relatedCards, ebayToken] = await Promise.all([
-      supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_uri=not.is.null&limit=12&order=number.asc`).catch(() => []),
+      supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=number.asc`).catch(() => []),
       (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null)
     ]);
 
@@ -118,7 +118,7 @@ export default async (req) => {
       ? await getEbayListings(card.name, card.set_name, ebayToken).catch(() => [])
       : [];
 
-    const priceAud = card.price_usd ? (card.price_usd * 1.58) : null;
+    const priceAud = card.market_price ? (card.market_price * 1.58) : null;
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/pokemon/${card.slug}`);
     const shareText = encodeURIComponent(`${card.name} — ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
 
@@ -136,7 +136,7 @@ export default async (req) => {
       "@context": "https://schema.org", "@type": "Product",
       "name": card.name,
       "description": card.description || `${card.name} Pokemon card from ${card.set_name}`,
-      "image": card.image_uri || '',
+      "image": card.image_url || '',
       "offers": { "@type": "Offer", "priceCurrency": "AUD", "price": priceAud.toFixed(2), "availability": "https://schema.org/InStock", "url": `https://cardsoncardsoncards.com.au/cards/pokemon/${card.slug}` }
     } : null;
 
@@ -157,9 +157,9 @@ export default async (req) => {
       <div class="card-carousel">
         ${relatedCards.map(c => `
           <a href="/cards/pokemon/${c.slug}" class="mini-card">
-            ${c.image_uri ? `<img src="${c.image_uri}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:6px">` : `<div style="height:80px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text2)">${c.name}</div>`}
+            ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:6px">` : `<div style="height:80px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text2)">${c.name}</div>`}
             <div class="mini-card-name">${c.name}</div>
-            <div class="mini-card-price">${c.price_usd ? '~AU$'+(c.price_usd*1.58).toFixed(2) : ''}</div>
+            <div class="mini-card-price">${c.market_price ? '~AU$'+(c.market_price*1.58).toFixed(2) : ''}</div>
           </a>`).join('')}
       </div>
     </section>` : '';
@@ -194,7 +194,7 @@ export default async (req) => {
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/pokemon/${card.slug}">
   <meta property="og:title" content="${card.name} | ${card.set_name} | Pokemon Price AU">
   <meta property="og:description" content="${priceAud ? `~AU$${priceAud.toFixed(2)} — ` : ''}${card.name} from ${card.set_name}. ${card.rarity || ''} Pokemon card.">
-  ${card.image_uri ? `<meta property="og:image" content="${card.image_uri}">` : ''}
+  ${card.image_url ? `<meta property="og:image" content="${card.image_url}">` : ''}
   <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
   ${productSchema ? `<script type="application/ld+json">${JSON.stringify(productSchema)}</script>` : ''}
   <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
@@ -295,8 +295,8 @@ export default async (req) => {
 <div class="card-hero">
   <div class="card-image-col">
     <div class="card-image-wrap">
-      ${card.image_uri
-        ? `<img src="${card.image_uri}" alt="${card.name} — ${card.set_name} Pokemon card" loading="eager">`
+      ${card.image_url
+        ? `<img src="${card.image_url}" alt="${card.name} — ${card.set_name} Pokemon card" loading="eager">`
         : `<div class="card-image-placeholder"><span>No image available</span></div>`}
     </div>
     ${card.number && card.set_name ? `<p style="text-align:center;font-size:12px;color:var(--text2);margin-top:10px">${card.set_name} · #${card.number}</p>` : ''}
@@ -313,7 +313,7 @@ export default async (req) => {
       <div class="price-label">Current Price (AUD)</div>
       ${priceAud
         ? `<div class="price-main">~AU$${priceAud.toFixed(2)}</div>
-           <div class="price-usd">US$${parseFloat(card.price_usd).toFixed(2)} · Converted at 1 USD = 1.58 AUD</div>`
+           <div class="price-usd">US$${parseFloat(card.market_price).toFixed(2)} · Converted at 1 USD = 1.58 AUD</div>`
         : `<div class="price-main" style="color:var(--text2);font-size:20px">Price unavailable</div>
            <div class="price-usd">Check eBay AU for current pricing</div>`}
     </div>

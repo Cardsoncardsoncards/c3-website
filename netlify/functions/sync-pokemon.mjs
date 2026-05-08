@@ -6,6 +6,7 @@
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
+const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const GAME_SLUG            = 'pokemon';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200; // stop if daily_remaining drops below this
@@ -76,6 +77,13 @@ async function supabaseUpsert(table, rows) {
 
 export default async (req) => {
   console.log('[sync-pokemon] Starting...');
+
+  // Auth check -- must be POST with correct secret
+  const secret = req.headers.get('x-sync-secret');
+  if (!SYNC_SECRET || secret !== SYNC_SECRET) {
+    console.error('[sync-pokemon] Unauthorised');
+    return new Response('Unauthorised', { status: 401 });
+  }
   const start = Date.now();
 
   // Validate env vars first
