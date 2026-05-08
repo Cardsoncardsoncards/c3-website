@@ -90,10 +90,10 @@ export default async (req) => {
     .nav-link--shop:hover{background:rgba(74,222,128,.06);border-color:#4ADE80}
     .nav-link--tracker{color:#FB923C;border-color:rgba(251,146,60,.3)}
     .nav-link--tracker:hover{background:rgba(251,146,60,.06);border-color:#FB923C}
-
-    /* HERO */
-    .hero{padding:56px 24px 40px;text-align:center;position:relative;z-index:1}
-    .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--ygo-gold);margin-bottom:14px}
+    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
+    .nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+    .nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
+    .nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
     h1{font-family:'Cinzel',serif;font-size:clamp(26px,5vw,52px);font-weight:900;color:var(--text);margin-bottom:14px;line-height:1.1}
     h1 span{color:var(--ygo-gold)}
     .hero-sub{font-size:15px;color:var(--text2);max-width:560px;margin:0 auto 32px}
@@ -167,17 +167,19 @@ export default async (req) => {
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">Cards on Cards on Cards</a>
+    <a href="/" class="nav-logo">
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
     <div class="nav-links">
       <a href="/" class="nav-link nav-link--home">← Home</a>
-      <a href="/cards/mtg" class="nav-link nav-link--mtg">MTG</a>
-      <a href="/cards/pokemon" class="nav-link nav-link--pokemon">Pokemon</a>
-      <a href="/cards/lorcana" class="nav-link nav-link--lorcana">Lorcana</a>
-      <a href="/cards/yugioh" class="nav-link nav-link--yugioh" style="background:rgba(192,132,252,.1);color:#C084FC">Yu-Gi-Oh</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/contact.html" class="nav-link">Contact Us</a>
     </div>
   </div>
 </nav>

@@ -43,15 +43,43 @@ async function supabaseGet(path) {
   }
 }
 
-const NAV = `<nav style="background:#1a1d2e;border-bottom:1px solid #2d3254;padding:12px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
-  <a href="/" style="font-weight:bold;font-size:18px;color:#f5a623;text-decoration:none">C3</a>
-  <a href="/" style="color:#9ba3c4;font-size:14px;text-decoration:none">Home</a>
-  <a href="/shop.html" style="color:#9ba3c4;font-size:14px;text-decoration:none">Shop</a>
-  <a href="/blog" style="color:#9ba3c4;font-size:14px;text-decoration:none">Blog</a>
-  <a href="/ev-calculator.html" style="color:#9ba3c4;font-size:14px;text-decoration:none">EV Calculator</a>
-  <a href="/cards/mtg" style="color:#f5a623;font-size:14px;text-decoration:none">MTG Cards</a>
-  <a href="/cards/mtg/random-commander" style="color:#9ba3c4;font-size:14px;text-decoration:none">Random Commander</a>
-  <a href="/tracker.html" style="color:#9ba3c4;font-size:14px;text-decoration:none">Free Tracker</a>
+const NAV_STYLES = `
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid #252840;padding:12px 0;position:sticky;top:0;z-index:100}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+    .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #252840;color:#A0A8C0;white-space:nowrap}
+    .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
+    .nav-link--gold{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+    .nav-link--gold:hover{background:rgba(201,168,76,.14);border-color:#C9A84C}
+    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
+    .nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
+    .nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
+    .nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+    .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+  </style>`;
+
+const NAV = `<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">← Home</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/contact.html" class="nav-link">Contact Us</a>
+    </div>
+  </div>
 </nav>`;
 
 const BASE_STYLES = `
@@ -70,7 +98,7 @@ const BASE_STYLES = `
   </style>`;
 
 // MTG Card Hub Page
-function renderCardHub(sets, topCards, sosCards = []) {
+function renderCardHub(sets, topCards) {
 
   // Group sets: parent sets (no parent_set_code) are top-level
   // Sub-sets (have parent_set_code) are children of their parent
@@ -123,16 +151,6 @@ function renderCardHub(sets, topCards, sosCards = []) {
       <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.58).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
-  // SOS carousel built server-side — no client fetch, no auth, no template conflicts
-  const sosHTML = (sosCards || []).map(c => {
-    const aud = (c.price_aud > 0 ? parseFloat(c.price_aud) : parseFloat(c.price_usd || 0) * 1.58).toFixed(0);
-    return '<a href="/cards/mtg/' + c.slug + '" style="display:block;min-width:120px;flex-shrink:0;text-decoration:none;text-align:center">'
-      + (c.image_uri_small ? '<img src="' + c.image_uri_small + '" alt="" loading="lazy" style="width:120px;border-radius:6px;display:block;margin:0 auto">' : '')
-      + '<div style="font-size:11px;color:var(--text);margin-top:4px;padding:0 4px;line-height:1.3;max-width:120px">' + c.name.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
-      + '<div style="font-size:12px;color:#C9A84C;font-weight:700">~AU$' + aud + '</div>'
-      + '</a>';
-  }).join('');
-
   return `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -142,6 +160,7 @@ function renderCardHub(sets, topCards, sosCards = []) {
   <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, 52-week price ranges, and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg">
   ${BASE_STYLES}
+  ${NAV_STYLES}
 </head>
 <body>
 ${NAV}
@@ -169,21 +188,6 @@ ${NAV}
     <a href="/shop.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#ff7043,#e64a19);color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">🛒 Shop</a>
   </div>
 
-  ${sosHTML ? `
-  <!-- Latest Set: Secrets of Strixhaven -->
-  <div style="margin-bottom:32px;padding:24px;background:rgba(201,168,76,.04);border:1px solid #7A621E;border-radius:var(--radius);overflow:hidden">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-      <div>
-        <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#C9A84C;margin-bottom:4px">Latest Set</p>
-        <h2 style="font-family:'Cinzel',serif;font-size:18px;color:var(--text1);margin:0">Most Valuable in Secrets of Strixhaven</h2>
-      </div>
-      <a href="/cards/mtg/sets/secrets-of-strixhaven" style="font-size:12px;color:#C9A84C;text-decoration:none;border:1px solid #7A621E;padding:6px 14px;border-radius:6px;white-space:nowrap">Browse Full Set →</a>
-    </div>
-    <div style="overflow:hidden;mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 3%,black 97%,transparent)">
-      <div id="sos-track" class="cmd-track">${sosHTML}${sosHTML}</div>
-    </div>
-  </div>` : ''}
-
   <!-- Commander Spotlight Carousel -->
   <div style="margin-bottom:32px;padding:24px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:var(--radius);overflow:hidden">
     <div style="text-align:center;margin-bottom:20px">
@@ -200,26 +204,28 @@ ${NAV}
       </div>
     </div>
     <div style="text-align:center;margin-top:14px">
-      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF;text-decoration:none">Generate a random Commander → </a>
+      <a href="/cards/mtg?page=random-commander" style="font-size:12px;color:#9898FF;text-decoration:none">Generate a random Commander → </a>
     </div>
   </div>
 
   <!-- Browse by Set — search + grouped alphabetical list -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
-    <h2 style="font-size:18px;margin-bottom:6px">Browse by Set</h2>
-    <p style="color:var(--text2);font-size:13px;margin-bottom:12px">All ${sortedParents.length} MTG sets — type to filter</p>
-    <input type="text" id="set-search" placeholder="e.g. Strixhaven, Commander, Dominaria..."
-      style="width:100%;max-width:520px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;margin-bottom:12px;display:block"
-      oninput="filterSets(this.value)" autocomplete="off" spellcheck="false">
-    <div id="set-list" style="column-count:3;column-gap:8px;max-height:400px;overflow-y:auto">
-      ${sortedParents.map(s =>
-        '<a href="/cards/mtg/sets/' + s.set_slug + '" class="set-list-link"'
-        + ' style="display:block;padding:5px 0;font-size:13px;color:var(--text);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"'
-        + ' onmouseover="this.style.color=\'#C9A84C\'" onmouseout="this.style.color=\'var(--text)\'"'
-        + ' data-name="' + s.set_name.toLowerCase().replace(/"/g,'&quot;') + '">'
-        + s.set_name
-        + '</a>'
-      ).join('')}
+    <h2 style="font-size:18px;margin-bottom:12px">Browse by Set</h2>
+    <div style="margin-bottom:12px">
+      <input type="text" id="set-search" placeholder="Type a set name e.g. Strixhaven, Commander..."
+        style="width:100%;max-width:500px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box"
+        oninput="filterSets(this.value)" autocomplete="off">
+      <span style="font-size:11px;color:var(--text2);margin-left:12px">Sets with <span style="color:var(--gold)">+N</span> have sub-sets — click the + button to expand them</span>
+    </div>
+    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px">
+      ${setListHTML}
+    </div>
+    <div id=\"set-child-drawer\" style=\"display:none;margin-top:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px\">
+      <div style=\"display:flex;align-items:center;justify-content:space-between;margin-bottom:10px\">
+        <span id=\"set-drawer-title\" style=\"font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em\"></span>
+        <button onclick=\"closeDrawer()\" style=\"background:none;border:none;color:var(--text2);cursor:pointer;font-size:18px;line-height:1\">&times;</button>
+      </div>
+      <div id=\"set-drawer-items\" style=\"display:flex;gap:8px;flex-wrap:wrap\"></div>
     </div>
   </div>
 
@@ -294,11 +300,17 @@ async function searchCard() {
 }
 
 function filterSets(query) {
-  var q = (query || '').trim().toLowerCase();
-  var links = document.querySelectorAll('.set-list-link');
-  links.forEach(function(el) {
-    var name = el.getAttribute('data-name') || '';
-    el.style.display = (!q || name.indexOf(q) >= 0) ? '' : 'none';
+  const q = query.toLowerCase().trim();
+  const items = document.querySelectorAll('.set-parent-item');
+  items.forEach(item => {
+    const name = item.dataset.name || '';
+    const match = !q || name.includes(q);
+    item.style.display = match ? '' : 'none';
+    // If searching, auto-expand children so sub-set matches are visible
+    if (q && match) {
+      const children = item.querySelector('.set-children');
+      if (children) children.style.display = '';
+    }
   });
 }
 
@@ -411,7 +423,7 @@ function renderRandomCommander() {
     .count-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
     .cmc-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
     .cmc-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
-    #results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin:32px 0 24px;max-width:1100px;margin-left:auto;margin-right:auto}
+    #results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:32px 0 24px}
     @media(max-width:480px){#results-grid{grid-template-columns:repeat(2,1fr)}}
     .cmd-result-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;transition:border-color .2s}
     .cmd-result-card:hover{border-color:var(--accent)}
@@ -484,7 +496,7 @@ ${NAV}
     <div style="margin-bottom:22px">
       <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">How many Commanders?</p>
       <div style="display:flex;gap:8px">
-        ${[1,2,3,4,5,6].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
+        ${[1,2,3,4].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
       </div>
     </div>
 
@@ -626,30 +638,35 @@ function setCmc(btn, val) {
 }
 
 async function fetchOneCommander(exclude) {
-  // Query mtg_commanders materialised view — pre-filtered to legendary creatures only
-  // GIN index on color_identity makes colour queries ~10ms instead of 22,000ms
+  // Build PostgREST query manually — URLSearchParams URL-encodes special chars that PostgREST needs literal
   const filters = [];
-  filters.push('select=name,type_line,image_uri,price_usd,slug,color_identity,cmc,set_name');
+  filters.push('select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug,color_identity,cmc');
+  // Legendary Creature filter — use 'like' with wildcards (case insensitive via ilike but we need URL-safe)
+  filters.push('type_line=ilike.*Legendary*Creature*');
+  // Skip digital
+  filters.push('digital=eq.false');
   // CMC filter
   if (selectedCmc < 99) filters.push('cmc=lte.' + selectedCmc);
-  // Price filter — only cards with a known price
-  filters.push('price_usd=gt.0');
-  // Exclude already-shown slugs
+  // Exclude already-shown slugs (only add filter if list is non-empty)
   if (exclude && exclude.length) {
+    // PostgREST in.() needs comma-separated values, slugs are URL-safe already
     filters.push('slug=not.in.(' + exclude.map(encodeURIComponent).join(',') + ')');
   }
   // Colour identity: card colour_identity must be contained by selected colours
   if (selectedColors.length) {
+    // PostgREST array contained-by: cd.{W,U} — braces stay literal
     filters.push('color_identity=cd.{' + selectedColors.join(',') + '}');
   }
   filters.push('limit=500');
 
   const queryString = filters.join('&');
-  const url = window.C3_SUPA_URL + '/rest/v1/mtg_commanders?' + queryString;
+  const url = window.C3_SUPA_URL + '/rest/v1/mtg_cards?' + queryString;
 
   try {
     const res = await fetch(url, {
-      headers: { 'apikey': window.C3_SUPA_KEY }
+      headers: {
+        'apikey': window.C3_SUPA_KEY
+      }
     });
     if (!res.ok) {
       console.error('Supabase request failed:', res.status, await res.text());
@@ -665,10 +682,10 @@ async function fetchOneCommander(exclude) {
 }
 
 function cardHTML(card, index) {
-  const price = card.price_usd > 0
-    ? '~AU$' + (card.price_usd * 1.58).toFixed(2)
-    : 'Price N/A';
-  const img = card.image_uri || '';
+  const price = card.price_aud > 0
+    ? 'AU$' + parseFloat(card.price_aud).toFixed(2)
+    : card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A';
+  const img = card.image_uri_normal || card.image_uri_small || '';
   // Colour identity pips
   const ci = Array.isArray(card.color_identity) ? card.color_identity : [];
   const pipColours = { W:'#f9faf4', U:'#aae0fa', B:'#2a2a2a', R:'#f9aa8f', G:'#9bd3ae' };
@@ -1301,12 +1318,11 @@ export default async (req) => {
   const path = url.pathname;
 
   if (path === '/cards/mtg' || path === '/cards/mtg/') {
-    const [sets, topCards, sosCards] = await Promise.all([
+    const [sets, topCards] = await Promise.all([
       supabaseGet('mtg_sets?order=set_name.asc&limit=1000&digital=eq.false'),
-      supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10'),
-      supabaseGet('mtg_cards?set_code=in.(sos,soa,soc)&price_usd=gte.3&image_uri_small=not.is.null&select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=30')
+      supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
     ]);
-    return new Response(renderCardHub(sets, topCards, sosCards), {
+    return new Response(renderCardHub(sets, topCards), {
       headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=3600' }
     });
   }
