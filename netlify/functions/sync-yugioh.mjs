@@ -78,7 +78,7 @@ async function supabaseUpsert(table, rows) {
 // Fetch set_ids that already have cards in Supabase (used for incremental sync)
 async function getAlreadySyncedSetIds() {
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id&limit=10000`,
+    `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id&limit=100000`,
     {
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,
@@ -238,7 +238,7 @@ export default async (req) => {
           set_id:            set.id,
           set_name:          set.name,
           game_slug:         GAME_SLUG,
-          custom_attributes: card.custom_attributes ? JSON.stringify(card.custom_attributes) : null,
+          custom_attributes: card.custom_attributes || null,
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,

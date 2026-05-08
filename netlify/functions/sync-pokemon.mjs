@@ -199,7 +199,7 @@ export default async (req) => {
           set_id:            set.id,
           set_name:          set.name,
           game_slug:         GAME_SLUG,
-          custom_attributes: card.custom_attributes ? JSON.stringify(card.custom_attributes) : null,
+          custom_attributes: card.custom_attributes || null,
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,
