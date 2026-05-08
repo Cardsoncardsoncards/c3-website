@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "The Moment You Pull a Chase Card: Why TCG Is Still Addictive in 2026"
 description: "That specific feeling when you flip to the rare slot and it's actually the one you wanted. An honest exploration of why pulling a chase card hits differently — and what that means for collectors."
 date: 2026-05-05

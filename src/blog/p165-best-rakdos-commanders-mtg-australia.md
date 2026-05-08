@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Rakdos (Black-Red) Commanders in MTG Australia 2026"
 description: "Top Rakdos commanders in MTG ranked by power and AUD price. Black-red delivers fast, aggressive, and sacrifice-based strategies — here are the best options for Australian players."
 date: 2026-05-05

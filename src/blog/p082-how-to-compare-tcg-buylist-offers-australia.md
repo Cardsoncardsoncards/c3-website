@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Compare TCG Buylist Offers in Australia (And Why It's Worth Doing)"
 description: "Step-by-step guide to comparing TCG buylist offers across Australian stores. Learn how to find the best price for your cards before you sell."
 date: 2026-04-16

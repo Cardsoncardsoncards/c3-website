@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Kaldheim Worth Opening in Australia?"
 description: "Is the MTG Kaldheim booster box worth opening in Australia? Norse mythology, Vorinclex, and Viking Frame showcase treatments. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

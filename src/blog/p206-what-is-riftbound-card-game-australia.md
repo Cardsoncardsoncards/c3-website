@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "What Is Riftbound Card Game? An Australian Player's First Look"
 description: "Riftbound is one of the newest TCGs to hit the Australian market. This guide covers what Riftbound is, how it plays, where to buy it in Australia, and whether it's worth getting into in 2026."
 date: 2026-05-05

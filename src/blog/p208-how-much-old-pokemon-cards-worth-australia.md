@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "How Much Are Your Old Pokemon Cards Worth in Australia? A Real Guide"
 description: "Found a collection of old Pokemon cards? This honest guide explains which ones are actually valuable, how to check current Australian prices, and what to do if you find something worth selling."
 date: 2026-05-05

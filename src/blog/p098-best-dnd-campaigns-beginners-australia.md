@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "Best D&D Campaigns for Beginners in Australia: Where to Start"
 description: "New to D&D and not sure which campaign to run or play first? This guide covers the best official campaigns for beginner Dungeon Masters and players in Australia, with honest assessments of each."
 date: 2026-04-16

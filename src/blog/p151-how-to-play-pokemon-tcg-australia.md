@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "How to Play Pokemon TCG: Step-by-Step Rules Guide for Australian Beginners"
 description: "Never played Pokemon TCG before? This guide walks through every rule — from setting up your bench to evolution, energy, and winning — in plain English for Australian beginners."
 date: 2026-05-05

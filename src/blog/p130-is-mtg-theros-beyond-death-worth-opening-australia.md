@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Theros Beyond Death Worth Opening in Australia?"
 description: "Is the MTG Theros Beyond Death booster box worth opening in Australia? Uro, Kroxa, and the Greek mythology plane return. Full AUD expected value breakdown and verdict for Australian players."
 date: 2026-04-20

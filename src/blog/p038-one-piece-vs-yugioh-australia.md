@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "One Piece Card Game vs Yu-Gi-Oh: Which Should You Pick in Australia?"
 description: "Choosing between the One Piece Card Game and Yu-Gi-Oh in Australia? This honest comparison covers gameplay complexity, cost, community, and which game suits different types of players."
 date: 2026-04-07

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Are the MTG Secrets of Strixhaven Commander Decks Worth Pre-Ordering in Australia?"
 description: "Five Commander precon decks release with Secrets of Strixhaven on 24 April 2026. This guide breaks down each deck, the reprint value, and which ones are worth pre-ordering in Australia."
 date: 2026-04-08

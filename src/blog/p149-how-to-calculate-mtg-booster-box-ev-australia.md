@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Calculate MTG Booster Box EV in Australia"
 description: "How do you calculate MTG booster box expected value in Australia? This guide walks through the exact methodology used by the C3 EV Calculator — pull rates, AUD pricing, and the full calculation explained."
 date: 2026-04-20

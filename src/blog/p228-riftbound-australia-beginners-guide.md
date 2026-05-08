@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound TCG Australia: Beginner's Guide for League of Legends Players"
 description: "New to Riftbound in Australia? Here's how to start, what to buy, how much it costs in AUD, and where to get it."
 date: 2026-05-06

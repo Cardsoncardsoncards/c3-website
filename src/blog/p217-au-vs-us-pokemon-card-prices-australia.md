@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "AU vs US Pokemon Card Prices: Why the Gap Exists and How to Use It"
 description: "Pokemon card prices in Australia are consistently higher than US prices. This guide explains the exact reasons for the gap and shows Australian collectors how to use that knowledge to buy smarter."
 date: 2026-05-05

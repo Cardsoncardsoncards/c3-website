@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound Australia FAQ: 15 Questions Every New Player Is Asking"
 description: "Is Riftbound available in Australia? Where do you buy it? How much does it cost? How do you play? Every Riftbound Australia question answered in one place."
 date: 2026-05-08

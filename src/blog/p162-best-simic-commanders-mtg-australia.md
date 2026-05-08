@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Simic (Blue-Green) Commanders in MTG Australia 2026"
 description: "The strongest Simic commanders in MTG ranked by power and current AUD price. Blue-green offers the best card draw plus ramp combination in the format — here are the top choices."
 date: 2026-05-05

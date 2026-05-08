@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Murders at Karlov Manor Worth Opening in Australia?"
 description: "Is the MTG Murders at Karlov Manor booster box worth opening in Australia? Murder mystery on Ravnica with Case enchantments and Disguise mechanic. Full AUD expected value breakdown."
 date: 2026-04-20

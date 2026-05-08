@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound RQ Singapore 2026: The Australian Player's Guide to the Second APAC Qualifier"
 description: "RQ Singapore runs September 4-6, 2026. Badges go on sale July 8. Here's everything Australian players need to know about competing, travelling, and preparing."
 date: 2026-05-07

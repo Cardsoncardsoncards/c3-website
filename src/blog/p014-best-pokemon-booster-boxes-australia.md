@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Best Pokemon Booster Boxes in Australia 2026: Prices, Sets, and What to Buy"
 description: "Pokemon booster boxes in Australia run AU$140-175. This guide covers every current set on Amazon AU, who each one suits, and which is actually worth buying right now."
 date: 2026-04-07

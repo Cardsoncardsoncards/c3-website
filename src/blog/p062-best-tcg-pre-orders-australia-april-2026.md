@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Best TCG Pre-Orders Right Now in Australia: April 2026"
 description: "The best trading card game pre-orders available in Australia right now. April 2026 edition covering MTG, Pokemon, Lorcana, One Piece, and Riftbound with direct Amazon AU links."
 date: 2026-04-08

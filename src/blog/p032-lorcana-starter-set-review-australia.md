@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Lorcana Starter Set Review: Worth Buying in Australia?"
 description: "Are Disney Lorcana Starter Decks worth buying in Australia? This honest review covers what's inside, how they play, who they suit, and whether they're good value for the price."
 date: 2026-04-07

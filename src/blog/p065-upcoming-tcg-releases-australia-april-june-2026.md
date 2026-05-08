@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Upcoming TCG Releases in Australia: April to June 2026"
 description: "Every major trading card game release coming to Australia between April and June 2026. MTG, Pokemon, Lorcana, One Piece, Riftbound, and more with release dates and Amazon AU availability."
 date: 2026-04-08

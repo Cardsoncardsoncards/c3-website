@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Warhammer 40K Collector Booster Worth Opening in Australia?"
 description: "Is the MTG Warhammer 40K Collector Booster box worth opening in Australia? Space Marines, Necrons, and Surge Foil treatments. Full AUD expected value breakdown for this crossover product."
 date: 2026-04-20

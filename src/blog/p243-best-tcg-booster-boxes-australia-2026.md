@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best TCG Booster Boxes to Open in Australia 2026: Value Guide"
 description: "Which booster boxes are actually worth opening in Australia in 2026? Here's the honest value breakdown across MTG, Pokemon, Riftbound, One Piece, and Lorcana in AUD."
 date: 2026-05-09

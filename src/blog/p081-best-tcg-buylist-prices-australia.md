@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Best TCG Buylist Prices in Australia — Where to Get the Most for Your Cards"
 description: "Not all TCG buylists pay the same. This guide explains how buylist prices work in Australia, which factors affect your offer, and how to find the best price for your cards."
 date: 2026-04-16

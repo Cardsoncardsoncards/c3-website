@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "MTG Booster Box Price Guide: What to Expect Paying in Australia"
 description: "What does a Magic: The Gathering booster box actually cost in Australia? This guide covers current price ranges by box type, why AU prices differ from US prices, and what affects the cost."
 date: 2026-04-07

@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Where to Buy Lorcana Cards in Australia: Online vs Local Game Stores"
 description: "Where should you buy Disney Lorcana cards in Australia? This guide covers every buying option — Amazon AU, local game stores, eBay, and Facebook — with honest pros and cons for each."
 date: 2026-04-07

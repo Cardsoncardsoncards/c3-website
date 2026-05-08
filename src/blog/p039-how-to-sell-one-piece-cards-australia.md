@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "How to Sell One Piece Cards in Australia for Maximum Value"
 description: "Want to sell your One Piece Card Game cards in Australia? This guide covers every platform, real fee breakdowns, how to price correctly, and how to get the best return from your collection."
 date: 2026-04-07

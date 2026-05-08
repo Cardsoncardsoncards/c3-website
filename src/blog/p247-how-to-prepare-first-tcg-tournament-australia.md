@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Prepare for Your First TCG Tournament in Australia: The Complete Guide"
 description: "First TCG tournament coming up? Here's exactly how to prepare, what to bring, what to expect on the day, and how to avoid the mistakes most new tournament players make."
 date: 2026-05-07

@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound Unleashed Set Review: Best Cards and What to Buy in Australia"
 description: "Riftbound Unleashed launched May 8 with 220+ cards, the new Ultimate rarity, and four new Champions. Here's what's worth buying and what to hunt in Australia."
 date: 2026-05-07

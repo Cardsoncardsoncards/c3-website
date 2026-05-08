@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Mono-White Commanders in MTG: Australia Price Guide 2026"
 description: "The strongest mono-white Commanders in Magic: The Gathering ranked by power, accessibility, and current AUD price. Includes budget options under AU$20 and premium picks."
 date: 2026-05-05

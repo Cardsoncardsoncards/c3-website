@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "D&D Storage and Bags in Australia: Organising Your Gear"
 description: "A practical guide to D&D storage bags, backpacks and organiser cases available in Australia. Covers what fits in each type and who actually needs dedicated storage."
 date: 2026-04-09

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Modern Horizons 2 Worth Opening in Australia?"
 description: "Is the MTG Modern Horizons 2 booster box worth opening in Australia? One of the most valuable MTG sets ever printed. Full AUD expected value breakdown with Ragavan, Evoke Elementals, and retro frame dual lands explained."
 date: 2026-04-20

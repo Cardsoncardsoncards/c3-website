@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Are Pokemon Booster Boxes a Good Investment in Australia?"
 description: "Thinking about buying Pokemon booster boxes as an investment in Australia? This honest guide covers the real risks, what has and hasn't appreciated, and what you need to know before spending."
 date: 2026-04-07

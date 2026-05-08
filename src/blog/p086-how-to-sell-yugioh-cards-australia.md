@@ -1,4 +1,5 @@
 ---
+game: yugioh
 title: "How to Sell Yu-Gi-Oh Cards in Australia: Platforms, Prices, and What Actually Sells"
 description: "Selling Yu-Gi-Oh cards in Australia? This guide covers every real selling option — eBay, Facebook, buylists, and locals — with honest return rates and what's actually worth listing."
 date: 2026-04-16

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Modern Horizons 3 Worth Opening in Australia?"
 description: "Is the MTG Modern Horizons 3 booster box worth opening in Australia? Full expected value breakdown in AUD. The premium set designed for Modern with above-average card values throughout."
 date: 2026-04-20

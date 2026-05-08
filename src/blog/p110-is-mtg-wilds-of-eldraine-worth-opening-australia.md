@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Wilds of Eldraine Worth Opening in Australia?"
 description: "Is the MTG Wilds of Eldraine booster box worth opening in Australia? One of the strongest EV standard sets of 2023. Full AUD breakdown with Enchanting Tales bonus sheet explained."
 date: 2026-04-20

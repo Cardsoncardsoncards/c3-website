@@ -1,4 +1,5 @@
 ---
+game: yugioh
 title: "How to Build a Competitive Yu-Gi-Oh Deck in Australia Without Breaking the Bank"
 description: "Competitive Yu-Gi-Oh decks can cost AU$400 to AU$1,200. This guide shows how Australian players can build competitive or near-competitive decks at significantly lower cost with smart card choices."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Best Lorcana Booster Boxes to Buy in Australia"
 description: "Looking for the best Disney Lorcana booster box in Australia? This guide covers every current set on Amazon AU, what each offers collectors and players, and honest buying advice."
 date: 2026-04-07

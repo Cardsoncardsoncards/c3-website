@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Best TCG Games for Two Players Australia: Date Night Edition"
 description: "Not every card game is fun with just two people. This guide covers which TCGs actually work well in a two-player format — and which are better with a full table — for Australian couples and pairs."
 date: 2026-05-05

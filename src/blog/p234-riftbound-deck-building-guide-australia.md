@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "How to Build Your First Riftbound Deck in Australia: Step-by-Step Guide"
 description: "Build your first Riftbound deck the right way. Step-by-step guide covering Legend choice, card ratios, rune balance, and how to do it on a budget in AUD."
 date: 2026-05-08

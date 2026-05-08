@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Is Disney Lorcana Worth Starting in 2026? An Australian Take"
 description: "Thinking about getting into Disney Lorcana in 2026? This honest guide covers the real costs, the Australian community, the collector appeal, and whether it's worth starting now."
 date: 2026-04-07

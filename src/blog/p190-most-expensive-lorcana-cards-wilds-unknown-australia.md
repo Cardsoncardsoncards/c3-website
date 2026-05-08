@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Most Expensive Lorcana Cards in Wilds of the Unknown Australia: Price Guide"
 description: "The highest-value Disney Lorcana cards from the Wilds of the Unknown set with current AUD pricing. Chase Enchanted cards, alternate arts, and the most valuable pulls for Australian collectors."
 date: 2026-05-05

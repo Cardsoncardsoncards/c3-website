@@ -6,6 +6,7 @@
 <title>Contact | Cards on Cards on Cards</title>
 <meta name="description" content="Get in touch with Cards on Cards on Cards. Questions about products, your order, or the buylist.">
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
+<link rel="icon" type="image/png" href="/c3logo.png">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,8 +69,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .footer-links{display:flex;gap:16px;flex-wrap:wrap}
 .footer-link{font-size:12px;color:rgba(160,168,192,.4);text-decoration:none;transition:color .2s}
 .footer-link:hover{color:var(--silver)}
-.footer-copy{font-size:11px;color:rgba(160,168,192,.25)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.25);width:100%;text-align:center;padding-top:12px;border-top:1px solid rgba(255,255,255,.04);margin-top:4px}
 @media(max-width:640px){.contact-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
+
+/* NAV COLOUR CLASSES - outline and font only */
 .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
 .nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
 .nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
@@ -84,7 +87,9 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
 .nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
 .nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
+/* Active page override */
 .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+
 </style>
 </head>
 <body>
@@ -102,8 +107,8 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools</a>
-      <a href="/contact.html" class="nav-link nav-link--contact nav-link--active">Contact</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
+      <a href="/contact.html" class="nav-link nav-link--contact nav-link--active">Contact Us</a>
     </div>
   </div>
 </nav>
@@ -131,7 +136,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <div class="contact-icon contact-icon--buylist">📋</div>
       <p class="contact-label">Buylist Coming Soon</p>
       <h2 class="contact-title">Buylist Interest</h2>
-      <p class="contact-body">We are building a buylist tool for Australian TCG players — a single place to compare what stores are paying for your cards. Register your interest and we will keep you updated as it gets closer to launch.</p>
+      <p class="contact-body">We're building a buylist tool for Australian TCG players — a single place to compare what stores are paying for your cards. Register your interest below and we'll keep you updated as it gets closer to launch.</p>
       <a href="mailto:ccc.squadhelp@gmail.com?subject=Buylist%20Interest%20-%20Cards%20on%20Cards%20on%20Cards" class="contact-btn contact-btn--buylist">Register Interest →</a>
     </div>
 
@@ -150,9 +155,12 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/shop.html" class="footer-link">Shop</a>
       <a href="/blog" class="footer-link">Blog</a>
       <a href="/tracker.html" class="footer-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay Store</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Footer&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="footer-link">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy D&amp;D Tools</a>
+      <a href="/contact.html" class="footer-link">Contact Us</a>
+      <a href="/legal.html" class="footer-link">Legal</a>
     </div>
-    <div class="footer-copy">© 2026 Cards on Cards on Cards</div>
+    <div class="footer-copy">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases made through links on this site may earn a commission at no extra cost to you.</div>
   </div>
 </footer>
 

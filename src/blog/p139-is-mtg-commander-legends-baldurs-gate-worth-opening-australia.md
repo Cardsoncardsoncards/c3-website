@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Commander Legends Baldurs Gate Worth Opening in Australia?"
 description: "Is the MTG Commander Legends Baldurs Gate booster box worth opening in Australia? DnD crossover with two legends per pack guaranteed. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

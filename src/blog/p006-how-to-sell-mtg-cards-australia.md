@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Sell Your MTG Cards in Australia and Get the Best Price"
 description: "Want to sell your Magic: The Gathering cards in Australia? This guide covers every platform, the real fees, what sells and what doesn't, and how to get the most money for your collection."
 date: 2026-04-07

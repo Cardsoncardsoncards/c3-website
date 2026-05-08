@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Bloomburrow Worth Opening in Australia?"
 description: "Is the MTG Bloomburrow booster box worth opening in Australia? Full expected value breakdown in AUD with chase cards, pull rates, and an honest verdict for Australian players."
 date: 2026-04-20

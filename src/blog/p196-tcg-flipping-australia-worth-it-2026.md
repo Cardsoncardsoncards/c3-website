@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Flipping in Australia: Is It Worth Trying in 2026?"
 description: "Can you make money flipping TCG cards in Australia? An honest look at the real margins, time costs, and risks of buying and reselling MTG, Pokemon, and other TCG cards in the Australian market."
 date: 2026-05-05

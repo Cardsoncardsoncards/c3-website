@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Introduce MTG to Friends Who Have Never Played: A Guide for Australian Players"
 description: "Getting your friends into Magic: The Gathering is the best thing you can do for your Commander pod. This guide covers exactly how to introduce non-players to MTG without overwhelming them — what to teach first, what to skip, and what to buy."
 date: 2026-05-05

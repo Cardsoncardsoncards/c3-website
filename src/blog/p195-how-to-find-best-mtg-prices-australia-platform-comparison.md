@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Find the Best MTG Card Prices in Australia: Platform by Platform Comparison"
 description: "Where to check MTG card prices in Australia — eBay AU, TCGplayer, Card Kingdom, MTGGoldfish, and the C3 Card Vault — compared for accuracy, ease, and Australian relevance."
 date: 2026-05-05

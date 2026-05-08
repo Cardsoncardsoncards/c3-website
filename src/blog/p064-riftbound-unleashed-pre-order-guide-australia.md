@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound Unleashed Pre-Order Guide for Australia: What It Is and Whether to Buy"
 description: "Riftbound Unleashed releases 8 May 2026. This guide covers the new set, every confirmed product, Amazon AU availability, and whether to buy in for the third Riftbound expansion."
 date: 2026-04-16

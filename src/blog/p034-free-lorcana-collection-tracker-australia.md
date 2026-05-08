@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Free Lorcana Collection Tracker: Keep Track of Your Disney Cards"
 description: "Organise and value your Disney Lorcana collection with a free tracker spreadsheet. Log every card, track values, manage set completion, and know exactly what you own."
 date: 2026-04-07

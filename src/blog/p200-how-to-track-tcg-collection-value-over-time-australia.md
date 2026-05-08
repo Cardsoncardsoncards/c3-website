@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Track Your TCG Collection Value Over Time Using Free Tools in Australia"
 description: "Most TCG players have no idea what their collection is actually worth. This guide shows how to track collection value over time using free tools available to Australian players — including the C3 collection tracker."
 date: 2026-05-05

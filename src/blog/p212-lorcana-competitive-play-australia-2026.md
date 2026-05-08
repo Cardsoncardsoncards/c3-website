@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Lorcana Competitive Play Australia: Is There a Tournament Scene Worth Joining?"
 description: "Disney Lorcana has a growing competitive scene in Australia. This guide covers the state of Lorcana tournaments in 2026 — what events exist, what level of investment is needed, and whether it's worth getting into."
 date: 2026-05-05

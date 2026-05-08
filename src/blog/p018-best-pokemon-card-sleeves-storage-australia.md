@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Best Pokemon Card Sleeves and Storage in Australia"
 description: "Protecting your Pokemon collection properly matters — especially in Australia's climate. This guide covers the best sleeves, binders, and storage options available in Australia right now."
 date: 2026-04-07

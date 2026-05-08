@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Where to Sell MTG Cards for the Best Price in Australia"
 description: "Comparing every platform for selling Magic: The Gathering cards in Australia — eBay, Facebook, buylists, and more. Find out where you'll actually get the most money."
 date: 2026-04-16

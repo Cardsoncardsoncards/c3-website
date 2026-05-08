@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon TCG vs MTG: Which Should You Start First in Australia?"
 description: "Choosing between Pokemon TCG and Magic: The Gathering? This honest comparison covers gameplay, cost, community, and which game suits different types of players in Australia."
 date: 2026-04-07

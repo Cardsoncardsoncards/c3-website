@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Assassins Creed Worth Opening in Australia?"
 description: "Is the MTG Assassins Creed booster box worth opening in Australia? Ezio, Altair and the Ubisoft crossover. Smaller box format with strong IP demand. Full AUD expected value breakdown."
 date: 2026-04-20

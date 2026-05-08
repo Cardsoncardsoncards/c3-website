@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Core Set 2021 Worth Opening in Australia?"
 description: "Is the MTG Core Set 2021 booster box worth opening in Australia? Ugin the Spirit Dragon, Teferi Master of Time, and Mangara. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

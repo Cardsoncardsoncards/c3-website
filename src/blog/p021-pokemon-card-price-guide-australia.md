@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon Card Price Guide Australia: How Much Are Your Cards Worth?"
 description: "Trying to work out what your Pokemon cards are worth in Australia? This guide covers how to value cards accurately, where to check prices, and what actually drives card values up or down."
 date: 2026-04-07

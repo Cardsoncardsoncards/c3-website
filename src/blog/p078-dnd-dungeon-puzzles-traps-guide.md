@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "Dungeon Puzzles and Traps for D&D: A DM's Planning Guide"
 description: "A practical guide for D&D DMs on designing and running dungeon puzzles and traps. Covers what makes puzzles work at the table, trap mechanics, and printable resources for session prep."
 date: 2026-04-09

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Where to Sell MTG Cards for the Best Price in Australia"
 description: "You have four main options: eBay, local stores, buylists, and Facebook groups. Here is what each pays, what each costs in time, and which is right for your situation."
 date: 2026-04-18

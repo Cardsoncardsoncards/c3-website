@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Azorius (White-Blue) Commanders in MTG Australia 2026"
 description: "Top Azorius commanders ranked by power and AUD price. White-blue offers the best control and tempo in Commander — here are the strongest options for Australian players."
 date: 2026-05-05

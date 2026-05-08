@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Collection Trackers: Why a Spreadsheet Beats a Shoebox"
 description: "A practical guide to tracking your TCG collection in Australia. Covers what collection tracking actually solves, what free tools exist, and when a premium tracker is worth buying."
 date: 2026-04-09

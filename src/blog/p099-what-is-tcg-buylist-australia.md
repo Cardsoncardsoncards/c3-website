@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "What Is a TCG Buylist and How Does It Work in Australia?"
 description: "A TCG buylist is a store's public list of cards it wants to buy, with set prices for cash or store credit. Here is exactly how the process works in Australia and what to expect."
 date: 2026-04-18

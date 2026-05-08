@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Selling Fees in Australia: eBay, Facebook, and Local Store Buylist Compared"
 description: "Selling TCG cards in Australia? Here's a real breakdown of eBay fees, Facebook Marketplace, local store buylists, and how to maximise your return in AUD."
 date: 2026-05-08

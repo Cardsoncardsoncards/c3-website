@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Teenage Mutant Ninja Turtles Worth Opening in Australia?"
 description: "Is the MTG TMNT booster box worth opening in Australia? Leonardo, Donatello, Michelangelo and Raphael as legendary creatures. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

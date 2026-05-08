@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Lorcana vs Pokemon in Australia: Which Should You Start With?"
 description: "Pokemon has the bigger community. Lorcana has no rotation and stronger Disney collector appeal. Here is the honest breakdown to help you decide which suits you."
 date: 2026-04-07

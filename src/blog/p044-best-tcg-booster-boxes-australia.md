@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best TCG Booster Boxes to Buy in Australia Right Now"
 description: "Looking for the best trading card game booster box in Australia? This cross-game guide covers current top picks across MTG, Pokemon, One Piece, Lorcana, and more for 2026."
 date: 2026-04-07

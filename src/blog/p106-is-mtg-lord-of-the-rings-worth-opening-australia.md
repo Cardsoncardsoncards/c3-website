@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Lord of the Rings Worth Opening in Australia?"
 description: "Is the MTG Lord of the Rings Tales of Middle-earth booster box worth opening in Australia? Full expected value breakdown in AUD with chase cards and an honest verdict."
 date: 2026-04-20

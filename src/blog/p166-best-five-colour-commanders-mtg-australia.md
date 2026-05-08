@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Five-Colour Commanders in MTG Australia 2026"
 description: "The most powerful five-colour Commanders in Magic: The Gathering with current AUD pricing. Goodstuff, tribal, and domain strategies for the most flexible Commander builds."
 date: 2026-05-05

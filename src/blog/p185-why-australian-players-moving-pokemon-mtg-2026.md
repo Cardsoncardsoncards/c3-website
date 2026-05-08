@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Why Australian TCG Players Are Moving from Pokemon to MTG in 2026"
 description: "A noticeable number of Australian Pokemon TCG players are switching to Magic: The Gathering. Here's what's driving the shift, what they find when they arrive, and whether the move is worth it."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Free Pokemon Collection Tracker: Organise and Value Your Cards"
 description: "Keep track of your Pokemon card collection with a free spreadsheet tracker. Log every card, track values, manage duplicates, and know exactly what you own and what it's worth."
 date: 2026-04-07

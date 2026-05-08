@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Commander Masters Worth Opening in Australia?"
 description: "Is the MTG Commander Masters booster box worth opening in Australia? Jewelled Lotus, Fierce Guardianship, and Commander staple density throughout. Full AUD expected value breakdown."
 date: 2026-04-20

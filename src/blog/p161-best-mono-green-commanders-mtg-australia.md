@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Mono-Green Commanders in MTG: Australia Price Guide 2026"
 description: "The strongest mono-green Commanders in Magic: The Gathering with current AUD pricing. Stompy, elfball, and land-based strategies covered — from budget to high-power."
 date: 2026-05-05

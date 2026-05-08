@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Build Your First MTG Deck: Step-by-Step for Beginners"
 description: "Building your first Magic: The Gathering deck doesn't have to be complicated. This step-by-step guide walks Australian beginners through deck construction from scratch, covering format, mana, and card selection."
 date: 2026-04-07

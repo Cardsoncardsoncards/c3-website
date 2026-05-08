@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound Meta Tier List May 2026: Best Decks for RQ Sydney"
 description: "The Unleashed meta is live and RQ Sydney is days away. Here's the current Riftbound tier list, best Legends to play, and what Australians should know heading in."
 date: 2026-05-07

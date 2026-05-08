@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Mono-Black Commanders in MTG: Australia Price Guide 2026"
 description: "The strongest mono-black Commanders in Magic: The Gathering ranked by power and current AUD price. From budget Zombie tribal to high-power Combo and Reanimator options."
 date: 2026-05-05

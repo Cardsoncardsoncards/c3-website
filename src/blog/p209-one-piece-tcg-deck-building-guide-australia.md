@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "One Piece TCG Deck Building Guide for Australian Beginners"
 description: "Building your first One Piece Card Game deck in Australia — how to choose a Leader, how DON!! affects your build, what to buy first, and the key decisions every new player faces."
 date: 2026-05-05

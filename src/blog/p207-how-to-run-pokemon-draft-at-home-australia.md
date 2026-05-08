@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "How to Run a Pokemon Draft at Home in Australia: Step-by-Step Guide"
 description: "Pokemon TCG can be drafted just like MTG. This guide covers how to run a fun, balanced Pokemon draft night at home in Australia — rules, cost, and what makes it better than regular play."
 date: 2026-05-05

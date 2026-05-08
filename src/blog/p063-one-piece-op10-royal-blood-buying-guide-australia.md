@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "One Piece TCG OP-10 Royal Blood: Australia Buying Guide and Where to Get It Now"
 description: "One Piece TCG OP-10 Royal Blood is available in Australia now. This guide covers every product, where to buy, current AU pricing, and whether to buy sealed or singles in 2026."
 date: 2026-04-16

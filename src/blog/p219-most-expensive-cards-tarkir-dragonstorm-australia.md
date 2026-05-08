@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Most Expensive Cards in Tarkir: Dragonstorm Australia — Price Guide 2026"
 description: "The highest-value Magic: The Gathering cards from Tarkir: Dragonstorm with current AUD pricing. Dragon tribal payoffs, Commander staples, and the most valuable pulls from this set in Australia."
 date: 2026-05-05

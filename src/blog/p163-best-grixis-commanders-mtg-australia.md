@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Grixis (Blue-Black-Red) Commanders in MTG Australia 2026"
 description: "Top Grixis commanders in Magic: The Gathering ranked by power level and AUD price. Control, combo, and tempo strategies for one of MTG's most iconic colour combinations."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Playmats: Best Options for Australian Players"
 description: "A good playmat protects your cards and defines your play area. This guide covers the best TCG playmat options available in Australia, what to look for, and which suits different budgets and games."
 date: 2026-04-07

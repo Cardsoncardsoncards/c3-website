@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Modern Horizons Worth Opening in Australia?"
 description: "Is the MTG Modern Horizons booster box worth opening in Australia? Wrenn and Six, Force of Negation, and Snow lands make this one of the most valuable older MTG sets. Full AUD breakdown."
 date: 2026-04-20

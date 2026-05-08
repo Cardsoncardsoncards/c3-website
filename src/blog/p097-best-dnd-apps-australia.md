@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "Best D&D Apps in Australia: What's Actually Worth Using"
 description: "A practical guide to the best Dungeons and Dragons apps available in Australia — for players, Dungeon Masters, and everyone in between. What each does and whether it's worth it."
 date: 2026-04-16

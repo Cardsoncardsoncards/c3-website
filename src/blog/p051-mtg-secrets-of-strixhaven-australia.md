@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "MTG Secrets of Strixhaven: Everything You Need to Know Before It Drops in Australia"
 description: "Secrets of Strixhaven releases 24 April 2026. This guide covers every product, the key cards to know, what is available to pre-order on Amazon AU right now, and whether it is worth buying."
 date: 2026-04-08

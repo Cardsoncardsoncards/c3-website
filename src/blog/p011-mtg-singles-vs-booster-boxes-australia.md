@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is Buying MTG Singles Smarter Than Booster Boxes in Australia?"
 description: "Singles vs booster boxes — which is the better way to get MTG cards in Australia? This honest comparison covers cost, experience, and when each approach actually makes sense."
 date: 2026-04-07

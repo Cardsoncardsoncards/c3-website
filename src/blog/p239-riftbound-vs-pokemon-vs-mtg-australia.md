@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound vs Pokemon vs MTG vs One Piece: Which TCG Is Worth Starting in Australia?"
 description: "Comparing the major TCGs available in Australia in 2026. Cost to start, competitive depth, collection value, and which one is right for you in AUD."
 date: 2026-05-09

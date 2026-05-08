@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Lost Caverns of Ixalan Worth Opening in Australia?"
 description: "Is the MTG Lost Caverns of Ixalan booster box worth opening in Australia? Dinosaurs, vampires, merfolk and pirates underground. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

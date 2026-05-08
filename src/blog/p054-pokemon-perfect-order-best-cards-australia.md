@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon TCG Mega Evolution Perfect Order: Best Cards and Box Value in Australia"
 description: "Pokemon TCG Mega Evolution Perfect Order released 27 March 2026. This guide covers the top chase cards, pull rates, box value, and whether to buy sealed or singles in Australia."
 date: 2026-04-08

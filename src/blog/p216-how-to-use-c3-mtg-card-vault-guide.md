@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Use the C3 MTG Card Vault: Full Feature Guide"
 description: "The C3 MTG Card Vault has 96,000+ Magic: The Gathering cards with live AUD pricing. This guide covers every feature — search, set browsing, card pages, printings carousel, and the Random Commander tool."
 date: 2026-05-05

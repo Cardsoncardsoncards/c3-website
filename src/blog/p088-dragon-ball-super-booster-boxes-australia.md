@@ -1,4 +1,5 @@
 ---
+game: dragon-ball-super
 title: "Dragon Ball Super Card Game Booster Boxes in Australia: What to Buy and Expect"
 description: "Thinking about buying a Dragon Ball Super Card Game booster box in Australia? This guide covers current sets, pull rates, where to buy, and whether sealed product is worth it."
 date: 2026-04-16

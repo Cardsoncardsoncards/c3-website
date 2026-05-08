@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Commander Legends Worth Opening in Australia?"
 description: "Is the MTG Commander Legends 2020 booster box worth opening in Australia? Jewelled Lotus debut, two legends per pack guaranteed. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

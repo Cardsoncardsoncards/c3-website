@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Iconic Masters Worth Opening in Australia?"
 description: "Is the MTG Iconic Masters booster box worth opening in Australia? Mana Drain, Aether Vial, and iconic reprints from MTG history. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

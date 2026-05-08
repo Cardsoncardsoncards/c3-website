@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound Vendetta (Set 4): Release Date, What We Know, and What to Expect"
 description: "Riftbound Set 4, Vendetta, releases July 31, 2026. Here's everything confirmed, including global release parity and what Australian players should plan for."
 date: 2026-05-09

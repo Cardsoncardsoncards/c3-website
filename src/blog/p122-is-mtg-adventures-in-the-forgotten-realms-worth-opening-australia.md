@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Adventures in the Forgotten Realms Worth Opening in Australia?"
 description: "Is the MTG Adventures in the Forgotten Realms booster box worth opening in Australia? The first DnD crossover with Dungeon mechanic and Classic Module Art showcase. Full AUD breakdown."
 date: 2026-04-20

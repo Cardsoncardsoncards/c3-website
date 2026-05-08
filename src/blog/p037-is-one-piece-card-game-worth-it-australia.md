@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "Is the One Piece Card Game Worth Playing in Australia in 2026?"
 description: "Thinking about starting the One Piece Card Game in Australia? This honest guide covers the gameplay, costs, community, and whether it's worth getting into in 2026."
 date: 2026-04-07

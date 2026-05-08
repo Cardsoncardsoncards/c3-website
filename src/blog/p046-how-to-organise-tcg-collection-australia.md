@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Organise Your TCG Collection in Australia: Tools and Tips"
 description: "A disorganised TCG collection costs you money and time. This practical guide covers the best systems for sorting, storing, and tracking your cards across any game in Australia."
 date: 2026-04-07

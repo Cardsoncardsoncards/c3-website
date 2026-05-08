@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is Magic: The Gathering Worth Starting in 2026? Honest AU Perspective"
 description: "Thinking about getting into Magic: The Gathering in 2026? This honest guide covers the real costs, time commitment, community, and whether it's worth it for Australian players right now."
 date: 2026-04-07

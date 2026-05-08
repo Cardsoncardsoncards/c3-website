@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Final Fantasy Worth Opening in Australia?"
 description: "Is the MTG Final Fantasy booster box worth opening in Australia? Full expected value breakdown in AUD, chase cards explained, and an honest verdict for Australian players."
 date: 2026-04-20

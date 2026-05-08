@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Double Masters 2022 Worth Opening in Australia?"
 description: "Is the MTG Double Masters 2022 booster box worth opening in Australia? Two rares guaranteed per pack. Full AUD expected value breakdown with chase cards and honest verdict."
 date: 2026-04-20

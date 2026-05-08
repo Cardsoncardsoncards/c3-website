@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG March of the Machine Worth Opening in Australia?"
 description: "Is the MTG March of the Machine booster box worth opening in Australia? The Phyrexian invasion climax with Multiverse Legends bonus sheet. Full AUD expected value breakdown."
 date: 2026-04-20

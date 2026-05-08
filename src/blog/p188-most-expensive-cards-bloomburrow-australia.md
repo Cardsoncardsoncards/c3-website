@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Most Expensive Cards in Bloomburrow Australia: Full Price Guide 2026"
 description: "The highest-value Magic: The Gathering cards from the Bloomburrow set with current AUD pricing. Includes Commander staples, chase rares, and the most valuable special treatment versions."
 date: 2026-05-05

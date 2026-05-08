@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "How to Sell Pokemon Cards in Australia: Platforms, Prices and Tips"
 description: "Want to sell your Pokemon cards in Australia? This guide covers every platform, real fee breakdowns, how to price cards correctly, and how to get the most money from your collection."
 date: 2026-04-07

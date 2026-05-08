@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Compare TCG Buylist Offers in Australia and Get the Best Price"
 description: "Accepting the first buylist offer you find costs Australian TCG sellers money every time. Here is the exact process for comparing offers across stores and getting the most for your cards."
 date: 2026-04-18

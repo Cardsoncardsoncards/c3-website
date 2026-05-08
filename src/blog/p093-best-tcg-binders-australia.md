@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Binders in Australia: How to Choose the Right One for Your Collection"
 description: "Looking for the right TCG binder in Australia? This guide covers the main binder types, what to look for, and which options work best for different collection sizes and games."
 date: 2026-04-16

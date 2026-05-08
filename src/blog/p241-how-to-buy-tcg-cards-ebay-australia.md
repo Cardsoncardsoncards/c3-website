@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Buy TCG Cards on eBay Australia: Tips for Getting the Right Card at the Right Price"
 description: "Buying TCG singles on eBay AU? Here's how to find the right price, spot fakes, read condition descriptions, and buy safely."
 date: 2026-05-09

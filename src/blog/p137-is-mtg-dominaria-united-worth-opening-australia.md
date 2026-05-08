@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Dominaria United Worth Opening in Australia?"
 description: "Is the MTG Dominaria United booster box worth opening in Australia? Liliana of the Veil reprint and Legends Retro Frame treatments. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Commander Staples: Cards Every MTG Deck Should Have in Australia (With AUD Prices)"
 description: "The core cards that belong in almost every Commander deck — Sol Ring, Arcane Signet, Swords to Plowshares and more — with current AUD pricing for Australian players."
 date: 2026-05-05

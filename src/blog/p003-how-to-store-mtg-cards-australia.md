@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Store and Protect Your MTG Collection in Australia"
 description: "Australia's climate is hard on trading cards. This guide covers the right sleeves, binders, boxes, and storage conditions to protect your MTG collection from heat, humidity, and wear."
 date: 2026-04-07

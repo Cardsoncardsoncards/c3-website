@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How Commander Colour Identity Works: The Rule Australians Most Often Get Wrong"
 description: "Colour identity in MTG Commander is more than just the card's frame colour. This guide explains the exact rule — including mana symbols in text boxes — with examples Australian players often get wrong."
 date: 2026-05-05

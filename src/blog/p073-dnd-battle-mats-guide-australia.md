@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "D&D Battle Mats in Australia: A Practical Buying Guide"
 description: "A practical guide to D&D battle mats and grid mats available in Australia. Covers what to look for, dry-erase versus printed options, and sizing considerations."
 date: 2026-04-09

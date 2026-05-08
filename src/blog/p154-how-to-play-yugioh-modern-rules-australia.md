@@ -1,4 +1,5 @@
 ---
+game: yugioh
 title: "How to Play Yu-Gi-Oh in 2026: Modern Rules Guide for Australian Beginners"
 description: "Yu-Gi-Oh's modern rules are very different from the 2000s version. This guide covers the current rules — Extra Deck, Link Monsters, and how the game actually works in 2026."
 date: 2026-05-05

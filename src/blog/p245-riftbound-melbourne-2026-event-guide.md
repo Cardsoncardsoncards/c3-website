@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound Melbourne 2026: The Second Australian Event and What You Need to Know"
 description: "Riftbound is coming to Melbourne October 10-12, 2026. Here's what Australian players need to know about the event, the exclusive Ahri promo card, and what to expect."
 date: 2026-05-07

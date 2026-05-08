@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "DM Screens in Australia: What to Look For"
 description: "A practical guide to Dungeon Master screens for D&D available in Australia. Covers what a DM screen does, official versus third-party options, and what features matter."
 date: 2026-04-09

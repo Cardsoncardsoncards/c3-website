@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "How to Teach Your Child to Play Pokemon TCG (Age 6 and Up): A Parent's Step-by-Step Guide"
 description: "Pokemon TCG is one of the best games to play with kids — if you teach it in the right order. This guide shows exactly how to introduce the game to children aged 6 and up without overwhelming them."
 date: 2026-05-05

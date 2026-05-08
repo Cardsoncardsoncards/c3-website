@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Digimon Card Game Australia: Beginner's Guide for 2026"
 description: "The Digimon Card Game is one of the best underrated TCGs in Australia. Here's how to start, what to buy, how much it costs in AUD, and where to find product."
 date: 2026-05-09

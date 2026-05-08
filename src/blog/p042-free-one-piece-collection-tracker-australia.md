@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "Free One Piece Card Collection Tracker: Organise Your OP Cards"
 description: "Keep track of your One Piece Card Game collection with a free spreadsheet tracker. Log every card, track values, manage set completion, and know what you own across all OP sets."
 date: 2026-04-07

@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "How to Sell a Large Pokemon Card Collection in Australia: Step-by-Step Guide"
 description: "Selling a large Pokemon card collection in Australia is overwhelming without a plan. This guide covers how to sort, value, and sell — whether that's eBay, buylist, or bulk — to maximise what you get."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "D&D Dice: A Buyer's Guide for Australian Players"
 description: "A practical guide to buying D&D dice in Australia. Covers dice types, materials, sets worth considering, and dice storage options available on Amazon AU."
 date: 2026-04-09

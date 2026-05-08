@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Best Pokemon Starter Decks for New Players in Australia"
 description: "Looking for the best Pokemon TCG starter deck in Australia? This guide covers current Battle Decks and starter sets available on Amazon AU, what each plays like, and which suits new players."
 date: 2026-04-07

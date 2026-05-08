@@ -1,4 +1,5 @@
 ---
+game: dragon-ball-super
 title: "How to Play Dragon Ball Super Card Game: Australian Beginner's Guide"
 description: "Dragon Ball Super Card Game explained from scratch — Leaders, Battle Cards, Extra Cards, and how attacking works. A complete rules guide for Australian beginners."
 date: 2026-05-05

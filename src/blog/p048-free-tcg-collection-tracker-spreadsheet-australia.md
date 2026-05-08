@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Free TCG Collection Tracker Spreadsheet: Track Every Card You Own"
 description: "Get a free TCG collection tracker spreadsheet that works for Magic, Pokemon, One Piece, Lorcana and every other card game. Log your collection, track values, and manage your wishlist."
 date: 2026-04-07

@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Release Calendar 2026: Every Major Set and Tournament Date for Australia"
 description: "The complete 2026 TCG release and tournament calendar for Australian players. MTG, Pokemon, Riftbound, Lorcana, One Piece, and more, all dates in AEST."
 date: 2026-05-07

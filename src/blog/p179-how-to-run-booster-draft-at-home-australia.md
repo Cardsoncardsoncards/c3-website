@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Run a Booster Draft at Home in Australia: Complete Guide"
 description: "Booster Draft is one of the best ways to play MTG with 4 to 8 friends without needing pre-built decks. This guide covers the full format — how drafting works, what to buy, and how to run a great night."
 date: 2026-05-05

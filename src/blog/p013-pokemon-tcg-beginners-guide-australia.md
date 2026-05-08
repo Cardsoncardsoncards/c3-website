@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon TCG for Beginners: How to Start Playing in Australia"
 description: "Never played the Pokemon Trading Card Game? This beginner's guide covers how the game works, what to buy first in Australia, how much it costs, and where to play locally."
 date: 2026-04-07

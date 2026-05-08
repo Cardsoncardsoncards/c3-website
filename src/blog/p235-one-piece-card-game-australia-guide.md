@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "One Piece Card Game Australia: Beginner's Guide for 2026"
 description: "New to the One Piece Card Game in Australia? Here's how to start, what sets to buy, how much it costs in AUD, and where to find singles. Updated for OP-15."
 date: 2026-05-08

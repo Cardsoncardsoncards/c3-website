@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Best TCG for Kids in Australia: Age-by-Age Guide for Parents"
 description: "Which trading card game should your child start with? This honest parent's guide covers Pokemon, Lorcana, One Piece, and MTG — with recommended ages, costs, and what to actually buy first in Australia."
 date: 2026-05-05

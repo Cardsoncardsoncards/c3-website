@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Why Commander Is the Best Social Game Most Australians Haven't Tried"
 description: "Commander isn't just a card game — it's one of the most socially engaging multiplayer experiences available. Here's why the format has taken over Australian game tables and why you should try it even if you've never played MTG."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Duskmourn House of Horror Worth Opening in Australia?"
 description: "Is the MTG Duskmourn House of Horror booster box worth opening in Australia? Horror theme with Nightmare Frame treatments and competitive staples. Full AUD expected value breakdown."
 date: 2026-04-20

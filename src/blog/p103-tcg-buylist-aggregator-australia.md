@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Why Australia Needs a TCG Buylist Aggregator and What One Actually Does"
 description: "Australian TCG sellers lose money every time they check one buylist and stop. A buylist aggregator solves this by comparing every store's prices in one search. Here is how it works."
 date: 2026-04-18

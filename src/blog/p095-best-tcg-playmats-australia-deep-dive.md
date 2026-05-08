@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Playmats in Australia: What to Look For and Which Are Worth Buying"
 description: "A proper look at TCG playmats available in Australia — materials, sizes, stitched vs unstitched edges, and what actually matters for game play and card protection."
 date: 2026-04-16

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Price MTG Singles for eBay Australia: A Seller's Complete Guide"
 description: "Pricing MTG cards correctly on eBay AU is the difference between cards that sell and cards that sit. This guide covers how to find the right price, when to adjust, and how to avoid common pricing mistakes."
 date: 2026-05-05

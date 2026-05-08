@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Play MTG Sealed Deck Format at Home: A Budget Game Night Guide for Australians"
 description: "MTG Sealed is one of the most fun casual formats and doesn't require any existing collection. This guide shows how to run a Sealed Deck night at home in Australia — rules, cost, and what makes it great."
 date: 2026-05-05

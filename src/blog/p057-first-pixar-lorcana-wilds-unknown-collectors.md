@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "First Pixar Characters in Lorcana: What Wilds Unknown Means for Collectors in Australia"
 description: "Disney Lorcana Wilds Unknown is the first set to feature Pixar characters. Here is what that means for collectors in Australia, which cards to chase, and whether now is the time to buy in."
 date: 2026-04-08

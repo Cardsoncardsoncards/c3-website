@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "MTG Secrets of Strixhaven: Best Cards and What Everyone Will Be Chasing in Australia"
 description: "Secrets of Strixhaven releases 24 April 2026. Here are the cards collectors and players in Australia will be hunting, from the serialised headliner to Mystical Archive reprints and borderless Elder Dragons."
 date: 2026-04-08

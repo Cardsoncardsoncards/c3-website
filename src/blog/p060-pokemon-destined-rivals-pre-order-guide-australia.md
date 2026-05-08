@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon Destined Rivals Pre-Order Guide for Australia: What to Buy and Where"
 description: "Pokemon TCG Destined Rivals is available now on Amazon AU. This guide covers every product, what to pre-order, current AU pricing, and how to get the best value on the Team Rocket set."
 date: 2026-04-16

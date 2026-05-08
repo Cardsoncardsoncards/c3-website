@@ -1,4 +1,5 @@
 ---
+game: star-wars-unlimited
 title: "Star Wars: Unlimited Card Game — A Beginners Guide for Australian Players"
 description: "Thinking about starting Star Wars: Unlimited in Australia? This guide covers how the game works, what it costs to get into, where to buy, and whether it's worth it in 2026."
 date: 2026-04-16

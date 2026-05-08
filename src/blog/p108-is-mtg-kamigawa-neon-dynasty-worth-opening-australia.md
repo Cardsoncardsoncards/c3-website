@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Kamigawa Neon Dynasty Worth Opening in Australia?"
 description: "Is the MTG Kamigawa Neon Dynasty booster box worth opening in Australia? One of the best standard sets in recent MTG history. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

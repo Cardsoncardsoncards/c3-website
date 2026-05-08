@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "How to Play the One Piece Card Game: Starter Rules for Australian Beginners"
 description: "The One Piece Card Game explained from scratch — Leader cards, Don!!, attacking, and how to win. A plain-English beginner's rules guide for Australian players."
 date: 2026-05-05

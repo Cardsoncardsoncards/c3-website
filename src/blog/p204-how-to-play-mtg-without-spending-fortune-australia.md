@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Play MTG Without Spending a Fortune: Casual Formats for Australian Players"
 description: "MTG has a reputation for being expensive. This guide covers every way to play Magic: The Gathering in Australia without the cost spiral — formats, strategies, and real budget options."
 date: 2026-05-05

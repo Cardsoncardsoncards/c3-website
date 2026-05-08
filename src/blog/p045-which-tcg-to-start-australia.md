@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Which TCG Should You Start With in Australia? Honest Comparison"
 description: "Not sure which trading card game to start in Australia? This comprehensive comparison covers MTG, Pokemon, One Piece, Lorcana, and more — with honest advice on which game suits which player."
 date: 2026-04-07

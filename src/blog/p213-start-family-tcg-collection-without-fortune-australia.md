@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Start a Family TCG Collection Without Spending a Fortune in Australia"
 description: "A family TCG collection can become a shared hobby for years — or an expensive impulse that takes over. This guide shows Australian families how to start, structure, and sustain a TCG collection without the cost spiral."
 date: 2026-05-05

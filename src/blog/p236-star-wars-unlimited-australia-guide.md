@@ -1,4 +1,5 @@
 ---
+game: star-wars-unlimited
 title: "Star Wars Unlimited TCG Australia: Everything You Need to Know in 2026"
 description: "Star Wars Unlimited is one of the best-designed TCGs of the last decade. Here's the Australian guide: how to start, what to buy, and where to find it in AUD."
 date: 2026-05-08

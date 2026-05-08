@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "The Real Cost of Selling Cards on eBay Australia (Fees, Time, and What You Actually Take Home)"
 description: "eBay AU fees are more complex than they appear. This guide breaks down exactly what you actually take home when selling MTG, Pokemon, or other TCG cards on eBay in Australia."
 date: 2026-05-05

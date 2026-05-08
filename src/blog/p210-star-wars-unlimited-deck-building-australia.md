@@ -1,4 +1,5 @@
 ---
+game: star-wars-unlimited
 title: "Star Wars Unlimited Deck Building: How to Get Started in Australia"
 description: "Building your first Star Wars Unlimited deck in Australia — Leader choice, Base selection, arena management, and what to buy. A complete beginner deck building guide."
 date: 2026-05-05

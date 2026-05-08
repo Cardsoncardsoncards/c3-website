@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound Card Prices in Australia: What to Know Before You Buy"
 description: "Riftbound card prices in Australia are still forming. Here's what cards are worth watching, how AUD compares to US prices, and where to buy singles in Australia."
 date: 2026-05-07

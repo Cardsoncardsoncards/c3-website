@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Best TCG Card Sleeves in Australia: A Buyer's Guide for Every Game"
 description: "Looking for the best card sleeves in Australia? This cross-game guide covers the top sleeve brands for MTG, Pokemon, One Piece, Lorcana and more — with honest advice on which suits each use case."
 date: 2026-04-07

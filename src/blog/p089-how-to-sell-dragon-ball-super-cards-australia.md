@@ -1,4 +1,5 @@
 ---
+game: dragon-ball-super
 title: "How to Sell Dragon Ball Super Card Game Cards in Australia"
 description: "Selling Dragon Ball Super Card Game cards in Australia? This guide covers every platform, realistic prices, and what's actually worth listing individually."
 date: 2026-04-16

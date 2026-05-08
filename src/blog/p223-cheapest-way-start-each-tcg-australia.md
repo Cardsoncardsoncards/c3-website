@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "The Cheapest Way to Start Playing Each TCG in Australia (2026 Prices)"
 description: "What's the minimum spend to actually play each major TCG in Australia? This guide gives the honest minimum for Pokemon, MTG, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, and Star Wars Unlimited."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Buylist vs eBay Australia: Which Gets You More Money for MTG Cards?"
 description: "When selling MTG cards in Australia, you have two main options: sell to a buylist or sell on eBay. This guide compares both options across real examples to show which is better and when."
 date: 2026-05-05

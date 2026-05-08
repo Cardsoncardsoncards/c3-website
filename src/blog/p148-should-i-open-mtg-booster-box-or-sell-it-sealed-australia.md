@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Should I Open My MTG Booster Box or Sell It Sealed? How to Decide"
 description: "Should you open your MTG booster box or sell it sealed? This guide walks Australian players through the exact decision framework — with the C3 EV Calculator doing the heavy lifting."
 date: 2026-04-20

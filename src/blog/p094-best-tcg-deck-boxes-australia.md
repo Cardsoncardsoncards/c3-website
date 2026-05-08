@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Deck Boxes in Australia: What to Look For and What Actually Protects Your Cards"
 description: "Choosing a TCG deck box in Australia? This guide covers the main types, what build quality actually means for card protection, and which options suit different deck sizes and budgets."
 date: 2026-04-16

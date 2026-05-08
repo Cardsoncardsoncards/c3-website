@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "What It Actually Feels Like to Play Your First Commander Game"
 description: "Commander is unlike any other Magic: The Gathering experience. This is an honest account of what the first game is like — the confusion, the chaos, the moment it clicks, and why so many players never go back to other formats."
 date: 2026-05-05

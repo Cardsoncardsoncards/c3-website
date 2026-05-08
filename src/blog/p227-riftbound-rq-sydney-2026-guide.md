@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound RQ Sydney 2026: Everything Australian Players Need to Know"
 description: "Riftbound's first Australian Regional Qualifier hits Sydney Showground on May 15-17. Here's the full guide for competitors, spectators, and Unleashed hunters."
 date: 2026-05-06

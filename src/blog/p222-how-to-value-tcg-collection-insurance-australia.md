@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Value Your TCG Collection for Home Insurance in Australia"
 description: "A TCG collection worth AU$2,000 or more should be documented for home contents insurance. This guide covers how to value your collection, what documentation you need, and how to get coverage in Australia."
 date: 2026-05-05

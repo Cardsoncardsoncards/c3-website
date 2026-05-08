@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Innistrad Crimson Vow Worth Opening in Australia?"
 description: "Is the MTG Innistrad Crimson Vow booster box worth opening in Australia? Vampires, Fang Frame showcase, and the wedding of Olivia Voldaren. Full AUD expected value breakdown."
 date: 2026-04-20

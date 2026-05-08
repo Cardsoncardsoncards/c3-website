@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Time Spiral Remastered Worth Opening in Australia?"
 description: "Is the MTG Time Spiral Remastered booster box worth opening in Australia? Every pack has an old-border retro frame Timeshifted card. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

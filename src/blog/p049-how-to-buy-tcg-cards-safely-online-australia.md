@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Buy TCG Cards Safely Online in Australia"
 description: "Buying TCG cards online in Australia involves real risks — fakes, misrepresented condition, seller fraud, and no-shows. This guide covers how to buy safely on every platform."
 date: 2026-04-07

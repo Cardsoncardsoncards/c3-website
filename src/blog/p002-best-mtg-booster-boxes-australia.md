@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best MTG Booster Boxes to Buy in Australia Right Now"
 description: "Looking for the best Magic: The Gathering booster box in Australia? This guide breaks down current sets by goal — value, play, or collecting — with honest advice on what's actually worth buying."
 date: 2026-04-07

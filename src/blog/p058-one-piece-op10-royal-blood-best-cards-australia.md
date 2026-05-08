@@ -1,4 +1,5 @@
 ---
+game: one-piece
 title: "One Piece TCG OP-10 Royal Blood: Best Cards and Box Value in Australia"
 description: "One Piece OP-10 Royal Blood is one of the strongest sets in OPTCG history. This guide covers the top chase cards, pull rates, box value, and where to buy in Australia."
 date: 2026-04-08

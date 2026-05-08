@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Lorwyn Eclipsed Worth Opening in Australia?"
 description: "Is the MTG Lorwyn Eclipsed booster box worth opening in Australia? Return to the beloved tribal plane with Faeries, Giants, Treefolk and more. Full AUD expected value breakdown."
 date: 2026-04-20

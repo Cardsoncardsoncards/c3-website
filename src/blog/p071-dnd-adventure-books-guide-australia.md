@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "D&D Adventure Books Worth Reading: A Guide for Australian DMs"
 description: "A guide to Dungeons and Dragons adventure books available in Australia. Covers pre-written campaigns, what makes each one distinct, and how to choose based on your group's interests."
 date: 2026-04-09

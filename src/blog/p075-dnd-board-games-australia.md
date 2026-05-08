@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "D&D Board Games in Australia: Options for Every Table"
 description: "A guide to Dungeons and Dragons board games available in Australia. Covers the Adventure System games, standalone options, and how they compare to the full tabletop RPG."
 date: 2026-04-09

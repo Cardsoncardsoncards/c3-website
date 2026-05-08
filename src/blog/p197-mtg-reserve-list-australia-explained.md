@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "MTG Reserve List Australia: What It Is and Why It Matters for Your Collection"
 description: "The MTG Reserved List guarantees certain cards will never be reprinted. This guide explains what the list is, why it exists, and how it affects card values for Australian collectors."
 date: 2026-05-05

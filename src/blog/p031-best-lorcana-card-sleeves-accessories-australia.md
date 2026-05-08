@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Best Lorcana Card Sleeves and Accessories for Australian Players"
 description: "Protecting your Disney Lorcana cards in Australia's climate matters. This guide covers the best sleeves, deck boxes, and storage options for Lorcana players and collectors."
 date: 2026-04-07

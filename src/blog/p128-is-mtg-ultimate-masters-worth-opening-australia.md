@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Ultimate Masters Worth Opening in Australia?"
 description: "Is the MTG Ultimate Masters booster box worth opening in Australia? The gold standard of MTG reprint sets. Snapcaster Mage, Liliana, Dark Depths and a Box Topper included. Full AUD breakdown."
 date: 2026-04-20

@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "D&D Miniatures in Australia: What to Know Before You Buy"
 description: "A practical guide to D&D miniatures available in Australia. Covers pre-painted versus unpainted options, scale, types of sets, and what actually makes sense to buy."
 date: 2026-04-09

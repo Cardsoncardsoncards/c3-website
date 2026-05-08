@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Play Magic: The Gathering — Complete Beginner Rules Guide for Australians"
 description: "New to MTG? This plain-English guide covers every rule you need to play your first game — from how turns work to combat, spells, and winning. Written for Australian beginners."
 date: 2026-05-05

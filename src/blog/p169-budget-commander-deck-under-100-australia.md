@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Budget Commander Decks Under AU$100: How to Build One From Scratch in Australia"
 description: "You don't need to spend AU$500 to play Commander. This guide shows exactly how to build a functional, fun Commander deck for under AU$100 in Australia — with specific card recommendations."
 date: 2026-05-05

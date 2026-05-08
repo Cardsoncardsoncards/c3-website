@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "What Is MTG Commander Format? Complete Australian Guide"
 description: "Commander (EDH) is the most popular Magic: The Gathering format in Australia. This guide explains how it works, what you need to start, and why so many Australian players have switched from other formats."
 date: 2026-05-05

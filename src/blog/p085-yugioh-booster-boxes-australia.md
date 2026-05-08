@@ -1,4 +1,5 @@
 ---
+game: yugioh
 title: "Yu-Gi-Oh Booster Boxes in Australia: What to Buy and What to Expect"
 description: "Looking at Yu-Gi-Oh booster boxes in Australia? This guide covers current sets, realistic pull rates, where to buy, and whether sealed product is worth it for your situation."
 date: 2026-04-16

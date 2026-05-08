@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Edge of Eternities Worth Opening in Australia?"
 description: "Is the MTG Edge of Eternities booster box worth opening in Australia? MTG's space opera set with cosmic treatments and new mechanics. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

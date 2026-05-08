@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Most Expensive Pokemon Cards in Destined Rivals Australia: Full Price Guide"
 description: "The highest-value cards in Pokemon TCG Destined Rivals with current AUD pricing. Chase rares, alt arts, and the most valuable pulls from this set for Australian collectors."
 date: 2026-05-05

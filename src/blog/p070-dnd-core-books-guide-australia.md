@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "D&D Core Books: A Guide for New and Returning Players in Australia"
 description: "A guide to the 2024 Dungeons and Dragons core books available in Australia. Covers what each book does, who needs it, and how the 2024 revision changes things for returning players."
 date: 2026-04-09

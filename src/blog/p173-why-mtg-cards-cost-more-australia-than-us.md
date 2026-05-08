@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Why MTG Cards Cost More in Australia Than the US (And What You Can Do About It)"
 description: "Australian MTG prices are consistently higher than US prices. This guide explains exactly why the gap exists — and practical ways to reduce what you pay for cards in Australia."
 date: 2026-05-05

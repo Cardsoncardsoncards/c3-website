@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "What Is Disney Lorcana? The Complete Beginner's Guide for Australians"
 description: "Never heard of Disney Lorcana or not sure if it's worth starting? This plain-English guide covers how the game works, what to buy first in Australia, and who it's actually for."
 date: 2026-04-07

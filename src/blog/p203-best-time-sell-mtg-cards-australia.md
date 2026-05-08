@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Time to Sell MTG Cards in Australia: When to Hold and When to Cash Out"
 description: "MTG card values follow predictable patterns tied to set releases, tournament seasons, and reprint cycles. This guide helps Australian sellers identify the best moments to sell for maximum return."
 date: 2026-05-05

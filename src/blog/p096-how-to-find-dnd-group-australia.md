@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "How to Find a D&D Group in Australia: Where to Look and What to Expect"
 description: "Looking for a D&D group in Australia? This guide covers every real method for finding players — online, local, and in-person — and what to expect as a new player joining a group."
 date: 2026-04-16

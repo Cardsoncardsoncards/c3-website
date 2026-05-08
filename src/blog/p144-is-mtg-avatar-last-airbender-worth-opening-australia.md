@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Avatar The Last Airbender Worth Opening in Australia?"
 description: "Is the MTG Avatar The Last Airbender booster box worth opening in Australia? Aang, Zuko and the four nations crossover. Full AUD expected value breakdown and verdict for Australian players."
 date: 2026-04-20

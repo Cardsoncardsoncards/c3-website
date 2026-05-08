@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Random Commander Challenge: We Rolled 4 Commanders and Built the Decks"
 description: "We used the C3 Random Commander Generator to roll 4 random Commanders — then actually built decks around them. Here's what we rolled, what it cost in Australia, and whether any of them are actually good."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "How to Start Playing D&D in Australia: What You Actually Need"
 description: "Thinking about starting Dungeons and Dragons in Australia? This guide covers what you actually need to begin, what's optional, and where to find players and products locally."
 date: 2026-04-09

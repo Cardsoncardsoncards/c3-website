@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best MTG Card Sleeves in Australia: Dragon Shield, KMC and Ultra Pro Compared"
 description: "Dragon Shield Matte is the top pick for Australian conditions. This guide compares the main sleeve brands on durability, price, and performance in heat and humidity."
 date: 2026-04-07

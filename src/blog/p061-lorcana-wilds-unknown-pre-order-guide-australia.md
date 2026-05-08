@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Disney Lorcana Wilds Unknown Pre-Order Guide for Australia: Every Confirmed Product and How to Buy"
 description: "Disney Lorcana Wilds Unknown releases in Australia on 15 May 2026. This guide covers every confirmed product, pre-order options, Amazon AU availability, and what to buy first."
 date: 2026-04-16

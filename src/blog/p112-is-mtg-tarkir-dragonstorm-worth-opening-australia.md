@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Tarkir Dragonstorm Worth Opening in Australia?"
 description: "Is the MTG Tarkir Dragonstorm booster box worth opening in Australia? Full expected value breakdown in AUD with chase cards and an honest verdict for Australian players."
 date: 2026-04-20

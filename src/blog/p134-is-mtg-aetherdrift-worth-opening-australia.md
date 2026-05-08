@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Aetherdrift Worth Opening in Australia?"
 description: "Is the MTG Aetherdrift booster box worth opening in Australia? Racing across the multiverse with the Exhaust mechanic and vehicle commanders. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Store and Protect Your TCG Cards in Australia: The Complete Guide"
 description: "Australian climate is tough on TCG cards. Here's exactly how to sleeve, store, and protect your MTG, Pokemon, Riftbound, and One Piece cards to preserve their value."
 date: 2026-05-08

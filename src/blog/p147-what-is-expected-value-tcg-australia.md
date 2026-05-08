@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "What Is Expected Value in TCG? A Beginner's Guide for Australian Players"
 description: "What is expected value in TCG and why does it matter for Australian players? This plain-English guide explains EV, how it is calculated, and how to use it to make smarter buying decisions in AUD."
 date: 2026-04-20

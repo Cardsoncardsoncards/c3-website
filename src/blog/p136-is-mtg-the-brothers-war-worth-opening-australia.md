@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG The Brothers War Worth Opening in Australia?"
 description: "Is the MTG The Brothers War booster box worth opening in Australia? Urza vs Mishra with Retro Artifact treatments throughout. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

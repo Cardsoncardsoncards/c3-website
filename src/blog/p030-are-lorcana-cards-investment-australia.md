@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Are Lorcana Cards a Good Investment in Australia?"
 description: "Thinking about buying Disney Lorcana cards as an investment in Australia? This honest guide covers what has and hasn't appreciated, the real risks, and what you need to know before spending."
 date: 2026-04-07

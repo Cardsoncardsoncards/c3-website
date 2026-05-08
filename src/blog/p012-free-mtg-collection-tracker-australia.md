@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Free MTG Collection Tracker: How to Catalogue and Value Your Cards"
 description: "Trying to keep track of your Magic: The Gathering collection? This guide covers how to catalogue your cards, track their value, and get our free TCG collection tracker spreadsheet."
 date: 2026-04-07

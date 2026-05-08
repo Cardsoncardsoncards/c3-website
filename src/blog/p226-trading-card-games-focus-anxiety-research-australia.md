@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How Trading Card Games Help with Focus and Anxiety: What the Research Actually Says"
 description: "TCG players often report that playing card games helps them focus and manage anxiety. This guide looks at what the research says — and what it doesn't — about TCGs and mental wellbeing."
 date: 2026-05-05

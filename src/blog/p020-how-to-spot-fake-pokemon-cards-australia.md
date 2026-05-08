@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "How to Spot Fake Pokemon Cards When Buying Online in Australia"
 description: "Counterfeit Pokemon cards are a real problem in the Australian online market. This practical guide covers the key checks to identify fakes before you buy or trade."
 date: 2026-04-07

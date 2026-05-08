@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Use the C3 Random Commander Generator to Build Better MTG Decks"
 description: "The C3 Random Commander Generator does more than roll random Commanders — it's a deck inspiration tool with colour, mana value, and count filters. Here's how to use it effectively."
 date: 2026-05-05

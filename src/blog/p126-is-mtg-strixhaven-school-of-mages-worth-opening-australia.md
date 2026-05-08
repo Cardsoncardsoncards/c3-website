@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Strixhaven School of Mages Worth Opening in Australia?"
 description: "Is the MTG Strixhaven School of Mages booster box worth opening in Australia? The Mystical Archive bonus sheet changes everything. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

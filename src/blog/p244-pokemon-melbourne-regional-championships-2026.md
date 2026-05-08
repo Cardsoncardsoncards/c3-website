@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon Melbourne Regional Championships 2026: Everything Australian Players Need to Know"
 description: "Pokemon Melbourne Regional Championships run May 23-24 at MCEC. Full guide for TCG, VGC and Pokemon GO competitors. Dates, venue, format, and what to expect."
 date: 2026-05-07

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Most Expensive Cards in MTG Foundations Australia: Price Guide 2026"
 description: "Magic: The Gathering Foundations reprinted many format staples. This guide covers which Foundations cards are most valuable in Australia and which reprints dropped their prices significantly."
 date: 2026-05-05

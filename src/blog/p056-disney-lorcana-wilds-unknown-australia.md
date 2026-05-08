@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "Disney Lorcana Wilds Unknown: Australia Release Guide and What to Expect"
 description: "Disney Lorcana Wilds Unknown releases 15 May 2026 and introduces Pixar characters for the first time. Here is everything Australian collectors and players need to know before it drops."
 date: 2026-04-08

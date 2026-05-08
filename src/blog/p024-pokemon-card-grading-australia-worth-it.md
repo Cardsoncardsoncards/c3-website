@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon TCG Grading in Australia: Is It Worth Getting Cards Graded?"
 description: "Thinking about getting your Pokemon cards graded in Australia? This honest guide covers the costs, turnaround times, which cards are worth submitting, and what grading actually does for value."
 date: 2026-04-07

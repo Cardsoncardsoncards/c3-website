@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Should You Sell Your MTG Collection Now or Wait? How to Decide in Australia"
 description: "Timing matters when selling MTG cards in Australia. This guide gives a framework for deciding whether to sell now or hold — based on the cards you have, the current market, and your personal situation."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Where to Sell Pokemon Cards in Australia for the Best Price"
 description: "eBay, Facebook groups, and store buylists are your three main options for selling Pokemon cards in Australia. Here is what each pays, what each costs, and which suits your situation."
 date: 2026-04-18

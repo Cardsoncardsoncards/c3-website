@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "How to Build Your First Lorcana Deck in Australia"
 description: "Ready to build your first Disney Lorcana deck? This step-by-step guide covers ink colour selection, card types, deck structure, and where to get the cards you need in Australia."
 date: 2026-04-07

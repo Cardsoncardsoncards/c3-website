@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon TCG Rotation Australia: What It Is and How to Prepare for It"
 description: "Pokemon TCG rotation removes older sets from Standard format each year. This guide explains how rotation works in Australia, which sets rotate when, and how to manage your collection around it."
 date: 2026-05-05

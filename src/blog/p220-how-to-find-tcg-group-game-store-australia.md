@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "How to Find a TCG Group or Local Game Store in Australia"
 description: "Finding other TCG players is the key to staying engaged with the hobby. This guide covers how to find local game stores, Commander pods, Pokemon leagues, and online communities across Australia."
 date: 2026-05-05

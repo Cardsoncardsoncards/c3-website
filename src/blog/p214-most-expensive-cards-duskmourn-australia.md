@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Most Expensive Cards in Duskmourn Australia: Full Price Guide 2026"
 description: "The highest-value Magic: The Gathering cards from Duskmourn: House of Horror with current AUD pricing. Commander staples, chase rares, and special treatments for Australian MTG players."
 date: 2026-05-05

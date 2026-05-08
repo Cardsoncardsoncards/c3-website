@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "What Is a TCG Buylist? A Plain-English Guide for Australian Sellers"
 description: "New to selling TCG cards in Australia? This guide explains exactly what a buylist is, how it works, and whether it's the right way to sell your cards."
 date: 2026-04-16

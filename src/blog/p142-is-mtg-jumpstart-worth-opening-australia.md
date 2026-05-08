@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Jumpstart Worth Opening in Australia?"
 description: "Is the MTG Jumpstart booster box worth opening in Australia? Unique themed pack format with Jumpstart-exclusive Commander staples. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Outlaws of Thunder Junction Worth Opening in Australia?"
 description: "Is the MTG Outlaws of Thunder Junction booster box worth opening in Australia? Full AUD expected value breakdown including the Breaking News bonus sheet and honest verdict."
 date: 2026-04-20

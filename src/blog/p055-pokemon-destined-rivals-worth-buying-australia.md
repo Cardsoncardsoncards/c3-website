@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon Destined Rivals: Is It Still Worth Buying in Australia in 2026?"
 description: "Pokemon TCG Destined Rivals released May 2025 with Team Rocket returning for the first time in 25 years. This guide covers whether it is still worth buying in Australia, the top chase cards, and current market values."
 date: 2026-04-08

@@ -1,4 +1,5 @@
 ---
+game: dragon-ball-super
 title: "Dragon Ball Super Card Game: A Beginners Guide for Australian Players"
 description: "New to the Dragon Ball Super Card Game in Australia? This guide covers how the game works, what it costs to start, where to buy, and whether it's worth getting into."
 date: 2026-04-16

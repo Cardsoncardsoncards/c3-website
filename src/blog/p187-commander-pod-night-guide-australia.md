@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Commander Pod Night: How to Run the Perfect 4-Player Game Night in Australia"
 description: "Running a regular Commander night takes more than shuffling decks. This guide covers everything — seating, power level communication, house rules, and how to make it a night people actually want to come back to."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is Your Old MTG Collection Worth Anything? How to Find Out in Australia"
 description: "Found an old MTG collection? This guide shows exactly how to check whether your cards have value — which ones to look at first, how to check Australian prices, and what to do if you find something valuable."
 date: 2026-05-05

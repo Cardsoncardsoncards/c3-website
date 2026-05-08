@@ -1,4 +1,5 @@
 ---
+game: riftbound
 title: "Riftbound Card Game: A Beginners Guide for Australian Players"
 description: "Curious about Riftbound in Australia? This guide covers what Riftbound is, how it plays, what it costs to start, and whether it's worth trying."
 date: 2026-04-16

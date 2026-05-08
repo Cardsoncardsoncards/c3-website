@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "D&D Starter Sets in Australia: Which One Suits You"
 description: "A guide to Dungeons and Dragons starter sets available in Australia. Covers what each set includes, who each one suits, and what to expect from your first session."
 date: 2026-04-09

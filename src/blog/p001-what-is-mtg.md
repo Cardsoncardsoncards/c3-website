@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "What Is Magic: The Gathering? Plain-English Beginner's Guide for Australians"
 description: "MTG is the world's oldest trading card game, still in active print since 1993. Here is what it is, how it works, and exactly what an Australian beginner needs to buy first."
 date: 2026-04-07

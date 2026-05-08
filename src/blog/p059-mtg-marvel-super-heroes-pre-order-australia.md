@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "MTG Marvel Super Heroes: Full Pre-Order Guide for Australia (June 2026)"
 description: "Magic: The Gathering Marvel Super Heroes releases 26 June 2026. This guide covers every product, confirmed characters, Commander decks, and whether to pre-order on Amazon AU right now."
 date: 2026-04-08

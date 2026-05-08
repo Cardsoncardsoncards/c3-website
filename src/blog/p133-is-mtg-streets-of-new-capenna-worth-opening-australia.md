@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Streets of New Capenna Worth Opening in Australia?"
 description: "Is the MTG Streets of New Capenna booster box worth opening in Australia? Art Deco crime families and five three-colour clan commanders. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

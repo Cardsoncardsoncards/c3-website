@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "Free DM Tools for D&D: What's Available and What Actually Helps"
 description: "A practical guide to free and low-cost DM tools for Dungeons and Dragons. Covers digital tools, printable resources, NPC trackers, encounter builders, and what actually saves time at the table."
 date: 2026-04-09

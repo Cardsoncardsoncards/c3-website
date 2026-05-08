@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Zendikar Rising Worth Opening in Australia?"
 description: "Is the MTG Zendikar Rising booster box worth opening in Australia? Modal Double-Faced Cards changed MTG deckbuilding forever. Full AUD expected value breakdown and verdict."
 date: 2026-04-20

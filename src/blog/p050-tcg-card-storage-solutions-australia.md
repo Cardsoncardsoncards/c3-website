@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "TCG Card Storage Solutions: Best Binders and Boxes in Australia"
 description: "The right storage protects your TCG cards and makes your collection easy to use. This guide covers the best binders, boxes, and storage solutions available in Australia across all card games."
 date: 2026-04-07

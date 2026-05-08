@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "MTG Commander Decks: Best Options for Australian Players"
 description: "Looking for the best MTG Commander deck in Australia? This guide covers current precon options across recent sets, what each plays like, and where to buy them on Amazon AU."
 date: 2026-04-07

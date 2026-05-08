@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "Pokemon TCG Elite Trainer Box: Is It Worth Buying in Australia?"
 description: "Is a Pokemon Elite Trainer Box worth the price in Australia? This honest guide covers what you get, what each current ETB costs, and whether it's better value than other Pokemon products."
 date: 2026-04-07

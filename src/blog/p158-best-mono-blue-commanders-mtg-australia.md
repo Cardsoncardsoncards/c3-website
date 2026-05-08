@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Mono-Blue Commanders in MTG: Australia Price Guide 2026"
 description: "Top mono-blue Commanders ranked by power level and current AUD price. From budget builds under AU$20 to premium control and combo options for Australian MTG players."
 date: 2026-05-05

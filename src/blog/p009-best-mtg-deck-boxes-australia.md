@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best MTG Deck Boxes in Australia: Which Fits Your Sleeves and Deck Size"
 description: "Buying the wrong deck box for your sleeve setup is a common mistake. This guide covers the best options on Amazon AU by deck size, sleeve type, and budget."
 date: 2026-04-07

@@ -1,4 +1,5 @@
 ---
+game: yugioh
 title: "Yu-Gi-Oh TCG Beginners Guide for Australian Players"
 description: "New to Yu-Gi-Oh in Australia? This plain-English guide covers how the game works, how much it costs to start, where to buy cards, and whether it's worth getting into in 2026."
 date: 2026-04-16

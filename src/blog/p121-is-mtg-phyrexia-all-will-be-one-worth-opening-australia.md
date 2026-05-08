@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Phyrexia All Will Be One Worth Opening in Australia?"
 description: "Is the MTG Phyrexia All Will Be One booster box worth opening in Australia? Phyrexian text treatments, Oil Slick foils, and Elesh Norn. Full AUD expected value breakdown."
 date: 2026-04-20

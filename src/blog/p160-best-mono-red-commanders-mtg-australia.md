@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Best Mono-Red Commanders in MTG: Australia Price Guide 2026"
 description: "Top mono-red Commanders in Magic: The Gathering ranked by power and AUD price. Fast aggro, artifact combos, and chaos builds covered — with options for every budget."
 date: 2026-05-05

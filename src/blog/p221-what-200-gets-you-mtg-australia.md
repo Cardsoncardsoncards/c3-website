@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "What AU$200 Gets You in MTG: Singles vs Booster Boxes vs Commander Precons"
 description: "AU$200 is a meaningful MTG budget. This guide shows exactly what you get from each spending path — singles, booster boxes, and Commander precons — so you can make the right choice for your situation."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: dnd
 title: "Running Better Tavern Scenes in D&D: Ideas and Printable Resources"
 description: "Practical ideas for DMs on running engaging tavern scenes in D&D. Covers what makes tavern encounters work, mini-game ideas, and printable resources to bring the table to life."
 date: 2026-04-09

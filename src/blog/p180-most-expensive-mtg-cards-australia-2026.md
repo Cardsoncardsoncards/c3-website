@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Most Expensive MTG Cards in Australia Right Now (2026 Price Guide)"
 description: "The highest-value Magic: The Gathering cards available in Australia with current AUD pricing. Includes Reserved List staples, Commander format powerhouses, and recent chase cards."
 date: 2026-05-05

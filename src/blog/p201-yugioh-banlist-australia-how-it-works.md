@@ -1,4 +1,5 @@
 ---
+game: yugioh
 title: "Yu-Gi-Oh Banlist Australia: How It Works and Why It Destroys Card Values Overnight"
 description: "The Yu-Gi-Oh Forbidden and Limited List updates several times per year. This guide explains how the banlist works, when it changes, and how to protect your Australian card investments."
 date: 2026-05-05

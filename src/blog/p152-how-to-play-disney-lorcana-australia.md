@@ -1,4 +1,5 @@
 ---
+game: lorcana
 title: "How to Play Disney Lorcana: Full Rules Guide for Australian Beginners"
 description: "Disney Lorcana explained from scratch. Learn how Ink works, how to quest and challenge, and how to win — a complete beginner's rules guide for Australian players."
 date: 2026-05-05

@@ -1,4 +1,5 @@
 ---
+game: pokemon
 title: "I Spent AU$50 Starting Pokemon TCG in Australia — Full Honest Breakdown"
 description: "What AU$50 actually gets you when starting Pokemon TCG in Australia. What we bought, what we could play, and what we'd change. A real breakdown for new players."
 date: 2026-05-05

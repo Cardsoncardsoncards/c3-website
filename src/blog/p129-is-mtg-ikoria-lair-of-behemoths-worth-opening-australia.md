@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Ikoria Lair of Behemoths Worth Opening in Australia?"
 description: "Is the MTG Ikoria Lair of Behemoths booster box worth opening in Australia? Godzilla Series Monster cards are among the most collectable MTG cards ever printed. Full AUD breakdown."
 date: 2026-04-20

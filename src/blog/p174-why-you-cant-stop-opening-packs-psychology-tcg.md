@@ -1,4 +1,5 @@
 ---
+game: tcg
 title: "Why You Can't Stop Opening Packs: The Psychology of the TCG Pull"
 description: "There's a reason opening booster packs is so compelling. Variable reward, loss aversion, sunk cost thinking — this guide explains the psychology behind TCG pack opening and how to make smarter buying decisions."
 date: 2026-05-05

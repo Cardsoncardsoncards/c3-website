@@ -1,4 +1,5 @@
 ---
+game: star-wars-unlimited
 title: "How to Play Star Wars Unlimited: Full Beginner Rules Guide for Australians"
 description: "Star Wars Unlimited explained from scratch — base, leader, resources, and how combat works. A complete rules guide for Australian beginners wanting to try the game."
 date: 2026-05-05

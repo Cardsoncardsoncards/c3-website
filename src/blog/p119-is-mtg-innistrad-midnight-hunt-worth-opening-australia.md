@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "Is MTG Innistrad Midnight Hunt Worth Opening in Australia?"
 description: "Is the MTG Innistrad Midnight Hunt booster box worth opening in Australia? Werewolves, Eternal Night showcase frames, and Day and Night mechanic. Full AUD expected value breakdown."
 date: 2026-04-20

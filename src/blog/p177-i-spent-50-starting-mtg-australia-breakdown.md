@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "I Spent AU$50 Starting MTG — Here's Exactly What I Got and What I'd Do Differently"
 description: "A real account of starting Magic: The Gathering from scratch with a AU$50 budget in Australia. What we bought, whether it worked, and what we'd change with hindsight."
 date: 2026-05-05

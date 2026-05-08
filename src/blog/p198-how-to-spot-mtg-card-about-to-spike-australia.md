@@ -1,4 +1,5 @@
 ---
+game: mtg
 title: "How to Spot a MTG Card About to Spike in Price Australia"
 description: "MTG card prices can double or triple overnight when a new deck, combo, or reprint announcement hits. This guide explains the signals to watch — and how Australian players can act on them faster."
 date: 2026-05-05
