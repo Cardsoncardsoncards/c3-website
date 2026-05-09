@@ -44,9 +44,15 @@ async function tcgapiGet(path) {
   const res = await fetch(`${TCGAPI_BASE}${path}`, {
     headers: { 'X-API-Key': TCGAPI_KEY }
   });
+  const text = await res.text();
   if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
+    throw new Error(`tcgapi GET ${path} failed ${res.status}: ${text.slice(0, 200)}`);
+  }
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
   }
   // Rate limit is in response headers, not the body
   const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
