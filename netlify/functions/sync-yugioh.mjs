@@ -97,6 +97,42 @@ async function supabaseUpsertSnapshots(table, rows) {
 }
 
 
+// Fetch already-synced set IDs from progress tracking table (max 610 rows, always fast)
+async function getAlreadySyncedSetIds() {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/yugioh_sync_progress?select=set_id&limit=1000`,
+    {
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+      }
+    }
+  );
+  if (!res.ok) {
+    console.error('[sync-yugioh] Could not fetch sync progress, will do full sync');
+    return new Set();
+  }
+  const rows = await res.json();
+  return new Set(rows.map(r => r.set_id));
+}
+
+// Mark a set as fully synced in the progress table
+async function markSetSynced(setId) {
+  await fetch(
+    `${SUPABASE_URL}/rest/v1/yugioh_sync_progress`,
+    {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
+    }
+  );
+}
+
 // --- Main ---
 
 export default async (req) => {
@@ -123,6 +159,10 @@ export default async (req) => {
   try {
     const audRate = await getExchangeRate();
     console.log(`[sync-yugioh] AUD rate: ${audRate}`);
+
+    // Fetch already-synced set IDs from progress table
+    const syncedSetIds = await getAlreadySyncedSetIds();
+    console.log(`[sync-yugioh] ${syncedSetIds.size} sets already synced — will skip these`);
 
     // Step 1: Fetch all sets (hard cap at MAX_PAGES)
     // Yu-Gi-Oh has 610 sets — needs multiple pages at 100 per page
@@ -162,11 +202,17 @@ export default async (req) => {
     let totalCards = 0;
     let totalSnaps = 0;
     let setCount = 0;
+    let skippedCount = 0;
 
     for (const set of allSets) {
+      if (syncedSetIds.has(set.id)) {
+        skippedCount++;
+        continue;
+      }
+
       setCount++;
-      if (setCount % 20 === 0) {
-        console.log(`[sync-yugioh] Progress: ${setCount} sets processed, ${totalCards} cards so far`);
+      if (setCount % 10 === 0) {
+        console.log(`[sync-yugioh] Progress: ${setCount} new sets, ${skippedCount} skipped, ${totalCards} cards so far`);
       }
 
       const setCards = [];
@@ -266,11 +312,12 @@ export default async (req) => {
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
+      await markSetSynced(set.id);
       console.log(`[sync-yugioh] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-yugioh] Done. ${setCount} sets processed. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-yugioh] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response('OK', { status: 200 });
 
   } catch (err) {
