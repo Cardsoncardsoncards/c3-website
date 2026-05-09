@@ -3,7 +3,6 @@
 // Fetches all Yu-Gi-Oh sets + cards + prices from tcgapi.dev Pro
 // Upserts into yugioh_sets, yugioh_cards, yugioh_price_snapshots
 // Note: Yu-Gi-Oh has 45k+ cards across 610 sets — largest non-MTG catalogue
-// Incremental mode: skips sets that already have cards in Supabase (saves ~1,100 credits/day)
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -98,35 +97,6 @@ async function supabaseUpsertSnapshots(table, rows) {
 }
 
 
-// Fetch set_ids that already have cards in Supabase (used for incremental sync)
-// Uses Range header to bypass Supabase default 1000-row limit
-async function getAlreadySyncedSetIds() {
-  const allSetIds = new Set();
-  let offset = 0;
-  const pageSize = 1000;
-  while (true) {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id`,
-      {
-        headers: {
-          'apikey': SUPABASE_SERVICE_KEY,
-          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-          'Range': `${offset}-${offset + pageSize - 1}`
-        }
-      }
-    );
-    if (!res.ok) {
-      console.error('[sync-yugioh] Could not fetch synced set IDs, will do full sync');
-      return new Set();
-    }
-    const rows = await res.json();
-    for (const r of rows) allSetIds.add(r.set_id);
-    if (rows.length < pageSize) break;
-    offset += pageSize;
-  }
-  return allSetIds;
-}
-
 // --- Main ---
 
 export default async (req) => {
@@ -153,10 +123,6 @@ export default async (req) => {
   try {
     const audRate = await getExchangeRate();
     console.log(`[sync-yugioh] AUD rate: ${audRate}`);
-
-    // Fetch already-synced set IDs for incremental mode
-    const syncedSetIds = await getAlreadySyncedSetIds();
-    console.log(`[sync-yugioh] ${syncedSetIds.size} sets already synced — will skip these`);
 
     // Step 1: Fetch all sets (hard cap at MAX_PAGES)
     // Yu-Gi-Oh has 610 sets — needs multiple pages at 100 per page
@@ -196,18 +162,11 @@ export default async (req) => {
     let totalCards = 0;
     let totalSnaps = 0;
     let setCount = 0;
-    let skippedCount = 0;
 
     for (const set of allSets) {
-      // Incremental: skip sets that already have cards
-      if (syncedSetIds.has(set.id)) {
-        skippedCount++;
-        continue;
-      }
-
       setCount++;
-      if (setCount % 10 === 0) {
-        console.log(`[sync-yugioh] Progress: ${setCount} new sets processed, ${skippedCount} skipped, ${totalCards} cards so far`);
+      if (setCount % 20 === 0) {
+        console.log(`[sync-yugioh] Progress: ${setCount} sets processed, ${totalCards} cards so far`);
       }
 
       const setCards = [];
@@ -311,7 +270,7 @@ export default async (req) => {
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-yugioh] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-yugioh] Done. ${setCount} sets processed. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response('OK', { status: 200 });
 
   } catch (err) {
