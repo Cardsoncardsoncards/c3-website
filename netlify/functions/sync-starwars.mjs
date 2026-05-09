@@ -94,6 +94,42 @@ async function supabaseUpsertSnapshots(table, rows) {
 }
 
 
+// Fetch already-synced set IDs from progress tracking table
+async function getAlreadySyncedSetIds() {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/starwars_sync_progress?select=set_id&limit=1000`,
+    {
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+      }
+    }
+  );
+  if (!res.ok) {
+    console.error('[sync-starwars] Could not fetch sync progress, will do full sync');
+    return new Set();
+  }
+  const rows = await res.json();
+  return new Set(rows.map(r => r.set_id));
+}
+
+// Mark a set as fully synced in the progress table
+async function markSetSynced(setId) {
+  await fetch(
+    `${SUPABASE_URL}/rest/v1/starwars_sync_progress`,
+    {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
+    }
+  );
+}
+
 export default async (req) => {
   console.log('[sync-starwars] Starting...');
   const start = Date.now();
@@ -117,6 +153,9 @@ export default async (req) => {
   try {
     const audRate = await getExchangeRate();
     console.log(`[sync-starwars] AUD rate: ${audRate}`);
+
+    const syncedSetIds = await getAlreadySyncedSetIds();
+    console.log(`[sync-starwars] ${syncedSetIds.size} sets already synced — will skip these`);
 
     // Step 1: Fetch all sets
     console.log('[sync-starwars] Fetching sets...');
