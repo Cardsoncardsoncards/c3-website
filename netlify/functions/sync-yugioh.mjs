@@ -49,8 +49,8 @@ async function tcgapiGet(path) {
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
   const data = await res.json();
-  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
-  const remaining = data.rate_limit?.daily_remaining ?? 0;
+  // Rate limit is in response headers, not the body
+  const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
