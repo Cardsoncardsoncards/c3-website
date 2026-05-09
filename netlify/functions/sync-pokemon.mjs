@@ -97,6 +97,42 @@ async function supabaseUpsertSnapshots(table, rows) {
 }
 
 
+
+// Fetch already-synced set IDs from progress tracking table (fast, accurate)
+async function getAlreadySyncedSetIds() {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/pokemon_sync_progress?select=set_id&limit=1000`,
+    {
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+      }
+    }
+  );
+  if (!res.ok) {
+    console.error('[sync-pokemon] Could not fetch sync progress, will do full sync');
+    return new Set();
+  }
+  const rows = await res.json();
+  return new Set(rows.map(r => r.set_id));
+}
+
+// Mark a set as fully synced in the progress table
+async function markSetSynced(setId) {
+  await fetch(
+    `${SUPABASE_URL}/rest/v1/pokemon_sync_progress`,
+    {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
+    }
+  );
+}
 // --- Main ---
 
 export default async (req) => {
@@ -124,7 +160,11 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-pokemon] AUD rate: ${audRate}`);
 
-    // Step 1: Fetch all sets (hard cap at MAX_PAGES)
+    // Fetch already-synced set IDs from progress table
+    const syncedSetIds = await getAlreadySyncedSetIds();
+    console.log(`[sync-pokemon] ${syncedSetIds.size} sets already synced — will skip these`);
+
+    // Step 1: Step 1: Fetch all sets (hard cap at MAX_PAGES)
     console.log('[sync-pokemon] Fetching sets...');
     const allSets = [];
     let page = 1;
@@ -158,9 +198,19 @@ export default async (req) => {
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
+    let setCount = 0;
+    let skippedCount = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-pokemon] Syncing set: ${set.name} (id:${set.id})`);
+      if (syncedSetIds.has(set.id)) {
+        skippedCount++;
+        continue;
+      }
+
+      setCount++;
+      if (setCount % 10 === 0) {
+        console.log(`[sync-pokemon] Progress: ${setCount} new sets, ${skippedCount} skipped, ${totalCards} cards so far`);
+      }
       const setCards = [];
       let cardPage = 1;
 
@@ -266,7 +316,7 @@ export default async (req) => {
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-pokemon] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-pokemon] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response('OK', { status: 200 });
 
   } catch (err) {

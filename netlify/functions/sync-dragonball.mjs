@@ -94,6 +94,42 @@ async function supabaseUpsertSnapshots(table, rows) {
 }
 
 
+// Fetch already-synced set IDs from progress tracking table
+async function getAlreadySyncedSetIds() {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/dragonball_sync_progress?select=set_id&limit=1000`,
+    {
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+      }
+    }
+  );
+  if (!res.ok) {
+    console.error('[sync-dragonball] Could not fetch sync progress, will do full sync');
+    return new Set();
+  }
+  const rows = await res.json();
+  return new Set(rows.map(r => r.set_id));
+}
+
+// Mark a set as fully synced in the progress table
+async function markSetSynced(setId) {
+  await fetch(
+    `${SUPABASE_URL}/rest/v1/dragonball_sync_progress`,
+    {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
+    }
+  );
+}
+
 export default async (req) => {
   console.log('[sync-dragonball] Starting...');
   const start = Date.now();
@@ -118,7 +154,11 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-dragonball] AUD rate: ${audRate}`);
 
-    // Step 1: Fetch all sets
+    // Fetch already-synced set IDs from progress table
+    const syncedSetIds = await getAlreadySyncedSetIds();
+    console.log(`[sync-dragonball] ${syncedSetIds.size} sets already synced — will skip these`);
+
+    // Step 1: Step 1: Fetch all sets
     console.log('[sync-dragonball] Fetching sets...');
     const allSets = [];
     let page = 1;
@@ -152,9 +192,19 @@ export default async (req) => {
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
+    let setCount = 0;
+    let skippedCount = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-dragonball] Syncing set: ${set.name} (id:${set.id})`);
+      if (syncedSetIds.has(set.id)) {
+        skippedCount++;
+        continue;
+      }
+
+      setCount++;
+      if (setCount % 10 === 0) {
+        console.log(`[sync-dragonball] Progress: ${setCount} new sets, ${skippedCount} skipped, ${totalCards} cards so far`);
+      }
       const setCards = [];
       let cardPage = 1;
 
@@ -245,11 +295,12 @@ export default async (req) => {
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
+      await markSetSynced(set.id);
       console.log(`[sync-dragonball] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-dragonball] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-dragonball] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
