@@ -197,6 +197,8 @@ export default async (req) => {
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
+    let setCount = 0;
+    let skippedCount = 0;
 
     for (const set of allSets) {
       if (syncedSetIds.has(set.id)) {
