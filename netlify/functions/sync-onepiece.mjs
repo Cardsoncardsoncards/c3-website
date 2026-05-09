@@ -307,6 +307,7 @@ export default async (req) => {
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
+      await markSetSynced(set.id);
       console.log(`[sync-onepiece] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
