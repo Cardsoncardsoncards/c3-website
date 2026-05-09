@@ -46,9 +46,15 @@ async function tcgapiGet(path) {
     const err = await res.text();
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
-  const data = await res.json();
-  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
-  const remaining = data.rate_limit?.daily_remaining ?? 0;
+  const text = await res.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
+  }
+  // Rate limit is in response headers, not the body
+  const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
@@ -72,6 +78,24 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
+async function supabaseUpsertSnapshots(table, rows) {
+  if (!rows.length) return;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
+    },
+    body: JSON.stringify(rows)
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
+  }
+}
+
 
 // --- Main ---
 
@@ -228,7 +252,7 @@ export default async (req) => {
         await supabaseUpsert('onepiece_cards', cardRows.slice(i, i + 200));
       }
       for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsert('onepiece_price_snapshots', snapRows.slice(i, i + 500));
+        await supabaseUpsertSnapshots('onepiece_price_snapshots', snapRows.slice(i, i + 500));
       }
 
       totalCards += cardRows.length;
