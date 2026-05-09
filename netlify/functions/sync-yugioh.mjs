@@ -99,22 +99,32 @@ async function supabaseUpsertSnapshots(table, rows) {
 
 
 // Fetch set_ids that already have cards in Supabase (used for incremental sync)
+// Uses Range header to bypass Supabase default 1000-row limit
 async function getAlreadySyncedSetIds() {
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id&limit=100000`,
-    {
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+  const allSetIds = new Set();
+  let offset = 0;
+  const pageSize = 1000;
+  while (true) {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id`,
+      {
+        headers: {
+          'apikey': SUPABASE_SERVICE_KEY,
+          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+          'Range': `${offset}-${offset + pageSize - 1}`
+        }
       }
+    );
+    if (!res.ok) {
+      console.error('[sync-yugioh] Could not fetch synced set IDs, will do full sync');
+      return new Set();
     }
-  );
-  if (!res.ok) {
-    console.error('[sync-yugioh] Could not fetch synced set IDs, will do full sync');
-    return new Set();
+    const rows = await res.json();
+    for (const r of rows) allSetIds.add(r.set_id);
+    if (rows.length < pageSize) break;
+    offset += pageSize;
   }
-  const rows = await res.json();
-  return new Set(rows.map(r => r.set_id));
+  return allSetIds;
 }
 
 // --- Main ---
