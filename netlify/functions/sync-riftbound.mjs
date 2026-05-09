@@ -193,7 +193,14 @@ export default async (req) => {
     let totalSnaps = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-riftbound] Syncing set: ${set.name} (id:${set.id})`);
+      if (syncedSetIds.has(set.id)) {
+        skippedCount++;
+        continue;
+      }
+      setCount++;
+      if (setCount % 10 === 0) {
+        console.log(`[sync-riftbound] Progress: ${setCount} new sets, ${skippedCount} skipped, ${totalCards} cards so far`);
+      }
       const setCards = [];
       let cardPage = 1;
 
@@ -289,7 +296,7 @@ export default async (req) => {
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-riftbound] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-riftbound] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }

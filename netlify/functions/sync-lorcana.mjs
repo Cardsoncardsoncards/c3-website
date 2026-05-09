@@ -199,7 +199,14 @@ export default async (req) => {
     let totalSnaps = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-lorcana] Syncing set: ${set.name} (id:${set.id})`);
+      if (syncedSetIds.has(set.id)) {
+        skippedCount++;
+        continue;
+      }
+      setCount++;
+      if (setCount % 10 === 0) {
+        console.log(`[sync-lorcana] Progress: ${setCount} new sets, ${skippedCount} skipped, ${totalCards} cards so far`);
+      }
       const setCards = [];
       let cardPage = 1;
 
@@ -301,7 +308,7 @@ export default async (req) => {
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-lorcana] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-lorcana] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response('OK', { status: 200 });
 
   } catch (err) {
