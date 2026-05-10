@@ -20,13 +20,22 @@
     a:hover{text-decoration:underline}
     nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
-.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;transition:box-shadow .2s}.nav-logo:hover img{box-shadow:0 0 12px rgba(201,168,76,.5)}
 .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
 .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
 .nav-link--active{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF;color:#C8DDFF}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1;color:#A5DFC0}
+.nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{background:rgba(192,132,252,.06);border-color:#C084FC;color:#D8B4FE}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171;color:#FCA5A5}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE;color:#67E8F9}
 .nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
     .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px;position:relative;z-index:1}
     .hero{padding:72px 0 48px;text-align:center}
@@ -56,23 +65,21 @@
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/c3logo.png" alt="C3 Logo">
-      <span>Cards on Cards on Cards</span>
+      <img src="/c3logo.png" alt="C3" onmouseover="this.style.boxShadow='0 0 14px rgba(201,168,76,.6)'" onmouseout="this.style.boxShadow=''">
     </a>
     <div class="nav-links">
-
-      <a href="/" class="nav-link">Home</a>
-      <a href="/cards" class="nav-link">Card Vault</a>
-      <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="/calendar" class="nav-link">Calendar</a>
-      <a href="/generators" class="nav-link">Generators</a>
+      <a href="/" class="nav-link nav-link--home">Home</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
       <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="/dnd" class="nav-link nav-link--active">D&amp;D Tools</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" class="nav-link" target="_blank" rel="noopener">eBay ↗</a>
-      <a href="/contact.html" class="nav-link">Contact</a>
+      <a href="/dnd" class="nav-link nav-link--dnd nav-link--active">D&amp;D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact</a>
     </div>
   </div>
 </nav>
@@ -184,10 +191,10 @@
       if (!email) return;
       try {
         var fields = {dnd_tools: tools.join(', ') + (other ? ', Other: ' + other : '')};
-        await fetch('https://connect.mailerlite.com/api/subscribers', {
+        await fetch('/api/dnd-interest', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-          body: JSON.stringify({email: email, fields: fields, groups: ['187060931011806295']})
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({email: email, tools: tools, other: other})
         });
       } catch(err) {}
       document.getElementById('dnd-form-success').style.display = 'block';

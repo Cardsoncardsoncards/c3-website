@@ -43,47 +43,54 @@ async function supabaseGet(path) {
   }
 }
 
-const NAV_STYLES = `
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid #252840;padding:12px 0;position:sticky;top:0;z-index:100}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
-    .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-    .nav-links::-webkit-scrollbar{display:none}
-    .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #252840;color:#A0A8C0;white-space:nowrap}
-    .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
-    .nav-link--gold{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
-    .nav-link--gold:hover{background:rgba(201,168,76,.14);border-color:#C9A84C}
-    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
-    .nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
-    .nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
-    .nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
-    .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
-  </style>`;
+const NAV_CSS = `
+  nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+  .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+  .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;transition:box-shadow .2s}
+  .nav-logo:hover img{box-shadow:0 0 12px rgba(201,168,76,.5)}
+  .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
+  .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
+  .nav-link--active{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+  .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF}
+  .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:#C9A84C}
+  .nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{background:rgba(201,168,76,.06);border-color:#C9A84C}
+  .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1}
+  .nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA}
+  .nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{background:rgba(192,132,252,.06);border-color:#C084FC}
+  .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{background:rgba(96,165,250,.06);border-color:#60A5FA}
+  .nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171}
+  .nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE}
+  .nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6}
+  .nav-link--dnd{color:#A78BFA;border-color:rgba(139,92,246,.35)}.nav-link--dnd:hover{background:rgba(139,92,246,.06);border-color:#A78BFA}
+  .nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{background:rgba(148,163,184,.06);border-color:#94A3B8}
+`;
 
 const NAV = `<nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
-      <span>Cards on Cards on Cards</span>
-    </a>
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"></a>
     <div class="nav-links">
-      <a href="/" class="nav-link">← Home</a>
-      <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
-      <a href="/contact.html" class="nav-link">Contact Us</a>
+      <a href="/" class="nav-link nav-link--home">Home</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
+      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/dnd" class="nav-link nav-link--dnd">D&D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact</a>
     </div>
   </div>
 </nav>`;
 
 const BASE_STYLES = `
   <style>
+  ${NAV_CSS}
     :root { --bg:#0f1117;--bg2:#1a1d2e;--bg3:#22263a;--accent:#f5a623;--accent2:#7c6af5;--text:#e8eaf0;--text2:#9ba3c4;--border:#2d3254;--radius:12px; }
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text);font-family:sans-serif;line-height:1.6}
@@ -160,7 +167,6 @@ function renderCardHub(sets, topCards) {
   <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, 52-week price ranges, and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg">
   ${BASE_STYLES}
-  ${NAV_STYLES}
 </head>
 <body>
 ${NAV}
@@ -413,7 +419,7 @@ function renderRandomCommander() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Random MTG Commander Generator Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Generate 1 to 6 random Magic: The Gathering Commanders. Filter by colour identity and mana value. Share your results with friends.">
+  <meta name="description" content="Generate 1 to 4 random Magic: The Gathering Commanders. Filter by colour identity and mana value. Share your results with friends.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/random-commander">
   ${BASE_STYLES}
   <style>
@@ -480,7 +486,7 @@ ${NAV}
     <span style="font-size:20px">⚔️</span>
     <div style="flex:1;min-width:180px">
       <div style="font-size:13px;font-weight:700;color:var(--text)">Roll your pod. Dare a friend.</div>
-      <div style="font-size:12px;color:var(--text2)">Generate up to 6 random Commanders and share the link — see who builds the better deck.</div>
+      <div style="font-size:12px;color:var(--text2)">Generate 4 random Commanders and share the link — see who builds the better deck.</div>
     </div>
   </div>
 
@@ -496,7 +502,7 @@ ${NAV}
     <div style="margin-bottom:22px">
       <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:10px">How many Commanders?</p>
       <div style="display:flex;gap:8px">
-        ${[1,2,3,4,5,6].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
+        ${[1,2,3,4].map(n => `<button class="count-btn${n===4?' active':''}" data-count="${n}" onclick="setCount(this,${n})">${n}</button>`).join('')}
       </div>
     </div>
 
