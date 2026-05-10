@@ -7,12 +7,13 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/c3-logo.png": "c3-logo.png"});
   eleventyConfig.addPassthroughCopy({"sitemap.xml": "sitemap.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-index.xml": "sitemap-index.xml"});
+  eleventyConfig.addPassthroughCopy({"robots.txt": "robots.txt"});
   eleventyConfig.addPassthroughCopy({"ev-calculator": "ev-calculator"});
+  eleventyConfig.addPassthroughCopy({"quizzes": "quizzes"});
   eleventyConfig.addPassthroughCopy({"netlify": "netlify"});
   eleventyConfig.addPassthroughCopy({"netlify.toml": "netlify.toml"});
 
   // Passthrough src HTML files directly to _site root
-  // Ignored as templates below to prevent Eleventy double-processing them
   eleventyConfig.addPassthroughCopy({"src/index.html": "index.html"});
   eleventyConfig.addPassthroughCopy({"src/shop.html": "shop.html"});
   eleventyConfig.addPassthroughCopy({"src/contact.html": "contact.html"});
@@ -24,19 +25,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/dashboard.html": "dashboard.html"});
   eleventyConfig.addPassthroughCopy({"src/cards.html": "cards.html"});
   eleventyConfig.addPassthroughCopy({"src/legal.html": "legal.html"});
-
-  // Permanently ignore these as Eleventy templates - served via passthrough only
-  eleventyConfig.ignores.add("src/index.html");
-  eleventyConfig.ignores.add("src/shop.html");
-  eleventyConfig.ignores.add("src/contact.html");
-  eleventyConfig.ignores.add("src/tracker.html");
-  eleventyConfig.ignores.add("src/vip.html");
-  eleventyConfig.ignores.add("src/ev-calculator.html");
-  eleventyConfig.ignores.add("src/mtg-strixhaven.html");
-  eleventyConfig.ignores.add("src/content-engine.html");
-  eleventyConfig.ignores.add("src/dashboard.html");
-  eleventyConfig.ignores.add("src/cards.html");
-  eleventyConfig.ignores.add("src/legal.html");
+  eleventyConfig.addPassthroughCopy({"src/calendar.html": "calendar.html"});
+  eleventyConfig.addPassthroughCopy({"src/generators.html": "generators.html"});
+  eleventyConfig.addPassthroughCopy({"src/quizzes.html": "quizzes.html"});
 
   // Only blog posts (tagged "post") use the permalink rule
   eleventyConfig.addGlobalData("eleventyComputed", {

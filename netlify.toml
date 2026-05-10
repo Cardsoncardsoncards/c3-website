@@ -11,39 +11,57 @@
 [functions."sitemap-cards"]
   timeout = 30
 
-# Security headers applied to all pages
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://tally.so; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://api.exchangerate-api.com https://api.tcgapi.dev https://www.google-analytics.com https://region1.google-analytics.com https://ebay.com https://*.ebay.com https://svgs.scryfall.io https://cards.scryfall.io https://c1.scryfall.com https://c2.scryfall.com; frame-src https://tally.so; worker-src 'none'; object-src 'none'; base-uri 'self';"
-    X-XSS-Protection = "1; mode=block"
+[functions."sync-lorcana"]
+  timeout = 1200
 
-# Cache static assets aggressively
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+[functions."sync-onepiece"]
+  timeout = 1200
 
-[[headers]]
-  for = "*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+[functions."sync-pokemon"]
+  timeout = 1500
 
-[[headers]]
-  for = "*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+[functions."sync-yugioh"]
+  timeout = 1500
 
-# HTML pages: no cache (always fresh)
-[[headers]]
-  for = "/*.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+[functions."sync-riftbound"]
+  timeout = 600
 
+[functions."sync-starwars"]
+  timeout = 1200
+
+[functions."sync-dragonball"]
+  timeout = 1200
+
+# ─── Scheduled syncs (UTC times = AEST -10) ──────────────────
+# 8pm AEST = 10am UTC
+[functions."sync-pokemon".schedule]
+  cron = "0 10 * * *"
+
+# 8:30pm AEST = 10:30am UTC
+[functions."sync-yugioh".schedule]
+  cron = "30 10 * * *"
+
+# 9pm AEST = 11am UTC
+[functions."sync-onepiece".schedule]
+  cron = "0 11 * * *"
+
+# 9:30pm AEST = 11:30am UTC
+[functions."sync-lorcana".schedule]
+  cron = "30 11 * * *"
+
+# 10pm AEST = 12pm UTC
+[functions."sync-dragonball".schedule]
+  cron = "0 12 * * *"
+
+# 10:30pm AEST = 12:30pm UTC
+[functions."sync-starwars".schedule]
+  cron = "30 12 * * *"
+
+# 11pm AEST = 1pm UTC
+[functions."sync-riftbound".schedule]
+  cron = "0 13 * * *"
+
+# ─── Blog redirects ──────────────────────────────────────────
 [[redirects]]
   from = "/blog/lorcana-booster-box-guide/"
   to = "/blog/best-lorcana-booster-boxes-australia/"
@@ -67,4 +85,10 @@
 [[redirects]]
   from = "/blog/star-wars-unlimited-guide/"
   to = "/blog/star-wars-unlimited-beginners-guide-australia/"
+  status = 301
+
+# Quiz URL redirect (old → new hub)
+[[redirects]]
+  from = "/quiz"
+  to = "/quizzes"
   status = 301

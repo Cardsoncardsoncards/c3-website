@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" type="image/png" href="/c3logo.png">
   <title>TCG Release Calendar 2026 Australia | Cards on Cards on Cards</title>
   <meta name="description" content="Every confirmed TCG release date and tournament for Australia in 2026. MTG, Pokemon, Riftbound, Lorcana, One Piece and more. Updated regularly.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/calendar">
@@ -43,6 +42,8 @@
     .nav-link--yugioh:hover{background:rgba(192,132,252,.06);border-color:var(--purple)}
     .nav-link--calendar{color:var(--red);border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.07)}
     .nav-link--generators{color:var(--cyan);border-color:rgba(34,211,238,.3)}
+    .nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
+    .nav-link--active{opacity:1!important}
     .nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:var(--cyan)}
     .nav-link--shop{color:var(--green);border-color:rgba(74,222,128,.3)}
     .nav-link--shop:hover{background:rgba(74,222,128,.06);border-color:var(--green)}
@@ -118,17 +119,22 @@
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">Cards on Cards on Cards</a>
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3" style="height:28px;width:28px;border-radius:5px;object-fit:cover;flex-shrink:0">
+      <span>Cards on Cards on Cards</span>
+    </a>
     <div class="nav-links">
       <a href="/" class="nav-link nav-link--home">← Home</a>
-      <a href="/cards/mtg" class="nav-link nav-link--mtg">MTG</a>
-      <a href="/cards/pokemon" class="nav-link nav-link--pokemon">Pokemon</a>
-      <a href="/cards/lorcana" class="nav-link nav-link--lorcana">Lorcana</a>
-      <a href="/cards/yugioh" class="nav-link nav-link--yugioh">Yu-Gi-Oh</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/calendar" class="nav-link nav-link--calendar nav-link--active">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
+      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact</a>
     </div>
   </div>
 </nav>

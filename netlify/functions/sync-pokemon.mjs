@@ -138,9 +138,10 @@ async function markSetSynced(setId) {
 export default async (req) => {
   console.log('[sync-pokemon] Starting...');
 
-  // Auth check -- must be POST with correct secret
+  // Auth: accept manual POST with secret OR Netlify scheduled trigger (no header)
   const secret = req.headers.get('x-sync-secret');
-  if (!SYNC_SECRET || secret !== SYNC_SECRET) {
+  const isScheduled = !secret;
+  if (!isScheduled && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
     console.error('[sync-pokemon] Unauthorised');
     return new Response('Unauthorised', { status: 401 });
   }
