@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Are You Light Side or Dark Side? | C3 TCG Quizzes Australia</title>
+  <meta name="description" content="Are you Light Side, Dark Side, or Neutral in Star Wars Unlimited? Take this quiz to find your affiliation and get Australian card links.">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/quizzes/starwars-affiliation">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+  
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{color:var(--white);border-color:var(--silver);text-decoration:none}
+.nav-link--active{color:#F472B6;border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.06)}
+.wrap{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.quiz-hero{padding:56px 0 32px;text-align:center}
+.quiz-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.quiz-hero h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,40px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:12px}
+.quiz-hero p{font-size:15px;color:var(--text2);max-width:540px;margin:0 auto 20px}
+.quiz-meta{display:flex;justify-content:center;gap:20px;font-size:12px;color:var(--text2);margin-bottom:8px}
+.quiz-meta span{display:flex;align-items:center;gap:5px}
+.quiz-container{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:40px}
+.quiz-progress-wrap{height:3px;background:var(--border)}
+.quiz-progress-bar{height:100%;background:var(--gold);transition:width .4s ease;width:0%}
+.quiz-step{padding:32px;display:none}
+.quiz-step.active{display:block}
+.step-num{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.step-q{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:24px;line-height:1.3}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg3);border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;user-select:none}
+.option:hover{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.option.selected{border-color:var(--gold);background:rgba(201,168,76,.12)}
+.option-icon{font-size:22px;flex-shrink:0;width:32px;text-align:center}
+.option-text{font-size:14px;font-weight:600;color:var(--white)}
+.option-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;border-top:1px solid var(--border)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;font-family:'DM Sans',sans-serif}
+.btn-primary{background:linear-gradient(135deg,#9A7B28,#C9A84C);color:#0A0C14}
+.btn-primary:hover{opacity:.9}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--silver)}
+.btn-secondary:hover{border-color:var(--silver);color:var(--white)}
+.btn:disabled{opacity:.4;cursor:default}
+.step-counter{font-size:12px;color:var(--text2)}
+#result{display:none;padding:32px}
+.result-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.result-name{font-family:'Cinzel',serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.result-why{font-size:14px;color:var(--text2);margin-bottom:8px;line-height:1.6}
+.result-flavour{font-size:13px;color:var(--text2);font-style:italic;margin-bottom:24px;padding:12px 16px;border-left:2px solid var(--gold);background:rgba(201,168,76,.05);border-radius:0 8px 8px 0}
+.result-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.result-stat{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text2);flex:1;min-width:120px}
+.result-stat strong{display:block;font-size:15px;color:var(--white);font-family:'Cinzel',serif;margin-bottom:2px}
+.result-actions{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.result-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s}
+.result-cta:hover{opacity:.85;text-decoration:none}
+.result-share{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.share-title{font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600}
+.share-btns{display:flex;gap:8px;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:opacity .2s}
+.share-btn:hover{opacity:.85}
+.suggest-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--border)}
+.suggest-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:16px}
+.suggest-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.suggest-grid{grid-template-columns:1fr}}
+.suggest-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;transition:border-color .2s;display:block}
+.suggest-card:hover{border-color:var(--gold);text-decoration:none}
+.suggest-game{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.suggest-name{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px}
+.suggest-desc{font-size:11px;color:var(--text2)}
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--text2);max-width:100%}
+footer a{color:var(--text2);margin:0 8px}
+footer a:hover{color:var(--white)}
+
+  .result-name{color:#FFE81F}
+  .result-badge{background:#FFE81F22;color:#FFE81F;border:1px solid #FFE81F55}
+  @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards" class="nav-link">Card Vault</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/quizzes" class="nav-link nav-link--active">Quizzes</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/calendar" class="nav-link">Calendar</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="quiz-hero">
+    <div class="quiz-eyebrow">Star Wars Unlimited Quiz · Affiliation</div>
+    <h1>Are You Light Side or Dark Side?</h1>
+    <p>5 questions to reveal your Star Wars Unlimited affiliation. Jedi, Sith, or something in between?</p>
+    <div class="quiz-meta">
+      <span>⏱ 2 minutes</span>
+      <span>❓ 5 questions</span>
+      <span>🎯 3 possible results</span>
+    </div>
+  </div>
+
+  <div class="quiz-container">
+    <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="progress-bar"></div></div>
+
+    <div class="quiz-step  active" data-step="1">
+      <div class="step-num">Question 1 of 5</div>
+      <div class="step-q">When you want something, you:</div>
+      <div class="options"><div class="option" data-q="1" data-v="light" onclick="selectOption(this)">
+          <span class="option-icon">🙏</span>
+          <div><div class="option-text">Work for it through patience and discipline</div><div class="option-sub">The right way takes time</div></div>
+        </div><div class="option" data-q="1" data-v="dark" onclick="selectOption(this)">
+          <span class="option-icon">⚡</span>
+          <div><div class="option-text">Take it — power belongs to those who seize it</div><div class="option-sub">The galaxy rewards strength</div></div>
+        </div><div class="option" data-q="1" data-v="neutral" onclick="selectOption(this)">
+          <span class="option-icon">🤷</span>
+          <div><div class="option-text">Do whatever gets the job done</div><div class="option-sub">Credits talk</div></div>
+        </div></div>
+    </div><div class="quiz-step" data-step="2">
+      <div class="step-num">Question 2 of 5</div>
+      <div class="step-q">Your view on the Galactic Empire:</div>
+      <div class="options"><div class="option" data-q="2" data-v="light" onclick="selectOption(this)">
+          <span class="option-icon">✊</span>
+          <div><div class="option-text">Order through oppression is still oppression</div><div class="option-sub">Freedom matters</div></div>
+        </div><div class="option" data-q="2" data-v="dark" onclick="selectOption(this)">
+          <span class="option-icon">🏛️</span>
+          <div><div class="option-text">Order is necessary — the galaxy was chaos before</div><div class="option-sub">Strong leadership works</div></div>
+        </div><div class="option" data-q="2" data-v="neutral" onclick="selectOption(this)">
+          <span class="option-icon">💰</span>
+          <div><div class="option-text">I work for whoever pays the most</div><div class="option-sub">No politics, just profit</div></div>
+        </div></div>
+    </div><div class="quiz-step" data-step="3">
+      <div class="step-num">Question 3 of 5</div>
+      <div class="step-q">Pick your Star Wars weapon of choice:</div>
+      <div class="options"><div class="option" data-q="3" data-v="light" onclick="selectOption(this)">
+          <span class="option-icon">💙</span>
+          <div><div class="option-text">Blue lightsaber — Jedi tradition</div><div class="option-sub">Defender of the Republic</div></div>
+        </div><div class="option" data-q="3" data-v="dark" onclick="selectOption(this)">
+          <span class="option-icon">❤️</span>
+          <div><div class="option-text">Red lightsaber — Sith power</div><div class="option-sub">Lord of the Force</div></div>
+        </div><div class="option" data-q="3" data-v="neutral" onclick="selectOption(this)">
+          <span class="option-icon">🔫</span>
+          <div><div class="option-text">Blaster — fast, practical, no nonsense</div><div class="option-sub">Hokey religions and ancient weapons</div></div>
+        </div></div>
+    </div><div class="quiz-step" data-step="4">
+      <div class="step-num">Question 4 of 5</div>
+      <div class="step-q">In a Star Wars Unlimited game, your style is:</div>
+      <div class="options"><div class="option" data-q="4" data-v="light" onclick="selectOption(this)">
+          <span class="option-icon">🛡️</span>
+          <div><div class="option-text">Protect my base, build up, win with superior resources</div><div class="option-sub">Patient and controlled</div></div>
+        </div><div class="option" data-q="4" data-v="dark" onclick="selectOption(this)">
+          <span class="option-icon">⚔️</span>
+          <div><div class="option-text">Overwhelm with aggressive force and powerful leaders</div><div class="option-sub">Dominate from the start</div></div>
+        </div><div class="option" data-q="4" data-v="neutral" onclick="selectOption(this)">
+          <span class="option-icon">🎯</span>
+          <div><div class="option-text">Whatever the most efficient line is</div><div class="option-sub">Win conditions, not allegiances</div></div>
+        </div></div>
+    </div><div class="quiz-step" data-step="5">
+      <div class="step-num">Question 5 of 5</div>
+      <div class="step-q">Han Solo or Darth Vader?</div>
+      <div class="options"><div class="option" data-q="5" data-v="light" onclick="selectOption(this)">
+          <span class="option-icon">☀️</span>
+          <div><div class="option-text">Neither — I am with the Rebellion proper</div><div class="option-sub">Luke, Leia, the cause</div></div>
+        </div><div class="option" data-q="5" data-v="dark" onclick="selectOption(this)">
+          <span class="option-icon">🌑</span>
+          <div><div class="option-text">Vader — power, presence, absolute authority</div><div class="option-sub">No contest</div></div>
+        </div><div class="option" data-q="5" data-v="neutral" onclick="selectOption(this)">
+          <span class="option-icon">🎰</span>
+          <div><div class="option-text">Han — never tell me the odds</div><div class="option-sub">Pragmatic and charismatic</div></div>
+        </div></div>
+    </div>
+
+    <div id="result">
+      <div id="result-inner"></div>
+      <div class="suggest-section">
+    <div class="suggest-title">You Might Also Like</div>
+    <div class="suggest-grid"><a href="/quizzes/riftbound-champion" class="suggest-card">
+      <div class="suggest-game">Riftbound</div>
+      <div class="suggest-name">Which Riftbound Champion Are You?</div>
+      <div class="suggest-desc">Find your LoL TCG identity</div>
+    </a><a href="/quizzes/which-tcg" class="suggest-card">
+      <div class="suggest-game">All TCGs</div>
+      <div class="suggest-name">Which TCG Should I Start?</div>
+      <div class="suggest-desc">Not playing yet? Find your game</div>
+    </a></div>
+  </div>
+    </div>
+
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="btn btn-secondary" id="btn-back" onclick="goBack()" disabled>← Back</button>
+      <span class="step-counter" id="step-counter">1 / 5</span>
+      <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>Next →</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/quizzes">Quizzes</a><a href="/tracker.html">Tracker</a><a href="/contact.html">Contact</a></p>
+  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Cards on Cards on Cards participates in affiliate programmes. Purchases through links may earn a small commission at no extra cost to you.</p>
+</footer>
+
+<script>
+
+const QUIZ_SLUG = 'starwars-affiliation';
+const SUPA = 'https://owaroeqchreuffbyakqx.supabase.co/rest/v1/quiz_stats';
+const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMwMzc5MDgsImV4cCI6MjA1ODYxMzkwOH0.sEmRMSN5Gx8QaX8mJ1e-Bg5jHGrXvDFpkNT-uWcN8Ro';
+
+async function recordResult(resultSlug) {
+  try {
+    await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&result_slug=eq.${resultSlug}`, {
+      method: 'PATCH',
+      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+      body: JSON.stringify({count: 0})
+    });
+    // Use RPC upsert-and-increment pattern via raw SQL is not available on anon
+    // Instead POST to card-api which has service key
+    await fetch('/.netlify/functions/card-api?action=quiz-result', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({quiz_slug: QUIZ_SLUG, result_slug: resultSlug})
+    });
+  } catch(e) {}
+}
+
+async function getStats(resultSlug) {
+  try {
+    const res = await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&result_slug=eq.${resultSlug}&select=count`, {
+      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON}
+    });
+    const data = await res.json();
+    return data[0]?.count || 0;
+  } catch(e) { return 0; }
+}
+
+async function getMostCommon() {
+  try {
+    const res = await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&select=result_slug,count&order=count.desc&limit=1`, {
+      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON}
+    });
+    const data = await res.json();
+    return data[0] || null;
+  } catch(e) { return null; }
+}
+
+const RESULTS = {"light": {"name": "Light Side", "tag": "Jedi & Rebellion", "why": "You are Light Side — the Alliance, the Jedi Order, hope against impossible odds. You believe in fighting for something bigger than yourself. At the Star Wars Unlimited table you build patiently and win with conviction. May the Force be with you. Always.", "flavour": "Hope is not naive. It is necessary.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited light side cards australia"}, "dark": {"name": "Dark Side", "tag": "Sith & Empire", "why": "You are Dark Side — the Empire, the Sith, overwhelming force and absolute power. You do not negotiate. Your leader cards are imposing, your deck is efficient, and your opponent knows they are in trouble from turn one. The Force is a tool and you use it well.", "flavour": "I find your lack of faith disturbing.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited dark side cards australia"}, "neutral": {"name": "Neutral / Smuggler", "tag": "Never Tell Me the Odds", "why": "You are Neutral — Han Solo, Boba Fett, the Mandalorian. You work for yourself. At the Star Wars Unlimited table you play the most efficient cards regardless of affiliation and win through pure optimisation. The credits are good. That is enough.", "flavour": "I know what I am worth.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited neutral cards australia"}};
+
+
+function shareResult(resultName, quizUrl) {
+  const text = `I got "${resultName}" on the C3 TCG quiz! What do you get?`;
+  const url = quizUrl || window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'C3 TCG Quiz', text, url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text + ' ' + url).then(() => {
+      showToast('Result copied to clipboard!');
+    }).catch(() => {
+      window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + url), '_blank');
+    });
+  }
+}
+
+function shareTwitter(resultName, quizUrl) {
+  const text = `I got "${resultName}" on the C3 TCG Quiz! What do you get?`;
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + (quizUrl || window.location.href)), '_blank');
+}
+
+function copyLink(quizUrl) {
+  navigator.clipboard.writeText((quizUrl || window.location.href)).then(() => {
+    showToast('Link copied!');
+  }).catch(() => {});
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#0A0C14;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;animation:fadeIn .2s ease';
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+
+const TOTAL = 5;
+let current = 1;
+const answers = {};
+
+function selectOption(el) {
+  const q = el.dataset.q;
+  const v = el.dataset.v;
+  document.querySelectorAll(`.option[data-q="${q}"]`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[q] = v;
+  document.getElementById('btn-next').disabled = false;
+}
+
+function goNext() {
+  if (!answers[current]) return;
+  if (current === TOTAL) { showResult(); return; }
+  current++;
+  showStep(current);
+}
+
+function goBack() {
+  if (current === 1) return;
+  current--;
+  showStep(current);
+}
+
+function showStep(n) {
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  document.querySelector(`[data-step="${n}"]`)?.classList.add('active');
+  document.getElementById('btn-back').disabled = n === 1;
+  document.getElementById('btn-next').disabled = !answers[n];
+  document.getElementById('btn-next').textContent = n === TOTAL ? 'See Result →' : 'Next →';
+  document.getElementById('step-counter').textContent = n + ' / ' + TOTAL;
+  document.getElementById('progress-bar').style.width = ((n-1)/TOTAL*100) + '%';
+}
+
+async function showResult() {
+  // Score function
+  
+  const a = answers;
+  const s = {light:0,dark:0,neutral:0};
+  Object.values(a).forEach(v => { if (s[v]!==undefined) s[v]+=4; });
+  const resultKey = Object.entries(s).sort((a,b)=>b[1]-a[1])[0][0];
+
+
+  const r = RESULTS[resultKey] || Object.values(RESULTS)[0];
+  
+  await recordResult(resultKey);
+  const myCount = await getStats(resultKey);
+  const mostCommon = await getMostCommon();
+
+  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(r.ebay || r.name + ' tcg australia')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
+
+  document.getElementById('result-inner').innerHTML = `
+    <div class="result-badge">${r.tag || 'Your Result'}</div>
+    <div class="result-name">${r.name}</div>
+    <div class="result-why">${r.why}</div>
+    <div class="result-flavour">${r.flavour}</div>
+    <div class="result-stats">
+      <div class="result-stat"><strong>${myCount.toLocaleString()}</strong>people got this result</div>
+      ${mostCommon && mostCommon.result_slug !== resultKey ? `<div class="result-stat"><strong>${RESULTS[mostCommon.result_slug]?.name || mostCommon.result_slug}</strong>most common result</div>` : ''}
+    </div>
+    <div class="result-actions">
+      ${r.cardLink ? `<a href="${r.cardLink}" class="result-cta" style="background:#FFE81F22;border:1px solid #FFE81F55;color:#FFE81F">🃏 Browse ${r.name} Cards →</a>` : ''}
+      ${r.shopLink ? `<a href="${r.shopLink}" class="result-cta" style="background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C">🛒 Shop on C3 →</a>` : ''}
+      <a href="${ebayUrl}" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">🏪 Buy on eBay AU ↗</a>
+      ${r.blogLink ? `<a href="${r.blogLink}" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 Beginners Guide →</a>` : ''}
+      ${r.evLink ? `<a href="${r.evLink}" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">📊 EV Calculator →</a>` : ''}
+    </div>
+    <div class="result-share">
+      <div class="share-title">Share your result</div>
+      <div class="share-btns">
+        <button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="shareTwitter('${r.name}', window.location.href)">𝕏 Share on X</button>
+        <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="copyLink(window.location.href)">🔗 Copy Link</button>
+        <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="shareResult('${r.name}', window.location.href)">↗ Share</button>
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('.quiz-step').forEach(s => s.style.display='none');
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('quiz-nav').style.display = 'none';
+  document.getElementById('progress-bar').style.width = '100%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>

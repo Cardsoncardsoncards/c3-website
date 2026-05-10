@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TCG Quizzes Australia | Find Your Game, Style and Identity | Cards on Cards on Cards</title>
+  <meta name="description" content="Free TCG personality quizzes for Australian players. Find your MTG Commander archetype, Pokemon era, Lorcana ink, Riftbound champion and more. Which TCG should you start?">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/quizzes">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+    a{color:var(--gold);text-decoration:none}
+    a:hover{text-decoration:underline}
+    nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+    .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+    .nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+    .nav-link:hover{color:var(--white);border-color:var(--silver);text-decoration:none}
+    .nav-link--active{color:#F472B6;border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.06)}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+    .hero{padding:56px 0 40px;text-align:center}
+    .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#F472B6;margin-bottom:12px}
+    .hero h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,48px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:14px}
+    .hero h1 span{color:#F472B6}
+    .hero p{font-size:15px;color:var(--text2);max-width:540px;margin:0 auto 24px}
+    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+    .filter-btn{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;border:1px solid var(--border);background:transparent;color:var(--silver);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;letter-spacing:.05em;text-transform:uppercase}
+    .filter-btn:hover,.filter-btn.active{background:rgba(244,114,182,.12);border-color:rgba(244,114,182,.4);color:#F472B6}
+    .quiz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:48px}
+    .quiz-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-decoration:none;transition:all .2s;display:block;position:relative;overflow:hidden}
+    .quiz-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-colour,var(--gold));opacity:.6;transition:opacity .25s}
+    .quiz-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4);border-color:var(--card-colour,var(--gold));text-decoration:none}
+    .quiz-card:hover::before{opacity:1}
+    .quiz-card.hidden{display:none}
+    .quiz-game-tag{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--card-colour,var(--gold));margin-bottom:6px}
+    .quiz-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3}
+    .quiz-desc{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5}
+    .quiz-meta{display:flex;gap:12px;font-size:11px;color:var(--text2);margin-bottom:16px}
+    .quiz-cta{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--card-colour,var(--gold))}
+    .quiz-stats{font-size:11px;color:var(--text2);margin-top:8px}
+    .section-head{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin:48px 0 20px}
+    footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--text2)}
+    footer a{color:var(--text2);margin:0 8px}
+    footer a:hover{color:var(--white)}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards" class="nav-link">Card Vault</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/quizzes" class="nav-link nav-link--active">Quizzes</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/calendar" class="nav-link">Calendar</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">C3 TCG Quizzes · Australia</div>
+    <h1>Find Your TCG <span>Identity</span></h1>
+    <p>Personality quizzes for Australian TCG players. Free, fun, and all results include AUD card links and eBay buy options.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterQuizzes('all',this)">All Quizzes</button>
+    <button class="filter-btn" onclick="filterQuizzes('all-tcg',this)">All TCGs</button>
+    <button class="filter-btn" onclick="filterQuizzes('mtg',this)">MTG</button>
+    <button class="filter-btn" onclick="filterQuizzes('pokemon',this)">Pokemon</button>
+    <button class="filter-btn" onclick="filterQuizzes('lorcana',this)">Lorcana</button>
+    <button class="filter-btn" onclick="filterQuizzes('riftbound',this)">Riftbound</button>
+    <button class="filter-btn" onclick="filterQuizzes('starwars',this)">Star Wars</button>
+    <button class="filter-btn" onclick="filterQuizzes('dragonball',this)">Dragon Ball</button>
+  </div>
+
+  <div class="quiz-grid" id="quiz-grid">
+
+    <a href="/quizzes/which-tcg" class="quiz-card" data-game="all-tcg" style="--card-colour:#C9A84C">
+      <div class="quiz-game-tag">All TCGs · Most Popular</div>
+      <div class="quiz-title">Which TCG Should I Start?</div>
+      <div class="quiz-desc">6 questions. Get a personalised recommendation for the Australian TCG market with AU pricing and buy links for your perfect game.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 6 questions</span><span>🎯 8 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-which-tcg">Loading...</div>
+    </a>
+
+    <a href="/quizzes/mtg-archetype" class="quiz-card" data-game="mtg" style="--card-colour:#A78BFA">
+      <div class="quiz-game-tag">MTG · Commander</div>
+      <div class="quiz-title">What's Your Commander Archetype?</div>
+      <div class="quiz-desc">Tokens, Combo, Control, Voltron, Reanimator, Stax, Tribal or Superfriends? 6 questions to reveal your true Commander identity.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 6 questions</span><span>🎯 8 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-mtg-archetype">Loading...</div>
+    </a>
+
+    <a href="/quizzes/mtg-colour" class="quiz-card" data-game="mtg" style="--card-colour:#A78BFA">
+      <div class="quiz-game-tag">MTG · Colour Philosophy</div>
+      <div class="quiz-title">Which MTG Colour Identity Are You?</div>
+      <div class="quiz-desc">White, Blue, Black, Red, Green or a two-colour guild? Find your true Magic colour identity in 5 questions.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 10 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-mtg-colour">Loading...</div>
+    </a>
+
+    <a href="/quizzes/rarity" class="quiz-card" data-game="all-tcg" style="--card-colour:#F59E0B">
+      <div class="quiz-game-tag">All TCGs · Personality</div>
+      <div class="quiz-title">What TCG Rarity Are You?</div>
+      <div class="quiz-desc">Common, Uncommon, Rare, Mythic Rare, or Special Illustration Rare? Find out your TCG rarity personality in 5 questions.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 5 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-rarity">Loading...</div>
+    </a>
+
+    <a href="/quizzes/investor-collector" class="quiz-card" data-game="all-tcg" style="--card-colour:#34D399">
+      <div class="quiz-game-tag">All TCGs · Mindset</div>
+      <div class="quiz-title">TCG Investor or Collector?</div>
+      <div class="quiz-desc">Collector, Investor, Player or Hoarder? 5 questions to reveal how you really think about your trading card collection.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 4 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-investor-collector">Loading...</div>
+    </a>
+
+    <a href="/quizzes/lorcana-ink" class="quiz-card" data-game="lorcana" style="--card-colour:#38BDF8">
+      <div class="quiz-game-tag">Lorcana · Ink Identity</div>
+      <div class="quiz-title">Which Lorcana Ink Are You?</div>
+      <div class="quiz-desc">Amber, Amethyst, Emerald, Ruby, Sapphire or Steel? Discover your Disney Lorcana ink identity and what it says about your playstyle.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 6 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-lorcana-ink">Loading...</div>
+    </a>
+
+    <a href="/quizzes/pokemon-era" class="quiz-card" data-game="pokemon" style="--card-colour:#FFCC00">
+      <div class="quiz-game-tag">Pokemon · Your Era</div>
+      <div class="quiz-title">Which Pokemon TCG Era Are You From?</div>
+      <div class="quiz-desc">Base Set original, Neo Genesis, EX era, Diamond and Pearl, or modern collector? Find your Pokemon TCG era in 5 questions.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 5 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-pokemon-era">Loading...</div>
+    </a>
+
+    <a href="/quizzes/riftbound-champion" class="quiz-card" data-game="riftbound" style="--card-colour:#818CF8">
+      <div class="quiz-game-tag">Riftbound · Champion Identity</div>
+      <div class="quiz-title">Which Riftbound Champion Are You?</div>
+      <div class="quiz-desc">Jinx, Jayce, Vi, Lux or Thresh? 5 questions to reveal your League of Legends TCG champion identity and playstyle.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 5 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-riftbound-champion">Loading...</div>
+    </a>
+
+    <a href="/quizzes/starwars-affiliation" class="quiz-card" data-game="starwars" style="--card-colour:#FFE81F">
+      <div class="quiz-game-tag">Star Wars Unlimited · Affiliation</div>
+      <div class="quiz-title">Are You Light Side or Dark Side?</div>
+      <div class="quiz-desc">Jedi, Sith, or Neutral smuggler? 5 questions to reveal your Star Wars Unlimited affiliation and what it means for your playstyle.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 3 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-starwars-affiliation">Loading...</div>
+    </a>
+
+    <a href="/quizzes/dragonball-character" class="quiz-card" data-game="dragonball" style="--card-colour:#F97316">
+      <div class="quiz-game-tag">Dragon Ball Super · Character</div>
+      <div class="quiz-title">Which Dragon Ball Character Are You?</div>
+      <div class="quiz-desc">Goku, Vegeta, Gohan, Frieza or Beerus? 5 questions to reveal your Dragon Ball Super Card Game fighter identity.</div>
+      <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 5 results</span></div>
+      <div class="quiz-cta">Take the Quiz →</div>
+      <div class="quiz-stats" id="stats-dragonball-character">Loading...</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/generators">Generators</a><a href="/tracker.html">Tracker</a><a href="/contact.html">Contact</a></p>
+  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+</footer>
+
+<script>
+const SUPA = 'https://owaroeqchreuffbyakqx.supabase.co/rest/v1/quiz_stats';
+const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMwMzc5MDgsImV4cCI6MjA1ODYxMzkwOH0.sEmRMSN5Gx8QaX8mJ1e-Bg5jHGrXvDFpkNT-uWcN8Ro';
+
+const quizzes = [
+  {slug:'which-tcg',label:'Which TCG Should I Start?'},
+  {slug:'mtg-archetype',label:'MTG Archetype'},
+  {slug:'mtg-colour',label:'MTG Colour'},
+  {slug:'rarity',label:'TCG Rarity'},
+  {slug:'investor-collector',label:'Investor/Collector'},
+  {slug:'lorcana-ink',label:'Lorcana Ink'},
+  {slug:'pokemon-era',label:'Pokemon Era'},
+  {slug:'riftbound-champion',label:'Riftbound Champion'},
+  {slug:'starwars-affiliation',label:'Star Wars Side'},
+  {slug:'dragonball-character',label:'Dragon Ball Character'},
+];
+
+// Load stats for each quiz
+(async () => {
+  for (const q of quizzes) {
+    try {
+      const res = await fetch(`${SUPA}?quiz_slug=eq.${q.slug}&select=count&order=count.desc`, {
+        headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON}
+      });
+      const data = await res.json();
+      const total = data.reduce((s,r) => s + (parseInt(r.count)||0), 0);
+      const el = document.getElementById('stats-'+q.slug);
+      if (el && total > 0) el.textContent = total.toLocaleString() + ' people have taken this quiz';
+      else if (el) el.textContent = '';
+    } catch(e) {}
+  }
+})();
+
+function filterQuizzes(game, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#quiz-grid .quiz-card').forEach(card => {
+    if (game === 'all') card.classList.remove('hidden');
+    else card.classList.toggle('hidden', card.dataset.game !== game);
+  });
+}
+</script>
+</body>
+</html>
