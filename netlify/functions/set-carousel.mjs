@@ -66,7 +66,7 @@ export default async (req) => {
   }
 
   // Filter: must have image, must have price, exclude sealed products
-  query += `image_url=not.is.null&market_price=gt.0`;
+  query += `image_url=not.is.null&market_price=gt.0&rarity=not.is.null&rarity=neq.None`;
 
   // For games that use price_aud
   query += `&order=market_price.desc.nullslast&limit=${limit}`;
@@ -88,9 +88,12 @@ export default async (req) => {
     let cards = await res.json();
 
     // Filter out sealed products server-side
-    const sealedKeywords = ['booster box', 'booster case', 'elite trainer', 'display box', 'case (wave', 'booster set'];
+    const sealedKeywords = ['booster box', 'booster case', 'elite trainer', 'display box', 'case (wave', 'booster set', 'display case', 'event kit', 'trove case', 'champion deck', 'display', 'sealed', 'bundle', 'collection box'];
     cards = cards.filter(c => {
       const nameLower = (c.name || '').toLowerCase();
+      // Keep if rarity is set (individual cards always have rarity)
+      if (c.rarity && c.rarity !== 'None' && c.rarity !== 'none') return true;
+      // Reject if name contains sealed keywords
       return !sealedKeywords.some(kw => nameLower.includes(kw));
     });
 

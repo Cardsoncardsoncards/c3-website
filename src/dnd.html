@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>D&amp;D Tools Australia &mdash; Coming Soon | Cards on Cards on Cards</title>
+  <meta name="description" content="C3 is building online D&D tools for Australian players. Monster comparisons, HP trackers, fight simulators, item databases and more. Register your interest now.">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/dnd">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--dnd:#8B5CF6}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(139,92,246,.08),transparent 60%);z-index:0}
+    a{color:var(--gold);text-decoration:none}
+    a:hover{text-decoration:underline}
+    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
+.nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
+.nav-link--active{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+.nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
+    .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px;position:relative;z-index:1}
+    .hero{padding:72px 0 48px;text-align:center}
+    .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--dnd);margin-bottom:16px}
+    .hero h1{font-family:'Cinzel',serif;font-size:clamp(28px,6vw,52px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:16px}
+    .hero h1 span{color:var(--dnd)}
+    .hero p{font-size:16px;color:var(--text2);max-width:580px;margin:0 auto 32px;line-height:1.7}
+    .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:56px 0}
+    .tool-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden}
+    .tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dnd);opacity:.5}
+    .tool-icon{font-size:28px;margin-bottom:12px}
+    .tool-title{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px}
+    .tool-desc{font-size:13px;color:var(--text2);line-height:1.6}
+    .tool-badge{display:inline-block;margin-top:12px;padding:3px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);color:var(--dnd)}
+    .form-section{background:var(--bg2);border:1px solid rgba(139,92,246,.25);border-radius:16px;padding:40px;text-align:center;margin:48px 0}
+    .form-section h2{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--white);margin-bottom:12px}
+    .form-section p{font-size:14px;color:var(--text2);margin-bottom:32px}
+    .etsy-link{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:10px;background:linear-gradient(135deg,#6B2D8B,#8B5CF6);color:#fff;font-size:14px;font-weight:700;text-decoration:none;transition:opacity .2s}
+    .etsy-link:hover{opacity:.85;text-decoration:none}
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,.4),var(--dnd),rgba(139,92,246,.4),transparent);margin:56px 0}
+    .faq-item{border-top:1px solid var(--border);padding:20px 0}
+    .faq-q{font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px}
+    .faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3 Logo">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards" class="nav-link">Card Vault</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/calendar" class="nav-link">Calendar</a>
+      <a href="/generators" class="nav-link">Generators</a>
+      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/dnd" class="nav-link nav-link--active">D&amp;D Tools</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" class="nav-link" target="_blank" rel="noopener">eBay ↗</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">&#127922; Cards on Cards on Cards &mdash; New Frontier</div>
+    <h1>D&amp;D Tools for <span>Australian Players</span></h1>
+    <p>We are exploring a full suite of free online Dungeons &amp; Dragons tools for Australian players. Monster comparisons, HP trackers, fight simulators, item databases, campaign planners and more. Tell us what you want and we will build it.</p>
+    <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="etsy-link">&#x1F6CD;&#xFE0F; Browse Our Etsy D&amp;D Printables &#8599;</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="text-align:center;margin-bottom:32px">
+    <p class="hero-eyebrow">What We Are Planning to Build</p>
+    <h2 style="font-family:'Cinzel',serif;font-size:26px;font-weight:700;color:var(--white);margin-top:8px">Tools Being Considered</h2>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon">&#9760;&#65039;</div>
+      <div class="tool-title">Monster Comparison Tool</div>
+      <div class="tool-desc">Compare any two monsters side by side. CR, stats, resistances, immunities, legendary actions. Instant reference for DMs building encounters.</div>
+      <span class="tool-badge">In Consideration</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">&#10084;&#65039;</div>
+      <div class="tool-title">HP Tracker &amp; Initiative</div>
+      <div class="tool-desc">Track hit points for your whole party and enemies in one place. Initiative order, conditions, and concentration all in one screen.</div>
+      <span class="tool-badge">In Consideration</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">&#128736;&#65039;</div>
+      <div class="tool-title">Fight Simulator</div>
+      <div class="tool-desc">Run probability-based fight simulations between any creature combinations. Know the odds before your players walk into a room.</div>
+      <span class="tool-badge">In Consideration</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">&#128218;</div>
+      <div class="tool-title">Item Database</div>
+      <div class="tool-desc">Searchable item database with descriptions, attunement requirements, rarity, and suggested price ranges for Australian campaigns.</div>
+      <span class="tool-badge">In Consideration</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">&#127919;</div>
+      <div class="tool-title">Random Encounter Generator</div>
+      <div class="tool-desc">CR-appropriate random encounter generator filtered by terrain, environment, and party level. With loot tables.</div>
+      <span class="tool-badge">In Consideration</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">&#128205;</div>
+      <div class="tool-title">Campaign Notes &amp; Planner</div>
+      <div class="tool-desc">Lightweight campaign notes tool. Track NPCs, locations, session summaries, and plot hooks. No account required.</div>
+      <span class="tool-badge">In Consideration</span>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h2>Tell Us What You Want</h2>
+    <p>Register your interest and vote on which tools get built first. We send one update email when a tool goes live. No spam.</p>
+    <!-- MailerLite Form 187060936876492476 -->
+    <div class="ml-embedded" data-form="DkEtHq"></div>
+    <p style="margin-top:20px;font-size:12px;color:var(--text2)">Already using our D&amp;D printables? <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">Browse the Etsy shop &#8599;</a></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <p style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:24px">Common Questions</p>
+    <div class="faq-item">
+      <div class="faq-q">Will these tools be free?</div>
+      <div class="faq-a">Yes. The plan is free tools with no account required, following the same model as our TCG card vault and collection tracker. We earn through affiliate links on related product recommendations.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">When will they be available?</div>
+      <div class="faq-a">We are gauging demand before committing to a build timeline. Register your interest above and you will be first to know when the first tool goes live.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What edition is being supported?</div>
+      <div class="faq-a">Initially 5th Edition (5e) and D&D 2024 (the revised ruleset). We will expand based on what the community wants.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you already sell D&D products?</div>
+      <div class="faq-a">Yes. Our <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">Etsy shop</a> has printable D&D resources including dungeon puzzles, trap cards, tavern scene decks, and DM tools. All instant download, AUD pricing.</div>
+    </div>
+  </div>
+</div>
+
+<footer style="border-top:1px solid #1e2235;padding:32px 24px;text-align:center;font-size:12px;color:#7a8099">
+  <p>
+    <a href="/" style="color:#7a8099;margin:0 8px">Home</a>
+    <a href="/cards" style="color:#7a8099;margin:0 8px">Card Vault</a>
+    <a href="/shop.html" style="color:#7a8099;margin:0 8px">Shop</a>
+    <a href="/blog" style="color:#7a8099;margin:0 8px">Blog</a>
+    <a href="/quizzes" style="color:#7a8099;margin:0 8px">Quizzes</a>
+    <a href="/ev-calculator.html" style="color:#7a8099;margin:0 8px">EV Calc</a>
+    <a href="/tracker.html" style="color:#7a8099;margin:0 8px">Tracker</a>
+    <a href="/generators" style="color:#7a8099;margin:0 8px">Generators</a>
+    <a href="/dnd" style="color:#7a8099;margin:0 8px">D&amp;D Tools</a>
+    <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="color:#7a8099;margin:0 8px">Etsy Shop &#8599;</a>
+    <a href="/contact.html" style="color:#7a8099;margin:0 8px">Contact</a>
+    <a href="/legal.html" style="color:#7a8099;margin:0 8px">Legal</a>
+  </p>
+  <p style="margin-top:12px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases through links may earn a commission at no extra cost to you.</p>
+</footer>
+
+<!-- MailerLite Universal -->
+<script>
+(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+ml('account', '2220065');
+</script>
+</body>
+</html>

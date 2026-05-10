@@ -28,6 +28,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/calendar.html": "calendar.html"});
   eleventyConfig.addPassthroughCopy({"src/generators.html": "generators.html"});
   eleventyConfig.addPassthroughCopy({"src/quizzes.html": "quizzes.html"});
+   eleventyConfig.addPassthroughCopy({"src/dnd.html": "dnd.html"}); 
 
   // Only blog posts (tagged "post") use the permalink rule
   eleventyConfig.addGlobalData("eleventyComputed", {

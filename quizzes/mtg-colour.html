@@ -263,8 +263,9 @@ let _shareResultName = '';
 let _shareUrl = '';
 
 function openSharePopup(resultName, quizUrl) {
-  _shareResultName = resultName;
-  _shareUrl = quizUrl || window.location.href;
+  if (resultName !== undefined) _shareResultName = resultName;
+  if (quizUrl !== undefined) _shareUrl = quizUrl;
+  if (!_shareUrl) _shareUrl = window.location.href;
   document.getElementById('popup-result-name').textContent = resultName;
   document.getElementById('popup-result-text').textContent =
     'I got "' + resultName + '" on the C3 TCG Quiz! What do you get?';
@@ -397,10 +398,10 @@ async function showResult() {
     '<div class="result-share">' +
       '<div class="share-title">Share your result</div>' +
       '<div class="share-btns">' +
-        '<button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="openSharePopup('' + r.name.replace(/'/g, "\'") + '', window.location.href)">𝕏 Share</button>' +
+        '<button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="openSharePopup()">𝕏 Share</button>' +
         '<button class="share-btn" style="background:#4267B2;color:#fff" onclick="doShareFacebook()">📘 Facebook</button>' +
         '<button class="share-btn" style="background:#25D366;color:#fff" onclick="doShareWhatsApp()">💬 WhatsApp</button>' +
-        '<button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="openSharePopup('' + r.name.replace(/'/g, "\'") + '', window.location.href)">↗ All platforms</button>' +
+        '<button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="openSharePopup()">↗ All platforms</button>' +
       '</div>' +
     '</div>';
 

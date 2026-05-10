@@ -81,22 +81,23 @@ footer a{color:var(--text2);margin:0 8px}
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/c3-logo.png" alt="C3" style="height:28px;width:28px;border-radius:5px;object-fit:cover;flex-shrink:0">
+      <img src="/c3logo.png" alt="C3 Logo">
       <span>Cards on Cards on Cards</span>
     </a>
     <div class="nav-links">
-      <a href="/" class="nav-link nav-link--home">← Home</a>
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
-      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators nav-link--active">Generators</a>
+
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards" class="nav-link">Card Vault</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/calendar" class="nav-link">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--active">Generators</a>
       <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
-      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&D Tools ↗</a>
-      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
+      <a href="/dnd" class="nav-link">D&amp;D Tools</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" class="nav-link" target="_blank" rel="noopener">eBay ↗</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
     </div>
   </div>
 </nav>
@@ -129,66 +130,69 @@ footer a{color:var(--text2);margin:0 8px}
 
   </div>
 
-  <div class="section-label">Coming Soon — Syncing Data</div>
-  <div class="generator-grid">
+  
 
-    <div class="gen-card gen-card--pokemon gen-card--soon">
-      <div class="gen-game" style="color:#FFCC00">Pokemon TCG</div>
-      <div class="gen-title">Random Pokemon Card</div>
-      <div class="gen-desc">Draw a random Pokemon card from 130,000+ cards across all sets. Filter by Type (Fire, Water, Psychic...) and Rarity to narrow your pull.</div>
-      <span class="gen-badge gen-badge--live">Live — 31,488 cards</span>
-      <a href="/cards/pokemon" class="gen-cta" style="background:linear-gradient(135deg,#FFCC00,#CC9900);color:#0A0C14">🎲 Random Pokemon Card →</a>
+  <div class="section-label">Random Card Generators &mdash; All Games</div>
+
+  <div class="generator-grid" id="result-area">
+    <div class="gen-card gen-card--pokemon gen-card--live" onclick="generateRandom('pokemon', 'random-pokemon-card')">
+      <div class="gen-icon">&#9889;</div>
+      <div class="gen-title">Random Pokemon TCG Card</div>
+      <div class="gen-desc">Draw a completely random Pokemon TCG card from 31,488 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
+      <span class="gen-badge gen-badge--live">Live &mdash; 31,488 cards</span>
+      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#786400,#FFCC00);color:#0A0C14" onclick="event.preventDefault();generateRandom('pokemon', 'random-pokemon-card')">&#127922; Random Pokemon Card &rarr;</a>
+      <div id="random-pokemon-card" class="gen-result" style="display:none;margin-top:12px"></div>
     </div>
-
-    <div class="gen-card gen-card--yugioh gen-card--live" onclick="window.location='/cards/yugioh'">
-      <div class="gen-game" style="color:#c8a332">Yu-Gi-Oh! TCG</div>
-      <div class="gen-title">Random Yu-Gi-Oh Card</div>
-      <div class="gen-desc">Draw a random card from 12,000+ Yu-Gi-Oh cards. Filter by Attribute (Light, Dark, Fire...), card Type, and Archetype.</div>
-      <span class="gen-badge gen-badge--live">Live — 46,588 cards</span>
-      <a href="/cards/yugioh" class="gen-cta" style="background:linear-gradient(135deg,#7B2FBE,#C084FC);color:#fff">🎲 Random Yu-Gi-Oh Card →</a>
+    <div class="gen-card gen-card--yugioh gen-card--live" onclick="generateRandom('yugioh', 'random-yugioh-card')">
+      <div class="gen-icon">&#128065;</div>
+      <div class="gen-title">Random Yu-Gi-Oh! Card</div>
+      <div class="gen-desc">Draw a completely random Yu-Gi-Oh! card from 46,588 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
+      <span class="gen-badge gen-badge--live">Live &mdash; 46,588 cards</span>
+      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#6B2D8B,#C084FC);color:#0A0C14" onclick="event.preventDefault();generateRandom('yugioh', 'random-yugioh-card')">&#127922; Random Yu-Gi-Oh Card &rarr;</a>
+      <div id="random-yugioh-card" class="gen-result" style="display:none;margin-top:12px"></div>
     </div>
-
-    <div class="gen-card gen-card--lorcana gen-card--live" onclick="window.location='/cards/lorcana'">
-      <div class="gen-game" style="color:#0189C4">Disney Lorcana</div>
-      <div class="gen-title">Random Lorcana Card</div>
-      <div class="gen-desc">Draw a random Lorcana card from 1,000+ cards. Filter by Ink colour (Amber, Amethyst, Emerald, Ruby, Sapphire, Steel) and Rarity.</div>
-      <span class="gen-badge gen-badge--live">Live — 3,153 cards</span>
-      <a href="/cards/lorcana" class="gen-cta" style="background:linear-gradient(135deg,#0369A1,#38BDF8);color:#fff">🎲 Random Lorcana Card →</a>
+    <div class="gen-card gen-card--lorcana gen-card--live" onclick="generateRandom('lorcana', 'random-lorcana-card')">
+      <div class="gen-icon">&#127984;</div>
+      <div class="gen-title">Random Disney Lorcana Card</div>
+      <div class="gen-desc">Draw a completely random Disney Lorcana card from 3,153 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
+      <span class="gen-badge gen-badge--live">Live &mdash; 3,153 cards</span>
+      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#0369A1,#38BDF8);color:#0A0C14" onclick="event.preventDefault();generateRandom('lorcana', 'random-lorcana-card')">&#127922; Random Lorcana Card &rarr;</a>
+      <div id="random-lorcana-card" class="gen-result" style="display:none;margin-top:12px"></div>
     </div>
-
-    <div class="gen-card gen-card--onepiece gen-card--live" onclick="window.location='/cards/onepiece'">
-      <div class="gen-game" style="color:#e03030">One Piece Card Game</div>
-      <div class="gen-title">Random One Piece Card</div>
-      <div class="gen-desc">Draw a random card from the One Piece TCG. Filter by Colour and Card Type (Character, Event, Stage).</div>
-      <span class="gen-badge gen-badge--live">Live — 6,641 cards</span>
-      <a href="/cards/onepiece" class="gen-cta" style="background:linear-gradient(135deg,#B91C1C,#F97316);color:#fff">🎲 Random One Piece Card →</a>
+    <div class="gen-card gen-card--onepiece gen-card--live" onclick="generateRandom('onepiece', 'random-onepiece-card')">
+      <div class="gen-icon">&#9760;&#65039;</div>
+      <div class="gen-title">Random One Piece TCG Card</div>
+      <div class="gen-desc">Draw a completely random One Piece TCG card from 6,641 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
+      <span class="gen-badge gen-badge--live">Live &mdash; 6,641 cards</span>
+      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#B91C1C,#F97316);color:#0A0C14" onclick="event.preventDefault();generateRandom('onepiece', 'random-onepiece-card')">&#127922; Random One Piece Card &rarr;</a>
+      <div id="random-onepiece-card" class="gen-result" style="display:none;margin-top:12px"></div>
     </div>
-
-    <div class="gen-card gen-card--starwars gen-card--live" onclick="window.location='/cards/starwars'">
-      <div class="gen-game" style="color:#ffe81f">Star Wars: Unlimited</div>
-      <div class="gen-title">Random Star Wars Card</div>
-      <div class="gen-desc">Draw a random Star Wars: Unlimited card. Filter by Aspect (Vigilance, Command, Aggression, Cunning, Villainy, Heroism) and Rarity.</div>
-      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    <div class="gen-card gen-card--starwars gen-card--live" onclick="generateRandom('starwars', 'random-starwars-card')">
+      <div class="gen-icon">&#128640;</div>
+      <div class="gen-title">Random Star Wars Unlimited Card</div>
+      <div class="gen-desc">Draw a completely random Star Wars Unlimited card from 6,113 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
+      <span class="gen-badge gen-badge--live">Live &mdash; 6,113 cards</span>
+      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#78350F,#FFE81F);color:#0A0C14" onclick="event.preventDefault();generateRandom('starwars', 'random-starwars-card')">&#127922; Random Star Wars Card &rarr;</a>
+      <div id="random-starwars-card" class="gen-result" style="display:none;margin-top:12px"></div>
     </div>
-
-    <div class="gen-card gen-card--dbz gen-card--soon">
-      <div class="gen-game" style="color:#ff6600">Dragon Ball Super CG</div>
-      <div class="gen-title" onclick="window.location='/cards/dragonball'">Random Dragon Ball Card</div>
-      <div class="gen-desc">Draw a random card from the Dragon Ball Super Card Game. Filter by Colour and Card Category.</div>
-      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+    <div class="gen-card gen-card--dragonball gen-card--live" onclick="generateRandom('dragonball', 'random-dragonball-card')">
+      <div class="gen-icon">&#128009;</div>
+      <div class="gen-title">Random Dragon Ball Super Card</div>
+      <div class="gen-desc">Draw a completely random Dragon Ball Super card from 6,261 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
+      <span class="gen-badge gen-badge--live">Live &mdash; 6,261 cards</span>
+      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#C2410C,#F97316);color:#0A0C14" onclick="event.preventDefault();generateRandom('dragonball', 'random-dragonball-card')">&#127922; Random Dragon Ball Card &rarr;</a>
+      <div id="random-dragonball-card" class="gen-result" style="display:none;margin-top:12px"></div>
     </div>
-
-    <div class="gen-card gen-card--riftbound gen-card--live" onclick="window.location='/cards/riftbound'">
-      <div class="gen-game" style="color:#5865F2">Riftbound</div>
+    <div class="gen-card gen-card--riftbound gen-card--live" onclick="generateRandom('riftbound', 'random-riftbound-card')">
+      <div class="gen-icon">&#9876;&#65039;</div>
       <div class="gen-title">Random Riftbound Card</div>
-      <div class="gen-desc">Pull a random card from the Riftbound League of Legends TCG. Filter by champion, element, and rarity.</div>
-      <span class="gen-badge gen-badge--live">Live — 1,159 cards</span>
-      <a href="/cards/riftbound" class="gen-cta" style="background:linear-gradient(135deg,#3730A3,#818CF8);color:#fff">🎲 Random Riftbound Card →</a>
-      <div class="gen-desc">Draw a random card from the Riftbound: League of Legends TCG. Filter by Champion and Card Type as data becomes available.</div>
-      <span class="gen-badge gen-badge--soon">Coming Soon</span>
+      <div class="gen-desc">Draw a completely random Riftbound card from 1,159 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
+      <span class="gen-badge gen-badge--live">Live &mdash; 1,159 cards</span>
+      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#3730A3,#818CF8);color:#0A0C14" onclick="event.preventDefault();generateRandom('riftbound', 'random-riftbound-card')">&#127922; Random Riftbound Card &rarr;</a>
+      <div id="random-riftbound-card" class="gen-result" style="display:none;margin-top:12px"></div>
     </div>
-
   </div>
+
 
   <div style="background:rgba(34,211,238,.04);border:1px solid rgba(34,211,238,.15);border-radius:var(--radius);padding:24px;margin-top:48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
     <div>
@@ -200,12 +204,52 @@ footer a{color:var(--text2);margin:0 8px}
 
 </div>
 
-<footer>
-  <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/calendar">Calendar</a><a href="/quizzes">TCG Quiz</a><a href="/tracker.html">Tracker</a><a href="/contact.html">Contact</a></p>
-  <p style="margin-top:8px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+<footer style="border-top:1px solid #1e2235;padding:32px 24px;text-align:center;font-size:12px;color:#7a8099">
+  <p>
+    <a href="/" style="color:#7a8099;margin:0 8px">Home</a>
+    <a href="/cards" style="color:#7a8099;margin:0 8px">Card Vault</a>
+    <a href="/shop.html" style="color:#7a8099;margin:0 8px">Shop</a>
+    <a href="/blog" style="color:#7a8099;margin:0 8px">Blog</a>
+    <a href="/quizzes" style="color:#7a8099;margin:0 8px">Quizzes</a>
+    <a href="/ev-calculator.html" style="color:#7a8099;margin:0 8px">EV Calc</a>
+    <a href="/tracker.html" style="color:#7a8099;margin:0 8px">Tracker</a>
+    <a href="/generators" style="color:#7a8099;margin:0 8px">Generators</a>
+    <a href="/dnd" style="color:#7a8099;margin:0 8px">D&amp;D Tools</a>
+    <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="color:#7a8099;margin:0 8px">Etsy Shop &#8599;</a>
+    <a href="/contact.html" style="color:#7a8099;margin:0 8px">Contact</a>
+    <a href="/legal.html" style="color:#7a8099;margin:0 8px">Legal</a>
+  </p>
+  <p style="margin-top:12px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases through links may earn a commission at no extra cost to you.</p>
 </footer>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<script>
+async function generateRandom(game, resultId) {
+  var el = document.getElementById(resultId);
+  if (!el) return;
+  el.style.display = 'block';
+  el.innerHTML = '<div style="color:#7a8099;font-size:12px;padding:8px">Drawing...</div>';
+  try {
+    var res = await fetch('/api/random-card?game=' + game + '&limit=1');
+    if (!res.ok) throw new Error('Failed');
+    var data = await res.json();
+    var c = data.cards && data.cards[0];
+    if (!c) throw new Error('No card');
+    el.innerHTML =
+      (c.image_url ? '<img src="' + c.image_url + '" alt="' + c.name.replace(/"/g,'&quot;') + '" onerror="this.style.display='none'">' : '') +
+      '<div class="gr-name">' + c.name + '</div>' +
+      (c.rarity ? '<div style="font-size:10px;color:#7a8099;margin-bottom:4px">' + c.rarity + (c.set_name ? ' &middot; ' + c.set_name : '') + '</div>' : '') +
+      '<div class="gr-price">' + c.priceDisplay + '</div>' +
+      '<div class="gr-links">' +
+        '<a href="' + c.cardUrl + '" class="gen-cta" style="font-size:11px;padding:6px 12px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C;border-radius:6px;text-decoration:none">View Card &rarr;</a>' +
+        '<a href="' + c.ebayUrl + '" target="_blank" rel="noopener sponsored" class="gen-cta" style="font-size:11px;padding:6px 12px;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA;border-radius:6px;text-decoration:none">Buy on eBay &#8599;</a>' +
+      '</div>';
+  } catch(e) {
+    el.innerHTML = '<div style="color:#7a8099;font-size:12px">Could not draw a card. Try again.</div>';
+  }
+}
+</script>
 </body>
 </html>
