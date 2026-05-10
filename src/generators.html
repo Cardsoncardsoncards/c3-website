@@ -19,13 +19,15 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;li
 a{color:var(--gold);text-decoration:none}
 a:hover{text-decoration:underline}
 nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
-.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-.nav-links::-webkit-scrollbar{display:none}
-.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
-.nav-link:hover{text-decoration:none}
-.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+  .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+  .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;transition:box-shadow .2s}
+  .nav-logo:hover img{box-shadow:0 0 12px rgba(201,168,76,.5)}
+  .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
+  .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
+  .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
 .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
 .nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
 .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
@@ -75,15 +77,70 @@ h1 span{color:#22D3EE}
 footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px}
 footer a{color:var(--text2);margin:0 8px}
 </style>
+<script>
+async function generateRandom(game, resultId) {
+  var el = document.getElementById(resultId);
+  if (!el) return;
+  el.style.display = 'block';
+  el.innerHTML = '<div style="color:#7a8099;font-size:12px;padding:8px">Drawing...</div>';
+  try {
+    var res = await fetch('/api/random-card?game=' + game + '&limit=1');
+    if (!res.ok) throw new Error('Failed');
+    var data = await res.json();
+    var c = data.cards && data.cards[0];
+    if (!c) throw new Error('No card');
+    var imgHtml = c.image_url
+      ? '<img src="' + c.image_url + '" alt="" style="width:120px;border-radius:6px;margin:0 auto 8px;display:block" onerror="this.style.display=&quot;none&quot;">'
+      : '';
+    var rarityHtml = c.rarity
+      ? '<div style="font-size:10px;color:#7a8099;margin-bottom:4px">' + c.rarity + (c.set_name ? ' &middot; ' + c.set_name : '') + '</div>'
+      : '';
+    el.innerHTML = imgHtml +
+      '<div class="gr-name">' + c.name + '</div>' +
+      rarityHtml +
+      '<div class="gr-price">' + c.priceDisplay + '</div>' +
+      '<div class="gr-links">' +
+        '<a href="' + c.cardUrl + '" class="gen-cta" style="font-size:11px;padding:6px 12px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C;border-radius:6px;text-decoration:none">View Card &rarr;</a>' +
+        ' <a href="' + c.ebayUrl + '" target="_blank" rel="noopener sponsored" class="gen-cta" style="font-size:11px;padding:6px 12px;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA;border-radius:6px;text-decoration:none">Buy on eBay &#8599;</a>' +
+      '</div>';
+  } catch(e) {
+    el.innerHTML = '<div style="color:#7a8099;font-size:12px">Could not draw a card. Try again.</div>';
+  }
+}
+
+async function generateMTGRandom() {
+  var el = document.getElementById('random-mtg-result');
+  if (!el) return;
+  el.style.display = 'block';
+  el.innerHTML = '<div style="color:#7a8099;font-size:12px;padding:8px">Drawing...</div>';
+  try {
+    var res = await fetch('/api/random-card?game=mtg&limit=1');
+    if (!res.ok) throw new Error('Failed');
+    var data = await res.json();
+    var c = data.cards && data.cards[0];
+    if (!c) throw new Error('No card');
+    var imgHtml = c.image_url
+      ? '<img src="' + c.image_url + '" alt="" style="width:120px;border-radius:6px;margin:0 auto 8px;display:block" onerror="this.style.display=&quot;none&quot;">'
+      : '';
+    el.innerHTML = imgHtml +
+      '<div class="gr-name">' + c.name + '</div>' +
+      (c.rarity ? '<div style="font-size:10px;color:#7a8099;margin-bottom:4px">' + c.rarity + (c.set_name ? ' &middot; ' + c.set_name : '') + '</div>' : '') +
+      '<div class="gr-price">' + c.priceDisplay + '</div>' +
+      '<div class="gr-links">' +
+        '<a href="' + c.cardUrl + '" style="font-size:11px;padding:6px 12px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C;border-radius:6px;text-decoration:none">View Card &rarr;</a>' +
+        ' <a href="' + c.ebayUrl + '" target="_blank" rel="noopener sponsored" style="font-size:11px;padding:6px 12px;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA;border-radius:6px;text-decoration:none">Buy on eBay &#8599;</a>' +
+      '</div>';
+  } catch(e) {
+    el.innerHTML = '<div style="color:#7a8099;font-size:12px">Could not draw a card. Try again.</div>';
+  }
+}
+</script>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <img src="/c3logo.png" alt="C3 Logo">
-      <span>Cards on Cards on Cards</span>
-    </a>
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3" onmouseover="this.style.boxShadow='0 0 14px rgba(201,168,76,.6)'" onmouseout="this.style.boxShadow=''"></a>
     <div class="nav-links">
 
       <a href="/" class="nav-link">Home</a>
@@ -95,7 +152,7 @@ footer a{color:var(--text2);margin:0 8px}
       <a href="/calendar" class="nav-link">Calendar</a>
       <a href="/generators" class="nav-link nav-link--active">Generators</a>
       <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="/dnd" class="nav-link">D&amp;D Tools</a>
+      <a href="/dnd" class="nav-link nav-link--dnd">D&amp;D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" class="nav-link" target="_blank" rel="noopener">eBay ↗</a>
       <a href="/contact.html" class="nav-link">Contact</a>
     </div>
@@ -225,31 +282,6 @@ footer a{color:var(--text2);margin:0 8px}
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
-<script>
-async function generateRandom(game, resultId) {
-  var el = document.getElementById(resultId);
-  if (!el) return;
-  el.style.display = 'block';
-  el.innerHTML = '<div style="color:#7a8099;font-size:12px;padding:8px">Drawing...</div>';
-  try {
-    var res = await fetch('/api/random-card?game=' + game + '&limit=1');
-    if (!res.ok) throw new Error('Failed');
-    var data = await res.json();
-    var c = data.cards && data.cards[0];
-    if (!c) throw new Error('No card');
-    el.innerHTML =
-      (c.image_url ? '<img src="' + c.image_url + '" alt="' + c.name.replace(/"/g,'&quot;') + '" onerror="this.style.display='none'">' : '') +
-      '<div class="gr-name">' + c.name + '</div>' +
-      (c.rarity ? '<div style="font-size:10px;color:#7a8099;margin-bottom:4px">' + c.rarity + (c.set_name ? ' &middot; ' + c.set_name : '') + '</div>' : '') +
-      '<div class="gr-price">' + c.priceDisplay + '</div>' +
-      '<div class="gr-links">' +
-        '<a href="' + c.cardUrl + '" class="gen-cta" style="font-size:11px;padding:6px 12px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C;border-radius:6px;text-decoration:none">View Card &rarr;</a>' +
-        '<a href="' + c.ebayUrl + '" target="_blank" rel="noopener sponsored" class="gen-cta" style="font-size:11px;padding:6px 12px;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA;border-radius:6px;text-decoration:none">Buy on eBay &#8599;</a>' +
-      '</div>';
-  } catch(e) {
-    el.innerHTML = '<div style="color:#7a8099;font-size:12px">Could not draw a card. Try again.</div>';
-  }
-}
-</script>
+
 </body>
 </html>

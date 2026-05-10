@@ -134,8 +134,66 @@
   <div class="form-section">
     <h2>Tell Us What You Want</h2>
     <p>Register your interest and vote on which tools get built first. We send one update email when a tool goes live. No spam.</p>
-    <!-- MailerLite Form 187060936876492476 -->
-    <div class="ml-embedded" data-form="DkEtHq"></div>
+    <form id="dnd-interest-form" style="text-align:left;max-width:480px;margin:0 auto">
+      <div style="margin-bottom:20px">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A78BFA;margin-bottom:12px">Which tools are you most interested in?</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:#F0F2FF">
+            <input type="checkbox" name="tools" value="monster-comparison" style="accent-color:#8B5CF6;width:16px;height:16px"> Monster Comparison Tool
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:#F0F2FF">
+            <input type="checkbox" name="tools" value="hp-tracker" style="accent-color:#8B5CF6;width:16px;height:16px"> HP Tracker &amp; Initiative Order
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:#F0F2FF">
+            <input type="checkbox" name="tools" value="fight-simulator" style="accent-color:#8B5CF6;width:16px;height:16px"> Fight Simulator
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:#F0F2FF">
+            <input type="checkbox" name="tools" value="item-database" style="accent-color:#8B5CF6;width:16px;height:16px"> Item Database
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:#F0F2FF">
+            <input type="checkbox" name="tools" value="encounter-generator" style="accent-color:#8B5CF6;width:16px;height:16px"> Random Encounter Generator
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:#F0F2FF">
+            <input type="checkbox" name="tools" value="campaign-notes" style="accent-color:#8B5CF6;width:16px;height:16px"> Campaign Notes &amp; Planner
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:#F0F2FF">
+            <input type="checkbox" name="tools" value="spell-tracker" style="accent-color:#8B5CF6;width:16px;height:16px"> Spell Slot Tracker
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;color:#F0F2FF">
+            <input type="checkbox" name="tools" value="loot-generator" style="accent-color:#8B5CF6;width:16px;height:16px"> Loot Table Generator
+          </label>
+        </div>
+      </div>
+      <div style="margin-bottom:20px">
+        <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A78BFA;margin-bottom:8px">Something else? Tell us:</label>
+        <textarea name="other" placeholder="e.g. NPC generator, session timer, encounter difficulty calculator..." style="width:100%;padding:12px 14px;background:#0e1118;border:1px solid #1e2235;border-radius:8px;color:#F0F2FF;font-size:13px;font-family:'DM Sans',sans-serif;resize:vertical;min-height:80px;outline:none" onfocus="this.style.borderColor='#8B5CF6'" onblur="this.style.borderColor='#1e2235'"></textarea>
+      </div>
+      <div style="margin-bottom:20px">
+        <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A78BFA;margin-bottom:8px">Your email address:</label>
+        <input type="email" name="email" required placeholder="you@example.com" style="width:100%;padding:12px 14px;background:#0e1118;border:1px solid #1e2235;border-radius:8px;color:#F0F2FF;font-size:13px;font-family:'DM Sans',sans-serif;outline:none" onfocus="this.style.borderColor='#8B5CF6'" onblur="this.style.borderColor='#1e2235'">
+      </div>
+      <button type="submit" style="width:100%;padding:14px 24px;background:linear-gradient(135deg,#6B2D8B,#8B5CF6);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Register My Interest &#x1F3AF;</button>
+      <div id="dnd-form-success" style="display:none;margin-top:16px;padding:14px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.3);border-radius:8px;text-align:center;font-size:13px;color:#4ADE80">Thanks! We will let you know when your chosen tools go live.</div>
+    </form>
+    <script>
+    document.getElementById('dnd-interest-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var tools = Array.from(document.querySelectorAll('input[name="tools"]:checked')).map(function(el){return el.value;});
+      var other = document.querySelector('textarea[name="other"]').value;
+      var email = document.querySelector('input[name="email"]').value;
+      if (!email) return;
+      try {
+        var fields = {dnd_tools: tools.join(', ') + (other ? ', Other: ' + other : '')};
+        await fetch('https://connect.mailerlite.com/api/subscribers', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+          body: JSON.stringify({email: email, fields: fields, groups: ['187060931011806295']})
+        });
+      } catch(err) {}
+      document.getElementById('dnd-form-success').style.display = 'block';
+      e.target.style.display = 'none';
+    });
+    </script>
     <p style="margin-top:20px;font-size:12px;color:var(--text2)">Already using our D&amp;D printables? <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">Browse the Etsy shop &#8599;</a></p>
   </div>
 
@@ -145,7 +203,7 @@
     <p style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:24px">Common Questions</p>
     <div class="faq-item">
       <div class="faq-q">Will these tools be free?</div>
-      <div class="faq-a">Yes. The plan is free tools with no account required, following the same model as our TCG card vault and collection tracker. We earn through affiliate links on related product recommendations.</div>
+      <div class="faq-a">Most tools will be free with no account required, following the same model as our TCG card vault and collection tracker. Some advanced features may have a one-time premium upgrade, similar to our existing Etsy spreadsheet tools. We will always have a fully functional free tier.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">When will they be available?</div>

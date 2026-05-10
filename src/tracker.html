@@ -1,499 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free TCG Collection Tracker | Know What Your Cards Are Worth | C3</title>
+<meta name="description" content="Your TCG collection might be worth more than you think. Free collection tracker for Australian players. MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Riftbound and more.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/tracker">
 <link rel="icon" type="image/png" href="/c3logo.png">
-<title>Free TCG Collection Tracker | Cards on Cards on Cards</title>
-<meta name="description" content="Download your free TCG Collection Tracker. Works for Magic, Pokemon, Yu-Gi-Oh, Lorcana, One Piece and more.">
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     SETUP GUIDE — replace placeholders before deploying
-     ═══════════════════════════════════════════════════════════════════
-
-  Replace these placeholders (Ctrl+H):
-    YOUR_MAILERLITE_FORM_URL   → Your MailerLite embedded form action URL (4 occurrences)
-    https://docs.google.com/spreadsheets/d/18GtZjToO1lxMzM3urEq-nj_5Ck86BLOnDqGv5uN7VmM/edit?usp=sharing     → Shareable link to your free tracker Google Sheet
-    YOUR_EBAY_STORE_URL        → Your full eBay store URL
-    YOUR_ETSY_STORE_URL        → Your full Etsy store URL (BLAS Digital)
-    blasdigital-22             → Your Amazon Associates tracking tag
-
-  After replacing, do Ctrl+F and search for YOUR_ — zero should remain.
-     ═══════════════════════════════════════════════════════════════════ -->
-
-<meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
-<!-- Google tag (gtag.js) -->
+<meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WR68HPE92S');
-  document.addEventListener('submit', function(e) {
-    if (e.target && e.target.tagName === 'FORM') {
-      gtag('event', 'form_submit', { event_category: 'newsletter', event_label: 'signup' });
-    }
-  }, true);
-</script>
-<!-- MailerLite Universal -->
-<script>
-  (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-  .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);}
-  (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml'));
-  ml('account', '2220065');
-</script>
-<!-- End MailerLite Universal -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
-  :root {
-    --ink:      #0A0C14;
-    --deep:     #111422;
-    --card:     #161929;
-    --border:   #252840;
-    --gold:     #C9A84C;
-    --gold-lit: #E8C86A;
-    --gold-dim: #7A621E;
-    --silver:   #A0A8C0;
-    --white:    #F0F2FF;
-    --success:  #3DD68C;
-    --purple:   #6B6BFF;
-  }
+:root{
+  --bg:#080a0f;--bg2:#0e1118;--bg3:#141720;
+  --gold:#C9A84C;--gold-dim:#7A621E;--gold-lit:#E8C86A;
+  --silver:#A0A8C0;--white:#F0F2FF;
+  --border:#1e2235;--text2:#7a8099;
+  --green:#4ADE80;--blue:#60A5FA;--purple:#C084FC;
+  --ink:var(--bg);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--ink);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    line-height: 1.65;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 60%),
-      repeating-linear-gradient(60deg, transparent, transparent 30px, rgba(255,255,255,0.012) 30px, rgba(255,255,255,0.012) 31px),
-      repeating-linear-gradient(-60deg, transparent, transparent 30px, rgba(255,255,255,0.012) 30px, rgba(255,255,255,0.012) 31px);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .wrap        { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-  .wrap--narrow { max-width: 680px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(10,12,20,0.88);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 0;
-  }
+/* ── NAV ── */
+nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
-  .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
-  .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;transition:box-shadow .2s}
-  .nav-logo:hover img{box-shadow:0 0 12px rgba(201,168,76,.5)}
-  .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-  .nav-links::-webkit-scrollbar{display:none}
-  .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
-  .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
-  .nav-link--active{color:var(--gold);border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
-  .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF;color:#C8DDFF}
-  .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
-  .nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
-  .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1;color:#A5DFC0}
-  .nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
-  .nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{background:rgba(192,132,252,.06);border-color:#C084FC;color:#D8B4FE}
-  .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
-  .nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171;color:#FCA5A5}
-  .nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE;color:#67E8F9}
-  .nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
-  .nav-link--dnd{color:#A78BFA;border-color:rgba(139,92,246,.35)}.nav-link--dnd:hover{background:rgba(139,92,246,.06);border-color:#A78BFA;color:#C4B5FD}
-  .nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{background:rgba(148,163,184,.06);border-color:#94A3B8;color:#CBD5E1}
-    .hero { padding: 96px 0 72px; text-align: center; position: relative; z-index: 1; }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--gold); padding: 6px 16px; border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 100px; margin-bottom: 32px; background: rgba(201,168,76,0.06);
-    animation: fadeSlideDown 0.6s ease both;
-  }
-  .hero-eyebrow::before { content: '◆'; font-size: 8px; }
-  .hero-title {
-    font-family: 'Cinzel', serif; font-size: clamp(38px, 7vw, 72px);
-    font-weight: 900; line-height: 1.08; color: var(--white); margin-bottom: 8px;
-    animation: fadeSlideDown 0.6s 0.1s ease both;
-  }
-  .hero-title .gold { color: var(--gold); }
-  .hero-subtitle {
-    font-family: 'Cinzel', serif; font-size: clamp(13px, 2vw, 18px);
-    font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--silver); margin-bottom: 28px;
-    animation: fadeSlideDown 0.6s 0.2s ease both;
-  }
-  .hero-desc {
-    font-size: 17px; color: rgba(240,242,255,0.65);
-    max-width: 540px; margin: 0 auto 48px;
-    animation: fadeSlideDown 0.6s 0.3s ease both;
-  }
-  .hero-tcgs {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-    animation: fadeSlideDown 0.6s 0.4s ease both;
-  }
-  .tcg-badge {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-    padding: 5px 12px; border-radius: 4px;
-    background: var(--card); border: 1px solid var(--border);
-    color: var(--silver); text-transform: uppercase;
-  }
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;transition:box-shadow .2s}
+.nav-logo:hover img{box-shadow:0 0 12px rgba(201,168,76,.5)}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
+.nav-link--active{color:var(--gold);border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF;color:#C8DDFF}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
+.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1;color:#A5DFC0}
+.nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
+.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{background:rgba(192,132,252,.06);border-color:#C084FC;color:#D8B4FE}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171;color:#FCA5A5}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE;color:#67E8F9}
+.nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
+.nav-link--dnd{color:#A78BFA;border-color:rgba(139,92,246,.35)}.nav-link--dnd:hover{background:rgba(139,92,246,.06);border-color:#A78BFA;color:#C4B5FD}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{background:rgba(148,163,184,.06);border-color:#94A3B8;color:#CBD5E1}
 
-  /* ── DIVIDER ── */
-  .gold-divider {
-    width: 100%; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
-    position: relative; z-index: 1;
-  }
+/* ── TICKER ── */
+.release-ticker{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.15);padding:0;overflow:hidden;height:36px;display:flex;align-items:center;position:relative}
+.release-ticker::before,.release-ticker::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+.release-ticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.release-ticker::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.ticker-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);white-space:nowrap;padding:0 16px 0 20px;flex-shrink:0;z-index:3}
+.ticker-track{display:flex;gap:0;animation:tickerScroll 50s linear infinite;flex-shrink:0}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:6px;padding:0 20px;font-size:12px;color:var(--silver);white-space:nowrap}
+.ticker-game{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:3px}
 
-  /* ── SECTIONS ── */
-  .section { padding: 80px 0; position: relative; z-index: 1; }
-  .section--alt { background: rgba(22,25,41,0.5); }
-  .section-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.3em;
-    text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
-  }
-  .section-title {
-    font-family: 'Cinzel', serif; font-size: clamp(24px, 4vw, 38px);
-    font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 16px;
-  }
-  .section-body { font-size: 16px; color: rgba(240,242,255,0.6); max-width: 560px; }
+/* ── LAYOUT ── */
+.wrap{max-width:900px;margin:0 auto;padding:0 24px}
+.section{padding:64px 0}
+.section--alt{background:rgba(14,17,24,.6)}
+.section-label{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,34px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:16px}
+.section-body{font-size:15px;color:var(--text2);line-height:1.7;max-width:640px}
+.gold-divider{height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);margin:0}
 
-  /* ── DOWNLOAD CARD ── */
-  .download-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 48px; margin-top: 40px;
-    position: relative; overflow: hidden;
-  }
-  .download-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .feature-list {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0 36px;
-  }
-  .feature-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px; color: rgba(240,242,255,0.75);
-  }
-  .feature-item::before { content: '◆'; font-size: 8px; color: var(--gold); margin-top: 5px; flex-shrink: 0; }
+/* ── HERO ── */
+.hero{padding:80px 0 56px;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(201,168,76,.06),transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.hero-title{font-family:'Cinzel',serif;font-size:clamp(30px,6vw,56px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:16px}
+.hero-title .accent{color:var(--gold)}
+.hero-sub{font-size:16px;color:var(--text2);max-width:560px;margin:0 auto 28px;line-height:1.7}
+.hero-tcgs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:32px}
+.tcg-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--silver)}
+.hero-cta-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;cursor:pointer}
+.btn--gold{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0A0C14}.btn--gold:hover{opacity:.9;text-decoration:none}
+.btn--outline{background:transparent;border:1px solid var(--border);color:var(--silver)}.btn--outline:hover{border-color:var(--silver);color:var(--white);text-decoration:none}
 
-  /* ── MERGED FORM ── */
-  .form-section-label {
-    font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600;
-    color: var(--white); margin-bottom: 6px;
-  }
-  .form-section-sub { font-size: 14px; color: var(--silver); margin-bottom: 20px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-  .input-field {
-    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-    border-radius: 8px; padding: 13px 16px; font-size: 15px;
-    font-family: 'DM Sans', sans-serif; color: var(--white); outline: none;
-    transition: border-color 0.2s ease;
-  }
-  .input-field::placeholder { color: rgba(160,168,192,0.5); }
-  .input-field:focus { border-color: var(--gold-dim); background: rgba(255,255,255,0.07); }
-  select.input-field { cursor: pointer; margin-bottom: 16px; }
-  select.input-field option { background: var(--deep); color: var(--white); }
+/* ── TRUST BAR ── */
+.trust-grid{display:flex;flex-wrap:wrap;gap:12px;margin:40px 0 0}
+.trust-card{flex:1;min-width:130px;border-radius:10px;padding:16px;text-align:center;border:1px solid}
+.trust-num{font-family:'Cinzel',serif;font-size:24px;font-weight:700;line-height:1}
+.trust-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text2);margin-top:6px}
 
-  .expectation-copy {
-    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-    border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;
-    font-size: 13px; color: rgba(160,168,192,0.7); line-height: 1.6;
-  }
-  .expectation-copy strong { color: var(--silver); }
+/* ── BUYLIST SECTION ── */
+.buylist-card{background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.25);border-radius:16px;padding:40px;position:relative;overflow:hidden;margin-top:32px}
+.buylist-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.buylist-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:20px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold);margin-bottom:16px}
+.buylist-title{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,28px);font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2}
+.buylist-body{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:24px;max-width:560px}
+.buylist-features{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.buylist-feat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--silver);background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:8px 14px}
+.buylist-feat::before{content:'&#10003;';color:var(--green);font-weight:700}
 
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 13px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
-    font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em;
-    cursor: pointer; border: none; transition: all 0.2s ease; white-space: nowrap;
-  }
-  .btn--gold { background: linear-gradient(135deg, var(--gold), #A8843A); color: #0A0C14; }
-  .btn--gold:hover { background: linear-gradient(135deg, var(--gold-lit), var(--gold)); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,168,76,0.25); }
-  .btn--gold:active { transform: translateY(0); }
-  .btn--outline { background: transparent; border: 1px solid var(--gold-dim); color: var(--gold); }
-  .btn--outline:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
-  .btn--silver { background: rgba(255,255,255,0.07); border: 1px solid var(--border); color: var(--white); }
-  .btn--silver:hover { background: rgba(255,255,255,0.12); }
-  .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
-  .btn--full { width: 100%; justify-content: center; padding: 15px 24px; font-size: 15px; }
+/* ── DOWNLOAD CARD ── */
+.download-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:32px;margin-top:32px}
+.feature-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:28px}
+@media(max-width:500px){.feature-list{grid-template-columns:1fr}}
+.feature-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--silver)}
+.feature-item::before{content:'&#10003;';color:var(--green);font-weight:700;flex-shrink:0}
+.form-label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 
-  .alert { padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-top: 12px; display: none; }
-  .alert.visible { display: block; }
-  .alert--error { background: rgba(240,97,74,0.1); border: 1px solid rgba(240,97,74,0.3); color: #F0614A; }
+/* ── PLATFORM FEATURES ── */
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:32px}
+.platform-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative}
+.platform-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.platform-icon{font-size:24px;margin-bottom:10px}
+.platform-title{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--white);margin-bottom:6px}
+.platform-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.platform-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--gold);text-decoration:none;margin-top:10px;letter-spacing:.05em;text-transform:uppercase}
+.platform-link:hover{text-decoration:underline}
 
-  /* ── SUCCESS STATE ── */
-  .download-success { display: none; animation: fadeIn 0.5s ease both; }
-  .download-success.visible { display: block; }
-  .success-icon {
-    width: 56px; height: 56px; background: rgba(61,214,140,0.12);
-    border: 2px solid var(--success); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; margin-bottom: 20px;
-  }
-  .download-btn-wrap { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
-  .btn--download {
-    background: linear-gradient(135deg, var(--gold), #A8843A); color: #0A0C14;
-    padding: 16px 32px; font-size: 16px; border-radius: 10px;
-  }
-  .btn--download:hover {
-    background: linear-gradient(135deg, var(--gold-lit), var(--gold));
-    transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.3);
-  }
-  .success-note {
-    margin-top: 20px; padding: 16px;
-    background: rgba(61,214,140,0.06); border: 1px solid rgba(61,214,140,0.2);
-    border-radius: 8px; font-size: 13px; color: rgba(240,242,255,0.65);
-  }
+/* ── PREMIUM / GEAR CARDS ── */
+.gear-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.gear-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:8px;transition:all .2s;position:relative;overflow:hidden}
+.gear-card:hover{border-color:var(--gold-dim);transform:translateY(-2px);text-decoration:none}
+.gear-icon{font-size:24px}
+.gear-name{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--white)}
+.gear-desc{font-size:12px;color:var(--text2);line-height:1.5;flex:1}
+.gear-cta{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-top:auto}
 
-  /* ── PLATFORM TEASER ── */
-  .platform-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 48px; margin-top: 40px;
-    position: relative; overflow: hidden;
-  }
-  .platform-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--purple), transparent);
-  }
-  .coming-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #9898FF; padding: 5px 14px; border: 1px solid rgba(107,107,255,0.35);
-    border-radius: 100px; margin-bottom: 24px; background: rgba(107,107,255,0.07);
-  }
-  .coming-badge::before { content: '◈'; font-size: 10px; }
-  .platform-features {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px; margin: 32px 0 28px;
-  }
-  .platform-feat {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(107,107,255,0.15); border-radius: 10px; padding: 20px;
-  }
-  .platform-feat-icon { font-size: 24px; margin-bottom: 10px; }
-  .platform-feat-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
-  .platform-feat-desc { font-size: 13px; color: var(--silver); opacity: 0.7; }
-  .signup-nudge {
-    text-align: center; padding: 16px 20px;
-    background: rgba(107,107,255,0.06); border: 1px solid rgba(107,107,255,0.2);
-    border-radius: 10px; font-size: 14px; color: rgba(160,168,192,0.8);
-  }
-  .signup-nudge a { color: #9898FF; text-decoration: none; border-bottom: 1px solid rgba(152,152,255,0.4); }
-  .signup-nudge a:hover { color: var(--white); }
+/* ── STORES ── */
+.stores-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
+@media(max-width:540px){.stores-grid{grid-template-columns:1fr}}
+.store-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;text-decoration:none;transition:border-color .2s;display:block}
+.store-card:hover{border-color:var(--gold-dim);text-decoration:none}
+.store-name{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px}
+.store-sub{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:10px}
+.store-desc{font-size:13px;color:var(--text2);line-height:1.6}
 
-  /* ── GEAR SECTION ── */
-  .gear-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px; margin-top: 40px;
-  }
-  .gear-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 24px; text-decoration: none;
-    display: block; transition: all 0.25s ease; position: relative; overflow: hidden;
-  }
-  .gear-card:hover {
-    transform: translateY(-3px); border-color: rgba(201,168,76,0.3);
-    box-shadow: 0 10px 32px rgba(0,0,0,0.4);
-  }
-  .gear-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
-    opacity: 0; transition: opacity 0.25s ease;
-  }
-  .gear-card:hover::before { opacity: 1; }
-  .gear-icon { font-size: 28px; margin-bottom: 12px; }
-  .gear-name { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
-  .gear-desc { font-size: 13px; color: var(--silver); opacity: 0.7; line-height: 1.5; margin-bottom: 14px; }
-  .gear-cta {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--gold); text-decoration: none;
-  }
-  .gear-disclaimer {
-    margin-top: 20px; font-size: 12px; color: rgba(160,168,192,0.35);
-    text-align: center; line-height: 1.5;
-  }
-
-  /* ── STORES GRID ── */
-  .stores-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 40px; }
-  .store-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 28px; text-decoration: none;
-    display: block; transition: all 0.25s ease; position: relative; overflow: hidden;
-  }
-  .store-card:hover { transform: translateY(-3px); border-color: rgba(201,168,76,0.4); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
-  .store-card::after {
-    content: '→'; position: absolute; top: 20px; right: 20px;
-    font-size: 16px; color: var(--gold-dim); transition: transform 0.2s ease;
-  }
-  .store-card:hover::after { transform: translateX(4px); color: var(--gold); }
-  .store-name { font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
-  .store-desc { font-size: 13px; color: var(--silver); line-height: 1.5; }
-  .store-tag {
-    display: inline-block; margin-top: 14px; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold);
-    border: 1px solid var(--gold-dim); border-radius: 4px; padding: 3px 10px;
-  }
-  .store-tag--purple { color: #9898FF; border-color: rgba(107,107,255,0.4); }
-
-  /* ── FOOTER ── */
-  footer { border-top: 1px solid var(--border); padding: 36px 0; position: relative; z-index: 1; }
-  .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  .footer-logo { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); }
-  .footer-partner { font-size: 12px; color: rgba(160,168,192,0.45); text-align: center; }
-  .footer-partner a { color: var(--gold-dim); text-decoration: none; border-bottom: 1px solid var(--gold-dim); }
-  .footer-partner a:hover { color: var(--gold); }
-  .footer-copy { font-size: 12px; color: rgba(160,168,192,0.35); }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.in-view { opacity: 1; transform: translateY(0); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .stores-grid { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 640px) {
-    .feature-list { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .download-card, .platform-card { padding: 28px 20px; }
-    .nav-link span { display: none; }
-    .platform-features { grid-template-columns: 1fr 1fr; }
-    .download-btn-wrap { flex-direction: column; }
-    .footer-inner { flex-direction: column; text-align: center; }
-    .gear-grid { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 420px) {
-    .gear-grid { grid-template-columns: 1fr; }
-    .platform-features { grid-template-columns: 1fr; }
-  }
-
-  /* ── SIDEBAR NAV ─────────────────────────────────────────────── */
-  .sidebar-nav {
-    position: fixed;
-    top: 50%;
-    right: 24px;
-    transform: translateY(-50%);
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    background: rgba(10,12,20,0.85);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 10px;
-  }
-  .sidebar-nav-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(160,168,192,0.4);
-    text-align: center;
-    margin-bottom: 4px;
-    padding: 0 4px;
-  }
-  .sidebar-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 7px;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 500;
-    color: rgba(160,168,192,0.6);
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    border: 1px solid transparent;
-  }
-  .sidebar-link:hover {
-    color: var(--white);
-    background: rgba(255,255,255,0.05);
-    border-color: var(--border);
-  }
-  .sidebar-link.active {
-    color: var(--gold);
-    background: rgba(201,168,76,0.08);
-    border-color: rgba(201,168,76,0.25);
-  }
-  .sidebar-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-    flex-shrink: 0;
-    opacity: 0.6;
-  }
-  .sidebar-link.active .sidebar-dot { opacity: 1; }
-  @media (max-width: 1200px) { .sidebar-nav { display: none; } }
-
-
-/* NAV COLOUR CLASSES - outline and font only */
-.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}
-.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
-.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}
-.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
-.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
-.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
-.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}
-.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
-.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
-.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
-.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}
-.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
-.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}
-.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
-/* Active page override */
-.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
-
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:40px 24px;text-align:center;font-size:12px;color:var(--text2)}
+footer a{color:var(--text2);margin:0 8px}
+footer a:hover{color:var(--white)}
+.footer-disclaimer{font-size:11px;color:rgba(160,168,192,.4);max-width:760px;margin:16px auto 0;line-height:1.6}
 </style>
 </head>
 <body>
 
-
-<!-- ── SIDEBAR NAV ─────────────────────────────────────────────── -->
-<aside class="sidebar-nav" id="sidebar-nav">
-  <div class="sidebar-nav-label">On This Page</div>
-  <a href="#coming-soon" class="sidebar-link active" data-section="coming-soon">
-    <span class="sidebar-dot"></span>Coming Soon
-  </a>
-  <a href="#download" class="sidebar-link" data-section="download">
-    <span class="sidebar-dot"></span>Free Tracker
-  </a>
-  <a href="#premium-tools" class="sidebar-link" data-section="premium-tools">
-    <span class="sidebar-dot"></span>Premium Tools
-  </a>
-  <a href="#gear" class="sidebar-link" data-section="gear">
-    <span class="sidebar-dot"></span>Gear &amp; Supplies
-  </a>
-  <a href="#stores" class="sidebar-link" data-section="stores">
-    <span class="sidebar-dot"></span>Our Stores
-  </a>
-</aside>
-
-<!-- ── NAV ────────────────────────────────────────────────────── -->
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
@@ -515,114 +167,130 @@
     </div>
   </div>
 </nav>
+<div class="release-ticker">
+  <span class="ticker-label">Releases</span>
+  <div class="ticker-track" id="relTicker">
+    <span class="ticker-item"><a href="/cards/lorcana/sets/4500014" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Wilds Unknown</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound/sets/unleashed" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Unleashed</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Final Fantasy</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>OP-12</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Twilight of the Republic</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Late 2026</a></span>
+    <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
+    <span class="ticker-item"><a href="/cards/lorcana/sets/4500014" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Wilds Unknown</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound/sets/unleashed" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Unleashed</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Final Fantasy</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>OP-12</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Twilight of the Republic</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Late 2026</a></span>
+    <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
+  </div>
+</div>
 
-<!-- ── HERO ───────────────────────────────────────────────────── -->
+<!-- ══ HERO ══════════════════════════════════════════════════════ -->
 <section class="hero">
-  <div class="wrap--narrow">
-    <div class="hero-eyebrow">Free Download Below</div>
-    <h1 class="hero-title">
-      Track Every Card.<br>
-      <span class="gold">Know Your Numbers.</span>
-    </h1>
-    <p class="hero-subtitle">Cards on Cards on Cards</p>
-    <p class="hero-desc">
-      Free for every Australian TCG player. Works across every game, right out of the box. No app required.
-    </p>
+  <div class="wrap">
+    <div class="hero-eyebrow">Free Tools for Australian TCG Players</div>
+    <h1 class="hero-title">Your Collection Probably Has<br><span class="accent">More Money in It Than You Think.</span></h1>
+    <p class="hero-sub">Most players have no idea what their cards are worth. The C3 free tracker changes that. Know your numbers, find the value, sell at the right time.</p>
     <div class="hero-tcgs">
-      <span class="tcg-badge">Magic</span>
-      <span class="tcg-badge">Pokémon</span>
+      <span class="tcg-badge">Magic: The Gathering</span>
+      <span class="tcg-badge">Pokemon</span>
       <span class="tcg-badge">Yu-Gi-Oh</span>
       <span class="tcg-badge">Lorcana</span>
       <span class="tcg-badge">One Piece</span>
       <span class="tcg-badge">Riftbound</span>
-      <span class="tcg-badge">Digimon</span>
-      <span class="tcg-badge">+ More</span>
+      <span class="tcg-badge">Dragon Ball</span>
+      <span class="tcg-badge">Star Wars</span>
+    </div>
+    <div class="hero-cta-group">
+      <a href="#download" class="btn btn--gold">&#128229; Get Free Tracker</a>
+      <a href="#buylist" class="btn btn--outline">&#128203; Join Buylist Waitlist</a>
     </div>
   </div>
 </section>
 
 <div class="gold-divider"></div>
 
-<!-- ── COMING SOON ─────────────────────────────────────────────── -->
-<section class="section section--alt" id="coming-soon">
-  <div class="wrap--narrow">
-    <div class="reveal">
-      <p class="section-label">The C3 Platform</p>
-      <h2 class="section-title">Australia's TCG Hub<br>is Live and Growing</h2>
-      <p class="section-body">
-        The Card Vault is live with 250,000+ cards across 4 TCGs. The release calendar, EV Calculator,
-        and Random Commander generator are all live. And there is more coming.
-      </p>
-    </div>
-
-    <!-- TRUST BAR -->
-    <div class="reveal" style="display:flex;flex-wrap:wrap;gap:12px;margin:24px 0;justify-content:center">
-      <div style="flex:1;min-width:140px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.18);border-radius:10px;padding:16px;text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--gold)">96,000+</div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">MTG Cards</div>
+<!-- ══ TRUST NUMBERS ════════════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <p class="section-label">The C3 Platform</p>
+    <h2 class="section-title">Australia's TCG Price Hub.<br>Live and Growing.</h2>
+    <p class="section-body">Over 200,000 individual card prices updated daily across 8 TCGs. Live AUD conversion, eBay AU buy links, and 90-day price history on every card.</p>
+    <div class="trust-grid">
+      <div class="trust-card" style="background:rgba(201,168,76,.05);border-color:rgba(201,168,76,.2)">
+        <div class="trust-num" style="color:var(--gold)">99,731</div>
+        <div class="trust-label">MTG Cards</div>
       </div>
-      <div style="flex:1;min-width:140px;background:rgba(255,204,0,.04);border:1px solid rgba(255,204,0,.15);border-radius:10px;padding:16px;text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#FFCC00">107,000+</div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">Pokemon Cards</div>
+      <div class="trust-card" style="background:rgba(255,204,0,.04);border-color:rgba(255,204,0,.18)">
+        <div class="trust-num" style="color:#FFCC00">31,488</div>
+        <div class="trust-label">Pokemon Cards</div>
       </div>
-      <div style="flex:1;min-width:140px;background:rgba(192,132,252,.04);border:1px solid rgba(192,132,252,.15);border-radius:10px;padding:16px;text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#C084FC">9,999</div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">Yu-Gi-Oh Cards</div>
+      <div class="trust-card" style="background:rgba(192,132,252,.04);border-color:rgba(192,132,252,.18)">
+        <div class="trust-num" style="color:#C084FC">46,588</div>
+        <div class="trust-label">Yu-Gi-Oh Cards</div>
       </div>
-      <div style="flex:1;min-width:140px;background:rgba(56,189,248,.04);border:1px solid rgba(56,189,248,.15);border-radius:10px;padding:16px;text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#38BDF8">2,911</div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">Lorcana Cards</div>
+      <div class="trust-card" style="background:rgba(56,189,248,.04);border-color:rgba(56,189,248,.18)">
+        <div class="trust-num" style="color:#38BDF8">3,153</div>
+        <div class="trust-label">Lorcana Cards</div>
       </div>
-      <div style="flex:1;min-width:140px;background:rgba(74,222,128,.04);border:1px solid rgba(74,222,128,.15);border-radius:10px;padding:16px;text-align:center">
-        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#4ADE80">25,441</div>
-        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(160,168,192,.6);margin-top:4px">eBay Listings</div>
+      <div class="trust-card" style="background:rgba(249,115,22,.04);border-color:rgba(249,115,22,.18)">
+        <div class="trust-num" style="color:#F97316">6,641</div>
+        <div class="trust-label">One Piece Cards</div>
       </div>
-    </div>
-
-    <div class="platform-card reveal">
-      <div class="coming-badge">Live Now</div>
-
-      <div class="platform-features">
-        <div class="platform-feat">
-          <div class="platform-feat-icon">🃏</div>
-          <div class="platform-feat-title">Card Vault</div>
-          <div class="platform-feat-desc">250,000+ cards across MTG, Pokemon, Yu-Gi-Oh and Lorcana. Live AUD pricing and eBay AU buy links on every card.</div>
-        </div>
-        <div class="platform-feat">
-          <div class="platform-feat-icon">📅</div>
-          <div class="platform-feat-title">TCG Release Calendar</div>
-          <div class="platform-feat-desc">Every confirmed release date and tournament for Australian players. Riftbound, MTG, Pokemon, One Piece and more.</div>
-        </div>
-        <div class="platform-feat">
-          <div class="platform-feat-icon">📊</div>
-          <div class="platform-feat-title">EV Calculator</div>
-          <div class="platform-feat-desc">Know the expected value of any MTG set before you open a box. Australian prices, real data.</div>
-        </div>
-        <div class="platform-feat">
-          <div class="platform-feat-icon">🎲</div>
-          <div class="platform-feat-title">Random Commander</div>
-          <div class="platform-feat-desc">Filter 10,000+ MTG commanders by colour identity and CMC. Find your next deck instantly.</div>
-        </div>
-      </div>
-
-      <div class="signup-nudge">
-        ◈ Sign up below to get the free tracker and stay updated as more games and features go live.
+      <div class="trust-card" style="background:rgba(74,222,128,.04);border-color:rgba(74,222,128,.18)">
+        <div class="trust-num" style="color:#4ADE80">25,441</div>
+        <div class="trust-label">eBay Listings</div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ══ BUYLIST WAITLIST ═════════════════════════════════════════ -->
+<section class="section section--alt" id="buylist">
+  <div class="wrap">
+    <p class="section-label">Coming Soon &mdash; Register Now</p>
+    <h2 class="section-title">Australia's First TCG<br>Buylist Aggregator</h2>
+    <p class="section-body">This is why C3 was built. A single page that compares what every major Australian TCG store will pay for your cards, side by side, updated daily. No more ringing around. No more guessing. Just the best price, instantly.</p>
 
-<!-- ── FREE DOWNLOAD + MERGED SIGN-UP ─────────────────────────── -->
-<section class="section" id="download">
-  <div class="wrap--narrow">
-    <div class="reveal">
-      <p class="section-label">Free Download</p>
-      <h2 class="section-title">Your Free TCG Collection Tracker</h2>
-      <p class="section-body">A Google Sheets tracker built for collectors who actually sell. Drop your details below and get instant access.</p>
+    <div class="buylist-card">
+      <div class="buylist-badge">&#128203; Waitlist Open</div>
+      <div class="buylist-title">Stop Leaving Money on the Table</div>
+      <div class="buylist-body">Right now, if you want to sell your cards you have to check eBay, then check CardMarket, then ring your local store, then check another store. Every store has different buy prices. The difference between stores on a single card can be AU$20-50. We are building the tool that does all of that in one place.</div>
+      <div class="buylist-features">
+        <div class="buylist-feat">Compare every Australian store's buy price</div>
+        <div class="buylist-feat">Updated daily with real buylist data</div>
+        <div class="buylist-feat">Works across MTG, Pokemon, Yu-Gi-Oh and more</div>
+        <div class="buylist-feat">Find the best price before you sell</div>
+        <div class="buylist-feat">Free for all Australian players</div>
+        <div class="buylist-feat">Email alert when your card hits target price</div>
+      </div>
+      <div style="background:rgba(8,10,15,.6);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:24px">
+        <div class="form-label" style="margin-bottom:4px">Join the Waitlist</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:16px">You also get the free collection tracker immediately on signup.</p>
+        <div class="ml-embedded" data-form="mIFDGb"></div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="download-card reveal">
+<!-- ══ FREE TRACKER ═════════════════════════════════════════════ -->
+<section class="section" id="download">
+  <div class="wrap">
+    <p class="section-label">Free Download</p>
+    <h2 class="section-title">Your Free TCG Collection Tracker</h2>
+    <p class="section-body">A Google Sheets tracker built for collectors who actually sell. Track value, profit and loss, and wishlist across every game. No app required.</p>
+
+    <div class="download-card">
       <div class="feature-list">
         <div class="feature-item">Collection inventory with auto profit/loss</div>
         <div class="feature-item">Works across all major TCGs</div>
@@ -631,202 +299,151 @@
         <div class="feature-item">Instant Google Sheets access</div>
         <div class="feature-item">No app download needed</div>
       </div>
-
-      <!-- MailerLite embedded form -->
-      <div class="form-section-label">Get your free tracker</div>
-      <div class="form-section-sub">Sign up to be the first to know when the C3 Buylist goes live — and get instant access to the free tracker while you wait.</div>
-      <div class="ml-embedded" data-form="mIFDGb"></div>
-
-      <!-- Post-signup download note (always visible below form) -->
-      <div style="margin-top:28px; padding:20px; background:rgba(61,214,140,0.06); border:1px solid rgba(61,214,140,0.2); border-radius:10px;">
-        <p style="font-size:14px; color:rgba(240,242,255,0.75); line-height:1.6; margin-bottom:16px;">
-          After subscribing, check your email for your confirmation link, then come back here to access the tracker.
-        </p>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="https://docs.google.com/spreadsheets/d/18GtZjToO1lxMzM3urEq-nj_5Ck86BLOnDqGv5uN7VmM/edit?usp=sharing" target="_blank" rel="noopener" class="btn btn--gold">
-            ↗ Open Free Tracker
-          </a>
-          <a href="https://www.etsy.com/au/listing/4482818193/tcg-collection-tracker-magic-pokemon" target="_blank" rel="noopener" class="btn btn--outline">
-            See Premium Version
-          </a>
-        </div>
-        <p style="margin-top:14px; font-size:12px; color:rgba(160,168,192,0.5);">
-          Once open: File → Make a Copy to save it to your own Google Drive.
-        </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="https://docs.google.com/spreadsheets/d/18GtZjToO1lxMzM3urEq-nj_5Ck86BLOnDqGv5uN7VmM/edit?usp=sharing" target="_blank" rel="noopener" class="btn btn--gold">&#8599; Open Free Tracker</a>
+        <a href="https://www.etsy.com/au/listing/4482818193/tcg-collection-tracker-magic-pokemon" target="_blank" rel="noopener" class="btn btn--outline">See Premium Version</a>
       </div>
+      <p style="margin-top:12px;font-size:12px;color:var(--text2)">Once open: File &rarr; Make a Copy to save it to your own Google Drive.</p>
     </div>
   </div>
 </section>
 
-
-<!-- ── PREMIUM TOOLS ──────────────────────────────────────────── -->
-<section class="section" id="premium-tools">
-  <div class="wrap--narrow">
-    <div class="reveal">
-      <p class="section-label">Available on Etsy</p>
-      <h2 class="section-title">Premium TCG Spreadsheet Tools</h2>
-      <p class="section-body">Upgraded versions built for serious collectors and sellers. One-time purchase — delivered as Excel files, compatible with Google Sheets.</p>
-    </div>
-
-    <div class="gear-grid reveal" style="margin-top:32px;">
-
-      <a href="https://www.etsy.com/au/listing/4482818193/tcg-collection-tracker-magic-pokemon" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2);">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);"></div>
-        <div class="gear-icon">📦</div>
-        <div class="gear-name" style="color:var(--white);">Premium Collection Tracker</div>
-        <div class="gear-desc">Everything in the free version plus unlimited card capacity, advanced profit/loss breakdowns, and multi-game portfolio tracking.</div>
-        <span class="gear-cta" style="margin-top:auto;">View on Etsy — AU$9.95 ↗</span>
-      </a>
-
-      <a href="https://www.etsy.com/au/listing/4483270444/tcg-seller-fee-calculator-google-sheets" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2);">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);"></div>
-        <div class="gear-icon">💰</div>
-        <div class="gear-name" style="color:var(--white);">Seller Fee Calculator</div>
-        <div class="gear-desc">Calculate your real take-home after eBay, TCGplayer, and other platform fees. Side-by-side platform comparison built in.</div>
-        <span class="gear-cta" style="margin-top:auto;">View on Etsy — AU$9.95 ↗</span>
-      </a>
-
-      <a href="https://www.etsy.com/au/listing/4483341751/tcg-booster-box-roi-calculator-google" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2);">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);"></div>
-        <div class="gear-icon">📈</div>
-        <div class="gear-name" style="color:var(--white);">Booster Box ROI Calculator</div>
-        <div class="gear-desc">Enter your box cost, pulls, and sale prices to get a clear open-vs-sell recommendation. Includes expected value modelling.</div>
-        <span class="gear-cta" style="margin-top:auto;">View on Etsy — AU$9.95 ↗</span>
-      </a>
-
-      <a href="https://www.etsy.com/au/listing/4483367459/tcg-tournament-performance-log-google" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2);">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);"></div>
-        <div class="gear-icon">🏆</div>
-        <div class="gear-name" style="color:var(--white);">Tournament Performance Log</div>
-        <div class="gear-desc">Track win rates, deck performance, prize earnings vs entry fees, and meta trends across all your competitive events.</div>
-        <span class="gear-cta" style="margin-top:auto;">View on Etsy — AU$9.95 ↗</span>
-      </a>
-
-    </div>
-
-    <div style="margin-top:20px;padding:14px 20px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);border-radius:10px;text-align:center;">
-      <p style="font-size:13px;color:rgba(160,168,192,.6);">All tools are Excel files delivered instantly via Etsy. Compatible with Google Sheets. One-time purchase — no subscription.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── GEAR WE RECOMMEND ────────────────────────────────────────── -->
-<section class="section" id="gear">
-  <div class="wrap--narrow">
-    <div class="reveal">
-      <p class="section-label">Gear We Recommend</p>
-      <h2 class="section-title">Protect &amp; Organise Your Collection</h2>
-      <p class="section-body">The basics every serious TCG collector needs. We only recommend gear we'd actually use.</p>
-    </div>
-
-    <div class="gear-grid reveal">
-
-      <a href="https://www.amazon.com.au/s?k=card+sleeves+trading+card+game&tag=blasdigital-22" target="_blank" rel="noopener" class="gear-card">
-        <div class="gear-icon">🛡️</div>
-        <div class="gear-name">Card Sleeves</div>
-        <div class="gear-desc">Protect your cards with quality sleeves. Double-sleeving valuable cards is the collector standard for long-term protection.</div>
-        <span class="gear-cta">Shop on Amazon ↗</span>
-      </a>
-
-      <a href="https://www.amazon.com.au/s?k=9+pocket+card+binder+trading+cards&tag=blasdigital-22" target="_blank" rel="noopener" class="gear-card">
-        <div class="gear-icon">📒</div>
-        <div class="gear-name">Card Binder</div>
-        <div class="gear-desc">Keep your collection organised and protected. Side-loading 9-pocket binders stop cards from falling out during storage.</div>
-        <span class="gear-cta">Shop on Amazon ↗</span>
-      </a>
-
-      <a href="https://www.amazon.com.au/s?k=trading+card+storage+box&tag=blasdigital-22" target="_blank" rel="noopener" class="gear-card">
-        <div class="gear-icon">📦</div>
-        <div class="gear-name">Storage Box</div>
-        <div class="gear-desc">Bulk storage boxes are the most cost-effective way to house a large collection. Available in a range of card capacities.</div>
-        <span class="gear-cta">Shop on Amazon ↗</span>
-      </a>
-
-      <a href="https://www.amazon.com.au/s?k=rigid+top+loader+card+holder&tag=blasdigital-22" target="_blank" rel="noopener" class="gear-card">
-        <div class="gear-icon">💎</div>
-        <div class="gear-name">Top Loaders</div>
-        <div class="gear-desc">Rigid holders for high-value singles. Essential for safe posting and long-term protection of valuable cards.</div>
-        <span class="gear-cta">Shop on Amazon ↗</span>
-      </a>
-
-    </div>
-    <div style="margin-top:24px; padding:16px 20px; background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.2); border-radius:10px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
-      <p style="font-size:13px; color:rgba(160,168,192,0.7); line-height:1.5;">
-        <strong style="color:var(--gold);">Amazon Associates Disclosure:</strong> As an Amazon Associate we earn from qualifying purchases at no extra cost to you. Always check current pricing and reviews on Amazon before purchasing.
-      </p>
-      <a href="/shop.html" style="white-space:nowrap; font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; border:1px solid var(--gold-dim); padding:8px 16px; border-radius:6px; background:rgba(201,168,76,0.06);">View Full Shop →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ── STORES ──────────────────────────────────────────────────── -->
-<section class="section section--alt" id="stores">
-  <div class="wrap--narrow">
-    <div class="reveal">
-      <p class="section-label">Our Stores</p>
-      <h2 class="section-title">Browse Our Full Range</h2>
-      <p class="section-body">Singles, sealed product, printables, and digital tools for TCG players and tabletop fans.</p>
-    </div>
-    <div class="stores-grid reveal">
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="store-card">
-        <div class="store-name">eBay Store</div>
-        <p class="store-desc">MTG singles, Pokemon, Yu-Gi-Oh, Lorcana and more. Updated regularly with new stock.</p>
-        <span class="store-tag">TCG Singles &amp; Sealed</span>
-      </a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="store-card">
-        <div class="store-name">Etsy — TCG Tools</div>
-        <p class="store-desc">Premium digital trackers, calculators, and planners for collectors and sellers.</p>
-        <span class="store-tag">Digital Downloads</span>
-      </a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="store-card">
-        <div class="store-name">BLAS Digital</div>
-        <p class="store-desc">Our creative studio. D&amp;D tools, Dungeon Master printables, and tabletop resources — also on Etsy.</p>
-        <span class="store-tag store-tag--purple">D&amp;D &amp; Tabletop</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ── FOOTER ──────────────────────────────────────────────────── -->
-<footer>
+<!-- ══ PREMIUM TOOLS ════════════════════════════════════════════ -->
+<section class="section section--alt" id="premium-tools">
   <div class="wrap">
-    <div class="footer-inner">
-      <div class="footer-logo">Cards on Cards on Cards</div>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
-        <a href="/" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Home</a>
-        <a href="/shop.html" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Shop</a>
-        <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Blog</a>
-        <a href="/contact.html" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Contact Us</a>
-        <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="font-size:12px;color:rgba(160,168,192,.45);text-decoration:none">Etsy D&amp;D Tools</a>
-      </div>
-      <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
+    <p class="section-label">Available on Etsy</p>
+    <h2 class="section-title">Premium TCG Spreadsheet Tools</h2>
+    <p class="section-body">Upgraded versions built for serious collectors and sellers. One-time purchase, delivered as Excel files compatible with Google Sheets.</p>
+    <div class="gear-grid" style="margin-top:32px">
+      <a href="https://www.etsy.com/au/listing/4482818193/tcg-collection-tracker-magic-pokemon" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2)">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)"></div>
+        <div class="gear-icon">&#128230;</div>
+        <div class="gear-name" style="color:var(--white)">Premium Collection Tracker</div>
+        <div class="gear-desc">Everything in the free version plus unlimited card capacity, advanced profit/loss breakdowns, and multi-game portfolio tracking.</div>
+        <span class="gear-cta">View on Etsy &mdash; AU$9.95 &#8599;</span>
+      </a>
+      <a href="https://www.etsy.com/au/listing/4483270444/tcg-seller-fee-calculator-google-sheets" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2)">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)"></div>
+        <div class="gear-icon">&#128176;</div>
+        <div class="gear-name" style="color:var(--white)">Seller Fee Calculator</div>
+        <div class="gear-desc">Calculate your real take-home after eBay, TCGplayer, and other platform fees. Side-by-side platform comparison built in.</div>
+        <span class="gear-cta">View on Etsy &mdash; AU$9.95 &#8599;</span>
+      </a>
+      <a href="https://www.etsy.com/au/listing/4483341751/tcg-booster-box-roi-calculator-google" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2)">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)"></div>
+        <div class="gear-icon">&#128200;</div>
+        <div class="gear-name" style="color:var(--white)">Booster Box ROI Calculator</div>
+        <div class="gear-desc">Enter your box cost, pulls, and sale prices to get a clear open-vs-sell recommendation. Includes expected value modelling.</div>
+        <span class="gear-cta">View on Etsy &mdash; AU$9.95 &#8599;</span>
+      </a>
+      <a href="https://www.etsy.com/au/listing/4483367459/tcg-tournament-performance-log-google" target="_blank" rel="noopener" class="gear-card" style="border-color:rgba(201,168,76,.2)">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)"></div>
+        <div class="gear-icon">&#127942;</div>
+        <div class="gear-name" style="color:var(--white)">Tournament Performance Log</div>
+        <div class="gear-desc">Track win rates, deck performance, prize earnings vs entry fees, and meta trends across all your competitive events.</div>
+        <span class="gear-cta">View on Etsy &mdash; AU$9.95 &#8599;</span>
+      </a>
     </div>
   </div>
+</section>
+
+<!-- ══ OTHER FREE C3 TOOLS ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <p class="section-label">Also Free</p>
+    <h2 class="section-title">More Free Tools from C3</h2>
+    <p class="section-body">Everything below is free for Australian players. No account required.</p>
+    <div class="platform-grid" style="margin-top:32px">
+      <a href="/cards" class="platform-card" style="text-decoration:none">
+        <div class="platform-icon">&#127183;</div>
+        <div class="platform-title">Card Vault</div>
+        <div class="platform-desc">200,000+ cards priced in AUD across 8 TCGs. Live eBay buy links on every card.</div>
+        <span class="platform-link">Browse Cards &rarr;</span>
+      </a>
+      <a href="/ev-calculator.html" class="platform-card" style="text-decoration:none">
+        <div class="platform-icon">&#128202;</div>
+        <div class="platform-title">EV Calculator</div>
+        <div class="platform-desc">Know the expected value of any MTG booster box before you open it. Real Australian prices.</div>
+        <span class="platform-link">Calculate &rarr;</span>
+      </a>
+      <a href="/generators" class="platform-card" style="text-decoration:none">
+        <div class="platform-icon">&#127922;</div>
+        <div class="platform-title">Random Generators</div>
+        <div class="platform-desc">Random card generators for every TCG. Random Commander, Pokemon, Yu-Gi-Oh and more.</div>
+        <span class="platform-link">Generate &rarr;</span>
+      </a>
+      <a href="/quizzes" class="platform-card" style="text-decoration:none">
+        <div class="platform-icon">&#127919;</div>
+        <div class="platform-title">TCG Quizzes</div>
+        <div class="platform-desc">Which TCG should you start? What colour are you? 10 personality quizzes with AUD buy links.</div>
+        <span class="platform-link">Take a Quiz &rarr;</span>
+      </a>
+      <a href="/calendar" class="platform-card" style="text-decoration:none">
+        <div class="platform-icon">&#128197;</div>
+        <div class="platform-title">Release Calendar</div>
+        <div class="platform-desc">Every Australian TCG release and tournament date in one place. Updated as dates are confirmed.</div>
+        <span class="platform-link">View Calendar &rarr;</span>
+      </a>
+      <a href="/cards/mtg/random-commander" class="platform-card" style="text-decoration:none">
+        <div class="platform-icon">&#129335;</div>
+        <div class="platform-title">Random Commander</div>
+        <div class="platform-desc">Filter 10,000+ legendary creatures by colour identity and mana value. Find your next Commander deck.</div>
+        <span class="platform-link">Find a Commander &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STORES ════════════════════════════════════════════════════ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <p class="section-label">Our Stores</p>
+    <h2 class="section-title">Buy, Sell, and Browse</h2>
+    <p class="section-body">25,000+ TCG listings on eBay. Premium digital tools on Etsy.</p>
+    <div class="stores-grid">
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=TrackerStores&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="store-card">
+        <div class="store-name">C3 eBay Store</div>
+        <div class="store-sub">25,441 Listings</div>
+        <div class="store-desc">MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece and more. Singles and sealed. Ships across Australia.</div>
+        <div style="margin-top:14px;font-size:12px;font-weight:700;color:var(--gold)">Visit Store &#8599;</div>
+      </a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="store-card">
+        <div class="store-name">BLAS Digital on Etsy</div>
+        <div class="store-sub">Digital Tools &amp; Printables</div>
+        <div class="store-desc">Premium TCG spreadsheet tools, D&amp;D printables, and collector resources. Instant download, AUD pricing.</div>
+        <div style="margin-top:14px;font-size:12px;font-weight:700;color:var(--gold)">Visit Etsy Shop &#8599;</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>
+    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a>
+    <a href="/blog">Blog</a><a href="/quizzes">Quizzes</a><a href="/ev-calculator.html">EV Calc</a>
+    <a href="/generators">Generators</a><a href="/calendar">Calendar</a>
+    <a href="/dnd">D&amp;D Tools</a><a href="/contact.html">Contact</a><a href="/legal.html">Legal</a>
+  </p>
+  <div class="footer-disclaimer">
+    Cards on Cards on Cards is unofficial Fan Content. Not approved or endorsed by Wizards of the Coast, The Pokemon Company, Nintendo, Disney, Bandai, Konami, or Riot Games. As an Amazon Associate and eBay Partner Network member, we earn from qualifying purchases at no extra cost to you.
+  </div>
+  <p style="margin-top:12px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
 </footer>
 
-<!-- ── SCRIPTS ─────────────────────────────────────────────────── -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
 <script>
-// ── Scroll reveal ─────────────────────────────────────────────────────────
-const observer = new IntersectionObserver(
-  entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); observer.unobserve(e.target); } }),
-  { threshold: 0.1 }
-);
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// ── Sidebar active state ───────────────────────────────────────────────────
-const sidebarLinks = document.querySelectorAll('.sidebar-link[data-section]');
-const sectionEls   = ['coming-soon','download','premium-tools','gear','stores'].map(id => document.getElementById(id)).filter(Boolean);
-
-function updateSidebar() {
-  let current = sectionEls[0].id;
-  sectionEls.forEach(sec => {
-    if (sec.getBoundingClientRect().top <= 120) current = sec.id;
-  });
-  sidebarLinks.forEach(l => l.classList.toggle('active', l.dataset.section === current));
-}
-window.addEventListener('scroll', updateSidebar, { passive: true });
-updateSidebar();
-
+(function(){
+  var ticker = document.getElementById('relTicker');
+  if (!ticker) return;
+  ticker.addEventListener('mouseenter', function(){ ticker.style.animationPlayState='paused'; });
+  ticker.addEventListener('mouseleave', function(){ ticker.style.animationPlayState='running'; });
+})();
+</script>
+<!-- MailerLite Universal -->
+<script>
+(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+ml('account', '2220065');
 </script>
 </body>
 </html>
