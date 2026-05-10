@@ -13,55 +13,32 @@
 
 [functions."sync-lorcana"]
   timeout = 1200
+  schedule = "30 11 * * *"
 
 [functions."sync-onepiece"]
   timeout = 1200
+  schedule = "0 11 * * *"
 
 [functions."sync-pokemon"]
   timeout = 1500
+  schedule = "0 10 * * *"
 
 [functions."sync-yugioh"]
   timeout = 1500
+  schedule = "30 10 * * *"
 
 [functions."sync-riftbound"]
   timeout = 600
+  schedule = "0 13 * * *"
 
 [functions."sync-starwars"]
   timeout = 1200
+  schedule = "30 12 * * *"
 
 [functions."sync-dragonball"]
   timeout = 1200
+  schedule = "0 12 * * *"
 
-# ─── Scheduled syncs (UTC times = AEST -10) ──────────────────
-# 8pm AEST = 10am UTC
-[functions."sync-pokemon".schedule]
-  cron = "0 10 * * *"
-
-# 8:30pm AEST = 10:30am UTC
-[functions."sync-yugioh".schedule]
-  cron = "30 10 * * *"
-
-# 9pm AEST = 11am UTC
-[functions."sync-onepiece".schedule]
-  cron = "0 11 * * *"
-
-# 9:30pm AEST = 11:30am UTC
-[functions."sync-lorcana".schedule]
-  cron = "30 11 * * *"
-
-# 10pm AEST = 12pm UTC
-[functions."sync-dragonball".schedule]
-  cron = "0 12 * * *"
-
-# 10:30pm AEST = 12:30pm UTC
-[functions."sync-starwars".schedule]
-  cron = "30 12 * * *"
-
-# 11pm AEST = 1pm UTC
-[functions."sync-riftbound".schedule]
-  cron = "0 13 * * *"
-
-# ─── Blog redirects ──────────────────────────────────────────
 [[redirects]]
   from = "/blog/lorcana-booster-box-guide/"
   to = "/blog/best-lorcana-booster-boxes-australia/"
@@ -87,7 +64,6 @@
   to = "/blog/star-wars-unlimited-beginners-guide-australia/"
   status = 301
 
-# Quiz URL redirect (old → new hub)
 [[redirects]]
   from = "/quiz"
   to = "/quizzes"
