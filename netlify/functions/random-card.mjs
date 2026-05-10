@@ -69,7 +69,7 @@ export default async (req) => {
   // MTG has no rarity column in the same way -- skip rarity filter for MTG
   let imageFilter, rarityFilter, selectFields;
   if (game === 'mtg') {
-    imageFilter  = `image_uri_small=not.is.null`;
+    imageFilter  = `image_uri_small=not.is.null&tcgplayer_id=not.is.null`;
     if (rarityParam === 'mythic') rarityFilter = `&rarity=eq.mythic`;
     else if (rarityParam === 'rare') rarityFilter = `&rarity=in.(rare,mythic)`;
     else rarityFilter = '';
@@ -116,7 +116,9 @@ export default async (req) => {
     selectFields = `id,slug,name,number,image_url,market_price,price_aud,rarity,set_name`;
   }
 
-  const query = `${SUPABASE_URL}/rest/v1/${table}?${imageFilter}${rarityFilter}&order=id&limit=${limit}&offset=${offset}&select=${selectFields}`;
+  // MTG uses tcgplayer_id (bigint) for ordering; UUID id column breaks OFFSET pagination
+  const orderCol = game === 'mtg' ? 'tcgplayer_id' : 'id';
+  const query = `${SUPABASE_URL}/rest/v1/${table}?${imageFilter}${rarityFilter}&order=${orderCol}&limit=${limit}&offset=${offset}&select=${selectFields}`;
 
   try {
     const res = await fetch(query, {
