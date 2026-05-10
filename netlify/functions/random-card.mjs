@@ -52,6 +52,7 @@ export default async (req) => {
   const url   = new URL(req.url);
   const game  = (url.searchParams.get('game') || '').toLowerCase();
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '1'), 6);
+  const rarityParam = (url.searchParams.get('rarity') || 'all').toLowerCase();
 
   if (!game || !GAME_TABLES[game]) {
     return json({ error: 'Invalid game. Supported: ' + Object.keys(GAME_TABLES).join(', ') }, 400);
@@ -69,11 +70,49 @@ export default async (req) => {
   let imageFilter, rarityFilter, selectFields;
   if (game === 'mtg') {
     imageFilter  = `image_uri_small=not.is.null`;
-    rarityFilter = '';
-    selectFields = `id,slug,name,image_uri_small,price_aud,price_usd,rarity,set_id`;
+    if (rarityParam === 'mythic') rarityFilter = `&rarity=eq.mythic`;
+    else if (rarityParam === 'rare') rarityFilter = `&rarity=in.(rare,mythic)`;
+    else rarityFilter = '';
+    selectFields = `id,slug,name,image_uri_small,price_aud,price_usd,rarity,set_code,set_name`;
   } else {
     imageFilter  = `image_url=not.is.null`;
-    rarityFilter = `&rarity=not.is.null&rarity=neq.None`;
+    // Base filter: always exclude sealed/null
+    const baseRarity = `&rarity=not.is.null&rarity=neq.None`;
+    // Game-specific rarity mappings based on actual DB values
+    const rarityMap = {
+      pokemon: {
+        rare:    `&rarity=not.is.null&rarity=neq.None&rarity=in.(Rare,Holo Rare,Double Rare,Ultra Rare,Illustration Rare,Secret Rare,Special Illustration Rare,Hyper Rare,Shiny Holo Rare,Shiny Rare)`,
+        ultra:   `&rarity=not.is.null&rarity=neq.None&rarity=in.(Ultra Rare,Illustration Rare,Secret Rare,Special Illustration Rare,Hyper Rare,Shiny Holo Rare,Shiny Rare)`,
+        secret:  `&rarity=not.is.null&rarity=neq.None&rarity=in.(Secret Rare,Special Illustration Rare,Hyper Rare)`,
+      },
+      yugioh: {
+        super:   `&rarity=not.is.null&rarity=neq.None&rarity=ilike.*super rare*`,
+        ultra:   `&rarity=not.is.null&rarity=neq.None&rarity=ilike.*ultra rare*`,
+        secret:  `&rarity=not.is.null&rarity=neq.None&rarity=ilike.*secret rare*`,
+      },
+      lorcana: {
+        super:      `&rarity=not.is.null&rarity=neq.None&rarity=in.(Super Rare,Enchanted)`,
+        enchanted:  `&rarity=eq.Enchanted`,
+      },
+      onepiece: {
+        rare:   `&rarity=not.is.null&rarity=neq.None&rarity=in.(R,SR,L,SEC)`,
+        leader: `&rarity=in.(L,SEC)`,
+      },
+      riftbound: {
+        rare:  `&rarity=not.is.null&rarity=neq.None&rarity=in.(Rare,Epic,Showcase)`,
+        epic:  `&rarity=in.(Epic,Showcase)`,
+      },
+      dragonball: {
+        rare:  `&rarity=not.is.null&rarity=neq.None&rarity=in.(Rare,Expansion Rare,Super Rare,Special Rare)`,
+        super: `&rarity=not.is.null&rarity=neq.None&rarity=in.(Super Rare,Special Rare)`,
+      },
+      starwars: {
+        rare:      `&rarity=not.is.null&rarity=neq.None&rarity=in.(Rare,Legendary,Special)`,
+        legendary: `&rarity=in.(Legendary,Special)`,
+      },
+    };
+    const gameFilters = rarityMap[game] || {};
+    rarityFilter = gameFilters[rarityParam] || baseRarity;
     selectFields = `id,slug,name,number,image_url,market_price,price_aud,rarity,set_name`;
   }
 

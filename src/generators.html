@@ -82,6 +82,16 @@ h1 span{color:#22D3EE}
 .draw-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;letter-spacing:.04em;border:none;cursor:pointer;transition:all .2s;text-transform:uppercase}
 .draw-btn:hover{opacity:.88;transform:translateY(-1px)}
 .draw-btn:active{transform:translateY(0)}
+.draw-count-toggle{display:flex;gap:6px;margin-bottom:16px;align-items:center}
+.draw-count-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-right:4px}
+.dc-btn{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s}
+.dc-btn:hover{border-color:var(--silver);color:var(--white)}
+.dc-btn.active{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.5);color:var(--gold)}
+.rarity-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.rarity-filter-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-right:4px}
+.rf-btn{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.04em;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s;text-transform:uppercase}
+.rf-btn:hover{border-color:var(--silver);color:var(--white)}
+.rf-btn.active{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.5);color:var(--gold)}
 .draw-again-wrap{text-align:center;margin:28px 0 8px}
 
 /* CARD FLIP ANIMATION */
@@ -100,6 +110,14 @@ h1 span{color:#22D3EE}
 .result-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);text-align:center;line-height:1.3}
 .result-meta{font-size:11px;color:var(--text2);text-align:center}
 .result-price{font-size:20px;font-weight:700;color:var(--gold);text-align:center;margin:4px 0}
+.rarity-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:0 auto 4px;text-align:center}
+.rarity-badge--common{background:rgba(160,168,192,.15);border:1px solid rgba(160,168,192,.3);color:#A0A8C0}
+.rarity-badge--uncommon{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.3);color:#4ade80}
+.rarity-badge--rare{background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.3);color:#60A5FA}
+.rarity-badge--mythic{background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.4);color:#FB923C;animation:mythicGlow 2s ease-in-out infinite}
+.rarity-badge--ultra{background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.4);color:#FB923C;animation:mythicGlow 2s ease-in-out infinite}
+.rarity-badge--secret{background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(251,146,60,.2));border:1px solid rgba(201,168,76,.5);color:var(--gold);animation:mythicGlow 2s ease-in-out infinite}
+@keyframes mythicGlow{0%,100%{box-shadow:0 0 6px rgba(251,146,60,.3)}50%{box-shadow:0 0 12px rgba(251,146,60,.6)}}
 .result-links{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:4px}
 .result-links a{font-size:11px;padding:6px 12px;border-radius:6px;font-weight:600;text-decoration:none;transition:opacity .2s;display:inline-block}
 .result-links a:hover{opacity:.8;text-decoration:none}
@@ -107,16 +125,19 @@ h1 span{color:#22D3EE}
 .btn-ebay{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA}
 
 /* SHARE SECTION */
-.share-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-top:12px;display:none}
+.share-section{background:var(--bg2);border:1px solid rgba(201,168,76,.2);border-radius:var(--radius);padding:22px 24px;margin-top:16px;display:none}
 .share-section.visible{display:block}
-.share-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:14px}
+.share-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold);margin-bottom:14px;letter-spacing:.05em}
 .share-buttons{display:flex;gap:10px;flex-wrap:wrap}
-.share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;border:1px solid var(--border);background:var(--bg3);color:var(--silver);cursor:pointer;transition:all .2s;text-decoration:none}
-.share-btn:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.06);text-decoration:none}
-.share-btn--x{border-color:rgba(255,255,255,.15)}.share-btn--x:hover{border-color:#fff;color:#fff}
-.share-btn--reddit{border-color:rgba(255,69,0,.3)}.share-btn--reddit:hover{border-color:#FF4500;color:#FF6633}
-.share-btn--whatsapp{border-color:rgba(37,211,102,.3)}.share-btn--whatsapp:hover{border-color:#25D366;color:#25D366}
-.share-btn--copy{border-color:rgba(201,168,76,.3)}.share-btn--copy:hover{border-color:var(--gold);color:var(--gold)}
+.share-btn{display:inline-flex;align-items:center;gap:0;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:all .2s;text-decoration:none;letter-spacing:.04em;text-transform:uppercase}
+.share-btn:hover{opacity:.88;transform:translateY(-1px);text-decoration:none}
+.share-btn--x{background:#000;color:#fff}
+.share-btn--reddit{background:#FF4500;color:#fff}
+.share-btn--whatsapp{background:#25D366;color:#fff}
+.share-btn--instagram{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff}
+.share-btn--facebook{background:#1877F2;color:#fff}
+.share-btn--copy{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gold)}
+.share-btn--copy:hover{background:rgba(201,168,76,.25)}
 .share-copied{font-size:11px;color:#4ade80;display:none;align-items:center;gap:4px;padding:8px 0}
 
 /* POST-DRAW CTAs */
@@ -168,6 +189,43 @@ const GAMES = {
 let currentGame = 'mtg';
 let lastDrawnCards = [];
 let shareResultName = '';
+// Per-game rarity filter state
+const gameRarityFilter = {mtg:'all',pokemon:'all',yugioh:'all',lorcana:'all',onepiece:'all',riftbound:'all',dragonball:'all',starwars:'all'};
+
+// Rarity tier mapping for badge display
+const gameDrawCount = {mtg:3,pokemon:3,yugioh:3,lorcana:3,onepiece:3,riftbound:3,dragonball:3,starwars:3};
+function setDrawCount(game, count, btnEl) {
+  gameDrawCount[game] = count;
+  const panel = document.getElementById('panel-' + game);
+  if (panel) panel.querySelectorAll('.dc-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+}
+
+function getRarityBadge(rarity) {
+  if (!rarity) return '';
+  const r = rarity.toLowerCase();
+  if (r.includes('mythic') || r.includes('secret') || r.includes('hyper') || r.includes('special illustration') || r.includes('rainbow')) {
+    return '<div class="rarity-badge rarity-badge--secret">' + rarity + ' ★</div>';
+  }
+  if (r.includes('ultra') || r.includes('full art') || r.includes('alternate') || r.includes('showcase') || r.includes('borderless')) {
+    return '<div class="rarity-badge rarity-badge--ultra">' + rarity + '</div>';
+  }
+  if (r === 'rare' || r.includes('rare')) {
+    return '<div class="rarity-badge rarity-badge--rare">' + rarity + '</div>';
+  }
+  if (r === 'uncommon') {
+    return '<div class="rarity-badge rarity-badge--uncommon">' + rarity + '</div>';
+  }
+  return '<div class="rarity-badge rarity-badge--common">' + rarity + '</div>';
+}
+
+function setRarityFilter(game, val, btnEl) {
+  gameRarityFilter[game] = val;
+  // Only reset buttons within the current game panel
+  const panel = document.getElementById('panel-' + game);
+  if (panel) panel.querySelectorAll('.rf-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+}
 
 // === SWITCH GAME ===
 function switchGame(game) {
@@ -185,7 +243,7 @@ function switchGame(game) {
 
 // === DRAW CARDS ===
 async function drawCards(game, count) {
-  count = count || 3;
+  count = count || gameDrawCount[game] || 3;
   const cfg = GAMES[game];
   const resultEl = document.getElementById('result-' + game);
   const shareEl = document.getElementById('share-' + game);
@@ -209,7 +267,9 @@ async function drawCards(game, count) {
   resultEl.appendChild(loadingGrid);
 
   try {
-    const res = await fetch('/api/random-card?game=' + game + '&limit=' + count);
+    const activeRarity = gameRarityFilter[game] || 'all';
+    const rarityParam = activeRarity !== 'all' ? '&rarity=' + activeRarity : '';
+    const res = await fetch('/api/random-card?game=' + game + '&limit=' + count + rarityParam);
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
     const cards = data.cards;
@@ -228,7 +288,8 @@ async function drawCards(game, count) {
         ? `<img src="${c.image_url}" alt="${c.name}" class="result-img" onerror="this.style.display='none'">`
         : '<div style="height:180px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:12px">No image</div>';
 
-      const metaHtml = [c.rarity, c.set_name].filter(Boolean).join(' &middot; ');
+      const rarityBadgeHtml = getRarityBadge(c.rarity);
+      const metaHtml = c.set_name ? c.set_name : '';
 
       const flipDiv = document.createElement('div');
       flipDiv.className = 'flip-card';
@@ -241,6 +302,7 @@ async function drawCards(game, count) {
             </div>
           </div>
           <div class="flip-card-back">
+            ${rarityBadgeHtml}
             ${imgHtml}
             <div class="result-name">${c.name}</div>
             ${metaHtml ? `<div class="result-meta">${metaHtml}</div>` : ''}
@@ -287,6 +349,11 @@ async function drawCards(game, count) {
 }
 
 // === SHARE ===
+function shareFacebook(game) {
+  const url = encodeURIComponent('https://cardsoncardsoncards.com.au/generators?game=' + game);
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
+}
+
 function shareX(game) {
   const cfg = GAMES[game];
   const cardNames = lastDrawnCards.length ? lastDrawnCards.map(c => c.name).join(', ') : cfg.label + ' cards';
@@ -398,23 +465,35 @@ window.addEventListener('DOMContentLoaded', () => {
       <a href="/cards/mtg/random-commander" class="btn-commander">&#127922; Open Commander Generator &rarr;</a>
     </div>
 
-    <button class="draw-btn" style="background:linear-gradient(135deg,#8a6200,#C9A84C);color:#080a0f" onclick="drawCards('mtg',3);document.getElementById('again-mtg').style.display='flex'">&#127922; Draw 3 Random MTG Cards</button>
+    <div class="draw-count-toggle">
+      <span class="draw-count-label">Cards:</span>
+      <button class="dc-btn active" onclick="setDrawCount('mtg',3,this)">3</button>
+      <button class="dc-btn" onclick="setDrawCount('mtg',5,this)">5</button>
+    </div>
+    <div class="rarity-filter">
+      <span class="rarity-filter-label">Rarity:</span>
+      <button class="rf-btn active" onclick="setRarityFilter('mtg','all',this)">All</button>
+      <button class="rf-btn" onclick="setRarityFilter('mtg','rare',this)">Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('mtg','mythic',this)">Mythic Only</button>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#8a6200,#C9A84C);color:#080a0f" onclick="drawCards('mtg');document.getElementById('again-mtg').style.display='flex'">&#127922; Draw 3 Random MTG Cards</button>
 
     <div id="result-mtg"></div>
 
     <div class="draw-again-wrap" id="again-mtg" style="display:none">
-      <button class="draw-btn" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C" onclick="drawCards('mtg',3)">&#8635; Draw Again</button>
+      <button class="draw-btn" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C" onclick="drawCards('mtg')">&#8635; Draw Again</button>
     </div>
 
     <!-- SHARE -->
     <div class="share-section" id="share-mtg">
-      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-title">Share Your Pull</div>
       <div class="share-buttons">
-        <button class="share-btn share-btn--x" onclick="shareX('mtg')">&#10005; Post on X</button>
-        <button class="share-btn share-btn--reddit" onclick="shareReddit('mtg')">&#128172; Share on Reddit</button>
-        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('mtg')">&#128172; WhatsApp</button>
-        <button class="share-btn" onclick="copyInstagram('mtg',this)">&#128247; Copy Instagram Caption</button>
-        <button class="share-btn share-btn--copy" onclick="copyShareLink('mtg',this)">&#128279; Copy Link</button>
+        <button class="share-btn share-btn--x" onclick="shareX('mtg')">X / Twitter</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('mtg')">Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('mtg')">WhatsApp</button>
+        <button class="share-btn share-btn--instagram" onclick="copyInstagram('mtg',this)">Instagram</button>
+        <button class="share-btn share-btn--facebook" onclick="shareFacebook('mtg')">Facebook</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('mtg',this)">Copy Link</button>
       </div>
     </div>
 
@@ -437,6 +516,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <div class="pd-title">Is that booster box worth cracking?</div>
           <div class="pd-arrow">Calculate EV &rarr;</div>
         </a>
+      
+        <a href="/tracker.html" class="pd-card">
+          <div class="pd-label">Free Tool</div>
+          <div class="pd-title">Your collection might be worth more than you think</div>
+          <div class="pd-arrow">Check the tracker &rarr;</div>
+        </a>
       </div>
     </div>
   </div>
@@ -447,19 +532,32 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="panel-title" style="color:#FFCC00">&#9889; Pokemon TCG</div>
       <div class="panel-sub">31,642 singles from all eras. From Base Set to the latest sets, every draw is unique.</div>
     </div>
-    <button class="draw-btn" style="background:linear-gradient(135deg,#786400,#FFCC00);color:#080a0f" onclick="drawCards('pokemon',3);document.getElementById('again-pokemon').style.display='flex'">&#127922; Draw 3 Random Pokemon Cards</button>
+    <div class="draw-count-toggle">
+      <span class="draw-count-label">Cards:</span>
+      <button class="dc-btn active" onclick="setDrawCount('pokemon',3,this)">3</button>
+      <button class="dc-btn" onclick="setDrawCount('pokemon',5,this)">5</button>
+    </div>
+    <div class="rarity-filter">
+      <span class="rarity-filter-label">Rarity:</span>
+      <button class="rf-btn active" onclick="setRarityFilter('pokemon','all',this)">All</button>
+      <button class="rf-btn" onclick="setRarityFilter('pokemon','rare',this)">Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('pokemon','ultra',this)">Ultra Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('pokemon','secret',this)">Secret Rare+</button>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#786400,#FFCC00);color:#080a0f" onclick="drawCards('pokemon');document.getElementById('again-pokemon').style.display='flex'">&#127922; Draw 3 Random Pokemon Cards</button>
     <div id="result-pokemon"></div>
     <div class="draw-again-wrap" id="again-pokemon" style="display:none">
-      <button class="draw-btn" style="background:rgba(255,204,0,.12);border:1px solid rgba(255,204,0,.3);color:#FFCC00" onclick="drawCards('pokemon',3)">&#8635; Draw Again</button>
+      <button class="draw-btn" style="background:rgba(255,204,0,.12);border:1px solid rgba(255,204,0,.3);color:#FFCC00" onclick="drawCards('pokemon')">&#8635; Draw Again</button>
     </div>
     <div class="share-section" id="share-pokemon">
-      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-title">Share Your Pull</div>
       <div class="share-buttons">
-        <button class="share-btn share-btn--x" onclick="shareX('pokemon')">&#10005; Post on X</button>
-        <button class="share-btn share-btn--reddit" onclick="shareReddit('pokemon')">&#128172; Share on Reddit</button>
-        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('pokemon')">&#128172; WhatsApp</button>
-        <button class="share-btn" onclick="copyInstagram('pokemon',this)">&#128247; Copy Instagram Caption</button>
-        <button class="share-btn share-btn--copy" onclick="copyShareLink('pokemon',this)">&#128279; Copy Link</button>
+        <button class="share-btn share-btn--x" onclick="shareX('pokemon')">X / Twitter</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('pokemon')">Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('pokemon')">WhatsApp</button>
+        <button class="share-btn share-btn--instagram" onclick="copyInstagram('pokemon',this)">Instagram</button>
+        <button class="share-btn share-btn--facebook" onclick="shareFacebook('pokemon')">Facebook</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('pokemon',this)">Copy Link</button>
       </div>
     </div>
     <div class="post-draw" id="postdraw-pokemon">
@@ -480,6 +578,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <div class="pd-title">Is that booster box worth it?</div>
           <div class="pd-arrow">Calculate EV &rarr;</div>
         </a>
+      
+        <a href="/tracker.html" class="pd-card">
+          <div class="pd-label">Free Tool</div>
+          <div class="pd-title">Your collection might be worth more than you think</div>
+          <div class="pd-arrow">Check the tracker &rarr;</div>
+        </a>
       </div>
     </div>
   </div>
@@ -490,19 +594,32 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="panel-title" style="color:#9333EA">&#128065; Yu-Gi-Oh!</div>
       <div class="panel-sub">46,588 cards across 610 sets. From classic archetypes to the modern meta, every draw reveals something different.</div>
     </div>
-    <button class="draw-btn" style="background:linear-gradient(135deg,#6B2D8B,#9333EA);color:#fff" onclick="drawCards('yugioh',3);document.getElementById('again-yugioh').style.display='flex'">&#127922; Draw 3 Random Yu-Gi-Oh Cards</button>
+    <div class="draw-count-toggle">
+      <span class="draw-count-label">Cards:</span>
+      <button class="dc-btn active" onclick="setDrawCount('yugioh',3,this)">3</button>
+      <button class="dc-btn" onclick="setDrawCount('yugioh',5,this)">5</button>
+    </div>
+    <div class="rarity-filter">
+      <span class="rarity-filter-label">Rarity:</span>
+      <button class="rf-btn active" onclick="setRarityFilter('yugioh','all',this)">All</button>
+      <button class="rf-btn" onclick="setRarityFilter('yugioh','super',this)">Super Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('yugioh','ultra',this)">Ultra Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('yugioh','secret',this)">Secret Rare+</button>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#6B2D8B,#9333EA);color:#fff" onclick="drawCards('yugioh');document.getElementById('again-yugioh').style.display='flex'">&#127922; Draw 3 Random Yu-Gi-Oh Cards</button>
     <div id="result-yugioh"></div>
     <div class="draw-again-wrap" id="again-yugioh" style="display:none">
-      <button class="draw-btn" style="background:rgba(147,51,234,.12);border:1px solid rgba(147,51,234,.3);color:#9333EA" onclick="drawCards('yugioh',3)">&#8635; Draw Again</button>
+      <button class="draw-btn" style="background:rgba(147,51,234,.12);border:1px solid rgba(147,51,234,.3);color:#9333EA" onclick="drawCards('yugioh')">&#8635; Draw Again</button>
     </div>
     <div class="share-section" id="share-yugioh">
-      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-title">Share Your Pull</div>
       <div class="share-buttons">
-        <button class="share-btn share-btn--x" onclick="shareX('yugioh')">&#10005; Post on X</button>
-        <button class="share-btn share-btn--reddit" onclick="shareReddit('yugioh')">&#128172; Share on Reddit</button>
-        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('yugioh')">&#128172; WhatsApp</button>
-        <button class="share-btn" onclick="copyInstagram('yugioh',this)">&#128247; Copy Instagram Caption</button>
-        <button class="share-btn share-btn--copy" onclick="copyShareLink('yugioh',this)">&#128279; Copy Link</button>
+        <button class="share-btn share-btn--x" onclick="shareX('yugioh')">X / Twitter</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('yugioh')">Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('yugioh')">WhatsApp</button>
+        <button class="share-btn share-btn--instagram" onclick="copyInstagram('yugioh',this)">Instagram</button>
+        <button class="share-btn share-btn--facebook" onclick="shareFacebook('yugioh')">Facebook</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('yugioh',this)">Copy Link</button>
       </div>
     </div>
     <div class="post-draw" id="postdraw-yugioh">
@@ -518,6 +635,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <div class="pd-title">Which TCG should you start?</div>
           <div class="pd-arrow">Take the quiz &rarr;</div>
         </a>
+      
+        <a href="/tracker.html" class="pd-card">
+          <div class="pd-label">Free Tool</div>
+          <div class="pd-title">Your collection might be worth more than you think</div>
+          <div class="pd-arrow">Check the tracker &rarr;</div>
+        </a>
       </div>
     </div>
   </div>
@@ -528,19 +651,31 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="panel-title" style="color:#38BDF8">&#127984; Disney Lorcana</div>
       <div class="panel-sub">3,153 cards across 18 sets including Wilds Unknown. Draw your next Disney favourite.</div>
     </div>
-    <button class="draw-btn" style="background:linear-gradient(135deg,#0369A1,#38BDF8);color:#080a0f" onclick="drawCards('lorcana',3);document.getElementById('again-lorcana').style.display='flex'">&#127922; Draw 3 Random Lorcana Cards</button>
+    <div class="draw-count-toggle">
+      <span class="draw-count-label">Cards:</span>
+      <button class="dc-btn active" onclick="setDrawCount('lorcana',3,this)">3</button>
+      <button class="dc-btn" onclick="setDrawCount('lorcana',5,this)">5</button>
+    </div>
+    <div class="rarity-filter">
+      <span class="rarity-filter-label">Rarity:</span>
+      <button class="rf-btn active" onclick="setRarityFilter('lorcana','all',this)">All</button>
+      <button class="rf-btn" onclick="setRarityFilter('lorcana','super',this)">Super Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('lorcana','enchanted',this)">Enchanted</button>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#0369A1,#38BDF8);color:#080a0f" onclick="drawCards('lorcana');document.getElementById('again-lorcana').style.display='flex'">&#127922; Draw 3 Random Lorcana Cards</button>
     <div id="result-lorcana"></div>
     <div class="draw-again-wrap" id="again-lorcana" style="display:none">
-      <button class="draw-btn" style="background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);color:#38BDF8" onclick="drawCards('lorcana',3)">&#8635; Draw Again</button>
+      <button class="draw-btn" style="background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);color:#38BDF8" onclick="drawCards('lorcana')">&#8635; Draw Again</button>
     </div>
     <div class="share-section" id="share-lorcana">
-      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-title">Share Your Pull</div>
       <div class="share-buttons">
-        <button class="share-btn share-btn--x" onclick="shareX('lorcana')">&#10005; Post on X</button>
-        <button class="share-btn share-btn--reddit" onclick="shareReddit('lorcana')">&#128172; Share on Reddit</button>
-        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('lorcana')">&#128172; WhatsApp</button>
-        <button class="share-btn" onclick="copyInstagram('lorcana',this)">&#128247; Copy Instagram Caption</button>
-        <button class="share-btn share-btn--copy" onclick="copyShareLink('lorcana',this)">&#128279; Copy Link</button>
+        <button class="share-btn share-btn--x" onclick="shareX('lorcana')">X / Twitter</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('lorcana')">Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('lorcana')">WhatsApp</button>
+        <button class="share-btn share-btn--instagram" onclick="copyInstagram('lorcana',this)">Instagram</button>
+        <button class="share-btn share-btn--facebook" onclick="shareFacebook('lorcana')">Facebook</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('lorcana',this)">Copy Link</button>
       </div>
     </div>
     <div class="post-draw" id="postdraw-lorcana">
@@ -556,6 +691,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <div class="pd-title">Which Lorcana ink are you?</div>
           <div class="pd-arrow">Take the quiz &rarr;</div>
         </a>
+      
+        <a href="/tracker.html" class="pd-card">
+          <div class="pd-label">Free Tool</div>
+          <div class="pd-title">Your collection might be worth more than you think</div>
+          <div class="pd-arrow">Check the tracker &rarr;</div>
+        </a>
       </div>
     </div>
   </div>
@@ -566,19 +707,31 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="panel-title" style="color:#DC3030">&#9760;&#65039; One Piece TCG</div>
       <div class="panel-sub">6,289 singles across 74 sets. Singles only, no sealed products.</div>
     </div>
-    <button class="draw-btn" style="background:linear-gradient(135deg,#B91C1C,#DC3030);color:#fff" onclick="drawCards('onepiece',3);document.getElementById('again-onepiece').style.display='flex'">&#127922; Draw 3 Random One Piece Cards</button>
+    <div class="draw-count-toggle">
+      <span class="draw-count-label">Cards:</span>
+      <button class="dc-btn active" onclick="setDrawCount('onepiece',3,this)">3</button>
+      <button class="dc-btn" onclick="setDrawCount('onepiece',5,this)">5</button>
+    </div>
+    <div class="rarity-filter">
+      <span class="rarity-filter-label">Rarity:</span>
+      <button class="rf-btn active" onclick="setRarityFilter('onepiece','all',this)">All</button>
+      <button class="rf-btn" onclick="setRarityFilter('onepiece','rare',this)">Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('onepiece','leader',this)">Leader+</button>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#B91C1C,#DC3030);color:#fff" onclick="drawCards('onepiece');document.getElementById('again-onepiece').style.display='flex'">&#127922; Draw 3 Random One Piece Cards</button>
     <div id="result-onepiece"></div>
     <div class="draw-again-wrap" id="again-onepiece" style="display:none">
-      <button class="draw-btn" style="background:rgba(220,48,48,.12);border:1px solid rgba(220,48,48,.3);color:#DC3030" onclick="drawCards('onepiece',3)">&#8635; Draw Again</button>
+      <button class="draw-btn" style="background:rgba(220,48,48,.12);border:1px solid rgba(220,48,48,.3);color:#DC3030" onclick="drawCards('onepiece')">&#8635; Draw Again</button>
     </div>
     <div class="share-section" id="share-onepiece">
-      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-title">Share Your Pull</div>
       <div class="share-buttons">
-        <button class="share-btn share-btn--x" onclick="shareX('onepiece')">&#10005; Post on X</button>
-        <button class="share-btn share-btn--reddit" onclick="shareReddit('onepiece')">&#128172; Share on Reddit</button>
-        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('onepiece')">&#128172; WhatsApp</button>
-        <button class="share-btn" onclick="copyInstagram('onepiece',this)">&#128247; Copy Instagram Caption</button>
-        <button class="share-btn share-btn--copy" onclick="copyShareLink('onepiece',this)">&#128279; Copy Link</button>
+        <button class="share-btn share-btn--x" onclick="shareX('onepiece')">X / Twitter</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('onepiece')">Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('onepiece')">WhatsApp</button>
+        <button class="share-btn share-btn--instagram" onclick="copyInstagram('onepiece',this)">Instagram</button>
+        <button class="share-btn share-btn--facebook" onclick="shareFacebook('onepiece')">Facebook</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('onepiece',this)">Copy Link</button>
       </div>
     </div>
     <div class="post-draw" id="postdraw-onepiece">
@@ -594,6 +747,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <div class="pd-title">Which TCG should you start?</div>
           <div class="pd-arrow">Take the quiz &rarr;</div>
         </a>
+      
+        <a href="/tracker.html" class="pd-card">
+          <div class="pd-label">Free Tool</div>
+          <div class="pd-title">Your collection might be worth more than you think</div>
+          <div class="pd-arrow">Check the tracker &rarr;</div>
+        </a>
       </div>
     </div>
   </div>
@@ -604,19 +763,31 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="panel-title" style="color:#818CF8">&#9876;&#65039; Riftbound</div>
       <div class="panel-sub">1,159 cards across 7 sets including Unleashed. The newest TCG to hit the C3 vault.</div>
     </div>
-    <button class="draw-btn" style="background:linear-gradient(135deg,#3730A3,#5865F2);color:#fff" onclick="drawCards('riftbound',3);document.getElementById('again-riftbound').style.display='flex'">&#127922; Draw 3 Random Riftbound Cards</button>
+    <div class="draw-count-toggle">
+      <span class="draw-count-label">Cards:</span>
+      <button class="dc-btn active" onclick="setDrawCount('riftbound',3,this)">3</button>
+      <button class="dc-btn" onclick="setDrawCount('riftbound',5,this)">5</button>
+    </div>
+    <div class="rarity-filter">
+      <span class="rarity-filter-label">Rarity:</span>
+      <button class="rf-btn active" onclick="setRarityFilter('riftbound','all',this)">All</button>
+      <button class="rf-btn" onclick="setRarityFilter('riftbound','rare',this)">Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('riftbound','epic',this)">Epic+</button>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#3730A3,#5865F2);color:#fff" onclick="drawCards('riftbound');document.getElementById('again-riftbound').style.display='flex'">&#127922; Draw 3 Random Riftbound Cards</button>
     <div id="result-riftbound"></div>
     <div class="draw-again-wrap" id="again-riftbound" style="display:none">
-      <button class="draw-btn" style="background:rgba(88,101,242,.12);border:1px solid rgba(88,101,242,.3);color:#818CF8" onclick="drawCards('riftbound',3)">&#8635; Draw Again</button>
+      <button class="draw-btn" style="background:rgba(88,101,242,.12);border:1px solid rgba(88,101,242,.3);color:#818CF8" onclick="drawCards('riftbound')">&#8635; Draw Again</button>
     </div>
     <div class="share-section" id="share-riftbound">
-      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-title">Share Your Pull</div>
       <div class="share-buttons">
-        <button class="share-btn share-btn--x" onclick="shareX('riftbound')">&#10005; Post on X</button>
-        <button class="share-btn share-btn--reddit" onclick="shareReddit('riftbound')">&#128172; Share on Reddit</button>
-        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('riftbound')">&#128172; WhatsApp</button>
-        <button class="share-btn" onclick="copyInstagram('riftbound',this)">&#128247; Copy Instagram Caption</button>
-        <button class="share-btn share-btn--copy" onclick="copyShareLink('riftbound',this)">&#128279; Copy Link</button>
+        <button class="share-btn share-btn--x" onclick="shareX('riftbound')">X / Twitter</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('riftbound')">Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('riftbound')">WhatsApp</button>
+        <button class="share-btn share-btn--instagram" onclick="copyInstagram('riftbound',this)">Instagram</button>
+        <button class="share-btn share-btn--facebook" onclick="shareFacebook('riftbound')">Facebook</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('riftbound',this)">Copy Link</button>
       </div>
     </div>
     <div class="post-draw" id="postdraw-riftbound">
@@ -632,6 +803,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <div class="pd-title">Which Riftbound champion are you?</div>
           <div class="pd-arrow">Take the quiz &rarr;</div>
         </a>
+      
+        <a href="/tracker.html" class="pd-card">
+          <div class="pd-label">Free Tool</div>
+          <div class="pd-title">Your collection might be worth more than you think</div>
+          <div class="pd-arrow">Check the tracker &rarr;</div>
+        </a>
       </div>
     </div>
   </div>
@@ -642,19 +819,31 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="panel-title" style="color:#F97316">&#128009; Dragon Ball Super Card Game</div>
       <div class="panel-sub">6,261 cards across 101 sets. Power levels over 9,000.</div>
     </div>
-    <button class="draw-btn" style="background:linear-gradient(135deg,#C2410C,#F97316);color:#fff" onclick="drawCards('dragonball',3);document.getElementById('again-dragonball').style.display='flex'">&#127922; Draw 3 Random Dragon Ball Cards</button>
+    <div class="draw-count-toggle">
+      <span class="draw-count-label">Cards:</span>
+      <button class="dc-btn active" onclick="setDrawCount('dragonball',3,this)">3</button>
+      <button class="dc-btn" onclick="setDrawCount('dragonball',5,this)">5</button>
+    </div>
+    <div class="rarity-filter">
+      <span class="rarity-filter-label">Rarity:</span>
+      <button class="rf-btn active" onclick="setRarityFilter('dragonball','all',this)">All</button>
+      <button class="rf-btn" onclick="setRarityFilter('dragonball','rare',this)">Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('dragonball','super',this)">Super Rare+</button>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#C2410C,#F97316);color:#fff" onclick="drawCards('dragonball');document.getElementById('again-dragonball').style.display='flex'">&#127922; Draw 3 Random Dragon Ball Cards</button>
     <div id="result-dragonball"></div>
     <div class="draw-again-wrap" id="again-dragonball" style="display:none">
-      <button class="draw-btn" style="background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:#F97316" onclick="drawCards('dragonball',3)">&#8635; Draw Again</button>
+      <button class="draw-btn" style="background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:#F97316" onclick="drawCards('dragonball')">&#8635; Draw Again</button>
     </div>
     <div class="share-section" id="share-dragonball">
-      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-title">Share Your Pull</div>
       <div class="share-buttons">
-        <button class="share-btn share-btn--x" onclick="shareX('dragonball')">&#10005; Post on X</button>
-        <button class="share-btn share-btn--reddit" onclick="shareReddit('dragonball')">&#128172; Share on Reddit</button>
-        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('dragonball')">&#128172; WhatsApp</button>
-        <button class="share-btn" onclick="copyInstagram('dragonball',this)">&#128247; Copy Instagram Caption</button>
-        <button class="share-btn share-btn--copy" onclick="copyShareLink('dragonball',this)">&#128279; Copy Link</button>
+        <button class="share-btn share-btn--x" onclick="shareX('dragonball')">X / Twitter</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('dragonball')">Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('dragonball')">WhatsApp</button>
+        <button class="share-btn share-btn--instagram" onclick="copyInstagram('dragonball',this)">Instagram</button>
+        <button class="share-btn share-btn--facebook" onclick="shareFacebook('dragonball')">Facebook</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('dragonball',this)">Copy Link</button>
       </div>
     </div>
     <div class="post-draw" id="postdraw-dragonball">
@@ -670,6 +859,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <div class="pd-title">Which TCG should you start?</div>
           <div class="pd-arrow">Take the quiz &rarr;</div>
         </a>
+      
+        <a href="/tracker.html" class="pd-card">
+          <div class="pd-label">Free Tool</div>
+          <div class="pd-title">Your collection might be worth more than you think</div>
+          <div class="pd-arrow">Check the tracker &rarr;</div>
+        </a>
       </div>
     </div>
   </div>
@@ -680,19 +875,31 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="panel-title" style="color:#FFE81F">&#128640; Star Wars Unlimited</div>
       <div class="panel-sub">6,113 cards across 26 sets. Light side, dark side, or neutral, the Force will decide.</div>
     </div>
-    <button class="draw-btn" style="background:linear-gradient(135deg,#78350F,#B8960C);color:#FFE81F" onclick="drawCards('starwars',3);document.getElementById('again-starwars').style.display='flex'">&#127922; Draw 3 Random Star Wars Cards</button>
+    <div class="draw-count-toggle">
+      <span class="draw-count-label">Cards:</span>
+      <button class="dc-btn active" onclick="setDrawCount('starwars',3,this)">3</button>
+      <button class="dc-btn" onclick="setDrawCount('starwars',5,this)">5</button>
+    </div>
+    <div class="rarity-filter">
+      <span class="rarity-filter-label">Rarity:</span>
+      <button class="rf-btn active" onclick="setRarityFilter('starwars','all',this)">All</button>
+      <button class="rf-btn" onclick="setRarityFilter('starwars','rare',this)">Rare+</button>
+      <button class="rf-btn" onclick="setRarityFilter('starwars','legendary',this)">Legendary</button>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#78350F,#B8960C);color:#FFE81F" onclick="drawCards('starwars');document.getElementById('again-starwars').style.display='flex'">&#127922; Draw 3 Random Star Wars Cards</button>
     <div id="result-starwars"></div>
     <div class="draw-again-wrap" id="again-starwars" style="display:none">
-      <button class="draw-btn" style="background:rgba(255,232,31,.1);border:1px solid rgba(255,232,31,.3);color:#FFE81F" onclick="drawCards('starwars',3)">&#8635; Draw Again</button>
+      <button class="draw-btn" style="background:rgba(255,232,31,.1);border:1px solid rgba(255,232,31,.3);color:#FFE81F" onclick="drawCards('starwars')">&#8635; Draw Again</button>
     </div>
     <div class="share-section" id="share-starwars">
-      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-title">Share Your Pull</div>
       <div class="share-buttons">
-        <button class="share-btn share-btn--x" onclick="shareX('starwars')">&#10005; Post on X</button>
-        <button class="share-btn share-btn--reddit" onclick="shareReddit('starwars')">&#128172; Share on Reddit</button>
-        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('starwars')">&#128172; WhatsApp</button>
-        <button class="share-btn" onclick="copyInstagram('starwars',this)">&#128247; Copy Instagram Caption</button>
-        <button class="share-btn share-btn--copy" onclick="copyShareLink('starwars',this)">&#128279; Copy Link</button>
+        <button class="share-btn share-btn--x" onclick="shareX('starwars')">X / Twitter</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('starwars')">Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('starwars')">WhatsApp</button>
+        <button class="share-btn share-btn--instagram" onclick="copyInstagram('starwars',this)">Instagram</button>
+        <button class="share-btn share-btn--facebook" onclick="shareFacebook('starwars')">Facebook</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('starwars',this)">Copy Link</button>
       </div>
     </div>
     <div class="post-draw" id="postdraw-starwars">
@@ -707,6 +914,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <div class="pd-label">Quiz</div>
           <div class="pd-title">Which TCG should you start?</div>
           <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+      
+        <a href="/tracker.html" class="pd-card">
+          <div class="pd-label">Free Tool</div>
+          <div class="pd-title">Your collection might be worth more than you think</div>
+          <div class="pd-arrow">Check the tracker &rarr;</div>
         </a>
       </div>
     </div>
