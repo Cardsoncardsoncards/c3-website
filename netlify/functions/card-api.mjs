@@ -39,7 +39,7 @@ async function supabaseGet(path, useService = false) {
 }
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
-  status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://cardsoncardsoncards.com.au' }
+  status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
 });
 
 // --- Like handler ---
@@ -229,6 +229,65 @@ async function handleNewsletter(req) {
   }
 }
 
+
+// --- Quiz result handler ---
+async function handleQuizResult(req) {
+  if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
+  try {
+    const body = await req.json();
+    const { quiz_slug, result_slug } = body;
+    if (!quiz_slug || !result_slug) return json({ error: 'Missing quiz_slug or result_slug' }, 400);
+
+    const SUPA = SUPABASE_URL + '/rest/v1/quiz_stats';
+    const hdrs = {
+      'apikey': SUPABASE_SERVICE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_SERVICE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    };
+
+    // Upsert the row (insert if not exists)
+    await fetch(SUPA + '?on_conflict=quiz_slug,result_slug', {
+      method: 'POST',
+      headers: hdrs,
+      body: JSON.stringify({ quiz_slug, result_slug, count: 0, updated_at: new Date().toISOString() })
+    });
+
+    // Increment count using RPC or raw update
+    await fetch(SUPA + `?quiz_slug=eq.${encodeURIComponent(quiz_slug)}&result_slug=eq.${encodeURIComponent(result_slug)}`, {
+      method: 'PATCH',
+      headers: { ...hdrs, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ count: 0, updated_at: new Date().toISOString() })
+    });
+
+    // Actually increment via SQL RPC
+    const rpcRes = await fetch(SUPABASE_URL + '/rest/v1/rpc/increment_quiz_count', {
+      method: 'POST',
+      headers: hdrs,
+      body: JSON.stringify({ p_quiz_slug: quiz_slug, p_result_slug: result_slug })
+    });
+
+    // Get current count for this result
+    const countRes = await fetch(SUPA + `?quiz_slug=eq.${encodeURIComponent(quiz_slug)}&result_slug=eq.${encodeURIComponent(result_slug)}&select=count`, {
+      headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': 'Bearer ' + SUPABASE_SERVICE_KEY }
+    });
+    const countData = await countRes.json();
+    const count = countData[0]?.count || 0;
+
+    // Get most common result for this quiz
+    const mcRes = await fetch(SUPA + `?quiz_slug=eq.${encodeURIComponent(quiz_slug)}&select=result_slug,count&order=count.desc&limit=1`, {
+      headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': 'Bearer ' + SUPABASE_SERVICE_KEY }
+    });
+    const mcData = await mcRes.json();
+    const most_common = mcData[0]?.result_slug || null;
+
+    return json({ ok: true, count: parseInt(count) + 1, most_common });
+  } catch (e) {
+    console.error('Quiz result error:', e.message);
+    return json({ error: e.message }, 500);
+  }
+}
+
 // --- Main router ---
 export default async (req) => {
   const url = new URL(req.url);
@@ -241,6 +300,7 @@ export default async (req) => {
   if (path === '/api/random-commander') return handleRandomCommander(req);
   if (path === '/api/feedback' && req.method === 'POST') return handleFeedback(req);
   if (path === '/api/newsletter' && req.method === 'POST') return handleNewsletter(req);
+  if (path === '/api/quiz-result' && req.method === 'POST') return handleQuizResult(req);
 
   return json({ error: 'Not found' }, 404);
 };
@@ -253,6 +313,7 @@ export const config = {
     '/api/collection-waitlist',
     '/api/random-commander',
     '/api/feedback',
-    '/api/newsletter'
+    '/api/newsletter',
+    '/api/quiz-result'
   ]
 };

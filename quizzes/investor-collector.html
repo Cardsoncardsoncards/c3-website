@@ -12,12 +12,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-  
+
 :root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
-a{color:var(--gold);text-decoration:none}
-a:hover{text-decoration:underline}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
 nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
 .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
@@ -33,7 +32,6 @@ nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:1
 .quiz-hero h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,40px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:12px}
 .quiz-hero p{font-size:15px;color:var(--text2);max-width:540px;margin:0 auto 20px}
 .quiz-meta{display:flex;justify-content:center;gap:20px;font-size:12px;color:var(--text2);margin-bottom:8px}
-.quiz-meta span{display:flex;align-items:center;gap:5px}
 .quiz-container{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:40px}
 .quiz-progress-wrap{height:3px;background:var(--border)}
 .quiz-progress-bar{height:100%;background:var(--gold);transition:width .4s ease;width:0%}
@@ -81,16 +79,39 @@ nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:1
 .suggest-game{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
 .suggest-name{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px}
 .suggest-desc{font-size:11px;color:var(--text2)}
-footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--text2);max-width:100%}
-footer a{color:var(--text2);margin:0 8px}
-footer a:hover{color:var(--white)}
+.share-popup{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.share-popup.open{display:flex}
+.share-popup-inner{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:380px;width:90%;text-align:center}
+.share-popup h3{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px}
+.share-popup p{font-size:13px;color:var(--text2);margin-bottom:24px}
+.share-popup-result{font-family:'Cinzel',serif;font-size:24px;font-weight:900;margin-bottom:8px}
+.share-popup-buttons{display:flex;flex-direction:column;gap:10px}
+.share-popup-close{position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text2);font-size:20px;cursor:pointer;line-height:1}
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--text2)}
+footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
   .result-name{color:#34D399}
   .result-badge{background:#34D39922;color:#34D399;border:1px solid #34D39955}
-  @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
   </style>
 </head>
 <body>
+<div class="share-popup" id="share-popup" onclick="if(event.target===this)closeSharePopup()">
+  <div class="share-popup-inner" style="position:relative">
+    <button class="share-popup-close" onclick="closeSharePopup()">✕</button>
+    <div id="popup-result-name" class="share-popup-result"></div>
+    <h3>Share Your Result</h3>
+    <p id="popup-result-text"></p>
+    <div class="share-popup-buttons">
+      <button class="share-btn" style="background:#1DA1F2;color:#fff;width:100%;justify-content:center" onclick="doShareTwitter()">𝕏 Share on X / Twitter</button>
+      <button class="share-btn" style="background:#4267B2;color:#fff;width:100%;justify-content:center" onclick="doShareFacebook()">📘 Share on Facebook</button>
+      <button class="share-btn" style="background:#25D366;color:#fff;width:100%;justify-content:center" onclick="doShareWhatsApp()">💬 Share on WhatsApp</button>
+      <button class="share-btn" style="background:#E1306C;color:#fff;width:100%;justify-content:center" onclick="doShareInstagram()">📷 Copy for Instagram</button>
+      <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white);width:100%;justify-content:center" onclick="doCopyLink()">🔗 Copy Link</button>
+    </div>
+  </div>
+</div>
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
@@ -111,17 +132,12 @@ footer a:hover{color:var(--white)}
     <div class="quiz-eyebrow">Personality Quiz · All TCGs</div>
     <h1>TCG Investor or Collector?</h1>
     <p>5 questions to reveal how you really think about your cards. Collector, Investor, Player, or Hoarder?</p>
-    <div class="quiz-meta">
-      <span>⏱ 2 minutes</span>
-      <span>❓ 5 questions</span>
-      <span>🎯 4 possible results</span>
-    </div>
+    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 4 possible results</span></div>
   </div>
 
   <div class="quiz-container">
     <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="progress-bar"></div></div>
-
-    <div class="quiz-step  active" data-step="1">
+    <div class="quiz-step active" data-step="1">
       <div class="step-num">Question 1 of 5</div>
       <div class="step-q">You open a booster box. Your first thought is:</div>
       <div class="options"><div class="option" data-q="1" data-v="collector" onclick="selectOption(this)">
@@ -132,7 +148,7 @@ footer a:hover{color:var(--white)}
           <div><div class="option-text">What is the expected value of this box?</div><div class="option-sub">ROI comes first</div></div>
         </div><div class="option" data-q="1" data-v="player" onclick="selectOption(this)">
           <span class="option-icon">⚔️</span>
-          <div><div class="option-text">Did I hit anything I need for my deck?</div><div class="option-sub">Playability matters most</div></div>
+          <div><div class="option-text">Did I hit anything I need for my deck?</div><div class="option-sub">Playability matters</div></div>
         </div><div class="option" data-q="1" data-v="hoarder" onclick="selectOption(this)">
           <span class="option-icon">📦</span>
           <div><div class="option-text">I am keeping everything</div><div class="option-sub">Never sell, always acquire</div></div>
@@ -202,10 +218,7 @@ footer a:hover{color:var(--white)}
           <div><div class="option-text">Everything in the sale bin</div><div class="option-sub">It might be useful one day</div></div>
         </div></div>
     </div>
-
-    <div id="result">
-      <div id="result-inner"></div>
-      <div class="suggest-section">
+    <div id="result"><div id="result-inner"></div><div class="suggest-section">
     <div class="suggest-title">You Might Also Like</div>
     <div class="suggest-grid"><a href="/quizzes/rarity" class="suggest-card">
       <div class="suggest-game">All TCGs</div>
@@ -216,9 +229,7 @@ footer a:hover{color:var(--white)}
       <div class="suggest-name">Which TCG Should I Start?</div>
       <div class="suggest-desc">6 questions, personalised pick</div>
     </a></div>
-  </div>
-    </div>
-
+  </div></div>
     <div class="quiz-nav" id="quiz-nav">
       <button class="btn btn-secondary" id="btn-back" onclick="goBack()" disabled>← Back</button>
       <span class="step-counter" id="step-counter">1 / 5</span>
@@ -226,88 +237,62 @@ footer a:hover{color:var(--white)}
     </div>
   </div>
 </div>
-
 <footer>
   <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/quizzes">Quizzes</a><a href="/tracker.html">Tracker</a><a href="/contact.html">Contact</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Cards on Cards on Cards participates in affiliate programmes. Purchases through links may earn a small commission at no extra cost to you.</p>
 </footer>
 
 <script>
 
-const QUIZ_SLUG = 'investor-collector';
-const SUPA = 'https://owaroeqchreuffbyakqx.supabase.co/rest/v1/quiz_stats';
-const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMwMzc5MDgsImV4cCI6MjA1ODYxMzkwOH0.sEmRMSN5Gx8QaX8mJ1e-Bg5jHGrXvDFpkNT-uWcN8Ro';
+let _shareResultName = '';
+let _shareUrl = '';
 
-async function recordResult(resultSlug) {
-  try {
-    await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&result_slug=eq.${resultSlug}`, {
-      method: 'PATCH',
-      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
-      body: JSON.stringify({count: 0})
-    });
-    // Use RPC upsert-and-increment pattern via raw SQL is not available on anon
-    // Instead POST to card-api which has service key
-    await fetch('/.netlify/functions/card-api?action=quiz-result', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({quiz_slug: QUIZ_SLUG, result_slug: resultSlug})
-    });
-  } catch(e) {}
+function openSharePopup(resultName, quizUrl) {
+  _shareResultName = resultName;
+  _shareUrl = quizUrl || window.location.href;
+  document.getElementById('popup-result-name').textContent = resultName;
+  document.getElementById('popup-result-text').textContent =
+    'I got "' + resultName + '" on the C3 TCG Quiz! What do you get?';
+  document.getElementById('share-popup').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-async function getStats(resultSlug) {
-  try {
-    const res = await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&result_slug=eq.${resultSlug}&select=count`, {
-      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON}
-    });
-    const data = await res.json();
-    return data[0]?.count || 0;
-  } catch(e) { return 0; }
+function closeSharePopup() {
+  document.getElementById('share-popup').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-async function getMostCommon() {
-  try {
-    const res = await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&select=result_slug,count&order=count.desc&limit=1`, {
-      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON}
-    });
-    const data = await res.json();
-    return data[0] || null;
-  } catch(e) { return null; }
+function doShareTwitter() {
+  const text = 'I got "' + _shareResultName + '" on the @C3TCGAustralia quiz! What do you get? ';
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + _shareUrl), '_blank');
 }
 
-const RESULTS = {"collector": {"name": "Collector", "tag": "The Curator", "why": "You are a Collector. The beauty of the card matters as much as its power. You chase alternate arts, you sleeve everything in premium protection, and your binder is a work of art. You do not need to explain why you kept the foil. It is yours. That is enough.", "flavour": "The joy is in the having, not the selling.", "cardLink": "/cards/mtg", "shopLink": "/tracker.html", "ebay": "TCG alternate art foil cards australia"}, "investor": {"name": "Investor", "tag": "The Strategist", "why": "You are an Investor. You understand that cards are assets. You track price movements, watch set rotation timelines, and know which cards to buy before the announcement. The EV Calculator was made for you. You play the market as much as the game.", "flavour": "Everything has a buy price and a sell price.", "cardLink": "/ev-calculator.html", "evLink": "/ev-calculator.html", "shopLink": "/tracker.html", "ebay": "TCG sealed product investment australia"}, "player": {"name": "Player", "tag": "The Competitor", "why": "You are a Player. Cards are tools, not trophies. You know exactly what your deck costs and you have calculated whether buying singles is better than opening packs (it always is). You care about winning more than collecting.", "flavour": "Shuffle up and deal.", "cardLink": "/cards/mtg", "shopLink": "/shop.html", "ebay": "TCG singles competitive australia"}, "hoarder": {"name": "Hoarder", "tag": "The Archivist", "why": "You are a Hoarder — and that is a badge of honour. You have cards from fifteen years ago you forgot existed. Somewhere in those boxes is almost certainly something worth serious money. You are an accidental archivist and the hobby needs you.", "flavour": "One day I will sort all of this. One day.", "cardLink": "/cards/mtg", "shopLink": "/tracker.html", "ebay": "TCG collection bulk lot australia"}};
-
-
-function shareResult(resultName, quizUrl) {
-  const text = `I got "${resultName}" on the C3 TCG quiz! What do you get?`;
-  const url = quizUrl || window.location.href;
-  if (navigator.share) {
-    navigator.share({ title: 'C3 TCG Quiz', text, url }).catch(() => {});
-  } else {
-    navigator.clipboard.writeText(text + ' ' + url).then(() => {
-      showToast('Result copied to clipboard!');
-    }).catch(() => {
-      window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + url), '_blank');
-    });
-  }
+function doShareFacebook() {
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(_shareUrl), '_blank');
 }
 
-function shareTwitter(resultName, quizUrl) {
-  const text = `I got "${resultName}" on the C3 TCG Quiz! What do you get?`;
-  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + (quizUrl || window.location.href)), '_blank');
+function doShareWhatsApp() {
+  const text = 'I got "' + _shareResultName + '" on the C3 TCG Quiz! ' + _shareUrl;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
 }
 
-function copyLink(quizUrl) {
-  navigator.clipboard.writeText((quizUrl || window.location.href)).then(() => {
+function doShareInstagram() {
+  const text = '🃏 I got "' + _shareResultName + '" on the C3 TCG Quiz!\n\nFind yours at: ' + _shareUrl;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied for Instagram!'));
+  closeSharePopup();
+}
+
+function doCopyLink() {
+  navigator.clipboard.writeText(_shareUrl).then(() => {
     showToast('Link copied!');
-  }).catch(() => {});
+    closeSharePopup();
+  });
 }
 
 function showToast(msg) {
   const t = document.createElement('div');
   t.textContent = msg;
-  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#0A0C14;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;animation:fadeIn .2s ease';
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#0A0C14;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:99999;animation:toastIn .2s ease';
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2500);
 }
@@ -316,11 +301,11 @@ function showToast(msg) {
 const TOTAL = 5;
 let current = 1;
 const answers = {};
+const RESULTS = {"collector": {"name": "Collector", "tag": "The Curator", "why": "You are a Collector. The beauty of the card matters as much as its power. You chase alternate arts, sleeve everything in premium protection, and your binder is a work of art.", "flavour": "The joy is in the having, not the selling.", "cardLink": "/cards/mtg", "shopLink": "/tracker.html", "ebay": "TCG alternate art foil cards australia"}, "investor": {"name": "Investor", "tag": "The Strategist", "why": "You are an Investor. You understand that cards are assets. You track price movements, watch set rotation timelines, and know which cards to buy before the announcement.", "flavour": "Everything has a buy price and a sell price.", "cardLink": "/ev-calculator.html", "evLink": "/ev-calculator.html", "shopLink": "/tracker.html", "ebay": "TCG sealed product investment australia"}, "player": {"name": "Player", "tag": "The Competitor", "why": "You are a Player. Cards are tools, not trophies. You know exactly what your deck costs and have calculated whether buying singles is better than opening packs.", "flavour": "Shuffle up and deal.", "cardLink": "/cards/mtg", "shopLink": "/shop.html", "ebay": "TCG singles competitive australia"}, "hoarder": {"name": "Hoarder", "tag": "The Archivist", "why": "You are a Hoarder \u2014 and that is a badge of honour. You have cards from fifteen years ago you forgot existed. Somewhere in those boxes is almost certainly something worth serious money.", "flavour": "One day I will sort all of this. One day.", "cardLink": "/cards/mtg", "shopLink": "/tracker.html", "ebay": "TCG collection bulk lot australia"}};
 
 function selectOption(el) {
-  const q = el.dataset.q;
-  const v = el.dataset.v;
-  document.querySelectorAll(`.option[data-q="${q}"]`).forEach(o => o.classList.remove('selected'));
+  const q = el.dataset.q, v = el.dataset.v;
+  document.querySelectorAll('.option[data-q="'+q+'"]').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
   answers[q] = v;
   document.getElementById('btn-next').disabled = false;
@@ -341,7 +326,8 @@ function goBack() {
 
 function showStep(n) {
   document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
-  document.querySelector(`[data-step="${n}"]`)?.classList.add('active');
+  var el = document.querySelector('[data-step="'+n+'"]');
+  if (el) el.classList.add('active');
   document.getElementById('btn-back').disabled = n === 1;
   document.getElementById('btn-next').disabled = !answers[n];
   document.getElementById('btn-next').textContent = n === TOTAL ? 'See Result →' : 'Next →';
@@ -349,54 +335,67 @@ function showStep(n) {
   document.getElementById('progress-bar').style.width = ((n-1)/TOTAL*100) + '%';
 }
 
+async function loadStats(resultKey) {
+  try {
+    const res = await fetch('/.netlify/functions/card-api?action=quiz-result', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({quiz_slug: 'investor-collector', result_slug: resultKey})
+    });
+    if (!res.ok) return {count: 0, most_common: null};
+    return await res.json();
+  } catch(e) { return {count: 0, most_common: null}; }
+}
+
 async function showResult() {
-  // Score function
   
-  const a = answers;
-  const s = {collector:0,investor:0,player:0,hoarder:0};
-  Object.values(a).forEach(v => { if (s[v]!==undefined) s[v]+=4; });
-  const resultKey = Object.entries(s).sort((a,b)=>b[1]-a[1])[0][0];
-
-
+  const a = answers, s = {collector:0,investor:0,player:0,hoarder:0};
+  Object.values(a).forEach(function(v){if(s[v]!==undefined)s[v]+=4;});
+  const resultKey = Object.entries(s).sort(function(a,b){return b[1]-a[1];})[0][0];
   const r = RESULTS[resultKey] || Object.values(RESULTS)[0];
+  document.getElementById('progress-bar').style.width = '100%';
   
-  await recordResult(resultKey);
-  const myCount = await getStats(resultKey);
-  const mostCommon = await getMostCommon();
+  const stats = await loadStats(resultKey);
+  const myCount = stats.count || 0;
+  const mostCommon = stats.most_common;
+  
+  const ebayUrl = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent((r.ebay || r.name + ' tcg australia')) + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1';
 
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(r.ebay || r.name + ' tcg australia')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
-
-  document.getElementById('result-inner').innerHTML = `
-    <div class="result-badge">${r.tag || 'Your Result'}</div>
-    <div class="result-name">${r.name}</div>
-    <div class="result-why">${r.why}</div>
-    <div class="result-flavour">${r.flavour}</div>
-    <div class="result-stats">
-      <div class="result-stat"><strong>${myCount.toLocaleString()}</strong>people got this result</div>
-      ${mostCommon && mostCommon.result_slug !== resultKey ? `<div class="result-stat"><strong>${RESULTS[mostCommon.result_slug]?.name || mostCommon.result_slug}</strong>most common result</div>` : ''}
-    </div>
-    <div class="result-actions">
-      ${r.cardLink ? `<a href="${r.cardLink}" class="result-cta" style="background:#34D39922;border:1px solid #34D39955;color:#34D399">🃏 Browse ${r.name} Cards →</a>` : ''}
-      ${r.shopLink ? `<a href="${r.shopLink}" class="result-cta" style="background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C">🛒 Shop on C3 →</a>` : ''}
-      <a href="${ebayUrl}" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">🏪 Buy on eBay AU ↗</a>
-      ${r.blogLink ? `<a href="${r.blogLink}" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 Beginners Guide →</a>` : ''}
-      ${r.evLink ? `<a href="${r.evLink}" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">📊 EV Calculator →</a>` : ''}
-    </div>
-    <div class="result-share">
-      <div class="share-title">Share your result</div>
-      <div class="share-btns">
-        <button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="shareTwitter('${r.name}', window.location.href)">𝕏 Share on X</button>
-        <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="copyLink(window.location.href)">🔗 Copy Link</button>
-        <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="shareResult('${r.name}', window.location.href)">↗ Share</button>
-      </div>
-    </div>
-  `;
+  document.getElementById('result-inner').innerHTML =
+    '<div class="result-badge">' + (r.tag || 'Your Result') + '</div>' +
+    '<div class="result-name">' + r.name + '</div>' +
+    '<div class="result-why">' + r.why + '</div>' +
+    '<div class="result-flavour">' + r.flavour + '</div>' +
+    '<div class="result-stats">' +
+      '<div class="result-stat"><strong>' + myCount.toLocaleString() + '</strong>people got this result</div>' +
+      (mostCommon && mostCommon !== resultKey && RESULTS[mostCommon] ?
+        '<div class="result-stat"><strong>' + RESULTS[mostCommon].name + '</strong>most common result</div>' : '') +
+    '</div>' +
+    '<div class="result-actions">' +
+      (r.cardLink ? '<a href="' + r.cardLink + '" class="result-cta" style="background:#34D39922;border:1px solid #34D39955;color:#34D399">🃏 Browse ' + r.name + ' Cards →</a>' : '') +
+      (r.shopLink ? '<a href="' + r.shopLink + '" class="result-cta" style="background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C">🛒 Shop on C3 →</a>' : '') +
+      '<a href="' + ebayUrl + '" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">🏪 Buy on eBay AU ↗</a>' +
+      (r.blogLink ? '<a href="' + r.blogLink + '" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 Beginners Guide →</a>' : '') +
+      (r.evLink ? '<a href="' + r.evLink + '" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">📊 EV Calculator →</a>' : '') +
+    '</div>' +
+    '<div class="result-share">' +
+      '<div class="share-title">Share your result</div>' +
+      '<div class="share-btns">' +
+        '<button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="openSharePopup('' + r.name.replace(/'/g, "\'") + '', window.location.href)">𝕏 Share</button>' +
+        '<button class="share-btn" style="background:#4267B2;color:#fff" onclick="doShareFacebook()">📘 Facebook</button>' +
+        '<button class="share-btn" style="background:#25D366;color:#fff" onclick="doShareWhatsApp()">💬 WhatsApp</button>' +
+        '<button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="openSharePopup('' + r.name.replace(/'/g, "\'") + '', window.location.href)">↗ All platforms</button>' +
+      '</div>' +
+    '</div>';
 
   document.querySelectorAll('.quiz-step').forEach(s => s.style.display='none');
   document.getElementById('result').style.display = 'block';
   document.getElementById('quiz-nav').style.display = 'none';
-  document.getElementById('progress-bar').style.width = '100%';
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
+  
+  // Set share vars for popup
+  _shareResultName = r.name;
+  _shareUrl = window.location.href;
 }
 </script>
 </body>

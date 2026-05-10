@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Which Pokemon TCG Era Are You From? | C3 TCG Quizzes Australia</title>
-  <meta name="description" content="Which Pokemon TCG era are you from? Base Set, Neo Genesis, EX era, Diamond and Pearl, or Modern? Take this quiz and find out with Australian card links.">
+  <meta name="description" content="Which Pokemon TCG era are you from? Base Set, Neo Genesis, EX era, Diamond and Pearl, or Modern? Take this quiz with Australian card links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/quizzes/pokemon-era">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
@@ -12,12 +12,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-  
+
 :root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
-a{color:var(--gold);text-decoration:none}
-a:hover{text-decoration:underline}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
 nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
 .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
@@ -33,7 +32,6 @@ nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:1
 .quiz-hero h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,40px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:12px}
 .quiz-hero p{font-size:15px;color:var(--text2);max-width:540px;margin:0 auto 20px}
 .quiz-meta{display:flex;justify-content:center;gap:20px;font-size:12px;color:var(--text2);margin-bottom:8px}
-.quiz-meta span{display:flex;align-items:center;gap:5px}
 .quiz-container{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:40px}
 .quiz-progress-wrap{height:3px;background:var(--border)}
 .quiz-progress-bar{height:100%;background:var(--gold);transition:width .4s ease;width:0%}
@@ -81,16 +79,39 @@ nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:1
 .suggest-game{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
 .suggest-name{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px}
 .suggest-desc{font-size:11px;color:var(--text2)}
-footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--text2);max-width:100%}
-footer a{color:var(--text2);margin:0 8px}
-footer a:hover{color:var(--white)}
+.share-popup{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.share-popup.open{display:flex}
+.share-popup-inner{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:380px;width:90%;text-align:center}
+.share-popup h3{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px}
+.share-popup p{font-size:13px;color:var(--text2);margin-bottom:24px}
+.share-popup-result{font-family:'Cinzel',serif;font-size:24px;font-weight:900;margin-bottom:8px}
+.share-popup-buttons{display:flex;flex-direction:column;gap:10px}
+.share-popup-close{position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text2);font-size:20px;cursor:pointer;line-height:1}
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--text2)}
+footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
   .result-name{color:#FFCC00}
   .result-badge{background:#FFCC0022;color:#FFCC00;border:1px solid #FFCC0055}
-  @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
   </style>
 </head>
 <body>
+<div class="share-popup" id="share-popup" onclick="if(event.target===this)closeSharePopup()">
+  <div class="share-popup-inner" style="position:relative">
+    <button class="share-popup-close" onclick="closeSharePopup()">✕</button>
+    <div id="popup-result-name" class="share-popup-result"></div>
+    <h3>Share Your Result</h3>
+    <p id="popup-result-text"></p>
+    <div class="share-popup-buttons">
+      <button class="share-btn" style="background:#1DA1F2;color:#fff;width:100%;justify-content:center" onclick="doShareTwitter()">𝕏 Share on X / Twitter</button>
+      <button class="share-btn" style="background:#4267B2;color:#fff;width:100%;justify-content:center" onclick="doShareFacebook()">📘 Share on Facebook</button>
+      <button class="share-btn" style="background:#25D366;color:#fff;width:100%;justify-content:center" onclick="doShareWhatsApp()">💬 Share on WhatsApp</button>
+      <button class="share-btn" style="background:#E1306C;color:#fff;width:100%;justify-content:center" onclick="doShareInstagram()">📷 Copy for Instagram</button>
+      <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white);width:100%;justify-content:center" onclick="doCopyLink()">🔗 Copy Link</button>
+    </div>
+  </div>
+</div>
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
@@ -110,18 +131,13 @@ footer a:hover{color:var(--white)}
   <div class="quiz-hero">
     <div class="quiz-eyebrow">Pokemon Quiz · Your Era</div>
     <h1>Which Pokemon TCG Era Are You From?</h1>
-    <p>5 questions to reveal your Pokemon era. Base Set original, Neo Genesis, ex era, Diamond Pearl, or modern collector?</p>
-    <div class="quiz-meta">
-      <span>⏱ 2 minutes</span>
-      <span>❓ 5 questions</span>
-      <span>🎯 5 possible results</span>
-    </div>
+    <p>5 questions to reveal your Pokemon era. Base Set original, Neo, EX era, Diamond Pearl, or modern collector?</p>
+    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 5 possible results</span></div>
   </div>
 
   <div class="quiz-container">
     <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="progress-bar"></div></div>
-
-    <div class="quiz-step  active" data-step="1">
+    <div class="quiz-step active" data-step="1">
       <div class="step-num">Question 1 of 5</div>
       <div class="step-q">What is your earliest Pokemon memory?</div>
       <div class="options"><div class="option" data-q="1" data-v="base-set" onclick="selectOption(this)">
@@ -217,23 +233,18 @@ footer a:hover{color:var(--white)}
           <div><div class="option-text">Current Pokemon is amazing</div><div class="option-sub">Best it has ever been</div></div>
         </div></div>
     </div>
-
-    <div id="result">
-      <div id="result-inner"></div>
-      <div class="suggest-section">
+    <div id="result"><div id="result-inner"></div><div class="suggest-section">
     <div class="suggest-title">You Might Also Like</div>
     <div class="suggest-grid"><a href="/quizzes/investor-collector" class="suggest-card">
       <div class="suggest-game">All TCGs</div>
       <div class="suggest-name">Investor or Collector?</div>
-      <div class="suggest-desc">How do you really think about cards?</div>
+      <div class="suggest-desc">How do you think about cards?</div>
     </a><a href="/quizzes/rarity" class="suggest-card">
       <div class="suggest-game">All TCGs</div>
       <div class="suggest-name">What Rarity Are You?</div>
       <div class="suggest-desc">Find your TCG personality rarity</div>
     </a></div>
-  </div>
-    </div>
-
+  </div></div>
     <div class="quiz-nav" id="quiz-nav">
       <button class="btn btn-secondary" id="btn-back" onclick="goBack()" disabled>← Back</button>
       <span class="step-counter" id="step-counter">1 / 5</span>
@@ -241,88 +252,62 @@ footer a:hover{color:var(--white)}
     </div>
   </div>
 </div>
-
 <footer>
   <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/quizzes">Quizzes</a><a href="/tracker.html">Tracker</a><a href="/contact.html">Contact</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Cards on Cards on Cards participates in affiliate programmes. Purchases through links may earn a small commission at no extra cost to you.</p>
 </footer>
 
 <script>
 
-const QUIZ_SLUG = 'pokemon-era';
-const SUPA = 'https://owaroeqchreuffbyakqx.supabase.co/rest/v1/quiz_stats';
-const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMwMzc5MDgsImV4cCI6MjA1ODYxMzkwOH0.sEmRMSN5Gx8QaX8mJ1e-Bg5jHGrXvDFpkNT-uWcN8Ro';
+let _shareResultName = '';
+let _shareUrl = '';
 
-async function recordResult(resultSlug) {
-  try {
-    await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&result_slug=eq.${resultSlug}`, {
-      method: 'PATCH',
-      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
-      body: JSON.stringify({count: 0})
-    });
-    // Use RPC upsert-and-increment pattern via raw SQL is not available on anon
-    // Instead POST to card-api which has service key
-    await fetch('/.netlify/functions/card-api?action=quiz-result', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({quiz_slug: QUIZ_SLUG, result_slug: resultSlug})
-    });
-  } catch(e) {}
+function openSharePopup(resultName, quizUrl) {
+  _shareResultName = resultName;
+  _shareUrl = quizUrl || window.location.href;
+  document.getElementById('popup-result-name').textContent = resultName;
+  document.getElementById('popup-result-text').textContent =
+    'I got "' + resultName + '" on the C3 TCG Quiz! What do you get?';
+  document.getElementById('share-popup').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-async function getStats(resultSlug) {
-  try {
-    const res = await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&result_slug=eq.${resultSlug}&select=count`, {
-      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON}
-    });
-    const data = await res.json();
-    return data[0]?.count || 0;
-  } catch(e) { return 0; }
+function closeSharePopup() {
+  document.getElementById('share-popup').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-async function getMostCommon() {
-  try {
-    const res = await fetch(`${SUPA}?quiz_slug=eq.${QUIZ_SLUG}&select=result_slug,count&order=count.desc&limit=1`, {
-      headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON}
-    });
-    const data = await res.json();
-    return data[0] || null;
-  } catch(e) { return null; }
+function doShareTwitter() {
+  const text = 'I got "' + _shareResultName + '" on the @C3TCGAustralia quiz! What do you get? ';
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + _shareUrl), '_blank');
 }
 
-const RESULTS = {"base-set": {"name": "Base Set Era", "tag": "The Original", "why": "You are from the Base Set era. Shadowless Charizard, Holographic Blastoise, the smell of a fresh booster from 1999. You may or may not have a collection in a shoebox that is worth more than your car. You will always be the person who says the original was best.", "flavour": "A first edition Charizard is worth more than a car. You knew.", "cardLink": "/cards/pokemon", "shopLink": "/shop.html#pokemon", "ebay": "Pokemon base set cards australia PSA"}, "neo": {"name": "Neo Genesis Era", "tag": "The Johto Fan", "why": "You are from the Neo Genesis era. Lugia, Ho-Oh, Shining cards, and the dark/light split. Johto was when Pokemon got storytelling right. You have strong feelings about the original 151 vs 251 debate and you are probably right.", "flavour": "Ho-Oh will always be the better legendary. Unpopular opinion.", "cardLink": "/cards/pokemon", "ebay": "Pokemon neo genesis cards australia"}, "ex-era": {"name": "EX Era", "tag": "The Competitor", "why": "You are from the EX era. Ruby and Sapphire, FireRed and LeafGreen, the ex mechanic that changed competitive Pokemon forever. You respect power and innovation. You probably built a deck specifically to counter something.", "flavour": "Two prize cards when knocked out. Worth it.", "cardLink": "/cards/pokemon", "ebay": "Pokemon ex era cards australia"}, "diamond-pearl": {"name": "Diamond & Pearl Era", "tag": "The Classicist", "why": "You are from the Diamond and Pearl era. Sinnoh is unironically one of the best regions. The TCG was at peak art quality during this period. You have strong opinions about card back design and you are partially right.", "flavour": "Infernape was criminally underrated.", "cardLink": "/cards/pokemon", "ebay": "Pokemon diamond pearl cards australia"}, "modern": {"name": "Modern Era", "tag": "The Current Player", "why": "You are a Modern era player. Scarlet, Violet, Destined Rivals, Illustration Rares, and Special Illustration Rares. You know the pull rates by memory, you track market prices, and you are building your collection at exactly the right time.", "flavour": "Special Illustration Rares are the best thing to happen to Pokemon in decades.", "cardLink": "/cards/pokemon", "evLink": "/ev-calculator.html", "ebay": "Pokemon modern era cards australia scarlet violet"}};
-
-
-function shareResult(resultName, quizUrl) {
-  const text = `I got "${resultName}" on the C3 TCG quiz! What do you get?`;
-  const url = quizUrl || window.location.href;
-  if (navigator.share) {
-    navigator.share({ title: 'C3 TCG Quiz', text, url }).catch(() => {});
-  } else {
-    navigator.clipboard.writeText(text + ' ' + url).then(() => {
-      showToast('Result copied to clipboard!');
-    }).catch(() => {
-      window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + url), '_blank');
-    });
-  }
+function doShareFacebook() {
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(_shareUrl), '_blank');
 }
 
-function shareTwitter(resultName, quizUrl) {
-  const text = `I got "${resultName}" on the C3 TCG Quiz! What do you get?`;
-  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + (quizUrl || window.location.href)), '_blank');
+function doShareWhatsApp() {
+  const text = 'I got "' + _shareResultName + '" on the C3 TCG Quiz! ' + _shareUrl;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
 }
 
-function copyLink(quizUrl) {
-  navigator.clipboard.writeText((quizUrl || window.location.href)).then(() => {
+function doShareInstagram() {
+  const text = '🃏 I got "' + _shareResultName + '" on the C3 TCG Quiz!\n\nFind yours at: ' + _shareUrl;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied for Instagram!'));
+  closeSharePopup();
+}
+
+function doCopyLink() {
+  navigator.clipboard.writeText(_shareUrl).then(() => {
     showToast('Link copied!');
-  }).catch(() => {});
+    closeSharePopup();
+  });
 }
 
 function showToast(msg) {
   const t = document.createElement('div');
   t.textContent = msg;
-  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#0A0C14;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;animation:fadeIn .2s ease';
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#0A0C14;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:99999;animation:toastIn .2s ease';
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2500);
 }
@@ -331,11 +316,11 @@ function showToast(msg) {
 const TOTAL = 5;
 let current = 1;
 const answers = {};
+const RESULTS = {"base-set": {"name": "Base Set Era", "tag": "The Original", "why": "You are from the Base Set era. Shadowless Charizard, Holographic Blastoise, the smell of a fresh booster from 1999. You may have a collection in a shoebox worth more than your car.", "flavour": "A first edition Charizard is worth more than a car. You knew.", "cardLink": "/cards/pokemon", "shopLink": "/shop.html#pokemon", "ebay": "Pokemon base set cards australia PSA"}, "neo": {"name": "Neo Genesis Era", "tag": "The Johto Fan", "why": "You are from the Neo Genesis era. Lugia, Ho-Oh, Shining cards, and the dark/light split. Johto was when Pokemon got storytelling right.", "flavour": "Ho-Oh will always be the better legendary.", "cardLink": "/cards/pokemon", "ebay": "Pokemon neo genesis cards australia"}, "ex-era": {"name": "EX Era", "tag": "The Competitor", "why": "You are from the EX era. Ruby and Sapphire, the ex mechanic that changed competitive Pokemon forever. You respect power and innovation.", "flavour": "Two prize cards when knocked out. Worth it.", "cardLink": "/cards/pokemon", "ebay": "Pokemon ex era cards australia"}, "diamond-pearl": {"name": "Diamond & Pearl Era", "tag": "The Classicist", "why": "You are from the Diamond and Pearl era. Sinnoh is unironically one of the best regions. The TCG was at peak art quality during this period.", "flavour": "Infernape was criminally underrated.", "cardLink": "/cards/pokemon", "ebay": "Pokemon diamond pearl cards australia"}, "modern": {"name": "Modern Era", "tag": "The Current Player", "why": "You are a Modern era player. Scarlet, Violet, Destined Rivals, Illustration Rares, and Special Illustration Rares. You know the pull rates by memory.", "flavour": "Special Illustration Rares are the best thing to happen to Pokemon in decades.", "cardLink": "/cards/pokemon", "evLink": "/ev-calculator.html", "ebay": "Pokemon modern era cards australia scarlet violet"}};
 
 function selectOption(el) {
-  const q = el.dataset.q;
-  const v = el.dataset.v;
-  document.querySelectorAll(`.option[data-q="${q}"]`).forEach(o => o.classList.remove('selected'));
+  const q = el.dataset.q, v = el.dataset.v;
+  document.querySelectorAll('.option[data-q="'+q+'"]').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
   answers[q] = v;
   document.getElementById('btn-next').disabled = false;
@@ -356,7 +341,8 @@ function goBack() {
 
 function showStep(n) {
   document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
-  document.querySelector(`[data-step="${n}"]`)?.classList.add('active');
+  var el = document.querySelector('[data-step="'+n+'"]');
+  if (el) el.classList.add('active');
   document.getElementById('btn-back').disabled = n === 1;
   document.getElementById('btn-next').disabled = !answers[n];
   document.getElementById('btn-next').textContent = n === TOTAL ? 'See Result →' : 'Next →';
@@ -364,54 +350,67 @@ function showStep(n) {
   document.getElementById('progress-bar').style.width = ((n-1)/TOTAL*100) + '%';
 }
 
+async function loadStats(resultKey) {
+  try {
+    const res = await fetch('/.netlify/functions/card-api?action=quiz-result', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({quiz_slug: 'pokemon-era', result_slug: resultKey})
+    });
+    if (!res.ok) return {count: 0, most_common: null};
+    return await res.json();
+  } catch(e) { return {count: 0, most_common: null}; }
+}
+
 async function showResult() {
-  // Score function
   
-  const a = answers;
-  const s = {'base-set':0,neo:0,'ex-era':0,'diamond-pearl':0,modern:0};
-  Object.values(a).forEach(v => { if (s[v]!==undefined) s[v]+=4; });
-  const resultKey = Object.entries(s).sort((a,b)=>b[1]-a[1])[0][0];
-
-
+  const a = answers, s = {'base-set':0,neo:0,'ex-era':0,'diamond-pearl':0,modern:0};
+  Object.values(a).forEach(function(v){if(s[v]!==undefined)s[v]+=4;});
+  const resultKey = Object.entries(s).sort(function(a,b){return b[1]-a[1];})[0][0];
   const r = RESULTS[resultKey] || Object.values(RESULTS)[0];
+  document.getElementById('progress-bar').style.width = '100%';
   
-  await recordResult(resultKey);
-  const myCount = await getStats(resultKey);
-  const mostCommon = await getMostCommon();
+  const stats = await loadStats(resultKey);
+  const myCount = stats.count || 0;
+  const mostCommon = stats.most_common;
+  
+  const ebayUrl = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent((r.ebay || r.name + ' tcg australia')) + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1';
 
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(r.ebay || r.name + ' tcg australia')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
-
-  document.getElementById('result-inner').innerHTML = `
-    <div class="result-badge">${r.tag || 'Your Result'}</div>
-    <div class="result-name">${r.name}</div>
-    <div class="result-why">${r.why}</div>
-    <div class="result-flavour">${r.flavour}</div>
-    <div class="result-stats">
-      <div class="result-stat"><strong>${myCount.toLocaleString()}</strong>people got this result</div>
-      ${mostCommon && mostCommon.result_slug !== resultKey ? `<div class="result-stat"><strong>${RESULTS[mostCommon.result_slug]?.name || mostCommon.result_slug}</strong>most common result</div>` : ''}
-    </div>
-    <div class="result-actions">
-      ${r.cardLink ? `<a href="${r.cardLink}" class="result-cta" style="background:#FFCC0022;border:1px solid #FFCC0055;color:#FFCC00">🃏 Browse ${r.name} Cards →</a>` : ''}
-      ${r.shopLink ? `<a href="${r.shopLink}" class="result-cta" style="background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C">🛒 Shop on C3 →</a>` : ''}
-      <a href="${ebayUrl}" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">🏪 Buy on eBay AU ↗</a>
-      ${r.blogLink ? `<a href="${r.blogLink}" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 Beginners Guide →</a>` : ''}
-      ${r.evLink ? `<a href="${r.evLink}" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">📊 EV Calculator →</a>` : ''}
-    </div>
-    <div class="result-share">
-      <div class="share-title">Share your result</div>
-      <div class="share-btns">
-        <button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="shareTwitter('${r.name}', window.location.href)">𝕏 Share on X</button>
-        <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="copyLink(window.location.href)">🔗 Copy Link</button>
-        <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="shareResult('${r.name}', window.location.href)">↗ Share</button>
-      </div>
-    </div>
-  `;
+  document.getElementById('result-inner').innerHTML =
+    '<div class="result-badge">' + (r.tag || 'Your Result') + '</div>' +
+    '<div class="result-name">' + r.name + '</div>' +
+    '<div class="result-why">' + r.why + '</div>' +
+    '<div class="result-flavour">' + r.flavour + '</div>' +
+    '<div class="result-stats">' +
+      '<div class="result-stat"><strong>' + myCount.toLocaleString() + '</strong>people got this result</div>' +
+      (mostCommon && mostCommon !== resultKey && RESULTS[mostCommon] ?
+        '<div class="result-stat"><strong>' + RESULTS[mostCommon].name + '</strong>most common result</div>' : '') +
+    '</div>' +
+    '<div class="result-actions">' +
+      (r.cardLink ? '<a href="' + r.cardLink + '" class="result-cta" style="background:#FFCC0022;border:1px solid #FFCC0055;color:#FFCC00">🃏 Browse ' + r.name + ' Cards →</a>' : '') +
+      (r.shopLink ? '<a href="' + r.shopLink + '" class="result-cta" style="background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C">🛒 Shop on C3 →</a>' : '') +
+      '<a href="' + ebayUrl + '" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">🏪 Buy on eBay AU ↗</a>' +
+      (r.blogLink ? '<a href="' + r.blogLink + '" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 Beginners Guide →</a>' : '') +
+      (r.evLink ? '<a href="' + r.evLink + '" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">📊 EV Calculator →</a>' : '') +
+    '</div>' +
+    '<div class="result-share">' +
+      '<div class="share-title">Share your result</div>' +
+      '<div class="share-btns">' +
+        '<button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="openSharePopup('' + r.name.replace(/'/g, "\'") + '', window.location.href)">𝕏 Share</button>' +
+        '<button class="share-btn" style="background:#4267B2;color:#fff" onclick="doShareFacebook()">📘 Facebook</button>' +
+        '<button class="share-btn" style="background:#25D366;color:#fff" onclick="doShareWhatsApp()">💬 WhatsApp</button>' +
+        '<button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="openSharePopup('' + r.name.replace(/'/g, "\'") + '', window.location.href)">↗ All platforms</button>' +
+      '</div>' +
+    '</div>';
 
   document.querySelectorAll('.quiz-step').forEach(s => s.style.display='none');
   document.getElementById('result').style.display = 'block';
   document.getElementById('quiz-nav').style.display = 'none';
-  document.getElementById('progress-bar').style.width = '100%';
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
+  
+  // Set share vars for popup
+  _shareResultName = r.name;
+  _shareUrl = window.location.href;
 }
 </script>
 </body>
