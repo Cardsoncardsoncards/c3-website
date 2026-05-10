@@ -5,6 +5,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy({"src/c3logo.png": "c3logo.png"});
   eleventyConfig.addPassthroughCopy({"src/c3-logo.png": "c3-logo.png"});
+  eleventyConfig.addPassthroughCopy({"src/c3-og-banner.png": "c3-og-banner.png"});
   eleventyConfig.addPassthroughCopy({"sitemap.xml": "sitemap.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-index.xml": "sitemap-index.xml"});
   eleventyConfig.addPassthroughCopy({"robots.txt": "robots.txt"});

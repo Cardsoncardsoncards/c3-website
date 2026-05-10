@@ -4,284 +4,737 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TCG Random Generators Australia | Cards on Cards on Cards</title>
-<meta name="description" content="Free TCG random generators for Australian players. Random Commander for MTG, random card generators for Pokemon, Yu-Gi-Oh, Lorcana and more. Filterable by colour, type, archetype and ink.">
+<meta name="description" content="Free TCG random generators for Australian players. Random Commander for MTG, random card generators for Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Riftbound, Dragon Ball and Star Wars. Discover your next card obsession.">
+<meta property="og:title" content="TCG Random Generators | Cards on Cards on Cards">
+<meta property="og:description" content="Draw random cards from 8 TCGs. Share your pulls with friends. Australia's free TCG card generator.">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+<meta property="og:url" content="https://cardsoncardsoncards.com.au/generators">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/generators">
-<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="/c3logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"TCG Random Generators Australia","description":"Free random card and commander generators for MTG, Pokemon, Yu-Gi-Oh, Lorcana and more.","url":"https://cardsoncardsoncards.com.au/generators"}
+{"@context":"https://schema.org","@type":"WebPage","name":"TCG Random Generators Australia","description":"Free random card generators for MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Riftbound, Dragon Ball and Star Wars.","url":"https://cardsoncardsoncards.com.au/generators"}
 </script>
 <style>
-:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--gold-dim:rgba(201,168,76,.15);--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh}
 a{color:var(--gold);text-decoration:none}
 a:hover{text-decoration:underline}
+
+/* NAV */
 nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
-  .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
-  .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;transition:box-shadow .2s}
-  .nav-logo:hover img{box-shadow:0 0 12px rgba(201,168,76,.5)}
-  .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-  .nav-links::-webkit-scrollbar{display:none}
-  .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
-  .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
-  .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
+.nav-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+.nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;transition:box-shadow .2s}
+.nav-logo:hover img{box-shadow:0 0 12px rgba(201,168,76,.5)}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
+.nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
+.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{color:#C8DDFF;border-color:#A0C4FF;background:rgba(160,196,255,.06)}
 .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
 .nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{color:#E8C86A;border-color:#C9A84C;background:rgba(201,168,76,.06)}
 .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{color:#A5DFC0;border-color:#7ECBA1;background:rgba(126,203,161,.06)}
-.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
-.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35);background:rgba(34,211,238,.06)}.nav-link--generators:hover{color:#67E8F9;border-color:#22D3EE;background:rgba(34,211,238,.10)}
-.nav-link--ev{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--ev:hover{color:#FDBA74;border-color:#FB923C;background:rgba(251,146,60,.06)}
+.nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ev:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
 .nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{color:#D8B4FE;border-color:#C084FC;background:rgba(192,132,252,.06)}
 .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{color:#93C5FD;border-color:#60A5FA;background:rgba(96,165,250,.06)}
-.nav-link--dnd{color:#F97316;border-color:rgba(249,115,22,.35)}.nav-link--dnd:hover{color:#FB923C;border-color:#F97316;background:rgba(249,115,22,.06)}
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{color:#FCA5A5;border-color:#F87171;background:rgba(248,113,113,.06)}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35);background:rgba(34,211,238,.06)}
+.nav-link--quizzes{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quizzes:hover{color:#F9A8D4;border-color:#F472B6;background:rgba(244,114,182,.06)}
+.nav-link--dnd{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--dnd:hover{color:#C4B5FD;border-color:#A78BFA;background:rgba(167,139,250,.06)}
 .nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
-.nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
 
-.hero{padding:52px 24px 44px;text-align:center;max-width:700px;margin:0 auto}
-h1{font-family:'Cinzel',serif;font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--white);margin-bottom:10px}
+/* HERO */
+.hero{padding:48px 24px 32px;text-align:center;max-width:700px;margin:0 auto}
+h1{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,40px);font-weight:700;color:var(--white);margin-bottom:10px}
 h1 span{color:#22D3EE}
 .hero-sub{font-size:15px;color:var(--text2);margin-bottom:0}
 
+/* TCG SWITCHER */
+.switcher-wrap{max-width:1100px;margin:0 auto;padding:0 24px 32px}
+.switcher{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px}
+.sw-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s;white-space:nowrap}
+.sw-btn:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
+.sw-btn.active{color:#080a0f!important;border-color:transparent!important}
+.sw-mtg.active{background:#C9A84C}
+.sw-pokemon.active{background:#FFCC00;color:#111!important}
+.sw-yugioh.active{background:#9333EA}
+.sw-lorcana.active{background:#0189C4}
+.sw-onepiece.active{background:#DC3030}
+.sw-riftbound.active{background:#5865F2}
+.sw-dragonball.active{background:#F97316}
+.sw-starwars.active{background:#B8960C;color:#080a0f!important}
+
+/* GAME PANELS */
 .wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.game-panel{display:none}
+.game-panel.active{display:block}
 
-.section-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);margin-bottom:20px;margin-top:48px}
-.generator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.panel-header{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.panel-title{font-family:'Cinzel',serif;font-size:22px;font-weight:700;margin-bottom:6px}
+.panel-sub{font-size:14px;color:var(--text2)}
 
-.gen-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:12px;transition:all .25s;position:relative;overflow:hidden}
-.gen-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:11px}
-.gen-card:hover::before{opacity:1}
-.gen-card--live{cursor:pointer}
-.gen-card--live:hover{transform:translateY(-3px)}
-.gen-card--soon{opacity:.55}
-.gen-card--mtg{border-color:rgba(201,168,76,.3)}.gen-card--mtg::before{background:linear-gradient(135deg,rgba(201,168,76,.06),transparent)}
-.gen-card--pokemon{border-color:rgba(255,204,0,.25)}.gen-card--pokemon::before{background:linear-gradient(135deg,rgba(255,204,0,.05),transparent)}
-.gen-card--yugioh{border-color:rgba(107,45,139,.4)}.gen-card--yugioh::before{background:linear-gradient(135deg,rgba(107,45,139,.08),transparent)}
-.gen-card--lorcana{border-color:rgba(1,137,196,.3)}.gen-card--lorcana::before{background:linear-gradient(135deg,rgba(1,137,196,.06),transparent)}
-.gen-card--onepiece{border-color:rgba(220,48,48,.25)}.gen-card--onepiece::before{background:linear-gradient(135deg,rgba(220,48,48,.05),transparent)}
-.gen-card--starwars{border-color:rgba(255,232,31,.2)}.gen-card--starwars::before{background:linear-gradient(135deg,rgba(255,232,31,.04),transparent)}
-.gen-card--dbz{border-color:rgba(255,102,0,.25)}.gen-card--dbz::before{background:linear-gradient(135deg,rgba(255,102,0,.05),transparent)}
-.gen-card--riftbound{border-color:rgba(88,101,242,.3)}.gen-card--riftbound::before{background:linear-gradient(135deg,rgba(88,101,242,.06),transparent)}
+/* DRAW BUTTON */
+.draw-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:700;letter-spacing:.04em;border:none;cursor:pointer;transition:all .2s;text-transform:uppercase}
+.draw-btn:hover{opacity:.88;transform:translateY(-1px)}
+.draw-btn:active{transform:translateY(0)}
+.draw-again-wrap{text-align:center;margin:28px 0 8px}
 
-.gen-game{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-.gen-title{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:var(--white)}
-.gen-desc{font-size:13px;color:var(--text2);line-height:1.5}
-.gen-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.05em;align-self:flex-start}
-.gen-badge--live{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.3);color:#4ade80}
-.gen-badge--soon{background:rgba(160,168,192,.08);border:1px solid rgba(160,168,192,.2);color:#7a8099}
-.gen-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s;align-self:flex-start;margin-top:4px}
-.gen-cta:hover{opacity:.85;text-decoration:none}
+/* CARD FLIP ANIMATION */
+.cards-result{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin:28px 0 8px;min-height:0}
+.flip-card{perspective:800px;min-height:360px}
+.flip-card-inner{position:relative;width:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;border-radius:var(--radius)}
+.flip-card.revealed .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius)}
+.flip-card-front{background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;min-height:360px;z-index:2}
+.flip-card-front-inner{text-align:center;color:var(--text2);font-size:13px;padding:24px}
+.flip-card-front-inner .card-back-logo{font-family:'Cinzel',serif;font-size:28px;color:var(--gold);margin-bottom:8px}
+.flip-card-back{background:var(--bg2);border:1px solid var(--border);transform:rotateY(180deg);padding:20px;display:flex;flex-direction:column;gap:12px;min-height:360px;z-index:1}
+
+/* CARD CONTENT */
+.result-img{width:100%;max-width:180px;border-radius:8px;display:block;margin:0 auto 4px}
+.result-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);text-align:center;line-height:1.3}
+.result-meta{font-size:11px;color:var(--text2);text-align:center}
+.result-price{font-size:20px;font-weight:700;color:var(--gold);text-align:center;margin:4px 0}
+.result-links{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.result-links a{font-size:11px;padding:6px 12px;border-radius:6px;font-weight:600;text-decoration:none;transition:opacity .2s;display:inline-block}
+.result-links a:hover{opacity:.8;text-decoration:none}
+.btn-view{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C}
+.btn-ebay{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA}
+
+/* SHARE SECTION */
+.share-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-top:12px;display:none}
+.share-section.visible{display:block}
+.share-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:14px}
+.share-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;border:1px solid var(--border);background:var(--bg3);color:var(--silver);cursor:pointer;transition:all .2s;text-decoration:none}
+.share-btn:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.06);text-decoration:none}
+.share-btn--x{border-color:rgba(255,255,255,.15)}.share-btn--x:hover{border-color:#fff;color:#fff}
+.share-btn--reddit{border-color:rgba(255,69,0,.3)}.share-btn--reddit:hover{border-color:#FF4500;color:#FF6633}
+.share-btn--whatsapp{border-color:rgba(37,211,102,.3)}.share-btn--whatsapp:hover{border-color:#25D366;color:#25D366}
+.share-btn--copy{border-color:rgba(201,168,76,.3)}.share-btn--copy:hover{border-color:var(--gold);color:var(--gold)}
+.share-copied{font-size:11px;color:#4ade80;display:none;align-items:center;gap:4px;padding:8px 0}
+
+/* POST-DRAW CTAs */
+.post-draw{margin-top:28px;padding-top:24px;border-top:1px solid var(--border);display:none}
+.post-draw.visible{display:block}
+.post-draw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:14px}
+.pd-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;text-decoration:none;transition:all .2s}
+.pd-card:hover{border-color:var(--gold);background:rgba(201,168,76,.04);text-decoration:none;transform:translateY(-2px)}
+.pd-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2)}
+.pd-title{font-size:14px;font-weight:700;color:var(--white);line-height:1.3}
+.pd-arrow{font-size:12px;color:var(--gold);margin-top:2px}
+
+/* MTG COMMANDER SECTION */
+.mtg-commander-callout{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.2);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.mtg-commander-callout p{font-size:14px;color:var(--text2);margin:0}
+.mtg-commander-callout strong{color:var(--white)}
+.btn-commander{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;white-space:nowrap}
+.btn-commander:hover{background:rgba(201,168,76,.2);text-decoration:none}
+
+/* LOADING STATE */
+.loading-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin:28px 0}
+.loading-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);min-height:360px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:13px}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin-right:10px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px}
 footer a{color:var(--text2);margin:0 8px}
+
+@media(max-width:600px){
+  .switcher{gap:6px;padding:12px}
+  .sw-btn{padding:7px 12px;font-size:11px}
+  .cards-result{grid-template-columns:1fr}
+}
 </style>
+
 <script>
-async function generateRandom(game, resultId) {
-  var el = document.getElementById(resultId);
-  if (!el) return;
-  el.style.display = 'block';
-  el.innerHTML = '<div style="color:#7a8099;font-size:12px;padding:8px">Drawing...</div>';
+// === GAME CONFIG ===
+const GAMES = {
+  mtg:        { label:'MTG',         emoji:'⚔️',  colour:'#C9A84C', vault:'/cards/mtg',        quiz:'/quizzes/mtg-archetype',   quizLabel:'MTG Archetype Quiz', ev:true },
+  pokemon:    { label:'Pokemon',     emoji:'⚡',  colour:'#FFCC00', vault:'/cards/pokemon',     quiz:'/quizzes/pokemon-era',     quizLabel:'Pokemon Era Quiz',   ev:true },
+  yugioh:     { label:'Yu-Gi-Oh!',   emoji:'👁',  colour:'#9333EA', vault:'/cards/yugioh',      quiz:'/quizzes/which-tcg',       quizLabel:'Which TCG Quiz' },
+  lorcana:    { label:'Lorcana',     emoji:'🏰',  colour:'#0189C4', vault:'/cards/lorcana',     quiz:'/quizzes/lorcana-ink',     quizLabel:'Lorcana Ink Quiz' },
+  onepiece:   { label:'One Piece',   emoji:'☠️',  colour:'#DC3030', vault:'/cards/onepiece',    quiz:'/quizzes/which-tcg',       quizLabel:'Which TCG Quiz' },
+  riftbound:  { label:'Riftbound',   emoji:'⚔️',  colour:'#5865F2', vault:'/cards/riftbound',   quiz:'/quizzes/riftbound-champion', quizLabel:'Riftbound Champion Quiz' },
+  dragonball: { label:'Dragon Ball', emoji:'🐉',  colour:'#F97316', vault:'/cards/dragonball',  quiz:'/quizzes/which-tcg',       quizLabel:'Which TCG Quiz' },
+  starwars:   { label:'Star Wars',   emoji:'🚀',  colour:'#FFE81F', vault:'/cards/starwars',    quiz:'/quizzes/which-tcg',       quizLabel:'Which TCG Quiz' },
+};
+
+let currentGame = 'mtg';
+let lastDrawnCards = [];
+let shareResultName = '';
+
+// === SWITCH GAME ===
+function switchGame(game) {
+  currentGame = game;
+  document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sw-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('panel-' + game);
+  const btn = document.getElementById('sw-' + game);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+  // Reset share and post-draw sections when switching
+  document.querySelectorAll('.share-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.post-draw').forEach(p => p.classList.remove('visible'));
+}
+
+// === DRAW CARDS ===
+async function drawCards(game, count) {
+  count = count || 3;
+  const cfg = GAMES[game];
+  const resultEl = document.getElementById('result-' + game);
+  const shareEl = document.getElementById('share-' + game);
+  const postDrawEl = document.getElementById('postdraw-' + game);
+  if (!resultEl) return;
+
+  if (!shareEl || !postDrawEl) return;
+  shareEl.classList.remove('visible');
+  postDrawEl.classList.remove('visible');
+
+  // Show loading placeholders
+  resultEl.innerHTML = '';
+  const loadingGrid = document.createElement('div');
+  loadingGrid.className = 'loading-cards';
+  for (let i = 0; i < count; i++) {
+    const lc = document.createElement('div');
+    lc.className = 'loading-card';
+    lc.innerHTML = '<span class="spinner"></span>Drawing...';
+    loadingGrid.appendChild(lc);
+  }
+  resultEl.appendChild(loadingGrid);
+
   try {
-    var res = await fetch('/api/random-card?game=' + game + '&limit=1');
-    if (!res.ok) throw new Error('Failed');
-    var data = await res.json();
-    var c = data.cards && data.cards[0];
-    if (!c) throw new Error('No card');
-    var imgHtml = c.image_url
-      ? '<img src="' + c.image_url + '" alt="" style="width:120px;border-radius:6px;margin:0 auto 8px;display:block" onerror="this.style.display=&quot;none&quot;">'
-      : '';
-    var rarityHtml = c.rarity
-      ? '<div style="font-size:10px;color:#7a8099;margin-bottom:4px">' + c.rarity + (c.set_name ? ' &middot; ' + c.set_name : '') + '</div>'
-      : '';
-    el.innerHTML = imgHtml +
-      '<div class="gr-name">' + c.name + '</div>' +
-      rarityHtml +
-      '<div class="gr-price">' + c.priceDisplay + '</div>' +
-      '<div class="gr-links">' +
-        '<a href="' + c.cardUrl + '" class="gen-cta" style="font-size:11px;padding:6px 12px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C;border-radius:6px;text-decoration:none">View Card &rarr;</a>' +
-        ' <a href="' + c.ebayUrl + '" target="_blank" rel="noopener sponsored" class="gen-cta" style="font-size:11px;padding:6px 12px;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA;border-radius:6px;text-decoration:none">Buy on eBay &#8599;</a>' +
-      '</div>';
+    const res = await fetch('/api/random-card?game=' + game + '&limit=' + count);
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    const cards = data.cards;
+    if (!cards || !cards.length) throw new Error('No cards');
+
+    lastDrawnCards = cards;
+    shareResultName = cards.map(c => c.name).join(', ');
+
+    // Build flip cards
+    resultEl.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'cards-result';
+
+    cards.forEach((c, i) => {
+      const imgHtml = c.image_url
+        ? `<img src="${c.image_url}" alt="${c.name}" class="result-img" onerror="this.style.display='none'">`
+        : '<div style="height:180px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:12px">No image</div>';
+
+      const metaHtml = [c.rarity, c.set_name].filter(Boolean).join(' &middot; ');
+
+      const flipDiv = document.createElement('div');
+      flipDiv.className = 'flip-card';
+      flipDiv.innerHTML = `
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-front-inner">
+              <div class="card-back-logo">C3</div>
+              <div style="font-size:12px">Drawing card ${i+1}...</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            ${imgHtml}
+            <div class="result-name">${c.name}</div>
+            ${metaHtml ? `<div class="result-meta">${metaHtml}</div>` : ''}
+            <div class="result-price">${c.priceDisplay}</div>
+            <div class="result-links">
+              <a href="${c.cardUrl}" class="btn-view" onclick="event.stopPropagation()">View Card &rarr;</a>
+              <a href="${c.ebayUrl}" target="_blank" rel="noopener sponsored" class="btn-ebay" onclick="event.stopPropagation()">Buy on eBay &#8599;</a>
+            </div>
+          </div>
+        </div>`;
+      grid.appendChild(flipDiv);
+
+      // Staggered flip reveal
+      setTimeout(() => flipDiv.classList.add('revealed'), 100 + i * 200);
+    });
+
+    resultEl.appendChild(grid);
+
+    // Fix flip card heights after images load
+    setTimeout(() => {
+      grid.querySelectorAll('.flip-card').forEach(fc => {
+        const back = fc.querySelector('.flip-card-back');
+        const front = fc.querySelector('.flip-card-front');
+        const h = Math.max(back.scrollHeight, 360);
+        fc.style.height = h + 'px';
+        front.style.height = h + 'px';
+        back.style.height = h + 'px';
+        fc.querySelector('.flip-card-inner').style.height = h + 'px';
+      });
+    }, 2000);
+
+    // Show share + post-draw sections
+    setTimeout(() => {
+      shareEl.classList.add('visible');
+      postDrawEl.classList.add('visible');
+      // Update post-draw vault link label
+      const vaultLink = postDrawEl.querySelector('.pd-vault');
+      if (vaultLink) vaultLink.querySelector('.pd-title').textContent = 'Browse all ' + cfg.label + ' cards on C3';
+    }, 800);
+
   } catch(e) {
-    el.innerHTML = '<div style="color:#7a8099;font-size:12px">Could not draw a card. Try again.</div>';
+    resultEl.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:24px;text-align:center">Could not draw cards. Try again.</div>';
   }
 }
 
-async function generateMTGRandom() {
-  var el = document.getElementById('random-mtg-result');
-  if (!el) return;
-  el.style.display = 'block';
-  el.innerHTML = '<div style="color:#7a8099;font-size:12px;padding:8px">Drawing...</div>';
-  try {
-    var res = await fetch('/api/random-card?game=mtg&limit=1');
-    if (!res.ok) throw new Error('Failed');
-    var data = await res.json();
-    var c = data.cards && data.cards[0];
-    if (!c) throw new Error('No card');
-    var imgHtml = c.image_url
-      ? '<img src="' + c.image_url + '" alt="" style="width:120px;border-radius:6px;margin:0 auto 8px;display:block" onerror="this.style.display=&quot;none&quot;">'
-      : '';
-    el.innerHTML = imgHtml +
-      '<div class="gr-name">' + c.name + '</div>' +
-      (c.rarity ? '<div style="font-size:10px;color:#7a8099;margin-bottom:4px">' + c.rarity + (c.set_name ? ' &middot; ' + c.set_name : '') + '</div>' : '') +
-      '<div class="gr-price">' + c.priceDisplay + '</div>' +
-      '<div class="gr-links">' +
-        '<a href="' + c.cardUrl + '" style="font-size:11px;padding:6px 12px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C;border-radius:6px;text-decoration:none">View Card &rarr;</a>' +
-        ' <a href="' + c.ebayUrl + '" target="_blank" rel="noopener sponsored" style="font-size:11px;padding:6px 12px;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA;border-radius:6px;text-decoration:none">Buy on eBay &#8599;</a>' +
-      '</div>';
-  } catch(e) {
-    el.innerHTML = '<div style="color:#7a8099;font-size:12px">Could not draw a card. Try again.</div>';
-  }
+// === SHARE ===
+function shareX(game) {
+  const cfg = GAMES[game];
+  const cardNames = lastDrawnCards.length ? lastDrawnCards.map(c => c.name).join(', ') : cfg.label + ' cards';
+  const text = encodeURIComponent('Just drew ' + cardNames + ' on C3 TCG Australia! Find yours: https://cardsoncardsoncards.com.au/generators?game=' + game);
+  window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
 }
+
+function shareReddit(game) {
+  const cfg = GAMES[game];
+  const cardNames = lastDrawnCards.length ? lastDrawnCards.map(c => c.name).join(', ') : cfg.label + ' cards';
+  const title = encodeURIComponent('Just drew ' + cardNames + ' using the C3 random generator!');
+  const url = encodeURIComponent('https://cardsoncardsoncards.com.au/generators?game=' + game);
+  window.open('https://reddit.com/submit?title=' + title + '&url=' + url, '_blank');
+}
+
+function shareWhatsApp(game) {
+  const cfg = GAMES[game];
+  const cardNames = lastDrawnCards.length ? lastDrawnCards.map(c => c.name).join(', ') : cfg.label + ' cards';
+  const text = encodeURIComponent('Just drew ' + cardNames + ' on C3 TCG! Try it: https://cardsoncardsoncards.com.au/generators?game=' + game);
+  window.open('https://wa.me/?text=' + text, '_blank');
+}
+
+function copyShareLink(game, btnEl) {
+  const url = 'https://cardsoncardsoncards.com.au/generators?game=' + game;
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = btnEl.innerHTML;
+    btnEl.innerHTML = '&#10003; Copied!';
+    btnEl.style.color = '#4ade80';
+    setTimeout(() => { btnEl.innerHTML = orig; btnEl.style.color = ''; }, 2000);
+  });
+}
+
+function copyInstagram(game, btnEl) {
+  const cfg = GAMES[game];
+  const cardNames = lastDrawnCards.length ? lastDrawnCards.map(c => c.name).join(' | ') : cfg.label + ' cards';
+  const caption = 'Just drew ' + cardNames + ' on C3 TCG Australia! Free random card generator at cardsoncardsoncards.com.au #TCG #' + cfg.label.replace(/\s/g,'') + ' #CardGames';
+  navigator.clipboard.writeText(caption).then(() => {
+    const orig = btnEl.innerHTML;
+    btnEl.innerHTML = '&#10003; Caption copied!';
+    btnEl.style.color = '#4ade80';
+    setTimeout(() => { btnEl.innerHTML = orig; btnEl.style.color = ''; }, 2500);
+  });
+}
+
+// === INIT: read ?game= param on load ===
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const g = params.get('game');
+  if (g && GAMES[g]) switchGame(g);
+  else switchGame('mtg');
+});
 </script>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3" onmouseover="this.style.boxShadow='0 0 14px rgba(201,168,76,.6)'" onmouseout="this.style.boxShadow=''"></a>
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"></a>
     <div class="nav-links">
-
-      <a href="/" class="nav-link">Home</a>
-      <a href="/cards" class="nav-link">Card Vault</a>
-      <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="/calendar" class="nav-link">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--active">Generators</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/" class="nav-link nav-link--home">Home</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" class="nav-link nav-link--ebay" target="_blank" rel="noopener">eBay &#8599;</a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
+      <a href="/quizzes" class="nav-link nav-link--quizzes">Quizzes</a>
       <a href="/dnd" class="nav-link nav-link--dnd">D&amp;D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" class="nav-link" target="_blank" rel="noopener">eBay ↗</a>
-      <a href="/contact.html" class="nav-link">Contact</a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact</a>
     </div>
   </div>
 </nav>
 
 <div class="hero">
   <h1>TCG <span>Random Generators</span></h1>
-  <p class="hero-sub">Stuck for a deck idea? Let the generator decide. Filter by colour, type, archetype or ink and discover your next obsession.</p>
+  <p class="hero-sub">Pick a game, draw 3 cards, share your pulls. Discover your next obsession from 200,000+ cards across 8 TCGs.</p>
+</div>
+
+<!-- TCG SWITCHER -->
+<div class="switcher-wrap">
+  <div class="switcher">
+    <button class="sw-btn sw-mtg" id="sw-mtg" onclick="switchGame('mtg')">⚔️ MTG</button>
+    <button class="sw-btn sw-pokemon" id="sw-pokemon" onclick="switchGame('pokemon')">⚡ Pokemon</button>
+    <button class="sw-btn sw-yugioh" id="sw-yugioh" onclick="switchGame('yugioh')">👁 Yu-Gi-Oh!</button>
+    <button class="sw-btn sw-lorcana" id="sw-lorcana" onclick="switchGame('lorcana')">🏰 Lorcana</button>
+    <button class="sw-btn sw-onepiece" id="sw-onepiece" onclick="switchGame('onepiece')">☠️ One Piece</button>
+    <button class="sw-btn sw-riftbound" id="sw-riftbound" onclick="switchGame('riftbound')">⚔️ Riftbound</button>
+    <button class="sw-btn sw-dragonball" id="sw-dragonball" onclick="switchGame('dragonball')">🐉 Dragon Ball</button>
+    <button class="sw-btn sw-starwars" id="sw-starwars" onclick="switchGame('starwars')">🚀 Star Wars</button>
+  </div>
 </div>
 
 <div class="wrap">
 
-  <div class="section-label">Live Now</div>
-  <div class="generator-grid">
-
-    <div class="gen-card gen-card--mtg gen-card--live" onclick="window.location='/cards/mtg/random-commander'">
-      <div class="gen-game" style="color:#C9A84C">Magic: The Gathering</div>
-      <div class="gen-title">Random Commander Generator</div>
-      <div class="gen-desc">Generate 1 to 4 random legendary creatures for a Commander pod. Filter by colour identity and mana value. Share your results and challenge friends.</div>
-      <span class="gen-badge gen-badge--live">Live — 10,000+ commanders</span>
-      <a href="/cards/mtg/random-commander" class="gen-cta" style="background:linear-gradient(135deg,#7A621E,#C9A84C);color:#0A0C14">🎲 Generate Commanders →</a>
+  <!-- ===== MTG PANEL ===== -->
+  <div class="game-panel" id="panel-mtg">
+    <div class="panel-header">
+      <div class="panel-title" style="color:#C9A84C">&#9876;&#65039; Magic: The Gathering</div>
+      <div class="panel-sub">96,000+ cards. Pull 3 random MTG cards from the full vault, or head to the Random Commander generator to build your next Commander pod.</div>
     </div>
 
-    <div class="gen-card gen-card--mtg gen-card--live" onclick="window.location='/cards/mtg'">
-      <div class="gen-game" style="color:#C9A84C">Magic: The Gathering</div>
-      <div class="gen-title">Random MTG Card</div>
-      <div class="gen-desc">Pull a completely random MTG card from the full 96,000+ card database. Filter by colour, type, rarity and set to narrow your draw. Use the Random Card button on the MTG hub.</div>
-      <span class="gen-badge gen-badge--live">Live — 96,000+ cards</span>
-      <a href="/cards/mtg" class="gen-cta" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C">🃏 Random MTG Card →</a>
+    <div class="mtg-commander-callout">
+      <div>
+        <strong>Random Commander Generator</strong>
+        <p>Generate 1 to 4 legendary creatures for your Commander pod. Filter by colour identity and mana value.</p>
+      </div>
+      <a href="/cards/mtg/random-commander" class="btn-commander">&#127922; Open Commander Generator &rarr;</a>
     </div>
 
-  </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#8a6200,#C9A84C);color:#080a0f" onclick="drawCards('mtg',3);document.getElementById('again-mtg').style.display='flex'">&#127922; Draw 3 Random MTG Cards</button>
 
-  
+    <div id="result-mtg"></div>
 
-  <div class="section-label">Random Card Generators &mdash; All Games</div>
+    <div class="draw-again-wrap" id="again-mtg" style="display:none">
+      <button class="draw-btn" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C" onclick="drawCards('mtg',3)">&#8635; Draw Again</button>
+    </div>
 
-  <div class="generator-grid" id="result-area">
-    <div class="gen-card gen-card--pokemon gen-card--live" onclick="generateRandom('pokemon', 'random-pokemon-card')">
-      <div class="gen-icon">&#9889;</div>
-      <div class="gen-title">Random Pokemon TCG Card</div>
-      <div class="gen-desc">Draw a completely random Pokemon TCG card from 31,488 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
-      <span class="gen-badge gen-badge--live">Live &mdash; 31,488 cards</span>
-      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#786400,#FFCC00);color:#0A0C14" onclick="event.preventDefault();generateRandom('pokemon', 'random-pokemon-card')">&#127922; Random Pokemon Card &rarr;</a>
-      <div id="random-pokemon-card" class="gen-result" style="display:none;margin-top:12px"></div>
+    <!-- SHARE -->
+    <div class="share-section" id="share-mtg">
+      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-buttons">
+        <button class="share-btn share-btn--x" onclick="shareX('mtg')">&#10005; Post on X</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('mtg')">&#128172; Share on Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('mtg')">&#128172; WhatsApp</button>
+        <button class="share-btn" onclick="copyInstagram('mtg',this)">&#128247; Copy Instagram Caption</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('mtg',this)">&#128279; Copy Link</button>
+      </div>
     </div>
-    <div class="gen-card gen-card--yugioh gen-card--live" onclick="generateRandom('yugioh', 'random-yugioh-card')">
-      <div class="gen-icon">&#128065;</div>
-      <div class="gen-title">Random Yu-Gi-Oh! Card</div>
-      <div class="gen-desc">Draw a completely random Yu-Gi-Oh! card from 46,588 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
-      <span class="gen-badge gen-badge--live">Live &mdash; 46,588 cards</span>
-      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#6B2D8B,#C084FC);color:#0A0C14" onclick="event.preventDefault();generateRandom('yugioh', 'random-yugioh-card')">&#127922; Random Yu-Gi-Oh Card &rarr;</a>
-      <div id="random-yugioh-card" class="gen-result" style="display:none;margin-top:12px"></div>
-    </div>
-    <div class="gen-card gen-card--lorcana gen-card--live" onclick="generateRandom('lorcana', 'random-lorcana-card')">
-      <div class="gen-icon">&#127984;</div>
-      <div class="gen-title">Random Disney Lorcana Card</div>
-      <div class="gen-desc">Draw a completely random Disney Lorcana card from 3,153 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
-      <span class="gen-badge gen-badge--live">Live &mdash; 3,153 cards</span>
-      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#0369A1,#38BDF8);color:#0A0C14" onclick="event.preventDefault();generateRandom('lorcana', 'random-lorcana-card')">&#127922; Random Lorcana Card &rarr;</a>
-      <div id="random-lorcana-card" class="gen-result" style="display:none;margin-top:12px"></div>
-    </div>
-    <div class="gen-card gen-card--onepiece gen-card--live" onclick="generateRandom('onepiece', 'random-onepiece-card')">
-      <div class="gen-icon">&#9760;&#65039;</div>
-      <div class="gen-title">Random One Piece TCG Card</div>
-      <div class="gen-desc">Draw a completely random One Piece TCG card from 6,641 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
-      <span class="gen-badge gen-badge--live">Live &mdash; 6,641 cards</span>
-      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#B91C1C,#F97316);color:#0A0C14" onclick="event.preventDefault();generateRandom('onepiece', 'random-onepiece-card')">&#127922; Random One Piece Card &rarr;</a>
-      <div id="random-onepiece-card" class="gen-result" style="display:none;margin-top:12px"></div>
-    </div>
-    <div class="gen-card gen-card--starwars gen-card--live" onclick="generateRandom('starwars', 'random-starwars-card')">
-      <div class="gen-icon">&#128640;</div>
-      <div class="gen-title">Random Star Wars Unlimited Card</div>
-      <div class="gen-desc">Draw a completely random Star Wars Unlimited card from 6,113 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
-      <span class="gen-badge gen-badge--live">Live &mdash; 6,113 cards</span>
-      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#78350F,#FFE81F);color:#0A0C14" onclick="event.preventDefault();generateRandom('starwars', 'random-starwars-card')">&#127922; Random Star Wars Card &rarr;</a>
-      <div id="random-starwars-card" class="gen-result" style="display:none;margin-top:12px"></div>
-    </div>
-    <div class="gen-card gen-card--dragonball gen-card--live" onclick="generateRandom('dragonball', 'random-dragonball-card')">
-      <div class="gen-icon">&#128009;</div>
-      <div class="gen-title">Random Dragon Ball Super Card</div>
-      <div class="gen-desc">Draw a completely random Dragon Ball Super card from 6,261 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
-      <span class="gen-badge gen-badge--live">Live &mdash; 6,261 cards</span>
-      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#C2410C,#F97316);color:#0A0C14" onclick="event.preventDefault();generateRandom('dragonball', 'random-dragonball-card')">&#127922; Random Dragon Ball Card &rarr;</a>
-      <div id="random-dragonball-card" class="gen-result" style="display:none;margin-top:12px"></div>
-    </div>
-    <div class="gen-card gen-card--riftbound gen-card--live" onclick="generateRandom('riftbound', 'random-riftbound-card')">
-      <div class="gen-icon">&#9876;&#65039;</div>
-      <div class="gen-title">Random Riftbound Card</div>
-      <div class="gen-desc">Draw a completely random Riftbound card from 1,159 cards. Each draw is unique. Use it to discover cards you have never seen before.</div>
-      <span class="gen-badge gen-badge--live">Live &mdash; 1,159 cards</span>
-      <a href="#" class="gen-cta" style="background:linear-gradient(135deg,#3730A3,#818CF8);color:#0A0C14" onclick="event.preventDefault();generateRandom('riftbound', 'random-riftbound-card')">&#127922; Random Riftbound Card &rarr;</a>
-      <div id="random-riftbound-card" class="gen-result" style="display:none;margin-top:12px"></div>
+
+    <!-- POST-DRAW -->
+    <div class="post-draw" id="postdraw-mtg">
+      <div class="share-title">&#128218; What's next?</div>
+      <div class="post-draw-grid">
+        <a href="/cards/mtg" class="pd-card pd-vault">
+          <div class="pd-label">Card Vault</div>
+          <div class="pd-title">Browse all MTG cards on C3</div>
+          <div class="pd-arrow">Browse &rarr;</div>
+        </a>
+        <a href="/quizzes/mtg-archetype" class="pd-card">
+          <div class="pd-label">Quiz</div>
+          <div class="pd-title">What's your Commander archetype?</div>
+          <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+        <a href="/ev-calculator.html" class="pd-card">
+          <div class="pd-label">EV Calculator</div>
+          <div class="pd-title">Is that booster box worth cracking?</div>
+          <div class="pd-arrow">Calculate EV &rarr;</div>
+        </a>
+      </div>
     </div>
   </div>
 
-
-  <div style="background:rgba(34,211,238,.04);border:1px solid rgba(34,211,238,.15);border-radius:var(--radius);padding:24px;margin-top:48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
-    <div>
-      <div style="font-size:13px;font-weight:700;color:#22D3EE;margin-bottom:4px">Which TCG should I start?</div>
-      <div style="font-size:13px;color:var(--text2)">Not sure which game is right for you? Take the 5-question quiz and get a personalised recommendation.</div>
+  <!-- ===== POKEMON PANEL ===== -->
+  <div class="game-panel" id="panel-pokemon">
+    <div class="panel-header">
+      <div class="panel-title" style="color:#FFCC00">&#9889; Pokemon TCG</div>
+      <div class="panel-sub">31,642 singles from all eras. From Base Set to the latest sets, every draw is unique.</div>
     </div>
-    <a href="/quizzes" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.3);color:#22D3EE;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">Take the Quiz →</a>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#786400,#FFCC00);color:#080a0f" onclick="drawCards('pokemon',3);document.getElementById('again-pokemon').style.display='flex'">&#127922; Draw 3 Random Pokemon Cards</button>
+    <div id="result-pokemon"></div>
+    <div class="draw-again-wrap" id="again-pokemon" style="display:none">
+      <button class="draw-btn" style="background:rgba(255,204,0,.12);border:1px solid rgba(255,204,0,.3);color:#FFCC00" onclick="drawCards('pokemon',3)">&#8635; Draw Again</button>
+    </div>
+    <div class="share-section" id="share-pokemon">
+      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-buttons">
+        <button class="share-btn share-btn--x" onclick="shareX('pokemon')">&#10005; Post on X</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('pokemon')">&#128172; Share on Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('pokemon')">&#128172; WhatsApp</button>
+        <button class="share-btn" onclick="copyInstagram('pokemon',this)">&#128247; Copy Instagram Caption</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('pokemon',this)">&#128279; Copy Link</button>
+      </div>
+    </div>
+    <div class="post-draw" id="postdraw-pokemon">
+      <div class="share-title">&#128218; What's next?</div>
+      <div class="post-draw-grid">
+        <a href="/cards/pokemon" class="pd-card pd-vault">
+          <div class="pd-label">Card Vault</div>
+          <div class="pd-title">Browse all Pokemon cards on C3</div>
+          <div class="pd-arrow">Browse &rarr;</div>
+        </a>
+        <a href="/quizzes/pokemon-era" class="pd-card">
+          <div class="pd-label">Quiz</div>
+          <div class="pd-title">Which Pokemon era are you from?</div>
+          <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+        <a href="/ev-calculator.html" class="pd-card">
+          <div class="pd-label">EV Calculator</div>
+          <div class="pd-title">Is that booster box worth it?</div>
+          <div class="pd-arrow">Calculate EV &rarr;</div>
+        </a>
+      </div>
+    </div>
   </div>
 
-</div>
+  <!-- ===== YUGIOH PANEL ===== -->
+  <div class="game-panel" id="panel-yugioh">
+    <div class="panel-header">
+      <div class="panel-title" style="color:#9333EA">&#128065; Yu-Gi-Oh!</div>
+      <div class="panel-sub">46,588 cards across 610 sets. From classic archetypes to the modern meta, every draw reveals something different.</div>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#6B2D8B,#9333EA);color:#fff" onclick="drawCards('yugioh',3);document.getElementById('again-yugioh').style.display='flex'">&#127922; Draw 3 Random Yu-Gi-Oh Cards</button>
+    <div id="result-yugioh"></div>
+    <div class="draw-again-wrap" id="again-yugioh" style="display:none">
+      <button class="draw-btn" style="background:rgba(147,51,234,.12);border:1px solid rgba(147,51,234,.3);color:#9333EA" onclick="drawCards('yugioh',3)">&#8635; Draw Again</button>
+    </div>
+    <div class="share-section" id="share-yugioh">
+      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-buttons">
+        <button class="share-btn share-btn--x" onclick="shareX('yugioh')">&#10005; Post on X</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('yugioh')">&#128172; Share on Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('yugioh')">&#128172; WhatsApp</button>
+        <button class="share-btn" onclick="copyInstagram('yugioh',this)">&#128247; Copy Instagram Caption</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('yugioh',this)">&#128279; Copy Link</button>
+      </div>
+    </div>
+    <div class="post-draw" id="postdraw-yugioh">
+      <div class="share-title">&#128218; What's next?</div>
+      <div class="post-draw-grid">
+        <a href="/cards/yugioh" class="pd-card">
+          <div class="pd-label">Card Vault</div>
+          <div class="pd-title">Browse all Yu-Gi-Oh cards on C3</div>
+          <div class="pd-arrow">Browse &rarr;</div>
+        </a>
+        <a href="/quizzes/which-tcg" class="pd-card">
+          <div class="pd-label">Quiz</div>
+          <div class="pd-title">Which TCG should you start?</div>
+          <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </div>
 
-<footer style="border-top:1px solid #1e2235;padding:32px 24px;text-align:center;font-size:12px;color:#7a8099">
-  <p>
-    <a href="/" style="color:#7a8099;margin:0 8px">Home</a>
-    <a href="/cards" style="color:#7a8099;margin:0 8px">Card Vault</a>
-    <a href="/shop.html" style="color:#7a8099;margin:0 8px">Shop</a>
-    <a href="/blog" style="color:#7a8099;margin:0 8px">Blog</a>
-    <a href="/quizzes" style="color:#7a8099;margin:0 8px">Quizzes</a>
-    <a href="/ev-calculator.html" style="color:#7a8099;margin:0 8px">EV Calc</a>
-    <a href="/tracker.html" style="color:#7a8099;margin:0 8px">Tracker</a>
-    <a href="/generators" style="color:#7a8099;margin:0 8px">Generators</a>
-    <a href="/dnd" style="color:#7a8099;margin:0 8px">D&amp;D Tools</a>
-    <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="color:#7a8099;margin:0 8px">Etsy Shop &#8599;</a>
-    <a href="/contact.html" style="color:#7a8099;margin:0 8px">Contact</a>
-    <a href="/legal.html" style="color:#7a8099;margin:0 8px">Legal</a>
-  </p>
-  <p style="margin-top:12px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+  <!-- ===== LORCANA PANEL ===== -->
+  <div class="game-panel" id="panel-lorcana">
+    <div class="panel-header">
+      <div class="panel-title" style="color:#38BDF8">&#127984; Disney Lorcana</div>
+      <div class="panel-sub">3,153 cards across 18 sets including Wilds Unknown. Draw your next Disney favourite.</div>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#0369A1,#38BDF8);color:#080a0f" onclick="drawCards('lorcana',3);document.getElementById('again-lorcana').style.display='flex'">&#127922; Draw 3 Random Lorcana Cards</button>
+    <div id="result-lorcana"></div>
+    <div class="draw-again-wrap" id="again-lorcana" style="display:none">
+      <button class="draw-btn" style="background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);color:#38BDF8" onclick="drawCards('lorcana',3)">&#8635; Draw Again</button>
+    </div>
+    <div class="share-section" id="share-lorcana">
+      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-buttons">
+        <button class="share-btn share-btn--x" onclick="shareX('lorcana')">&#10005; Post on X</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('lorcana')">&#128172; Share on Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('lorcana')">&#128172; WhatsApp</button>
+        <button class="share-btn" onclick="copyInstagram('lorcana',this)">&#128247; Copy Instagram Caption</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('lorcana',this)">&#128279; Copy Link</button>
+      </div>
+    </div>
+    <div class="post-draw" id="postdraw-lorcana">
+      <div class="share-title">&#128218; What's next?</div>
+      <div class="post-draw-grid">
+        <a href="/cards/lorcana" class="pd-card">
+          <div class="pd-label">Card Vault</div>
+          <div class="pd-title">Browse all Lorcana cards on C3</div>
+          <div class="pd-arrow">Browse &rarr;</div>
+        </a>
+        <a href="/quizzes/lorcana-ink" class="pd-card">
+          <div class="pd-label">Quiz</div>
+          <div class="pd-title">Which Lorcana ink are you?</div>
+          <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ONE PIECE PANEL ===== -->
+  <div class="game-panel" id="panel-onepiece">
+    <div class="panel-header">
+      <div class="panel-title" style="color:#DC3030">&#9760;&#65039; One Piece TCG</div>
+      <div class="panel-sub">6,289 singles across 74 sets. Singles only, no sealed products.</div>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#B91C1C,#DC3030);color:#fff" onclick="drawCards('onepiece',3);document.getElementById('again-onepiece').style.display='flex'">&#127922; Draw 3 Random One Piece Cards</button>
+    <div id="result-onepiece"></div>
+    <div class="draw-again-wrap" id="again-onepiece" style="display:none">
+      <button class="draw-btn" style="background:rgba(220,48,48,.12);border:1px solid rgba(220,48,48,.3);color:#DC3030" onclick="drawCards('onepiece',3)">&#8635; Draw Again</button>
+    </div>
+    <div class="share-section" id="share-onepiece">
+      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-buttons">
+        <button class="share-btn share-btn--x" onclick="shareX('onepiece')">&#10005; Post on X</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('onepiece')">&#128172; Share on Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('onepiece')">&#128172; WhatsApp</button>
+        <button class="share-btn" onclick="copyInstagram('onepiece',this)">&#128247; Copy Instagram Caption</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('onepiece',this)">&#128279; Copy Link</button>
+      </div>
+    </div>
+    <div class="post-draw" id="postdraw-onepiece">
+      <div class="share-title">&#128218; What's next?</div>
+      <div class="post-draw-grid">
+        <a href="/cards/onepiece" class="pd-card">
+          <div class="pd-label">Card Vault</div>
+          <div class="pd-title">Browse all One Piece cards on C3</div>
+          <div class="pd-arrow">Browse &rarr;</div>
+        </a>
+        <a href="/quizzes/which-tcg" class="pd-card">
+          <div class="pd-label">Quiz</div>
+          <div class="pd-title">Which TCG should you start?</div>
+          <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RIFTBOUND PANEL ===== -->
+  <div class="game-panel" id="panel-riftbound">
+    <div class="panel-header">
+      <div class="panel-title" style="color:#818CF8">&#9876;&#65039; Riftbound</div>
+      <div class="panel-sub">1,159 cards across 7 sets including Unleashed. The newest TCG to hit the C3 vault.</div>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#3730A3,#5865F2);color:#fff" onclick="drawCards('riftbound',3);document.getElementById('again-riftbound').style.display='flex'">&#127922; Draw 3 Random Riftbound Cards</button>
+    <div id="result-riftbound"></div>
+    <div class="draw-again-wrap" id="again-riftbound" style="display:none">
+      <button class="draw-btn" style="background:rgba(88,101,242,.12);border:1px solid rgba(88,101,242,.3);color:#818CF8" onclick="drawCards('riftbound',3)">&#8635; Draw Again</button>
+    </div>
+    <div class="share-section" id="share-riftbound">
+      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-buttons">
+        <button class="share-btn share-btn--x" onclick="shareX('riftbound')">&#10005; Post on X</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('riftbound')">&#128172; Share on Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('riftbound')">&#128172; WhatsApp</button>
+        <button class="share-btn" onclick="copyInstagram('riftbound',this)">&#128247; Copy Instagram Caption</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('riftbound',this)">&#128279; Copy Link</button>
+      </div>
+    </div>
+    <div class="post-draw" id="postdraw-riftbound">
+      <div class="share-title">&#128218; What's next?</div>
+      <div class="post-draw-grid">
+        <a href="/cards/riftbound" class="pd-card">
+          <div class="pd-label">Card Vault</div>
+          <div class="pd-title">Browse all Riftbound cards on C3</div>
+          <div class="pd-arrow">Browse &rarr;</div>
+        </a>
+        <a href="/quizzes/riftbound-champion" class="pd-card">
+          <div class="pd-label">Quiz</div>
+          <div class="pd-title">Which Riftbound champion are you?</div>
+          <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DRAGON BALL PANEL ===== -->
+  <div class="game-panel" id="panel-dragonball">
+    <div class="panel-header">
+      <div class="panel-title" style="color:#F97316">&#128009; Dragon Ball Super Card Game</div>
+      <div class="panel-sub">6,261 cards across 101 sets. Power levels over 9,000.</div>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#C2410C,#F97316);color:#fff" onclick="drawCards('dragonball',3);document.getElementById('again-dragonball').style.display='flex'">&#127922; Draw 3 Random Dragon Ball Cards</button>
+    <div id="result-dragonball"></div>
+    <div class="draw-again-wrap" id="again-dragonball" style="display:none">
+      <button class="draw-btn" style="background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:#F97316" onclick="drawCards('dragonball',3)">&#8635; Draw Again</button>
+    </div>
+    <div class="share-section" id="share-dragonball">
+      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-buttons">
+        <button class="share-btn share-btn--x" onclick="shareX('dragonball')">&#10005; Post on X</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('dragonball')">&#128172; Share on Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('dragonball')">&#128172; WhatsApp</button>
+        <button class="share-btn" onclick="copyInstagram('dragonball',this)">&#128247; Copy Instagram Caption</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('dragonball',this)">&#128279; Copy Link</button>
+      </div>
+    </div>
+    <div class="post-draw" id="postdraw-dragonball">
+      <div class="share-title">&#128218; What's next?</div>
+      <div class="post-draw-grid">
+        <a href="/cards/dragonball" class="pd-card">
+          <div class="pd-label">Card Vault</div>
+          <div class="pd-title">Browse all Dragon Ball cards on C3</div>
+          <div class="pd-arrow">Browse &rarr;</div>
+        </a>
+        <a href="/quizzes/which-tcg" class="pd-card">
+          <div class="pd-label">Quiz</div>
+          <div class="pd-title">Which TCG should you start?</div>
+          <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STAR WARS PANEL ===== -->
+  <div class="game-panel" id="panel-starwars">
+    <div class="panel-header">
+      <div class="panel-title" style="color:#FFE81F">&#128640; Star Wars Unlimited</div>
+      <div class="panel-sub">6,113 cards across 26 sets. Light side, dark side, or neutral, the Force will decide.</div>
+    </div>
+    <button class="draw-btn" style="background:linear-gradient(135deg,#78350F,#B8960C);color:#FFE81F" onclick="drawCards('starwars',3);document.getElementById('again-starwars').style.display='flex'">&#127922; Draw 3 Random Star Wars Cards</button>
+    <div id="result-starwars"></div>
+    <div class="draw-again-wrap" id="again-starwars" style="display:none">
+      <button class="draw-btn" style="background:rgba(255,232,31,.1);border:1px solid rgba(255,232,31,.3);color:#FFE81F" onclick="drawCards('starwars',3)">&#8635; Draw Again</button>
+    </div>
+    <div class="share-section" id="share-starwars">
+      <div class="share-title">&#128279; Share your pull</div>
+      <div class="share-buttons">
+        <button class="share-btn share-btn--x" onclick="shareX('starwars')">&#10005; Post on X</button>
+        <button class="share-btn share-btn--reddit" onclick="shareReddit('starwars')">&#128172; Share on Reddit</button>
+        <button class="share-btn share-btn--whatsapp" onclick="shareWhatsApp('starwars')">&#128172; WhatsApp</button>
+        <button class="share-btn" onclick="copyInstagram('starwars',this)">&#128247; Copy Instagram Caption</button>
+        <button class="share-btn share-btn--copy" onclick="copyShareLink('starwars',this)">&#128279; Copy Link</button>
+      </div>
+    </div>
+    <div class="post-draw" id="postdraw-starwars">
+      <div class="share-title">&#128218; What's next?</div>
+      <div class="post-draw-grid">
+        <a href="/cards/starwars" class="pd-card">
+          <div class="pd-label">Card Vault</div>
+          <div class="pd-title">Browse all Star Wars cards on C3</div>
+          <div class="pd-arrow">Browse &rarr;</div>
+        </a>
+        <a href="/quizzes/which-tcg" class="pd-card">
+          <div class="pd-label">Quiz</div>
+          <div class="pd-title">Which TCG should you start?</div>
+          <div class="pd-arrow">Take the quiz &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Draw Again show logic: show after first draw -->
+
+
+</div><!-- end wrap -->
+
+<footer>
+  <div style="margin-bottom:10px">
+    <a href="/">Home</a>
+    <a href="/cards">Card Vault</a>
+    <a href="/shop.html">Shop</a>
+    <a href="/blog">Blog</a>
+    <a href="/quizzes">Quizzes</a>
+    <a href="/ev-calculator.html">EV Calc</a>
+    <a href="/tracker.html">Tracker</a>
+    <a href="/generators">Generators</a>
+    <a href="/dnd">D&amp;D Tools</a>
+    <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">Etsy Shop &#8599;</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/legal.html">Legal</a>
+  </div>
+  <p>&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases through links may earn a commission at no extra cost to you.</p>
 </footer>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
 
 </body>
 </html>
