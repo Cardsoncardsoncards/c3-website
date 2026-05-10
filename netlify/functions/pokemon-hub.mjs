@@ -18,7 +18,7 @@ export default async (req) => {
 
   const [sets, topCards] = await Promise.all([
     supabaseGet('pokemon_sets?order=release_date.desc&limit=200&select=id,name,series,release_date,logo_uri,card_count'),
-    supabaseGet('pokemon_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,set_name,rarity')
+    supabaseGet('pokemon_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,set_name,rarity')
   ]);
 
   const cardCount = sets.reduce((a, s) => a + (s.card_count || 0), 0);
@@ -35,7 +35,7 @@ export default async (req) => {
     </a>`).join('');
 
   const setListHTML = sets.length ? sets.map(s => `
-    <a href="/cards/pokemon/sets/${s.id}" class="set-tile" data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
+    <a href="/cards/pokemon/sets/${encodeURIComponent(s.abbreviation||s.slug||s.id)}" class="set-tile" data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
       ${s.logo_uri ? `<img src="${s.logo_uri}" alt="${s.name}" class="set-logo" onerror="this.style.display='none'">` : ''}
       <span class="set-tile-name">${s.name}</span>
       ${s.release_date ? `<span class="set-tile-year">${s.release_date.slice(0,4)}</span>` : ''}
@@ -197,6 +197,8 @@ export default async (req) => {
 <div class="quick-links fade-up fade-up-1">
   <a href="https://www.ebay.com.au/sch/i.html?_nkw=pokemon+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,var(--poke-yellow),#e6b800);color:#000">🛒 Shop Pokemon on eBay ↗</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📋 Free Tracker</a>
+  <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
+  <a href="/quizzes/pokemon-era" class="quick-link" style="background:rgba(255,204,0,.08);border-color:rgba(255,204,0,.3);color:#FFCC00">&#127919; Which Pokemon Era Are You? &#8594;</a>
   <a href="/blog/best-pokemon-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📦 Best Booster Boxes →</a>
   <a href="/blog/pokemon-tcg-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📖 Beginners Guide →</a>
 </div>
@@ -267,7 +269,7 @@ async function searchCard() {
   const results = document.getElementById('search-results');
   results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">Searching...</div>';
   try {
-    const url = window.C3_SUPA_URL + '/rest/v1/pokemon_cards?select=slug,name,image_url,market_price,price_aud,set_name,rarity&order=market_price.desc&limit=24&name=ilike.*' + encodeURIComponent(q) + '*';
+    const url = window.C3_SUPA_URL + '/rest/v1/pokemon_cards?select=slug,name,image_url,market_price,price_aud,set_name,rarity&order=market_price.desc&rarity=not.is.null&rarity=neq.None&limit=24&name=ilike.*' + encodeURIComponent(q) + '*';
     const res = await fetch(url, { headers: { 'apikey': window.C3_SUPA_KEY } });
     const cards = await res.json();
     if (!cards.length) { results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">No cards found.</div>'; return; }

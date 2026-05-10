@@ -56,6 +56,8 @@ const NAV_HTML = `<nav>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
       <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="/generators" class="nav-link" style="color:#22D3EE;border-color:rgba(34,211,238,.35)">Generators</a>
+      <a href="/quizzes" class="nav-link" style="color:#F472B6;border-color:rgba(244,114,182,.35)">Quizzes</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
       <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
@@ -68,7 +70,7 @@ export default async (req) => {
 
   const [sets, topCards] = await Promise.all([
     supabaseGet('onepiece_sets?order=release_date.desc&limit=300&select=id,name,slug,abbreviation,card_count,release_date'),
-    supabaseGet('onepiece_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name')
+    supabaseGet('onepiece_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name')
   ]);
 
   const carouselHTML = topCards.length ? topCards.map(c => `
@@ -162,6 +164,8 @@ ${NAV_HTML}
 
 <div class="quick-links">
   <a href="https://www.ebay.com.au/sch/i.html?_nkw=one+piece+card+game&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#CC0000,#990000);color:#fff">🛒 Shop One Piece on eBay ↗</a>
+  <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
+  <a href="/quizzes/which-tcg" class="quick-link" style="background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.3);color:#F97316">&#127919; TCG Quiz &#8594;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📋 Free Tracker</a>
   <a href="/blog/one-piece-card-game-australia-beginners-guide/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📖 Beginners Guide →</a>
 </div>

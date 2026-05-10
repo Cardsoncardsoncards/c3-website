@@ -17,8 +17,8 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
   const [sets, topCards] = await Promise.all([
-    supabaseGet('lorcana_sets?order=released_at.desc&limit=100&select=id,name,code,released_at'),
-    supabaseGet('lorcana_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,version,image_url,market_price,price_aud,ink,rarity')
+    supabaseGet('lorcana_sets?order=release_date.desc&limit=300&select=id,name,slug,abbreviation,release_date,card_count'),
+    supabaseGet('lorcana_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&limit=24&select=slug,name,version,image_url,market_price,price_aud,ink,rarity')
   ]);
 
   const cardCount = sets.reduce((a, s) => a + (s.card_count || 0), 0);
@@ -35,10 +35,10 @@ export default async (req) => {
     </a>`).join('');
 
   const setListHTML = sets.length ? sets.map(s => `
-    <a href="/cards/lorcana/sets/${s.code}" class="set-tile" data-name="${s.name.toLowerCase().replace(/"/g,'&quot;')}">
+    <a href="/cards/lorcana/sets/${encodeURIComponent(s.id)}" class="set-tile" data-name="${(s.name||'').toLowerCase().replace(/"/g,'&quot;')}">
       ${s.logo_uri ? `<img src="${s.logo_uri}" alt="${s.name}" class="set-logo" onerror="this.style.display='none'">` : ''}
       <span class="set-tile-name">${s.name}</span>
-      ${s.released_at ? `<span class="set-tile-year">${s.released_at ? s.released_at.slice(0,4) : ''}</span>` : ''}
+      ${s.release_date ? `<span class="set-tile-year">${s.release_date.slice(0,4)}</span>` : ''}
     </a>`).join('') : '<div class="sync-msg">Sets loading — check back after tonight\'s sync.</div>';
 
   return new Response(`<!DOCTYPE html>
@@ -197,6 +197,8 @@ export default async (req) => {
 <div class="quick-links fade-up fade-up-1">
   <a href="https://www.ebay.com.au/sch/i.html?_nkw=lorcana+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,var(--lorcana-gold),#e6b800);color:#000">🛒 Shop Lorcana on eBay ↗</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📋 Free Tracker</a>
+  <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
+  <a href="/quizzes/lorcana-ink" class="quick-link" style="background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.3);color:#38BDF8">&#127919; Which Lorcana Ink Are You? &#8594;</a>
   <a href="/blog/best-lorcana-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📦 Best Lorcana Boxes →</a>
   <a href="/blog/is-disney-lorcana-worth-starting-2026-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📖 Is Lorcana Worth It? →</a>
 </div>

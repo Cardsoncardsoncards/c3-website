@@ -17,8 +17,8 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
   const [sets, topCards] = await Promise.all([
-    supabaseGet('yugioh_sets?order=tcg_date.desc&limit=300&select=set_name,set_code,num_of_cards,tcg_date'),
-    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,type,attribute,archetype')
+    supabaseGet('yugioh_sets?order=release_date.desc&limit=300&select=id,name,slug,abbreviation,card_count,release_date'),
+    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,type,attribute,rarity')
   ]);
 
   const cardCount = sets.reduce((a, s) => a + (s.card_count || 0), 0);
@@ -35,10 +35,10 @@ export default async (req) => {
     </a>`).join('');
 
   const setListHTML = sets.length ? sets.map(s => `
-    <a href="/cards/yugioh/sets/${s.set_code}" class="set-tile" data-name="${(s.set_name||'').toLowerCase()}">
+    <a href="/cards/yugioh/sets/${encodeURIComponent(s.abbreviation||s.slug||s.id)}" class="set-tile" data-name="${(s.name||s.set_name||s.slug||'').toLowerCase()}">
       
-      <span class="set-tile-name">${s.set_name}</span>
-      ${s.tcg_date ? `<span class="set-tile-year">${s.tcg_date.slice(0,4)}</span>` : ''}
+      <span class="set-tile-name">${s.name||s.set_name||s.slug}</span>
+      ${s.release_date ? `<span class="set-tile-year">${s.release_date.slice(0,4)}</span>` : ''}
     </a>`).join('') : '<div class="sync-msg">Sets loading — check back after tonight\'s sync.</div>';
 
   return new Response(`<!DOCTYPE html>
@@ -197,6 +197,8 @@ export default async (req) => {
 <div class="quick-links fade-up fade-up-1">
   <a href="https://www.ebay.com.au/sch/i.html?_nkw=yugioh+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,var(--ygo-gold),#e6b800);color:#000">🛒 Shop Yu-Gi-Oh on eBay ↗</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📋 Free Tracker</a>
+  <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
+  <a href="/quizzes/mtg-archetype" class="quick-link" style="background:rgba(192,132,252,.08);border-color:rgba(192,132,252,.3);color:#C084FC">&#127919; What's Your Archetype? &#8594;</a>
   <a href="/blog/yugioh-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📦 Best YGO Boxes →</a>
   <a href="/blog/yugioh-tcg-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📖 YGO Guide →</a>
 </div>
