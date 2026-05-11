@@ -198,8 +198,13 @@ export default async (req) => {
   <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
   ${productSchema ? `<script type="application/ld+json">${JSON.stringify(productSchema)}</script>` : ''}
   <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <meta property="og:image" content="${card.image_url || 'https://cardsoncardsoncards.com.au/c3-og-banner.png'}">
+  <meta property="og:site_name" content="Cards on Cards on Cards">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
   <style>
     :root {
       --bg:#0f1117;--bg2:#1a1d2e;--bg3:#22263a;
@@ -278,6 +283,8 @@ export default async (req) => {
       <a href="/" class="nav-link">← Home</a>
       <a href="/cards/mtg" class="nav-link">MTG Cards</a>
       <a href="/cards/pokemon" class="nav-link active">Pokemon</a>
+      <a href="/compare" class="nav-link">Compare</a>
+      <a href="/generators" class="nav-link">Generators</a>
       <a href="/shop.html" class="nav-link">Shop</a>
       <a href="/blog" class="nav-link">Blog</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
@@ -319,8 +326,11 @@ export default async (req) => {
     </div>
 
     <div class="cta-group">
-      <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy on eBay AU →</a>
-      <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(card.name+' pokemon '+card.set_name)}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:#f90;color:#f90">Search Amazon AU →</a>
+      <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary" onclick="if(typeof gtag!=='undefined')gtag('event','ebay_card_click',{card_name:'${card.name}',game:'pokemon'})">Buy on eBay AU →</a>
+      <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(card.name+' pokemon '+card.set_name)}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:#f90;color:#f90" onclick="if(typeof gtag!=='undefined')gtag('event','amazon_click',{card_name:'${card.name}'})">Search Amazon AU →</a>
+      <button id="c3-compare-btn" class="cta-btn cta-secondary" style="cursor:pointer;border-color:rgba(124,106,245,.4);color:#7c6af5" onclick="addToCompare('${card.slug}','${card.name.replace(/'/g,"\\'")}','${(card.image_url||'').replace(/'/g,"\\'")}','${card.market_price ? '~AU$'+(card.market_price*1.58).toFixed(2) : 'N/A'}','pokemon')">
+        <span id="c3-compare-lbl">⚖️ Add to Compare</span>
+      </button>
       <a href="/tracker.html" class="cta-btn cta-secondary">Track This Card's Value →</a>
     </div>
 
@@ -391,6 +401,49 @@ ${relatedHTML}
   <p>© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Prices are estimates based on USD Scryfall/TCGdex data converted at approximately 1.58 AUD. Check eBay AU for live Australian pricing.</p>
 </footer>
+<div id="c3-compare-tray" style="position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1a1d2e;border-top:1px solid #2d3254;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)">
+  <div id="c3-tray-cards" style="display:flex;gap:8px;flex:1;align-items:center;overflow-x:auto"></div>
+  <span id="c3-tray-count" style="color:#9ba3c4;white-space:nowrap;font-size:12px"></span>
+  <button onclick="goToCompare()" style="background:#7c6af5;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap">⚖️ Compare Now</button>
+  <button onclick="saveCompareTray([]);renderCompareTray('${card.slug}','${card.name.replace(/'/g,"\\'")}');" style="background:none;border:1px solid #2d3254;color:#9ba3c4;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;white-space:nowrap">Clear</button>
+</div>
+
+<script>
+${(await import('fs')).readFileSync ? '' : ''}
+const COMPARE_KEY='c3_compare_tray';
+function getCompareTray(){try{return JSON.parse(localStorage.getItem(COMPARE_KEY)||'[]');}catch{return[];}}
+function saveCompareTray(t){localStorage.setItem(COMPARE_KEY,JSON.stringify(t));}
+function renderCompareTray(currentSlug,currentName){
+  const tray=getCompareTray();
+  const el=document.getElementById('c3-compare-tray');
+  const cardsEl=document.getElementById('c3-tray-cards');
+  const countEl=document.getElementById('c3-tray-count');
+  if(!el||!cardsEl)return;
+  if(!tray.length){el.style.transform='translateY(100%)';return;}
+  el.style.transform='translateY(0)';
+  countEl.textContent=tray.length+' of 5';
+  cardsEl.innerHTML=tray.map(c=>\`<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">
+    \${c.img?\`<img src="\${c.img}" style="width:28px;border-radius:3px" alt="\${c.name}">\`:''}
+    <span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">\${c.name}</span>
+    <button onclick="removeFromCompare('\${c.slug}')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px;line-height:1">×</button>
+  </div>\`).join('');
+  const btn=document.getElementById('c3-compare-btn');
+  const lbl=document.getElementById('c3-compare-lbl');
+  if(btn&&lbl){const inTray=tray.some(c=>c.slug===(currentSlug||'${card.slug}'));btn.style.borderColor=inTray?'#7c6af5':'';btn.style.color=inTray?'#7c6af5':'';lbl.textContent=inTray?'Added to Compare ✓':'⚖️ Add to Compare';}
+}
+function addToCompare(slug,name,img,price,game){
+  let tray=getCompareTray();
+  if(tray.some(c=>c.slug===slug)){removeFromCompare(slug);return;}
+  if(tray.length>=5){alert('Maximum 5 cards. Remove one first.');return;}
+  tray.push({slug,name,img,price,game});
+  saveCompareTray(tray);
+  renderCompareTray(slug,name);
+  if(typeof gtag!=='undefined')gtag('event','card_added_to_tray',{card_name:name,game});
+}
+function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray('${card.slug}','${card.name.replace(/'/g,"\\'")}');}
+function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>c.slug).join(',');}
+renderCompareTray('${card.slug}','${card.name.replace(/'/g,"\\'")}');
+</script>
 </body>
 </html>`;
 

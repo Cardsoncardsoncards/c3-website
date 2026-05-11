@@ -103,7 +103,6 @@ function buildPriceChart(snapshots) {
   const points = snapshots.slice(-90);
   const prices = points.map(p => parseFloat(p.price_aud || 0));
   const pricesFoil = points.map(p => parseFloat(p.price_aud_foil || 0));
-  const usdRates = points.map(p => parseFloat(p.aud_usd_rate || 1.58));
   const maxPrice = Math.max(...prices, ...pricesFoil) * 1.15;
   const minPrice = Math.min(...prices.filter(p => p > 0), ...pricesFoil.filter(p => p > 0)) * 0.85;
   const w = 700, h = 220, pad = { t: 20, r: 20, b: 40, l: 60 };
@@ -130,8 +129,15 @@ function buildPriceChart(snapshots) {
             <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" stroke="#333" stroke-width="0.5" stroke-dasharray="4"/>`;
   }).join('');
 
+  // Embed price data for JS tooltip
+  const priceData = JSON.stringify(points.map(p => ({
+    d: p.snapshot_date ? p.snapshot_date.slice(0,10) : '',
+    nf: parseFloat(p.price_aud || 0),
+    foil: parseFloat(p.price_aud_foil || 0)
+  })));
+
   return `
-  <svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px">
+  <svg id="price-chart-svg" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px;cursor:crosshair" data-prices='${priceData}' data-padl="${pad.l}" data-padr="${pad.r}" data-padt="${pad.t}" data-padb="${pad.b}" data-chartw="${chartW}" data-charth="${chartH}" data-n="${n}" data-min="${minPrice}" data-max="${maxPrice}" data-w="${w}" data-h="${h}">
     <defs>
       <linearGradient id="gradNF" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#f5a623" stop-opacity="0.3"/>
@@ -144,6 +150,16 @@ function buildPriceChart(snapshots) {
     ${foilPath ? `<path d="${foilPath}" stroke="#7c6af5" stroke-width="2" fill="none" stroke-dasharray="5,3"/>` : ''}
     <line x1="${pad.l}" y1="${pad.t}" x2="${pad.l}" y2="${pad.t + chartH}" stroke="#555" stroke-width="1"/>
     <line x1="${pad.l}" y1="${pad.t + chartH}" x2="${pad.l + chartW}" y2="${pad.t + chartH}" stroke="#555" stroke-width="1"/>
+    <!-- Tooltip overlay -->
+    <rect id="chart-overlay" x="${pad.l}" y="${pad.t}" width="${chartW}" height="${chartH}" fill="transparent" style="cursor:crosshair"/>
+    <g id="chart-tooltip-group" class="chart-tooltip-group" style="display:none">
+      <line id="chart-tooltip-line" x1="0" y1="${pad.t}" x2="0" y2="${pad.t + chartH}" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3"/>
+      <circle id="chart-tooltip-dot-nf" r="4" fill="#f5a623" stroke="#fff" stroke-width="1.5"/>
+      <rect id="chart-tooltip-bg" rx="5" ry="5" fill="#1a1d2e" stroke="#2d3254" stroke-width="1"/>
+      <text id="chart-tooltip-date" fill="#9ba3c4" font-size="10" font-family="sans-serif"/>
+      <text id="chart-tooltip-nf" fill="#f5a623" font-size="11" font-family="sans-serif" font-weight="bold"/>
+      <text id="chart-tooltip-foil" fill="#7c6af5" font-size="11" font-family="sans-serif" font-weight="bold"/>
+    </g>
   </svg>
   <div class="chart-legend">
     <span class="legend-nf">&#9644; AUD Non-foil</span>
@@ -161,6 +177,18 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const low52w = latestSnap?.price_52w_low_aud;
   const verdict = getSellVerdict(priceAud, high52w, low52w);
   const edhrecLabel = getEdhrecLabel(card.edhrec_rank);
+
+  // 7-day % change
+  const sevenDayChange = (() => {
+    if (!snapshots || snapshots.length < 7) return null;
+    const recent = snapshots.slice(-7);
+    const first = parseFloat(recent[0]?.price_aud || 0);
+    const last = parseFloat(recent[recent.length - 1]?.price_aud || 0);
+    if (!first || !last) return null;
+    const pct = ((last - first) / first) * 100;
+    if (Math.abs(pct) < 0.5) return null;
+    return { pct: pct.toFixed(1), up: pct > 0 };
+  })();
   const isReserved = card.reserved;
   const isDoubleFaced = card.card_faces && card.card_faces.length > 1;
   const blogPosts = card.related_blog_posts || [];
@@ -224,25 +252,21 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     </div>
   </section>` : '';
 
-  const sealedHTML = sealedProducts.length > 0 ? `
+  const sealedHTML = `
   <section class="sealed-products">
     <h2>Buy ${card.set_name} Sealed</h2>
     <div class="card-carousel" id="sealed-carousel">
-      ${sealedProducts.map(p => `
+      ${sealedProducts.length > 0 ? sealedProducts.map(p => `
         <a href="https://www.amazon.com.au/dp/${p.asin}?tag=${AMAZON_TAG}" class="sealed-card" target="_blank" rel="noopener">
           <div class="sealed-name">${p.name}</div>
           <div class="sealed-cta">View on Amazon AU →</div>
-        </a>`).join('')}
+        </a>`).join('') : ''}
+      <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(card.set_name + ' booster box')}&tag=${AMAZON_TAG}" class="sealed-card" target="_blank" rel="noopener">
+        <div class="sealed-name">Search ${card.set_name} Sealed on Amazon AU</div>
+        <div class="sealed-cta">Browse all sealed →</div>
+      </a>
     </div>
-  </section>` : '';
-
-  const blogHTML = blogPosts.length > 0 ? `
-  <section class="blog-links">
-    <h3>Related Guides</h3>
-    <ul>
-      ${blogPosts.map(p => `<li><a href="${p.url}">${p.title}</a></li>`).join('')}
-    </ul>
-  </section>` : '';
+  </section>`;
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -516,6 +540,30 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .newsletter-inline-form button{background:var(--accent2);color:#fff;border:none;padding:8px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px}
     /* Price disclaimer */
     .price-disclaimer{font-size:11px;color:var(--text2);background:rgba(255,255,255,.03);border-radius:6px;padding:8px 12px;margin-top:8px;font-family:sans-serif;line-height:1.5}
+    /* 7-day change badge */
+    .price-7d{font-size:11px;font-weight:700;font-family:sans-serif;padding:2px 7px;border-radius:4px;margin-left:6px}
+    .price-7d-up{background:rgba(76,175,80,.18);color:#81c784}
+    .price-7d-down{background:rgba(244,67,54,.18);color:#e57373}
+    /* Compare button */
+    .cta-compare{background:var(--bg3);border:1px solid rgba(124,106,245,.4);color:var(--accent2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+    .cta-compare:hover,.cta-compare.in-compare{border-color:var(--accent2);background:rgba(124,106,245,.12)}
+    .cta-compare.in-compare{color:var(--accent2)}
+    /* Compare tray bar */
+    .compare-tray{position:fixed;bottom:0;left:0;right:0;z-index:900;background:var(--bg2);border-top:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)}
+    .compare-tray.visible{transform:translateY(0)}
+    .compare-tray-cards{display:flex;gap:8px;flex:1;align-items:center;overflow-x:auto}
+    .compare-tray-card{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;white-space:nowrap}
+    .compare-tray-card img{width:28px;border-radius:3px}
+    .compare-tray-card-name{font-size:12px;color:var(--text);max-width:100px;overflow:hidden;text-overflow:ellipsis}
+    .compare-tray-card-remove{background:none;border:none;color:var(--text2);cursor:pointer;font-size:14px;padding:0 2px;line-height:1}
+    .compare-tray-card-remove:hover{color:var(--red)}
+    .compare-tray-count{color:var(--text2);white-space:nowrap;font-size:12px}
+    .compare-tray-btn{background:var(--accent2);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap}
+    .compare-tray-btn:hover{opacity:.88}
+    .compare-tray-clear{background:none;border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;white-space:nowrap}
+    .compare-tray-clear:hover{border-color:var(--red);color:var(--red)}
+    /* Chart tooltip */
+    .chart-tooltip-group{pointer-events:none}
 
     /* Footer */
     footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; color: var(--text2); font-size: 13px; font-family: sans-serif; }
@@ -578,6 +626,7 @@ ${contextPara}
         <div class="price-row price-row--nf">
           <span class="price-row-label">Non-Foil</span>
           <span class="price-row-aud">${priceAud ? formatAUD(priceAud) : 'N/A'}</span>
+          ${sevenDayChange ? `<span class="price-7d ${sevenDayChange.up ? 'price-7d-up' : 'price-7d-down'}">${sevenDayChange.up ? '▲' : '▼'} ${Math.abs(sevenDayChange.pct)}% 7d</span>` : ''}
           ${card.price_usd ? `<button class="price-row-toggle" onclick="toggleRowCurrency(this,'${parseFloat(card.price_usd).toFixed(2)}','${priceAud ? priceAud.toFixed(2) : ''}')">show USD</button>
           <span class="price-row-usd">$${parseFloat(card.price_usd).toFixed(2)}<span class="price-row-usd-label">USD</span></span>` : ''}
         </div>
@@ -645,6 +694,9 @@ ${contextPara}
       ${hasEVCalc ? `<a href="/ev-calculator.html#${card.set_code}" class="cta-btn cta-ev">📊 ${card.set_name} EV Calculator</a>` : ''}
       <button class="cta-btn cta-watch" id="watch-btn" onclick="toggleWatch('${card.scryfall_id}','${card.name.replace(/'/g,"\'")}')">
         <span id="watch-icon">☆</span> <span id="watch-label">Watch this card</span>
+      </button>
+      <button class="cta-btn cta-compare" id="compare-btn" onclick="addToCompare('${card.slug}','${card.name.replace(/'/g,"\\'")}','${(card.image_uri_small || card.image_uri_normal || '').replace(/'/g,"\\'")}','${priceAud ? formatAUD(priceAud) : 'N/A'}')">
+        <span id="compare-icon">⚖️</span> <span id="compare-label">Add to Compare</span>
       </button>
     </div>
     ${shareBar}
@@ -752,7 +804,6 @@ ${otherPrintings && otherPrintings.length > 1 ? `
 
 ${relatedCardsHTML}
 ${sealedHTML}
-${blogHTML}
 
 <div style="max-width:1100px;margin:0 auto 32px;padding:0 24px">
   <div class="buylist-cta">
@@ -782,6 +833,14 @@ ${blogHTML}
   </div>
 </div>
 
+
+<!-- Compare tray bar -->
+<div class="compare-tray" id="compare-tray">
+  <div class="compare-tray-cards" id="compare-tray-cards"></div>
+  <span class="compare-tray-count" id="compare-tray-count"></span>
+  <button class="compare-tray-btn" onclick="goToCompare()">⚖️ Compare Now</button>
+  <button class="compare-tray-clear" onclick="clearCompare()">Clear all</button>
+</div>
 
 <footer>
   <p style="margin-bottom:12px">
@@ -1044,6 +1103,137 @@ async function submitFeedback() {
     if(res.ok) setTimeout(() => document.getElementById('feedback-overlay').classList.remove('open'), 2000);
   } catch { msg.textContent = 'Something went wrong.'; msg.style.color='#f44'; }
 }
+
+// Chart hover tooltip
+(function() {
+  const svg = document.getElementById('price-chart-svg');
+  if (!svg) return;
+  const overlay = document.getElementById('chart-overlay');
+  const tooltipGroup = document.getElementById('chart-tooltip-group');
+  const tooltipLine = document.getElementById('chart-tooltip-line');
+  const tooltipDotNF = document.getElementById('chart-tooltip-dot-nf');
+  const tooltipBg = document.getElementById('chart-tooltip-bg');
+  const tooltipDate = document.getElementById('chart-tooltip-date');
+  const tooltipNF = document.getElementById('chart-tooltip-nf');
+  const tooltipFoil = document.getElementById('chart-tooltip-foil');
+  if (!overlay || !tooltipGroup) return;
+
+  const priceData = JSON.parse(svg.dataset.prices || '[]');
+  const padL = parseFloat(svg.dataset.padl), padT = parseFloat(svg.dataset.padt);
+  const chartW = parseFloat(svg.dataset.chartw), chartH = parseFloat(svg.dataset.charth);
+  const n = parseFloat(svg.dataset.n);
+  const minP = parseFloat(svg.dataset.min), maxP = parseFloat(svg.dataset.max);
+  const svgW = parseFloat(svg.dataset.w), svgH = parseFloat(svg.dataset.h);
+
+  function toX(i) { return padL + (i / (n - 1)) * chartW; }
+  function toY(val) { return padT + chartH - ((val - minP) / (maxP - minP)) * chartH; }
+
+  overlay.addEventListener('mousemove', function(e) {
+    const rect = svg.getBoundingClientRect();
+    const scaleX = svgW / rect.width;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const relX = mouseX - padL;
+    const idx = Math.max(0, Math.min(n - 1, Math.round((relX / chartW) * (n - 1))));
+    const pt = priceData[idx];
+    if (!pt) return;
+
+    const cx = toX(idx);
+    const cyNF = pt.nf > 0 ? toY(pt.nf) : null;
+
+    tooltipLine.setAttribute('x1', cx);
+    tooltipLine.setAttribute('x2', cx);
+    if (cyNF !== null) {
+      tooltipDotNF.setAttribute('cx', cx);
+      tooltipDotNF.setAttribute('cy', cyNF);
+      tooltipDotNF.style.display = '';
+    } else {
+      tooltipDotNF.style.display = 'none';
+    }
+
+    // Format date
+    const dateStr = pt.d ? new Date(pt.d + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' }) : '';
+    const nfStr = pt.nf > 0 ? 'NF: AU$' + pt.nf.toFixed(2) : '';
+    const foilStr = pt.foil > 0 ? 'Foil: AU$' + pt.foil.toFixed(2) : '';
+
+    tooltipDate.textContent = dateStr;
+    tooltipNF.textContent = nfStr;
+    tooltipFoil.textContent = foilStr;
+
+    // Position tooltip box
+    const lineCount = 1 + (nfStr ? 1 : 0) + (foilStr ? 1 : 0);
+    const bw = 110, bh = lineCount * 14 + 12;
+    const bx = cx + 8 > svgW - bw - padL ? cx - bw - 8 : cx + 8;
+    const by = cyNF !== null ? Math.max(padT, cyNF - bh / 2) : padT + 10;
+    tooltipBg.setAttribute('x', bx); tooltipBg.setAttribute('y', by);
+    tooltipBg.setAttribute('width', bw); tooltipBg.setAttribute('height', bh);
+    tooltipDate.setAttribute('x', bx + 8); tooltipDate.setAttribute('y', by + 12);
+    tooltipNF.setAttribute('x', bx + 8); tooltipNF.setAttribute('y', by + 25);
+    tooltipFoil.setAttribute('x', bx + 8); tooltipFoil.setAttribute('y', by + 39);
+
+    tooltipGroup.style.display = '';
+  });
+
+  overlay.addEventListener('mouseleave', function() {
+    tooltipGroup.style.display = 'none';
+  });
+})();
+
+// Compare tray
+const COMPARE_KEY = 'c3_compare_tray';
+function getCompareTray() {
+  try { return JSON.parse(localStorage.getItem(COMPARE_KEY) || '[]'); } catch { return []; }
+}
+function saveCompareTray(tray) {
+  localStorage.setItem(COMPARE_KEY, JSON.stringify(tray));
+}
+function renderCompareTray() {
+  const tray = getCompareTray();
+  const el = document.getElementById('compare-tray');
+  const cardsEl = document.getElementById('compare-tray-cards');
+  const countEl = document.getElementById('compare-tray-count');
+  if (!el || !cardsEl) return;
+  if (tray.length === 0) { el.classList.remove('visible'); return; }
+  el.classList.add('visible');
+  countEl.textContent = tray.length + ' of 5 cards';
+  cardsEl.innerHTML = tray.map(c => \`<div class="compare-tray-card">
+    \${c.img ? \`<img src="\${c.img}" alt="\${c.name}">\` : ''}
+    <span class="compare-tray-card-name">\${c.name}</span>
+    <button class="compare-tray-card-remove" onclick="removeFromCompare('\${c.slug}')" title="Remove">×</button>
+  </div>\`).join('');
+  // Update compare button on current card
+  const compareBtn = document.getElementById('compare-btn');
+  const compareLabel = document.getElementById('compare-label');
+  if (compareBtn && compareLabel) {
+    const inTray = tray.some(c => c.slug === '${card.slug}');
+    compareBtn.classList.toggle('in-compare', inTray);
+    compareLabel.textContent = inTray ? 'Added to Compare ✓' : 'Add to Compare';
+  }
+}
+function addToCompare(slug, name, img, price) {
+  let tray = getCompareTray();
+  if (tray.some(c => c.slug === slug)) { removeFromCompare(slug); return; }
+  if (tray.length >= 5) { alert('Maximum 5 cards in compare. Remove one first.'); return; }
+  tray.push({ slug, name, img, price, game: 'mtg' });
+  saveCompareTray(tray);
+  renderCompareTray();
+  if (typeof gtag !== 'undefined') gtag('event', 'card_added_to_tray', { card_name: name, game: 'mtg' });
+}
+function removeFromCompare(slug) {
+  let tray = getCompareTray().filter(c => c.slug !== slug);
+  saveCompareTray(tray);
+  renderCompareTray();
+}
+function clearCompare() {
+  saveCompareTray([]);
+  renderCompareTray();
+}
+function goToCompare() {
+  const tray = getCompareTray();
+  if (!tray.length) return;
+  const slugs = tray.map(c => c.slug).join(',');
+  window.location.href = '/compare?cards=' + slugs;
+}
+renderCompareTray();
 
 initWatch();
 

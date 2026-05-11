@@ -195,7 +195,82 @@ async function handleFeedback(req) {
     }
   }
 
+  // If email provided, add to MailerLite (engaged users)
+  if (email && email.includes('@')) {
+    const MAILERLITE_KEY = Netlify.env.get('MAILERLITE_API_KEY');
+    if (MAILERLITE_KEY) {
+      try {
+        await fetch('https://connect.mailerlite.com/api/subscribers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${MAILERLITE_KEY}` },
+          body: JSON.stringify({ email, groups: ['mIFDGb'], fields: { feedback_rating: rating || '', source: 'card_feedback' } })
+        });
+      } catch (e) { console.error('MailerLite feedback error:', e.message); }
+    }
+  }
+
   return json({ ok: true });
+}
+
+// --- Sell price alert (for sellers wanting notification when price rises) ---
+async function handleSellAlert(req) {
+  const body = await req.json();
+  const { scryfallId, cardName, email, targetPriceAud } = body;
+  if (!scryfallId || !email || !targetPriceAud) return json({ error: 'Missing fields' }, 400);
+
+  await supabasePost('mtg_price_alerts', {
+    scryfall_id: scryfallId,
+    email,
+    target_price_aud: targetPriceAud,
+    alert_type: 'above',
+    is_active: true,
+    card_name: cardName || null
+  });
+
+  // Confirmation email
+  if (RESEND_API_KEY) {
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: 'C3 Price Alerts <alerts@cardsoncardsoncards.com.au>',
+          to: [email],
+          subject: `Sell alert set for ${cardName || 'your card'}`,
+          html: `<p>Hi,</p>
+<p>You will be notified when <strong>${cardName}</strong> rises above <strong>AU$${targetPriceAud}</strong>.</p>
+<p>We check prices daily. When the price hits your target we will email you straight away.</p>
+<p>The C3 Team</p>
+<p style="font-size:11px;color:#999">To unsubscribe from price alerts, reply to this email.</p>`
+        })
+      });
+    } catch (e) { console.error('Resend sell-alert error:', e.message); }
+  }
+
+  // Add to MailerLite
+  const MAILERLITE_KEY = Netlify.env.get('MAILERLITE_API_KEY');
+  if (MAILERLITE_KEY) {
+    try {
+      await fetch('https://connect.mailerlite.com/api/subscribers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${MAILERLITE_KEY}` },
+        body: JSON.stringify({ email, groups: ['mIFDGb'], fields: { source: 'sell_alert' } })
+      });
+    } catch {}
+  }
+
+  return json({ ok: true });
+}
+
+// --- Store-first eBay URL helper ---
+// Returns C3 store search URL first, falls back to all AU sellers
+function getEbayUrls(cardName, game = 'mtg') {
+  const gameKeyword = game === 'mtg' ? 'mtg' : game === 'pokemon' ? 'pokemon' : game === 'yugioh' ? 'yugioh' : game;
+  const q = encodeURIComponent(`${cardName} ${gameKeyword}`);
+  const campid = '5339146789';
+  const storeUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${q}&campid=${campid}`;
+  const allUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${q}&_sacat=183454&_sop=15&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${campid}&toolid=10001&mkevt=1`;
+  return { storeUrl, allUrl };
 }
 
 
@@ -229,65 +304,6 @@ async function handleNewsletter(req) {
   }
 }
 
-
-// --- Quiz result handler ---
-async function handleQuizResult(req) {
-  if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
-  try {
-    const body = await req.json();
-    const { quiz_slug, result_slug } = body;
-    if (!quiz_slug || !result_slug) return json({ error: 'Missing quiz_slug or result_slug' }, 400);
-
-    const SUPA = SUPABASE_URL + '/rest/v1/quiz_stats';
-    const hdrs = {
-      'apikey': SUPABASE_SERVICE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_SERVICE_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
-    };
-
-    // Upsert the row (insert if not exists)
-    await fetch(SUPA + '?on_conflict=quiz_slug,result_slug', {
-      method: 'POST',
-      headers: hdrs,
-      body: JSON.stringify({ quiz_slug, result_slug, count: 0, updated_at: new Date().toISOString() })
-    });
-
-    // Increment count using RPC or raw update
-    await fetch(SUPA + `?quiz_slug=eq.${encodeURIComponent(quiz_slug)}&result_slug=eq.${encodeURIComponent(result_slug)}`, {
-      method: 'PATCH',
-      headers: { ...hdrs, 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ count: 0, updated_at: new Date().toISOString() })
-    });
-
-    // Actually increment via SQL RPC
-    const rpcRes = await fetch(SUPABASE_URL + '/rest/v1/rpc/increment_quiz_count', {
-      method: 'POST',
-      headers: hdrs,
-      body: JSON.stringify({ p_quiz_slug: quiz_slug, p_result_slug: result_slug })
-    });
-
-    // Get current count for this result
-    const countRes = await fetch(SUPA + `?quiz_slug=eq.${encodeURIComponent(quiz_slug)}&result_slug=eq.${encodeURIComponent(result_slug)}&select=count`, {
-      headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': 'Bearer ' + SUPABASE_SERVICE_KEY }
-    });
-    const countData = await countRes.json();
-    const count = countData[0]?.count || 0;
-
-    // Get most common result for this quiz
-    const mcRes = await fetch(SUPA + `?quiz_slug=eq.${encodeURIComponent(quiz_slug)}&select=result_slug,count&order=count.desc&limit=1`, {
-      headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': 'Bearer ' + SUPABASE_SERVICE_KEY }
-    });
-    const mcData = await mcRes.json();
-    const most_common = mcData[0]?.result_slug || null;
-
-    return json({ ok: true, count: parseInt(count) + 1, most_common });
-  } catch (e) {
-    console.error('Quiz result error:', e.message);
-    return json({ error: e.message }, 500);
-  }
-}
-
 // --- Main router ---
 export default async (req) => {
   const url = new URL(req.url);
@@ -299,8 +315,8 @@ export default async (req) => {
   if (path === '/api/collection-waitlist' && req.method === 'POST') return handleWaitlist(req);
   if (path === '/api/random-commander') return handleRandomCommander(req);
   if (path === '/api/feedback' && req.method === 'POST') return handleFeedback(req);
+  if (path === '/api/sell-alert' && req.method === 'POST') return handleSellAlert(req);
   if (path === '/api/newsletter' && req.method === 'POST') return handleNewsletter(req);
-  if (path === '/api/quiz-result' && req.method === 'POST') return handleQuizResult(req);
 
   return json({ error: 'Not found' }, 404);
 };
@@ -313,7 +329,6 @@ export const config = {
     '/api/collection-waitlist',
     '/api/random-commander',
     '/api/feedback',
-    '/api/newsletter',
-    '/api/quiz-result'
+    '/api/newsletter'
   ]
 };

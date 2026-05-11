@@ -280,7 +280,8 @@ export default async (req) => {
           foil_price_aud:    foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
           aud_rate:          audRate,
           price_change_24h:  price.price_change_24h || null,
-          price_change_7d:   null,
+          price_change_7d:   price.price_change_7d || null,
+          price_change_30d:  price.price_change_30d || null,
           last_price_update: price.last_updated_at || null,
           updated_at:        new Date().toISOString()
         });

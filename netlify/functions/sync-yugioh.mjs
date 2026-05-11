@@ -3,11 +3,11 @@
 // Fetches all Yu-Gi-Oh sets + cards + prices from tcgapi.dev Pro
 // Upserts into yugioh_sets, yugioh_cards, yugioh_price_snapshots
 // Note: Yu-Gi-Oh has 45k+ cards across 610 sets — largest non-MTG catalogue
+// Incremental mode: skips sets that already have cards in Supabase (saves ~1,100 credits/day)
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
-const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const GAME_SLUG            = 'yugioh';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
@@ -43,18 +43,13 @@ async function tcgapiGet(path) {
   const res = await fetch(`${TCGAPI_BASE}${path}`, {
     headers: { 'X-API-Key': TCGAPI_KEY }
   });
-  const text = await res.text();
   if (!res.ok) {
-    throw new Error(`tcgapi GET ${path} failed ${res.status}: ${text.slice(0, 200)}`);
+    const err = await res.text();
+    throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
-  }
-  // Rate limit is in response headers, not the body
-  const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
+  const data = await res.json();
+  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
+  const remaining = data.rate_limit?.daily_remaining ?? 0;
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
@@ -78,29 +73,11 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
-async function supabaseUpsertSnapshots(table, rows) {
-  if (!rows.length) return;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'resolution=merge-duplicates,return=minimal'
-    },
-    body: JSON.stringify(rows)
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
-  }
-}
 
-
-// Fetch already-synced set IDs from progress tracking table (max 610 rows, always fast)
+// Fetch set_ids that already have cards in Supabase (used for incremental sync)
 async function getAlreadySyncedSetIds() {
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/yugioh_sync_progress?select=set_id&limit=1000`,
+    `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id&limit=10000`,
     {
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,
@@ -109,42 +86,17 @@ async function getAlreadySyncedSetIds() {
     }
   );
   if (!res.ok) {
-    console.error('[sync-yugioh] Could not fetch sync progress, will do full sync');
+    console.error('[sync-yugioh] Could not fetch synced set IDs, will do full sync');
     return new Set();
   }
   const rows = await res.json();
   return new Set(rows.map(r => r.set_id));
 }
 
-// Mark a set as fully synced in the progress table
-async function markSetSynced(setId) {
-  await fetch(
-    `${SUPABASE_URL}/rest/v1/yugioh_sync_progress`,
-    {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates,return=minimal'
-      },
-      body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
-    }
-  );
-}
-
 // --- Main ---
 
 export default async (req) => {
   console.log('[sync-yugioh] Starting...');
-
-  // Auth: accept manual POST with secret OR Netlify scheduled trigger (no header)
-  const secret = req.headers.get('x-sync-secret');
-  const isScheduled = !secret;
-  if (!isScheduled && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
-    console.error('[sync-yugioh] Unauthorised');
-    return new Response('Unauthorised', { status: 401 });
-  }
   const start = Date.now();
 
   // Validate env vars first
@@ -161,7 +113,7 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-yugioh] AUD rate: ${audRate}`);
 
-    // Fetch already-synced set IDs from progress table
+    // Fetch already-synced set IDs for incremental mode
     const syncedSetIds = await getAlreadySyncedSetIds();
     console.log(`[sync-yugioh] ${syncedSetIds.size} sets already synced — will skip these`);
 
@@ -206,6 +158,7 @@ export default async (req) => {
     let skippedCount = 0;
 
     for (const set of allSets) {
+      // Incremental: skip sets that already have cards
       if (syncedSetIds.has(set.id)) {
         skippedCount++;
         continue;
@@ -213,7 +166,7 @@ export default async (req) => {
 
       setCount++;
       if (setCount % 10 === 0) {
-        console.log(`[sync-yugioh] Progress: ${setCount} new sets, ${skippedCount} skipped, ${totalCards} cards so far`);
+        console.log(`[sync-yugioh] Progress: ${setCount} new sets processed, ${skippedCount} skipped, ${totalCards} cards so far`);
       }
 
       const setCards = [];
@@ -277,7 +230,7 @@ export default async (req) => {
           set_id:            set.id,
           set_name:          set.name,
           game_slug:         GAME_SLUG,
-          custom_attributes: card.custom_attributes || null,
+          custom_attributes: card.custom_attributes ? JSON.stringify(card.custom_attributes) : null,
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,
@@ -285,7 +238,8 @@ export default async (req) => {
           foil_price_aud:    foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
           aud_rate:          audRate,
           price_change_24h:  price.price_change_24h || null,
-          price_change_7d:   null,
+          price_change_7d:   price.price_change_7d || null,
+          price_change_30d:  price.price_change_30d || null,
           last_price_update: price.last_updated_at || null,
           updated_at:        new Date().toISOString()
         });
@@ -308,12 +262,11 @@ export default async (req) => {
         await supabaseUpsert('yugioh_cards', cardRows.slice(i, i + 200));
       }
       for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsertSnapshots('yugioh_price_snapshots', snapRows.slice(i, i + 500));
+        await supabaseUpsert('yugioh_price_snapshots', snapRows.slice(i, i + 500));
       }
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
-      await markSetSynced(set.id);
       console.log(`[sync-yugioh] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 

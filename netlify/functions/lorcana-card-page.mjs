@@ -148,9 +148,11 @@ export default async (req) => {
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/c3logo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${fullName} Price Australia | ${card.set_name} Lorcana | Cards on Cards on Cards</title>
   <meta name="description" content="${fullName} (${card.rarity || 'Lorcana'}) from ${card.set_name}${priceAud ? ` — ~AU$${priceAud.toFixed(2)}` : ''}. View price, card details, and buy on eBay AU. Australia's Lorcana price guide.">
+  <meta property="og:site_name" content="Cards on Cards on Cards">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana/${card.slug}">
   <meta property="og:title" content="${fullName} | ${card.set_name} Lorcana | Cards on Cards on Cards">
   ${card.image_url ? `<meta property="og:image" content="${card.image_url}">` : ''}
@@ -213,6 +215,9 @@ export default async (req) => {
     .breadcrumb a{color:var(--text2)}
     .breadcrumb a:hover{color:var(--accent)}
   </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
 </head>
 <body>
 <nav>
@@ -224,6 +229,8 @@ export default async (req) => {
       <a href="/cards/lorcana" class="nav-link active">Lorcana</a>
       <a href="/shop.html" class="nav-link">Shop</a>
       <a href="/blog" class="nav-link">Blog</a>
+      <a href="/compare" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(124,106,245,.35);color:#a78bfa;white-space:nowrap">Compare</a>
+      <a href="/generators" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Generators</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
     </div>
   </div>
@@ -343,7 +350,39 @@ function notFoundPage(slug) {
     <h1 style="color:#f5a623;margin-bottom:16px">Card Not Found</h1>
     <p style="color:#9ba3c4;margin-bottom:24px">We couldn't find "${slug}" in our Lorcana database.</p>
     <a href="/cards/lorcana" style="background:#f5a623;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none">Browse Lorcana Cards →</a>
-  </body></html>`;
+  
+<div id="c3-compare-tray" style="position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1a1d2e;border-top:1px solid #2d3254;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)">
+  <div id="c3-tray-cards" style="display:flex;gap:8px;flex:1;align-items:center;overflow-x:auto"></div>
+  <span id="c3-tray-count" style="color:#9ba3c4;white-space:nowrap;font-size:12px"></span>
+  <button onclick="goToCompare()" style="background:#7c6af5;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap">⚖️ Compare Now</button>
+  <button onclick="saveCompareTray([]);renderCompareTray();" style="background:none;border:1px solid #2d3254;color:#9ba3c4;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;white-space:nowrap">Clear</button>
+</div>
+<script>
+const COMPARE_KEY='c3_compare_tray';
+function getCompareTray(){try{return JSON.parse(localStorage.getItem(COMPARE_KEY)||'[]');}catch{return[];}}
+function saveCompareTray(t){localStorage.setItem(COMPARE_KEY,JSON.stringify(t));}
+function renderCompareTray(){
+  const tray=getCompareTray();const el=document.getElementById('c3-compare-tray');const cardsEl=document.getElementById('c3-tray-cards');const countEl=document.getElementById('c3-tray-count');
+  if(!el||!cardsEl)return;
+  if(!tray.length){el.style.transform='translateY(100%)';return;}
+  el.style.transform='translateY(0)';countEl.textContent=tray.length+' of 5';
+  cardsEl.innerHTML=tray.map(c=>`<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">${c.img?`<img src="${c.img}" style="width:28px;border-radius:3px">`:''}<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</span><button onclick="removeFromCompare('${c.slug}')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>`).join('');
+  const btn=document.getElementById('c3-compare-btn');const lbl=document.getElementById('c3-compare-lbl');
+  if(btn&&lbl){const pageSlug=btn.dataset.slug;const inTray=tray.some(c=>c.slug===pageSlug);btn.style.borderColor=inTray?'#7c6af5':'rgba(124,106,245,.4)';btn.style.color='#7c6af5';lbl.textContent=inTray?'Added ✓':'⚖️ Add to Compare';}
+}
+function addToCompare(slug,name,img,price,game){
+  let tray=getCompareTray();
+  if(tray.some(c=>c.slug===slug)){removeFromCompare(slug);return;}
+  if(tray.length>=5){alert('Maximum 5 cards. Remove one first.');return;}
+  tray.push({slug,name,img,price,game:'lorcana'});saveCompareTray(tray);renderCompareTray();
+  if(typeof gtag!=='undefined')gtag('event','card_added_to_tray',{card_name:name,game:'lorcana'});
+}
+function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray();}
+function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>c.slug).join(',');}
+renderCompareTray();
+if(typeof gtag!=='undefined'){document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_card_click',{game:'lorcana'})));}
+</script>
+</body></html>`;
 }
 
 export const config = { path: '/cards/lorcana/:slug+' };

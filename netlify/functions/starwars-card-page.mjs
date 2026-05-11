@@ -78,6 +78,8 @@ export default async (req) => {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${card.name} Price Australia | Star Wars Unlimited | Cards on Cards on Cards</title>
   <meta name="description" content="${card.name} card price in Australia.${priceAUD > 0 ? ' Currently AU$'+priceAUD.toFixed(2)+'.' : ''} Live AUD pricing and eBay AU buy links for Star Wars Unlimited cards.">
+  <meta property="og:site_name" content="Cards on Cards on Cards">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/starwars/${card.slug}">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
@@ -133,6 +135,8 @@ export default async (req) => {
       <a href="/blog" class="nav-link">Blog</a>
       <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
       <a href="/quizzes" class="nav-link">Quizzes</a>
+      <a href="/compare" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(124,106,245,.35);color:#a78bfa;white-space:nowrap">Compare</a>
+      <a href="/generators" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Generators</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
     </div>
   </div>
@@ -182,6 +186,38 @@ export default async (req) => {
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <div class="footer-disclaimer">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases through links may earn a commission at no extra cost to you.</div>
 </footer>
+
+<div id="c3-compare-tray" style="position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1a1d2e;border-top:1px solid #2d3254;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)">
+  <div id="c3-tray-cards" style="display:flex;gap:8px;flex:1;align-items:center;overflow-x:auto"></div>
+  <span id="c3-tray-count" style="color:#9ba3c4;white-space:nowrap;font-size:12px"></span>
+  <button onclick="goToCompare()" style="background:#7c6af5;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap">⚖️ Compare Now</button>
+  <button onclick="saveCompareTray([]);renderCompareTray();" style="background:none;border:1px solid #2d3254;color:#9ba3c4;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;white-space:nowrap">Clear</button>
+</div>
+<script>
+const COMPARE_KEY='c3_compare_tray';
+function getCompareTray(){try{return JSON.parse(localStorage.getItem(COMPARE_KEY)||'[]');}catch{return[];}}
+function saveCompareTray(t){localStorage.setItem(COMPARE_KEY,JSON.stringify(t));}
+function renderCompareTray(){
+  const tray=getCompareTray();const el=document.getElementById('c3-compare-tray');const cardsEl=document.getElementById('c3-tray-cards');const countEl=document.getElementById('c3-tray-count');
+  if(!el||!cardsEl)return;
+  if(!tray.length){el.style.transform='translateY(100%)';return;}
+  el.style.transform='translateY(0)';countEl.textContent=tray.length+' of 5';
+  cardsEl.innerHTML=tray.map(c=>`<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">${c.img?`<img src="${c.img}" style="width:28px;border-radius:3px">`:''}<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</span><button onclick="removeFromCompare('${c.slug}')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>`).join('');
+  const btn=document.getElementById('c3-compare-btn');const lbl=document.getElementById('c3-compare-lbl');
+  if(btn&&lbl){const pageSlug=btn.dataset.slug;const inTray=tray.some(c=>c.slug===pageSlug);btn.style.borderColor=inTray?'#7c6af5':'rgba(124,106,245,.4)';btn.style.color='#7c6af5';lbl.textContent=inTray?'Added ✓':'⚖️ Add to Compare';}
+}
+function addToCompare(slug,name,img,price,game){
+  let tray=getCompareTray();
+  if(tray.some(c=>c.slug===slug)){removeFromCompare(slug);return;}
+  if(tray.length>=5){alert('Maximum 5 cards. Remove one first.');return;}
+  tray.push({slug,name,img,price,game:'starwars'});saveCompareTray(tray);renderCompareTray();
+  if(typeof gtag!=='undefined')gtag('event','card_added_to_tray',{card_name:name,game:'starwars'});
+}
+function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray();}
+function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>c.slug).join(',');}
+renderCompareTray();
+if(typeof gtag!=='undefined'){document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_card_click',{game:'starwars'})));}
+</script>
 </body>
 </html>`, { status: 200, headers });
 };
