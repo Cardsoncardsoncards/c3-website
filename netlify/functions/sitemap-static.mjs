@@ -19,6 +19,7 @@ const STATIC_PAGES = [
   { path: '/cards/riftbound',     priority: '0.8', changefreq: 'daily'   },
   { path: '/cards/dragonball',    priority: '0.8', changefreq: 'daily'   },
   { path: '/cards/starwars',      priority: '0.8', changefreq: 'daily'   },
+  { path: '/compare',             priority: '0.8', changefreq: 'weekly'  },
   { path: '/generators',          priority: '0.8', changefreq: 'weekly'  },
   { path: '/quizzes',             priority: '0.8', changefreq: 'weekly'  },
   { path: '/quizzes/which-tcg',          priority: '0.7', changefreq: 'monthly' },
@@ -53,7 +54,6 @@ export default async (req) => {
   const headers = {
     'Content-Type': 'application/xml; charset=utf-8',
     'Cache-Control': 'public, max-age=43200', // 12 hours
-    'X-Robots-Tag': 'noindex'
   };
 
   const today = new Date().toISOString().slice(0, 10);

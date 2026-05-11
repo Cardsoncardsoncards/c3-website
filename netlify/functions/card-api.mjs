@@ -274,6 +274,57 @@ function getEbayUrls(cardName, game = 'mtg') {
 }
 
 
+
+// --- Random card draw ---
+async function handleRandomCard(req) {
+  const url = new URL(req.url);
+  const game = url.searchParams.get('game') || 'mtg';
+  const limit = Math.min(parseInt(url.searchParams.get('limit') || '3'), 10);
+  const rarity = url.searchParams.get('rarity') || '';
+
+  const TABLE_MAP = {
+    mtg: { table: 'mtg_cards', imgCol: 'image_uri_small', priceCol: 'price_usd', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity,color_identity,type_line' },
+    pokemon: { table: 'pokemon_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity' },
+    yugioh: { table: 'yugioh_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity,type,attribute' },
+    lorcana: { table: 'lorcana_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity,ink' },
+    onepiece: { table: 'onepiece_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity' },
+    dragonball: { table: 'dragonball_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity' },
+    starwars: { table: 'starwars_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity' },
+    riftbound: { table: 'riftbound_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity' },
+  };
+
+  const cfg = TABLE_MAP[game] || TABLE_MAP.mtg;
+  // Use offset randomisation - get a random page from the first 10000 cards with images
+  const offset = Math.floor(Math.random() * (9000 - limit));
+  let query = `${cfg.table}?${cfg.imgCol}=not.is.null&limit=${limit}&offset=${offset}&select=${cfg.slugCol},${cfg.nameCol},${cfg.imgCol},${cfg.priceCol},price_aud,${cfg.extraCols}`;
+
+  if (rarity && rarity !== 'all') {
+    if (rarity === 'rare+') query += `&rarity=in.(Rare,Mythic Rare,Mythic,Secret Rare,Ultra Rare,Legendary)`;
+    else if (rarity === 'mythic') query += `&rarity=in.(Mythic Rare,Mythic,Secret Rare)`;
+  }
+
+  try {
+    const res = await supabaseGet(query);
+    if (!res || !res.length) return json({ error: 'No cards found' }, 404);
+    const cards = res.map(c => ({
+      slug: c[cfg.slugCol],
+      name: c[cfg.nameCol],
+      image: c[cfg.imgCol],
+      price_usd: c[cfg.priceCol] || null,
+      price_aud: c.price_aud || (c[cfg.priceCol] ? (c[cfg.priceCol] * 1.58).toFixed(2) : null),
+      set_name: c.set_name || '',
+      rarity: c.rarity || '',
+      extra: { type: c.type_line || c.type || '', color: c.color_identity || c.ink || c.attribute || '', ink: c.ink || '' },
+      game,
+      path: `/cards/${game}/${c[cfg.slugCol]}`,
+    }));
+    return json({ cards });
+  } catch (err) {
+    console.error('[random-card]', err.message);
+    return json({ error: 'Failed to fetch cards' }, 500);
+  }
+}
+
 // --- Newsletter subscribe ---
 async function handleNewsletter(req) {
   const body = await req.json();
@@ -314,6 +365,7 @@ export default async (req) => {
   if (path === '/api/price-alert' && req.method === 'POST') return handlePriceAlert(req);
   if (path === '/api/collection-waitlist' && req.method === 'POST') return handleWaitlist(req);
   if (path === '/api/random-commander') return handleRandomCommander(req);
+  if (path === '/api/random-card') return handleRandomCard(req);
   if (path === '/api/feedback' && req.method === 'POST') return handleFeedback(req);
   if (path === '/api/sell-alert' && req.method === 'POST') return handleSellAlert(req);
   if (path === '/api/newsletter' && req.method === 'POST') return handleNewsletter(req);
@@ -328,6 +380,7 @@ export const config = {
     '/api/price-alert',
     '/api/collection-waitlist',
     '/api/random-commander',
+    '/api/random-card',
     '/api/feedback',
     '/api/newsletter'
   ]

@@ -1,11 +1,13 @@
 // netlify/functions/starwars-set-page.mjs
-// Serves /cards/starwars/sets/:setCode
+// Serves /cards/starwars/sets/:slug+
+// Set page for Star Wars: Unlimited
 
-const SUPABASE_URL       = Netlify.env.get('SUPABASE_URL');
-const SUPABASE_ANON_KEY  = Netlify.env.get('SUPABASE_ANON_KEY');
-const EBAY_CLIENT_ID     = Netlify.env.get('EBAY_CLIENT_ID');
+const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
+const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
+const EBAY_CLIENT_ID    = Netlify.env.get('EBAY_CLIENT_ID');
 const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
-const EPN_CAMPID         = '5339146789';
+const EPN_CAMPID        = '5339146789';
+const AMAZON_TAG        = 'blasdigital-22';
 
 async function supabaseGet(path) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
@@ -34,188 +36,207 @@ async function getEbayListings(q, token) {
   if (!token) return [];
   try {
     const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${encodeURIComponent(q)}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=-price&limit=8`;
-    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU' } });
+    const res = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU', 'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${EPN_CAMPID}` }
+    });
     if (!res.ok) return [];
     const d = await res.json();
     return d.itemSummaries || [];
   } catch { return []; }
 }
 
+function graceful404(setSlug) {
+  return `<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Set Not Found | Star Wars | Cards on Cards on Cards</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}.wrap{max-width:420px}.icon{font-size:48px;margin-bottom:16px}h1{font-family:'Cinzel',serif;color:#FFE81F;font-size:22px;margin-bottom:10px}p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}.btn{display:inline-block;background:#FFE81F;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}.btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}</style>
+</head>
+<body><div class="wrap"><div class="icon">🃏</div><h1>Set Not Found</h1><p>We couldn't find the Star Wars set "${setSlug}". It may not be in our database yet.</p><a href="/cards/starwars" class="btn">Browse All Star Wars Cards</a><a href="/" class="btn btn-sec">← Home</a></div></body>
+</html>`;
+}
+
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
-  const setCode = url.pathname.replace(/^\/cards\/starwars\/sets\//, '').replace(/\/$/, '');
-  if (!setCode) return new Response('Not found', { status: 404, headers });
+  const setSlug = url.pathname.replace(/^\/cards\/starwars\/sets\//, '').replace(/\/$/, '');
 
-  const [setsById, setsbySlug, ebayToken] = await Promise.all([
-    supabaseGet(`starwars_sets?id=eq.${encodeURIComponent(setCode)}&limit=1`),
-    supabaseGet(`starwars_sets?slug=eq.${encodeURIComponent(setCode)}&limit=1`),
-    getEbayToken()
-  ]);
+  if (!setSlug) return new Response(graceful404(''), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
-  const set = (setsById.length ? setsById : setsbySlug)[0];
-  if (!set) return new Response(`<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Set Not Found | C3</title><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px"><h1>Set not found</h1><a href="/cards/starwars" style="color:#FFE81F">← Back to Star Wars Unlimited</a></body></html>`, { status: 404, headers });
+  try {
+    const [sets, ebayToken] = await Promise.all([
+      supabaseGet(`starwars_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
+      getEbayToken()
+    ]);
 
-  const cards = await supabaseGet(`starwars_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=500&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,custom_attributes`);
+    if (!sets || !sets[0]) return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
-  const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' star wars unlimited')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  const ebayBoxURL   = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' star wars unlimited booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  const ebayListings = await getEbayListings(`${set.name} star wars unlimited`, ebayToken);
+    const set = sets[0];
 
-  const toAud = c => c.price_aud ? parseFloat(c.price_aud) : (c.market_price ? parseFloat(c.market_price) * 1.58 : 0);
-  const pricedCards = cards.filter(c => toAud(c) > 0).sort((a,b) => toAud(b) - toAud(a));
-  const top5 = pricedCards.slice(0,5);
-  const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();
+    const [cards, ebayListings] = await Promise.all([
+      supabaseGet(`starwars_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
+      getEbayListings(`${set.name}  star wars unlimited`, ebayToken)
+    ]);
 
-  const topCardsHTML = top5.map(c => `
-    <a href="/cards/starwars/${c.slug}" style="flex:0 0 140px;background:#111420;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .2s;display:block" onmouseover="this.style.borderColor='#FFE81F';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.transform='none'">
-      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:100px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${c.name}</div>`}
-      <div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">${c.name}</div>
-      <div style="font-size:11px;color:#FFE81F;font-weight:700;margin-top:3px">AU$${toAud(c).toFixed(2)}</div>
-    </a>`).join('');
+    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+    const pricedCards = (cards || []).filter(c => toAud(c) > 0);
+    const top5 = pricedCards.slice(0, 5);
+    const today = new Date().toISOString().slice(0, 10);
 
-  const allCardsHTML = cards.map(c => `
-    <a href="/cards/starwars/${c.slug}" class="card-item" data-rarity="${(c.rarity||'').toLowerCase()}" data-price="${toAud(c).toFixed(2)}">
-      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:5px;display:block" loading="lazy">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099;text-align:center;padding:4px">${c.name}</div>`}
-      <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${c.name}</div>
-      ${c.number ? `<div style="font-size:9px;color:#7a8099">${c.number}</div>` : ''}
-      ${toAud(c) > 0 ? `<div style="font-size:10px;color:#FFE81F;font-weight:700;margin-top:2px">AU$${toAud(c).toFixed(2)}</div>` : ''}
-    </a>`).join('');
+    const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' star wars unlimited')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
-  const ebayItemsHTML = ebayListings.slice(0,6).map(item => `
-    <a href="${item.itemWebUrl||'#'}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener sponsored" style="background:#111420;border:1px solid #252840;border-radius:10px;overflow:hidden;text-decoration:none;transition:border-color .2s;display:block" onmouseover="this.style.borderColor='#FFE81F'" onmouseout="this.style.borderColor='#252840'">
-      ${item.image?.imageUrl ? `<img src="${item.image.imageUrl}" alt="${(item.title||'').slice(0,40)}" style="width:100%;height:140px;object-fit:contain;background:#0d0f1a;padding:8px" loading="lazy">` : `<div style="height:140px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:24px">🃏</div>`}
-      <div style="padding:10px">
-        <div style="font-size:11px;color:#F0F2FF;line-height:1.3;margin-bottom:6px">${(item.title||'').slice(0,60)}</div>
-        <div style="font-size:13px;color:#FFE81F;font-weight:700">${item.price?.value ? 'AU$'+parseFloat(item.price.value).toFixed(2) : ''}</div>
-      </div>
-    </a>`).join('');
+    const top5HTML = top5.map(c => {
+      const aud = toAud(c);
+      return `<a href="/cards/starwars/${c.slug}" style="flex:0 0 140px;background:#0e1118;border:1px solid rgba(255,232,31,.35);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .2s;display:block" onmouseover="this.style.borderColor='#FFE81F';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,232,31,.35)';this.style.transform='none'">
+        ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
+        <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${c.name}</div>
+        ${c.rarity ? `<div style="font-size:10px;color:#FFE81F;margin-bottom:3px">${c.rarity}</div>` : ''}
+        ${aud > 0 ? `<div style="font-size:12px;color:#C9A84C;font-weight:700">AU$${aud.toFixed(2)}</div>` : ''}
+      </a>`;
+    }).join('');
 
-  const totalValue = pricedCards.reduce((s,c) => s + toAud(c), 0);
-  const avgValue = pricedCards.length ? totalValue / pricedCards.length : 0;
+    const allCardsHTML = cards && cards.length ? cards.map(c => {
+      const aud = toAud(c);
+      return `<a href="/cards/starwars/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block;transition:all .2s" onmouseover="this.style.borderColor='#FFE81F'" onmouseout="this.style.borderColor='#1e2235'">
+        ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
+        <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
+        ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
+      </a>`;
+    }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing — check back after tonight's update.</div>`;
 
-  return new Response(`<!DOCTYPE html>
+    const ebayListingsHTML = ebayListings.length ? ebayListings.slice(0,4).map(item => {
+      const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
+      const epnUrl = item.itemAffiliateWebUrl || item.itemWebUrl || '#';
+      return `<a href="${epnUrl}" target="_blank" rel="noopener" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:12px;text-decoration:none;display:flex;gap:10px;align-items:center;transition:border-color .2s" onmouseover="this.style.borderColor='#FFE81F'" onmouseout="this.style.borderColor='#1e2235'">
+        ${item.image?.imageUrl ? `<img src="${item.image.imageUrl}" alt="${item.title}" style="width:50px;height:50px;object-fit:contain;border-radius:4px;flex-shrink:0">` : ''}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;color:#e8eaf0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.title||''}</div>
+          ${price ? `<div style="font-size:13px;color:#C9A84C;font-weight:700;margin-top:3px">${price}</div>` : ''}
+          <div style="font-size:10px;color:#8892b0;margin-top:2px">eBay AU · Buy now</div>
+        </div>
+      </a>`;
+    }).join('') : '';
+
+    const metaDesc = `Browse ${cards?.length||0} Star Wars cards from ${set.name}. View card prices in AUD, find the most valuable cards and buy on eBay AU. Updated daily.`;
+
+    return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${set.name} Card Prices Australia | Star Wars Unlimited | Cards on Cards on Cards</title>
-  <meta name="description" content="Browse all ${cards.length} cards in ${set.name}. Live AUD prices, card images, and eBay AU buy links. Australia's Star Wars Unlimited price guide.">
-  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/starwars/sets/${encodeURIComponent(set.slug||set.id)}">
+  <title>${set.name} | Star Wars Set | Cards on Cards on Cards</title>
+  <meta name="description" content="${metaDesc}">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/starwars/sets/${setSlug}">
+  <meta property="og:title" content="${set.name} | Star Wars | C3">
+  <meta property="og:description" content="${metaDesc}">
+  <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards/starwars/sets/${setSlug}">
+  <meta property="og:site_name" content="Cards on Cards on Cards">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 40% at 50% -10%,#FFE81F0f,transparent 60%);z-index:0}
-    nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid #252840;padding:12px 0;position:sticky;top:0;z-index:100}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
-    .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-    .nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh}
+    a{color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 20px 60px}
+    .hero{padding:36px 0 24px;border-bottom:1px solid #1e2235;margin-bottom:28px}
+    .hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#FFE81F;margin-bottom:8px}
+    .hero-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:#F0F2FF;margin-bottom:8px}
+    .hero-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#8892b0;align-items:center}
+    .meta-badge{background:rgba(255,232,31,.08);border:1px solid rgba(255,232,31,.35);color:#FFE81F;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700}
+    .section-title{font-family:'Cinzel',serif;font-size:16px;color:#F0F2FF;margin-bottom:14px}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+    .cta-btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s}
+    .cta-primary{background:#FFE81F;color:#000}
+    .cta-secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+    .cards-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin;margin-bottom:28px}
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:28px}
+    .ebay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:28px}
+    .section{margin-bottom:32px}
+    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .nav-logo{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:#C9A84C;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;gap:8px}
     .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-    .nav-links::-webkit-scrollbar{display:none}
-    .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #252840;color:#A0A8C0;white-space:nowrap}
-    .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
-    h1{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,40px);font-weight:900;color:#F0F2FF;line-height:1.1;margin-bottom:10px}
-    h1 span{color:#FFE81F}
-    .breadcrumb{font-size:12px;color:#7a8099;margin-bottom:16px}
-    .breadcrumb a{color:#FFE81F;text-decoration:none}
-    .stat-bar{display:flex;gap:24px;flex-wrap:wrap;margin:24px 0;padding:20px;background:#111420;border:1px solid #252840;border-radius:12px}
-    .stat-item{text-align:center;flex:1;min-width:80px}
-    .stat-num{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#FFE81F}
-    .stat-label{font-size:11px;color:#7a8099;text-transform:uppercase;letter-spacing:.08em}
-    .section-head{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF;margin:40px 0 20px}
-    .top-cards{display:flex;gap:12px;overflow-x:auto;padding-bottom:16px;scrollbar-width:none}
-    .top-cards::-webkit-scrollbar{display:none}
-    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
-    .filter-btn{padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;border:1px solid #252840;background:transparent;color:#A0A8C0;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.05em}
-    .filter-btn.active,.filter-btn:hover{border-color:#FFE81F;color:#FFE81F;background:rgba(255,255,255,.04)}
-    .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
-    .card-item{background:#111420;border:1px solid #252840;border-radius:8px;padding:8px;text-decoration:none;transition:all .2s;display:block}
-    .card-item:hover{border-color:#FFE81F;transform:translateY(-2px)}
-    .card-item.hidden{display:none}
-    .ebay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:40px}
-    .cta-bar{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 40px}
-    .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s}
-    .cta-btn:hover{opacity:.85}
-    footer{border-top:1px solid #252840;padding:32px 24px;text-align:center;font-size:12px;color:#7a8099;margin-top:48px;position:relative;z-index:1}
-    footer a{color:#7a8099;margin:0 8px;text-decoration:none}
-    footer a:hover{color:#F0F2FF}
-    .footer-disclaimer{max-width:900px;margin:12px auto 0;font-size:11px;color:rgba(120,128,153,.5);line-height:1.7}
+    .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap;transition:all .2s}
+    .nav-link.active{border-color:rgba(255,232,31,.35);color:#FFE81F;background:rgba(255,232,31,.08)}
+    @media(max-width:600px){.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
   </style>
 </head>
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3 Logo"><span>Cards on Cards on Cards</span></a>
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3" style="height:24px;border-radius:4px"> C3</a>
     <div class="nav-links">
       <a href="/" class="nav-link">Home</a>
-      <a href="/cards/starwars" class="nav-link" style="color:#FFE81F;border-color:#FFE81F40">Star Wars Unlimited</a>
+      <a href="/cards" class="nav-link">Card Vault</a>
+      <a href="/cards/starwars" class="nav-link active">Star Wars</a>
+      <a href="/compare" class="nav-link">Compare</a>
+      <a href="/market" class="nav-link">Market</a>
       <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
-      <a href="/calendar" class="nav-link">Calendar</a>
-      <a href="/quizzes" class="nav-link">Quizzes</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
     </div>
   </div>
 </nav>
 
-<div class="wrap" style="padding-top:40px;padding-bottom:60px">
-  <div class="breadcrumb"><a href="/">Home</a> → <a href="/cards/starwars">Star Wars Unlimited</a> → ${set.name}</div>
-
-  <h1>${set.name} <span>Card Prices</span></h1>
-  <p style="color:#A0A8C0;font-size:15px;margin-bottom:8px">${set.name} — all ${cards.length} cards with live AUD prices and eBay AU buy links. Updated daily.</p>
-  ${set.release_date ? `<p style="font-size:12px;color:#7a8099;margin-bottom:0">Released: ${set.release_date}</p>` : ''}
-
-  <div class="stat-bar">
-    <div class="stat-item"><div class="stat-num">${cards.length}</div><div class="stat-label">Cards</div></div>
-    <div class="stat-item"><div class="stat-num">${pricedCards.length}</div><div class="stat-label">With Prices</div></div>
-    <div class="stat-item"><div class="stat-num">AU$${avgValue > 0 ? avgValue.toFixed(2) : 'N/A'}</div><div class="stat-label">Avg Card Value</div></div>
-    <div class="stat-item"><div class="stat-num">${top5[0] ? 'AU$'+toAud(top5[0]).toFixed(0) : 'N/A'}</div><div class="stat-label">Top Card Value</div></div>
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">Star Wars · Set</div>
+    <h1 class="hero-title">${set.name}</h1>
+    <div class="hero-meta">
+      <span class="meta-badge">Star Wars</span>
+      ${set.release_date ? `<span>Released: ${set.release_date.slice(0,10)}</span>` : ''}
+      ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
+      ${cards?.length ? `<span>${pricedCards.length} priced in AUD</span>` : ''}
+    </div>
   </div>
 
-  <div class="cta-bar">
-    <a href="${ebayBoxURL}" target="_blank" rel="noopener" class="cta-btn" style="background:linear-gradient(135deg,#FFE81F,#FFE81Faa);color:#0A0C14">🛒 Buy ${set.name} Booster Box on eBay ↗</a>
-    <a href="${ebaySearchURL}" target="_blank" rel="noopener" class="cta-btn" style="background:#111420;border:1px solid #252840;color:#F0F2FF">🔍 All ${set.name} Singles on eBay AU ↗</a>
-    <a href="/quizzes/starwars-affiliation" class="cta-btn" style="background:#111420;border:1px solid #252840;color:#FFE81F">⚔️ Light Side or Dark Side?</a>
+  <div class="cta-row">
+    <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary" onclick="if(typeof gtag!=='undefined')gtag('event','ebay_set_click',{set_name:'${set.name}',game:'starwars'})">Buy Cards on eBay AU →</a>
+    <a href="${ebayBoxURL}" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>
+    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' Star Wars')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
   </div>
 
-  ${top5.length ? `<h2 class="section-head">Most Valuable Cards</h2><div class="top-cards">${topCardsHTML}</div>` : ''}
-
-  ${ebayListings.length ? `<h2 class="section-head">Live on eBay Australia</h2><div class="ebay-grid">${ebayItemsHTML}</div>` : ''}
-
-  <h2 class="section-head">All Cards — ${set.name} (${cards.length})</h2>
-
-  ${rarities.length > 1 ? `<div class="filter-bar">
-    <button class="filter-btn active" onclick="filterCards('',this)">All</button>
-    ${rarities.map(r => `<button class="filter-btn" onclick="filterCards('${r.toLowerCase()}',this)">${r}</button>`).join('')}
+  ${top5.length ? `<div class="section">
+    <div class="section-title">Most Valuable Cards</div>
+    <div class="cards-scroll">${top5HTML}</div>
   </div>` : ''}
 
-  <div class="card-grid" id="card-grid">${allCardsHTML}</div>
+  ${ebayListingsHTML ? `<div class="section">
+    <div class="section-title">Live eBay AU Listings</div>
+    <div class="ebay-grid">${ebayListingsHTML}</div>
+    <a href="${ebaySetURL}" target="_blank" rel="noopener" style="font-size:13px;color:#FFE81F;text-decoration:none">See all listings on eBay AU →</a>
+  </div>` : ''}
+
+  <div class="section">
+    <div class="section-title">${cards?.length ? `All Cards (${cards.length})` : 'Cards'}</div>
+    <div class="cards-grid">${allCardsHTML}</div>
+  </div>
+
+  <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0">
+    <strong style="color:#F0F2FF">About this set:</strong> Star Wars card prices shown in AUD, converted from USD market data at approximately 1.58x. Prices update daily via tcgapi.dev. Always check eBay AU for live Australian market pricing before buying or selling.
+    <div style="margin-top:10px"><a href="/cards/starwars" style="color:#FFE81F">← Back to all Star Wars cards</a></div>
+  </div>
 </div>
 
-<footer>
-  <p><a href="/">Home</a><a href="/cards/starwars">Star Wars Unlimited</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/ev-calculator.html">EV Calc</a><a href="/tracker.html">Tracker</a></p>
-  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <div class="footer-disclaimer">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases through links may earn a commission at no extra cost to you.</div>
-</footer>
-
 <script>
-function filterCards(rarity, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#card-grid .card-item').forEach(function(el) {
-    el.classList.toggle('hidden', rarity !== '' && el.dataset.rarity !== rarity);
-  });
+if(typeof gtag!=='undefined'){
+  document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_click',{game:'starwars',set:'${set.name}'})));
 }
 </script>
 </body>
 </html>`, { status: 200, headers });
+
+  } catch (err) {
+    console.error('[starwars-set-page.mjs] Error:', err.message);
+    return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+  }
 };
 
-export const config = { path: '/cards/starwars/sets/:setCode+' };
+export const config = { path: '/cards/starwars/sets/:slug+' };
