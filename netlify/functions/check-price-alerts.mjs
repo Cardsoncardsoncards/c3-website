@@ -267,6 +267,5 @@ export default async (req) => {
 };
 
 export const config = {
-  path: '/api/check-price-alerts',
   schedule: '0 23 * * *' // 11pm UTC = 9am AEST daily
 };
