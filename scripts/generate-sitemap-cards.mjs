@@ -84,7 +84,7 @@ async function generatePokemonSitemap() {
     const cards = await fetchAll(
       'pokemon_cards',
       'id,slug,updated_at',
-      'slug=not.is.null&image_uri=not.is.null'
+      'slug=not.is.null&image_url=not.is.null'
     );
     if (!cards.length) { console.log('  Pokemon: no cards yet, skipping'); return 0; }
 
@@ -111,7 +111,7 @@ async function generateLorcanaSitemap() {
     const cards = await fetchAll(
       'lorcana_cards',
       'id,slug,updated_at',
-      'slug=not.is.null&image_uri=not.is.null'
+      'slug=not.is.null&image_url=not.is.null'
     );
     if (!cards.length) { console.log('  Lorcana: no cards yet, skipping'); return 0; }
 
@@ -138,7 +138,7 @@ async function generateYugiohSitemap() {
     const cards = await fetchAll(
       'yugioh_cards',
       'id,slug,updated_at',
-      'slug=not.is.null&image_uri=not.is.null'
+      'slug=not.is.null&image_url=not.is.null'
     );
     if (!cards.length) { console.log('  YuGiOh: no cards yet, skipping'); return 0; }
 
@@ -159,26 +159,8 @@ async function generateYugiohSitemap() {
   }
 }
 
-async function updateSitemapIndex(counts) {
-  const today = new Date().toISOString().split('T')[0];
-  const sitemaps = [
-    { loc: `${SITE_URL}/sitemap.xml`, label: 'static pages and blog posts' },
-    { loc: `${SITE_URL}/sitemap-cards.xml`, label: `${counts.mtg} MTG card pages` },
-  ];
-
-  if (counts.pokemon > 0) sitemaps.push({ loc: `${SITE_URL}/sitemap-pokemon.xml`, label: `${counts.pokemon} Pokemon card pages` });
-  if (counts.lorcana > 0) sitemaps.push({ loc: `${SITE_URL}/sitemap-lorcana.xml`, label: `${counts.lorcana} Lorcana card pages` });
-  if (counts.yugioh > 0)  sitemaps.push({ loc: `${SITE_URL}/sitemap-yugioh.xml`, label: `${counts.yugioh} Yu-Gi-Oh card pages` });
-
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Generated: ${new Date().toISOString()} -->
-${sitemaps.map(s => `  <!-- ${s.label} -->\n  <sitemap>\n    <loc>${s.loc}</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>`).join('\n')}
-</sitemapindex>`;
-
-  writeFileSync(`${OUT_DIR}/sitemap-index.xml`, xml);
-  console.log(`Updated sitemap-index.xml with ${sitemaps.length} sitemaps`);
-}
+// sitemap-index.xml is maintained in the repo root and NOT overwritten by this script.
+// It includes all runtime /api/sitemap-* endpoints plus build-time XML files.
 
 async function main() {
   console.log('=== Sitemap Generation Start ===', new Date().toISOString());
@@ -194,7 +176,7 @@ async function main() {
   const lorcana  = await generateLorcanaSitemap();
   const yugioh   = await generateYugiohSitemap();
 
-  await updateSitemapIndex({ mtg, pokemon, lorcana, yugioh });
+  // sitemap-index.xml not overwritten — managed in repo root
 
   const total = mtg + pokemon + lorcana + yugioh;
   console.log(`=== Sitemap Generation Complete === Total URLs: ${total}`);
