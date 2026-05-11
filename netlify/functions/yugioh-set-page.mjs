@@ -66,14 +66,70 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
   const setCode = url.pathname.replace(/^\/cards\/yugioh\/sets\//, '').replace(/\/$/, '');
-  if (!setCode) return new Response('Not found', { status: 404, headers });
+  if (!setCode) return new Response(`<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Set Not Found | Yu-Gi-Oh | Cards on Cards on Cards</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}
+    .wrap{max-width:420px}
+    .icon{font-size:48px;margin-bottom:16px}
+    h1{font-family:'Cinzel',serif;color:#c8a332;font-size:22px;margin-bottom:10px}
+    p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}
+    .btn{display:inline-block;background:#c8a332;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}
+    .btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="icon">🃏</div>
+  <h1>Set Not Found</h1>
+  <p>This Yu-Gi-Oh set page isn't available yet. Browse all Yu-Gi-Oh cards or return home.</p>
+  <a href="/cards/yugioh" class="btn">Browse All Yu-Gi-Oh Cards</a>
+  <a href="/" class="btn btn-sec">← Home</a>
+</div>
+</body>
+</html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
   const [sets, ebayToken] = await Promise.all([
     supabaseGet(`yugioh_sets?set_code=eq.${encodeURIComponent(setCode)}&limit=1`),
     getEbayToken()
   ]);
 
-  if (!sets || !sets[0]) return new Response('Set not found', { status: 404, headers });
+  if (!sets || !sets[0]) return new Response(`<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Set Not Found | Yu-Gi-Oh | Cards on Cards on Cards</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}
+    .wrap{max-width:420px}
+    .icon{font-size:48px;margin-bottom:16px}
+    h1{font-family:'Cinzel',serif;color:#c8a332;font-size:22px;margin-bottom:10px}
+    p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}
+    .btn{display:inline-block;background:#c8a332;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}
+    .btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="icon">🃏</div>
+  <h1>Set Not Found</h1>
+  <p>This Yu-Gi-Oh set page isn't available yet. Browse all Yu-Gi-Oh cards or return home.</p>
+  <a href="/cards/yugioh" class="btn">Browse All Yu-Gi-Oh Cards</a>
+  <a href="/" class="btn btn-sec">← Home</a>
+</div>
+</body>
+</html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   const set = sets[0];
 
   // yugioh_cards has no set linkage column - cannot filter by set

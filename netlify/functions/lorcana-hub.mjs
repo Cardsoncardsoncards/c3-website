@@ -253,8 +253,7 @@ ${topCards.length ? `
 </footer>
 
 <script>
-window.C3_SUPA_URL = '${SUPABASE_URL}';
-window.C3_SUPA_KEY = '${SUPABASE_ANON_KEY}';
+// Supabase direct client removed - search uses /api/compare-search
 
 function filterSets(q) {
   const lower = q.toLowerCase();
@@ -269,11 +268,11 @@ async function searchCard() {
   const results = document.getElementById('search-results');
   results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">Searching...</div>';
   try {
-    const url = window.C3_SUPA_URL + '/rest/v1/lorcana_cards?select=slug,name,version,image_url,market_price,price_aud,ink,rarity&order=market_price.desc&limit=24&name=ilike.*' + encodeURIComponent(q) + '*';
-    const res = await fetch(url, { headers: { 'apikey': window.C3_SUPA_KEY } });
-    const cards = await res.json();
+    const url = '/api/compare-search?q=' + encodeURIComponent(q) + '&game=lorcana&limit=24';
+    const res = await fetch(url);
+    const data = await res.json(); const cards = data.results || data || [];
     if (!cards.length) { results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">No cards found.</div>'; return; }
-    results.innerHTML = cards.map(c => \`<a href="/cards/pokemon/\${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--lorcana-gold)'" onmouseout="this.style.borderColor='var(--border)'">
+    results.innerHTML = cards.map(c => \`<a href="/cards/lorcana/\${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--lorcana-gold)'" onmouseout="this.style.borderColor='var(--border)'">
       \${c.image_url ? \`<img src="\${c.image_url}" alt="\${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain">\` : ''}
       <div style="font-size:11px;color:var(--text);margin-top:4px;line-height:1.3">\${c.name}</div>
       \${c.rarity ? \`<div style="font-size:10px;color:var(--text2)">\${c.rarity}</div>\` : ''}

@@ -73,7 +73,35 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
   const setCode = url.pathname.replace(/^\/cards\/lorcana\/sets\//, '').replace(/\/$/, '');
-  if (!setCode) return new Response('Not found', { status: 404, headers });
+  if (!setCode) return new Response(`<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Set Not Found | Lorcana | Cards on Cards on Cards</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}
+    .wrap{max-width:420px}
+    .icon{font-size:48px;margin-bottom:16px}
+    h1{font-family:'Cinzel',serif;color:#3B82F6;font-size:22px;margin-bottom:10px}
+    p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}
+    .btn{display:inline-block;background:#3B82F6;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}
+    .btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="icon">🃏</div>
+  <h1>Set Not Found</h1>
+  <p>This Lorcana set page isn't available yet. Browse all Lorcana cards or return home.</p>
+  <a href="/cards/lorcana" class="btn">Browse All Lorcana Cards</a>
+  <a href="/" class="btn btn-sec">← Home</a>
+</div>
+</body>
+</html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
   // Try to find set by set_code, fall back to id
   const [sets, ebayToken] = await Promise.all([
@@ -85,7 +113,35 @@ export default async (req) => {
   // Fetch cards using the set's UUID id (set_id on lorcana_cards = lorcana_sets.id)
   let cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,card_text`) : [];
 
-  if (!set) return new Response('Set not found', { status: 404, headers });
+  if (!set) return new Response(`<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Set Not Found | Lorcana | Cards on Cards on Cards</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}
+    .wrap{max-width:420px}
+    .icon{font-size:48px;margin-bottom:16px}
+    h1{font-family:'Cinzel',serif;color:#3B82F6;font-size:22px;margin-bottom:10px}
+    p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}
+    .btn{display:inline-block;background:#3B82F6;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}
+    .btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="icon">🃏</div>
+  <h1>Set Not Found</h1>
+  <p>This Lorcana set page isn't available yet. Browse all Lorcana cards or return home.</p>
+  <a href="/cards/lorcana" class="btn">Browse All Lorcana Cards</a>
+  <a href="/" class="btn btn-sec">← Home</a>
+</div>
+</body>
+</html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
   const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' lorcana')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' lorcana booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;

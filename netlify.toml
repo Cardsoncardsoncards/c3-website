@@ -11,34 +11,7 @@
 [functions."sitemap-cards"]
   timeout = 30
 
-[functions."sync-lorcana"]
-  timeout = 1200
-  schedule = "30 11 * * *"
-
-[functions."sync-onepiece"]
-  timeout = 1200
-  schedule = "0 11 * * *"
-
-[functions."sync-pokemon"]
-  timeout = 1500
-  schedule = "0 10 * * *"
-
-[functions."sync-yugioh"]
-  timeout = 1500
-  schedule = "30 10 * * *"
-
-[functions."sync-riftbound"]
-  timeout = 600
-  schedule = "0 13 * * *"
-
-[functions."sync-starwars"]
-  timeout = 1200
-  schedule = "30 12 * * *"
-
-[functions."sync-dragonball"]
-  timeout = 1200
-  schedule = "0 12 * * *"
-
+# ── Blog redirects (old URLs -> current slugs) ──────────────
 [[redirects]]
   from = "/blog/lorcana-booster-box-guide/"
   to = "/blog/best-lorcana-booster-boxes-australia/"
@@ -64,7 +37,35 @@
   to = "/blog/star-wars-unlimited-beginners-guide-australia/"
   status = 301
 
+# ── Missing blog posts -> best matching existing page ────────
 [[redirects]]
-  from = "/quiz"
-  to = "/quizzes"
+  from = "/blog/what-is-riftbound/"
+  to = "/blog/riftbound-card-game-beginners-guide-australia/"
   status = 301
+
+[[redirects]]
+  from = "/blog/dnd-battle-mats-australia/"
+  to = "/blog/dnd-battle-mats-guide-australia/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/dragon-shield-vs-ultra-pro/"
+  to = "/blog/best-tcg-card-sleeves-australia/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/toploaders-vs-magnetic-holders/"
+  to = "/blog/best-tcg-card-sleeves-australia/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/what-is-magic-the-gathering-australia/"
+  to = "/blog/what-is-mtg/"
+  status = 301
+
+# ── MTG set pages -> MTG hub (no set page function exists) ───
+[[redirects]]
+  from = "/cards/mtg/sets/*"
+  to = "/cards/mtg"
+  status = 301
+

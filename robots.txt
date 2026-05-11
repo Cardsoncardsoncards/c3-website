@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /api/
+Disallow: /rest/
 Disallow: /.netlify/
 
 Sitemap: https://cardsoncardsoncards.com.au/sitemap-index.xml
