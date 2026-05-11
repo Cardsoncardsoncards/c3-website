@@ -339,17 +339,6 @@ function renderPage({ gainers, losers, buySignals, sellSignals, selectedGame, up
 </head>
 <body>
 
-<!-- Password gate -->
-<div id="pw-gate" style="display:none;position:fixed;inset:0;background:rgba(8,11,18,.98);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;padding:24px;text-align:center">
-  <div style="font-size:32px">🔒</div>
-  <h1 style="font-family:'Cinzel',serif;color:var(--accent);font-size:24px">C3 Market Insights</h1>
-  <p style="color:var(--text2);font-size:14px;max-width:360px">This tool is currently in early access. Enter the access code to continue.</p>
-  <input id="pw-input" type="password" placeholder="Enter access code" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:12px 16px;border-radius:8px;font-size:15px;width:280px;text-align:center;outline:none" onkeydown="if(event.key==='Enter')checkPw()">
-  <button onclick="checkPw()" style="background:var(--accent);color:#000;border:none;padding:12px 28px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif">Enter →</button>
-  <div id="pw-error" style="color:var(--red);font-size:13px;display:none">Incorrect code. Try again.</div>
-  <p style="color:var(--text2);font-size:12px;margin-top:8px">Don't have the code? <a href="/contact.html" style="color:var(--accent)">Contact us</a> or <a href="/tracker.html" style="color:var(--accent)">join the waitlist</a>.</p>
-</div>
-
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">C3</a>
@@ -467,23 +456,7 @@ function renderPage({ gainers, losers, buySignals, sellSignals, selectedGame, up
 </footer>
 
 <script>
-// Password gate
-const MARKET_PW = '${MARKET_PASSWORD}';
-const ACCESS_KEY = 'c3_market_access';
-function checkPw() {
-  const val = document.getElementById('pw-input').value;
-  if (val === MARKET_PW) {
-    sessionStorage.setItem(ACCESS_KEY, '1');
-    document.getElementById('pw-gate').style.display = 'none';
-    gtag('event', 'market_access_granted');
-  } else {
-    document.getElementById('pw-error').style.display = 'block';
-    document.getElementById('pw-input').value = '';
-  }
-}
-if (!sessionStorage.getItem(ACCESS_KEY)) {
-  document.getElementById('pw-gate').style.display = 'flex';
-}
+// Access verified server-side
 
 // Tab switching
 function switchTab(tab, btn) {
@@ -517,7 +490,49 @@ function filterGame(game) {
 export default async (req) => {
   const url = new URL(req.url);
 
-  // Serve page
+  // Server-side password gate — password never exposed in page source
+  const pwParam = url.searchParams.get('pw');
+  if (pwParam !== MARKET_PASSWORD) {
+    const loginHtml = `<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>C3 Market Insights — Early Access</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#080b12;color:#e8eaf0;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:min-height:100vh;padding:24px;justify-content:center}
+    .gate{text-align:center;max-width:400px;width:100%}
+    h1{font-family:'Cinzel',serif;color:#C9A84C;font-size:24px;margin-bottom:12px}
+    p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}
+    input{width:100%;background:#0f1420;border:1px solid #2d3254;color:#e8eaf0;padding:12px 16px;border-radius:8px;font-size:15px;text-align:center;outline:none;margin-bottom:12px}
+    input:focus{border-color:#C9A84C}
+    button{width:100%;background:#C9A84C;color:#000;border:none;padding:13px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer}
+    .links{margin-top:20px;font-size:12px;color:#8892b0}.links a{color:#C9A84C}
+  </style>
+</head>
+<body>
+<div class="gate">
+  <div style="font-size:40px;margin-bottom:16px">⚡</div>
+  <h1>C3 Market Insights</h1>
+  <p>Track TCG price movers, buy and sell signals across all games. Early access only.</p>
+  <form method="GET" action="/market">
+    <input type="password" name="pw" placeholder="Enter access code" autocomplete="off">
+    <button type="submit">Enter →</button>
+  </form>
+  <div class="links">No code? <a href="/tracker.html">Join the waitlist</a> or <a href="/contact.html">contact us</a>.</div>
+</div>
+</body>
+</html>`;
+    return new Response(loginHtml, {
+      status: 401,
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' }
+    });
+  }
+
+  // Serve page — password verified server-side
   const updated = new Date().toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 
   // Fetch all data in parallel

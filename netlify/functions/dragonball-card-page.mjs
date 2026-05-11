@@ -6,6 +6,7 @@ const SUPABASE_ANON_KEY  = Netlify.env.get('SUPABASE_ANON_KEY');
 const EBAY_CLIENT_ID     = Netlify.env.get('EBAY_CLIENT_ID');
 const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
 const EPN_CAMPID         = '5339146789';
+const AMAZON_TAG         = 'blasdigital-22';
 
 async function supabaseGet(path) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
@@ -172,7 +173,8 @@ export default async (req) => {
       </div>
 
       <div class="cta-bar">
-        <a href="${ebayBuyURL}" target="_blank" rel="noopener" class="cta-btn" style="background:linear-gradient(135deg,#F97316,#F97316aa);color:#0A0C14">🛒 Buy on eBay AU ↗</a>
+        <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(card.name+' dragon ball super')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" style="display:block;background:rgba(255,153,0,.1);border:1px solid rgba(255,153,0,.35);color:#ff9900;padding:11px 20px;border-radius:8px;font-weight:700;font-size:14px;text-align:center;text-decoration:none;margin-bottom:8px">Search Amazon AU →</a>
+      <a href="${ebayBuyURL}" target="_blank" rel="noopener" class="cta-btn" style="background:linear-gradient(135deg,#F97316,#F97316aa);color:#0A0C14">🛒 Buy on eBay AU ↗</a>
         <a href="/tracker.html" class="cta-btn" style="background:#111420;border:1px solid #252840;color:#F0F2FF">📋 Track Your Collection</a>
       </div>
     </div>
@@ -202,7 +204,7 @@ function renderCompareTray(){
   if(!el||!cardsEl)return;
   if(!tray.length){el.style.transform='translateY(100%)';return;}
   el.style.transform='translateY(0)';countEl.textContent=tray.length+' of 5';
-  cardsEl.innerHTML=tray.map(c=>`<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">${c.img?`<img src="${c.img}" style="width:28px;border-radius:3px">`:''}<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</span><button onclick="removeFromCompare('${c.slug}')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>`).join('');
+  cardsEl.innerHTML=tray.map(c=>'<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">'+(c.img?'<img src="'+c.img+'" style="width:28px;border-radius:3px">':'')+'<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+c.name+'</span><button onclick="removeFromCompare(''+c.slug+'')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>').join('');
   const btn=document.getElementById('c3-compare-btn');const lbl=document.getElementById('c3-compare-lbl');
   if(btn&&lbl){const pageSlug=btn.dataset.slug;const inTray=tray.some(c=>c.slug===pageSlug);btn.style.borderColor=inTray?'#7c6af5':'rgba(124,106,245,.4)';btn.style.color='#7c6af5';lbl.textContent=inTray?'Added ✓':'⚖️ Add to Compare';}
 }

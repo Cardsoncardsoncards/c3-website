@@ -366,7 +366,7 @@ function renderCompareTray(){
   if(!el||!cardsEl)return;
   if(!tray.length){el.style.transform='translateY(100%)';return;}
   el.style.transform='translateY(0)';countEl.textContent=tray.length+' of 5';
-  cardsEl.innerHTML=tray.map(c=>`<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">${c.img?`<img src="${c.img}" style="width:28px;border-radius:3px">`:''}<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</span><button onclick="removeFromCompare('${c.slug}')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>`).join('');
+  cardsEl.innerHTML=tray.map(c=>'<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">'+(c.img?'<img src="'+c.img+'" style="width:28px;border-radius:3px">':'')+'<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+c.name+'</span><button onclick="removeFromCompare(''+c.slug+'')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>').join('');
   const btn=document.getElementById('c3-compare-btn');const lbl=document.getElementById('c3-compare-lbl');
   if(btn&&lbl){const pageSlug=btn.dataset.slug;const inTray=tray.some(c=>c.slug===pageSlug);btn.style.borderColor=inTray?'#7c6af5':'rgba(124,106,245,.4)';btn.style.color='#7c6af5';lbl.textContent=inTray?'Added ✓':'⚖️ Add to Compare';}
 }
