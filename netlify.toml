@@ -8,7 +8,32 @@
 [functions]
   node_bundler = "esbuild"
 
+# ── Sitemap function timeouts (all 8 dynamic sitemaps + MTG) ─
 [functions."sitemap-cards"]
+  timeout = 30
+
+[functions."sitemap-static"]
+  timeout = 30
+
+[functions."sitemap-pokemon"]
+  timeout = 30
+
+[functions."sitemap-yugioh"]
+  timeout = 30
+
+[functions."sitemap-lorcana"]
+  timeout = 30
+
+[functions."sitemap-onepiece"]
+  timeout = 30
+
+[functions."sitemap-riftbound"]
+  timeout = 30
+
+[functions."sitemap-dragonball"]
+  timeout = 30
+
+[functions."sitemap-starwars"]
   timeout = 30
 
 # ── Blog redirects (old URLs -> current slugs) ──────────────
@@ -68,4 +93,3 @@
   from = "/cards/mtg/sets/*"
   to = "/cards/mtg"
   status = 301
-
