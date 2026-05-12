@@ -1,9 +1,9 @@
 // netlify/functions/starwars-hub.mjs
-// Serves /cards/starwars
-
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
+
+const CALENDAR_EVENTS = []; // No confirmed AU Star Wars events in current data
 
 async function supabaseGet(path) {
   try {
@@ -15,44 +15,15 @@ async function supabaseGet(path) {
   } catch(e) { return []; }
 }
 
-const NAV_STYLES = `<link rel="icon" type="image/png" href="/c3logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid #252840;padding:12px 0;position:sticky;top:0;z-index:100}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
-.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0}
-.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-.nav-links::-webkit-scrollbar{display:none}
-.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #252840;color:#A0A8C0;white-space:nowrap}
-.nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04)}
-.nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF;color:#C8DDFF}
-.nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
-.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1;color:#A5DFC0}
-.nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
-.nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{background:rgba(192,132,252,.06);border-color:#C084FC;color:#D8B4FE}
-.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
-.nav-link--calendar{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--calendar:hover{background:rgba(34,211,238,.06);border-color:#22D3EE;color:#67E8F9}
-.nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
-.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{background:rgba(148,163,184,.06);border-color:#94A3B8;color:#CBD5E1}
-</style>`;
-const NAV_HTML = `<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3 Logo"><span>Cards on Cards on Cards</span></a>
-    <div class="nav-links">
-      <a href="/" class="nav-link nav-link--home">Home</a>
-      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
-      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
-      <a href="/contact.html" class="nav-link nav-link--contact">Contact</a>
-    </div>
-  </div>
-</nav>`;
+function buildAZFilter(sets) {
+  const letters = new Set();
+  sets.forEach(s => {
+    const ch = (s.name||'').trim()[0];
+    if (ch) letters.add(/[A-Z]/.test(ch.toUpperCase()) ? ch.toUpperCase() : '0-9');
+  });
+  const sorted = ['All', '0-9', ...[...letters].filter(l => l !== '0-9').sort()];
+  return sorted.map(l => `<button class="az-btn${l==='All'?' az-btn--active':''}" onclick="filterAZ('${l}',this)">${l}</button>`).join('');
+}
 
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
@@ -62,130 +33,246 @@ export default async (req) => {
     supabaseGet('starwars_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name')
   ]);
 
+  const azFilterHTML = buildAZFilter(sets);
+
   const carouselHTML = topCards.length ? topCards.map(c => `
     <a href="/cards/starwars/${c.slug}" class="carousel-card">
       <div class="carousel-img-wrap">
-        <img src="${c.image_url}" alt="${c.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>${(c.name||'?')[0]}</div>'">
+        <img src="${c.image_url}" alt="${c.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#128640;</div>'">
       </div>
       <div class="carousel-name">${c.name}</div>
       ${c.rarity ? `<div class="carousel-rarity">${c.rarity}</div>` : ''}
       <div class="carousel-price">${c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.58).toFixed(0)}` : ''}</div>
-    </a>`).join('') : '<div class="sync-msg">Cards sync daily after 10am AEST. Check back soon.</div>';
+      <div class="carousel-buy-row"><span class="carousel-buy-btn">Buy eBay &#8599;</span></div>
+    </a>`).join('') : '<div class="sync-msg">Cards sync daily after 10am AEST.</div>';
 
-  const setListHTML = sets.length ? sets.map(s => `
-    <a href="/cards/starwars/sets/${encodeURIComponent(s.abbreviation||s.slug||s.id)}" class="set-tile" data-name="${(s.name||'').toLowerCase()}">
-      <span class="set-tile-name">${s.name}</span>
-      ${s.release_date ? `<span class="set-tile-year">${s.release_date.slice(0,4)}</span>` : ''}
-    </a>`).join('') : '<div class="sync-msg">Sets sync daily after 10am AEST.</div>';
+  const setListHTML = sets.length ? sets.map(s => {
+    const name = s.name || '';
+    const ch = name.trim()[0] ? name.trim()[0].toUpperCase() : '';
+    const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
+    return `<a href="/cards/starwars/sets/${encodeURIComponent(s.abbreviation||s.slug||s.id)}" class="set-tile" data-name="${name.toLowerCase().replace(/"/g,'&quot;')}" data-letter="${letterKey}">
+      <span class="set-tile-name">${name}</span>
+      <span class="set-tile-meta">${s.release_date ? s.release_date.slice(0,4) : ''}${s.card_count ? ' &middot; '+s.card_count : ''}</span>
+    </a>`;
+  }).join('') : '<div class="sync-msg">Sets sync daily after 10am AEST.</div>';
 
   return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Star Wars Unlimited Card Prices Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Browse Star Wars Unlimited card prices in AUD. Live pricing and eBay AU buy links. Australia's Star Wars Unlimited price guide updated daily.">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Star Wars Unlimited Card Prices Australia | AUD Updated Daily | C3</title>
+  <meta name="description" content="Browse ${sets.length}+ Star Wars Unlimited sets. Live AUD card prices, eBay AU buy links. Australia's Star Wars Unlimited price guide updated daily.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/starwars">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
-  ${NAV_STYLES}
   <style>
-    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--gold:#C9A84C;--gold-dim:rgba(201,168,76,.3);--sw-yellow:#FFE81F;--text:#F0F2FF;--text2:#A0A8C0;--border:#252840;}
+    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--gold:#C9A84C;--accent:#FFE81F;--text:#e8eaf0;--text2:#9ba3c4;--border:#242840;--radius:12px;--silver:#A0A8C0}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(255,232,31,.05),transparent 60%);z-index:0}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
-    .hero{padding:56px 24px 36px;text-align:center;position:relative;z-index:1}
-    .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--sw-yellow);margin-bottom:12px}
-    h1{font-family:'Cinzel',serif;font-size:clamp(26px,5vw,48px);font-weight:900;color:var(--text);line-height:1.1;margin-bottom:12px}
-    h1 span{color:var(--sw-yellow)}
-    .hero-sub{font-size:15px;color:var(--text2);max-width:540px;margin:0 auto 24px}
-    .stat-bar{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:20px}
-    .stat-item{text-align:center}
-    .stat-num{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--sw-yellow)}
-    .stat-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
-    .gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,232,31,.3),var(--sw-yellow),rgba(255,232,31,.3),transparent);margin:40px 0}
-    .section-label{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--text2);margin-bottom:12px;padding:0 24px;display:block}
-    .section-title{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;padding:0 24px}
-    .carousel-outer{overflow:hidden;margin-bottom:48px}
-    .carousel-track{display:flex;gap:12px;overflow-x:auto;padding:0 24px 16px;scrollbar-width:none;scroll-snap-type:x mandatory}
-    .carousel-track::-webkit-scrollbar{display:none}
-    .carousel-card{flex:0 0 160px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px;text-decoration:none;scroll-snap-align:start;transition:border-color .2s,transform .2s;display:block}
-    .carousel-card:hover{border-color:var(--sw-yellow);transform:translateY(-2px)}
-    .carousel-img-wrap{width:100%;aspect-ratio:2/3;overflow:hidden;border-radius:6px;background:var(--bg3);margin-bottom:8px;display:flex;align-items:center;justify-content:center}
-    .carousel-img-wrap img{width:100%;height:100%;object-fit:cover}
-    .card-placeholder{font-family:'Cinzel',serif;font-size:24px;color:var(--text2)}
-    .carousel-name{font-size:11px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:3px}
-    .carousel-rarity{font-size:10px;color:var(--text2);margin-bottom:3px}
-    .carousel-price{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--sw-yellow)}
-    .quick-links{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:0 24px 40px;position:relative;z-index:1}
-    .quick-link{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s;border:1px solid transparent}
-    .quick-link:hover{opacity:.85}
-    .set-grid-wrap{padding:0 24px 48px;position:relative;z-index:1}
-    .set-search{width:100%;max-width:400px;padding:9px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;margin-bottom:20px;display:block;font-family:'DM Sans',sans-serif}
-    .set-search:focus{outline:none;border-color:var(--sw-yellow)}
-    .set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
-    .set-tile{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;text-decoration:none;display:flex;justify-content:space-between;align-items:center;transition:border-color .15s}
-    .set-tile:hover{border-color:var(--sw-yellow)}
-    .set-tile.hidden{display:none}
-    .set-tile-name{font-size:12px;color:var(--text);font-weight:600;line-height:1.3}
-    .set-tile-year{font-size:10px;color:var(--text2);white-space:nowrap;margin-left:8px;flex-shrink:0}
-    .sync-msg{font-size:13px;color:var(--text2);padding:20px;text-align:center;grid-column:1/-1}
-    footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:48px;position:relative;z-index:1}
-    footer a{color:var(--text2);margin:0 8px;text-decoration:none}
-    footer a:hover{color:var(--text)}
-    .footer-disclaimer{max-width:900px;margin:12px auto 0;font-size:11px;color:rgba(120,128,153,.5);line-height:1.7}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(255,232,31,.04),transparent 60%)}
+    nav{background:rgba(10,12,20,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+    .nav-logo img{height:34px;width:34px;border-radius:6px;object-fit:cover}
+    .nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-link{font-size:11px;padding:5px 9px;border-radius:6px;border:1px solid var(--border);color:var(--silver);text-decoration:none;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;white-space:nowrap}
+    .nav-link:hover{color:var(--text);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
+    .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.3)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF}
+    .nav-link--vault{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:var(--gold)}
+    .nav-link--compare{color:#a78bfa;border-color:rgba(167,139,250,.3)}.nav-link--compare:hover{background:rgba(167,139,250,.06);border-color:#a78bfa}
+    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.3)}.nav-link--market:hover{background:rgba(74,222,128,.06);border-color:#4ADE80}
+    .nav-link--shop{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--shop:hover{background:rgba(201,168,76,.06)}
+    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.3)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1}
+    .nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.3)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA}
+    .nav-link--tracker{color:#FB923C;border-color:rgba(251,146,60,.3)}.nav-link--tracker:hover{background:rgba(251,146,60,.06);border-color:#FB923C}
+    .nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.3)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6}
+    .nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.3)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171}
+    .nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.3)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE}
+    .nav-link--ebay{color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.05)}.nav-link--ebay:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
+    .hero{padding:52px 24px 36px;text-align:center;position:relative;z-index:1}
+    .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+    h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,50px);font-weight:900;color:var(--text);margin-bottom:12px;line-height:1.1}
+    h1 span{color:var(--accent)}
+    .hero-sub{font-size:14px;color:var(--text2);max-width:520px;margin:0 auto 28px}
+    .stat-bar{display:flex;gap:0;justify-content:center;border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:540px;margin:0 auto 32px;background:var(--bg2)}
+    .stat-item{flex:1;padding:14px 10px;text-align:center;border-right:1px solid var(--border)}.stat-item:last-child{border-right:none}
+    .stat-num{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--accent)}
+    .stat-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text2);margin-top:2px}
+    .quick-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;justify-content:center;padding:0 24px}
+    .quick-link{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-weight:700;font-size:12.5px;text-decoration:none;transition:all .2s;border:1px solid transparent}
+    .quick-link:hover{opacity:.88;transform:translateY(-1px);text-decoration:none}
+    .carousel-section{position:relative;z-index:1;margin-bottom:28px}
+    .carousel-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;padding:0 24px}
+    .carousel-title{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;padding:0 24px}
+    .carousel-track-wrap{overflow:hidden;position:relative}
+    .carousel-track-wrap::before,.carousel-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+    .carousel-track-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+    .carousel-track-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+    .carousel-track{display:flex;gap:12px;padding:4px 24px 12px;animation:scrollLeft 40s linear infinite}
+    .carousel-track:hover{animation-play-state:paused}
+    @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .carousel-card{flex-shrink:0;width:155px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .25s;display:block}
+    .carousel-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 20px rgba(255,232,31,.10);text-decoration:none}
+    .carousel-img-wrap{height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:7px;overflow:hidden}
+    .carousel-img-wrap img{max-height:130px;max-width:100%;object-fit:contain;border-radius:4px;transition:transform .3s}
+    .carousel-card:hover .carousel-img-wrap img{transform:scale(1.05)}
+    .card-placeholder{width:80px;height:110px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--text2)}
+    .carousel-name{font-size:11px;color:var(--text);font-weight:600;line-height:1.3;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .carousel-rarity{font-size:10px;color:var(--text2)}
+    .carousel-price{font-size:13px;color:var(--accent);font-weight:700;margin-top:3px}
+    .carousel-buy-row{margin-top:6px}
+    .carousel-buy-btn{font-size:10px;font-weight:700;color:#000;background:var(--accent);padding:3px 8px;border-radius:4px;letter-spacing:.04em}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+    .section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:20px}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+    .section-title{font-size:17px;font-weight:700;color:var(--text)}
+    .section-hint{font-size:12px;color:var(--text2)}
+    input[type=text]{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;width:100%;max-width:440px;transition:border-color .2s}
+    input[type=text]::placeholder{color:var(--text2)}
+    input[type=text]:focus{outline:none;border-color:var(--accent)}
+    .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+    .btn:hover{opacity:.85;text-decoration:none}
+    .btn-primary{background:var(--accent);color:#000}
+    #search-results{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:8px}
+    .az-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px}
+    .az-btn{padding:5px 9px;border-radius:6px;font-size:11.5px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'DM Sans',sans-serif;transition:all .2s;letter-spacing:.04em}
+    .az-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .az-btn--active{background:var(--accent);color:#000;border-color:var(--accent)}
+    .set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:5px;margin-top:8px}
+    .set-tile{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:8px 12px;text-decoration:none;transition:all .2s;min-width:0}
+    .set-tile:hover{border-color:var(--accent);background:rgba(255,232,31,.04);text-decoration:none;transform:translateX(2px)}
+    .set-tile-name{flex:1;font-size:12.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+    .set-tile-meta{font-size:10px;color:var(--text2);flex-shrink:0;white-space:nowrap}
+    .sync-msg{color:var(--text2);font-size:14px;padding:20px}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{animation:fadeUp .5s ease both}.fade-up-1{animation-delay:.08s}.fade-up-2{animation-delay:.16s}.fade-up-3{animation-delay:.24s}
+    footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
+    footer a{color:var(--text2);margin:0 7px;text-decoration:none}footer a:hover{color:var(--text)}
   </style>
 </head>
 <body>
-${NAV_HTML}
-<div class="hero">
-  <div class="hero-eyebrow">Card Vault — Star Wars Unlimited</div>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link nav-link--home">Home</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
+      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
+      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+    </div>
+  </div>
+</nav>
+<div class="hero fade-up">
+  <div class="hero-eyebrow">Card Vault &#8212; Star Wars Unlimited</div>
   <h1>Star Wars Unlimited <span>Card Prices AU</span></h1>
   <p class="hero-sub">Star Wars Unlimited card prices in AUD. Browse every set from Spark of Rebellion to the latest release. eBay AU buy links updated daily.</p>
   <div class="stat-bar">
     <div class="stat-item"><div class="stat-num">${sets.length || '26'}</div><div class="stat-label">Sets</div></div>
-    <div class="stat-item"><div class="stat-num">6,113</div><div class="stat-label">Cards</div></div>
+    <div class="stat-item"><div class="stat-num">6K+</div><div class="stat-label">Cards</div></div>
     <div class="stat-item"><div class="stat-num">AU$</div><div class="stat-label">Live Prices</div></div>
     <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-label">Updates</div></div>
   </div>
 </div>
-
-<div class="quick-links">
-  <a href="https://www.ebay.com.au/sch/i.html?_nkw=star+wars+unlimited+card+game&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#8B6914,#FFE81F);color:#0A0C14">🛒 Shop Star Wars on eBay ↗</a>
-  <a href="/quizzes/starwars-affiliation" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">⚡ Light Side or Dark Side?</a>
-  <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📋 Free Tracker</a>
-  <a href="/blog/star-wars-unlimited-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">📖 Beginners Guide →</a>
+<div class="quick-links fade-up fade-up-1">
+  <a href="https://www.ebay.com.au/sch/i.html?_nkw=star+wars+unlimited+tcg&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#1d4ed8,var(--accent));color:#000">&#128722; Shop Star Wars on eBay &#8599;</a>
+  <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
+  <a href="/quizzes/starwars-affiliation" class="quick-link" style="background:rgba(255,232,31,.08);border-color:rgba(255,232,31,.3);color:var(--accent)">&#9889; Light Side or Dark Side? &#8594;</a>
+  <a href="/blog/star-wars-unlimited-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128214; Beginners Guide &#8594;</a>
 </div>
-
-<div class="gold-divider"></div>
-
-<div style="position:relative;z-index:1;margin-bottom:48px">
-  <span class="section-label">Top Cards by Value</span>
-  <h2 class="section-title">Most Valuable Star Wars Unlimited Cards</h2>
-  <div class="carousel-outer">
-    <div class="carousel-track">${carouselHTML}</div>
+${topCards.length ? `
+<section class="carousel-section fade-up fade-up-2">
+  <div class="carousel-label">Most Valuable</div>
+  <div class="carousel-title">Top Star Wars Unlimited Cards by Price (AUD)</div>
+  <div class="carousel-track-wrap">
+    <div class="carousel-track">${carouselHTML}${carouselHTML}</div>
+  </div>
+</section>` : ''}
+<div class="wrap">
+  <div class="section fade-up fade-up-2">
+    <div class="section-header"><div class="section-title">Search Star Wars Cards</div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <input type="text" id="card-search" placeholder="Card name e.g. Luke Skywalker, Darth Vader..." onkeyup="if(event.key==='Enter')searchCard()">
+      <button class="btn btn-primary" onclick="searchCard()">Search</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+  <div class="section fade-up fade-up-3">
+    <div class="section-header">
+      <div class="section-title">Browse by Set</div>
+      <div class="section-hint">Click any set to view cards and prices</div>
+    </div>
+    <div class="az-row">${azFilterHTML}</div>
+    <input type="text" id="set-search" placeholder="Search sets e.g. Spark of Rebellion, Shadows of the Galaxy..." oninput="filterSets(this.value)" style="margin-bottom:12px">
+    <div id="set-list" class="set-grid">${setListHTML}</div>
+  </div>
+  <div style="background:rgba(255,232,31,.04);border:1px solid rgba(255,232,31,.15);border-radius:var(--radius);padding:22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
+    <div>
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:5px">Track Your Star Wars Collection</div>
+      <p style="font-size:13px;color:var(--text2)">Free Google Sheets tracker. Know what you own and what it is worth.</p>
+    </div>
+    <a href="/tracker.html" class="btn btn-primary">Get Free Tracker &#8594;</a>
   </div>
 </div>
-
-<div class="set-grid-wrap">
-  <span class="section-label">Browse by Set</span>
-  <input type="text" class="set-search" placeholder="Search sets..." oninput="filterSets(this.value)">
-  <div class="set-grid" id="set-grid">${setListHTML}</div>
-</div>
-
 <footer>
-  <p><a href="/">Home</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/ev-calculator.html">EV Calc</a><a href="/tracker.html">Tracker</a><a href="/cards/starwars">Star Wars</a></p>
-  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <div class="footer-disclaimer">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases through links may earn a commission at no extra cost to you.</div>
+  <div style="margin-bottom:10px">
+    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/starwars">Star Wars</a>
+    <a href="/cards/pokemon">Pokemon</a><a href="/cards/mtg">MTG</a><a href="/blog">Blog</a>
+    <a href="/tracker.html">Tracker</a><a href="/calendar">Calendar</a>
+  </div>
+  <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Not affiliated with Lucasfilm or Fantasy Flight Games. Prices converted to AUD at approximately 1.58.</p>
 </footer>
-
 <script>
-function filterSets(q) {
-  const term = (q || '').toLowerCase();
-  document.querySelectorAll('#set-grid .set-tile').forEach(function(el) {
-    el.classList.toggle('hidden', term.length > 0 && !el.dataset.name.includes(term));
+let activeAZ = 'All';
+function filterAZ(letter, btn) {
+  activeAZ = letter;
+  document.querySelectorAll('.az-btn').forEach(b => b.classList.remove('az-btn--active'));
+  if (btn) btn.classList.add('az-btn--active');
+  applyFilters();
+}
+function filterSets(q) { applyFilters(q); }
+function applyFilters(q) {
+  const search = q !== undefined ? q : (document.getElementById('set-search') ? document.getElementById('set-search').value : '');
+  const lower = search.toLowerCase();
+  document.querySelectorAll('#set-list .set-tile').forEach(el => {
+    const nameMatch = !lower || el.dataset.name.includes(lower);
+    const letterMatch = activeAZ === 'All' || el.dataset.letter === activeAZ;
+    el.style.display = (nameMatch && letterMatch) ? '' : 'none';
   });
+}
+async function searchCard() {
+  const q = document.getElementById('card-search').value.trim();
+  if (!q) return;
+  const results = document.getElementById('search-results');
+  results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">Searching...</div>';
+  try {
+    const res = await fetch('/api/compare-search?q=' + encodeURIComponent(q) + '&game=starwars&limit=24');
+    const data = await res.json();
+    const cards = data.results || data.cards || data || [];
+    if (!cards.length) { results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">No cards found.</div>'; return; }
+    results.innerHTML = cards.map(c => {
+      const img = c.image_url || '';
+      const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price*1.58).toFixed(0) : '';
+      return '<a href="/cards/starwars/'+c.slug+'" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor=\\'var(--accent)\\'" onmouseout="this.style.borderColor=\\'var(--border)\\'">'
+        + (img ? '<img src="'+img+'" alt="'+c.name.replace(/"/g,'')+'" style="width:100%;border-radius:6px;max-height:130px;object-fit:contain">' : '')
+        + '<div style="font-size:11px;color:var(--text);margin-top:4px;line-height:1.3">'+c.name+'</div>'
+        + '<div style="font-size:12px;color:var(--accent);font-weight:700">'+price+'</div>'
+        + '</a>';
+    }).join('');
+  } catch(e) { results.innerHTML = '<div style="color:#f88;font-size:13px">Search error. Try again.</div>'; }
 }
 </script>
 </body>
