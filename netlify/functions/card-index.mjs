@@ -74,16 +74,16 @@ const NAV = `<nav>
     <div class="nav-links">
       <a href="/" class="nav-link nav-link--home">Home</a>
       <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link" style="color:#a78bfa;border-color:rgba(167,139,250,.3)">Compare</a>
+      <a href="/market" class="nav-link" style="color:#4ADE80;border-color:rgba(74,222,128,.3)">Market</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
       <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
       <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
       <a href="/generators" class="nav-link nav-link--generators">Generators</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="/dnd" class="nav-link nav-link--dnd">D&D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
-      <a href="/contact.html" class="nav-link nav-link--contact">Contact</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link" style="color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.05)">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>`;

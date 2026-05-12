@@ -65,7 +65,7 @@ const NAV = `<nav style="background:rgba(8,10,15,.97);border-bottom:1px solid #1
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
-  const setCode = url.pathname.replace(/^\/cards\/yugioh\/sets\//, '').replace(/\/$/, '');
+  const setCode = url.pathname.replace(/^\/cards\/yugioh\/sets\//, '').replace(/\/$/, '').toLowerCase();
   if (!setCode) return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -97,7 +97,9 @@ export default async (req) => {
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
   const [sets, ebayToken] = await Promise.all([
-    supabaseGet(`yugioh_sets?set_code=eq.${encodeURIComponent(setCode)}&limit=1`),
+    supabaseGet(`yugioh_sets?abbreviation=ilike.${encodeURIComponent(setCode)}&limit=1`).then(r =>
+      r.length ? r : supabaseGet(`yugioh_sets?slug=eq.${encodeURIComponent(setCode)}&limit=1`)
+    ),
     getEbayToken()
   ]);
 

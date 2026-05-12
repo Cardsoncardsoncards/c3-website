@@ -72,7 +72,7 @@ const NAV = `<nav style="background:rgba(8,10,15,.97);border-bottom:1px solid #1
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
-  const setCode = url.pathname.replace(/^\/cards\/lorcana\/sets\//, '').replace(/\/$/, '');
+  const setCode = url.pathname.replace(/^\/cards\/lorcana\/sets\//, '').replace(/\/$/, '').toLowerCase();
   if (!setCode) return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -103,9 +103,12 @@ export default async (req) => {
 </body>
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
-  // Try to find set by set_code, fall back to id
   const [sets, ebayToken] = await Promise.all([
-    supabaseGet(`lorcana_sets?code=eq.${encodeURIComponent(setCode)}&limit=1`).then(r => r.length ? r : supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setCode)}&limit=1`)),
+    supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setCode)}&limit=1`).then(r =>
+      r.length ? r : supabaseGet(`lorcana_sets?abbreviation=ilike.${encodeURIComponent(setCode)}&limit=1`)
+    ).then(r =>
+      r.length ? r : supabaseGet(`lorcana_sets?slug=eq.${encodeURIComponent(setCode)}&limit=1`)
+    ),
     getEbayToken()
   ]);
 

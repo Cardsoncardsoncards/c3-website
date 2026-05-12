@@ -66,7 +66,7 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
   const [sets, topCards] = await Promise.all([
-    supabaseGet('pokemon_sets?order=release_date.desc&limit=300&select=id,name,series,release_date,logo_uri,card_count'),
+    supabaseGet('pokemon_sets?order=release_date.desc&limit=300&select=id,name,slug,abbreviation,release_date,card_count'),
     supabaseGet('pokemon_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,set_name,rarity')
   ]);
 

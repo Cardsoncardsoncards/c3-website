@@ -355,22 +355,75 @@ async function handleNewsletter(req) {
   }
 }
 
+// --- Quiz result increment ---
+async function handleQuizResult(req) {
+  if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
+  const body = await req.json();
+  const { quiz_slug, result_slug } = body;
+  if (!quiz_slug || !result_slug) return json({ error: 'Missing fields' }, 400);
+  try {
+    const key = SUPABASE_SERVICE_KEY || SUPABASE_ANON_KEY;
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_quiz_count`, {
+      method: 'POST',
+      headers: { 'apikey': key, 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_quiz_slug: quiz_slug, p_result_slug: result_slug })
+    });
+    return json({ ok: res.ok });
+  } catch (e) {
+    return json({ error: e.message }, 500);
+  }
+}
+
+// --- Quiz stats read (server-side, no client Supabase key needed) ---
+async function handleQuizStats(req) {
+  const url = new URL(req.url);
+  const quiz_slug = url.searchParams.get('quiz_slug');
+  if (!quiz_slug) return json({ error: 'Missing quiz_slug' }, 400);
+  try {
+    const data = await supabaseGet(`quiz_stats?quiz_slug=eq.${encodeURIComponent(quiz_slug)}&select=result_slug,count&order=count.desc`);
+    return json({ stats: Array.isArray(data) ? data : [] });
+  } catch (e) {
+    return json({ error: e.message }, 500);
+  }
+}
+
 // --- Main router ---
 export default async (req) => {
   const url = new URL(req.url);
   const path = url.pathname;
+  const noindexHeaders = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'X-Robots-Tag': 'noindex' };
 
   if (path === '/api/card-like') return handleLike(req);
-  if (path === '/api/card-view' && req.method === 'POST') return handleView(req);
-  if (path === '/api/price-alert' && req.method === 'POST') return handlePriceAlert(req);
-  if (path === '/api/collection-waitlist' && req.method === 'POST') return handleWaitlist(req);
+  if (path === '/api/card-view') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handleView(req);
+  }
+  if (path === '/api/price-alert') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handlePriceAlert(req);
+  }
+  if (path === '/api/collection-waitlist') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handleWaitlist(req);
+  }
   if (path === '/api/random-commander') return handleRandomCommander(req);
   if (path === '/api/random-card') return handleRandomCard(req);
-  if (path === '/api/feedback' && req.method === 'POST') return handleFeedback(req);
-  if (path === '/api/sell-alert' && req.method === 'POST') return handleSellAlert(req);
-  if (path === '/api/newsletter' && req.method === 'POST') return handleNewsletter(req);
+  if (path === '/api/feedback') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handleFeedback(req);
+  }
+  if (path === '/api/sell-alert') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handleSellAlert(req);
+  }
+  if (path === '/api/newsletter') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handleNewsletter(req);
+  }
+  if (path === '/api/quiz-result') return handleQuizResult(req);
+  if (path === '/api/quiz-stats') return handleQuizStats(req);
 
-  return json({ error: 'Not found' }, 404);
+  return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
 };
 
 export const config = {
@@ -382,6 +435,9 @@ export const config = {
     '/api/random-commander',
     '/api/random-card',
     '/api/feedback',
-    '/api/newsletter'
+    '/api/newsletter',
+    '/api/sell-alert',
+    '/api/quiz-result',
+    '/api/quiz-stats'
   ]
 };

@@ -106,10 +106,10 @@ export default async (req) => {
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
   <style>
-    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--gold:#C9A84C;--accent:#EF4444;--text:#e8eaf0;--text2:#9ba3c4;--border:#242840;--radius:12px;--silver:#A0A8C0}
+    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--gold:#C9A84C;--accent:#FC6B6B;--text:#e8eaf0;--text2:#9ba3c4;--border:#242840;--radius:12px;--silver:#A0A8C0}
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(239,68,68,.05),transparent 60%)}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(252,107,107,.05),transparent 60%)}
     nav{background:rgba(10,12,20,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
     .nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:8px}
     .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
@@ -130,7 +130,7 @@ export default async (req) => {
     .nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.3)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171}
     .nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.3)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE}
     .nav-link--ebay{color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.05)}.nav-link--ebay:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
-    .release-ticker{background:rgba(239,68,68,.06);border-bottom:1px solid rgba(239,68,68,.15);height:34px;display:flex;align-items:center;overflow:hidden;position:relative}
+    .release-ticker{background:rgba(252,107,107,.06);border-bottom:1px solid rgba(252,107,107,.15);height:34px;display:flex;align-items:center;overflow:hidden;position:relative}
     .release-ticker::before,.release-ticker::after{content:'';position:absolute;top:0;bottom:0;width:50px;z-index:2;pointer-events:none}
     .release-ticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
     .release-ticker::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
@@ -139,7 +139,7 @@ export default async (req) => {
     .ticker-track:hover{animation-play-state:paused}
     @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:11.5px;color:var(--silver);white-space:nowrap}
-    .ticker-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:rgba(239,68,68,.15);color:var(--accent);letter-spacing:.06em}
+    .ticker-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:rgba(252,107,107,.15);color:var(--accent);letter-spacing:.06em}
     .hero{padding:52px 24px 36px;text-align:center;position:relative;z-index:1}
     .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
     h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,50px);font-weight:900;color:var(--text);margin-bottom:12px;line-height:1.1}
@@ -163,7 +163,7 @@ export default async (req) => {
     .carousel-track:hover{animation-play-state:paused}
     @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .carousel-card{flex-shrink:0;width:155px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .25s;display:block}
-    .carousel-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 20px rgba(239,68,68,.12);text-decoration:none}
+    .carousel-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 20px rgba(252,107,107,.12);text-decoration:none}
     .carousel-img-wrap{height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:7px;overflow:hidden}
     .carousel-img-wrap img{max-height:130px;max-width:100%;object-fit:contain;border-radius:4px;transition:transform .3s}
     .carousel-card:hover .carousel-img-wrap img{transform:scale(1.05)}
@@ -191,7 +191,7 @@ export default async (req) => {
     .az-btn--active{background:var(--accent);color:#fff;border-color:var(--accent)}
     .set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:5px;margin-top:8px}
     .set-tile{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:8px 12px;text-decoration:none;transition:all .2s;min-width:0}
-    .set-tile:hover{border-color:var(--accent);background:rgba(239,68,68,.04);text-decoration:none;transform:translateX(2px)}
+    .set-tile:hover{border-color:var(--accent);background:rgba(252,107,107,.04);text-decoration:none;transform:translateX(2px)}
     .set-tile-name{flex:1;font-size:12.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
     .set-tile-meta{font-size:10px;color:var(--text2);flex-shrink:0;white-space:nowrap}
     .sync-msg{color:var(--text2);font-size:14px;padding:20px}
@@ -236,9 +236,9 @@ ${tickerHTML}
 <div class="quick-links fade-up fade-up-1">
   <a href="https://www.ebay.com.au/sch/i.html?_nkw=riftbound+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#b91c1c,var(--accent));color:#fff">&#128722; Shop Riftbound on eBay &#8599;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
-  <a href="/quizzes/riftbound-champion" class="quick-link" style="background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.3);color:var(--accent)">&#127919; Which Champion Are You? &#8594;</a>
+  <a href="/quizzes/riftbound-champion" class="quick-link" style="background:rgba(252,107,107,.08);border-color:rgba(252,107,107,.3);color:var(--accent)">&#127919; Which Champion Are You? &#8594;</a>
   <a href="/blog/riftbound-card-game-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128214; Beginners Guide &#8594;</a>
-  <a href="/calendar" class="quick-link" style="background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.3);color:var(--accent)">&#128248; RQ Schedule &#8594;</a>
+  <a href="/calendar" class="quick-link" style="background:rgba(252,107,107,.08);border-color:rgba(252,107,107,.3);color:var(--accent)">&#128248; RQ Schedule &#8594;</a>
 </div>
 ${topCards.length ? `
 <section class="carousel-section fade-up fade-up-2">
@@ -266,7 +266,7 @@ ${topCards.length ? `
     <input type="text" id="set-search" placeholder="Search sets e.g. Origins, Unleashed, Vendetta..." oninput="filterSets(this.value)" style="margin-bottom:12px">
     <div id="set-list" class="set-grid">${setListHTML}</div>
   </div>
-  <div style="background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.15);border-radius:var(--radius);padding:22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
+  <div style="background:rgba(252,107,107,.04);border:1px solid rgba(252,107,107,.15);border-radius:var(--radius);padding:22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
     <div>
       <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:5px">Track Your Riftbound Collection</div>
       <p style="font-size:13px;color:var(--text2)">Free Google Sheets tracker. Know what you own and what it is worth.</p>

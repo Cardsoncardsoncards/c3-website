@@ -69,7 +69,11 @@ export default async (req) => {
 
   try {
     const [sets, ebayToken] = await Promise.all([
-      supabaseGet(`riftbound_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
+      supabaseGet(`riftbound_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`).then(r =>
+        r.length ? r : supabaseGet(`riftbound_sets?abbreviation=ilike.${encodeURIComponent(setSlug)}&limit=1`)
+      ).then(r =>
+        r.length ? r : supabaseGet(`riftbound_sets?id=eq.${encodeURIComponent(setSlug)}&limit=1`)
+      ),
       getEbayToken()
     ]);
 
