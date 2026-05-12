@@ -93,3 +93,16 @@
   from = "/cards/mtg/sets/*"
   to = "/cards/mtg"
   status = 301
+
+# ── Non-MTG routing: v2 functions register their own paths via export const config ──
+# These redirects are intentionally removed. The functions self-register at:
+#   pokemon-hub.mjs        -> /cards/pokemon
+#   yugioh-hub.mjs         -> /cards/yugioh
+#   lorcana-hub.mjs        -> /cards/lorcana
+#   onepiece-hub.mjs       -> /cards/onepiece
+#   dragonball-hub.mjs     -> /cards/dragonball
+#   starwars-hub.mjs       -> /cards/starwars
+#   riftbound-hub.mjs      -> /cards/riftbound
+#   *-set-page.mjs         -> /cards/*/sets/:slug+
+#   *-card-page.mjs        -> /cards/*/:slug+
+# Adding explicit redirects to /.netlify/functions/* overrides and breaks v2 routing.

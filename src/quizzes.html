@@ -60,12 +60,16 @@
     <div class="nav-links">
       <a href="/" class="nav-link">Home</a>
       <a href="/cards" class="nav-link">Card Vault</a>
+      <a href="/compare" class="nav-link" style="color:#a78bfa;border-color:rgba(167,139,250,.3)">Compare</a>
+      <a href="/market" class="nav-link" style="color:#4ADE80;border-color:rgba(74,222,128,.3)">Market</a>
       <a href="/shop.html" class="nav-link">Shop</a>
       <a href="/blog" class="nav-link">Blog</a>
-      <a href="/quizzes" class="nav-link nav-link--active">Quizzes</a>
       <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/quizzes" class="nav-link nav-link--active">Quizzes</a>
       <a href="/calendar" class="nav-link">Calendar</a>
+      <a href="/generators" class="nav-link">Generators</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link" style="color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.05)">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>
@@ -189,32 +193,20 @@
 </footer>
 
 <script>
-const SUPA = 'https://owaroeqchreuffbyakqx.supabase.co/rest/v1/quiz_stats';
-const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMwMzc5MDgsImV4cCI6MjA1ODYxMzkwOH0.sEmRMSN5Gx8QaX8mJ1e-Bg5jHGrXvDFpkNT-uWcN8Ro';
-
-const quizzes = [
-  {slug:'which-tcg',label:'Which TCG Should I Start?'},
-  {slug:'mtg-archetype',label:'MTG Archetype'},
-  {slug:'mtg-colour',label:'MTG Colour'},
-  {slug:'rarity',label:'TCG Rarity'},
-  {slug:'investor-collector',label:'Investor/Collector'},
-  {slug:'lorcana-ink',label:'Lorcana Ink'},
-  {slug:'pokemon-era',label:'Pokemon Era'},
-  {slug:'riftbound-champion',label:'Riftbound Champion'},
-  {slug:'starwars-affiliation',label:'Star Wars Side'},
-  {slug:'dragonball-character',label:'Dragon Ball Character'},
+const QUIZ_SLUGS = [
+  'which-tcg','mtg-archetype','mtg-colour','rarity','investor-collector',
+  'lorcana-ink','pokemon-era','riftbound-champion','starwars-affiliation','dragonball-character'
 ];
 
-// Load stats for each quiz
+// Load stats via server-side API (no client Supabase key)
 (async () => {
-  for (const q of quizzes) {
+  for (const slug of QUIZ_SLUGS) {
     try {
-      const res = await fetch(`${SUPA}?quiz_slug=eq.${q.slug}&select=count&order=count.desc`, {
-        headers: {'apikey': ANON, 'Authorization': 'Bearer '+ANON}
-      });
+      const res = await fetch('/api/quiz-stats?quiz_slug=' + encodeURIComponent(slug));
+      if (!res.ok) continue;
       const data = await res.json();
-      const total = data.reduce((s,r) => s + (parseInt(r.count)||0), 0);
-      const el = document.getElementById('stats-'+q.slug);
+      const total = (data.stats || []).reduce((s, r) => s + (parseInt(r.count) || 0), 0);
+      const el = document.getElementById('stats-' + slug);
       if (el && total > 0) el.textContent = total.toLocaleString() + ' people have taken this quiz';
       else if (el) el.textContent = '';
     } catch(e) {}
