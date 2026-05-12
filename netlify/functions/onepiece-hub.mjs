@@ -30,7 +30,7 @@ export default async (req) => {
 
   const [sets, topCards] = await Promise.all([
     supabaseGet('onepiece_sets?order=release_date.desc&limit=300&select=id,name,slug,abbreviation,card_count,release_date'),
-    supabaseGet('onepiece_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name')
+    supabaseGet('onepiece_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&image_url=not.ilike.*sample*&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name')
   ]);
 
   const azFilterHTML = buildAZFilter(sets);

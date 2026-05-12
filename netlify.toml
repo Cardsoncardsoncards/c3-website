@@ -8,7 +8,7 @@
 [functions]
   node_bundler = "esbuild"
 
-# ── Sitemap function timeouts (all 8 dynamic sitemaps + MTG) ─
+# ── Sitemap function timeouts ────────────────────────────────
 [functions."sitemap-cards"]
   timeout = 30
 
@@ -62,7 +62,6 @@
   to = "/blog/star-wars-unlimited-beginners-guide-australia/"
   status = 301
 
-# ── Missing blog posts -> best matching existing page ────────
 [[redirects]]
   from = "/blog/what-is-riftbound/"
   to = "/blog/riftbound-card-game-beginners-guide-australia/"
@@ -88,21 +87,13 @@
   to = "/blog/what-is-mtg/"
   status = 301
 
-# ── MTG set pages -> MTG hub (no set page function exists) ───
+# ── MTG set pages -> MTG hub ─────────────────────────────────
 [[redirects]]
   from = "/cards/mtg/sets/*"
   to = "/cards/mtg"
   status = 301
 
-# ── Non-MTG routing: v2 functions register their own paths via export const config ──
-# These redirects are intentionally removed. The functions self-register at:
-#   pokemon-hub.mjs        -> /cards/pokemon
-#   yugioh-hub.mjs         -> /cards/yugioh
-#   lorcana-hub.mjs        -> /cards/lorcana
-#   onepiece-hub.mjs       -> /cards/onepiece
-#   dragonball-hub.mjs     -> /cards/dragonball
-#   starwars-hub.mjs       -> /cards/starwars
-#   riftbound-hub.mjs      -> /cards/riftbound
-#   *-set-page.mjs         -> /cards/*/sets/:slug+
-#   *-card-page.mjs        -> /cards/*/:slug+
-# Adding explicit redirects to /.netlify/functions/* overrides and breaks v2 routing.
+# ── NOTE: All other game hub, set page, and card page routes ─
+# are handled by v2 serverless functions via export const config
+# { path: '...' } in each function file. Do NOT add redirects
+# for these paths — doing so breaks the v2 function routing.

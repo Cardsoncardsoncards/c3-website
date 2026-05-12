@@ -326,4 +326,4 @@ export default async (req) => {
   }
 };
 
-export const config = {};
+export const config = { schedule: "0 4 * * *" };
