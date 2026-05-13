@@ -653,6 +653,7 @@ ${cards.length >= 2 ? `
 </div>
 ` : renderEmptyState()}
 
+<script type="application/json" id="compare-data">{"usdToAud":${usdToAud.toFixed(4)},"tokens":${JSON.stringify(allTokens)},"cardCount":${JSON.stringify(cards.length)}}</script>
 <footer>
   <p>
     <a href="/">Home</a><a href="/compare">Compare</a><a href="/market">Market</a>
@@ -663,10 +664,15 @@ ${cards.length >= 2 ? `
 </footer>
 
 <script>
-// State
-const USD_TO_AUD = ${usdToAud.toFixed(4)};
-const CURRENT_TOKENS = ${JSON.stringify(allTokens)};
-const CURRENT_CARDS  = ${JSON.stringify(cards.length)};
+// Read server data from JSON block (no inline interpolations = no syntax errors)
+(function() {
+  const dataEl = document.getElementById('compare-data');
+  const data = dataEl ? JSON.parse(dataEl.textContent) : {};
+  window.USD_TO_AUD    = data.usdToAud || 1.58;
+  window.CURRENT_TOKENS = data.tokens || [];
+  window.CURRENT_CARDS  = data.cardCount || 0;
+})();
+
 let currentCurrency  = 'aud';
 let activeGameFilter = null;
 let searchTimeout;
@@ -679,16 +685,11 @@ function setCurrency(cur) {
   document.getElementById('btn-usd').classList.toggle('active', cur === 'usd');
   document.getElementById('btn-aud').setAttribute('aria-pressed', cur === 'aud');
   document.getElementById('btn-usd').setAttribute('aria-pressed', cur === 'usd');
-
-  // Update all price elements
   document.querySelectorAll('.aud-val').forEach(el => {
     const aud = parseFloat(el.dataset.aud || 0);
     const usd = parseFloat(el.dataset.usd || 0);
-    if (cur === 'usd' && usd > 0) {
-      el.textContent = 'US$' + usd.toFixed(2);
-    } else if (aud > 0) {
-      el.textContent = 'AU$' + aud.toFixed(2);
-    }
+    if (cur === 'usd' && usd > 0) el.textContent = 'US$' + usd.toFixed(2);
+    else if (aud > 0) el.textContent = 'AU$' + aud.toFixed(2);
   });
   document.querySelectorAll('.usd-val').forEach(el => {
     el.style.display = cur === 'usd' ? 'none' : '';
@@ -715,7 +716,7 @@ function setGameFilter(game) {
 function handleSearch(val) {
   clearTimeout(searchTimeout);
   const el = document.getElementById('search-results');
-  if (!val || val.length < 2) { if(el) el.style.display = 'none'; return; }
+  if (!val || val.length < 2) { if (el) el.style.display = 'none'; return; }
   searchTimeout = setTimeout(async () => {
     try {
       const game = activeGameFilter ? '&game=' + activeGameFilter : '';
@@ -729,9 +730,9 @@ function handleSearch(val) {
 function handleSearchKey(e) {
   const el = document.getElementById('search-results');
   const items = el ? el.querySelectorAll('.result-item') : [];
-  if (e.key === 'ArrowDown') { searchIndex = Math.min(searchIndex + 1, items.length - 1); items[searchIndex]?.focus(); e.preventDefault(); }
-  else if (e.key === 'ArrowUp') { searchIndex = Math.max(searchIndex - 1, -1); if(searchIndex >= 0) items[searchIndex]?.focus(); else document.getElementById('main-search')?.focus(); e.preventDefault(); }
-  else if (e.key === 'Escape') { if(el) el.style.display = 'none'; searchIndex = -1; }
+  if (e.key === 'ArrowDown') { searchIndex = Math.min(searchIndex + 1, items.length - 1); items[searchIndex] && items[searchIndex].focus(); e.preventDefault(); }
+  else if (e.key === 'ArrowUp') { searchIndex = Math.max(searchIndex - 1, -1); if (searchIndex >= 0) items[searchIndex] && items[searchIndex].focus(); else { const ms = document.getElementById('main-search'); ms && ms.focus(); } e.preventDefault(); }
+  else if (e.key === 'Escape') { if (el) el.style.display = 'none'; searchIndex = -1; }
 }
 
 function renderResults(items) {
@@ -747,8 +748,8 @@ function renderResults(items) {
     const token     = card.game + ':' + card.slug;
     const inCompare = CURRENT_TOKENS.includes(token) || CURRENT_TOKENS.includes(card.slug);
     const full      = CURRENT_CARDS >= 5;
-    return '<div class="result-item" tabindex="0" role="option" aria-selected="false"' +
-      (inCompare || full ? '' : ' onclick="addCard(\'' + card.game + '\',\'' + card.slug + '\')" onkeydown="if(event.key===\'Enter\')addCard(\'' + card.game + '\',\'' + card.slug + '\')"') + '>' +
+    const clickAttr = (inCompare || full) ? '' : ' onclick="addCard('' + card.game + '','' + card.slug + '')" onkeydown="if(event.key==='Enter')addCard('' + card.game + '','' + card.slug + '')"';
+    return '<div class="result-item" tabindex="0" role="option" aria-selected="false"' + clickAttr + '>' +
       (card.image ? '<img class="result-img" src="' + card.image + '" alt="' + card.name + '" loading="lazy">' : '') +
       '<div><div class="result-name">' + card.name +
         '<span class="result-badge" style="background:' + card.gameColor + '22;color:' + card.gameColor + '">' + card.gameLabel + '</span>' +
@@ -787,7 +788,7 @@ async function loadVersions(game, name, slotIdx) {
     const data = await res.json();
     if (!data || !data.length) { panel.innerHTML = '<div style="padding:6px;color:var(--text2);font-size:10px">No other versions found</div>'; return; }
     panel.innerHTML = data.map(v =>
-      '<div class="version-item" onclick="switchVersion(\'' + game + '\',\'' + v.slug + '\',' + slotIdx + ')" tabindex="0" onkeydown="if(event.key===\'Enter\')switchVersion(\'' + game + '\',\'' + v.slug + '\',' + slotIdx + ')">' +
+      '<div class="version-item" onclick="switchVersion('' + game + '','' + v.slug + '',' + slotIdx + ')" tabindex="0" onkeydown="if(event.key==='Enter')switchVersion('' + game + '','' + v.slug + '',' + slotIdx + ')">' +
       '<span class="version-set">' + (v.setName || '—') + '</span>' +
       '<span class="version-price">' + (v.priceDisplay || 'N/A') + '</span>' +
       '<span class="version-select">Select →</span>' +
@@ -797,10 +798,8 @@ async function loadVersions(game, name, slotIdx) {
 }
 
 function switchVersion(game, newSlug, slotIdx) {
-  // Replace the token at the slot position
-  const currentToken = CURRENT_TOKENS[slotIdx];
-  const newToken     = game + ':' + newSlug;
-  const newTokens    = CURRENT_TOKENS.map((t, i) => i === slotIdx ? newToken : t);
+  const newToken  = game + ':' + newSlug;
+  const newTokens = CURRENT_TOKENS.map((t, i) => i === slotIdx ? newToken : t);
   gtag('event', 'compare_version_switched', { game, position: slotIdx });
   window.location.href = '/compare?cards=' + newTokens.join(',');
 }
@@ -830,7 +829,7 @@ function copyDiscordShare() {
   gtag('event', 'compare_share_clicked', { method: 'discord', card_count: CURRENT_CARDS });
 }
 
-// Wire search input events after script loads (avoids "not defined" errors)
+// Wire search input events after script loads
 const mainSearch = document.getElementById('main-search');
 if (mainSearch) {
   mainSearch.addEventListener('input', e => handleSearch(e.target.value));
@@ -873,6 +872,14 @@ export default async (req) => {
   const url        = new URL(req.url);
   const cardsParam = url.searchParams.get('cards') || '';
   const rawTokens  = cardsParam ? cardsParam.split(',').map(s => s.trim()).filter(Boolean).slice(0, 5) : [];
+
+  // Redirect bare /compare to a default example showing the feature
+  if (!rawTokens.length) {
+    return new Response(null, {
+      status: 302,
+      headers: { 'Location': '/compare?cards=mtg:generous-gift,mtg:sol-ring' }
+    });
+  }
 
   // Fetch live exchange rate and cards in parallel
   const [usdToAud, ...cardResults] = await Promise.all([
