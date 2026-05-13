@@ -192,7 +192,7 @@ ${NAV}
 
 export default async (req) => {
   const url = new URL(req.url);
-  const slug = decodeURIComponent(url.pathname.replace('/cards/onepiece/', '').replace(/^\\/|\\/$/g, ''));
+  const slug = url.pathname.replace('/cards/onepiece/', '').replace(/^\/|\/$/g, '');
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
 
   if (!slug) return new Response(notFoundPage(''), { status: 404, headers });
