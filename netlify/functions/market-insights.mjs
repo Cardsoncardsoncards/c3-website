@@ -74,16 +74,11 @@ async function fetchMTGTopMovers(direction = 'up', limit = 10) {
     d.setDate(d.getDate() - 7);
     const weekAgoDate = d.toISOString().split('T')[0];
 
-    // Fetch latest snapshots - top 1500 by price (covers all meaningful movers)
-    const latestSnaps = await supabaseGet(
-      `mtg_price_snapshots?snapshot_date=eq.${latestDate}&price_aud=gt.1&select=scryfall_id,price_aud&order=price_aud.desc&limit=1500`
-    );
-
-    // Fetch week-ago snapshots for the same cards
-    const latestIds = latestSnaps.map(s => s.scryfall_id).join(',');
-    const weekAgoSnaps = latestIds.length ? await supabaseGet(
-      `mtg_price_snapshots?snapshot_date=eq.${weekAgoDate}&scryfall_id=in.(${latestIds})&select=scryfall_id,price_aud&limit=1500`
-    ) : [];
+    // Fetch both dates in parallel - top 1500 by price each
+    const [latestSnaps, weekAgoSnaps] = await Promise.all([
+      supabaseGet(`mtg_price_snapshots?snapshot_date=eq.${latestDate}&price_aud=gt.1&select=scryfall_id,price_aud&order=price_aud.desc&limit=1500`),
+      supabaseGet(`mtg_price_snapshots?snapshot_date=eq.${weekAgoDate}&price_aud=gt.1&select=scryfall_id,price_aud&order=price_aud.desc&limit=1500`)
+    ]);
 
     if (!latestSnaps.length || !weekAgoSnaps.length) return [];
 
@@ -434,11 +429,11 @@ function renderPage({ gainers, losers, buySignals, sellSignals, selectedGame, up
     ${gameOptions}
   </div>
 
-  ${gainers.length >= 3 ? `
+  ${gainers.filter(m => m.game === 'mtg' && m.change7d !== 0).length >= 2 ? `
   <div class="top5-strip" id="top5-strip">
     <div class="top5-label">📈 Biggest Movers This Week (MTG)</div>
     <div class="top5-scroll">
-      ${gainers.slice(0, 5).map(c => `
+      ${gainers.filter(m => m.game === 'mtg' && m.change7d !== 0).slice(0, 5).map(c => `
         <a href="/cards/mtg/${c.slug}" class="top5-card" onclick="gtag('event','market_top5_clicked',{card:'${c.name.replace(/'/g,"\'")}'})" title="${c.name} — +${c.change7d}% this week">
           ${c.image ? `<img src="${c.image}" alt="${c.name}" class="top5-img" loading="lazy">` : '<div class="top5-img-placeholder">🃏</div>'}
           <div class="top5-name">${c.name.length > 18 ? c.name.slice(0,16)+'…' : c.name}</div>
@@ -541,7 +536,9 @@ let activeGame = 'all';
 function filterGame(game) {
   activeGame = game;
   document.querySelectorAll('.game-filter-btn').forEach(b => b.classList.toggle('active', b.dataset.game === game));
-  document.querySelectorAll('.card-row').forEach(row => {
+  const strip = document.getElementById('top5-strip');
+    if (strip) strip.style.display = (game === 'all' || game === 'mtg') ? '' : 'none';
+    document.querySelectorAll('.card-row').forEach(row => {
     const pill = row.querySelector('.game-pill');
     if (!pill) return;
     if (game === 'all') { row.style.display = ''; return; }

@@ -162,6 +162,67 @@ async function generateYugiohSitemap() {
 // sitemap-index.xml is maintained in the repo root and NOT overwritten by this script.
 // It includes all runtime /api/sitemap-* endpoints plus build-time XML files.
 
+
+async function generateOnePieceSitemap() {
+  console.log('Generating One Piece card sitemap...');
+  try {
+    const cards = await fetchAll('onepiece_cards', 'id,slug,updated_at', 'slug=not.is.null&image_url=not.is.null');
+    if (!cards.length) { console.log('  One Piece: no cards yet, skipping'); return 0; }
+    const urls = cards.filter(c => c.slug && c.slug.trim()).map(c => ({
+      loc: `${SITE_URL}/cards/onepiece/${c.slug}`,
+      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null, priority: '0.7'
+    }));
+    writeFileSync(`${OUT_DIR}/sitemap-onepiece.xml`, buildSitemap(urls, `One Piece card pages: ${urls.length} cards`));
+    console.log(`  One Piece: ${urls.length} URLs written to sitemap-onepiece.xml`);
+    return urls.length;
+  } catch (err) { console.error('  One Piece sitemap error:', err.message); return 0; }
+}
+
+async function generateRiftboundSitemap() {
+  console.log('Generating Riftbound card sitemap...');
+  try {
+    const cards = await fetchAll('riftbound_cards', 'id,slug,updated_at', 'slug=not.is.null&image_url=not.is.null');
+    if (!cards.length) { console.log('  Riftbound: no cards yet, skipping'); return 0; }
+    const urls = cards.filter(c => c.slug && c.slug.trim()).map(c => ({
+      loc: `${SITE_URL}/cards/riftbound/${c.slug}`,
+      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null, priority: '0.7'
+    }));
+    writeFileSync(`${OUT_DIR}/sitemap-riftbound.xml`, buildSitemap(urls, `Riftbound card pages: ${urls.length} cards`));
+    console.log(`  Riftbound: ${urls.length} URLs written to sitemap-riftbound.xml`);
+    return urls.length;
+  } catch (err) { console.error('  Riftbound sitemap error:', err.message); return 0; }
+}
+
+async function generateStarWarsSitemap() {
+  console.log('Generating Star Wars card sitemap...');
+  try {
+    const cards = await fetchAll('starwars_cards', 'id,slug,updated_at', 'slug=not.is.null&image_url=not.is.null');
+    if (!cards.length) { console.log('  Star Wars: no cards yet, skipping'); return 0; }
+    const urls = cards.filter(c => c.slug && c.slug.trim()).map(c => ({
+      loc: `${SITE_URL}/cards/starwars/${c.slug}`,
+      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null, priority: '0.7'
+    }));
+    writeFileSync(`${OUT_DIR}/sitemap-starwars.xml`, buildSitemap(urls, `Star Wars card pages: ${urls.length} cards`));
+    console.log(`  Star Wars: ${urls.length} URLs written to sitemap-starwars.xml`);
+    return urls.length;
+  } catch (err) { console.error('  Star Wars sitemap error:', err.message); return 0; }
+}
+
+async function generateDragonBallSitemap() {
+  console.log('Generating Dragon Ball Super card sitemap...');
+  try {
+    const cards = await fetchAll('dragonball_cards', 'id,slug,updated_at', 'slug=not.is.null&image_url=not.is.null');
+    if (!cards.length) { console.log('  Dragon Ball: no cards yet, skipping'); return 0; }
+    const urls = cards.filter(c => c.slug && c.slug.trim()).map(c => ({
+      loc: `${SITE_URL}/cards/dragonball/${c.slug}`,
+      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null, priority: '0.7'
+    }));
+    writeFileSync(`${OUT_DIR}/sitemap-dragonball.xml`, buildSitemap(urls, `Dragon Ball card pages: ${urls.length} cards`));
+    console.log(`  Dragon Ball: ${urls.length} URLs written to sitemap-dragonball.xml`);
+    return urls.length;
+  } catch (err) { console.error('  Dragon Ball sitemap error:', err.message); return 0; }
+}
+
 async function main() {
   console.log('=== Sitemap Generation Start ===', new Date().toISOString());
 
@@ -171,14 +232,18 @@ async function main() {
     return;
   }
 
-  const mtg     = await generateMtgSitemap();
-  const pokemon  = await generatePokemonSitemap();
-  const lorcana  = await generateLorcanaSitemap();
-  const yugioh   = await generateYugiohSitemap();
+  const mtg        = await generateMtgSitemap();
+  const pokemon    = await generatePokemonSitemap();
+  const lorcana    = await generateLorcanaSitemap();
+  const yugioh     = await generateYugiohSitemap();
+  const onepiece   = await generateOnePieceSitemap();
+  const riftbound  = await generateRiftboundSitemap();
+  const starwars   = await generateStarWarsSitemap();
+  const dragonball = await generateDragonBallSitemap();
 
   // sitemap-index.xml not overwritten — managed in repo root
 
-  const total = mtg + pokemon + lorcana + yugioh;
+  const total = mtg + pokemon + lorcana + yugioh + onepiece + riftbound + starwars + dragonball;
   console.log(`=== Sitemap Generation Complete === Total URLs: ${total}`);
 }
 

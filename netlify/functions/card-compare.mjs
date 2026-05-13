@@ -616,7 +616,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
 <div class="toolbar">
   <div class="search-row">
     <div class="search-wrap">
-      <input type="text" id="main-search" class="search-input" placeholder="${hasCards ? 'Add another card...' : 'Search any card from any TCG...'}" autocomplete="off" oninput="handleSearch(this.value)" onkeydown="handleSearchKey(event)" aria-label="Search for a card to compare" ${hasCards && cards.length >= 5 ? 'disabled placeholder="Maximum 5 cards reached"' : ''}>
+      <input type="text" id="main-search" class="search-input" placeholder="${hasCards ? 'Add another card...' : 'Search any card from any TCG...'}" autocomplete="off" aria-label="Search for a card to compare" ${hasCards && cards.length >= 5 ? 'disabled placeholder="Maximum 5 cards reached"' : ''}>
       <div id="search-results" class="search-results" style="display:none" role="listbox" aria-label="Search results"></div>
     </div>
     ${hasCards ? `<a href="/compare" class="nav-link" style="white-space:nowrap;font-size:12px">Reset ×</a>` : ''}
@@ -815,14 +815,26 @@ function copyShareUrl() {
 }
 
 function copyDiscordShare() {
-  const names  = ${JSON.stringify(cards.map(c => c.name))};
-  const prices = ${JSON.stringify(cards.map(c => c.priceAud ? 'AU$' + c.priceAud.toFixed(2) : 'N/A'))};
-  const text   = names.map((n, i) => n + ' (' + prices[i] + ')').join(' vs ') + '\\n' + window.location.href;
+  const names  = document.querySelectorAll('.slot-name a');
+  const prices = document.querySelectorAll('.slot-price');
+  const parts  = [];
+  names.forEach((el, i) => {
+    const price = prices[i] ? prices[i].textContent.trim() : '';
+    parts.push(el.textContent.trim() + (price ? ' (' + price + ')' : ''));
+  });
+  const text = parts.join(' vs ') + '\n' + window.location.href;
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.querySelector('.share-discord');
     if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = 'Discord', 2000); }
   });
   gtag('event', 'compare_share_clicked', { method: 'discord', card_count: CURRENT_CARDS });
+}
+
+// Wire search input events after script loads (avoids "not defined" errors)
+const mainSearch = document.getElementById('main-search');
+if (mainSearch) {
+  mainSearch.addEventListener('input', e => handleSearch(e.target.value));
+  mainSearch.addEventListener('keydown', e => handleSearchKey(e));
 }
 
 // Close search on outside click
@@ -835,10 +847,11 @@ document.addEventListener('click', e => {
 });
 
 // GA4 page load event
+const _games = [...new Set(CURRENT_TOKENS.map(t => t.split(':')[0]))];
 gtag('event', 'compare_page_load', {
   card_count: CURRENT_CARDS,
-  games: ${JSON.stringify([...new Set(cards.map(c => c.game))])}.join(','),
-  is_cross_tcg: ${[...new Set(cards.map(c => c.game))].length > 1}
+  games: _games.join(','),
+  is_cross_tcg: _games.length > 1
 });
 </script>
 </body>
