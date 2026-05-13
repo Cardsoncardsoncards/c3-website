@@ -5,7 +5,9 @@
 // This replaces the timing-out Netlify Function approach
 //
 // Price thresholds (balance SEO value vs crawl budget):
-//   MTG: $0.25 USD (~50k cards)
+//   MTG: split into two files to stay under Google's 50,000 URL per sitemap limit
+//     sitemap-cards.xml   = $2.00+ (~17,000 cards)
+//     sitemap-cards-2.xml = $0.25-$1.99 (~33,000 cards)
 //   Pokemon/Lorcana/YuGiOh: any card with an image
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -55,14 +57,15 @@ ${urlXml}
 }
 
 async function generateMtgSitemap() {
-  console.log('Generating MTG card sitemap...');
-  const cards = await fetchAll(
+  console.log('Generating MTG card sitemaps (split into 2 files)...');
+
+  // File 1: $2.00+ high value cards
+  const cards1 = await fetchAll(
     'mtg_cards',
     'id,slug,price_usd,updated_at',
-    'price_usd=gte.0.25&slug=not.is.null'
+    'price_usd=gte.2.00&slug=not.is.null'
   );
-
-  const urls = cards
+  const urls1 = cards1
     .filter(c => c.slug && c.slug.trim())
     .map(c => {
       const price = parseFloat(c.price_usd) || 0;
@@ -72,10 +75,26 @@ async function generateMtgSitemap() {
         priority: price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7'
       };
     });
+  writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, buildSitemap(urls1, `MTG card pages: ${urls1.length} cards at USD$2.00+`));
+  console.log(`  MTG part 1: ${urls1.length} URLs written to sitemap-cards.xml`);
 
-  writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, buildSitemap(urls, `MTG card pages: ${urls.length} cards at USD$0.25+`));
-  console.log(`  MTG: ${urls.length} URLs written to sitemap-cards.xml`);
-  return urls.length;
+  // File 2: $0.25-$1.99 budget cards
+  const cards2 = await fetchAll(
+    'mtg_cards',
+    'id,slug,price_usd,updated_at',
+    'price_usd=gte.0.25&price_usd=lt.2.00&slug=not.is.null'
+  );
+  const urls2 = cards2
+    .filter(c => c.slug && c.slug.trim())
+    .map(c => ({
+      loc: `${SITE_URL}/cards/mtg/${c.slug}`,
+      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
+      priority: '0.7'
+    }));
+  writeFileSync(`${OUT_DIR}/sitemap-cards-2.xml`, buildSitemap(urls2, `MTG card pages: ${urls2.length} cards at USD$0.25-$1.99`));
+  console.log(`  MTG part 2: ${urls2.length} URLs written to sitemap-cards-2.xml`);
+
+  return urls1.length + urls2.length;
 }
 
 async function generatePokemonSitemap() {
@@ -227,8 +246,9 @@ async function main() {
   console.log('=== Sitemap Generation Start ===', new Date().toISOString());
 
   if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.error('Missing SUPABASE_URL or key — writing empty MTG sitemap as fallback');
+    console.error('Missing SUPABASE_URL or key — writing empty MTG sitemaps as fallback');
     writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Build-time generation failed: missing env vars --></urlset>');
+    writeFileSync(`${OUT_DIR}/sitemap-cards-2.xml`, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Build-time generation failed: missing env vars --></urlset>');
     return;
   }
 

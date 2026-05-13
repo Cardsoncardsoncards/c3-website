@@ -9,6 +9,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"sitemap.xml": "sitemap.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-index.xml": "sitemap-index.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-cards.xml": "sitemap-cards.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-cards-2.xml": "sitemap-cards-2.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-pokemon.xml": "sitemap-pokemon.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-yugioh.xml": "sitemap-yugioh.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-lorcana.xml": "sitemap-lorcana.xml"});
