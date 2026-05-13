@@ -95,13 +95,12 @@ nav {
 }
 .nav-inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
-  flex-wrap: wrap;
-  gap: 8px;
+  padding: 8px 24px;
+  gap: 6px;
 }
 .nav-logo {
   display: flex;
@@ -116,7 +115,7 @@ nav {
   text-transform: uppercase;
 }
 .nav-logo img { height: 32px; width: 32px; border-radius: 6px; }
-.nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+.nav-links { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
 .nav-link {
   display: inline-flex;
   align-items: center;

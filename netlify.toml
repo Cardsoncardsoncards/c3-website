@@ -8,35 +8,19 @@
 [functions]
   node_bundler = "esbuild"
 
-# ── Sitemap function timeouts ────────────────────────────────
 [functions."sitemap-cards"]
   timeout = 30
 
-[functions."sitemap-static"]
-  timeout = 30
-
-[functions."sitemap-pokemon"]
-  timeout = 30
-
-[functions."sitemap-yugioh"]
-  timeout = 30
-
-[functions."sitemap-lorcana"]
-  timeout = 30
-
-[functions."sitemap-onepiece"]
-  timeout = 30
-
-[functions."sitemap-riftbound"]
-  timeout = 30
-
-[functions."sitemap-dragonball"]
-  timeout = 30
-
-[functions."sitemap-starwars"]
-  timeout = 30
-
 [functions."market-insights"]
+  timeout = 26
+
+[functions."lorcana-set-page"]
+  timeout = 26
+
+[functions."pokemon-set-page"]
+  timeout = 26
+
+[functions."yugioh-set-page"]
   timeout = 26
 
 [functions."card-compare"]
@@ -44,12 +28,6 @@
 
 [functions."compare-search"]
   timeout = 10
-
-# ── Favicon ──────────────────────────────────────────────────
-[[redirects]]
-  from = "/favicon.ico"
-  to = "/c3logo.png"
-  status = 200
 
 # ── Blog redirects (old URLs -> current slugs) ──────────────
 [[redirects]]
@@ -77,6 +55,7 @@
   to = "/blog/star-wars-unlimited-beginners-guide-australia/"
   status = 301
 
+# ── Missing blog posts -> best matching existing page ────────
 [[redirects]]
   from = "/blog/what-is-riftbound/"
   to = "/blog/riftbound-card-game-beginners-guide-australia/"
@@ -102,8 +81,9 @@
   to = "/blog/what-is-mtg/"
   status = 301
 
-# ── MTG set pages -> MTG hub ─────────────────────────────────
+# ── MTG set pages -> MTG hub (no set page function exists) ───
 [[redirects]]
   from = "/cards/mtg/sets/*"
   to = "/cards/mtg"
   status = 301
+
