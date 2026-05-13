@@ -1,6 +1,6 @@
 // netlify/functions/onepiece-card-page.mjs
 // Serves /cards/onepiece/:slug
-// Correct columns: market_price, price_aud, image_url, set_id, set_name
+// If slug starts with sets/, renders the set page inline (routing fix)
 
 const SUPABASE_URL       = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY  = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -37,7 +37,7 @@ async function getEbayToken() {
 async function getEbayListings(cardName, token) {
   if (!token) return [];
   try {
-    const q = encodeURIComponent(`${cardName} one piece card`);
+    const q = encodeURIComponent(`${cardName} onepiece card`);
     const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${q}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=price&limit=6`;
     const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU', 'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${EPN_CAMPID}` } });
     if (!res.ok) return [];
@@ -54,28 +54,153 @@ const NAV = `<nav style="background:rgba(10,12,20,.97);backdrop-filter:blur(18px
     </a>
     <div style="display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
       <a href="/" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(160,196,255,.35);color:#A0C4FF;white-space:nowrap">Home</a>
-      <a href="/cards/onepiece" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(204,0,0,.4);color:#FF4444;background:rgba(204,0,0,.08);white-space:nowrap">One Piece</a>
+      <a href="/cards/onepiece" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.4);color:#E8C97A;background:rgba(201,168,76,.08);white-space:nowrap">One Piece</a>
       <a href="/shop.html" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Shop</a>
       <a href="/ev-calculator.html" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(96,165,250,.35);color:#60A5FA;white-space:nowrap">EV Calc</a>
       <a href="/compare" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(124,106,245,.35);color:#a78bfa;white-space:nowrap">Compare</a>
-      <a href="/generators" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Generators</a>
       <a href="/tracker.html" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(192,132,252,.35);color:#C084FC;white-space:nowrap">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(96,165,250,.35);color:#60A5FA;white-space:nowrap">eBay</a>
-      <a href="/contact.html" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(148,163,184,.35);color:#94A3B8;white-space:nowrap">Contact Us</a>
     </div>
   </div>
 </nav>`;
 
 function notFoundPage(slug) {
-  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Card Not Found | Cards on Cards on Cards</title><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif">${NAV}<div style="padding:80px 24px;text-align:center"><h1 style="font-family:'Cinzel',serif;color:#CC0000;margin-bottom:16px">Card Not Found</h1><p style="color:#A0A8C0;margin-bottom:24px">The card "${slug}" doesn't exist or hasn't synced yet.</p><a href="/cards/onepiece" style="display:inline-block;padding:10px 24px;background:rgba(204,0,0,.15);border:1px solid rgba(204,0,0,.4);color:#FF4444;border-radius:8px;text-decoration:none">Browse One Piece Cards</a></div></body></html>`;
+  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Card Not Found | Cards on Cards on Cards</title><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif">${NAV}<div style="padding:80px 24px;text-align:center"><h1 style="font-family:'Cinzel',serif;color:#C9A84C;margin-bottom:16px">Card Not Found</h1><p style="color:#A0A8C0;margin-bottom:24px">The card "${slug}" doesn't exist or hasn't synced yet.</p><a href="/cards/onepiece" style="display:inline-block;padding:10px 24px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:#E8C97A;border-radius:8px;text-decoration:none">Browse One Piece Cards</a></div></body></html>`;
+}
+
+function setNotFoundPage(setSlug) {
+  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Set Not Found | One Piece | Cards on Cards on Cards</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/c3logo.png"><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif">${NAV}<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;padding:24px;text-align:center"><div><div style="font-size:48px;margin-bottom:16px">🃏</div><h1 style="font-family:'Cinzel',serif;color:#CC0000;font-size:22px;margin-bottom:10px">Set Not Found</h1><p style="color:#8892b0;font-size:14px;margin-bottom:24px">We couldn't find the One Piece set "${setSlug}".</p><a href="/cards/onepiece" style="display:inline-block;background:#CC0000;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px">Browse All One Piece</a><a href="/" style="display:inline-block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px">← Home</a></div></div></body></html>`;
+}
+
+async function handleSetPage(setSlug, htmlHeaders) {
+  const accent = '#CC0000';
+  const [sets, ebayToken] = await Promise.all([
+    supabaseGet(`onepiece_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
+    getEbayToken()
+  ]);
+
+  if (!sets || !sets[0]) return new Response(setNotFoundPage(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+  const set = sets[0];
+
+  const [cards, ebayListings] = await Promise.all([
+    supabaseGet(`onepiece_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
+    ebayToken ? getEbayListings(set.name + ' onepiece', ebayToken).catch(() => []) : []
+  ]);
+
+  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+  const pricedCards = (cards || []).filter(c => toAud(c) > 0);
+  const top5 = pricedCards.slice(0, 5);
+
+  const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' onepiece')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const metaDesc = `Browse ${cards?.length || 0} One Piece cards from ${set.name}. View card prices in AUD and buy on eBay AU. Updated daily.`;
+
+  const top5HTML = top5.map(c => {
+    const aud = toAud(c);
+    return `<a href="/cards/onepiece/${c.slug}" style="flex:0 0 140px;background:#0e1118;border:1px solid rgba(16,185,129,.35);border-radius:10px;padding:10px;text-align:center;text-decoration:none;display:block">
+      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
+      <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${c.name}</div>
+      ${c.rarity ? `<div style="font-size:10px;color:${accent};margin-bottom:3px">${c.rarity}</div>` : ''}
+      ${aud > 0 ? `<div style="font-size:12px;color:#C9A84C;font-weight:700">AU$${aud.toFixed(2)}</div>` : ''}
+    </a>`;
+  }).join('');
+
+  const allCardsHTML = cards && cards.length ? cards.map(c => {
+    const aud = toAud(c);
+    return `<a href="/cards/onepiece/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block">
+      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
+      <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
+      ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
+    </a>`;
+  }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing — check back after tonight's update.</div>`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${set.name} | One Piece Set | Cards on Cards on Cards</title>
+  <meta name="description" content="${metaDesc}">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/onepiece/sets/${setSlug}">
+  <meta property="og:title" content="${set.name} | One Piece | C3">
+  <meta property="og:description" content="${metaDesc}">
+  <meta property="og:site_name" content="Cards on Cards on Cards">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh}
+    a{color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 20px 60px}
+    .hero{padding:36px 0 24px;border-bottom:1px solid #1e2235;margin-bottom:28px}
+    .hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${accent};margin-bottom:8px}
+    .hero-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:#F0F2FF;margin-bottom:8px}
+    .hero-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#8892b0;align-items:center}
+    .meta-badge{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.35);color:${accent};padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700}
+    .section-title{font-family:'Cinzel',serif;font-size:16px;color:#F0F2FF;margin-bottom:14px}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+    .cta-btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none}
+    .cta-primary{background:${accent};color:#000}
+    .cta-secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+    .cards-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;margin-bottom:28px}
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:28px}
+    .section{margin-bottom:32px}
+    @media(max-width:600px){.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
+  </style>
+</head>
+<body>
+${NAV}
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">One Piece · Set</div>
+    <h1 class="hero-title">${set.name}</h1>
+    <div class="hero-meta">
+      <span class="meta-badge">One Piece</span>
+      ${set.release_date ? `<span>Released: ${set.release_date.slice(0,10)}</span>` : ''}
+      ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
+      ${pricedCards.length ? `<span>${pricedCards.length} priced in AUD</span>` : ''}
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>
+    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' One Piece')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
+  </div>
+
+  ${top5.length ? `<div class="section"><div class="section-title">Most Valuable Cards</div><div class="cards-scroll">${top5HTML}</div></div>` : ''}
+
+  <div class="section">
+    <div class="section-title">${cards?.length ? `All Cards (${cards.length})` : 'Cards'}</div>
+    <div class="cards-grid">${allCardsHTML}</div>
+  </div>
+
+  <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0">
+    <strong style="color:#F0F2FF">About this set:</strong> One Piece card prices shown in AUD, converted from USD market data. Prices update daily via tcgapi.dev.
+    <div style="margin-top:10px"><a href="/cards/onepiece" style="color:${accent}">← Back to all One Piece cards</a></div>
+  </div>
+</div>
+<footer style="border-top:1px solid #1e2235;padding:24px;text-align:center;color:#8892b0;font-size:12px;margin-top:20px">
+  <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/cards/onepiece" style="color:#8892b0;margin:0 8px">One Piece</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker.html" style="color:#8892b0;margin:0 8px">Tracker</a></p>
+  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+</footer>
+</body></html>`;
+
+  return new Response(html, { status: 200, headers: htmlHeaders });
 }
 
 export default async (req) => {
   const url = new URL(req.url);
-  const slug = decodeURIComponent(url.pathname.replace('/cards/onepiece/', '').replace(/^\/|\/$/g, ''));
+  const slug = decodeURIComponent(url.pathname.replace('/cards/onepiece/', '').replace(/^\\/|\\/$/g, ''));
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
 
-  if (!slug || slug.startsWith('sets/')) return new Response('Not found', { status: 404, headers });
+  if (!slug) return new Response(notFoundPage(''), { status: 404, headers });
+
+  if (slug.startsWith('sets/')) {
+    const setSlug = slug.replace(/^sets\//, '').replace(/\/$/, '');
+    return handleSetPage(setSlug, headers);
+  }
 
   try {
     const cards = await supabaseGet(`onepiece_cards?slug=eq.${encodeURIComponent(slug)}&limit=1`);
@@ -83,7 +208,7 @@ export default async (req) => {
     const card = cards[0];
 
     const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.58 : null);
-    const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' one piece card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' onepiece card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
     const [relatedCards, ebayToken] = await Promise.all([
       supabaseGet(`onepiece_cards?set_id=eq.${card.set_id}&slug=neq.${encodeURIComponent(slug)}&market_price=gt.0&image_url=not.is.null&limit=12&order=market_price.desc`).catch(() => []),
@@ -108,10 +233,10 @@ export default async (req) => {
       <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none">
         ${relatedCards.map(c => {
           const rAud = parseFloat(c.price_aud) || (c.market_price ? c.market_price * 1.58 : 0);
-          return `<a href="/cards/onepiece/${c.slug}" style="flex:0 0 130px;background:#161929;border:1px solid #252840;border-radius:8px;padding:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#CC0000'" onmouseout="this.style.borderColor='#252840'">
+          return `<a href="/cards/onepiece/${c.slug}" style="flex:0 0 130px;background:#161929;border:1px solid #252840;border-radius:8px;padding:8px;text-decoration:none">
             ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:5px">` : ''}
             <div style="font-size:10px;color:#F0F2FF;margin-top:5px;line-height:1.3">${c.name}</div>
-            ${rAud >= 0.50 ? `<div style="font-size:11px;color:#CC0000;font-weight:700;margin-top:2px">~AU$${rAud.toFixed(0)}</div>` : ''}
+            ${rAud >= 0.50 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">~AU$${rAud.toFixed(0)}</div>` : ''}
           </a>`;
         }).join('')}
       </div>
@@ -124,13 +249,13 @@ export default async (req) => {
         ${ebayListings.slice(0,6).map(item => {
           const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
           const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-          return `<a href="${epnUrl}" target="_blank" rel="noopener" style="display:block;background:#161929;border:1px solid #252840;border-radius:8px;padding:12px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#CC0000'" onmouseout="this.style.borderColor='#252840'">
+          return `<a href="${epnUrl}" target="_blank" rel="noopener" style="display:block;background:#161929;border:1px solid #252840;border-radius:8px;padding:12px;text-decoration:none">
             <div style="font-size:13px;color:#F0F2FF;margin-bottom:6px;line-height:1.3">${(item.title||card.name).slice(0,60)}...</div>
-            <div style="font-size:16px;font-weight:700;color:#CC0000">${price}</div>
+            <div style="font-size:16px;font-weight:700;color:#C9A84C">${price}</div>
           </a>`;
         }).join('')}
       </div>` : ''}
-      <a href="${ebaySearchUrl}" target="_blank" rel="noopener" style="display:inline-block;padding:10px 20px;background:rgba(204,0,0,.12);border:1px solid rgba(204,0,0,.3);color:#CC0000;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">See all ${card.name} listings on eBay AU →</a>
+      <a href="${ebaySearchUrl}" target="_blank" rel="noopener" style="display:inline-block;padding:10px 20px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">See all ${card.name} listings on eBay AU →</a>
     </div>`;
 
     const html = `<!DOCTYPE html>
@@ -138,8 +263,8 @@ export default async (req) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${card.name} Price Australia | One Piece TCG | Cards on Cards on Cards</title>
-  <meta name="description" content="${card.name} One Piece TCG card${priceAud ? ` — ~AU$${priceAud.toFixed(2)}` : ''}. ${card.rarity ? `${card.rarity}. ` : ''}View price and buy on eBay AU.">
+  <title>${card.name} Price Australia | One Piece | Cards on Cards on Cards</title>
+  <meta name="description" content="${card.name} One Piece card${priceAud ? ` — ~AU$${priceAud.toFixed(2)}` : ''}. ${card.rarity ? `${card.rarity}. ` : ''}View price and buy on eBay AU.">
   <meta property="og:site_name" content="Cards on Cards on Cards">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/onepiece/${card.slug}">
   <link rel="icon" type="image/png" href="/c3logo.png">
@@ -152,7 +277,7 @@ export default async (req) => {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--accent:#CC0000;--text:#F0F2FF;--text2:#A0A8C0;--border:#252840;--radius:12px}
+    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--accent:#C9A84C;--text:#F0F2FF;--text2:#A0A8C0;--border:#252840;--radius:12px}
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
     .card-hero{max-width:1100px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:300px 1fr;gap:40px;align-items:start}
@@ -166,12 +291,9 @@ export default async (req) => {
     .meta-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:4px}
     .meta-value{font-size:14px;color:var(--text);font-weight:600}
     .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-    .cta-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s}
-    .cta-btn:hover{opacity:.85}
-    .cta-primary{background:rgba(204,0,0,.15);border:1px solid rgba(204,0,0,.4);color:#FF4444}
+    .cta-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none}
+    .cta-primary{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:#E8C97A}
     .cta-secondary{background:var(--bg2);border:1px solid var(--border);color:var(--text2)}
-    .section{max-width:1100px;margin:0 auto 32px;padding:0 24px}
-    .section h2{font-size:18px;margin-bottom:16px;font-family:'Cinzel',serif}
   </style>
 </head>
 <body>
@@ -186,9 +308,8 @@ ${NAV}
       ${card.set_name ? ` → <a href="/cards/onepiece/sets/${encodeURIComponent(card.set_id||'')}" style="color:var(--text2);text-decoration:none">${card.set_name}</a>` : ''}
     </div>
     <h1>${card.name}</h1>
-    ${card.rarity ? `<div style="display:inline-block;background:rgba(204,0,0,.12);border:1px solid rgba(204,0,0,.3);color:#FF4444;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;margin-bottom:8px;text-transform:uppercase">${card.rarity}</div>` : ''}
+    ${card.rarity ? `<div style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#E8C97A;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;margin-bottom:8px;text-transform:uppercase">${card.rarity}</div>` : ''}
     <div class="price-tag">${priceAud ? `~AU$${priceAud.toFixed(2)}` : 'Price not available'}</div>
-    ${card.low_price ? `<div style="font-size:13px;color:var(--text2);margin-bottom:8px">Low: ~AU$${(card.low_price*1.58).toFixed(2)} · Foil: ${card.foil_market_price ? `~AU$${(card.foil_market_price*1.58).toFixed(2)}` : 'N/A'}</div>` : ''}
     <div class="meta-grid">
       ${card.number ? `<div class="meta-item"><div class="meta-label">Card Number</div><div class="meta-value">${card.number}</div></div>` : ''}
       ${card.set_name ? `<div class="meta-item"><div class="meta-label">Set</div><div class="meta-value">${card.set_name}</div></div>` : ''}
@@ -209,7 +330,6 @@ ${ebayHTML}
 <footer style="border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px">
   <p><a href="/" style="color:var(--text2);margin:0 8px">Home</a><a href="/cards/onepiece" style="color:var(--text2);margin:0 8px">One Piece</a><a href="/blog" style="color:var(--text2);margin:0 8px">Blog</a><a href="/tracker.html" style="color:var(--text2);margin:0 8px">Tracker</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px">One Piece Card Game © Bandai. C3 is not affiliated with Bandai.</p>
 </footer>
 
 <div id="c3-compare-tray" style="position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1a1d2e;border-top:1px solid #2d3254;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)">
@@ -227,21 +347,17 @@ function renderCompareTray(){
   if(!el||!cardsEl)return;
   if(!tray.length){el.style.transform='translateY(100%)';return;}
   el.style.transform='translateY(0)';countEl.textContent=tray.length+' of 5';
-  cardsEl.innerHTML=tray.map(c=>'<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">'+(c.img?'<img src="'+c.img+'" style="width:28px;border-radius:3px">':'')+'<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+c.name+'</span><button onclick="removeFromCompare(''+c.slug+'')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>').join('');
-  const btn=document.getElementById('c3-compare-btn');const lbl=document.getElementById('c3-compare-lbl');
-  if(btn&&lbl){const pageSlug=btn.dataset.slug;const inTray=tray.some(c=>c.slug===pageSlug);btn.style.borderColor=inTray?'#7c6af5':'rgba(124,106,245,.4)';btn.style.color='#7c6af5';lbl.textContent=inTray?'Added ✓':'⚖️ Add to Compare';}
+  cardsEl.innerHTML=tray.map(c=>'<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">'+(c.img?'<img src="'+c.img+'" style="width:28px;border-radius:3px">':'')+'<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+c.name+'</span><button onclick="removeFromCompare(\''+c.slug+'\')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>').join('');
 }
 function addToCompare(slug,name,img,price,game){
   let tray=getCompareTray();
   if(tray.some(c=>c.slug===slug)){removeFromCompare(slug);return;}
   if(tray.length>=5){alert('Maximum 5 cards. Remove one first.');return;}
   tray.push({slug,name,img,price,game:'onepiece'});saveCompareTray(tray);renderCompareTray();
-  if(typeof gtag!=='undefined')gtag('event','card_added_to_tray',{card_name:name,game:'onepiece'});
 }
 function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray();}
 function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>c.slug).join(',');}
 renderCompareTray();
-if(typeof gtag!=='undefined'){document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_card_click',{game:'onepiece'})));}
 </script>
 </body>
 </html>`;

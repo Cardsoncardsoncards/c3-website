@@ -60,6 +60,131 @@ function loreIcons(lore) {
   return '◆'.repeat(Math.min(lore, 4));
 }
 
+
+async function handleSetPage(setSlug, headers) {
+  const accent = '#3B82F6';
+  // Try slug first, then numeric id fallback
+  let sets = await supabaseGet(`lorcana_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`);
+  if (!sets || !sets[0]) {
+    sets = await supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setSlug)}&limit=1`);
+  }
+
+  const notFoundHtml = `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Set Not Found | Lorcana | Cards on Cards on Cards</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;padding:24px;text-align:center"><h1 style="font-family:'Cinzel',serif;color:${accent}">Set Not Found</h1><p style="color:#A0A8C0">We couldn't find Lorcana set "${setSlug}".</p><a href="/cards/lorcana" style="color:${accent}">← Browse All Lorcana</a></body></html>`;
+
+  if (!sets || !sets[0]) return new Response(notFoundHtml, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+  const set = sets[0];
+
+  const cards = await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number`);
+
+  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+  const pricedCards = (cards || []).filter(c => toAud(c) > 0);
+  const top5 = pricedCards.slice(0, 5);
+  const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' lorcana')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
+  const metaDesc = `Browse ${cards?.length || 0} Lorcana cards from ${set.name}. View card prices in AUD and buy on eBay AU. Updated daily.`;
+
+  const top5HTML = top5.map(c => {
+    const aud = toAud(c);
+    const fullName = c.version ? `${c.name} (${c.version})` : c.name;
+    return `<a href="/cards/lorcana/${c.slug}" style="flex:0 0 140px;background:#0e1118;border:1px solid rgba(59,130,246,.35);border-radius:10px;padding:10px;text-align:center;text-decoration:none;display:block">
+      ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
+      <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${fullName}</div>
+      ${aud > 0 ? `<div style="font-size:12px;color:#C9A84C;font-weight:700">AU$${aud.toFixed(2)}</div>` : ''}
+    </a>`;
+  }).join('');
+
+  const allCardsHTML = cards && cards.length ? cards.map(c => {
+    const aud = toAud(c);
+    const fullName = c.version ? `${c.name} (${c.version})` : c.name;
+    return `<a href="/cards/lorcana/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block">
+      ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
+      <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${fullName}</div>
+      ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
+    </a>`;
+  }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing — check back after tonight's update.</div>`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${set.name} | Lorcana Set | Cards on Cards on Cards</title>
+  <meta name="description" content="${metaDesc}">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana/sets/${setSlug}">
+  <meta property="og:site_name" content="Cards on Cards on Cards">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;line-height:1.6}
+    nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid #252840;padding:12px 0;position:sticky;top:0;z-index:100}
+    .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+    .nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+    .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #252840;color:#A0A8C0;white-space:nowrap}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 20px 60px}
+    .hero{padding:36px 0 24px;border-bottom:1px solid #1e2235;margin-bottom:28px}
+    .hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${accent};margin-bottom:8px}
+    .hero-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:#F0F2FF;margin-bottom:8px}
+    .hero-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#8892b0}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+    .cta-btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none}
+    .cta-primary{background:${accent};color:#fff}
+    .cta-secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+    .section-title{font-family:'Cinzel',serif;font-size:16px;color:#F0F2FF;margin-bottom:14px}
+    .cards-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;margin-bottom:28px}
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:28px}
+    @media(max-width:600px){.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards/lorcana" class="nav-link" style="color:${accent};border-color:rgba(59,130,246,.4)">Lorcana</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/compare" class="nav-link">Compare</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">Disney Lorcana · Set</div>
+    <h1 class="hero-title">${set.name}</h1>
+    <div class="hero-meta">
+      ${set.release_date ? `<span>Released: ${set.release_date.slice(0,10)}</span>` : ''}
+      ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
+      ${pricedCards.length ? `<span>${pricedCards.length} priced in AUD</span>` : ''}
+    </div>
+  </div>
+  <div class="cta-row">
+    <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
+    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' lorcana')}&tag=blasdigital-22" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
+  </div>
+  ${top5.length ? `<div style="margin-bottom:28px"><div class="section-title">Most Valuable Cards</div><div class="cards-scroll">${top5HTML}</div></div>` : ''}
+  <div style="margin-bottom:28px">
+    <div class="section-title">${cards?.length ? `All Cards (${cards.length})` : 'Cards'}</div>
+    <div class="cards-grid">${allCardsHTML}</div>
+  </div>
+  <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0">
+    <strong style="color:#F0F2FF">About this set:</strong> Lorcana card prices in AUD. Updated daily.
+    <div style="margin-top:10px"><a href="/cards/lorcana" style="color:${accent}">← Back to all Lorcana cards</a></div>
+  </div>
+</div>
+<footer style="border-top:1px solid #252840;padding:24px;text-align:center;color:#8892b0;font-size:12px;margin-top:20px">
+  <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/cards/lorcana" style="color:#8892b0;margin:0 8px">Lorcana</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker.html" style="color:#8892b0;margin:0 8px">Tracker</a></p>
+  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+</footer>
+</body></html>`;
+
+  return new Response(html, { status: 200, headers });
+}
+
 export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/lorcana/', '').replace(/^\/|\/$/g, '');
@@ -67,9 +192,9 @@ export default async (req) => {
 
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
 
-  // Route guard: /cards/lorcana/sets/* is handled by lorcana-set-page function
   if (slug.startsWith('sets/')) {
-    return new Response('Not found', { status: 404, headers });
+    const setSlug = slug.replace(/^sets\//, '').replace(/\/$/, '');
+    return handleSetPage(setSlug, headers);
   }
 
   try {

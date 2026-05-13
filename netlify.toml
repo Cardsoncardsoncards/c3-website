@@ -36,51 +36,6 @@
 [functions."sitemap-starwars"]
   timeout = 30
 
-# ── Set page rewrites -> v2 functions ────────────────────────
-# force=true ensures these fire before card page functions
-# which use wildcard paths that would otherwise match /sets/*
-[[redirects]]
-  from = "/cards/riftbound/sets/*"
-  to = "/.netlify/functions/riftbound-set-page"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/cards/pokemon/sets/*"
-  to = "/.netlify/functions/pokemon-set-page"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/cards/yugioh/sets/*"
-  to = "/.netlify/functions/yugioh-set-page"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/cards/lorcana/sets/*"
-  to = "/.netlify/functions/lorcana-set-page"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/cards/dragonball/sets/*"
-  to = "/.netlify/functions/dragonball-set-page"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/cards/starwars/sets/*"
-  to = "/.netlify/functions/starwars-set-page"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/cards/onepiece/sets/*"
-  to = "/.netlify/functions/onepiece-set-page"
-  status = 200
-  force = true
-
 # ── Favicon ──────────────────────────────────────────────────
 [[redirects]]
   from = "/favicon.ico"
