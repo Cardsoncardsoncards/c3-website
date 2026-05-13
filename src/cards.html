@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/png" href="/c3logo.png">
 <title>The C3 Card Vault | MTG, Pokemon and TCG Card Prices in Australia</title>
-<meta name="description" content="Australia's only TCG card price vault. MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece and Riftbound card prices in AUD with live conversion, 90-day price history, and eBay AU buy links.">
+<meta name="description" content="197,000+ TCG cards priced in AUD. MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Riftbound, Dragon Ball and Star Wars card prices for Australian players. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards">
 <meta property="og:title" content="The C3 Card Vault | TCG Card Prices Australia">
-<meta property="og:description" content="Every MTG card priced in Australian dollars. Live AUD conversion, 90-day price history, eBay AU buy links. More games coming soon.">
+<meta property="og:description" content="197,000+ TCG cards priced in AUD across 8 games. Live eBay AU buy links, daily updates, free tracker.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
@@ -52,6 +51,12 @@
   --lorcana-secondary: #F5B202;
   --riftbound-primary: #C4A15B;
   --riftbound-secondary: #548CB4;
+  --dragonball-primary: #F97316;
+  --dragonball-secondary: #C2410C;
+  --starwars-primary: #FFE81F;
+  --starwars-secondary: #8B6914;
+  --more-primary: #374151;
+  --more-secondary: #6B7280;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -423,32 +428,43 @@ nav {
 }
 .door--riftbound .door-name { color: #e8c97a; }
 .door--riftbound .door-arrow { color: #e8c97a; }
+.door--dragonball .door-frame { border-color: var(--dragonball-primary); }
+.door--dragonball .door-inner::before { background: radial-gradient(ellipse at 50% 0%, var(--dragonball-primary), transparent 70%); }
+.door--dragonball .door-name { color: #FB923C; }
+.door--dragonball .door-arrow { color: #FB923C; }
+.door--starwars .door-frame { border-color: var(--starwars-primary); }
+.door--starwars .door-inner::before { background: radial-gradient(ellipse at 50% 0%, rgba(255,232,31,.4), transparent 70%); }
+.door--starwars .door-name { color: #FDE68A; }
+.door--starwars .door-arrow { color: #FDE68A; }
+.door--more .door-frame { border-color: #374151; }
+.door--more .door-inner::before { background: radial-gradient(ellipse at 50% 0%, rgba(55,65,81,.6), transparent 70%); }
+.door--more .door-name { color: #9CA3AF; }
 
 /* Feature strip */
 .features {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px 80px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  position: relative;
-  z-index: 1;
-}
-.feature {
-  background: rgba(14,17,24,.8);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-}
-.feature-icon { font-size: 24px; margin-bottom: 8px; }
-.feature-title { font-family: 'Cinzel', serif; font-size: 13px; color: var(--gold); margin-bottom: 6px; }
-.feature-desc { font-size: 13px; color: rgba(160,168,192,.6); line-height: 1.6; }
+  max-width: 1200<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3 Logo">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
 
-/* Footer */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 32px 24px;
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
+      <a href="/tracker.html" class="nav-link">Tracker</a>
+      <a href="/calendar" class="nav-link">Calendar</a>
+      <a href="/generators" class="nav-link">Generators</a>
+      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/dnd" class="nav-link">D&amp;D Tools</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" class="nav-link" target="_blank" rel="noopener">eBay ↗</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>x;
   text-align: center;
   color: var(--text2);
   font-size: 12px;
@@ -476,16 +492,17 @@ footer a:hover { color: var(--silver); }
     </a>
     <div class="nav-links">
       <a href="/" class="nav-link">Home</a>
+      <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
+      <a href="/compare" class="nav-link" style="color:#a78bfa;border-color:rgba(167,139,250,.3)">Compare</a>
+      <a href="/market" class="nav-link" style="color:#4ADE80;border-color:rgba(74,222,128,.3)">Market</a>
       <a href="/shop.html" class="nav-link">Shop</a>
       <a href="/blog" class="nav-link">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link">EV Calculator</a>
-      <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
-      <a href="/compare" class="nav-link" style="color:#a78bfa;border-color:rgba(124,106,245,.35)">Compare</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
       <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="/contact.html" class="nav-link">Contact</a>
+      <a href="/quizzes" class="nav-link" style="color:#F472B6;border-color:rgba(244,114,182,.3)">Quizzes</a>
+      <a href="/calendar" class="nav-link" style="color:#F87171;border-color:rgba(248,113,113,.3)">Calendar</a>
+      <a href="/generators" class="nav-link" style="color:#22D3EE;border-color:rgba(34,211,238,.3)">Generators</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link" style="color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.05)">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>
@@ -494,7 +511,7 @@ footer a:hover { color: var(--silver); }
   <p class="hero-eyebrow">Cards on Cards on Cards</p>
   <h1 class="hero-title">The Card Vault</h1>
   <p class="hero-subtitle">Every Card. Priced for Australia.</p>
-  <p class="hero-desc">Australia's only TCG price guide with live AUD conversion, 90-day price history, eBay AU buy links, and daily updates. Choose your game below.</p>
+  <p class="hero-desc">197,000+ cards across 8 TCGs, priced in Australian dollars. Live eBay AU buy links, free tracker, and daily updates. Click any game to start.</p>
   <div class="vault-divider"></div>
 </section>
 
@@ -510,121 +527,172 @@ footer a:hover { color: var(--silver); }
           <div class="door-bolts"></div>
           <div class="door-icon">🧙</div>
           <div class="door-name">Magic:<br>The Gathering</div>
-          <div class="door-tagline">96,000+ cards · Updated daily</div>
+          <div class="door-tagline">96,000+ cards &middot; Updated daily</div>
           <div class="door-status door-status--open">⚡ Live Now</div>
           <div class="door-arrow">→</div>
         </div>
       </div>
     </a>
 
-    <!-- Pokemon — Coming Soon -->
-    <div class="vault-door vault-door--locked door--pokemon">
+    <!-- Pokemon — LIVE -->
+    <a href="/cards/pokemon" class="vault-door door--pokemon">
       <div class="door-frame">
         <div class="door-inner">
           <div class="door-bolts"></div>
-          <div class="door-icon">⚡</div>
+          <div class="door-icon">&#9889;</div>
           <div class="door-name">Pokemon TCG</div>
-          <div class="door-tagline">15,000+ cards planned</div>
-          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+          <div class="door-tagline">31,488 cards &middot; Updated daily</div>
+          <div class="door-status door-status--open">&#9889; Live Now</div>
+          <div class="door-arrow">&rarr;</div>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- Yu-Gi-Oh — Coming Soon -->
-    <div class="vault-door vault-door--locked door--yugioh">
+    <!-- Yu-Gi-Oh — LIVE -->
+    <a href="/cards/yugioh" class="vault-door door--yugioh">
       <div class="door-frame">
         <div class="door-inner">
           <div class="door-bolts"></div>
-          <div class="door-icon">👁</div>
+          <div class="door-icon">&#128065;</div>
           <div class="door-name">Yu-Gi-Oh!</div>
-          <div class="door-tagline">12,000+ cards planned</div>
-          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+          <div class="door-tagline">46,588 cards &middot; Updated daily</div>
+          <div class="door-status door-status--open">&#9889; Live Now</div>
+          <div class="door-arrow">&rarr;</div>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- One Piece — Coming Soon -->
-    <div class="vault-door vault-door--locked door--onepiece">
+    <!-- One Piece — LIVE -->
+    <a href="/cards/onepiece" class="vault-door door--onepiece">
       <div class="door-frame">
         <div class="door-inner">
           <div class="door-bolts"></div>
-          <div class="door-icon">☠️</div>
+          <div class="door-icon">&#9760;&#65039;</div>
           <div class="door-name">One Piece TCG</div>
-          <div class="door-tagline">1,500+ cards planned</div>
-          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+          <div class="door-tagline">6,641 cards &middot; Updated daily</div>
+          <div class="door-status door-status--open">&#9889; Live Now</div>
+          <div class="door-arrow">&rarr;</div>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- Lorcana — Coming Soon -->
-    <div class="vault-door vault-door--locked door--lorcana">
+    <!-- Lorcana — LIVE -->
+    <a href="/cards/lorcana" class="vault-door door--lorcana">
       <div class="door-frame">
         <div class="door-inner">
           <div class="door-bolts"></div>
-          <div class="door-icon">🏰</div>
+          <div class="door-icon">&#127984;</div>
           <div class="door-name">Disney Lorcana</div>
-          <div class="door-tagline">700+ cards planned</div>
-          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+          <div class="door-tagline">3,153 cards &middot; Updated daily</div>
+          <div class="door-status door-status--open">&#9889; Live Now</div>
+          <div class="door-arrow">&rarr;</div>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- Riftbound — Coming Soon -->
-    <div class="vault-door vault-door--locked door--riftbound">
+    <!-- Riftbound — LIVE -->
+    <a href="/cards/riftbound" class="vault-door door--riftbound">
       <div class="door-frame">
         <div class="door-inner">
           <div class="door-bolts"></div>
-          <div class="door-icon">⚔️</div>
+          <div class="door-icon">&#9876;&#65039;</div>
           <div class="door-name">Riftbound</div>
-          <div class="door-tagline">League of Legends TCG</div>
-          <div class="door-status door-status--soon">🔒 Coming Soon</div>
+          <div class="door-tagline">1,159 cards &middot; League of Legends TCG</div>
+          <div class="door-status door-status--open">&#9889; Live Now</div>
+          <div class="door-arrow">&rarr;</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Dragon Ball — LIVE -->
+    <a href="/cards/dragonball" class="vault-door door--dragonball">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">&#x1F409;</div>
+          <div class="door-name">Dragon Ball Super</div>
+          <div class="door-tagline">6,261 cards &middot; Updated daily</div>
+          <div class="door-status door-status--open">&#9889; Live Now</div>
+          <div class="door-arrow">&rarr;</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Star Wars — LIVE -->
+    <a href="/cards/starwars" class="vault-door door--starwars">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">&#x1F680;</div>
+          <div class="door-name">Star Wars Unlimited</div>
+          <div class="door-tagline">6,113 cards &middot; Updated daily</div>
+          <div class="door-status door-status--open">&#9889; Live Now</div>
+          <div class="door-arrow">&rarr;</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- More TCGs Coming -->
+    <div class="vault-door vault-door--locked door--more">
+      <div class="door-frame">
+        <div class="door-inner">
+          <div class="door-bolts"></div>
+          <div class="door-icon">&#43;</div>
+          <div class="door-name">More TCGs<br>Coming Soon</div>
+          <div class="door-tagline">More games expanding</div>
+          <div class="door-status door-status--soon">&#128274; Expanding</div>
         </div>
       </div>
     </div>
-
   </div>
 </section>
+
+<!-- Market callout -->
+<div style="text-align:center;padding:12px 24px 24px;position:relative;z-index:1">
+  <a href="/market" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#4ADE80;text-decoration:none;border:1px solid rgba(74,222,128,.25);padding:8px 20px;border-radius:8px;background:rgba(74,222,128,.04);transition:all .2s" onmouseover="this.style.background='rgba(74,222,128,.08)'" onmouseout="this.style.background='rgba(74,222,128,.04)'">&#128200; See what's moving in TCG prices this week &#8594;</a>
+</div>
 
 <!-- Feature strip -->
 <section class="features">
   <div class="feature">
-    <div class="feature-icon">💰</div>
+    <div class="feature-icon">&#128198;</div>
+    <div class="feature-title">197,000+ Cards</div>
+    <div class="feature-desc">MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Riftbound, Dragon Ball and Star Wars. All priced in AUD.</div>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">&#128176;</div>
     <div class="feature-title">Live AUD Pricing</div>
-    <div class="feature-desc">Every price converted to Australian dollars at the live exchange rate. Updated daily from Scryfall.</div>
+    <div class="feature-desc">Every price converted to Australian dollars at the live exchange rate. Updated daily.</div>
   </div>
   <div class="feature">
-    <div class="feature-icon">📊</div>
-    <div class="feature-title">90-Day Price History</div>
-    <div class="feature-desc">See whether a card is near its 52-week high or low before you buy or sell.</div>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">🛒</div>
+    <div class="feature-icon">&#128722;</div>
     <div class="feature-title">eBay AU Buy Links</div>
-    <div class="feature-desc">Direct links to the cheapest Australian eBay listings for every card. C3 store checked first.</div>
+    <div class="feature-desc">Direct links to eBay AU listings for every card. C3 store checked first so you buy local.</div>
   </div>
   <div class="feature">
-    <div class="feature-icon">🎲</div>
-    <div class="feature-title">Random Commander</div>
-    <div class="feature-desc">Filter by colour and mana value. Find your next Commander deck inspiration instantly.</div>
+    <div class="feature-icon">&#128203;</div>
+    <div class="feature-title">Free Collection Tracker</div>
+    <div class="feature-desc">Track what you own and what it is worth. Free Google Sheets tracker, no account needed.</div>
   </div>
 </section>
 
-<footer>
+<footer style="border-top:1px solid #1e2235;padding:32px 24px;text-align:center;font-size:12px;color:#7a8099">
   <p>
-    <a href="/">Home</a>
-    <a href="/cards">Card Vault</a>
-    <a href="/cards/mtg">MTG Cards</a>
-    <a href="/ev-calculator.html">EV Calculator</a>
-    <a href="/shop.html">Shop</a>
-    <a href="/blog">Blog</a>
-    <a href="/tracker.html">Free Tracker</a>
-    <a href="/legal.html">Legal &amp; Disclaimers</a>
-    <a href="/contact.html">Contact</a>
+    <a href="/" style="color:#7a8099;margin:0 8px">Home</a>
+    <a href="/cards" style="color:#7a8099;margin:0 8px">Card Vault</a>
+    <a href="/shop.html" style="color:#7a8099;margin:0 8px">Shop</a>
+    <a href="/blog" style="color:#7a8099;margin:0 8px">Blog</a>
+    <a href="/quizzes" style="color:#7a8099;margin:0 8px">Quizzes</a>
+    <a href="/ev-calculator.html" style="color:#7a8099;margin:0 8px">EV Calc</a>
+    <a href="/tracker.html" style="color:#7a8099;margin:0 8px">Tracker</a>
+    <a href="/generators" style="color:#7a8099;margin:0 8px">Generators</a>
+    <a href="/dnd" style="color:#7a8099;margin:0 8px">D&amp;D Tools</a>
+    <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="color:#7a8099;margin:0 8px">Etsy Shop &#8599;</a>
+    <a href="/contact.html" style="color:#7a8099;margin:0 8px">Contact</a>
+    <a href="/legal.html" style="color:#7a8099;margin:0 8px">Legal</a>
   </p>
-  <div class="footer-disclaimer">
-    Cards on Cards on Cards is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy. Not approved or endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast &copy; Wizards of the Coast LLC. Card images and data sourced via the Scryfall API. Cards on Cards on Cards is not affiliated with, endorsed by, or sponsored by Wizards of the Coast, The Pokemon Company, Nintendo, Disney, Bandai, or Konami. As an Amazon Associate and eBay Partner, we earn from qualifying purchases.
-  </div>
   <p style="margin-top:12px">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases through links may earn a commission at no extra cost to you.</p>
 </footer>
 
 <!-- GA4 -->

@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="/c3logo.png">
 <title>Contact | Cards on Cards on Cards</title>
 <meta name="description" content="Get in touch with Cards on Cards on Cards. Questions about products, your order, or the buylist.">
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
+<link rel="icon" type="image/png" href="/c3logo.png">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +69,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .footer-links{display:flex;gap:16px;flex-wrap:wrap}
 .footer-link{font-size:12px;color:rgba(160,168,192,.4);text-decoration:none;transition:color .2s}
 .footer-link:hover{color:var(--silver)}
-.footer-copy{font-size:11px;color:rgba(160,168,192,.25)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.25);width:100%;text-align:center;padding-top:12px;border-top:1px solid rgba(255,255,255,.04);margin-top:4px}
 @media(max-width:640px){.contact-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
 
 /* NAV COLOUR CLASSES - outline and font only */
@@ -101,17 +101,13 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <span>Cards on Cards on Cards</span>
     </a>
     <div class="nav-links">
-      <a href="/" class="nav-link nav-link--home">← Home</a>
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/" class="nav-link nav-link--home">Home</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/compare" class="nav-link" style="color:#a78bfa;border-color:rgba(124,106,245,.35)">Compare</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
       <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="nav-link nav-link--dnd">D&amp;D Tools ↗</a>
       <a href="/contact.html" class="nav-link nav-link--contact nav-link--active">Contact Us</a>
     </div>
   </div>
@@ -133,7 +129,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <p class="contact-label">General Enquiries</p>
       <h2 class="contact-title">Have a question for us?</h2>
       <p class="contact-body">Questions about our eBay store, a specific product, shipping, or anything else — send us a message and we will respond as soon as we can.</p>
-      <a href="/cdn-cgi/l/email-protection#eb888888c5989a9e8a8f838e879bab8c868a8287c5888486d4989e89818e889fd6ac8e858e998a87ced9dbae859a9e829992" class="contact-btn contact-btn--general">Send a Message →</a>
+      <a href="mailto:ccc.squadhelp@gmail.com?subject=General%20Enquiry%20-%20Cards%20on%20Cards%20on%20Cards" class="contact-btn contact-btn--general">Send a Message →</a>
     </div>
 
     <div class="contact-card contact-card--buylist">
@@ -141,7 +137,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <p class="contact-label">Buylist Coming Soon</p>
       <h2 class="contact-title">Buylist Interest</h2>
       <p class="contact-body">We're building a buylist tool for Australian TCG players — a single place to compare what stores are paying for your cards. Register your interest below and we'll keep you updated as it gets closer to launch.</p>
-      <a href="/cdn-cgi/l/email-protection#c3a0a0a0edb0b2b6a2a7aba6afb383a4aea2aaafeda0acaefcb0b6a1a9a6a0b7fe81b6bae6f1f3afaab0b7e6f1f3aaadb7a6b1a6b0b7" class="contact-btn contact-btn--buylist">Register Interest →</a>
+      <a href="mailto:ccc.squadhelp@gmail.com?subject=Buylist%20Interest%20-%20Cards%20on%20Cards%20on%20Cards" class="contact-btn contact-btn--buylist">Register Interest →</a>
     </div>
 
   </div>
@@ -159,4 +155,14 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/shop.html" class="footer-link">Shop</a>
       <a href="/blog" class="footer-link">Blog</a>
       <a href="/tracker.html" class="footer-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-lin
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Footer&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="footer-link">eBay</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy D&amp;D Tools</a>
+      <a href="/contact.html" class="footer-link">Contact Us</a>
+      <a href="/legal.html" class="footer-link">Legal</a>
+    </div>
+    <div class="footer-copy">Cards on Cards on Cards participates in affiliate programmes including Amazon Associates and eBay Partner Network. Purchases made through links on this site may earn a commission at no extra cost to you.</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -3,12 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="/c3logo.png">
-<title>Cards on Cards on Cards | Australian TCG Hub — Shop, Sell, Play</title>
-<meta name="description" content="Australia's TCG hub. Find sealed product on Amazon AU, buy singles on eBay, track your collection, and sharpen your next D&D session.">
+<title>Cards on Cards on Cards | Australian TCG Price Guide and Card Vault</title>
+<meta name="description" content="Australia's TCG price guide. 200,000+ cards across MTG, Pokemon, Lorcana, Yu-Gi-Oh and more with live AUD pricing and eBay AU buy links, updated daily.">
 <meta property="og:title" content="Cards on Cards on Cards | Australian TCG Hub">
 <meta property="og:url" content="https://cardsoncardsoncards.com.au">
 <meta property="og:type" content="website">
+<meta property="og:description" content="Australia's TCG price guide. 200,000+ cards across MTG, Pokemon, Lorcana, Yu-Gi-Oh and more with live AUD pricing and eBay AU buy links.">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Cards on Cards on Cards">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+<link rel="icon" type="image/png" href="/c3logo.png">
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
@@ -159,6 +166,15 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .tcg-name{font-size:11px;font-weight:700;color:var(--white);line-height:1.25}
 .tcg-tag{font-size:9px;color:rgba(160,168,192,.4)}
 
+.rel-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 14px;min-width:170px;flex-shrink:0;text-decoration:none;display:flex;flex-direction:column;gap:5px;transition:border-color .2s,transform .2s}
+.rel-card:hover{border-color:rgba(201,168,76,.35);transform:translateY(-2px)}
+.rel-card--cta{background:rgba(201,168,76,.04);border-color:rgba(201,168,76,.2);justify-content:center;align-items:center;text-align:center;min-width:150px}
+.rel-card--cta:hover{border-color:var(--gold)}
+.rel-game-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:4px;width:fit-content}
+.rel-name{font-size:13px;font-weight:700;color:var(--white);line-height:1.3;margin-top:2px}
+.rel-date{font-size:11px;color:var(--gold);font-weight:600}
+.rel-type{font-size:10px;color:rgba(160,168,192,.4)}
+
 /* MISSION */
 .mission{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:14px;padding:32px;text-align:center;margin-bottom:64px}
 .mission-text{font-size:15px;color:rgba(240,242,255,.6);max-width:540px;margin:0 auto;line-height:1.7}
@@ -201,6 +217,88 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 /* Active page override */
 .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
 
+
+/* CARD VAULT ADDITIONS */
+.hub-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.hub-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;border:1px solid var(--border);color:var(--silver);transition:all .2s}
+.hub-link:hover{color:var(--white);border-color:var(--silver);text-decoration:none}
+.hub-link--mtg{color:#A78BFA;border-color:rgba(167,139,250,.3)}
+.hub-link--mtg:hover{background:rgba(167,139,250,.08);border-color:#A78BFA}
+.hub-link--pokemon{color:#FFCC00;border-color:rgba(255,204,0,.3)}
+.hub-link--pokemon:hover{background:rgba(255,204,0,.08);border-color:#FFCC00}
+.hub-link--lorcana{color:#38BDF8;border-color:rgba(56,189,248,.3)}
+.hub-link--lorcana:hover{background:rgba(56,189,248,.08);border-color:#38BDF8}
+.hub-link--yugioh{color:#C084FC;border-color:rgba(192,132,252,.3)}
+.hub-link--yugioh:hover{background:rgba(192,132,252,.08);border-color:#C084FC}
+.hub-link--calendar{color:#F87171;border-color:rgba(248,113,113,.3)}
+.hub-link--calendar:hover{background:rgba(248,113,113,.08);border-color:#F87171}
+.hub-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.3)}
+.hub-link--generators:hover{background:rgba(34,211,238,.08);border-color:#22D3EE}
+
+/* VAULT DOORS */
+.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:48px}
+.vault-door{display:block;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-decoration:none;transition:all .25s;position:relative;overflow:hidden}
+.vault-door::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--door-colour,var(--gold));opacity:.6;transition:opacity .25s}
+.vault-door:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4);border-color:var(--door-colour,var(--gold));text-decoration:none}
+.vault-door:hover::before{opacity:1}
+.vault-door--locked{opacity:.65;cursor:default}
+.vault-door--locked:hover{transform:none;box-shadow:none}
+.door-icon{font-size:28px;margin-bottom:10px}
+.door-name{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px}
+.door-tagline{font-size:12px;color:rgba(160,168,192,.6);margin-bottom:10px}
+.door-status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px}
+.door-status--open{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ADE80}
+.door-status--soon{background:rgba(120,120,140,.08);border:1px solid rgba(120,120,140,.2);color:var(--silver)}
+.door-arrow{position:absolute;right:18px;bottom:18px;font-size:16px;opacity:0;transition:opacity .2s,transform .2s;transform:translateX(-4px)}
+.vault-door:not(.vault-door--locked):hover .door-arrow{opacity:1;transform:translateX(0)}
+
+/* CAROUSEL */
+.carousel-section{margin:-8px -24px 40px;overflow:hidden;position:relative}
+.carousel-section::before,.carousel-section::after{content:'';position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none}
+.carousel-section::before{left:0;background:linear-gradient(to right,var(--ink),transparent)}
+.carousel-section::after{right:0;background:linear-gradient(to left,var(--ink),transparent)}
+.carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;padding:0 24px}
+.carousel-heading{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:16px;padding:0 24px}
+.carousel-track{display:flex;gap:14px;padding:4px 24px 12px;animation:scrollTrack 50s linear infinite}
+.carousel-track:hover{animation-play-state:paused}
+@keyframes scrollTrack{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.c-card{flex-shrink:0;width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .22s;display:block}
+.c-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 20px rgba(201,168,76,.15);text-decoration:none}
+.c-card img{width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px}
+.c-card-name{font-size:11px;color:var(--white);font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-card-sub{font-size:10px;color:rgba(160,168,192,.6)}
+.c-card-price{font-size:12px;color:var(--gold);font-weight:700;margin-top:2px}
+/* RELEASE TICKER */
+.release-ticker{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.15);padding:0;overflow:hidden;height:36px;display:flex;align-items:center;position:relative}
+.release-ticker::before,.release-ticker::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+.release-ticker::before{left:0;background:linear-gradient(to right,var(--ink),transparent)}
+.release-ticker::after{right:0;background:linear-gradient(to left,var(--ink),transparent)}
+.ticker-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);white-space:nowrap;padding:0 16px 0 20px;flex-shrink:0;z-index:3}
+.ticker-track{display:flex;gap:0;animation:tickerScroll 50s linear infinite;flex-shrink:0}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;white-space:nowrap;font-size:11px;color:rgba(240,242,255,.7);border-left:1px solid rgba(201,168,76,.15)}
+.ticker-item strong{color:var(--white);font-weight:600}
+.ticker-game{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border-radius:3px;flex-shrink:0}
+
+@media(max-width:640px){.vault-grid{grid-template-columns:1fr 1fr}}
+
+  /* Set spotlight carousel auto-scroll */
+  @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes scrollRight{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+  .carousel-scroll{display:flex;gap:12px;animation:scrollLeft 30s linear infinite;will-change:transform;width:max-content}
+  .carousel-scroll--right{animation:scrollRight 30s linear infinite}
+  .carousel-scroll:hover,.carousel-scroll--right:hover{animation-play-state:paused}
+  .carousel-viewport{overflow:hidden;position:relative}
+  .carousel-viewport::before,.carousel-viewport::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;pointer-events:none}
+  .carousel-viewport::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+  .carousel-viewport::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+
+.nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA}
+.nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171}
+.nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE}
+.nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
+.nav-link--dnd{color:#A78BFA;border-color:rgba(139,92,246,.35)}.nav-link--dnd:hover{background:rgba(139,92,246,.06);border-color:#A78BFA}
 </style>
 </head>
 <body>
@@ -208,139 +306,200 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/c3logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
-      <span>Cards on Cards on Cards</span>
+      <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
     </a>
     <div class="nav-links">
-      <a href="/" class="nav-link nav-link--home nav-link--active">← Home</a>
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/compare" class="nav-link" style="color:#a78bfa;border-color:rgba(124,106,245,.35)">Compare</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
       <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
       <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
+      <a href="/dnd" class="nav-link nav-link--dnd">D&amp;D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
+      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
+      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
+      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
       <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
     </div>
   </div>
 </nav>
 
+<!-- RELEASE TICKER STRIP -->
+<div class="release-ticker">
+  <span class="ticker-label">Releases</span>
+  <div class="ticker-track" id="relTicker">
+    <span class="ticker-item"><a href="/cards/lorcana/sets/4500014" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Wilds Unknown</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound/sets/unleashed" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Unleashed</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Final Fantasy</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>OP-12</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Twilight of the Republic</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Late 2026</a></span>
+    <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
+    <!-- duplicate for loop -->
+    <span class="ticker-item"><a href="/cards/lorcana/sets/4500014" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Wilds Unknown</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound/sets/unleashed" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Unleashed</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Final Fantasy</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>OP-12</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Twilight of the Republic</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Late 2026</a></span>
+    <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
+  </div>
+</div></div>
+
 <div class="wrap">
 
-  <div class="hero">
+  <div class="hero" style="padding:56px 0 36px;text-align:center">
     <p class="hero-eyebrow">Cards on Cards on Cards</p>
-    <h1 class="hero-h1">Your Australian<br>TCG Home Base</h1>
-    <p class="hero-sub">Sealed product on Amazon AU, singles on eBay, and D&amp;D tools for your next campaign. We found them so you don't have to.</p>
+    <h1 class="hero-h1" style="font-size:clamp(28px,5vw,60px)">The Australian<br><span style="color:var(--gold)">TCG Card Vault</span></h1>
+    <p class="hero-sub">200,000+ cards across MTG, Pokemon, Lorcana, Yu-Gi-Oh and more. Live AUD pricing, eBay AU buy links, updated daily.</p>
     <div class="hero-cta-row">
-      <a href="/shop.html" class="btn btn-gold">Browse the Shop →</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="btn btn-ghost">eBay Singles ↗</a>
+      <a href="/cards" class="btn btn-gold">Open the Card Vault &#8594;</a>
+      <a href="/ev-calculator.html" class="btn btn-ghost">EV Calculator</a>
     </div>
   </div>
 
   <div class="trust-bar">
-    <div class="trust-item"><span>✅</span><span>300+ products confirmed on Amazon AU</span></div>
-    <div class="trust-item"><span>📦</span><span>Local + international shipping options</span></div>
-    <div class="trust-item"><span>⭐</span><span><strong>25,000+</strong> eBay listings</span></div>
-    <div class="trust-item"><span>🎲</span><span>D&amp;D tools from our Etsy store</span></div>
+    <div class="trust-item"><span>&#127183;</span><span><strong>200,000+</strong> cards tracked in AUD</span></div>
+    <div class="trust-item"><span>&#128214;</span><span><strong>247+</strong> blog posts and guides</span></div>
+    <div class="trust-item"><span>&#11088;</span><span><strong>25,441</strong> eBay listings</span></div>
+    <div class="trust-item"><span>&#128260;</span><span>Prices updated <strong>daily</strong></span></div>
   </div>
 
-  <div class="destinations">
+  <!-- Card Vault Hub Navigation -->
+  <div class="hub-nav">
+    <a href="/cards/mtg" class="hub-link hub-link--mtg">&#9876;&#65039; MTG Cards</a>
+    <a href="/cards/pokemon" class="hub-link hub-link--pokemon">&#9889; Pokemon Cards</a>
+    <a href="/cards/lorcana" class="hub-link hub-link--lorcana">&#127984; Lorcana Cards</a>
+    <a href="/cards/yugioh" class="hub-link hub-link--yugioh">&#128065; Yu-Gi-Oh Cards</a>
+    <a href="/calendar" class="hub-link hub-link--calendar">&#128197; Release Calendar</a>
+    <a href="/generators" class="hub-link hub-link--generators">&#127922; Card Generators</a>
+  </div>
 
-    <a href="/shop.html" class="dest-card dest-card--shop dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--shop">🃏</div>
-        <div>
-          <p class="dest-label">TCG Shop</p>
-          <h2 class="dest-title">Sealed Product on Amazon AU</h2>
-        </div>
-      </div>
-      <p class="dest-body">Pokemon, MTG, One Piece, Lorcana, Dragon Ball, Star Wars Unlimited, Riftbound and Yu-Gi-Oh. Booster boxes, collector boxes, commander decks and accessories — all confirmed on Amazon AU.</p>
-      <p class="dest-arrow">Shop Now →</p>
-    </a>
-
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="dest-card dest-card--ebay dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--ebay">🏪</div>
-        <div>
-          <p class="dest-label">eBay Store</p>
-          <h2 class="dest-title">Singles &amp; Sealed on eBay</h2>
-        </div>
-      </div>
-      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 25,000+ listings across all major TCGs with Australian shipping.</p>
-      <p class="dest-arrow">Visit Store ↗</p>
-    </a>
-
-    <a href="/blog" class="dest-card dest-card--blog dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--blog">📖</div>
-        <div>
-          <p class="dest-label">Blog</p>
-          <h2 class="dest-title">Guides, Reviews &amp; Set Breakdowns</h2>
-        </div>
-      </div>
-      <p class="dest-body">Buying guides, booster box ROI breakdowns, game introductions and set reviews. Written for Australian players, priced in AUD.</p>
-      <p class="dest-arrow">Read Articles →</p>
-    </a>
-
-    <!-- D&D TOOLS — div not <a> to allow nested links -->
-    <div class="dest-card dest-card--dnd" onclick="window.open('https://blasdigital.etsy.com','_blank')">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--dnd">🎲</div>
-        <div>
-          <p class="dest-label">D&amp;D Tools · Etsy Store</p>
-          <h2 class="dest-title">Run Better D&amp;D Sessions</h2>
-        </div>
-      </div>
-      <p class="dest-body">Printable D&amp;D tools from our Etsy store. Tavern mini-games to fill downtime, dungeon traps and puzzles, and DM toolkits to build adventures faster.</p>
-      <div class="dnd-section-links" onclick="event.stopPropagation()">
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56813304" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">🍺</span> Tavern Games
-        </a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=57106584" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">🗝️</span> Traps &amp; Puzzles
-        </a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56829599" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">📋</span> DM Tools
-        </a>
-      </div>
-      <p class="dest-arrow" style="margin-top:6px">Visit Etsy Shop ↗</p>
+  <!-- Commander Spotlight Carousel -->
+  <div class="carousel-section" id="commander-carousel">
+    <p class="carousel-eyebrow">MTG Commander Spotlight</p>
+    <p class="carousel-heading">Your Next Commander Awaits</p>
+    <div class="carousel-track" id="carousel-track-inner">
+      <div class="c-card" style="width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;color:rgba(160,168,192,.4);font-size:12px">Loading commanders...</div>
     </div>
+    <div style="text-align:center;margin-top:12px">
+      <a href="/cards/mtg/random-commander" class="btn btn-ghost" style="font-size:13px">Generate a random Commander &#8594;</a>
+    </div>
+  </div>
 
-    <a href="/tracker.html" class="dest-card dest-card--tracker dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--tracker">📊</div>
-        <div>
-          <p class="dest-label">Collection Tracker</p>
-          <h2 class="dest-title">Track Your Collection</h2>
-        </div>
+  <!-- Vault Doors -->
+  <!-- Quiz callout -->
+  <div style="background:linear-gradient(135deg,rgba(244,114,182,.08),rgba(167,139,250,.08));border:1px solid rgba(244,114,182,.2);border-radius:14px;padding:20px 24px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#F472B6;margin-bottom:4px">Not sure where to start?</div>
+      <div style="font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF">Find Your Perfect TCG</div>
+      <div style="font-size:13px;color:#A0A8C0;margin-top:4px">5 quick questions. Get a personalised recommendation with AU pricing.</div>
+    </div>
+    <a href="/quizzes/which-tcg" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;background:linear-gradient(135deg,#F472B6,#A78BFA);color:#0A0C14;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0">Take the Quiz &rarr;</a>
+  </div>
+
+  <!-- Riftbound Unleashed carousel -->
+  <div style="margin-bottom:48px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#818CF8;display:block;margin-bottom:4px">Riftbound &middot; Latest Set</span>
+        <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">Unleashed &mdash; Top Cards</span>
       </div>
-      <p class="dest-body">Log your sealed product, track booster box ROI, and keep a record of what you've opened. Free download — no app required.</p>
-      <p class="dest-arrow">Open Tracker →</p>
+      <a href="/cards/riftbound/sets/unleashed" style="font-size:12px;color:#818CF8;text-decoration:none;font-weight:600">View all &rarr;</a>
+    </div>
+    <div class="carousel-viewport"><div id="unleashed-carousel" class="carousel-scroll"></div></div>
+  </div>
+
+  <!-- Lorcana Wilds Unknown carousel -->
+  <div style="margin-bottom:48px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#38BDF8;display:block;margin-bottom:4px">Lorcana &middot; Latest Set</span>
+        <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">Wilds Unknown &mdash; Top Cards</span>
+      </div>
+      <a href="/cards/lorcana/sets/4500014" style="font-size:12px;color:#38BDF8;text-decoration:none;font-weight:600">View all &rarr;</a>
+    </div>
+    <div class="carousel-viewport"><div id="wilds-carousel" class="carousel-scroll carousel-scroll--right"></div></div>
+  </div>
+
+  <div class="vault-grid">
+
+    <a href="/cards/mtg" class="vault-door" style="--door-colour:#A78BFA">
+      <div class="door-icon">&#129497;</div>
+      <div class="door-name">Magic: The Gathering</div>
+      <div class="door-tagline">96,000+ cards &#183; Updated daily</div>
+      <div class="door-status door-status--open">&#9889; Live Now</div>
+      <div class="door-arrow">&#8594;</div>
     </a>
 
-  </div>
+    <a href="/cards/pokemon" class="vault-door" style="--door-colour:#FFCC00">
+      <div class="door-icon">&#9889;</div>
+      <div class="door-name">Pokemon TCG</div>
+      <div class="door-tagline">31,488 cards &middot; Updated daily</div>
+      <div class="door-status door-status--open">&#9889; Live Now</div>
+      <div class="door-arrow">&#8594;</div>
+    </a>
 
-  <div class="section-hd">
-    <span class="section-eyebrow">What We Cover</span>
-    <h2 class="section-title">All the Games That Matter</h2>
-  </div>
-  <div class="tcg-grid">
-    <a href="/shop.html#pokemon" class="tcg-card"><span class="tcg-icon">⚡</span><div class="tcg-name">Pokémon TCG</div><span class="tcg-tag">Scarlet &amp; Violet era</span></a>
-    <a href="/shop.html#mtg" class="tcg-card"><span class="tcg-icon">⚔️</span><div class="tcg-name">Magic: The Gathering</div><span class="tcg-tag">Standard + Commander</span></a>
-    <a href="/shop.html#onepiece" class="tcg-card"><span class="tcg-icon">☠️</span><div class="tcg-name">One Piece TCG</div><span class="tcg-tag">EN &amp; JP versions</span></a>
-    <a href="/shop.html#lorcana" class="tcg-card"><span class="tcg-icon">🏰</span><div class="tcg-name">Disney Lorcana</div><span class="tcg-tag">All chapters</span></a>
-    <a href="/shop.html#dragonball" class="tcg-card"><span class="tcg-icon">🐉</span><div class="tcg-name">Dragon Ball Super TCG</div><span class="tcg-tag">Fusion World era</span></a>
-    <a href="/shop.html#starwars" class="tcg-card"><span class="tcg-icon">✨</span><div class="tcg-name">Star Wars Unlimited</div><span class="tcg-tag">All sets</span></a>
-    <a href="/shop.html#riftbound" class="tcg-card"><span class="tcg-icon">🎮</span><div class="tcg-name">Riftbound</div><span class="tcg-tag">League of Legends TCG</span></a>
-    <a href="/shop.html#yugioh" class="tcg-card"><span class="tcg-icon">👁️</span><div class="tcg-name">Yu-Gi-Oh!</div><span class="tcg-tag">Recent sets</span></a>
+    <a href="/cards/lorcana" class="vault-door" style="--door-colour:#38BDF8">
+      <div class="door-icon">&#127984;</div>
+      <div class="door-name">Disney Lorcana</div>
+      <div class="door-tagline">2,911 cards &#183; Updated daily</div>
+      <div class="door-status door-status--open">&#9889; Live Now</div>
+      <div class="door-arrow">&#8594;</div>
+    </a>
+
+    <a href="/cards/yugioh" class="vault-door" style="--door-colour:#C084FC">
+      <div class="door-icon">&#128065;</div>
+      <div class="door-name">Yu-Gi-Oh!</div>
+      <div class="door-tagline">46,588 cards &middot; Updated daily</div>
+      <div class="door-status door-status--open">&#9889; Live Now</div>
+      <div class="door-arrow">&#8594;</div>
+    </a>
+
+    <a href="/cards/onepiece" class="vault-door" style="--door-colour:#F97316">
+      <div class="door-icon">&#9760;&#65039;</div>
+      <div class="door-name">One Piece TCG</div>
+      <div class="door-tagline">6,641 cards &middot; Updated daily</div>
+      <div class="door-status door-status--open">&#9889; Live Now</div>
+      <div class="door-arrow">&rarr;</div>
+    </a>
+
+    <a href="/cards/riftbound" class="vault-door" style="--door-colour:#818CF8">
+      <div class="door-icon">&#9876;&#65039;</div>
+      <div class="door-name">Riftbound</div>
+      <div class="door-tagline">1,159 cards &middot; League of Legends TCG</div>
+      <div class="door-status door-status--open">&#9889; Live Now</div>
+      <div class="door-arrow">&rarr;</div>
+    </a>
+
+    <a href="/cards/starwars" class="vault-door" style="--door-colour:#FFE81F">
+      <div class="door-icon">&#128640;</div>
+      <div class="door-name">Star Wars Unlimited</div>
+      <div class="door-tagline">6,113 cards &middot; Updated daily</div>
+      <div class="door-status door-status--open">&#9889; Live Now</div>
+      <div class="door-arrow">&rarr;</div>
+    </a>
+
+    <a href="/cards/dragonball" class="vault-door" style="--door-colour:#F97316">
+      <div class="door-icon">&#128009;</div>
+      <div class="door-name">Dragon Ball Super</div>
+      <div class="door-tagline">6,261 cards &middot; Updated daily</div>
+      <div class="door-status door-status--open">&#9889; Live Now</div>
+      <div class="door-arrow">&rarr;</div>
+    </a>
+
   </div>
 
   <div class="mission">
     <p class="section-eyebrow" style="margin-bottom:12px">Our Approach</p>
-    <p class="mission-text">We manually confirm every product on amazon.com.au before it goes live. <strong>We found them so you don't have to.</strong> Every click earns a small commission that keeps the site running — at no extra cost to you.</p>
+    <p class="mission-text">We manually confirm every product on amazon.com.au before it goes live. <strong>We found them so you don't have to.</strong> Every click earns a small commission that keeps the site running &#8212; at no extra cost to you.</p>
   </div>
 
 </div>
@@ -356,9 +515,84 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy D&amp;D Tools</a>
       <a href="/contact.html" class="footer-link">Contact Us</a>
     </div>
-    <div class="footer-copy">© 2026 Cards on Cards on Cards. All rights reserved.</div>
+    <div class="footer-copy">&#169; 2026 Cards on Cards on Cards. All rights reserved.</div>
   </div>
 </footer>
 
+
+<script>
+// Commander Carousel &#8212; calls Netlify function (server-side, no auth needed client-side)
+(async () => {
+  try {
+    const res = await fetch('/.netlify/functions/commander-carousel?mode=top&limit=40');
+    if (!res.ok) { console.warn('Carousel fetch failed:', res.status); return; }
+    const data = await res.json();
+    let commanders = data.commanders || [];
+    if (!commanders.length) return;
+    // Shuffle for variety on each page load
+    for (let i = commanders.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [commanders[i], commanders[j]] = [commanders[j], commanders[i]];
+    }
+    commanders = commanders.slice(0, 20);
+    const items = commanders.map(c => {
+      const price = c.price ? '~AU$' + (parseFloat(c.price) * 1.58).toFixed(0) : '';
+      return `<a href="${c.cardVaultUrl || '/cards/mtg/' + c.slug}" class="c-card">
+        <img src="${c.image || ''}" alt="${c.name || ''}" loading="lazy" onerror="this.style.display='none'">
+        <div class="c-card-name">${c.name || ''}</div>
+        <div class="c-card-price">${price}</div>
+      </a>`;
+    }).join('');
+    const track = document.getElementById('carousel-track-inner');
+    if (track) track.innerHTML = items + items;
+  } catch(e) { console.warn('Carousel error', e); }
+})();
+</script>
+<script>
+(function(){
+  var ticker = document.getElementById('relTicker');
+  if (!ticker) return;
+  ticker.addEventListener('mouseenter', function(){ ticker.style.animationPlayState = 'paused'; });
+  ticker.addEventListener('mouseleave', function(){ ticker.style.animationPlayState = 'running'; });
+  ticker.addEventListener('touchstart', function(){ ticker.style.animationPlayState = 'paused'; }, {passive:true});
+  ticker.addEventListener('touchend', function(){ setTimeout(function(){ ticker.style.animationPlayState = 'running'; }, 2000); }, {passive:true});
+})();
+
+// Set carousels via server-side Netlify function
+function buildCardEl(c, colour) {
+  var a = document.createElement('a');
+  a.href = c.cardUrl || '#';
+  a.style.cssText = 'flex:0 0 150px;background:#111420;border:1px solid #252840;border-radius:10px;padding:10px;text-decoration:none;display:block;transition:border-color .2s';
+  a.onmouseover = function(){this.style.borderColor=colour;};
+  a.onmouseout  = function(){this.style.borderColor='#252840';};
+  var name = (c.name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  a.innerHTML = (c.image_url
+    ? '<img src="'+c.image_url+'" alt="'+name+'" style="width:100%;border-radius:6px;display:block" loading="lazy">'
+    : '<div style="height:120px;background:#0d0f1a;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px">&#128228;</div>') +
+    '<div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">'+name+'</div>'+
+    '<div style="font-size:11px;color:'+colour+';font-weight:700;margin-top:3px">'+(c.priceDisplay||'')+'</div>';
+  return a;
+}
+
+async function loadSetCarousel(game, setId, containerId, colour) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  try {
+    var res = await fetch('/api/set-carousel?game='+game+'&set_id='+setId+'&limit=16');
+    if (!res.ok) { el.parentElement.style.display='none'; return; }
+    var data = await res.json();
+    if (!data.cards || !data.cards.length) { el.parentElement.style.display='none'; return; }
+    // Build cards, duplicate for seamless loop
+    var cards = data.cards;
+    var html = '';
+    cards.forEach(function(c){ el.appendChild(buildCardEl(c, colour)); });
+    // Duplicate for seamless infinite scroll
+    cards.forEach(function(c){ el.appendChild(buildCardEl(c, colour)); });
+  } catch(e) { if(el.parentElement) el.parentElement.style.display='none'; }
+}
+
+loadSetCarousel('riftbound', 500006,  'unleashed-carousel', '#818CF8');
+loadSetCarousel('lorcana',   4500014, 'wilds-carousel',     '#38BDF8');
+</script>
 </body>
 </html>
