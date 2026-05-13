@@ -8,6 +8,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/c3-og-banner.png": "c3-og-banner.png"});
   eleventyConfig.addPassthroughCopy({"sitemap.xml": "sitemap.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-index.xml": "sitemap-index.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-cards.xml": "sitemap-cards.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-pokemon.xml": "sitemap-pokemon.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-yugioh.xml": "sitemap-yugioh.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-lorcana.xml": "sitemap-lorcana.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-onepiece.xml": "sitemap-onepiece.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-riftbound.xml": "sitemap-riftbound.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-dragonball.xml": "sitemap-dragonball.xml"});
+  eleventyConfig.addPassthroughCopy({"sitemap-starwars.xml": "sitemap-starwars.xml"});
   eleventyConfig.addPassthroughCopy({"robots.txt": "robots.txt"});
   eleventyConfig.addPassthroughCopy({"ev-calculator": "ev-calculator"});
   eleventyConfig.addPassthroughCopy({"quizzes": "quizzes"});
