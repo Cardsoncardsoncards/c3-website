@@ -60,34 +60,76 @@ async function fetchTopMovers(game, direction = 'gainers', limit = 10) {
 }
 
 async function fetchMTGTopMovers(direction = 'up', limit = 10) {
-  // Use Supabase mtg_price_snapshots for MTG movers
-  const order = direction === 'up' ? 'price_change_7d.desc' : 'price_change_7d.asc';
-  const filter = direction === 'up' ? 'price_change_7d=gt.5' : 'price_change_7d=lt.-5';
+  // Compute movers by joining today vs 7 days ago snapshots
+  // price_change_7d column is not populated, so we join two dates
   try {
-    const snapshots = await supabaseGet(
-      `mtg_price_snapshots?${filter}&order=${order}&limit=${limit}&select=scryfall_id,price_aud,price_change_7d,snapshot_date`
+    const today = await supabaseGet(
+      `mtg_price_snapshots?order=snapshot_date.desc&limit=1&select=snapshot_date`
     );
-    if (!snapshots.length) return [];
-    const ids = snapshots.map(s => s.scryfall_id).join(',');
+    if (!today.length) return [];
+    const latestDate = today[0].snapshot_date;
+
+    // Get date 7 days ago from latest
+    const d = new Date(latestDate);
+    d.setDate(d.getDate() - 7);
+    const weekAgoDate = d.toISOString().split('T')[0];
+
+    // Fetch latest snapshots - top 1500 by price (covers all meaningful movers)
+    const latestSnaps = await supabaseGet(
+      `mtg_price_snapshots?snapshot_date=eq.${latestDate}&price_aud=gt.1&select=scryfall_id,price_aud&order=price_aud.desc&limit=1500`
+    );
+
+    // Fetch week-ago snapshots for the same cards
+    const latestIds = latestSnaps.map(s => s.scryfall_id).join(',');
+    const weekAgoSnaps = latestIds.length ? await supabaseGet(
+      `mtg_price_snapshots?snapshot_date=eq.${weekAgoDate}&scryfall_id=in.(${latestIds})&select=scryfall_id,price_aud&limit=1500`
+    ) : [];
+
+    if (!latestSnaps.length || !weekAgoSnaps.length) return [];
+
+    // Build lookup map for week-ago prices
+    const weekAgoMap = {};
+    weekAgoSnaps.forEach(s => { weekAgoMap[s.scryfall_id] = parseFloat(s.price_aud); });
+
+    // Compute % changes
+    const movers = latestSnaps
+      .filter(s => weekAgoMap[s.scryfall_id] && weekAgoMap[s.scryfall_id] > 0)
+      .map(s => ({
+        scryfall_id: s.scryfall_id,
+        priceAud: parseFloat(s.price_aud),
+        weekAgoAud: weekAgoMap[s.scryfall_id],
+        pct: ((parseFloat(s.price_aud) - weekAgoMap[s.scryfall_id]) / weekAgoMap[s.scryfall_id]) * 100
+      }))
+      .filter(s => direction === 'up' ? s.pct >= 5 : s.pct <= -5)
+      .sort((a, b) => direction === 'up' ? b.pct - a.pct : a.pct - b.pct)
+      .slice(0, limit);
+
+    if (!movers.length) return [];
+
+    const ids = movers.map(s => s.scryfall_id).join(',');
     const cards = await supabaseGet(
-      `mtg_cards?scryfall_id=in.(${ids})&select=name,slug,set_name,rarity,image_uri_small,price_aud,price_usd`
+      `mtg_cards?scryfall_id=in.(${ids})&select=name,slug,set_name,rarity,image_uri_small,price_aud,price_usd,scryfall_id`
     );
-    return snapshots.map(snap => {
-      const card = cards.find(c => c.scryfall_id === snap.scryfall_id);
+
+    return movers.map(mover => {
+      const card = cards.find(c => c.scryfall_id === mover.scryfall_id);
       if (!card) return null;
       return {
         name: card.name,
         setName: card.set_name,
         price: card.price_usd || 0,
-        priceAud: snap.price_aud || card.price_aud || 0,
-        change7d: snap.price_change_7d || 0,
+        priceAud: mover.priceAud,
+        change7d: parseFloat(mover.pct.toFixed(1)),
         rarity: card.rarity || '',
         image: card.image_uri_small || '',
         slug: card.slug,
         game: 'mtg',
       };
     }).filter(Boolean);
-  } catch { return []; }
+  } catch (e) {
+    console.error('fetchMTGTopMovers error:', e.message);
+    return [];
+  }
 }
 
 async function fetchMTGBuySignals(limit = 8) {
@@ -265,6 +307,19 @@ function renderPage({ gainers, losers, buySignals, sellSignals, selectedGame, up
     .game-filter-btn{padding:7px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;letter-spacing:.04em}
     .game-filter-btn:hover{border-color:var(--accent);color:var(--accent)}
     .game-filter-btn.active{background:var(--accent);border-color:var(--accent);color:#000}
+    .top5-strip{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:24px;position:relative;z-index:1}
+    .top5-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:12px}
+    .top5-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+    .top5-scroll::-webkit-scrollbar{display:none}
+    .top5-card{flex:0 0 110px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;text-decoration:none;transition:all .2s}
+    .top5-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .top5-img{width:100%;border-radius:4px;max-height:90px;object-fit:contain;display:block;margin-bottom:4px}
+    .top5-img-placeholder{height:70px;display:flex;align-items:center;justify-content:center;font-size:24px}
+    .top5-name{font-size:10px;color:#e8eaf0;font-weight:600;line-height:1.3;margin-bottom:2px;font-family:sans-serif}
+    .top5-change{font-size:11px;font-weight:700;margin-bottom:1px}
+    .top5-up{color:#4caf50}
+    .top5-down{color:#f44336}
+    .top5-price{font-size:10px;color:var(--accent);font-weight:700;font-family:sans-serif}
 
     /* Section tabs */
     .section-tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);position:relative;z-index:1}
@@ -378,6 +433,20 @@ function renderPage({ gainers, losers, buySignals, sellSignals, selectedGame, up
   <div class="game-filters" id="game-filters">
     ${gameOptions}
   </div>
+
+  ${gainers.length >= 3 ? `
+  <div class="top5-strip" id="top5-strip">
+    <div class="top5-label">📈 Biggest Movers This Week (MTG)</div>
+    <div class="top5-scroll">
+      ${gainers.slice(0, 5).map(c => `
+        <a href="/cards/mtg/${c.slug}" class="top5-card" onclick="gtag('event','market_top5_clicked',{card:'${c.name.replace(/'/g,"\'")}'})" title="${c.name} — +${c.change7d}% this week">
+          ${c.image ? `<img src="${c.image}" alt="${c.name}" class="top5-img" loading="lazy">` : '<div class="top5-img-placeholder">🃏</div>'}
+          <div class="top5-name">${c.name.length > 18 ? c.name.slice(0,16)+'…' : c.name}</div>
+          <div class="top5-change top5-up">+${c.change7d}%</div>
+          <div class="top5-price">AU$${parseFloat(c.priceAud).toFixed(2)}</div>
+        </a>`).join('')}
+    </div>
+  </div>` : ''}
 
   <div class="signal-explainer">
     <div class="signal-card">

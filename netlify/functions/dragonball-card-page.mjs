@@ -57,11 +57,13 @@ async function handleSetPage(setSlug, headers) {
   const set = sets[0];
 
   const [cards] = await Promise.all([
-    supabaseGet(`dragonball_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`)
+    supabaseGet(`dragonball_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=400&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`)
   ]);
 
   const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
-  const pricedCards = (cards || []).filter(c => toAud(c) > 0);
+  const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
+  const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
+  const sealedCards = (cards || []).filter(c => !isSingles(c));
   const top5 = pricedCards.slice(0, 5);
   const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' dragon ball super')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const metaDesc = `Browse ${cards?.length || 0} Dragon Ball Super cards from ${set.name}. View card prices in AUD and buy on eBay AU. Updated daily.`;
@@ -75,7 +77,7 @@ async function handleSetPage(setSlug, headers) {
     </a>`;
   }).join('');
 
-  const allCardsHTML = cards && cards.length ? cards.map(c => {
+  const allCardsHTML = (cards && cards.length) ? cards.filter(isSingles).map(c => {
     const aud = toAud(c);
     return `<a href="/cards/dragonball/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block">
       ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
@@ -150,7 +152,7 @@ async function handleSetPage(setSlug, headers) {
   </div>
   ${top5.length ? `<div style="margin-bottom:28px"><div class="section-title">Most Valuable Cards</div><div class="cards-scroll">${top5HTML}</div></div>` : ''}
   <div style="margin-bottom:28px">
-    <div class="section-title">${cards?.length ? `All Cards (${cards.length})` : 'Cards'}</div>
+    <div class="section-title">${pricedCards.length ? `Singles (${pricedCards.length})` : 'Cards'}</div>
     <div class="cards-grid">${allCardsHTML}</div>
   </div>
   <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0">

@@ -341,34 +341,26 @@ function renderCompareTable(cards) {
 
 function renderEmptyState() {
   const suggestions = [
-    { label: 'Lightning Bolt vs Chain Lightning', tokens: 'mtg:lightning-bolt-m11,mtg:chain-lightning-commander-legends-battle-for-baldurs-gate', desc: 'Classic burn spell showdown' },
-    { label: 'Sol Ring vs Arcane Signet', tokens: 'mtg:sol-ring-commander-2011,mtg:arcane-signet-throne-of-eldraine', desc: 'Best Commander mana rock?' },
-    { label: 'Charizard vs Black Lotus', tokens: 'pokemon:charizard-base-set,mtg:black-lotus-limited-edition-alpha', desc: 'Ultimate cross-game collector showdown' },
-    { label: 'Rhystic Study vs Mystic Remora', tokens: 'mtg:rhystic-study-prophecy,mtg:mystic-remora-ice-age', desc: 'Best Commander card draw' },
-    { label: 'Counterspell vs Mana Leak', tokens: 'mtg:counterspell-tenth-edition,mtg:mana-leak-magic-2012', desc: 'Control staple comparison' },
+    { label: 'Lightning Bolt vs Sol Ring', tokens: 'mtg:lightning-bolt,mtg:sol-ring', desc: 'Most played MTG cards ever' },
+    { label: 'Rhystic Study vs Mana Crypt', tokens: 'mtg:rhystic-study,mtg:mana-crypt', desc: 'Commander staple showdown' },
+    { label: 'Counterspell vs Black Lotus', tokens: 'mtg:counterspell,mtg:black-lotus', desc: 'Cheap vs the most valuable card in history' },
+    { label: 'Sol Ring vs Command Tower', tokens: 'mtg:sol-ring,mtg:command-tower', desc: 'Best Commander staples compared' },
+    { label: 'Rhystic Study vs Counterspell', tokens: 'mtg:rhystic-study,mtg:counterspell', desc: 'Draw vs counter — which is worth more?' },
   ];
 
-  const gameChips = Object.entries(GAME_CONFIG).map(([g, cfg]) =>
-    `<button class="game-chip" data-game="${g}" style="--gc:${cfg.color}" onclick="setGameFilter('${g}')">${cfg.label}</button>`
+  const suggestionsHTML = suggestions.map((s, i) =>
+    `<a href="/compare?cards=${s.tokens}" class="suggestion-card" style="animation-delay:${i * 0.07}s" onclick="gtag('event','compare_suggestion_clicked',{label:'${s.label.replace(/'/g, "\\'")}'})">`+
+    `<div class="suggestion-label">${s.label}</div>`+
+    `<div class="suggestion-desc">${s.desc}</div>`+
+    `</a>`
   ).join('');
 
   return `<div class="empty-state">
     <div class="empty-icon">⚖️</div>
     <h2>Compare Cards Across All 8 TCGs</h2>
-    <p>Search for up to 5 cards from any game. Compare AUD prices, trends, formats, and find the best deal on eBay AU.</p>
-    <div class="empty-search-wrap">
-      <input type="text" id="main-search" class="search-input" placeholder='Try "Charizard", "Lightning Bolt", "Elsa"...' autocomplete="off" oninput="handleSearch(this.value)" onkeydown="handleSearchKey(event)" aria-label="Search for a card">
-      <div id="search-results" class="search-results" style="display:none"></div>
-    </div>
-    <div class="game-chips">${gameChips}</div>
+    <p>Use the search bar above to find up to 5 cards from any game. Compare AUD prices, trends, formats, and find the best deal on eBay AU.</p>
     <div class="suggestions-label">Popular comparisons to try</div>
-    <div class="suggestions-grid">
-      ${suggestions.map((s, i) => `
-        <a href="/compare?cards=${s.tokens}" class="suggestion-card" style="animation-delay:${i * 0.07}s" onclick="gtag('event','compare_suggestion_clicked',{label:'${s.label.replace(/'/g,"\\'")}'})"  >
-          <div class="suggestion-label">${s.label}</div>
-          <div class="suggestion-desc">${s.desc}</div>
-        </a>`).join('')}
-    </div>
+    <div class="suggestions-grid">${suggestionsHTML}</div>
     <div class="market-teaser">
       <span>📊 See what's moving across all TCGs this week</span>
       <a href="/market" class="market-link" onclick="gtag('event','compare_market_link_clicked',{from:'empty_state'})">C3 Market →</a>
@@ -882,10 +874,13 @@ export default async (req) => {
   const cards = cardResults
     .filter(c => c !== null)
     .map(c => {
+      // MTG: priceAud comes directly from price_aud column (already AUD) — do not recalculate
+      // Non-MTG: priceAud was computed as market_price * 1.58 fallback — update to live rate
+      if (c.game === 'mtg') return c;
       if (!c.priceUsd) return c;
       return {
         ...c,
-        priceAud: c.priceUsd ? parseFloat((c.priceUsd * usdToAud).toFixed(2)) : c.priceAud,
+        priceAud:     c.priceUsd ? parseFloat((c.priceUsd * usdToAud).toFixed(2)) : c.priceAud,
         priceAudFoil: c.priceAudFoil ? parseFloat((c.priceAudFoil / 1.58 * usdToAud).toFixed(2)) : null,
       };
     });

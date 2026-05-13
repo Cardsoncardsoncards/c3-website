@@ -36,6 +36,9 @@
 [functions."sitemap-starwars"]
   timeout = 30
 
+[functions."market-insights"]
+  timeout = 26
+
 # ── Favicon ──────────────────────────────────────────────────
 [[redirects]]
   from = "/favicon.ico"

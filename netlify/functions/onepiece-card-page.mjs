@@ -83,12 +83,14 @@ async function handleSetPage(setSlug, htmlHeaders) {
   const set = sets[0];
 
   const [cards, ebayListings] = await Promise.all([
-    supabaseGet(`onepiece_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
+    supabaseGet(`onepiece_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=400&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
     ebayToken ? getEbayListings(set.name + ' onepiece', ebayToken).catch(() => []) : []
   ]);
 
   const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
-  const pricedCards = (cards || []).filter(c => toAud(c) > 0);
+  const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
+  const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
+  const sealedCards = (cards || []).filter(c => !isSingles(c));
   const top5 = pricedCards.slice(0, 5);
 
   const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' onepiece')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
@@ -104,7 +106,7 @@ async function handleSetPage(setSlug, htmlHeaders) {
     </a>`;
   }).join('');
 
-  const allCardsHTML = cards && cards.length ? cards.map(c => {
+  const allCardsHTML = (cards && cards.length) ? cards.filter(isSingles).map(c => {
     const aud = toAud(c);
     return `<a href="/cards/onepiece/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block">
       ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
@@ -172,7 +174,7 @@ ${NAV}
   ${top5.length ? `<div class="section"><div class="section-title">Most Valuable Cards</div><div class="cards-scroll">${top5HTML}</div></div>` : ''}
 
   <div class="section">
-    <div class="section-title">${cards?.length ? `All Cards (${cards.length})` : 'Cards'}</div>
+    <div class="section-title">${pricedCards.length ? `Singles (${pricedCards.length})` : 'Cards'}</div>
     <div class="cards-grid">${allCardsHTML}</div>
   </div>
 
