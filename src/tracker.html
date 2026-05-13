@@ -39,16 +39,16 @@ nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:1
 .nav-link--active{color:var(--gold);border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
 .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.35)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF;color:#C8DDFF}
 .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
-.nav-link--compare{color:#a78bfa;border-color:rgba(124,106,245,.35)}.nav-link--compare:hover{background:rgba(124,106,245,.06);border-color:#a78bfa;color:#c4b5fd}
-.nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover{background:rgba(74,222,128,.06);border-color:#4ADE80;color:#86efac}
 .nav-link--shop{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--shop:hover{background:rgba(201,168,76,.06);border-color:#C9A84C;color:#E8C86A}
 .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1;color:#A5DFC0}
 .nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
 .nav-link--tracker{color:#C084FC;border-color:rgba(192,132,252,.35)}.nav-link--tracker:hover{background:rgba(192,132,252,.06);border-color:#C084FC;color:#D8B4FE}
-.nav-link--ebay{color:#4ADE80;border-color:rgba(74,222,128,.35);background:rgba(74,222,128,.05)}.nav-link--ebay:hover{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86efac}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}.nav-link--ebay:hover{background:rgba(96,165,250,.06);border-color:#60A5FA;color:#93C5FD}
 .nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.35)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171;color:#FCA5A5}
 .nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE;color:#67E8F9}
 .nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
+.nav-link--dnd{color:#A78BFA;border-color:rgba(139,92,246,.35)}.nav-link--dnd:hover{background:rgba(139,92,246,.06);border-color:#A78BFA;color:#C4B5FD}
+.nav-link--contact{color:#94A3B8;border-color:rgba(148,163,184,.35)}.nav-link--contact:hover{background:rgba(148,163,184,.06);border-color:#94A3B8;color:#CBD5E1}
 
 /* ── TICKER ── */
 .release-ticker{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.15);padding:0;overflow:hidden;height:36px;display:flex;align-items:center;position:relative}
@@ -154,16 +154,17 @@ footer a:hover{color:var(--white)}
     <div class="nav-links">
       <a href="/" class="nav-link nav-link--home">Home</a>
       <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
-      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
       <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/tracker.html" class="nav-link nav-link--tracker nav-link--active">Tracker</a>
+      <a href="/compare" class="nav-link" style="color:#a78bfa;border-color:rgba(124,106,245,.35);background:none">Compare</a>
       <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/tracker.html" class="nav-link nav-link--tracker nav-link--active">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
       <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
       <a href="/generators" class="nav-link nav-link--generators">Generators</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
+      <a href="/dnd" class="nav-link nav-link--dnd">D&amp;D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
+      <a href="/contact.html" class="nav-link nav-link--contact">Contact</a>
     </div>
   </div>
 </nav>
@@ -220,6 +221,7 @@ footer a:hover{color:var(--white)}
 
 <div class="gold-divider"></div>
 
+
 <div class="gold-divider"></div>
 <!-- ══ LIVE CARD CAROUSELS ══════════════════════════════════════ -->
 <section class="section section--alt" id="live-prices">
@@ -231,8 +233,8 @@ footer a:hover{color:var(--white)}
     <!-- Carousel 1: Top MTG value cards -->
     <div style="margin-top:32px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--white)">&#129497; Top MTG Cards by Value</div>
-        <a href="/cards/mtg" style="font-size:11px;color:var(--gold);text-decoration:none;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Browse All MTG &#8594;</a>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--white)">🧙 Top MTG Cards by Value</div>
+        <a href="/cards/mtg" style="font-size:11px;color:var(--gold);text-decoration:none;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Browse All MTG →</a>
       </div>
       <div id="mtg-carousel" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.3) transparent">
         <div style="flex:0 0 140px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;color:var(--text2);font-size:12px;display:flex;align-items:center;justify-content:center;min-height:200px">Loading...</div>
@@ -242,8 +244,8 @@ footer a:hover{color:var(--white)}
     <!-- Carousel 2: Top Pokemon cards -->
     <div style="margin-top:36px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--white)">&#9889; Top Pokemon Cards by Value</div>
-        <a href="/cards/pokemon" style="font-size:11px;color:#FFCC00;text-decoration:none;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Browse All Pokemon &#8594;</a>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--white)">⚡ Top Pokemon Cards by Value</div>
+        <a href="/cards/pokemon" style="font-size:11px;color:#FFCC00;text-decoration:none;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Browse All Pokemon →</a>
       </div>
       <div id="pokemon-carousel" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:rgba(255,204,0,.3) transparent">
         <div style="flex:0 0 140px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;color:var(--text2);font-size:12px;display:flex;align-items:center;justify-content:center;min-height:200px">Loading...</div>
@@ -251,49 +253,55 @@ footer a:hover{color:var(--white)}
     </div>
 
     <div style="margin-top:24px;text-align:center">
-      <a href="/cards" class="btn btn--gold" style="display:inline-flex;align-items:center;gap:8px">&#127183; Browse All 200,000+ Cards</a>
+      <a href="/cards" class="btn btn--gold" style="display:inline-flex;align-items:center;gap:8px">🃏 Browse All 200,000+ Cards</a>
     </div>
   </div>
 </section>
 
 <script>
-// Load carousels via server-side API (no client-side Supabase key)
+// Load carousels from Supabase
 (async function(){
+  const SUPA_URL = 'https://owaroeqchreuffbyakqx.supabase.co';
+  const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YXJvZXFjaHJldWZmYnlha3F4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQxMDUyMDEsImV4cCI6MjAyOTY4MTIwMX0.Hx9-fmXS7X2KN6pSv2nGKcMLtw4MkKXGbGHJ8hSN7r4';
   const CAMPID = '5339146789';
 
-  function cardHTML(card, slugPrefix, accentColor) {
-    const img = card.image_uri_small || card.image_url || card.image_uri || null;
-    const priceAud = card.price_aud
-      ? parseFloat(card.price_aud)
-      : (parseFloat(card.price_usd || card.market_price || 0) * 1.58);
-    const ebayUrl = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(card.name) + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + CAMPID + '&toolid=10001&mkevt=1';
-    return '<a href="/cards/' + slugPrefix + '/' + card.slug + '" style="flex:0 0 140px;scroll-snap-align:start;background:#0e1118;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px;text-decoration:none;display:block;transition:all .2s" onmouseover="this.style.borderColor=\'' + accentColor + '\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,.08)\';this.style.transform=\'none\'">'
-      + (img ? '<img src="' + img + '" alt="' + card.name.replace(/"/g,'') + '" style="width:100%;border-radius:6px;max-height:150px;object-fit:contain;margin-bottom:8px" loading="lazy">' : '<div style="height:120px;background:#1e2235;border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:24px">&#127183;</div>')
-      + '<div style="font-size:11px;color:#e8eaf0;line-height:1.3;font-weight:600;margin-bottom:4px">' + card.name + '</div>'
-      + '<div style="font-size:11px;color:' + accentColor + ';font-weight:700">AU$' + priceAud.toFixed(2) + '</div>'
-      + (card.set_name ? '<div style="font-size:10px;color:#8892b0;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + card.set_name + '</div>' : '')
-      + '</a>';
+  async function fetchCards(table, imgCol, priceCol, slugPrefix, limit = 12) {
+    try {
+      const res = await fetch(
+        `${SUPA_URL}/rest/v1/${table}?${imgCol}=not.is.null&${priceCol}=gt.1&order=${priceCol}.desc&limit=${limit}&select=slug,name,${imgCol},${priceCol},price_aud,set_name`,
+        { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+      );
+      if (!res.ok) return [];
+      return res.json();
+    } catch { return []; }
   }
 
-  // MTG — uses /api/random-card with limit=12, sorted by price
-  try {
-    const mtgRes = await fetch('/api/random-card?game=mtg&limit=12&sort=price');
-    const mtgData = await mtgRes.json();
-    const mtgEl = document.getElementById('mtg-carousel');
-    if (mtgEl && mtgData.cards && mtgData.cards.length) {
-      mtgEl.innerHTML = mtgData.cards.map(function(c){ return cardHTML(c, 'mtg', '#C9A84C'); }).join('');
-    }
-  } catch(e) { console.warn('MTG carousel failed:', e.message); }
+  function cardHTML(card, imgCol, priceCol, slugPrefix, accentColor) {
+    const img = card[imgCol];
+    const priceUsd = parseFloat(card[priceCol] || 0);
+    const priceAud = card.price_aud ? parseFloat(card.price_aud) : priceUsd * 1.58;
+    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${CAMPID}&toolid=10001&mkevt=1`;
+    return `<a href="/cards/${slugPrefix}/${card.slug}" style="flex:0 0 140px;scroll-snap-align:start;background:#0e1118;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px;text-decoration:none;display:block;transition:all .2s" onmouseover="this.style.borderColor='${accentColor}';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.transform='none'">
+      ${img ? `<img src="${img}" alt="${card.name}" style="width:100%;border-radius:6px;max-height:150px;object-fit:contain;margin-bottom:8px" loading="lazy">` : `<div style="height:120px;background:#1e2235;border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:24px">🃏</div>`}
+      <div style="font-size:11px;color:#e8eaf0;line-height:1.3;font-weight:600;margin-bottom:4px">${card.name}</div>
+      <div style="font-size:11px;color:${accentColor};font-weight:700">AU${priceAud.toFixed(2)}</div>
+      ${card.set_name ? `<div style="font-size:10px;color:#8892b0;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${card.set_name}</div>` : ''}
+    </a>`;
+  }
 
-  // Pokemon — uses /api/random-card with limit=12, sorted by price
-  try {
-    const pkRes = await fetch('/api/random-card?game=pokemon&limit=12&sort=price');
-    const pkData = await pkRes.json();
-    const pkEl = document.getElementById('pokemon-carousel');
-    if (pkEl && pkData.cards && pkData.cards.length) {
-      pkEl.innerHTML = pkData.cards.map(function(c){ return cardHTML(c, 'pokemon', '#FFCC00'); }).join('');
-    }
-  } catch(e) { console.warn('Pokemon carousel failed:', e.message); }
+  // Load MTG
+  const mtgCards = await fetchCards('mtg_cards', 'image_uri_small', 'price_usd', 'mtg');
+  const mtgEl = document.getElementById('mtg-carousel');
+  if (mtgEl && mtgCards.length) {
+    mtgEl.innerHTML = mtgCards.map(c => cardHTML(c, 'image_uri_small', 'price_usd', 'mtg', '#C9A84C')).join('');
+  }
+
+  // Load Pokemon
+  const pkCards = await fetchCards('pokemon_cards', 'image_url', 'market_price', 'pokemon');
+  const pkEl = document.getElementById('pokemon-carousel');
+  if (pkEl && pkCards.length) {
+    pkEl.innerHTML = pkCards.map(c => cardHTML(c, 'image_url', 'market_price', 'pokemon', '#FFCC00')).join('');
+  }
 })();
 </script>
 
@@ -365,7 +373,7 @@ footer a:hover{color:var(--white)}
   <div class="wrap">
     <p class="section-label">Coming Soon &mdash; Register Now</p>
     <h2 class="section-title">Australia's First TCG<br>Buylist Aggregator</h2>
-    <p class="section-body">One page comparing every major Australian store's buy prices, side by side. Updated daily. Coming soon &mdash; register now to be first in line.</p>
+    <p class="section-body">One page comparing every major Australian store's buy prices, side by side. Updated daily. Coming soon — register now to be first in line.</p>
 
     <div class="buylist-card">
       <div class="buylist-badge">&#128203; Waitlist Open</div>
@@ -380,7 +388,7 @@ footer a:hover{color:var(--white)}
         <div class="buylist-feat">Email alert when your card hits target price</div>
       </div>
       <div style="background:rgba(8,10,15,.6);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:24px">
-        <div class="form-label" style="margin-bottom:8px">Get instant access &mdash; join the waitlist</div>
+        <div class="form-label" style="margin-bottom:8px">Get instant access — join the waitlist</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
           <div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:6px;padding:5px 10px;font-size:11px;color:#C9A84C;font-weight:700">&#128202; Free tracker now</div>
           <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:6px;padding:5px 10px;font-size:11px;color:#22c55e;font-weight:700">&#128200; Weekly AUD price alerts</div>
@@ -504,9 +512,8 @@ footer a:hover{color:var(--white)}
 
 <footer>
   <p>
-    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/compare">Compare</a>
-    <a href="/market">Market</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a>
-    <a href="/quizzes">Quizzes</a><a href="/ev-calculator.html">EV Calc</a>
+    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/shop.html">Shop</a>
+    <a href="/blog">Blog</a><a href="/quizzes">Quizzes</a><a href="/ev-calculator.html">EV Calc</a>
     <a href="/generators">Generators</a><a href="/calendar">Calendar</a>
     <a href="/dnd">D&amp;D Tools</a><a href="/contact.html">Contact</a><a href="/legal.html">Legal</a>
   </p>

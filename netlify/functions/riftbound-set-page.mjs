@@ -69,11 +69,7 @@ export default async (req) => {
 
   try {
     const [sets, ebayToken] = await Promise.all([
-      supabaseGet(`riftbound_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`).then(r =>
-        r.length ? r : supabaseGet(`riftbound_sets?abbreviation=ilike.${encodeURIComponent(setSlug)}&limit=1`)
-      ).then(r =>
-        r.length ? r : supabaseGet(`riftbound_sets?id=eq.${encodeURIComponent(setSlug)}&limit=1`)
-      ),
+      supabaseGet(`riftbound_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
       getEbayToken()
     ]);
 
@@ -128,6 +124,21 @@ export default async (req) => {
 
     const metaDesc = `Browse ${cards?.length||0} Riftbound cards from ${set.name}. View card prices in AUD, find the most valuable cards and buy on eBay AU. Updated daily.`;
 
+
+    const setSchemaLD = {
+      "@context": "https://schema.org", "@type": "CollectionPage",
+      "name": `${set.name} Riftbound Card Prices Australia`,
+      "description": `Browse all ${cards?.length||0} ${set.name} Riftbound cards with AUD prices and eBay AU buy links.`,
+      "url": `https://cardsoncardsoncards.com.au/cards/riftbound/sets/${setSlug}`,
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardsoncardsoncards.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "Riftbound", "item": "https://cardsoncardsoncards.com.au/cards/riftbound" },
+          { "@type": "ListItem", "position": 3, "name": set.name, "item": `https://cardsoncardsoncards.com.au/cards/riftbound/sets/${setSlug}` }
+        ]
+      }
+    };
     return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -136,6 +147,8 @@ export default async (req) => {
   <title>${set.name} | Riftbound Set | Cards on Cards on Cards</title>
   <meta name="description" content="${metaDesc}">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/riftbound/sets/${setSlug}">
+  <script type="application/ld+json">${JSON.stringify(setSchemaLD)}</script>
+
   <meta property="og:title" content="${set.name} | Riftbound | C3">
   <meta property="og:description" content="${metaDesc}">
   <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards/riftbound/sets/${setSlug}">

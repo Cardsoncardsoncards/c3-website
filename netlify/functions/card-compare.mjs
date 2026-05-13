@@ -49,7 +49,7 @@ async function fetchCard(game, slug, usdToAud) {
 }
 
 async function fetchMTGCard(slug, usdToAud) {
-  const cards = await supabaseGet(`mtg_cards?slug=eq.${encodeURIComponent(slug)}&limit=1`);
+  const cards = await supabaseGet(`mtg_cards?slug=eq.${encodeURIComponent(slug)}&order=price_aud.desc.nullslast&limit=1`);
   if (!cards || !cards[0]) return null;
   const card = cards[0];
 
@@ -209,7 +209,7 @@ function renderSlots(cards, allTokens, usdToAud) {
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' ' + card.label)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
     return `<div class="slot slot-filled" id="slot-${i}" style="--game-color:${card.color}">
-      <a href="${removeUrl}" class="slot-remove" title="Remove card" onclick="gtag('event','compare_card_removed',{game:'${card.game}',card:'${card.name.replace(/'/g,"\\'")}'})" aria-label="Remove ${card.name}">×</a>
+      <a href="${removeUrl}" class="slot-remove" title="Remove card" data-gtag-game="${card.game}" data-gtag-card="${card.name.replace(/"/g,'&quot;')}" aria-label="Remove ${card.name}">×</a>
       ${card.isSpiked ? '<div class="spike-badge" title="Price up 15%+ this week">📈 Spiked</div>' : ''}
       <div class="slot-img-wrap">
         ${card.image ? `<img src="${card.image}" alt="${card.name}" loading="lazy" class="slot-img">` : `<div class="slot-img-placeholder">🃏</div>`}
@@ -222,8 +222,8 @@ function renderSlots(cards, allTokens, usdToAud) {
       ${trendArrow}
       ${spark ? `<div class="slot-sparkline" title="7-day price trend">${spark}</div>` : ''}
       ${card.cheapestPrinting ? `<div class="slot-cheapest">Cheapest: <strong>${fmtAUD(card.cheapestPrinting.priceAud)}</strong> · ${card.cheapestPrinting.setName || ''}</div>` : ''}
-      <a href="${ebayUrl}" target="_blank" rel="noopener" class="slot-buy-btn" onclick="gtag('event','compare_ebay_clicked',{game:'${card.game}',card:'${card.name.replace(/'/g,"\\'")}',position:${i}})">Buy on eBay AU →</a>
-      <button class="slot-versions-btn" onclick="loadVersions('${card.game}','${card.name.replace(/'/g,"\\'")}',${i})" aria-label="View other versions of ${card.name}">⇄ Other versions</button>
+      <a href="${ebayUrl}" target="_blank" rel="noopener" class="slot-buy-btn" data-gtag-game="${card.game}" data-gtag-card="${card.name.replace(/"/g,'&quot;')}" data-gtag-pos="${i}">Buy on eBay AU →</a>
+      <button class="slot-versions-btn" data-game="${card.game}" data-name="${card.name.replace(/"/g,'&quot;')}" data-slot="${i}" aria-label="View other versions of ${card.name}">⇄ Other versions</button>
       <div class="slot-versions-panel" id="versions-${i}" style="display:none"></div>
     </div>`;
   }).join('');
@@ -842,6 +842,31 @@ document.addEventListener('click', e => {
     const el = document.getElementById('search-results');
     if (el) el.style.display = 'none';
     searchIndex = -1;
+  }
+  // Versions button delegation (replaces fragile inline onclick)
+  const vBtn = e.target.closest('.slot-versions-btn');
+  if (vBtn) {
+    const game = vBtn.dataset.game;
+    const name = vBtn.dataset.name;
+    const slot = parseInt(vBtn.dataset.slot, 10);
+    if (game && name && !isNaN(slot)) loadVersions(game, name, slot);
+  }
+  // GA4 eBay click tracking
+  const buyBtn = e.target.closest('.slot-buy-btn');
+  if (buyBtn && typeof gtag !== 'undefined') {
+    gtag('event', 'compare_ebay_clicked', {
+      game: buyBtn.dataset.gtagGame || '',
+      card: buyBtn.dataset.gtagCard || '',
+      position: parseInt(buyBtn.dataset.gtagPos || '0', 10)
+    });
+  }
+  // GA4 remove card tracking
+  const removeBtn = e.target.closest('.slot-remove');
+  if (removeBtn && typeof gtag !== 'undefined') {
+    gtag('event', 'compare_card_removed', {
+      game: removeBtn.dataset.gtagGame || '',
+      card: removeBtn.dataset.gtagCard || ''
+    });
   }
 });
 

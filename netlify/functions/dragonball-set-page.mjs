@@ -124,6 +124,21 @@ export default async (req) => {
 
     const metaDesc = `Browse ${cards?.length||0} Dragon Ball cards from ${set.name}. View card prices in AUD, find the most valuable cards and buy on eBay AU. Updated daily.`;
 
+
+    const setSchemaLD = {
+      "@context": "https://schema.org", "@type": "CollectionPage",
+      "name": `${set.name} Dragon Ball Super Card Prices Australia`,
+      "description": `Browse all ${cards?.length||0} ${set.name} Dragon Ball Super cards with AUD prices and eBay AU buy links.`,
+      "url": `https://cardsoncardsoncards.com.au/cards/dragonball/sets/${setSlug}`,
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardsoncardsoncards.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "Dragon Ball Super", "item": "https://cardsoncardsoncards.com.au/cards/dragonball" },
+          { "@type": "ListItem", "position": 3, "name": set.name, "item": `https://cardsoncardsoncards.com.au/cards/dragonball/sets/${setSlug}` }
+        ]
+      }
+    };
     return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -132,6 +147,8 @@ export default async (req) => {
   <title>${set.name} | Dragon Ball Set | Cards on Cards on Cards</title>
   <meta name="description" content="${metaDesc}">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/dragonball/sets/${setSlug}">
+  <script type="application/ld+json">${JSON.stringify(setSchemaLD)}</script>
+
   <meta property="og:title" content="${set.name} | Dragon Ball | C3">
   <meta property="og:description" content="${metaDesc}">
   <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards/dragonball/sets/${setSlug}">

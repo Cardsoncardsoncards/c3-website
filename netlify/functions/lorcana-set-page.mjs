@@ -103,18 +103,29 @@ export default async (req) => {
 </body>
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
-  const [sets, ebayToken] = await Promise.all([
-    supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setCode)}&limit=1`).then(r =>
-      r.length ? r : supabaseGet(`lorcana_sets?abbreviation=ilike.${encodeURIComponent(setCode)}&limit=1`)
-    ).then(r =>
-      r.length ? r : supabaseGet(`lorcana_sets?slug=eq.${encodeURIComponent(setCode)}&limit=1`)
-    ),
-    getEbayToken()
-  ]);
+  let sets, ebayToken, cards;
+  try {
+    [sets, ebayToken] = await Promise.all([
+      // Slug first (most common URL), then numeric id, then abbreviation fallback
+      supabaseGet(`lorcana_sets?slug=eq.${encodeURIComponent(setCode)}&limit=1`).then(r =>
+        r.length ? r : supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setCode)}&limit=1`)
+      ).then(r =>
+        r.length ? r : supabaseGet(`lorcana_sets?abbreviation=ilike.${encodeURIComponent(setCode)}&limit=1`)
+      ),
+      getEbayToken()
+    ]);
+  } catch (e) {
+    console.error('[lorcana-set-page] fetch error:', e.message);
+    sets = []; ebayToken = null;
+  }
 
   let set = sets && sets[0];
-  // Fetch cards using the set's UUID id (set_id on lorcana_cards = lorcana_sets.id)
-  let cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,card_text`) : [];
+  try {
+    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,card_text`) : [];
+  } catch (e) {
+    console.error('[lorcana-set-page] cards fetch error:', e.message);
+    cards = [];
+  }
 
   if (!set) return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
@@ -242,7 +253,7 @@ export default async (req) => {
 <title>${set.name} Card Prices Australia | Disney Lorcana | Cards on Cards on Cards</title>
 <meta name="description" content="Browse all ${cards.length} ${set.name} Disney Lorcana cards with live AUD pricing. Filter by ink colour and rarity. eBay AU buy links. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana/sets/${setCode}">
-<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="/c3logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">${schemaLD}</script>

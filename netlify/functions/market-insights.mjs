@@ -202,7 +202,7 @@ function cardRow(card, mode = 'movers') {
     ? `<span class="signal-badge signal-sell">▲ Near ${card.nearHighPct}% of 52W high</span>`
     : card.change7d ? `<span class="change-badge ${changeClass(card.change7d)}">${changeStr(card.change7d)} 7d</span>` : '';
 
-  return `<div class="card-row">
+  return `<div class="card-row" data-game="${card.game}">
     <div class="card-row-img">
       ${card.image ? `<img src="${card.image}" alt="${card.name}" loading="lazy">` : '<div class="img-placeholder"></div>'}
     </div>
@@ -539,12 +539,8 @@ function filterGame(game) {
   const strip = document.getElementById('top5-strip');
     if (strip) strip.style.display = (game === 'all' || game === 'mtg') ? '' : 'none';
     document.querySelectorAll('.card-row').forEach(row => {
-    const pill = row.querySelector('.game-pill');
-    if (!pill) return;
     if (game === 'all') { row.style.display = ''; return; }
-    const cfg = ${JSON.stringify(GAME_CONFIG)};
-    const match = Object.entries(cfg).find(([k,v]) => v.label === pill.textContent.trim());
-    row.style.display = (match && match[0] === game) ? '' : 'none';
+    row.style.display = (row.dataset.game === game) ? '' : 'none';
   });
   gtag('event', 'market_game_filter', { game });
 }

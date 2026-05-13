@@ -327,6 +327,71 @@ async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
 
 // --- Main ---
 
+
+async function updateSnapshotVerdicts() {
+  console.log('\nUpdating snapshot verdicts and 52w stats...');
+  const today = new Date().toISOString().slice(0, 10);
+
+  // Single SQL UPDATE using window functions to compute:
+  // - price_52w_high_aud: max price over all snapshots for each card
+  // - price_52w_low_aud: min price over all snapshots (excluding 0)
+  // - buy_verdict: 'buy' if today's price is within 10% of the historical low
+  // - sell_verdict: 'sell' if today's price is within 10% of the historical high
+  const sql = `
+    WITH card_history AS (
+      SELECT
+        scryfall_id,
+        MAX(price_aud) FILTER (WHERE price_aud > 0) AS high_aud,
+        MIN(price_aud) FILTER (WHERE price_aud > 0 AND snapshot_date < '${today}') AS low_aud
+      FROM mtg_price_snapshots
+      WHERE price_aud IS NOT NULL
+      GROUP BY scryfall_id
+    )
+    UPDATE mtg_price_snapshots s
+    SET
+      price_52w_high_aud = h.high_aud,
+      price_52w_low_aud  = h.low_aud,
+      buy_verdict  = CASE
+        WHEN s.price_aud > 0 AND h.low_aud > 0 AND s.price_aud <= h.low_aud * 1.10 THEN 'buy'
+        ELSE NULL
+      END,
+      sell_verdict = CASE
+        WHEN s.price_aud > 0 AND h.high_aud > 0 AND s.price_aud >= h.high_aud * 0.90 THEN 'sell'
+        ELSE NULL
+      END
+    FROM card_history h
+    WHERE s.scryfall_id = h.scryfall_id
+    AND s.snapshot_date = '${today}';
+  `;
+
+  const { error } = await supabase.rpc('exec_sql', { query: sql }).catch(() => ({ error: { message: 'rpc not available' } }));
+
+  if (error) {
+    // Fallback: use REST API with service key for direct SQL execution
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/exec_sql`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_SECRET_KEY,
+          'Authorization': `Bearer ${SUPABASE_SECRET_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ query: sql })
+      });
+      if (!res.ok) {
+        console.warn('Verdict update via RPC failed:', await res.text());
+        console.log('Verdict update skipped — will retry on next sync.');
+      } else {
+        console.log('Snapshot verdicts updated successfully.');
+      }
+    } catch (e) {
+      console.warn('Verdict update error:', e.message);
+    }
+  } else {
+    console.log('Snapshot verdicts updated successfully.');
+  }
+}
+
 async function main() {
   const startTime = Date.now();
   console.log('=== MTG Daily Sync ===');
@@ -465,6 +530,8 @@ async function main() {
   try { unlinkSync(TEMP_FILE); } catch {}
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+  await updateSnapshotVerdicts();
+
   console.log('\n=== Sync complete ===');
   console.log(`Mode:                ${FORCE_FULL_SYNC ? 'FULL' : 'INCREMENTAL'}`);
   console.log(`Processed:           ${totalProcessed}`);

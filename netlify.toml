@@ -39,6 +39,12 @@
 [functions."market-insights"]
   timeout = 26
 
+[functions."card-compare"]
+  timeout = 20
+
+[functions."compare-search"]
+  timeout = 10
+
 # ── Favicon ──────────────────────────────────────────────────
 [[redirects]]
   from = "/favicon.ico"

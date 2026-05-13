@@ -124,6 +124,21 @@ export default async (req) => {
 
     const metaDesc = `Browse ${cards?.length||0} One Piece cards from ${set.name}. View card prices in AUD, find the most valuable cards and buy on eBay AU. Updated daily.`;
 
+
+    const setSchemaLD = {
+      "@context": "https://schema.org", "@type": "CollectionPage",
+      "name": `${set.name} One Piece Card Prices Australia`,
+      "description": `Browse all ${cards?.length||0} ${set.name} One Piece cards with AUD prices and eBay AU buy links.`,
+      "url": `https://cardsoncardsoncards.com.au/cards/onepiece/sets/${setSlug}`,
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardsoncardsoncards.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "One Piece", "item": "https://cardsoncardsoncards.com.au/cards/onepiece" },
+          { "@type": "ListItem", "position": 3, "name": set.name, "item": `https://cardsoncardsoncards.com.au/cards/onepiece/sets/${setSlug}` }
+        ]
+      }
+    };
     return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -132,6 +147,8 @@ export default async (req) => {
   <title>${set.name} | One Piece Set | Cards on Cards on Cards</title>
   <meta name="description" content="${metaDesc}">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/onepiece/sets/${setSlug}">
+  <script type="application/ld+json">${JSON.stringify(setSchemaLD)}</script>
+
   <meta property="og:title" content="${set.name} | One Piece | C3">
   <meta property="og:description" content="${metaDesc}">
   <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards/onepiece/sets/${setSlug}">
