@@ -1,16 +1,21 @@
 // netlify/functions/sync-pokemon.mjs
-// Scheduled: daily at 4am UTC (2pm AEST)
-// Fetches all Pokemon sets + cards + prices from tcgapi.dev Pro
+// Scheduled: daily at 2pm AEST (4am UTC)
+// Primary source: tcgapi.dev Pro — card data, market/low/foil prices
+// Secondary source: pokemontcg.io — TCGPlayer and Cardmarket price breakdowns
+// Join key: tcgplayer_id (present in both APIs)
 // Upserts into pokemon_sets, pokemon_cards, pokemon_price_snapshots
+// Updated 13 May 2026: pokemontcg.io pricing added to snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
+const POKEMONTCG_KEY       = Netlify.env.get('POKEMONTCG_API_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const GAME_SLUG            = 'pokemon';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
-const RATE_LIMIT_BUFFER    = 200; // stop if daily_remaining drops below this
-const MAX_PAGES            = 50;  // hard cap on pagination to prevent runaway loops
+const POKEMONTCG_BASE      = 'https://api.pokemontcg.io/v2';
+const RATE_LIMIT_BUFFER    = 200;
+const MAX_PAGES            = 50;
 
 // --- Helpers ---
 
@@ -21,7 +26,6 @@ function slugify(name, number, setAbbr) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   const withNumber = number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
-  // Always prefix with set abbreviation to prevent cross-set slug collisions
   const prefix = setAbbr
     ? setAbbr.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
     : null;
@@ -53,7 +57,6 @@ async function tcgapiGet(path) {
   } catch {
     throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
   }
-  // Rate limit is in response headers, not the body
   const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
@@ -78,6 +81,7 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
+
 async function supabaseUpsertSnapshots(table, rows) {
   if (!rows.length) return;
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
@@ -96,10 +100,6 @@ async function supabaseUpsertSnapshots(table, rows) {
   }
 }
 
-
-// --- Main ---
-
-// Fetch already-synced set IDs from progress tracking table
 async function getAlreadySyncedSetIds() {
   const res = await fetch(
     `${SUPABASE_URL}/rest/v1/pokemon_sync_progress?select=set_id&limit=1000`,
@@ -118,22 +118,89 @@ async function getAlreadySyncedSetIds() {
   return new Set(rows.map(r => r.set_id));
 }
 
-// Mark a set as fully synced in the progress table
 async function markSetSynced(setId) {
-  await fetch(
-    `${SUPABASE_URL}/rest/v1/pokemon_sync_progress`,
-    {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates,return=minimal'
-      },
-      body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
-    }
-  );
+  await fetch(`${SUPABASE_URL}/rest/v1/pokemon_sync_progress`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
+    },
+    body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
+  });
 }
+
+// Fetch all pokemontcg.io cards and build a Map keyed on tcgplayer_id (integer)
+// Returns Map<tcgplayer_id, { tcg_low, tcg_mid, tcg_market, tcg_direct_low,
+//   holofoil_low, holofoil_mid, holofoil_market,
+//   reverse_holo_low, reverse_holo_mid, reverse_holo_market,
+//   cardmarket_low, cardmarket_trend, cardmarket_avg7, cardmarket_avg30 }>
+async function fetchPokemonTCGPriceMap() {
+  if (!POKEMONTCG_KEY) {
+    console.warn('[sync-pokemon] POKEMONTCG_API_KEY not set — skipping pokemontcg.io pricing');
+    return new Map();
+  }
+
+  console.log('[sync-pokemon] Fetching pokemontcg.io price map...');
+  const priceMap = new Map();
+  let page = 1;
+  let totalFetched = 0;
+
+  while (true) {
+    try {
+      const res = await fetch(
+        `${POKEMONTCG_BASE}/cards?select=id,tcgplayer,cardmarket&page=${page}&pageSize=250`,
+        { headers: { 'X-Api-Key': POKEMONTCG_KEY } }
+      );
+      if (!res.ok) {
+        console.warn(`[sync-pokemon] pokemontcg.io page ${page} failed: ${res.status}`);
+        break;
+      }
+      const data = await res.json();
+      const cards = data.data || [];
+      if (!cards.length) break;
+
+      for (const card of cards) {
+        // pokemontcg.io tcgplayer.productId matches tcgplayer_id in tcgapi.dev
+        const tcgplayerId = card.tcgplayer?.productId;
+        if (!tcgplayerId) continue;
+
+        const tcp = card.tcgplayer?.prices || {};
+        const cm  = card.cardmarket?.prices || {};
+
+        priceMap.set(tcgplayerId, {
+          tcg_low:             tcp.normal?.low             || null,
+          tcg_mid:             tcp.normal?.mid             || null,
+          tcg_market:          tcp.normal?.market          || null,
+          tcg_direct_low:      tcp.normal?.directLow       || null,
+          holofoil_low:        tcp.holofoil?.low           || null,
+          holofoil_mid:        tcp.holofoil?.mid           || null,
+          holofoil_market:     tcp.holofoil?.market        || null,
+          reverse_holo_low:    tcp.reverseHolofoil?.low    || null,
+          reverse_holo_mid:    tcp.reverseHolofoil?.mid    || null,
+          reverse_holo_market: tcp.reverseHolofoil?.market || null,
+          cardmarket_low:      cm.averageSellPrice         || cm.lowPrice || null,
+          cardmarket_trend:    cm.trendPrice               || null,
+          cardmarket_avg7:     cm.avg7                     || null,
+          cardmarket_avg30:    cm.avg30                    || null,
+        });
+      }
+
+      totalFetched += cards.length;
+      if (cards.length < 250) break;
+      page++;
+    } catch (err) {
+      console.warn(`[sync-pokemon] pokemontcg.io page ${page} error: ${err.message}`);
+      break;
+    }
+  }
+
+  console.log(`[sync-pokemon] pokemontcg.io: loaded ${priceMap.size} price entries (${totalFetched} cards fetched)`);
+  return priceMap;
+}
+
+// --- Main ---
 
 export default async (req) => {
   console.log('[sync-pokemon] Starting...');
@@ -147,7 +214,6 @@ export default async (req) => {
   }
   const start = Date.now();
 
-  // Validate env vars first
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     console.error('[sync-pokemon] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
@@ -161,10 +227,13 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-pokemon] AUD rate: ${audRate}`);
 
+    // Fetch pokemontcg.io price map upfront — keyed on tcgplayer_id
+    // Fails gracefully: if unavailable, pokemontcg fields will be null
+    const pokemonTCGPrices = await fetchPokemonTCGPriceMap();
+
     const syncedSetIds = await getAlreadySyncedSetIds();
     console.log(`[sync-pokemon] ${syncedSetIds.size} sets already synced — will skip these`);
 
-    // Step 1: Fetch all sets (hard cap at MAX_PAGES)
     console.log('[sync-pokemon] Fetching sets...');
     const allSets = [];
     let page = 1;
@@ -177,7 +246,6 @@ export default async (req) => {
     }
     console.log(`[sync-pokemon] Found ${allSets.length} sets`);
 
-    // Step 2: Upsert sets
     const setRows = allSets.map(s => ({
       id:           s.id,
       name:         s.name,
@@ -194,11 +262,10 @@ export default async (req) => {
     }
     console.log(`[sync-pokemon] Upserted ${setRows.length} sets`);
 
-    // Step 3: For each set, fetch cards
     const today = new Date().toISOString().split('T')[0];
-    let totalCards = 0;
-    let totalSnaps = 0;
-    let setCount = 0;
+    let totalCards   = 0;
+    let totalSnaps   = 0;
+    let setCount     = 0;
     let skippedCount = 0;
 
     for (const set of allSets) {
@@ -210,10 +277,10 @@ export default async (req) => {
       if (setCount % 10 === 0) {
         console.log(`[sync-pokemon] Progress: ${setCount} new sets, ${skippedCount} skipped, ${totalCards} cards so far`);
       }
+
       const setCards = [];
       let cardPage = 1;
 
-      // Hard cap on card pages per set
       while (cardPage <= MAX_PAGES) {
         const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
         const cards = data.data || [];
@@ -224,7 +291,6 @@ export default async (req) => {
 
       if (!setCards.length) continue;
 
-      // Fetch bulk prices for this set's cards (500 per request)
       const cardIds = setCards.map(c => c.id);
       const priceMap = new Map();
 
@@ -237,23 +303,24 @@ export default async (req) => {
             priceMap.set(p.card_id, p);
           }
         } catch (e) {
-          // Re-throw rate limit errors — do not swallow them
           if (e.message.includes('Rate limit low')) throw e;
           console.error(`[sync-pokemon] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
 
-      // Build card rows
-      const cardRows = [];
+      const cardRows  = [];
       const slugsSeen = new Set();
-      const snapRows = [];
-      const setAbbr = set.abbreviation || set.slug || String(set.id);
+      const snapRows  = [];
+      const setAbbr   = set.abbreviation || set.slug || String(set.id);
 
       for (const card of setCards) {
-        const price = priceMap.get(card.id) || {};
-        const marketPrice = price.market_price || null;
-        const lowPrice = price.low_price || null;
-        const foilPrice = price.foil_market_price || null;
+        const price      = priceMap.get(card.id) || {};
+        const marketPrice = price.market_price      || null;
+        const lowPrice    = price.low_price         || null;
+        const foilPrice   = price.foil_market_price || null;
+
+        // Look up pokemontcg.io granular prices via tcgplayer_id
+        const ptcg = card.tcgplayer_id ? (pokemonTCGPrices.get(card.tcgplayer_id) || {}) : {};
 
         let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
@@ -277,35 +344,49 @@ export default async (req) => {
           low_price:         lowPrice,
           foil_market_price: foilPrice,
           price_aud:         marketPrice ? parseFloat((marketPrice * audRate).toFixed(2)) : null,
-          foil_price_aud:    foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
+          foil_price_aud:    foilPrice   ? parseFloat((foilPrice   * audRate).toFixed(2)) : null,
           aud_rate:          audRate,
           price_change_24h:  price.price_change_24h || null,
-          price_change_7d:   price.price_change_7d || null,
+          price_change_7d:   price.price_change_7d  || null,
           price_change_30d:  price.price_change_30d || null,
-          last_price_update: price.last_updated_at || null,
+          last_price_update: price.last_updated_at  || null,
           updated_at:        new Date().toISOString()
         });
 
-        // Only snapshot cards with a price above $0.50
         if (marketPrice && marketPrice >= 0.50) {
           snapRows.push({
             card_id:       card.id,
             snapshot_date: today,
+            // tcgapi.dev prices
             market_price:  marketPrice,
             low_price:     lowPrice,
             foil_price:    foilPrice,
             price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
-            aud_rate:      audRate
+            aud_rate:      audRate,
+            price_change_30d: price.price_change_30d || null,
+            // pokemontcg.io TCGPlayer granular prices
+            tcg_low:             ptcg.tcg_low             ? parseFloat(ptcg.tcg_low)             : null,
+            tcg_mid:             ptcg.tcg_mid             ? parseFloat(ptcg.tcg_mid)             : null,
+            tcg_market:          ptcg.tcg_market          ? parseFloat(ptcg.tcg_market)          : null,
+            tcg_direct_low:      ptcg.tcg_direct_low      ? parseFloat(ptcg.tcg_direct_low)      : null,
+            holofoil_low:        ptcg.holofoil_low        ? parseFloat(ptcg.holofoil_low)        : null,
+            holofoil_mid:        ptcg.holofoil_mid        ? parseFloat(ptcg.holofoil_mid)        : null,
+            holofoil_market:     ptcg.holofoil_market     ? parseFloat(ptcg.holofoil_market)     : null,
+            reverse_holo_low:    ptcg.reverse_holo_low    ? parseFloat(ptcg.reverse_holo_low)    : null,
+            reverse_holo_mid:    ptcg.reverse_holo_mid    ? parseFloat(ptcg.reverse_holo_mid)    : null,
+            reverse_holo_market: ptcg.reverse_holo_market ? parseFloat(ptcg.reverse_holo_market) : null,
+            // pokemontcg.io Cardmarket (EU) prices
+            cardmarket_low:   ptcg.cardmarket_low   ? parseFloat(ptcg.cardmarket_low)   : null,
+            cardmarket_trend: ptcg.cardmarket_trend ? parseFloat(ptcg.cardmarket_trend) : null,
+            cardmarket_avg7:  ptcg.cardmarket_avg7  ? parseFloat(ptcg.cardmarket_avg7)  : null,
+            cardmarket_avg30: ptcg.cardmarket_avg30 ? parseFloat(ptcg.cardmarket_avg30) : null,
           });
         }
       }
 
-      // Upsert cards in batches of 200
       for (let i = 0; i < cardRows.length; i += 200) {
         await supabaseUpsert('pokemon_cards', cardRows.slice(i, i + 200));
       }
-
-      // Upsert snapshots in batches of 500
       for (let i = 0; i < snapRows.length; i += 500) {
         await supabaseUpsertSnapshots('pokemon_price_snapshots', snapRows.slice(i, i + 500));
       }

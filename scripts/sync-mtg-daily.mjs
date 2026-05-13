@@ -3,6 +3,7 @@
 // Smart sync: only upserts cards where the data has changed (via content hash).
 // Always inserts daily price snapshots.
 // Schema-matched to live Supabase as of 4 May 2026.
+// Card Kingdom buylist prices added 13 May 2026.
 
 import { createClient } from '@supabase/supabase-js';
 import { createWriteStream, existsSync, unlinkSync, createReadStream } from 'fs';
@@ -30,6 +31,8 @@ const HASH_FETCH_PAUSE_MS = 100;
 const MIN_SNAPSHOT_USD = 0.50;
 const MAX_RETRIES = 3;
 const TEMP_FILE = 'scryfall-bulk.json';
+
+const CK_PRICELIST_URL = 'https://api.cardkingdom.com/api/v2/pricelist';
 
 if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
   console.error('FATAL: SUPABASE_URL and SUPABASE_SECRET_KEY env vars are required');
@@ -61,6 +64,44 @@ async function getExchangeRate() {
   }
 }
 
+// Fetch Card Kingdom pricelist and return a Map keyed on scryfall_id
+// Returns: Map<scryfall_id, { price_retail, price_buy, nm_price, ex_price, vg_price, g_price }>
+async function fetchCardKingdomPrices() {
+  console.log('Fetching Card Kingdom pricelist...');
+  try {
+    const res = await fetch(CK_PRICELIST_URL, {
+      headers: { 'User-Agent': 'CardsonCardsonCards/1.0 (cardsoncardsoncards.com.au)' }
+    });
+    if (!res.ok) {
+      console.warn(`Card Kingdom pricelist failed: ${res.status}. Skipping CK prices.`);
+      return new Map();
+    }
+    const data = await res.json();
+    const items = data.data || [];
+    const map = new Map();
+    for (const item of items) {
+      if (!item.scryfall_id) continue;
+      // price_buy is what CK pays (seller/buylist price)
+      // price_retail is what buyers pay
+      // qty_buying = 0 means CK is not currently buying
+      map.set(item.scryfall_id, {
+        price_retail: parseFloat(item.price_retail) || null,
+        price_buy: item.qty_buying > 0 ? (parseFloat(item.price_buy) || null) : null,
+        nm_price: parseFloat(item.nm_price) || null,
+        ex_price: parseFloat(item.ex_price) || null,
+        vg_price: parseFloat(item.vg_price) || null,
+        g_price: parseFloat(item.g_price) || null,
+        qty_buying: item.qty_buying || 0
+      });
+    }
+    console.log(`Card Kingdom: loaded ${map.size} entries`);
+    return map;
+  } catch (err) {
+    console.warn(`Card Kingdom fetch error: ${err.message}. Skipping CK prices.`);
+    return new Map();
+  }
+}
+
 async function downloadBulkFile() {
   console.log('Fetching Scryfall bulk data index...');
   const bulkRes = await fetch('https://api.scryfall.com/bulk-data', {
@@ -80,40 +121,21 @@ async function downloadBulkFile() {
   console.log('Bulk file saved.');
 }
 
-// Compute a stable hash from a Scryfall card. Excludes prices (those go in snapshots).
 function computeCardHash(card) {
   const sigParts = [
-    card.id,
-    card.name,
-    card.set,
-    card.set_name,
-    card.collector_number,
-    card.rarity,
-    card.type_line || '',
-    card.oracle_text || card.card_faces?.[0]?.oracle_text || '',
-    card.mana_cost || '',
-    card.cmc ?? 0,
-    (card.colors || []).join(','),
+    card.id, card.name, card.set, card.set_name, card.collector_number,
+    card.rarity, card.type_line || '', card.oracle_text || card.card_faces?.[0]?.oracle_text || '',
+    card.mana_cost || '', card.cmc ?? 0, (card.colors || []).join(','),
     (card.color_identity || []).join(','),
     card.image_uris?.normal || card.card_faces?.[0]?.image_uris?.normal || '',
-    card.released_at || '',
-    card.layout || '',
-    (card.finishes || []).join(','),
-    card.edhrec_rank || '',
-    card.flavor_text || '',
-    card.power || '',
-    card.toughness || '',
-    card.loyalty || '',
-    card.artist || '',
-    JSON.stringify(card.legalities || {}),
-    card.frame || '',
-    card.border_color || ''
+    card.released_at || '', card.layout || '', (card.finishes || []).join(','),
+    card.edhrec_rank || '', card.flavor_text || '', card.power || '',
+    card.toughness || '', card.loyalty || '', card.artist || '',
+    JSON.stringify(card.legalities || {}), card.frame || '', card.border_color || ''
   ];
   return createHash('sha256').update(sigParts.join('|')).digest('hex').substring(0, 16);
 }
 
-// Fetch one page of hashes using cursor-based pagination (where scryfall_id > lastId).
-// Indexed on scryfall_id (unique) so this is a fast index range scan.
 async function fetchHashPage(lastId) {
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     let query = supabase
@@ -122,27 +144,22 @@ async function fetchHashPage(lastId) {
       .order('scryfall_id', { ascending: true })
       .limit(HASH_FETCH_BATCH);
 
-    if (lastId !== null) {
-      query = query.gt('scryfall_id', lastId);
-    }
+    if (lastId !== null) query = query.gt('scryfall_id', lastId);
 
     const { data, error } = await query;
-
     if (!error) return data || [];
 
     if (attempt < MAX_RETRIES) {
       const backoff = (attempt + 1) * 2000;
-      console.warn(`\nHash fetch retry ${attempt + 1}/${MAX_RETRIES} (after id=${lastId}): ${error.message}. Waiting ${backoff}ms...`);
+      console.warn(`\nHash fetch retry ${attempt + 1}/${MAX_RETRIES}: ${error.message}. Waiting ${backoff}ms...`);
       await sleep(backoff);
     } else {
-      console.error(`\nHash fetch FAILED after ${MAX_RETRIES + 1} attempts: ${error.message}`);
       throw error;
     }
   }
   return [];
 }
 
-// Pull all existing hashes from Supabase using cursor pagination.
 async function fetchExistingHashes() {
   console.log('Fetching existing card hashes (cursor-based)...');
   const hashes = new Map();
@@ -152,16 +169,10 @@ async function fetchExistingHashes() {
   while (true) {
     const page = await fetchHashPage(lastId);
     if (page.length === 0) break;
-
-    for (const row of page) {
-      hashes.set(row.scryfall_id, row.data_hash);
-    }
-
+    for (const row of page) hashes.set(row.scryfall_id, row.data_hash);
     totalFetched += page.length;
     process.stdout.write(`\rFetched ${totalFetched} existing hashes`);
-
     lastId = page[page.length - 1].scryfall_id;
-
     if (page.length < HASH_FETCH_BATCH) break;
     await sleep(HASH_FETCH_PAUSE_MS);
   }
@@ -263,7 +274,7 @@ function buildCardRow(card, audRate, dataHash) {
   };
 }
 
-function buildSnapshotRow(card, audRate, today) {
+function buildSnapshotRow(card, audRate, today, ckMap) {
   const priceUsd = parseFloat(card.prices?.usd || 0) || null;
   const priceUsdFoil = parseFloat(card.prices?.usd_foil || 0) || null;
   const priceUsdEtched = parseFloat(card.prices?.usd_etched || 0) || null;
@@ -276,6 +287,11 @@ function buildSnapshotRow(card, audRate, today) {
     return null;
   }
 
+  // Card Kingdom buylist data
+  const ck = ckMap.get(card.id);
+  const priceBuyCkUsd = ck?.price_buy || null;
+  const priceBuyCkAud = priceBuyCkUsd ? Math.round(priceBuyCkUsd * audRate * 100) / 100 : null;
+
   return {
     scryfall_id: card.id,
     price_usd: priceUsd,
@@ -284,6 +300,8 @@ function buildSnapshotRow(card, audRate, today) {
     price_aud: priceUsd ? Math.round(priceUsd * audRate * 100) / 100 : null,
     price_aud_foil: priceUsdFoil ? Math.round(priceUsdFoil * audRate * 100) / 100 : null,
     price_aud_etched: priceUsdEtched ? Math.round(priceUsdEtched * audRate * 100) / 100 : null,
+    price_buy_ck_usd: priceBuyCkUsd,
+    price_buy_ck_aud: priceBuyCkAud,
     aud_usd_rate: audRate,
     snapshot_date: today
   };
@@ -308,9 +326,7 @@ async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     const { error } = await supabase.from(table).upsert(rows, { onConflict: conflictKey });
 
-    if (!error) {
-      return { upserted: rows.length, failed: 0 };
-    }
+    if (!error) return { upserted: rows.length, failed: 0 };
 
     if (attempt < MAX_RETRIES) {
       const backoff = (attempt + 1) * 2000;
@@ -325,18 +341,10 @@ async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
   return { upserted: 0, failed: rows.length };
 }
 
-// --- Main ---
-
-
 async function updateSnapshotVerdicts() {
   console.log('\nUpdating snapshot verdicts and 52w stats...');
   const today = new Date().toISOString().slice(0, 10);
 
-  // Single SQL UPDATE using window functions to compute:
-  // - price_52w_high_aud: max price over all snapshots for each card
-  // - price_52w_low_aud: min price over all snapshots (excluding 0)
-  // - buy_verdict: 'buy' if today's price is within 10% of the historical low
-  // - sell_verdict: 'sell' if today's price is within 10% of the historical high
   const sql = `
     WITH card_history AS (
       SELECT
@@ -367,7 +375,6 @@ async function updateSnapshotVerdicts() {
   const { error } = await supabase.rpc('exec_sql', { query: sql }).catch(() => ({ error: { message: 'rpc not available' } }));
 
   if (error) {
-    // Fallback: use REST API with service key for direct SQL execution
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/exec_sql`, {
         method: 'POST',
@@ -399,6 +406,9 @@ async function main() {
 
   const audRate = await getExchangeRate();
   console.log('AUD rate:', audRate);
+
+  // Fetch Card Kingdom pricelist once upfront
+  const ckMap = await fetchCardKingdomPrices();
 
   if (!existsSync(TEMP_FILE)) {
     await downloadBulkFile();
@@ -447,7 +457,7 @@ async function main() {
         setsMap.set(card.set, buildSetRow(card));
       }
 
-      const snap = buildSnapshotRow(card, audRate, today);
+      const snap = buildSnapshotRow(card, audRate, today, ckMap);
       if (snap) allSnapshots.push(snap);
 
       const newHash = computeCardHash(card);
@@ -543,6 +553,7 @@ async function main() {
   console.log(`Snapshots failed:    ${totalSnapshotsFailed}`);
   console.log(`Sets upserted:       ${setsUpserted}`);
   console.log(`Sets failed:         ${setsFailed}`);
+  console.log(`CK prices loaded:    ${ckMap.size}`);
   console.log(`Elapsed:             ${elapsed}s`);
 
   if (totalCardsFailed > 0 || totalSnapshotsFailed > 0 || setsFailed > 0) {

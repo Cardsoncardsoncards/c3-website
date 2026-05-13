@@ -1,9 +1,10 @@
 // netlify/functions/sync-yugioh.mjs
-// Scheduled: daily at 5am UTC (3pm AEST)
+// Scheduled: daily at 3pm AEST (5am UTC)
 // Fetches all Yu-Gi-Oh sets + cards + prices from tcgapi.dev Pro
 // Upserts into yugioh_sets, yugioh_cards, yugioh_price_snapshots
 // Note: Yu-Gi-Oh has 45k+ cards across 610 sets — largest non-MTG catalogue
 // Incremental mode: skips sets that already have cards in Supabase (saves ~1,100 credits/day)
+// Updated 13 May 2026: all 5 price source fields now captured in snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -11,7 +12,7 @@ const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const GAME_SLUG            = 'yugioh';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
-const MAX_PAGES            = 50; // hard cap on pagination to prevent runaway loops
+const MAX_PAGES            = 50;
 
 // --- Helpers ---
 
@@ -22,7 +23,6 @@ function slugify(name, number, setAbbr) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   const withNumber = number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
-  // Always prefix with set abbreviation to prevent cross-set slug collisions
   const prefix = setAbbr
     ? setAbbr.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
     : null;
@@ -48,7 +48,6 @@ async function tcgapiGet(path) {
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
   const data = await res.json();
-  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
   const remaining = data.rate_limit?.daily_remaining ?? 0;
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
@@ -74,7 +73,6 @@ async function supabaseUpsert(table, rows) {
   }
 }
 
-// Fetch set_ids that already have cards in Supabase (used for incremental sync)
 async function getAlreadySyncedSetIds() {
   const res = await fetch(
     `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id&limit=10000`,
@@ -99,7 +97,6 @@ export default async (req) => {
   console.log('[sync-yugioh] Starting...');
   const start = Date.now();
 
-  // Validate env vars first
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     console.error('[sync-yugioh] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
@@ -113,12 +110,9 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-yugioh] AUD rate: ${audRate}`);
 
-    // Fetch already-synced set IDs for incremental mode
     const syncedSetIds = await getAlreadySyncedSetIds();
     console.log(`[sync-yugioh] ${syncedSetIds.size} sets already synced — will skip these`);
 
-    // Step 1: Fetch all sets (hard cap at MAX_PAGES)
-    // Yu-Gi-Oh has 610 sets — needs multiple pages at 100 per page
     console.log('[sync-yugioh] Fetching sets...');
     const allSets = [];
     let page = 1;
@@ -132,7 +126,6 @@ export default async (req) => {
     }
     console.log(`[sync-yugioh] Found ${allSets.length} sets total`);
 
-    // Step 2: Upsert sets (all sets, not just new ones — set metadata may change)
     const setRows = allSets.map(s => ({
       id:           s.id,
       name:         s.name,
@@ -149,16 +142,13 @@ export default async (req) => {
     }
     console.log(`[sync-yugioh] Upserted ${setRows.length} sets`);
 
-    // Step 3: For each set, fetch cards + prices
-    // Skip sets already synced (incremental mode)
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
-    let setCount = 0;
+    let setCount   = 0;
     let skippedCount = 0;
 
     for (const set of allSets) {
-      // Incremental: skip sets that already have cards
       if (syncedSetIds.has(set.id)) {
         skippedCount++;
         continue;
@@ -172,7 +162,6 @@ export default async (req) => {
       const setCards = [];
       let cardPage = 1;
 
-      // Hard cap on card pages per set
       while (cardPage <= MAX_PAGES) {
         const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
         const cards = data.data || [];
@@ -183,7 +172,6 @@ export default async (req) => {
 
       if (!setCards.length) continue;
 
-      // Fetch bulk prices for this set
       const cardIds = setCards.map(c => c.id);
       const priceMap = new Map();
 
@@ -196,23 +184,29 @@ export default async (req) => {
             priceMap.set(p.card_id, p);
           }
         } catch (e) {
-          // Re-throw rate limit errors — do not swallow them
           if (e.message.includes('Rate limit low')) throw e;
           console.error(`[sync-yugioh] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
 
-      // Build rows
-      const cardRows = [];
-      const slugsSeen = new Set();
-      const snapRows = [];
-      const setAbbr = set.abbreviation || set.slug || String(set.id);
+      const cardRows   = [];
+      const slugsSeen  = new Set();
+      const snapRows   = [];
+      const setAbbr    = set.abbreviation || set.slug || String(set.id);
 
       for (const card of setCards) {
-        const price = priceMap.get(card.id) || {};
-        const marketPrice = price.market_price || null;
-        const lowPrice = price.low_price || null;
-        const foilPrice = price.foil_market_price || null;
+        const price      = priceMap.get(card.id) || {};
+        const marketPrice = price.market_price       || null;
+        const lowPrice    = price.low_price          || null;
+        const foilPrice   = price.foil_market_price  || null;
+
+        // All individual source prices available from tcgapi.dev bulk/prices
+        const tcgplayerPrice    = price.tcgplayer_price    ? parseFloat(price.tcgplayer_price)    : null;
+        const cardmarketPrice   = price.cardmarket_price   ? parseFloat(price.cardmarket_price)   : null;
+        const ebayPrice         = price.ebay_price         ? parseFloat(price.ebay_price)         : null;
+        const amazonPrice       = price.amazon_price       ? parseFloat(price.amazon_price)       : null;
+        const coolstuffPrice    = price.coolstuffinc_price ? parseFloat(price.coolstuffinc_price) : null;
+
         let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
@@ -235,25 +229,32 @@ export default async (req) => {
           low_price:         lowPrice,
           foil_market_price: foilPrice,
           price_aud:         marketPrice ? parseFloat((marketPrice * audRate).toFixed(2)) : null,
-          foil_price_aud:    foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
+          foil_price_aud:    foilPrice   ? parseFloat((foilPrice   * audRate).toFixed(2)) : null,
           aud_rate:          audRate,
           price_change_24h:  price.price_change_24h || null,
-          price_change_7d:   price.price_change_7d || null,
+          price_change_7d:   price.price_change_7d  || null,
           price_change_30d:  price.price_change_30d || null,
-          last_price_update: price.last_updated_at || null,
+          last_price_update: price.last_updated_at  || null,
           updated_at:        new Date().toISOString()
         });
 
-        // Yu-Gi-Oh: threshold $0.25 — many staples sit under $0.50
+        // Yu-Gi-Oh threshold $0.25 — many staples sit under $0.50
         if (marketPrice && marketPrice >= 0.25) {
           snapRows.push({
-            card_id:       card.id,
-            snapshot_date: today,
-            market_price:  marketPrice,
-            low_price:     lowPrice,
-            foil_price:    foilPrice,
-            price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
-            aud_rate:      audRate
+            card_id:            card.id,
+            snapshot_date:      today,
+            market_price:       marketPrice,
+            low_price:          lowPrice,
+            foil_price:         foilPrice,
+            price_aud:          parseFloat((marketPrice * audRate).toFixed(2)),
+            aud_rate:           audRate,
+            price_change_30d:   price.price_change_30d || null,
+            // Individual price source fields added 13 May 2026
+            tcgplayer_price:    tcgplayerPrice,
+            cardmarket_price:   cardmarketPrice,
+            ebay_price:         ebayPrice,
+            amazon_price:       amazonPrice,
+            coolstuffinc_price: coolstuffPrice,
           });
         }
       }

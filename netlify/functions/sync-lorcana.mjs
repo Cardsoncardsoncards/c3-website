@@ -1,7 +1,8 @@
 // netlify/functions/sync-lorcana.mjs
-// Scheduled: daily at 4:30am UTC (2:30pm AEST)
+// Scheduled: daily at 2:30pm AEST (4:30am UTC)
 // Fetches all Lorcana sets + cards + prices from tcgapi.dev Pro
 // Upserts into lorcana_sets, lorcana_cards, lorcana_price_snapshots
+// Updated 13 May 2026: foil price fields added to snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -9,7 +10,7 @@ const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const GAME_SLUG            = 'lorcana-tcg';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
-const MAX_PAGES            = 50; // hard cap on pagination to prevent runaway loops
+const MAX_PAGES            = 50;
 
 // --- Helpers ---
 
@@ -20,7 +21,6 @@ function slugify(name, number, setAbbr) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   const withNumber = number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
-  // Always prefix with set abbreviation to prevent cross-set slug collisions
   const prefix = setAbbr
     ? setAbbr.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
     : null;
@@ -46,7 +46,6 @@ async function tcgapiGet(path) {
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
   const data = await res.json();
-  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
   const remaining = data.rate_limit?.daily_remaining ?? 0;
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
@@ -78,7 +77,6 @@ export default async (req) => {
   console.log('[sync-lorcana] Starting...');
   const start = Date.now();
 
-  // Validate env vars first
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     console.error('[sync-lorcana] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
@@ -92,7 +90,6 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-lorcana] AUD rate: ${audRate}`);
 
-    // Step 1: Fetch all sets (hard cap at MAX_PAGES)
     console.log('[sync-lorcana] Fetching sets...');
     const allSets = [];
     let page = 1;
@@ -105,7 +102,6 @@ export default async (req) => {
     }
     console.log(`[sync-lorcana] Found ${allSets.length} sets`);
 
-    // Step 2: Upsert sets
     const setRows = allSets.map(s => ({
       id:           s.id,
       name:         s.name,
@@ -122,7 +118,6 @@ export default async (req) => {
     }
     console.log(`[sync-lorcana] Upserted ${setRows.length} sets`);
 
-    // Step 3: For each set, fetch cards
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
@@ -132,7 +127,6 @@ export default async (req) => {
       const setCards = [];
       let cardPage = 1;
 
-      // Hard cap on card pages per set
       while (cardPage <= MAX_PAGES) {
         const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
         const cards = data.data || [];
@@ -143,7 +137,6 @@ export default async (req) => {
 
       if (!setCards.length) continue;
 
-      // Fetch bulk prices
       const cardIds = setCards.map(c => c.id);
       const priceMap = new Map();
 
@@ -156,13 +149,11 @@ export default async (req) => {
             priceMap.set(p.card_id, p);
           }
         } catch (e) {
-          // Re-throw rate limit errors — do not swallow them
           if (e.message.includes('Rate limit low')) throw e;
           console.error(`[sync-lorcana] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
 
-      // Build rows
       const cardRows = [];
       const slugsSeen = new Set();
       const snapRows = [];
@@ -171,8 +162,9 @@ export default async (req) => {
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
         const marketPrice = price.market_price || null;
-        const lowPrice = price.low_price || null;
-        const foilPrice = price.foil_market_price || null;
+        const lowPrice    = price.low_price    || null;
+        const foilPrice   = price.foil_market_price || null;
+
         let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
@@ -195,24 +187,28 @@ export default async (req) => {
           low_price:         lowPrice,
           foil_market_price: foilPrice,
           price_aud:         marketPrice ? parseFloat((marketPrice * audRate).toFixed(2)) : null,
-          foil_price_aud:    foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
+          foil_price_aud:    foilPrice   ? parseFloat((foilPrice   * audRate).toFixed(2)) : null,
           aud_rate:          audRate,
           price_change_24h:  price.price_change_24h || null,
-          price_change_7d:   price.price_change_7d || null,
+          price_change_7d:   price.price_change_7d  || null,
           price_change_30d:  price.price_change_30d || null,
-          last_price_update: price.last_updated_at || null,
+          last_price_update: price.last_updated_at  || null,
           updated_at:        new Date().toISOString()
         });
 
         if (marketPrice && marketPrice >= 0.50) {
           snapRows.push({
-            card_id:       card.id,
-            snapshot_date: today,
-            market_price:  marketPrice,
-            low_price:     lowPrice,
-            foil_price:    foilPrice,
-            price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
-            aud_rate:      audRate
+            card_id:          card.id,
+            snapshot_date:    today,
+            market_price:     marketPrice,
+            low_price:        lowPrice,
+            foil_price:       foilPrice,
+            price_aud:        parseFloat((marketPrice * audRate).toFixed(2)),
+            aud_rate:         audRate,
+            price_change_30d: price.price_change_30d || null,
+            // Foil price fields added 13 May 2026
+            price_usd_foil:   foilPrice,
+            price_aud_foil:   foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
           });
         }
       }
