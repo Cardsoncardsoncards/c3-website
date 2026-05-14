@@ -315,7 +315,20 @@ export default async (req) => {
                 market_price:  mp,
                 price_aud:     parseFloat((mp * audRate).toFixed(2)),
                 aud_rate:      audRate,
-                ...ptcg
+                tcg_low:             ptcg.tcg_low             ?? null,
+                tcg_mid:             ptcg.tcg_mid             ?? null,
+                tcg_market:          ptcg.tcg_market          ?? null,
+                tcg_direct_low:      ptcg.tcg_direct_low      ?? null,
+                holofoil_low:        ptcg.holofoil_low        ?? null,
+                holofoil_mid:        ptcg.holofoil_mid        ?? null,
+                holofoil_market:     ptcg.holofoil_market     ?? null,
+                reverse_holo_low:    ptcg.reverse_holo_low    ?? null,
+                reverse_holo_mid:    ptcg.reverse_holo_mid    ?? null,
+                reverse_holo_market: ptcg.reverse_holo_market ?? null,
+                cardmarket_low:      ptcg.cardmarket_low      ?? null,
+                cardmarket_trend:    ptcg.cardmarket_trend    ?? null,
+                cardmarket_avg7:     ptcg.cardmarket_avg7     ?? null,
+                cardmarket_avg30:    ptcg.cardmarket_avg30    ?? null,
               });
             }
             for (let i = 0; i < snapRows.length; i += 500) {
@@ -428,7 +441,20 @@ export default async (req) => {
             foil_price:    foilPrice,
             price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
             aud_rate:      audRate,
-            ...ptcg
+            tcg_low:             ptcg.tcg_low             ?? null,
+            tcg_mid:             ptcg.tcg_mid             ?? null,
+            tcg_market:          ptcg.tcg_market          ?? null,
+            tcg_direct_low:      ptcg.tcg_direct_low      ?? null,
+            holofoil_low:        ptcg.holofoil_low        ?? null,
+            holofoil_mid:        ptcg.holofoil_mid        ?? null,
+            holofoil_market:     ptcg.holofoil_market     ?? null,
+            reverse_holo_low:    ptcg.reverse_holo_low    ?? null,
+            reverse_holo_mid:    ptcg.reverse_holo_mid    ?? null,
+            reverse_holo_market: ptcg.reverse_holo_market ?? null,
+            cardmarket_low:      ptcg.cardmarket_low      ?? null,
+            cardmarket_trend:    ptcg.cardmarket_trend    ?? null,
+            cardmarket_avg7:     ptcg.cardmarket_avg7     ?? null,
+            cardmarket_avg30:    ptcg.cardmarket_avg30    ?? null,
           });
         }
       }

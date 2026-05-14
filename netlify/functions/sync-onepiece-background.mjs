@@ -1,16 +1,17 @@
-// netlify/functions/sync-dragonball.mjs
-// Manual trigger only -- POST with header x-sync-secret: <SYNC_SECRET>
-// Fetches all Riftbound sets + cards + prices from tcgapi.dev Pro
-// Upserts into dragonball_sets, dragonball_cards, dragonball_price_snapshots
+// netlify/functions/sync-onepiece.mjs
+// Scheduled: daily at 5:30am UTC (3:30pm AEST)
+// Fetches all One Piece sets + cards + prices from tcgapi.dev Pro
+// Upserts into onepiece_sets, onepiece_cards, onepiece_price_snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
-const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
-const GAME_SLUG            = 'dragon-ball-super-ccg';
+const GAME_SLUG            = 'one-piece-card-game';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
-const MAX_PAGES            = 50;
+const MAX_PAGES            = 50; // hard cap on pagination to prevent runaway loops
+
+// --- Helpers ---
 
 function slugify(name, number, setAbbr) {
   const base = name
@@ -19,6 +20,7 @@ function slugify(name, number, setAbbr) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   const withNumber = number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
+  // Always prefix with set abbreviation to prevent cross-set slug collisions
   const prefix = setAbbr
     ? setAbbr.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
     : null;
@@ -43,8 +45,14 @@ async function tcgapiGet(path) {
     const err = await res.text();
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
-  const data = await res.json();
-  const remaining = data.rate_limit?.daily_remaining ?? 0;
+  const text = await res.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
+  }
+  const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
@@ -68,33 +76,46 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
+async function supabaseUpsertSnapshots(table, rows) {
+  if (!rows.length) return;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
+    },
+    body: JSON.stringify(rows)
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
+  }
+}
+
+// --- Main ---
 
 export default async (req) => {
-  console.log('[sync-dragonball] Starting...');
+  console.log('[sync-onepiece] Starting (background function)...');
   const start = Date.now();
 
-  // Auth check -- must be POST with correct secret
-  const secret = req.headers.get('x-sync-secret');
-  if (!SYNC_SECRET || secret !== SYNC_SECRET) {
-    console.error('[sync-dragonball] Unauthorised');
-    return new Response('Unauthorised', { status: 401 });
-  }
-
+  // Validate env vars first
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.error('[sync-dragonball] Missing Supabase env vars');
+    console.error('[sync-onepiece] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
   }
   if (!TCGAPI_KEY) {
-    console.error('[sync-dragonball] TCGAPI_KEY not set');
+    console.error('[sync-onepiece] TCGAPI_KEY not set');
     return new Response('TCGAPI_KEY missing', { status: 500 });
   }
 
   try {
     const audRate = await getExchangeRate();
-    console.log(`[sync-dragonball] AUD rate: ${audRate}`);
+    console.log(`[sync-onepiece] AUD rate: ${audRate}`);
 
-    // Step 1: Fetch all sets
-    console.log('[sync-dragonball] Fetching sets...');
+    // Step 1: Fetch all sets (hard cap at MAX_PAGES)
+    console.log('[sync-onepiece] Fetching sets...');
     const allSets = [];
     let page = 1;
     while (page <= MAX_PAGES) {
@@ -104,7 +125,7 @@ export default async (req) => {
       if (sets.length < 100) break;
       page++;
     }
-    console.log(`[sync-dragonball] Found ${allSets.length} sets`);
+    console.log(`[sync-onepiece] Found ${allSets.length} sets`);
 
     // Step 2: Upsert sets
     const setRows = allSets.map(s => ({
@@ -119,9 +140,9 @@ export default async (req) => {
     }));
 
     for (let i = 0; i < setRows.length; i += 100) {
-      await supabaseUpsert('dragonball_sets', setRows.slice(i, i + 100));
+      await supabaseUpsert('onepiece_sets', setRows.slice(i, i + 100));
     }
-    console.log(`[sync-dragonball] Upserted ${setRows.length} sets`);
+    console.log(`[sync-onepiece] Upserted ${setRows.length} sets`);
 
     // Step 3: For each set, fetch cards + prices
     const today = new Date().toISOString().split('T')[0];
@@ -129,10 +150,11 @@ export default async (req) => {
     let totalSnaps = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-dragonball] Syncing set: ${set.name} (id:${set.id})`);
+      console.log(`[sync-onepiece] Syncing set: ${set.name} (id:${set.id})`);
       const setCards = [];
       let cardPage = 1;
 
+      // Hard cap on card pages per set
       while (cardPage <= MAX_PAGES) {
         const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
         const cards = data.data || [];
@@ -143,6 +165,7 @@ export default async (req) => {
 
       if (!setCards.length) continue;
 
+      // Fetch bulk prices
       const cardIds = setCards.map(c => c.id);
       const priceMap = new Map();
 
@@ -151,13 +174,17 @@ export default async (req) => {
         try {
           const priceData = await tcgapiGet(`/bulk/prices?ids=${batch.join(',')}`);
           const prices = priceData.data || [];
-          for (const p of prices) priceMap.set(p.card_id, p);
+          for (const p of prices) {
+            priceMap.set(p.card_id, p);
+          }
         } catch (e) {
+          // Re-throw rate limit errors — do not swallow them
           if (e.message.includes('Rate limit low')) throw e;
-          console.error(`[sync-dragonball] Bulk price fetch failed for set ${set.id}:`, e.message);
+          console.error(`[sync-onepiece] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
 
+      // Build rows
       const cardRows = [];
       const slugsSeen = new Set();
       const snapRows = [];
@@ -213,28 +240,28 @@ export default async (req) => {
       }
 
       for (let i = 0; i < cardRows.length; i += 200) {
-        await supabaseUpsert('dragonball_cards', cardRows.slice(i, i + 200));
+        await supabaseUpsert('onepiece_cards', cardRows.slice(i, i + 200));
       }
       for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsert('dragonball_price_snapshots', snapRows.slice(i, i + 500));
+        await supabaseUpsertSnapshots('onepiece_price_snapshots', snapRows.slice(i, i + 500));
       }
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
-      console.log(`[sync-dragonball] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      console.log(`[sync-onepiece] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-dragonball] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
-    return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    console.log(`[sync-onepiece] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    return new Response('OK', { status: 200 });
 
   } catch (err) {
-    console.error('[sync-dragonball] FATAL:', err.message);
+    console.error('[sync-onepiece] FATAL:', err.message);
     return new Response(err.message, { status: 500 });
   }
 };
 
-export const config = { schedule: "30 6 * * *" };
+export const config = {
+  schedule: "30 5 * * *",
+  type: "background"
+};

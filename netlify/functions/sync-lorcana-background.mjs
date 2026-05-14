@@ -1,12 +1,12 @@
-// netlify/functions/sync-onepiece.mjs
-// Scheduled: daily at 5:30am UTC (3:30pm AEST)
-// Fetches all One Piece sets + cards + prices from tcgapi.dev Pro
-// Upserts into onepiece_sets, onepiece_cards, onepiece_price_snapshots
+// netlify/functions/sync-lorcana.mjs
+// Scheduled: daily at 4:30am UTC (2:30pm AEST)
+// Fetches all Lorcana sets + cards + prices from tcgapi.dev Pro
+// Upserts into lorcana_sets, lorcana_cards, lorcana_price_snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
-const GAME_SLUG            = 'one-piece-card-game';
+const GAME_SLUG            = 'lorcana-tcg';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50; // hard cap on pagination to prevent runaway loops
@@ -45,9 +45,14 @@ async function tcgapiGet(path) {
     const err = await res.text();
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
-  const data = await res.json();
-  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
-  const remaining = data.rate_limit?.daily_remaining ?? 0;
+  const text = await res.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
+  }
+  const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
@@ -71,29 +76,46 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
+async function supabaseUpsertSnapshots(table, rows) {
+  if (!rows.length) return;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
+    },
+    body: JSON.stringify(rows)
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
+  }
+}
 
 // --- Main ---
 
 export default async (req) => {
-  console.log('[sync-onepiece] Starting...');
+  console.log('[sync-lorcana] Starting (background function)...');
   const start = Date.now();
 
   // Validate env vars first
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.error('[sync-onepiece] Missing Supabase env vars');
+    console.error('[sync-lorcana] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
   }
   if (!TCGAPI_KEY) {
-    console.error('[sync-onepiece] TCGAPI_KEY not set');
+    console.error('[sync-lorcana] TCGAPI_KEY not set');
     return new Response('TCGAPI_KEY missing', { status: 500 });
   }
 
   try {
     const audRate = await getExchangeRate();
-    console.log(`[sync-onepiece] AUD rate: ${audRate}`);
+    console.log(`[sync-lorcana] AUD rate: ${audRate}`);
 
     // Step 1: Fetch all sets (hard cap at MAX_PAGES)
-    console.log('[sync-onepiece] Fetching sets...');
+    console.log('[sync-lorcana] Fetching sets...');
     const allSets = [];
     let page = 1;
     while (page <= MAX_PAGES) {
@@ -103,7 +125,7 @@ export default async (req) => {
       if (sets.length < 100) break;
       page++;
     }
-    console.log(`[sync-onepiece] Found ${allSets.length} sets`);
+    console.log(`[sync-lorcana] Found ${allSets.length} sets`);
 
     // Step 2: Upsert sets
     const setRows = allSets.map(s => ({
@@ -118,17 +140,17 @@ export default async (req) => {
     }));
 
     for (let i = 0; i < setRows.length; i += 100) {
-      await supabaseUpsert('onepiece_sets', setRows.slice(i, i + 100));
+      await supabaseUpsert('lorcana_sets', setRows.slice(i, i + 100));
     }
-    console.log(`[sync-onepiece] Upserted ${setRows.length} sets`);
+    console.log(`[sync-lorcana] Upserted ${setRows.length} sets`);
 
-    // Step 3: For each set, fetch cards + prices
+    // Step 3: For each set, fetch cards
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-onepiece] Syncing set: ${set.name} (id:${set.id})`);
+      console.log(`[sync-lorcana] Syncing set: ${set.name} (id:${set.id})`);
       const setCards = [];
       let cardPage = 1;
 
@@ -158,7 +180,7 @@ export default async (req) => {
         } catch (e) {
           // Re-throw rate limit errors — do not swallow them
           if (e.message.includes('Rate limit low')) throw e;
-          console.error(`[sync-onepiece] Bulk price fetch failed for set ${set.id}:`, e.message);
+          console.error(`[sync-lorcana] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
 
@@ -190,7 +212,7 @@ export default async (req) => {
           set_id:            set.id,
           set_name:          set.name,
           game_slug:         GAME_SLUG,
-          custom_attributes: card.custom_attributes ? JSON.stringify(card.custom_attributes) : null,
+          custom_attributes: card.custom_attributes || null,
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,
@@ -206,37 +228,42 @@ export default async (req) => {
 
         if (marketPrice && marketPrice >= 0.50) {
           snapRows.push({
-            card_id:       card.id,
-            snapshot_date: today,
-            market_price:  marketPrice,
-            low_price:     lowPrice,
-            foil_price:    foilPrice,
-            price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
-            aud_rate:      audRate
+            card_id:        card.id,
+            snapshot_date:  today,
+            market_price:   marketPrice,
+            low_price:      lowPrice,
+            foil_price:     foilPrice,
+            price_aud:      parseFloat((marketPrice * audRate).toFixed(2)),
+            aud_rate:       audRate,
+            price_usd_foil: foilPrice || null,
+            price_aud_foil: foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null
           });
         }
       }
 
       for (let i = 0; i < cardRows.length; i += 200) {
-        await supabaseUpsert('onepiece_cards', cardRows.slice(i, i + 200));
+        await supabaseUpsert('lorcana_cards', cardRows.slice(i, i + 200));
       }
       for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsert('onepiece_price_snapshots', snapRows.slice(i, i + 500));
+        await supabaseUpsertSnapshots('lorcana_price_snapshots', snapRows.slice(i, i + 500));
       }
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
-      console.log(`[sync-onepiece] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      console.log(`[sync-lorcana] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-onepiece] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-lorcana] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response('OK', { status: 200 });
 
   } catch (err) {
-    console.error('[sync-onepiece] FATAL:', err.message);
+    console.error('[sync-lorcana] FATAL:', err.message);
     return new Response(err.message, { status: 500 });
   }
 };
 
-export const config = { schedule: "30 5 * * *" };
+export const config = {
+  schedule: "30 4 * * *",
+  type: "background"
+};

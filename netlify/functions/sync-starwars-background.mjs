@@ -1,13 +1,13 @@
-// netlify/functions/sync-riftbound.mjs
+// netlify/functions/sync-starwars.mjs
 // Manual trigger only -- POST with header x-sync-secret: <SYNC_SECRET>
-// Fetches all Riftbound sets + cards + prices from tcgapi.dev Pro
-// Upserts into riftbound_sets, riftbound_cards, riftbound_price_snapshots
+// Fetches all Star Wars sets + cards + prices from tcgapi.dev Pro
+// Upserts into starwars_sets, starwars_cards, starwars_price_snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
-const GAME_SLUG            = 'riftbound-league-of-legends-trading-card-game';
+const GAME_SLUG            = 'star-wars-unlimited';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
@@ -43,8 +43,14 @@ async function tcgapiGet(path) {
     const err = await res.text();
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
-  const data = await res.json();
-  const remaining = data.rate_limit?.daily_remaining ?? 0;
+  const text = await res.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
+  }
+  const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
@@ -68,33 +74,52 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
+async function supabaseUpsertSnapshots(table, rows) {
+  if (!rows.length) return;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
+    },
+    body: JSON.stringify(rows)
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
+  }
+}
 
 export default async (req) => {
-  console.log('[sync-riftbound] Starting...');
+  console.log('[sync-starwars] Starting (background function)...');
   const start = Date.now();
 
   // Auth check -- must be POST with correct secret
+  // Auth: accept scheduled trigger (no header) OR manual POST with secret
   const secret = req.headers.get('x-sync-secret');
-  if (!SYNC_SECRET || secret !== SYNC_SECRET) {
-    console.error('[sync-riftbound] Unauthorised');
+  const isScheduled = !secret;
+  if (!isScheduled && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
+    console.error('[sync-starwars] Unauthorised');
     return new Response('Unauthorised', { status: 401 });
   }
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.error('[sync-riftbound] Missing Supabase env vars');
+    console.error('[sync-starwars] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
   }
   if (!TCGAPI_KEY) {
-    console.error('[sync-riftbound] TCGAPI_KEY not set');
+    console.error('[sync-starwars] TCGAPI_KEY not set');
     return new Response('TCGAPI_KEY missing', { status: 500 });
   }
 
   try {
     const audRate = await getExchangeRate();
-    console.log(`[sync-riftbound] AUD rate: ${audRate}`);
+    console.log(`[sync-starwars] AUD rate: ${audRate}`);
 
     // Step 1: Fetch all sets
-    console.log('[sync-riftbound] Fetching sets...');
+    console.log('[sync-starwars] Fetching sets...');
     const allSets = [];
     let page = 1;
     while (page <= MAX_PAGES) {
@@ -104,7 +129,7 @@ export default async (req) => {
       if (sets.length < 100) break;
       page++;
     }
-    console.log(`[sync-riftbound] Found ${allSets.length} sets`);
+    console.log(`[sync-starwars] Found ${allSets.length} sets`);
 
     // Step 2: Upsert sets
     const setRows = allSets.map(s => ({
@@ -119,9 +144,9 @@ export default async (req) => {
     }));
 
     for (let i = 0; i < setRows.length; i += 100) {
-      await supabaseUpsert('riftbound_sets', setRows.slice(i, i + 100));
+      await supabaseUpsert('starwars_sets', setRows.slice(i, i + 100));
     }
-    console.log(`[sync-riftbound] Upserted ${setRows.length} sets`);
+    console.log(`[sync-starwars] Upserted ${setRows.length} sets`);
 
     // Step 3: For each set, fetch cards + prices
     const today = new Date().toISOString().split('T')[0];
@@ -129,7 +154,7 @@ export default async (req) => {
     let totalSnaps = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-riftbound] Syncing set: ${set.name} (id:${set.id})`);
+      console.log(`[sync-starwars] Syncing set: ${set.name} (id:${set.id})`);
       const setCards = [];
       let cardPage = 1;
 
@@ -154,7 +179,7 @@ export default async (req) => {
           for (const p of prices) priceMap.set(p.card_id, p);
         } catch (e) {
           if (e.message.includes('Rate limit low')) throw e;
-          console.error(`[sync-riftbound] Bulk price fetch failed for set ${set.id}:`, e.message);
+          console.error(`[sync-starwars] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
 
@@ -213,28 +238,31 @@ export default async (req) => {
       }
 
       for (let i = 0; i < cardRows.length; i += 200) {
-        await supabaseUpsert('riftbound_cards', cardRows.slice(i, i + 200));
+        await supabaseUpsert('starwars_cards', cardRows.slice(i, i + 200));
       }
       for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsert('riftbound_price_snapshots', snapRows.slice(i, i + 500));
+        await supabaseUpsertSnapshots('starwars_price_snapshots', snapRows.slice(i, i + 500));
       }
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
-      console.log(`[sync-riftbound] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      console.log(`[sync-starwars] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-riftbound] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-starwars] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
 
   } catch (err) {
-    console.error('[sync-riftbound] FATAL:', err.message);
+    console.error('[sync-starwars] FATAL:', err.message);
     return new Response(err.message, { status: 500 });
   }
 };
 
-export const config = { schedule: "0 6 * * *" };
+export const config = {
+  schedule: "0 7 * * *",
+  type: "background"
+};

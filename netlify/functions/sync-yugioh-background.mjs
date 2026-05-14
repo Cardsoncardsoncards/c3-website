@@ -73,6 +73,23 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
+async function supabaseUpsertSnapshots(table, rows) {
+  if (!rows.length) return;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
+    },
+    body: JSON.stringify(rows)
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
+  }
+}
 
 // Fetch set_ids that already have cards in Supabase (used for incremental sync)
 async function getAlreadySyncedSetIds() {
@@ -247,13 +264,18 @@ export default async (req) => {
         // Yu-Gi-Oh: threshold $0.25 — many staples sit under $0.50
         if (marketPrice && marketPrice >= 0.25) {
           snapRows.push({
-            card_id:       card.id,
-            snapshot_date: today,
-            market_price:  marketPrice,
-            low_price:     lowPrice,
-            foil_price:    foilPrice,
-            price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
-            aud_rate:      audRate
+            card_id:           card.id,
+            snapshot_date:     today,
+            market_price:      marketPrice,
+            low_price:         lowPrice,
+            foil_price:        foilPrice,
+            price_aud:         parseFloat((marketPrice * audRate).toFixed(2)),
+            aud_rate:          audRate,
+            tcgplayer_price:   price.tcgplayer_price   || null,
+            cardmarket_price:  price.cardmarket_price  || null,
+            ebay_price:        price.ebay_price        || null,
+            amazon_price:      price.amazon_price      || null,
+            coolstuffinc_price: price.coolstuffinc_price || null
           });
         }
       }
@@ -262,7 +284,7 @@ export default async (req) => {
         await supabaseUpsert('yugioh_cards', cardRows.slice(i, i + 200));
       }
       for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsert('yugioh_price_snapshots', snapRows.slice(i, i + 500));
+        await supabaseUpsertSnapshots('yugioh_price_snapshots', snapRows.slice(i, i + 500));
       }
 
       totalCards += cardRows.length;
