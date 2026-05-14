@@ -1,5 +1,5 @@
 // netlify/functions/sync-dragonball.mjs
-// Manual trigger only -- POST with header x-sync-secret: <SYNC_SECRET>
+// Scheduled: daily at 6:30am UTC (4:30pm AEST)
 // Fetches all Riftbound sets + cards + prices from tcgapi.dev Pro
 // Upserts into dragonball_sets, dragonball_cards, dragonball_price_snapshots
 
@@ -70,12 +70,14 @@ async function supabaseUpsert(table, rows) {
 }
 
 export default async (req) => {
-  console.log('[sync-dragonball] Starting...');
+  console.log('[sync-dragonball] Starting (background function)...');
   const start = Date.now();
 
   // Auth check -- must be POST with correct secret
+  // Auth: accept scheduled trigger (no header) OR manual POST with secret
   const secret = req.headers.get('x-sync-secret');
-  if (!SYNC_SECRET || secret !== SYNC_SECRET) {
+  const isScheduled = !secret;
+  if (!isScheduled && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
     console.error('[sync-dragonball] Unauthorised');
     return new Response('Unauthorised', { status: 401 });
   }
@@ -237,4 +239,7 @@ export default async (req) => {
   }
 };
 
-export const config = { schedule: "30 6 * * *" };
+export const config = {
+  schedule: "30 6 * * *",
+  type: "background"
+};

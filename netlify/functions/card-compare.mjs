@@ -733,6 +733,7 @@ function handleSearchKey(e) {
   if (e.key === 'ArrowDown') { searchIndex = Math.min(searchIndex + 1, items.length - 1); items[searchIndex] && items[searchIndex].focus(); e.preventDefault(); }
   else if (e.key === 'ArrowUp') { searchIndex = Math.max(searchIndex - 1, -1); if (searchIndex >= 0) items[searchIndex] && items[searchIndex].focus(); else { const ms = document.getElementById('main-search'); ms && ms.focus(); } e.preventDefault(); }
   else if (e.key === 'Escape') { if (el) el.style.display = 'none'; searchIndex = -1; }
+  else if (e.key === 'Enter') { const focused = el ? el.querySelector('.result-item:focus') : null; if (focused && focused.dataset.game) addCard(focused.dataset.game, focused.dataset.slug); }
 }
 
 function renderResults(items) {
@@ -748,8 +749,8 @@ function renderResults(items) {
     const token     = card.game + ':' + card.slug;
     const inCompare = CURRENT_TOKENS.includes(token) || CURRENT_TOKENS.includes(card.slug);
     const full      = CURRENT_CARDS >= 5;
-    const clickAttr = (inCompare || full) ? '' : ' onclick="addCard(\'' + card.game + '\',\'' + card.slug + '\')" onkeydown="if(event.key===\'Enter\')addCard(\'' + card.game + '\',\'' + card.slug + '\')"';
-    return '<div class="result-item" tabindex="0" role="option" aria-selected="false"' + clickAttr + '>' +
+    const canAdd = !inCompare && !full;
+    return '<div class="result-item" tabindex="0" role="option" aria-selected="false"' + (canAdd ? ' data-game="' + card.game + '" data-slug="' + card.slug + '"' : ' data-disabled="true"') + '>' +
       (card.image ? '<img class="result-img" src="' + card.image + '" alt="' + card.name + '" loading="lazy">' : '') +
       '<div><div class="result-name">' + card.name +
         '<span class="result-badge" style="background:' + card.gameColor + '22;color:' + card.gameColor + '">' + card.gameLabel + '</span>' +
@@ -788,7 +789,7 @@ async function loadVersions(game, name, slotIdx) {
     const data = await res.json();
     if (!data || !data.length) { panel.innerHTML = '<div style="padding:6px;color:var(--text2);font-size:10px">No other versions found</div>'; return; }
     panel.innerHTML = data.map(v =>
-      '<div class="version-item" onclick="switchVersion(\'' + game + '\',\'' + v.slug + '\',' + slotIdx + ')" tabindex="0" onkeydown="if(event.key===\'Enter\')switchVersion(\'' + game + '\',\'' + v.slug + '\',' + slotIdx + ')">\" +
+      '<div class="version-item" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '" tabindex="0">' +
       '<span class="version-set">' + (v.setName || '—') + '</span>' +
       '<span class="version-price">' + (v.priceDisplay || 'N/A') + '</span>' +
       '<span class="version-select">Select →</span>' +
@@ -842,6 +843,26 @@ document.addEventListener('click', e => {
     const el = document.getElementById('search-results');
     if (el) el.style.display = 'none';
     searchIndex = -1;
+  }
+  // Result item click — add card to compare
+  const resultItem = e.target.closest('.result-item[data-game]');
+  if (resultItem && !resultItem.dataset.disabled) {
+    addCard(resultItem.dataset.game, resultItem.dataset.slug);
+  }
+  // Version item click — switch version in slot
+  const versionItem = e.target.closest('.version-item[data-game]');
+  if (versionItem) {
+    switchVersion(versionItem.dataset.game, versionItem.dataset.slug, parseInt(versionItem.dataset.slot, 10));
+  }
+  // Result item click - add card to compare
+  const resultItem = e.target.closest('.result-item[data-game]');
+  if (resultItem && !resultItem.dataset.disabled) {
+    addCard(resultItem.dataset.game, resultItem.dataset.slug);
+  }
+  // Version item click - switch version in slot
+  const versionItem = e.target.closest('.version-item[data-game]');
+  if (versionItem) {
+    switchVersion(versionItem.dataset.game, versionItem.dataset.slug, parseInt(versionItem.dataset.slot, 10));
   }
   // Versions button delegation (replaces fragile inline onclick)
   const vBtn = e.target.closest('.slot-versions-btn');
