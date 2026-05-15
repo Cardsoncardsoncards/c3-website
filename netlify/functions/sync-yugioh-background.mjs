@@ -47,14 +47,9 @@ async function tcgapiGet(path) {
     const err = await res.text();
     throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
   }
-  const text = await res.text();
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
-  }
-  const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
+  const data = await res.json();
+  // Default to 0 if rate_limit field is missing — forces abort rather than running blind
+  const remaining = data.rate_limit?.daily_remaining ?? 0;
   if (remaining < RATE_LIMIT_BUFFER) {
     throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
   }
@@ -78,28 +73,11 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
-async function supabaseUpsertSnapshots(table, rows) {
-  if (!rows.length) return;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'resolution=merge-duplicates,return=minimal'
-    },
-    body: JSON.stringify(rows)
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
-  }
-}
 
 // Fetch set_ids that already have cards in Supabase (used for incremental sync)
 async function getAlreadySyncedSetIds() {
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/yugioh_cards?select=set_id&limit=10000`,
+    `${SUPABASE_URL}/rest/v1/yugioh_sync_progress?select=set_id&limit=1000`,
     {
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,
@@ -108,17 +86,33 @@ async function getAlreadySyncedSetIds() {
     }
   );
   if (!res.ok) {
-    console.error('[sync-yugioh] Could not fetch synced set IDs, will do full sync');
+    console.error('[sync-yugioh] Could not fetch sync progress, will do full sync');
     return new Set();
   }
   const rows = await res.json();
   return new Set(rows.map(r => r.set_id));
 }
 
+async function markSetSynced(setId) {
+  await fetch(
+    `${SUPABASE_URL}/rest/v1/yugioh_sync_progress`,
+    {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
+    }
+  );
+}
+
 // --- Main ---
 
 export default async (req) => {
-  console.log('[sync-yugioh] Starting (background function)...');
+  console.log('[sync-yugioh] Starting...');
   const start = Date.now();
 
   // Validate env vars first
@@ -269,18 +263,13 @@ export default async (req) => {
         // Yu-Gi-Oh: threshold $0.25 — many staples sit under $0.50
         if (marketPrice && marketPrice >= 0.25) {
           snapRows.push({
-            card_id:           card.id,
-            snapshot_date:     today,
-            market_price:      marketPrice,
-            low_price:         lowPrice,
-            foil_price:        foilPrice,
-            price_aud:         parseFloat((marketPrice * audRate).toFixed(2)),
-            aud_rate:          audRate,
-            tcgplayer_price:   price.tcgplayer_price   || null,
-            cardmarket_price:  price.cardmarket_price  || null,
-            ebay_price:        price.ebay_price        || null,
-            amazon_price:      price.amazon_price      || null,
-            coolstuffinc_price: price.coolstuffinc_price || null
+            card_id:       card.id,
+            snapshot_date: today,
+            market_price:  marketPrice,
+            low_price:     lowPrice,
+            foil_price:    foilPrice,
+            price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
+            aud_rate:      audRate
           });
         }
       }
@@ -289,11 +278,12 @@ export default async (req) => {
         await supabaseUpsert('yugioh_cards', cardRows.slice(i, i + 200));
       }
       for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsertSnapshots('yugioh_price_snapshots', snapRows.slice(i, i + 500));
+        await supabaseUpsert('yugioh_price_snapshots', snapRows.slice(i, i + 500));
       }
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
+      await markSetSynced(set.id);
       console.log(`[sync-yugioh] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
@@ -307,7 +297,4 @@ export default async (req) => {
   }
 };
 
-export const config = {
-  schedule: "0 5 * * *",
-  type: "background"
-};
+export const config = { schedule: "0 5 * * *" };

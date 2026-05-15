@@ -78,7 +78,7 @@ export default async (req) => {
     const set = sets[0];
 
     const [cards, ebayListings] = await Promise.all([
-      supabaseGet(`starwars_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
+      supabaseGet(`starwars_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,price_change_7d`),
       getEbayListings(`${set.name}  star wars unlimited`, ebayToken)
     ]);
 
@@ -102,9 +102,13 @@ export default async (req) => {
 
     const allCardsHTML = cards && cards.length ? cards.map(c => {
       const aud = toAud(c);
-      return `<a href="/cards/starwars/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block;transition:all .2s" onmouseover="this.style.borderColor='#FFE81F'" onmouseout="this.style.borderColor='#1e2235'">
+      const ch7 = c.price_change_7d ? parseFloat(c.price_change_7d) : null;
+      const trendDot = ch7 && Math.abs(ch7) >= 5 ? `<div style="position:absolute;top:4px;left:4px;width:7px;height:7px;border-radius:50%;background:${ch7>0?'#4dbd5f':'#e57373'}" title="${ch7>0?'+':''}${ch7.toFixed(1)}% this week"></div>` : '';
+      return `<a href="/cards/starwars/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block;transition:all .2s;position:relative" onmouseover="this.style.borderColor=\'#FFE81F\'" onmouseout="this.style.borderColor=\'#1e2235\'">${trendDot}
         ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
         <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
+        ${c.number ? `<div style="font-size:9px;color:#8892b0;margin-top:1px">#${c.number}</div>` : ''}
+        ${c.rarity ? `<div style="font-size:9px;color:#FFE81F;font-weight:700;margin-top:1px;text-transform:uppercase;letter-spacing:.04em">${c.rarity}</div>` : ''}
         ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
       </a>`;
     }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing — check back after tonight's update.</div>`;
@@ -212,6 +216,14 @@ export default async (req) => {
       ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
       ${cards?.length ? `<span>${pricedCards.length} priced in AUD</span>` : ''}
     </div>
+    ${pricedCards.length >= 2 ? `
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;padding:16px;background:#0e1118;border:1px solid #FFE81F22;border-radius:10px">
+      <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Set Total Value</div><div style="font-size:18px;font-weight:700;color:#FFE81F;font-family:'Cinzel',serif">AU$${pricedCards.reduce((s,c)=>s+(c.price_aud>0?parseFloat(c.price_aud):c.market_price>0?parseFloat(c.market_price)*1.58:0),0).toFixed(0)}</div></div>
+      <div style="width:1px;background:#1e2235"></div>
+      <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Most Valuable</div><div style="font-size:14px;font-weight:700;color:#e8eaf0">${pricedCards[0].name}</div><div style="font-size:12px;color:#FFE81F">AU$${(pricedCards[0].price_aud>0?parseFloat(pricedCards[0].price_aud):pricedCards[0].market_price>0?parseFloat(pricedCards[0].market_price)*1.58:0).toFixed(2)}</div></div>
+      <div style="width:1px;background:#1e2235"></div>
+      <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Avg Card Value</div><div style="font-size:18px;font-weight:700;color:#e8eaf0;font-family:'Cinzel',serif">AU$${(pricedCards.reduce((s,c)=>s+(c.price_aud>0?parseFloat(c.price_aud):c.market_price>0?parseFloat(c.market_price)*1.58:0),0)/pricedCards.length).toFixed(2)}</div></div>
+    </div>` : ''}
   </div>
 
   <div class="cta-row">

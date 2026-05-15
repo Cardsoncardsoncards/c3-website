@@ -695,7 +695,7 @@ ${contextPara}
       <button class="cta-btn cta-watch" id="watch-btn" onclick="toggleWatch('${card.scryfall_id}','${card.name.replace(/'/g,"\'")}')">
         <span id="watch-icon">☆</span> <span id="watch-label">Watch this card</span>
       </button>
-      <button class="cta-btn cta-compare" id="compare-btn" onclick="addToCompare('${card.slug}','${card.name.replace(/'/g,"\\'")}','${(card.image_uri_small || card.image_uri_normal || '').replace(/'/g,"\\'")}','${priceAud ? formatAUD(priceAud) : 'N/A'}')">
+      <button class="cta-btn cta-compare" id="compare-btn" data-action="mtg-compare" data-slug="${card.slug}" data-name="${card.name.replace(/"/g,'&quot;')}" data-img="${(card.image_uri_small||card.image_uri_normal||'').replace(/"/g,'&quot;')}" data-price="${priceAud ? formatAUD(priceAud) : 'N/A'}">
         <span id="compare-icon">⚖️</span> <span id="compare-label">Add to Compare</span>
       </button>
     </div>
@@ -1230,10 +1230,18 @@ function clearCompare() {
 function goToCompare() {
   const tray = getCompareTray();
   if (!tray.length) return;
-  const slugs = tray.map(c => c.slug).join(',');
+  const slugs = tray.map(c => (c.game||'mtg')+':'+c.slug).join(',');
   window.location.href = '/compare?cards=' + slugs;
 }
 renderCompareTray();
+
+// MTG compare button delegation — avoids escaped quotes in onclick
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-action="mtg-compare"]');
+  if (btn) {
+    addToCompare(btn.dataset.slug, btn.dataset.name, btn.dataset.img, btn.dataset.price);
+  }
+});
 
 initWatch();
 

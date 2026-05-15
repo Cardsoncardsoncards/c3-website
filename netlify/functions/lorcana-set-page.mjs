@@ -121,7 +121,7 @@ export default async (req) => {
 
   let set = sets && sets[0];
   try {
-    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,card_text`) : [];
+    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,card_text,price_change_7d`) : [];
   } catch (e) {
     console.error('[lorcana-set-page] cards fetch error:', e.message);
     cards = [];
@@ -189,10 +189,13 @@ export default async (req) => {
     const priceDisplay = aud >= 0.50 ? `~AU$${aud.toFixed(0)}` : `<span style="color:rgba(160,168,192,.35);font-size:9px">no price</span>`;
     const fullName = c.version ? `${c.name} — ${c.version}` : c.name;
     const ink = INK_COLOURS[c.ink] || { bg:'#888' };
-    return `<a href="/cards/lorcana/${c.slug}" class="card-item" data-rarity="${(c.rarity||'').toLowerCase()}" data-ink="${(c.ink||'').toLowerCase()}" data-price="${aud.toFixed(2)}">
-      <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${ink.bg}"></div>
+    const trendL = c.price_change_7d && Math.abs(parseFloat(c.price_change_7d)) >= 5 ? parseFloat(c.price_change_7d) : null;
+    return `<a href="/cards/lorcana/${c.slug}" class="card-item" data-rarity="${(c.rarity||'')}.toLowerCase()}" data-ink="${(c.ink||'').toLowerCase()}" data-price="${aud.toFixed(2)}">
+      <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${ink.bg}"></div>${trendL ? `<div style="position:absolute;top:4px;left:4px;width:7px;height:7px;border-radius:50%;background:${trendL>0?'#4dbd5f':'#e57373'}" title="${trendL>0?'+':''}" ></div>` : ''}
       ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
       <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${fullName}</div>
+      ${c.collector_number ? `<div style="font-size:9px;color:#8892b0;margin-top:1px">#${c.collector_number}</div>` : ''}
+      ${c.rarity ? `<div style="font-size:9px;color:#0189C4;font-weight:700;margin-top:1px;text-transform:uppercase;letter-spacing:.04em">${c.rarity}</div>` : ''}
       <div style="font-size:11px;color:#0189C4;font-weight:700;margin-top:2px">${priceDisplay}</div>
     </a>`;
   }).join('');
@@ -281,6 +284,14 @@ ${NAV}
   </div>
   <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.name} <span style="color:var(--accent)">Card Prices</span></h1>
   <p style="color:var(--text2);margin-bottom:20px;font-size:14px">${cards.length} cards${releaseDate ? ` · Released ${releaseDate}` : ''} · AUD prices updated daily</p>
+  ${pricedCards.length >= 2 ? `
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;padding:16px;background:#0e1118;border:1px solid #0189C422;border-radius:10px">
+    <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Set Total Value</div><div style="font-size:18px;font-weight:700;color:#0189C4;font-family:'Cinzel',serif">AU$${pricedCards.reduce((s,c)=>s+toAud(c),0).toFixed(0)}</div></div>
+    <div style="width:1px;background:#1e2235"></div>
+    <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Most Valuable</div><div style="font-size:14px;font-weight:700;color:#e8eaf0">${pricedCards[0].name}${pricedCards[0].version ? ' - '+pricedCards[0].version : ''}</div><div style="font-size:12px;color:#0189C4">AU$${toAud(pricedCards[0]).toFixed(2)}</div></div>
+    <div style="width:1px;background:#1e2235"></div>
+    <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Avg Card Value</div><div style="font-size:18px;font-weight:700;color:#e8eaf0;font-family:'Cinzel',serif">AU$${(pricedCards.reduce((s,c)=>s+toAud(c),0)/pricedCards.length).toFixed(2)}</div></div>
+  </div>` : ''}
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
     <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="background:rgba(1,137,196,.12);border:1px solid rgba(1,137,196,.3);color:#0189C4;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay AU ↗</a>
     <a href="${ebayBoxURL}" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60A5FA;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📦 Buy Booster Box ↗</a>

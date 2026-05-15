@@ -402,10 +402,11 @@ export default async (req) => {
 
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
       <span style="font-size:11px;color:var(--text2);font-weight:700;letter-spacing:.1em;text-transform:uppercase;align-self:center">Share</span>
-      <button class="share-btn" onclick="navigator.clipboard.writeText(location.href).then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
-      <a class="share-btn" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener">Reddit</a>
-      <a class="share-btn" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
-      <a class="share-btn" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="share-btn" style="background:#2d3254;color:#e8eaf0;border-color:#3d4270" data-action="copy-link">📋 Copy Link</button>
+      <a class="share-btn" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener" style="background:#ff450018;color:#ff4500;border-color:#ff450055">Reddit</a>
+      <a class="share-btn" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener" style="background:#00000055;color:#e8eaf0;border-color:#444">𝕏 Twitter</a>
+      <a class="share-btn" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener" style="background:#25d36618;color:#25d366;border-color:#25d36655">WhatsApp</a>
+      <button class="share-btn" style="background:#5865f218;color:#5865f2;border-color:#5865f255" data-action="copy-discord">Discord</button>
     </div>
   </div>
 </div>
@@ -505,7 +506,7 @@ function addToCompare(slug,name,img,price,game){
   if(typeof gtag!=='undefined')gtag('event','card_added_to_tray',{card_name:name,game:'lorcana'});
 }
 function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray();}
-function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>c.slug).join(',');}
+function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>(c.game||'lorcana')+':'+c.slug).join(',');}
 renderCompareTray();
 if(typeof gtag!=='undefined'){document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_card_click',{game:'lorcana'})));}
 </script>

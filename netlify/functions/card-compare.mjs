@@ -190,7 +190,7 @@ function renderSlots(cards, allTokens, usdToAud) {
 
   return slots.map((card, i) => {
     if (!card) {
-      return `<div class="slot slot-empty" id="slot-${i}" onclick="focusSearch()">
+      return `<div class="slot slot-empty" id="slot-${i}" data-action="focus-search">
         <div class="slot-plus">+</div>
         <div class="slot-empty-text">Add a card</div>
       </div>`;
@@ -349,7 +349,7 @@ function renderEmptyState() {
   ];
 
   const suggestionsHTML = suggestions.map((s, i) =>
-    `<a href="/compare?cards=${s.tokens}" class="suggestion-card" style="animation-delay:${i * 0.07}s" onclick="gtag('event','compare_suggestion_clicked',{label:'${s.label.replace(/'/g, "\\'")}'})">`+
+    `<a href="/compare?cards=${s.tokens}" class="suggestion-card" style="animation-delay:${i * 0.07}s" data-suggestion-label="${s.label.replace(/"/g, '&quot;')}">`+
     `<div class="suggestion-label">${s.label}</div>`+
     `<div class="suggestion-desc">${s.desc}</div>`+
     `</a>`
@@ -380,7 +380,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
   const shareUrl   = `https://cardsoncardsoncards.com.au/compare${allTokens.length ? '?cards=' + allTokens.join(',') : ''}`;
 
   const gameChips = Object.entries(GAME_CONFIG).map(([g, cfg]) =>
-    `<button class="game-chip" data-game="${g}" style="--gc:${cfg.color}" onclick="setGameFilter('${g}')">${cfg.label}</button>`
+    `<button class="game-chip" data-game="${g}" style="--gc:${cfg.color}">${cfg.label}</button>`
   ).join('');
 
   return `<!DOCTYPE html>
@@ -844,22 +844,21 @@ document.addEventListener('click', e => {
     if (el) el.style.display = 'none';
     searchIndex = -1;
   }
+  // Game chip click delegation
+  const gameChip = e.target.closest('.game-chip[data-game]');
+  if (gameChip) {
+    setGameFilter(gameChip.dataset.game);
+  }
+  // Empty slot click — focus search
+  if (e.target.closest('[data-action="focus-search"]')) {
+    focusSearch();
+  }
   // Result item click — add card to compare
   const resultItem = e.target.closest('.result-item[data-game]');
   if (resultItem && !resultItem.dataset.disabled) {
     addCard(resultItem.dataset.game, resultItem.dataset.slug);
   }
   // Version item click — switch version in slot
-  const versionItem = e.target.closest('.version-item[data-game]');
-  if (versionItem) {
-    switchVersion(versionItem.dataset.game, versionItem.dataset.slug, parseInt(versionItem.dataset.slot, 10));
-  }
-  // Result item click - add card to compare
-  const resultItem = e.target.closest('.result-item[data-game]');
-  if (resultItem && !resultItem.dataset.disabled) {
-    addCard(resultItem.dataset.game, resultItem.dataset.slug);
-  }
-  // Version item click - switch version in slot
   const versionItem = e.target.closest('.version-item[data-game]');
   if (versionItem) {
     switchVersion(versionItem.dataset.game, versionItem.dataset.slug, parseInt(versionItem.dataset.slot, 10));
@@ -871,6 +870,11 @@ document.addEventListener('click', e => {
     const name = vBtn.dataset.name;
     const slot = parseInt(vBtn.dataset.slot, 10);
     if (game && name && !isNaN(slot)) loadVersions(game, name, slot);
+  }
+  // Suggestion card click — GA4 event
+  const suggestionCard = e.target.closest('.suggestion-card[data-suggestion-label]');
+  if (suggestionCard && typeof gtag !== 'undefined') {
+    gtag('event', 'compare_suggestion_clicked', { label: suggestionCard.dataset.suggestionLabel });
   }
   // GA4 eBay click tracking
   const buyBtn = e.target.closest('.slot-buy-btn');

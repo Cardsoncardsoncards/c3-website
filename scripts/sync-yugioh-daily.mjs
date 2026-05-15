@@ -42,6 +42,24 @@ async function supabaseUpsert(table, rows) {
   }
 }
 
+async function supabaseUpsertSnapshots(rows) {
+  if (!rows.length) return;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/yugioh_price_snapshots?on_conflict=card_id,snapshot_date`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=minimal'
+    },
+    body: JSON.stringify(rows)
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Supabase upsert yugioh_price_snapshots failed ${res.status}: ${body.slice(0,200)}`);
+  }
+}
+
 async function syncSets() {
   console.log('Fetching Yu-Gi-Oh sets...');
   const res = await fetch(`${YGOPRO_BASE}/cardsets.php`);
@@ -139,6 +157,54 @@ async function syncCards() {
   }
 
   console.log(`Yu-Gi-Oh sync complete. Upserted: ${totalInserted}, Skipped: ${totalSkipped}`);
+  return cards;
+}
+
+async function getExchangeRate() {
+  try {
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const data = await res.json();
+    return data.rates?.AUD || 1.58;
+  } catch {
+    return 1.58;
+  }
+}
+
+async function syncSnapshots(cards, audRate) {
+  const today = new Date().toISOString().split('T')[0];
+  const snapRows = [];
+
+  for (const card of cards) {
+    const prices = card.card_prices?.[0] || {};
+    const tcgplayer  = prices.tcgplayer_price  ? parseFloat(prices.tcgplayer_price)  : null;
+    const cardmarket = prices.cardmarket_price  ? parseFloat(prices.cardmarket_price) : null;
+    const ebay       = prices.ebay_price        ? parseFloat(prices.ebay_price)       : null;
+    const amazon     = prices.amazon_price      ? parseFloat(prices.amazon_price)     : null;
+    const coolstuff  = prices.coolstuffinc_price ? parseFloat(prices.coolstuffinc_price) : null;
+
+    // Use best available price for market_price and snapshot gate
+    const marketPrice = tcgplayer || cardmarket || ebay || amazon || coolstuff || null;
+    if (!marketPrice || marketPrice < 0.25) continue;
+
+    snapRows.push({
+      card_id:           String(card.id),
+      snapshot_date:     today,
+      market_price:      marketPrice,
+      price_aud:         parseFloat((marketPrice * audRate).toFixed(2)),
+      aud_rate:          audRate,
+      tcgplayer_price:   tcgplayer,
+      cardmarket_price:  cardmarket,
+      ebay_price:        ebay,
+      amazon_price:      amazon,
+      coolstuffinc_price: coolstuff,
+    });
+  }
+
+  console.log(`Writing ${snapRows.length} Yu-Gi-Oh snapshot rows for ${today}...`);
+  for (let i = 0; i < snapRows.length; i += 500) {
+    await supabaseUpsertSnapshots(snapRows.slice(i, i + 500));
+  }
+  console.log(`Yu-Gi-Oh snapshots complete: ${snapRows.length} rows written.`);
 }
 
 async function main() {
@@ -146,7 +212,9 @@ async function main() {
   if (!SUPABASE_URL || !SUPABASE_KEY) throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
 
   await syncSets();
-  await syncCards();
+  const cards = await syncCards();
+  const audRate = await getExchangeRate();
+  await syncSnapshots(cards, audRate);
 
   console.log('=== Yu-Gi-Oh Daily Sync Complete ===', new Date().toISOString());
 }

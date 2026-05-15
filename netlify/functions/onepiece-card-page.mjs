@@ -210,6 +210,8 @@ export default async (req) => {
     const card = cards[0];
 
     const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.58 : null);
+    const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/onepiece/${card.slug}`);
+    const shareText = encodeURIComponent(`${card.name} One Piece Card Game — ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
     const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' onepiece card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
     const [relatedCards, ebayToken] = await Promise.all([
@@ -323,6 +325,14 @@ ${NAV}
       <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
     </div>
     <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. Updated daily. eBay links may earn affiliate commission.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px">
+      <span style="font-size:11px;color:rgba(160,168,192,.6);font-weight:700;letter-spacing:.1em;text-transform:uppercase">Share</span>
+      <button style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #3d4270;background:#2d3254;color:#e8eaf0;font-family:'DM Sans',sans-serif" data-action="copy-link">📋 Copy Link</button>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#ff450018;color:#ff4500;border:1px solid #ff450055" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener">Reddit</a>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#00000055;color:#e8eaf0;border:1px solid #444" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#25d36618;color:#25d366;border:1px solid #25d36655" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener">WhatsApp</a>
+      <button style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;background:#5865f218;color:#5865f2;border:1px solid #5865f255;font-family:'DM Sans',sans-serif" data-action="copy-discord">Discord</button>
+    </div>
   </div>
 </div>
 
@@ -358,8 +368,18 @@ function addToCompare(slug,name,img,price,game){
   tray.push({slug,name,img,price,game:'onepiece'});saveCompareTray(tray);renderCompareTray();
 }
 function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray();}
-function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>c.slug).join(',');}
+function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>(c.game||'onepiece')+':'+c.slug).join(',');}
 renderCompareTray();
+document.addEventListener('click',function(e){
+  if(e.target.closest('[data-action="copy-discord"]')){
+    const btn=e.target.closest('[data-action="copy-discord"]');
+    navigator.clipboard.writeText(location.href).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>{btn.textContent='Discord';},1500);});
+  }
+  if(e.target.closest('[data-action="copy-link"]')){
+    const btn=e.target.closest('[data-action="copy-link"]');
+    navigator.clipboard.writeText(location.href).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>{btn.textContent='📋 Copy Link';},1500);});
+  }
+});
 </script>
 </body>
 </html>`;

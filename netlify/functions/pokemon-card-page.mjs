@@ -97,7 +97,7 @@ async function handleSetPage(setSlug, headers) {
   if (!sets || !sets[0]) return new Response(notFoundHtml, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   const set = sets[0];
 
-  const cards = await supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=400&select=slug,name,image_url,market_price,price_aud,number,rarity`);
+  const cards = await supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=400&select=slug,name,image_url,market_price,price_aud,number,rarity,price_change_7d`);
 
   const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
@@ -116,13 +116,32 @@ async function handleSetPage(setSlug, headers) {
     </a>`;
   }).join('');
 
+  // Rarity colour for set page tiles
+  function getRarityColour(r) {
+    if (!r) return '#555';
+    const rl = r.toLowerCase();
+    if (rl.includes('hyper') || rl.includes('special illustration')) return '#ff69b4';
+    if (rl.includes('illustration') || rl.includes('ultra') || rl.includes('double')) return '#7c3aed';
+    if (rl.includes('holo')) return '#c9a84c';
+    if (rl.includes('rare')) return '#f5a623';
+    if (rl.includes('uncommon')) return '#4dbd5f';
+    return '#555';
+  }
+
   const allCardsHTML = (cards && cards.length) ? cards.filter(isSingles).map(c => {
     const aud = toAud(c);
-    return `<a href="/cards/pokemon/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block">
+    const rarityCol = getRarityColour(c.rarity);
+    const ch7 = c.price_change_7d ? parseFloat(c.price_change_7d) : null;
+    const trendDot = ch7 && Math.abs(ch7) >= 5
+      ? `<div style="position:absolute;top:5px;left:5px;width:8px;height:8px;border-radius:50%;background:${ch7>0?'#4dbd5f':'#e57373'};box-shadow:0 0 4px ${ch7>0?'#4dbd5f':'#e57373'}44" title="${ch7>0?'+':''}${ch7.toFixed(1)}% this week"></div>`
+      : '';
+    return `<a href="/cards/pokemon/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block;position:relative;transition:border-color .2s" onmouseover="this.style.borderColor='${rarityCol}'" onmouseout="this.style.borderColor='#1e2235'">
+      ${trendDot}
       ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
       <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
       ${c.number ? `<div style="font-size:9px;color:#8892b0">#${c.number}</div>` : ''}
-      ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
+      ${c.rarity ? `<div style="font-size:9px;color:${rarityCol};font-weight:700;margin-top:2px;text-transform:uppercase;letter-spacing:.04em">${c.rarity}</div>` : ''}
+      ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : `<div style="font-size:9px;color:#555;margin-top:2px">no price</div>`}
     </a>`;
   }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing — check back after tonight's update.</div>`;
 
@@ -183,10 +202,18 @@ async function handleSetPage(setSlug, headers) {
     <div class="hero-eyebrow">Pokemon TCG · Set</div>
     <h1 class="hero-title">${set.name}</h1>
     <div class="hero-meta">
-      ${set.release_date ? `<span>Released: ${set.release_date.slice(0,10)}</span>` : ''}
-      ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
-      ${pricedCards.length ? `<span>${pricedCards.length} priced in AUD</span>` : ''}
+      ${set.release_date ? `<span>📅 Released: ${set.release_date.slice(0,10)}</span>` : ''}
+      ${set.card_count ? `<span>🃏 ${set.card_count} cards</span>` : ''}
+      ${pricedCards.length ? `<span>💰 ${pricedCards.length} priced</span>` : ''}
     </div>
+    ${pricedCards.length >= 2 ? `
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;padding:16px;background:#0e1118;border:1px solid rgba(245,166,35,.2);border-radius:10px">
+      <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Set Total Value</div><div style="font-size:18px;font-weight:700;color:#f5a623;font-family:'Cinzel',serif">AU$${pricedCards.reduce((s,c)=>s+toAud(c),0).toFixed(0)}</div></div>
+      <div style="width:1px;background:#1e2235"></div>
+      <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Most Valuable</div><div style="font-size:14px;font-weight:700;color:#e8eaf0">${pricedCards[0].name}</div><div style="font-size:12px;color:#f5a623">AU$${toAud(pricedCards[0]).toFixed(2)}</div></div>
+      <div style="width:1px;background:#1e2235"></div>
+      <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Avg Card Value</div><div style="font-size:18px;font-weight:700;color:#e8eaf0;font-family:'Cinzel',serif">AU$${(pricedCards.reduce((s,c)=>s+toAud(c),0)/pricedCards.length).toFixed(2)}</div></div>
+    </div>` : ''}
   </div>
   <div class="cta-row">
     <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
@@ -229,24 +256,70 @@ export default async (req) => {
   }
   try {
 
-    // Fetch card
-    const cards = await supabaseGet(`pokemon_cards?slug=eq.${encodeURIComponent(slug)}&limit=1`);
+    // Fetch card — select all fields including price_change_7d, price_change_30d
+    const cards = await supabaseGet(`pokemon_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`);
     if (!cards || cards.length === 0) {
       return new Response(notFoundPage(slug), { status: 404, headers });
     }
     const card = cards[0];
 
-    // Parallel: related cards from same set, eBay listings
-    const [relatedCards, ebayToken] = await Promise.all([
+    // Parallel: related cards, eBay token, price snapshots for sparkline (last 14 days)
+    const [relatedCards, ebayToken, snapshots] = await Promise.all([
       supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=number.asc`).catch(() => []),
-      (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null)
+      (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null),
+      supabaseGet(`pokemon_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&order=snapshot_date.asc&limit=14&select=snapshot_date,price_aud,market_price`).catch(() => [])
     ]);
 
     const ebayListings = ebayToken
       ? await getEbayListings(card.name, card.set_name, ebayToken).catch(() => [])
       : [];
 
-    const priceAud = card.market_price ? (card.market_price * 1.58) : null;
+    // Use stored price_aud if available, fallback to conversion
+    const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud)
+                   : card.market_price > 0 ? parseFloat(card.market_price) * 1.58
+                   : null;
+    const audRate = card.aud_rate ? parseFloat(card.aud_rate) : 1.58;
+
+    // Price change badge
+    const change7d = card.price_change_7d ? parseFloat(card.price_change_7d) : null;
+    const change24h = card.price_change_24h ? parseFloat(card.price_change_24h) : null;
+    function changeBadge(pct, label) {
+      if (!pct || Math.abs(pct) < 0.5) return '';
+      const up = pct > 0;
+      const col = up ? '#4dbd5f' : '#e57373';
+      const arrow = up ? '▲' : '▼';
+      return `<span style="display:inline-flex;align-items:center;gap:3px;background:${col}18;border:1px solid ${col}44;color:${col};padding:2px 8px;border-radius:100px;font-size:11px;font-weight:700">${arrow} ${Math.abs(pct).toFixed(1)}% ${label}</span>`;
+    }
+
+    // Sparkline SVG — simple line from snapshot data
+    function buildSparkline(snaps) {
+      if (!snaps || snaps.length < 2) return '';
+      const prices = snaps.map(s => parseFloat(s.price_aud || (s.market_price * 1.58)) || 0).filter(p => p > 0);
+      if (prices.length < 2) return '';
+      const min = Math.min(...prices);
+      const max = Math.max(...prices);
+      const range = max - min || 1;
+      const W = 160, H = 40, pad = 4;
+      const pts = prices.map((p, i) => {
+        const x = pad + (i / (prices.length - 1)) * (W - pad * 2);
+        const y = H - pad - ((p - min) / range) * (H - pad * 2);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(' ');
+      const last = prices[prices.length - 1];
+      const first = prices[0];
+      const trendCol = last >= first ? '#4dbd5f' : '#e57373';
+      return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;margin-top:8px">
+        <polyline points="${pts}" fill="none" stroke="${trendCol}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="${(pad + (prices.length-1)/(prices.length-1)*(W-pad*2)).toFixed(1)}" cy="${(H - pad - ((last-min)/range)*(H-pad*2)).toFixed(1)}" r="3" fill="${trendCol}"/>
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin-top:2px">
+        <span>${snaps[0].snapshot_date?.slice(5) || ''}</span>
+        <span>${snaps[snaps.length-1].snapshot_date?.slice(5) || 'Today'}</span>
+      </div>`;
+    }
+
+    const sparklineHTML = buildSparkline(snapshots);
+
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/pokemon/${card.slug}`);
     const shareText = encodeURIComponent(`${card.name} — ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
 
@@ -447,27 +520,35 @@ export default async (req) => {
     <div class="price-block">
       <div class="price-label">Current Price (AUD)</div>
       ${priceAud
-        ? `<div class="price-main">~AU$${priceAud.toFixed(2)}</div>
-           <div class="price-usd">US$${parseFloat(card.market_price).toFixed(2)} · Converted at 1 USD = 1.58 AUD</div>`
+        ? `<div class="price-main">AU$${priceAud.toFixed(2)}</div>
+           <div class="price-usd" style="margin-top:4px">US$${parseFloat(card.market_price||0).toFixed(2)} · Rate: 1 USD = ${audRate.toFixed(4)} AUD</div>
+           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+             ${changeBadge(change24h,'24h')}
+             ${changeBadge(change7d,'7d')}
+           </div>
+           ${sparklineHTML ? `<div style="margin-top:8px"><div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">14-day trend</div>${sparklineHTML}</div>` : ''}`
         : `<div class="price-main" style="color:var(--text2);font-size:20px">Price unavailable</div>
            <div class="price-usd">Check eBay AU for current pricing</div>`}
     </div>
 
     <div class="cta-group">
-      <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary" onclick="if(typeof gtag!=='undefined')gtag('event','ebay_card_click',{card_name:'${card.name}',game:'pokemon'})">Buy on eBay AU →</a>
-      <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(card.name+' pokemon '+card.set_name)}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:#f90;color:#f90" onclick="if(typeof gtag!=='undefined')gtag('event','amazon_click',{card_name:'${card.name}'})">Search Amazon AU →</a>
-      <button id="c3-compare-btn" class="cta-btn cta-secondary" style="cursor:pointer;border-color:rgba(124,106,245,.4);color:#7c6af5" onclick="addToCompare('${card.slug}','${card.name.replace(/'/g,"\\'")}','${(card.image_url||'').replace(/'/g,"\\'")}','${card.market_price ? '~AU$'+(card.market_price*1.58).toFixed(2) : 'N/A'}','pokemon')">
+      <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary" data-gtag-event="ebay_card_click" data-gtag-card="${card.name}" data-gtag-game="pokemon">Buy on eBay AU →</a>
+      <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(card.name+' pokemon '+card.set_name)}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:#f90;color:#f90">Search Amazon AU →</a>
+      <button id="c3-compare-btn" class="cta-btn cta-secondary" style="cursor:pointer;border-color:rgba(124,106,245,.4);color:#7c6af5" data-action="add-to-compare" data-slug="${card.slug}" data-name="${card.name.replace(/"/g,'&quot;')}" data-img="${(card.image_url||'').replace(/"/g,'&quot;')}" data-price="${card.price_aud > 0 ? 'AU$'+parseFloat(card.price_aud).toFixed(2) : 'N/A'}" data-game="pokemon">
         <span id="c3-compare-lbl">⚖️ Add to Compare</span>
       </button>
-      <a href="/tracker.html" class="cta-btn cta-secondary">Track This Card's Value →</a>
+      <button class="cta-btn cta-secondary" style="cursor:pointer;border-color:rgba(77,189,95,.4);color:#4dbd5f" data-action="watch-card" data-card-name="${card.name.replace(/"/g,'&quot;')}" data-card-game="pokemon">
+        🔔 Watch This Card
+      </button>
     </div>
 
     <div class="share-bar">
       <span style="font-size:11px;color:var(--text2);font-weight:700;letter-spacing:.1em;text-transform:uppercase">Share</span>
-      <button class="share-btn" onclick="navigator.clipboard.writeText(location.href).then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
-      <a class="share-btn" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener">Reddit</a>
-      <a class="share-btn" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
-      <a class="share-btn" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="share-btn" style="background:#2d3254;color:#e8eaf0;border-color:#3d4270" data-action="copy-link">📋 Copy Link</button>
+      <a class="share-btn" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener" style="background:#ff450018;color:#ff4500;border-color:#ff450055">Reddit</a>
+      <a class="share-btn" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener" style="background:#00000055;color:#e8eaf0;border-color:#444">𝕏 Twitter</a>
+      <a class="share-btn" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener" style="background:#25d36618;color:#25d366;border-color:#25d36655">WhatsApp</a>
+      <button class="share-btn" style="background:#5865f218;color:#5865f2;border-color:#5865f255" data-action="copy-discord">Discord</button>
     </div>
   </div>
 </div>
@@ -533,7 +614,7 @@ ${relatedHTML}
   <div id="c3-tray-cards" style="display:flex;gap:8px;flex:1;align-items:center;overflow-x:auto"></div>
   <span id="c3-tray-count" style="color:#9ba3c4;white-space:nowrap;font-size:12px"></span>
   <button onclick="goToCompare()" style="background:#7c6af5;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap">⚖️ Compare Now</button>
-  <button onclick="saveCompareTray([]);renderCompareTray('${card.slug}','${card.name.replace(/'/g,"\\'")}');" style="background:none;border:1px solid #2d3254;color:#9ba3c4;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;white-space:nowrap">Clear</button>
+  <button data-action="clear-tray" style="background:none;border:1px solid #2d3254;color:#9ba3c4;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;white-space:nowrap">Clear</button>
 </div>
 
 <script>
@@ -569,9 +650,99 @@ function addToCompare(slug,name,img,price,game){
   if(typeof gtag!=='undefined')gtag('event','card_added_to_tray',{card_name:name,game});
 }
 function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray('${card.slug}','${card.name.replace(/'/g,"\\'")}');}
-function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>c.slug).join(',');}
+function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>(c.game||'pokemon')+':'+c.slug).join(',');}
 renderCompareTray('${card.slug}','${card.name.replace(/'/g,"\\'")}');
+
+// Event delegation — handles data-action buttons without inline onclick
+document.addEventListener('click', function(e) {
+  // Copy link
+  if (e.target.closest('[data-action="copy-link"]')) {
+    const btn = e.target.closest('[data-action="copy-link"]');
+    navigator.clipboard.writeText(location.href).then(() => {
+      btn.textContent = '✓ Copied';
+      setTimeout(() => { btn.textContent = '📋 Copy Link'; }, 1500);
+    });
+  }
+
+  // Add to compare
+  const compareBtn = e.target.closest('[data-action="add-to-compare"]');
+  if (compareBtn) {
+    addToCompare(
+      compareBtn.dataset.slug,
+      compareBtn.dataset.name,
+      compareBtn.dataset.img,
+      compareBtn.dataset.price,
+      compareBtn.dataset.game
+    );
+  }
+
+  // Clear compare tray
+  if (e.target.closest('[data-action="clear-tray"]')) {
+    saveCompareTray([]);
+    renderCompareTray();
+  }
+
+  // Copy for Discord
+  if (e.target.closest('[data-action="copy-discord"]')) {
+    const btn = e.target.closest('[data-action="copy-discord"]');
+    navigator.clipboard.writeText(location.href).then(() => {
+      btn.textContent = '\u2713 Copied';
+      setTimeout(() => { btn.textContent = 'Discord'; }, 1500);
+    });
+  }
+
+  // Watch this card — open MailerLite modal
+  if (e.target.closest('[data-action="watch-card"]')) {
+    const btn = e.target.closest('[data-action="watch-card"]');
+    const cardName = btn.dataset.cardName;
+    const threshold = document.getElementById('watch-threshold-input')?.value || '10';
+    document.getElementById('watch-modal').style.display = 'flex';
+    document.getElementById('watch-card-name').textContent = cardName;
+    document.getElementById('watch-card-input').value = cardName;
+    document.getElementById('watch-threshold-input').value = threshold;
+  }
+
+  // Close watch modal
+  if (e.target.closest('[data-action="close-watch-modal"]') || e.target.id === 'watch-modal') {
+    document.getElementById('watch-modal').style.display = 'none';
+  }
+
+  // eBay click GA4
+  const ebayBtn = e.target.closest('[data-gtag-event]');
+  if (ebayBtn && typeof gtag !== 'undefined') {
+    gtag('event', ebayBtn.dataset.gtagEvent, { card_name: ebayBtn.dataset.gtagCard, game: ebayBtn.dataset.gtagGame });
+  }
+});
 </script>
+
+<!-- Watch This Card Modal -->
+<div id="watch-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.75);align-items:center;justify-content:center;padding:24px">
+  <div style="background:#1a1d2e;border:1px solid #2d3254;border-radius:16px;padding:32px;max-width:440px;width:100%;position:relative">
+    <button data-action="close-watch-modal" style="position:absolute;top:14px;right:16px;background:none;border:none;color:#9ba3c4;font-size:20px;cursor:pointer">×</button>
+    <div style="font-size:20px;margin-bottom:8px">🔔 Watch This Card</div>
+    <div style="font-size:15px;font-weight:700;color:#e8eaf0;margin-bottom:4px" id="watch-card-name"></div>
+    <p style="font-size:13px;color:#9ba3c4;margin-bottom:20px;line-height:1.6">Get an email alert when this card's price changes by your chosen amount. Free, no spam.</p>
+    <form action="https://landing.mailerlite.com/webforms/submit/mIFDGb" method="POST" target="_blank" style="display:flex;flex-direction:column;gap:12px">
+      <input type="hidden" name="fields[watched_card]" id="watch-card-input" value="">
+      <input type="hidden" name="ml-submit" value="1">
+      <div>
+        <label style="font-size:12px;color:#9ba3c4;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em">Your Email</label>
+        <input type="email" name="fields[email]" required placeholder="you@email.com" style="width:100%;background:#0f1117;border:1px solid #2d3254;color:#e8eaf0;padding:10px 14px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif">
+      </div>
+      <div>
+        <label style="font-size:12px;color:#9ba3c4;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em">Alert me when price changes by</label>
+        <select name="fields[alert_threshold]" id="watch-threshold-input" style="width:100%;background:#0f1117;border:1px solid #2d3254;color:#e8eaf0;padding:10px 14px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif">
+          <option value="5%">5% or more</option>
+          <option value="10%" selected>10% or more</option>
+          <option value="20%">20% or more</option>
+          <option value="50%">50% or more (major moves only)</option>
+        </select>
+      </div>
+      <button type="submit" style="background:#4dbd5f;color:#000;border:none;padding:12px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif">Set Price Alert →</button>
+    </form>
+    <p style="font-size:11px;color:#6b7494;margin-top:12px;text-align:center">Unsubscribe any time. We never sell your data.</p>
+  </div>
+</div>
 </body>
 </html>`;
 

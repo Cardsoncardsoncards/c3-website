@@ -62,6 +62,8 @@ export default async (req) => {
   const foilAUD  = card.foil_price_aud ? parseFloat(card.foil_price_aud) : (card.foil_market_price ? parseFloat(card.foil_market_price) * 1.58 : 0);
 
   const ebayBuyURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' dragon ball super')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/dragonball/${card.slug}`);
+  const shareText = encodeURIComponent(`${card.name} Dragon Ball Super — ${priceAUD > 0 ? 'AU$'+priceAUD.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
 
   const breadcrumb_dragonball = {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
@@ -204,6 +206,14 @@ export default async (req) => {
       <a href="${ebayBuyURL}" target="_blank" rel="noopener" class="cta-btn" style="background:linear-gradient(135deg,#F97316,#F97316aa);color:#0A0C14">🛒 Buy on eBay AU ↗</a>
         <a href="/tracker.html" class="cta-btn" style="background:#111420;border:1px solid #252840;color:#F0F2FF">📋 Track Your Collection</a>
       </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px">
+      <span style="font-size:11px;color:rgba(160,168,192,.6);font-weight:700;letter-spacing:.1em;text-transform:uppercase">Share</span>
+      <button style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #3d4270;background:#2d3254;color:#e8eaf0;font-family:'DM Sans',sans-serif" data-action="copy-link">📋 Copy Link</button>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#ff450018;color:#ff4500;border:1px solid #ff450055" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener">Reddit</a>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#00000055;color:#e8eaf0;border:1px solid #444" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#25d36618;color:#25d366;border:1px solid #25d36655" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener">WhatsApp</a>
+      <button style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;background:#5865f218;color:#5865f2;border:1px solid #5865f255;font-family:'DM Sans',sans-serif" data-action="copy-discord">Discord</button>
+    </div>
     </div>
   </div>
 
@@ -243,8 +253,13 @@ function addToCompare(slug,name,img,price,game){
   if(typeof gtag!=='undefined')gtag('event','card_added_to_tray',{card_name:name,game:'dragonball'});
 }
 function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray();}
-function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>c.slug).join(',');}
+function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>(c.game||'dragonball')+':'+c.slug).join(',');}
 renderCompareTray();
+document.addEventListener('click',function(e){if(e.target.closest('[data-action="copy-discord"]')){
+    const btn=e.target.closest('[data-action="copy-discord"]');
+    navigator.clipboard.writeText(location.href).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>{btn.textContent='Discord';},1500);});
+  }
+  if(e.target.closest('[data-action="copy-link"]')){const btn=e.target.closest('[data-action="copy-link"]');navigator.clipboard.writeText(location.href).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>{btn.textContent='📋 Copy Link';},1500);});}});
 if(typeof gtag!=='undefined'){document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_card_click',{game:'dragonball'})));}
 </script>
 </body>
