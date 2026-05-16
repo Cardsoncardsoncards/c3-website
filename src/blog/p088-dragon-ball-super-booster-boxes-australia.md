@@ -1,7 +1,7 @@
 ---
 game: dragon-ball-super
-title: "Dragon Ball Super Card Game Booster Boxes in Australia: What to Buy and Expect"
-description: "Thinking about buying a Dragon Ball Super Card Game booster box in Australia? This guide covers current sets, pull rates, where to buy, and whether sealed product is worth it."
+title: "Dragon Ball Super Card Game Booster Boxes in Australia"
+description: "Thinking about buying a Dragon Ball Super Card Game booster box in Australia? This guide covers current sets, pull rates, where to buy."
 date: 2026-04-16
 category: "buying-guides"
 tags:
@@ -73,7 +73,7 @@ The process for calculating current EV:
 3. Multiply each card's expected quantity per display by its current price
 4. Sum the expected value and compare to the display retail price
 
-This process takes 15–20 minutes and saves you from buying displays with poor EV. In practice, very few booster displays across any TCG have positive EV consistently — the game would not be financially viable for publishers if they did.
+This process takes 15–20 minutes and saves you from buying displays with poor EV. In practice, very few booster displays across any TCG have positive EV consistently: the game would not be financially viable for publishers if they did.
 
 ## Singles vs Sealed: Which Makes More Sense for DBS TCG?
 
@@ -86,11 +86,11 @@ Booster Displays make more sense when:
 - You collect complete sets and value having every card in every rarity
 - You're after an SPR finish of a specific card and the display price is competitive with the singles price for that SPR
 
-The SPR question is worth calling out specifically. SPR versions of popular cards often cost more on the singles market than a display box. In those situations, buying a display to pull the SPR you want is sometimes cheaper than buying the SPR directly — especially if the rest of the display's value partially offsets the cost.
+The SPR question is worth calling out specifically. SPR versions of popular cards often cost more on the singles market than a display box. In those situations, buying a display to pull the SPR you want is sometimes cheaper than buying the SPR directly. especially if the rest of the display's value partially offsets the cost.
 
 ## Where to Buy DBS TCG Booster Displays in Australia
 
-**Amazon AU:** Current and recent DBS displays available with Prime shipping. Price-check against local stores — Amazon isn't always the cheapest.
+**Amazon AU:** Current and recent DBS displays available with Prime shipping. Price-check against local stores. Amazon isn't always the cheapest.
 
 **Local game stores:** Best for immediate access and confirmed AU stock. Most LGS with a DBS TCG presence carry current releases. Some also hold or pre-order older sets.
 
@@ -125,10 +125,15 @@ For Australian collectors considering DBS TCG for investment, the same principle
 
 <div class="cta-block">
 
-**Browse Dragon Ball Super Card Game singles and sealed product at C3 — 23,000+ TCG listings.**
+**Browse Dragon Ball Super Card Game singles and sealed product at C3 , 23,000+ TCG listings.**
 
 [Shop DBS TCG at C3](/shop.html#dragonball)
 
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions

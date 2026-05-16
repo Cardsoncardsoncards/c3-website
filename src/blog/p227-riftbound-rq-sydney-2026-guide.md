@@ -1,7 +1,7 @@
 ---
 game: riftbound
-title: "Riftbound RQ Sydney 2026: Everything Australian Players Need to Know"
-description: "Riftbound's first Australian Regional Qualifier hits Sydney Showground on May 15-17. Here's the full guide for competitors, spectators, and Unleashed hunters."
+title: "Riftbound RQ Sydney 2026: Event Guide and What Happened"
+description: "Riftbound's first Australian Regional Qualifier hits Sydney Showground on May 15-17. Here's the full guide for competitors, spectators, and."
 date: 2026-05-06
 category: buying-guides
 emoji: "⚔️"
@@ -10,7 +10,9 @@ affiliate_disclaimer: false
 layout: post
 ---
 
-If you have been waiting for Riftbound to come to Australia, the wait is over. The first APAC Regional Qualifier lands at Sydney Showground on May 15-17, 2026, and it is bigger than most people realise. Here is everything you need to know before you go, whether you are competing, spectating, or hunting Unleashed product.
+> **Event Update (May 2026):** RQ Sydney ran from 15-17 May 2026 at Sydney Showground. This guide was written before the event. Results and a full breakdown are in our [RQ Sydney results post](/blog/p248-rq-sydney-2026/). The information below covers the event format and what to expect from future Riftbound APAC events.
+
+The first Riftbound APAC Regional Qualifier ran at Sydney Showground from May 15-17, 2026, and it is bigger than most people realise. Here is everything about the event, whether you are competing, spectating, or hunting Unleashed product.
 
 ## What Is RQ Sydney?
 
@@ -78,3 +80,14 @@ We have four Unleashed boxes on hand and will post a full box opening and card p
 ---
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

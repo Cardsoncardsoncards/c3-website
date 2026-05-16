@@ -1,7 +1,7 @@
 ---
 game: tcg
 title: "How to Find a TCG Group or Local Game Store in Australia"
-description: "Finding other TCG players is the key to staying engaged with the hobby. This guide covers how to find local game stores, Commander pods, Pokemon leagues, and online communities across Australia."
+description: "Finding other TCG players is the key to staying engaged with the hobby. This guide covers how to find local game stores, Commander pods."
 date: 2026-05-05
 category: "general-tcg"
 tags:
@@ -37,7 +37,7 @@ The backbone of Australian TCG community is local game stores. Every major TCG h
 
 ## What to Expect at Your First LGS Visit
 
-**Walk in and ask.** The correct first step is introducing yourself and asking what events they run. Most game store staff are welcoming to new players — their business depends on new players joining the community.
+**Walk in and ask.** The correct first step is introducing yourself and asking what events they run. Most game store staff are welcoming to new players. their business depends on new players joining the community.
 
 Questions to ask:
 - "Do you run [MTG/Pokemon/Lorcana] events here?"
@@ -95,3 +95,14 @@ The [C3 shop](/shop.html) stocks starter products for every major TCG. Four peop
 Facebook Marketplace buy/sell/trade groups are also where local players organise. Search "[city] TCG" or "[game name] [city]" on Facebook to find active local groups.
 
 Instagram hashtags like #australianmtg, #pokemontcgaustralia, and #lorcanaaustralia connect you with the broader community.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

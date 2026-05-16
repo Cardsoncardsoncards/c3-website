@@ -1,9 +1,9 @@
 ---
 game: yugioh
-title: "How to Sell Yu-Gi-Oh Cards in Australia: Platforms, Prices, and What Actually Sells"
-description: "Selling Yu-Gi-Oh cards in Australia? This guide covers every real selling option — eBay, Facebook, buylists, and locals — with honest return rates and what's actually worth listing."
+title: "How to Sell Yu-Gi-Oh Cards in Australia"
+description: "Selling Yu-Gi-Oh cards in Australia? This guide covers every real selling option — eBay, Facebook, buylists, and locals — with honest return rates."
 date: 2026-04-16
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - yugioh
@@ -25,18 +25,18 @@ This guide covers every platform available to Australian sellers, realistic retu
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>eBay AU is the best platform for individual Yu-Gi-Oh singles worth AU$10 or more. Facebook TCG groups are better for small lots and collections without fees. Local game store buylists pay 30–50% of market value but are fast and convenient. In Yu-Gi-Oh specifically, selling immediately when a card spikes — rather than waiting — is often the most important factor in getting maximum value.</p>
+<p>eBay AU is the best platform for individual Yu-Gi-Oh singles worth AU$10 or more. Facebook TCG groups are better for small lots and collections without fees. Local game store buylists pay 30–50% of market value but are fast and convenient. In Yu-Gi-Oh specifically, selling immediately when a card spikes. rather than waiting. is often the most important factor in getting maximum value.</p>
 </div>
 
 ## What Yu-Gi-Oh Cards Are Worth Selling Individually?
 
 Not every card in a binder is worth the effort of an individual listing. The Yu-Gi-Oh card pool is massive and most cards have little to no secondary market value. Before deciding how to sell, separate your cards into three tiers:
 
-**Tier 1 — Worth listing individually (AU$10+):** Meta staples, Secret Rares and Quarter Century Rares from recent sets, old school collectibles with genuine demand, and specific combo pieces in high-demand archetypes. These are worth eBay individual listings.
+**Tier 1. Worth listing individually (AU$10+):** Meta staples, Secret Rares and Quarter Century Rares from recent sets, old school collectibles with genuine demand, and specific combo pieces in high-demand archetypes. These are worth eBay individual listings.
 
-**Tier 2 — Worth selling in small lots (AU$1–$9):** Super Rares and Ultra Rares with moderate demand, useful side deck cards, and staple cards at lower rarities. Group these by game use or rarity tier and sell as small lots on Facebook or eBay.
+**Tier 2. Worth selling in small lots (AU$1–$9):** Super Rares and Ultra Rares with moderate demand, useful side deck cards, and staple cards at lower rarities. Group these by game use or rarity tier and sell as small lots on Facebook or eBay.
 
-**Tier 3 — Bulk only:** Commons, Rares, and low-value uncommons. These are worth AU$5–$10 per 1,000 as mixed bulk. Don't list them individually — the return doesn't justify the effort.
+**Tier 3. Bulk only:** Commons, Rares, and low-value uncommons. These are worth AU$5–$10 per 1,000 as mixed bulk. Don't list them individually: the return doesn't justify the effort.
 
 ## eBay Australia: Still the Best for High-Value Singles
 
@@ -44,11 +44,11 @@ For individual Yu-Gi-Oh cards worth AU$10 or more, eBay AU gives you the widest 
 
 **Yu-Gi-Oh specific tips for eBay listings:**
 
-- Always specify the set code and collector number in your title. Yu-Gi-Oh has multiple prints and rarities of many cards — buyers need to know exactly which version they're getting.
+- Always specify the set code and collector number in your title. Yu-Gi-Oh has multiple prints and rarities of many cards. buyers need to know exactly which version they're getting.
 - Specify rarity clearly: Common, Rare, Super Rare, Ultra Rare, Secret Rare, Quarter Century Secret Rare, etc.
 - List condition honestly using the standard NM/LP/MP/HP terminology. Yu-Gi-Oh players are particularly sensitive to condition grading.
 - For valuable cards, photographs of the actual card are important. Foiling and wear is difficult to judge from stock images.
-- Check eBay AU completed listings — not just current listings — to set realistic prices. What cards are actually selling for is more relevant than what sellers are asking.
+- Check eBay AU completed listings. not just current listings. to set realistic prices. What cards are actually selling for is more relevant than what sellers are asking.
 
 The auction format can work well for genuinely rare or highly sought-after cards. For most singles, Buy It Now with Best Offer enabled is more efficient.
 
@@ -58,13 +58,13 @@ Facebook Marketplace suits large collections, bulk lots, and sellers who want to
 
 **Facebook group sales:** Pricing in Facebook TCG groups typically sits 10–20% below eBay market price. The discount compensates the buyer for taking on the postage and no platform protection. For the seller, the absence of eBay fees partially or fully offsets this, depending on card value.
 
-**Posting tips for Facebook:** Clear photos of the actual cards, stated set and rarity, honest condition grading, and stated price or price-on-request. Post during evenings when engagement is higher. Respond to comments promptly — interested buyers move on quickly.
+**Posting tips for Facebook:** Clear photos of the actual cards, stated set and rarity, honest condition grading, and stated price or price-on-request. Post during evenings when engagement is higher. Respond to comments promptly. interested buyers move on quickly.
 
 **Local meetups:** For higher-value transactions or collections, meeting locally (your LGS, a coffee shop) removes postage risk for both parties. This is common practice in the Australian community for transactions over AU$100.
 
 ## Local Game Store Buylists: Timing Matters More in Yu-Gi-Oh
 
-Local game store buylists work the same way as for any TCG — they pay 30–50% of market value in cash, or slightly more in store credit. What's different in Yu-Gi-Oh is that timing matters more than in other games.
+Local game store buylists work the same way as for any TCG: they pay 30–50% of market value in cash, or slightly more in store credit. What's different in Yu-Gi-Oh is that timing matters more than in other games.
 
 Yu-Gi-Oh card values are highly sensitive to:
 
@@ -76,20 +76,20 @@ Buylists in game stores update in response to these same factors. A card worth A
 
 ## Yu-Gi-Oh-Specific Selling Considerations
 
-**Old school cards:** Cards from the early sets (LOB, MRD, PSV etc.) have collector value independent of their competitive application. Unlimited vs 1st Edition matters significantly for these cards — 1st Edition prints command meaningful premiums. Photograph the edition indicator (bottom left of card) and list it explicitly.
+**Old school cards:** Cards from the early sets (LOB, MRD, PSV etc.) have collector value independent of their competitive application. Unlimited vs 1st Edition matters significantly for these cards , 1st Edition prints command meaningful premiums. Photograph the edition indicator (bottom left of card) and list it explicitly.
 
 **Foreign language cards:** Japanese Yu-Gi-Oh cards are legal in Australian OCG play but not TCG play. Label language clearly. Some collectors seek Japanese versions of specific cards, but the market for non-English cards is narrower.
 
 **Condition in Yu-Gi-Oh:** The game's competitive community is particularly condition-conscious. Cards played without sleeves, or in low-quality sleeves, accumulate wear faster than other TCGs. Grade honestly and photograph any notable imperfections.
 
-**Tournament legal vs collector:** Some high-rarity cards (Quarter Century Secret Rares, Collector's Rares) are sought purely for their aesthetic — players often play the cheaper rarity version and collect the premium version separately. This creates a separate collector demand for these rarity tiers worth noting when pricing.
+**Tournament legal vs collector:** Some high-rarity cards (Quarter Century Secret Rares, Collector's Rares) are sought purely for their aesthetic. players often play the cheaper rarity version and collect the premium version separately. This creates a separate collector demand for these rarity tiers worth noting when pricing.
 
 ## Where to Check Current Yu-Gi-Oh Card Prices
 
 Before listing anything, check current prices. Don't rely on what you paid or what you remember cards being worth.
 
 - **eBay AU completed listings:** Filter to sold items to see actual sell prices
-- **MTGGoldfish:** Covers Yu-Gi-Oh card prices in USD — useful as a reference point with exchange rate adjustment
+- **MTGGoldfish:** Covers Yu-Gi-Oh card prices in USD. useful as a reference point with exchange rate adjustment
 - **YGOPrices.com:** Dedicated Yu-Gi-Oh price tracking
 - **Cardmarket:** European prices, useful for trending data even if not directly applicable to AU
 
@@ -103,27 +103,35 @@ Before listing anything, check current prices. Don't rely on what you paid or wh
 
 </div>
 
+
+Track what you own with the [free C3 collection tracker](/tracker.html). Log cards, quantities, and conditions across all TCGs.
+
 <div class="cta-block">
 
-**Browse Yu-Gi-Oh singles at the C3 eBay store — 23,000+ TCG listings with competitive pricing.**
+**Browse Yu-Gi-Oh singles at the C3 eBay store , 23,000+ TCG listings with competitive pricing.**
 
 [Visit the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1)
 
 </div>
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
 ## Frequently Asked Questions
 
 **What Yu-Gi-Oh cards are worth money in Australia?**
-Current meta staples, Secret Rares and Quarter Century Rares from recent sets, 1st Edition copies of older sets, and cards in highly sought-after competitive archetypes. Check eBay AU completed listings for current prices — the market shifts quickly and estimates become outdated fast.
+Current meta staples, Secret Rares and Quarter Century Rares from recent sets, 1st Edition copies of older sets, and cards in highly sought-after competitive archetypes. Check eBay AU completed listings for current prices: the market shifts quickly and estimates become outdated fast.
 
 **Is eBay or Facebook better for selling Yu-Gi-Oh cards in Australia?**
-eBay for individual cards worth AU$10+. Facebook for collections, bulk lots, and lower-value cards where eBay fees eat into the return too heavily. Many sellers use both — eBay for singles, Facebook for everything else.
+eBay for individual cards worth AU$10+. Facebook for collections, bulk lots, and lower-value cards where eBay fees eat into the return too heavily. Many sellers use both: eBay for singles, Facebook for everything else.
 
 **Do game stores buy Yu-Gi-Oh cards in Australia?**
 Most stores with a Yu-Gi-Oh singles section maintain an active buylist. Buylist prices are typically 30–50% of market value in cash. Timing your sale before reprint announcements or F&L list updates makes a meaningful difference in the price you'll receive.
 
 **When is the best time to sell Yu-Gi-Oh cards?**
-As soon as a card spikes in price, before the next Forbidden and Limited list update, and before any known reprint announcement. Yu-Gi-Oh card values are more volatile than most other TCGs — holding too long is the most common way sellers lose value.
+As soon as a card spikes in price, before the next Forbidden and Limited list update, and before any known reprint announcement. Yu-Gi-Oh card values are more volatile than most other TCGs. holding too long is the most common way sellers lose value.
 
 **How do I price Yu-Gi-Oh cards when selling in Australia?**
 Check eBay AU sold listings, not just current listings. Sold listings show actual transaction prices rather than aspirational asking prices. Filter by completed sales, note the price range over the last 30 days, and price competitively within that range.

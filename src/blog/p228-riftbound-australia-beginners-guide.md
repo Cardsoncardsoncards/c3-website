@@ -46,8 +46,71 @@ A turn goes: Beginning phase (ready cards, gain Runes), Main phase (play units, 
 
 ## Where to Find Riftbound in Australia
 
-Cherry Collectables, Gameology, Good Games, and Collectible Madness all stock Riftbound. For singles, [our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards) carries Riftbound singles with Australian shipping. See our [Shop page](/shop.html) for sealed product affiliate links.
+Cherry Collectables, Gameology, Good Games, and Collectible Madness all stock Riftbound. For singles, [our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Riftbound singles with Australian shipping. See our [Shop page](/shop.html) for sealed product affiliate links.
 
 ---
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games.
+
+
+## The Core Loop: What You Do Each Turn
+
+Each turn in Riftbound follows a consistent structure:
+
+1. **Draw**: draw cards to refill your hand
+2. **Energy**: gain Energy for the turn (Energy resets each turn, unlike MTG mana)
+3. **Main Phase**: spend Energy to play cards, equip items, use abilities
+4. **Combat Phase**: your Champion and creatures attack or defend
+5. **End Phase**: discard down to hand size, resolve end-of-turn effects
+
+The XP your Champion accumulates persists across turns. Equipment attached to your Champion also persists. Your hand is the variable; your Champion's level and Equipment are the constants.
+
+## Reading a Riftbound Card
+
+Every Riftbound card has:
+
+**Cost**: Top left. Energy required to play.
+**Type**: Character, Spell, Equipment, or Location.
+**Stats**: Power (attack) and Health (damage it can absorb before being removed).
+**Ability Text**: What the card does. Triggered abilities (happens when a condition is met) and activated abilities (costs Energy or another resource to use).
+**XP Value**: Some cards grant XP to your Champion when played or when certain conditions are met.
+
+## Champions and How They Level Up
+
+Your Champion starts at Rank 1. Gaining enough XP advances them to Rank 2, then Rank 3. Each rank has:
+
+- Increased base stats (more Health, more Power)
+- New or improved abilities
+- Access to higher-tier Equipment
+
+Most decks have a clear "hit Rank 3 as fast as possible" objective because Rank 3 Champions are significantly more powerful. The speed at which you reach Rank 3 while keeping your opponent from doing the same determines most games.
+
+## Where to Play Riftbound in Australia
+
+Local game stores across Australian cities run regular Riftbound nights. Since RQ Sydney in May 2026, interest has grown significantly. Riot Games supports Australian Organised Play through Official Store events and the Regional Qualifier circuit.
+
+Find Riftbound players through the Riftbound Australia Facebook group, Discord community, and by checking with your local game store.
+
+The [C3 Release Calendar](/calendar) tracks upcoming Riftbound events in Australia, including RQ Singapore (September 2026) and the Riftbound Melbourne event (October 2026).
+
+
+## Your First Steps in Australia
+
+The Australian TCG community is welcoming to new players at all levels. Whether you are starting a new game or returning to one you played before, the best first step is finding a local game store and asking when they run beginner events.
+
+All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/calendar) tracks upcoming events so you can find one near you.
+
+For pricing on specific cards before you buy, the [C3 Card Compare tool](/compare) shows current AUD pricing from eBay AU sold data. For tracking your collection as it grows, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs on this site.
+
+## Frequently Asked Questions
+
+### How much does it cost to start playing Riftbound in Australia?
+The minimum entry cost depends on the game. Most TCGs have starter or preconstructed decks in the AU$20-90 range that give you everything needed for your first games. See the specific cost breakdown in this guide.
+
+### Is Riftbound popular in Australia?
+Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
+
+### Where can I find other Riftbound players in Australia?
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.
+
+Riftbound releases new sets roughly every three months. The [C3 Release Calendar](/calendar) tracks Australian release dates for Vendetta (Set 4, July 31, 2026) and beyond.

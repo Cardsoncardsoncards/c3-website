@@ -1,9 +1,9 @@
 ---
 game: mtg
 title: "Best TCG Booster Boxes to Open in Australia 2026: Value Guide"
-description: "Which booster boxes are actually worth opening in Australia in 2026? Here's the honest value breakdown across MTG, Pokemon, Riftbound, One Piece, and Lorcana in AUD."
+description: "Which booster boxes are actually worth opening in Australia in 2026? Here's the honest value breakdown across MTG, Pokemon, Riftbound, One Piece."
 date: 2026-05-09
-category: value-and-worth
+category: market-and-prices
 emoji: "📦"
 tags: ["post"]
 affiliate_disclaimer: false
@@ -77,3 +77,18 @@ Use our [EV Calculator](/ev-calculator.html) to compare expected value across MT
 ---
 
 Not affiliated with any card game publisher. All prices are approximate Australian retail prices as of May 2026.
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Where is the best place to buy TCG products in Australia?
+Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop.html) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
+
+### How do I know if a TCG product is good value in Australia?
+Compare the box price against the expected value of cards inside using the [C3 EV Calculator](/ev-calculator) for MTG sets. For other games, check secondary market prices for the top cards and multiply by pull rates to estimate expected return.
+
+### Can I return TCG products in Australia?
+Generally no. Once booster packs are opened they cannot be returned to retailers. Sealed product can usually be returned if unopened and unused, subject to the retailer's returns policy.

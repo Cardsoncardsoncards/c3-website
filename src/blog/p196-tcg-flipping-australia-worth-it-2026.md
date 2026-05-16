@@ -1,9 +1,9 @@
 ---
 game: tcg
 title: "TCG Flipping in Australia: Is It Worth Trying in 2026?"
-description: "Can you make money flipping TCG cards in Australia? An honest look at the real margins, time costs, and risks of buying and reselling MTG, Pokemon, and other TCG cards in the Australian market."
+description: "Can you make money flipping TCG cards in Australia? An honest look at the real margins, time costs, and risks of buying and reselling MTG, Pokemon."
 date: 2026-05-05
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - general-tcg
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-TCG flipping — buying cards at one price and selling at a higher price — is a real income source for some Australian collectors. Whether it's worth doing depends entirely on your available time, risk tolerance, and whether you enjoy the process enough that the work doesn't feel like work.
+TCG flipping. buying cards at one price and selling at a higher price. is a real income source for some Australian collectors. Whether it's worth doing depends entirely on your available time, risk tolerance, and whether you enjoy the process enough that the work doesn't feel like work.
 
 This guide covers the real mechanics, margins, and risks without the hype.
 
@@ -28,11 +28,11 @@ Flipping is finding a pricing inefficiency and exploiting it. You buy a card for
 
 Sources of pricing inefficiency in the Australian TCG market:
 
-**eBay underpricing**: sellers who don't know the current value of a card list it below market. This is increasingly rare as most eBay AU sellers check prices before listing, but it still occurs — particularly with older cards, foreign language cards, or niche printings.
+**eBay underpricing**: sellers who don't know the current value of a card list it below market. This is increasingly rare as most eBay AU sellers check prices before listing, but it still occurs. particularly with older cards, foreign language cards, or niche printings.
 
 **Local sale underpricing**: Facebook Marketplace, local TCG buy/sell groups, and LGS buylist purchases can be below eBay AU market rates. A card bought from a LGS buylist at 50% of market price and sold on eBay AU at 80% of market price (after fees) generates a margin.
 
-**Reprint arbitrage**: buying cards before a reprint announcement at high prices and selling quickly is the opposite — this is loss prevention for the wrong side of the trade.
+**Reprint arbitrage**: buying cards before a reprint announcement at high prices and selling quickly is the opposite. this is loss prevention for the wrong side of the trade.
 
 **Sealed arbitrage**: buying sealed product at retail when it's underpriced and selling when it becomes scarce. More common with older sealed product.
 
@@ -57,7 +57,7 @@ For context: 10 of these transactions per month = AU$60 profit, requiring sourci
 
 At 30 minutes total per card (sourcing, listing, packing, posting, message handling), 10 cards = 5 hours. AU$60 / 5 hours = AU$12 per hour.
 
-That's below Australian minimum wage. As a side income with flexible hours and no employer, it's a different calculation — but it's not meaningfully profitable at small scale.
+That's below Australian minimum wage. As a side income with flexible hours and no employer, it's a different calculation. but it's not meaningfully profitable at small scale.
 
 Scaling changes things. At 100 cards per month with efficient operations:
 
@@ -71,7 +71,7 @@ This is more competitive but requires significant volume, good sourcing access, 
 
 **Bulk buying and sorting**: buying unsorted collections, identifying the value cards, and reselling both the value cards individually and the bulk as bulk can generate meaningful margins. The work is finding collections at the right price.
 
-**Sealed product**: buying cases at retail, storing them, and selling years later when the product is out of print. This requires capital, storage, and patience — but sealed sets from 3 to 5 years ago regularly sell at 3x to 5x their original retail price. The risk is the set doesn't become desirable.
+**Sealed product**: buying cases at retail, storing them, and selling years later when the product is out of print. This requires capital, storage, and patience. but sealed sets from 3 to 5 years ago regularly sell at 3x to 5x their original retail price. The risk is the set doesn't become desirable.
 
 **Specialisation**: knowing one format deeply (Commander singles from a specific era, vintage staples, a specific TCG's rare set) allows faster and more confident sourcing decisions. Generalists compete with everyone. Specialists compete with fewer people.
 
@@ -103,3 +103,18 @@ Track all your card values and transactions with the [free C3 collection tracker
 ---
 
 *See also: [The Real Cost of Selling Cards on eBay Australia](/blog/real-cost-selling-cards-ebay-australia/)*
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

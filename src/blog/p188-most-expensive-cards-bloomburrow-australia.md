@@ -1,9 +1,9 @@
 ---
 game: mtg
-title: "Most Expensive Cards in Bloomburrow Australia: Full Price Guide 2026"
-description: "The highest-value Magic: The Gathering cards from the Bloomburrow set with current AUD pricing. Includes Commander staples, chase rares, and the most valuable special treatment versions."
+title: "Most Expensive Bloomburrow Cards in Australia"
+description: "The highest-value Magic: The Gathering cards from the Bloomburrow set with current AUD pricing. Includes Commander staples, chase rares."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - mtg
@@ -17,73 +17,89 @@ cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=bloomburrow+mtg+cards&campid=
 featured: false
 layout: post
 ---
+Bloomburrow released in August 2024 and introduced an all-animal world with no humanoid characters. The set produced some genuinely expensive cards, particularly in its collector-oriented treatments. Here are the cards worth money in Australia and why.
 
-Bloomburrow (released August 2024) introduced an all-animal world to Magic: The Gathering with no humanoid characters. The set produced several cards with sustained Commander and competitive format demand. This guide covers the most valuable Bloomburrow cards with current AUD pricing.
+<div class="quick-answer">
+<strong>Quick Answer:</strong>
+<p>The top Bloomburrow cards by value are Maha, Its Feathers Night, Three Tree City, and the borderless anime treatment variants. Gev, Scaled Scorch in its anime borderless foil version is one of the most valuable single cards in the set. Check live AUD prices at the <a href="/cards/mtg">C3 MTG Card Vault</a>.</p>
+</div>
 
-Note: prices fluctuate constantly. All figures below are approximate based on eBay AU sold data as of May 2026. Check the [C3 MTG Card Vault](/cards/mtg) for live current pricing.
-
-## The Top Cards by Value
+## The Most Expensive Bloomburrow Cards
 
 ### Maha, Its Feathers Night
 
-One of the most valuable cards from Bloomburrow. This legendary Elemental Bird gives all creatures your opponents control base toughness 1 — meaning any damage kills them. Works with damage-dealing abilities, ping effects, and combat. Commands a significant premium in both Commander and competitive formats.
+One of the most consistently demanded cards from Bloomburrow. This Elemental Bird legendary gives all creatures your opponents control a base toughness of one, meaning any damage kills them. The combination with ping effects, Anger of the Gods variants, and combat damage makes it a game-ending Commander card in the right build.
 
-**Current AUD estimate**: AU$50 to AU$120+. Alternate art and foil versions command higher premiums. Check exact current price at [C3](/cards/mtg).
+**Why it holds value:** High Commander playability across multiple strategies. Difficult to interact with through standard removal in some situations. Strong competitive Standard credentials at launch that transitioned to sustained Commander demand.
+
+**Current AUD estimate:** AU$60 to AU$120+ depending on treatment. Alternate art and foil versions command the highest premiums. Check the [C3 MTG Card Vault](/cards/mtg/maha-its-feathers-night) for current sold prices.
+
+### Three Tree City
+
+The Legendary Land from Bloomburrow that produces coloured mana and has an effect that rewards creature diversity. Lands with significant upside have historically maintained strong secondary market value because Commander players always need good mana.
+
+**Why it holds value:** Lands are hard to reprint without disrupting format dynamics. Three Tree City has the aesthetic appeal of its setting alongside genuine gameplay power.
+
+**Current AUD estimate:** AU$30 to AU$60. Check [live pricing at C3](/cards/mtg/three-tree-city).
 
 ### Ygra, Eater of All
 
-Legendary Leviathan that turns all permanents into food for mana purposes. Enables food sacrifice synergies and generates significant mana advantages in the right shell.
+Legendary Leviathan that turns all permanents into food for mana purposes. Enables food sacrifice synergies and generates significant mana advantages in the right shell. Commander players building around food mechanics adopted this quickly.
 
-**Current AUD estimate**: AU$15 to AU$35.
+**Current AUD estimate:** AU$15 to AU$35. Check [live pricing at C3](/cards/mtg).
 
 ### Glarb, Calamity's Augur
 
-Blue-green legendary frog with a powerful draw trigger. Generates card advantage on attack and rewards land-play strategies.
+Blue-green legendary frog with a powerful draw trigger. Generates card advantage on attack and rewards land-play strategies. Commander players building Simic midrange strategies include this regularly.
 
-**Current AUD estimate**: AU$8 to AU$20.
+**Current AUD estimate:** AU$10 to AU$25. Check [live pricing at C3](/cards/mtg).
 
 ### Lumra, Bringer of Dreams
 
-Legendary creature with flash that cantrips on ETB and enables graveyard recursion. Sees play in Commander value engines.
+Legendary creature with flash that provides immediate value on entering the battlefield. The flash clause made this a genuine consideration in Commander and limited, where instant-speed threats are valuable.
 
-**Current AUD estimate**: AU$6 to AU$15.
+**Current AUD estimate:** AU$8 to AU$20. Check [live pricing at C3](/cards/mtg).
 
-### Valley Questcaller
+## The Real Money: Collector Treatments
 
-Cares about creatures going to the graveyard and generates token swarms. High Commander playability in token and aristocrats strategies.
+The standard versions of most Bloomburrow cards sit below AU$20. The genuine high-value pulls are in the collector-oriented treatments.
 
-**Current AUD estimate**: AU$5 to AU$12.
+**Borderless anime variants:** Bloomburrow's Imagine: Courageous Critters series featured anime-style borderless art for several key legendary creatures. Gev, Scaled Scorch in this treatment sold for around USD$215 at launch. Baylen, the Haymaker in English borderless raised foil reached around USD$225. These prices have moderated since launch but the premium treatments remain the set's top-value cards.
 
-## The Special Treatment Premium
+**Planeswalker borderless:** The planeswalkers reimagined as animal characters drove collector interest. Jace, the Mind Sculptor and Liliana of the Dark Realms in borderless treatments sit at AU$25-45.
 
-Bloomburrow features several special treatment versions that command significant price premiums over standard versions:
+**Seasonal foil treatments:** Three Tree City has four foil seasons of art, making it one of the more collectible land cards from the set for frame-complete collectors.
 
-**Showcase frames**: the Bloomburrow showcase frames feature illustrated borders with nature motifs. These typically run 2x to 4x the standard version price.
+## How to Buy Bloomburrow Singles in Australia
 
-**Borderless alternate art**: full-bleed art versions of the rarest cards. Top-end Bloomburrow borderless versions can trade at AU$50 to AU$200+ for the most desirable versions.
+Specific named card singles from Bloomburrow are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=bloomburrow-blog&toolid=10001&mkevt=1) with Australian shipping. For live AU pricing, check the [C3 MTG Card Vault](/cards/mtg).
 
-**Foil treatment**: foil versions of chase cards add 20% to 100% premium depending on the card's desirability.
+<div class="tool-callout">
+<p>Compare Bloomburrow card prices against other sets at the <a href="/compare">C3 Card Compare tool</a>. Shows current AUD buy and sell prices side by side.</p>
+</div>
 
-## Which Bloomburrow Cards Are Budget-Friendly
+## Is Bloomburrow Worth Opening in 2026?
 
-Bloomburrow has a number of commons and uncommons with high Commander utility that remain accessible:
+The set is out of print on Amazon AU as of May 2026. Secondary market box prices have risen above original retail, which affects EV calculations. For individual cards, buying singles is more cost-efficient than opening sealed product at inflated secondary market prices.
 
-**Frog tribal synergy cards**: most common frog synergies are under AU$2.
+Use the [C3 EV Calculator](/ev-calculator) to check whether current box prices make sense to open before buying.
 
-**Basic removal spells**: Bloomburrow included functional removal at common rarity, largely under AU$1.
+<div class="related-guides">
 
-**Dual lands**: Bloomburrow slow lands (enters tapped if certain conditions aren't met) are approximately AU$2 to AU$6 each.
+**Related guides:**
+- [Is MTG Bloomburrow Worth Opening in Australia?](/blog/is-mtg-bloomburrow-worth-opening-australia/)
+- [MTG Commander Staples: Australia Price Guide](/blog/commander-staples-mtg-australia-price-guide/)
+- [Best MTG Booster Boxes in Australia](/blog/best-mtg-booster-boxes-australia/)
 
-## Should You Open Bloomburrow Booster Boxes?
+</div>
 
-Bloomburrow booster boxes in Australia (Play Boosters) retail at approximately AU$180 to AU$220. The expected value from opening depends heavily on pulling Maha or one of the top-end alternate art versions.
+## Frequently Asked Questions
 
-Use the [C3 EV Calculator](/ev-calculator.html) to check the current expected value breakdown before deciding to open vs buy singles.
+### What is the most expensive Bloomburrow card in Australia?
+The top-value pull is Maha, Its Feathers Night in borderless or foil treatment, followed by the anime borderless collector variants. Standard copies of Maha sit around AU$60-120. Check live prices at the [C3 MTG Card Vault](/cards/mtg/maha-its-feathers-night).
 
-## Finding Bloomburrow Singles in Australia
+### Are Bloomburrow cards good for Commander?
+Yes. Bloomburrow produced multiple strong Commander legendaries including Maha, Glarb, Ygra, and Lumra. The all-creature-type theme also supports tribal Commander strategies across many colour combinations.
 
-Check the [C3 MTG Card Vault](/cards/mtg) for live AUD pricing on every Bloomburrow card. Singles are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=bloomburrow&campid=5339146789).
-
----
-
-*See also: [Most Expensive MTG Cards in Australia Right Now](/blog/most-expensive-mtg-cards-australia-2026/)*
+### Where to buy Bloomburrow singles in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=bloomburrow-blog&toolid=10001&mkevt=1) has Bloomburrow singles with Australian shipping.

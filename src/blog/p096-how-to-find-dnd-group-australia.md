@@ -1,9 +1,9 @@
 ---
 game: dnd
-title: "How to Find a D&D Group in Australia: Where to Look and What to Expect"
-description: "Looking for a D&D group in Australia? This guide covers every real method for finding players — online, local, and in-person — and what to expect as a new player joining a group."
+title: "How to Find a D&D Group in Australia"
+description: "Looking for a D&D group in Australia? This guide covers every real method for finding players — online, local, and in-person — and what to expect as."
 date: 2026-04-16
-category: "game-guides"
+category: "how-to-play"
 tags:
   - post
   - dnd
@@ -19,7 +19,7 @@ featured: false
 layout: post
 ---
 
-Finding a D&D group is the part most new players find hardest. You can buy the books, learn the rules, and have dice ready to go — but none of that matters without other people to play with. The good news is that Australia has more active D&D communities than most players realise, and the methods for finding them are well-established.
+Finding a D&D group is the part most new players find hardest. You can buy the books, learn the rules, and have dice ready to go. but none of that matters without other people to play with. Australia has more active D&D communities than most players realise, and the methods for finding them are well-established.
 
 This guide covers every practical method for finding a D&D group in Australia, what to say when you reach out, and what to expect when you join a group as a new player.
 
@@ -58,7 +58,7 @@ Online D&D via virtual tabletop platforms has been the primary way most Australi
 
 **Campaigns vs one-shots:** A campaign is a long-form ongoing story that can run for months or years. A one-shot is a self-contained adventure played in a single session. For a first experience, a one-shot is lower commitment and a better way to try the format without committing to a long-term group. Many groups run introductory one-shots before inviting new players into a campaign.
 
-**Session zero:** Most good groups run a Session Zero before starting play — a meeting where everyone discusses the campaign's tone, table rules, content boundaries, and creates characters together. This is a good sign that a group is organised and considerate.
+**Session zero:** Most good groups run a Session Zero before starting play: a meeting where everyone discusses the campaign's tone, table rules, content boundaries, and creates characters together. This is a good sign that a group is organised and considerate.
 
 **Scheduling:** Consistent scheduling is the hardest part of maintaining a campaign group. Be honest about your availability upfront. A group that can play fortnightly consistently is more valuable than one that theoretically meets weekly but regularly cancels.
 
@@ -82,7 +82,7 @@ Both have genuine advantages:
 
 **In-person is better for:** The social experience of sitting around a table, physical dice and props, reading facial expressions and body language during roleplay, and the shared energy of a room full of players engaged in a story.
 
-Neither is the right answer for everyone. Many Australian players do both — an online campaign on Wednesday night and an in-person one-shot at the game store on Saturday.
+Neither is the right answer for everyone. Many Australian players do both. an online campaign on Wednesday night and an in-person one-shot at the game store on Saturday.
 
 <div class="affiliate-card">
 

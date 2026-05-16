@@ -1,7 +1,7 @@
 ---
 game: pokemon
-title: "How to Play Pokemon TCG: Step-by-Step Rules Guide for Australian Beginners"
-description: "Never played Pokemon TCG before? This guide walks through every rule — from setting up your bench to evolution, energy, and winning — in plain English for Australian beginners."
+title: "How to Play Pokemon TCG: Step-by-Step Rules Guide for"
+description: "New to Pokemon TCG? This guide covers the complete rules in plain English including how turns work, how to win, and what everything on the card."
 date: 2026-05-05
 category: "beginner-guides"
 tags:
@@ -26,7 +26,7 @@ This guide covers everything you need to play your first game.
 
 Two players. Two 60-card decks. Six Prize Cards per player. That's the setup.
 
-The easiest starting point in Australia is a Pokemon TCG Starter Deck — a ready-to-play 60-card deck sold as a box. They're available at Target, Big W, EB Games, and local game stores for roughly AU$20 to AU$35.
+The easiest starting point in Australia is a Pokemon TCG Starter Deck: a ready-to-play 60-card deck sold as a box. They're available at Target, Big W, EB Games, and local game stores for roughly AU$20 to AU$35.
 
 ## The Goal
 
@@ -40,7 +40,7 @@ You also win if your opponent has no Pokemon left in play, or if they can't draw
 
 1. Shuffle your 60-card deck
 2. Each player draws 7 cards
-3. Place one Basic Pokemon face-down in your Active Spot — this is your starting Pokemon
+3. Place one Basic Pokemon face-down in your Active Spot. this is your starting Pokemon
 4. Place up to five more Basic Pokemon face-down on your Bench
 5. Put the top six cards of your remaining deck face-down as your Prize Cards
 6. Both players flip their Active Pokemon face-up and the game begins
@@ -53,7 +53,7 @@ If you don't have a Basic Pokemon in your opening 7 cards, show your hand, shuff
 
 **Energy cards** power your attacks. Most attacks require specific amounts of energy attached to the Pokemon.
 
-**Trainer cards** are tools, supporters, and items that do various things — draw cards, heal Pokemon, search your deck, and more.
+**Trainer cards** are tools, supporters, and items that do various things: draw cards, heal Pokemon, search your deck, and more.
 
 ## How a Turn Works
 
@@ -104,3 +104,49 @@ For tracking what your Pokemon cards are worth, use the [free C3 collection trac
 ---
 
 *See our [guide to the best Pokemon booster boxes in Australia](/blog/best-pokemon-booster-boxes-australia/) for more buying advice.*
+
+
+## Energy Cards: The Fuel System
+
+Energy Cards are how Pokemon attacks are paid for. Basic Energy provides one Energy of its type per card attached. You can attach one Energy per turn from your hand to any Pokemon you control.
+
+Attacks require a specific number and type. A Lightning attack needing "LLC" needs two Lightning Energy and one Colourless (any type). Energy stays on a Pokemon until that Pokemon is knocked out or a card removes it.
+
+## Trainer Cards: The Most Important Category
+
+**Items**: Play as many per turn as you want. Immediate effects: draw cards, search your deck, heal damage.
+
+**Supporters**: One per turn. Highest impact effects: Professor's Research (draw 7), Boss's Orders (promote opponent's benched Pokemon), Irida, Iono. Supporters define competitive Pokemon deckbuilding.
+
+**Stadiums**: Placed centrally. Modify rules for both players until replaced by another Stadium.
+
+## Prize Cards: How You Win Through Knockouts
+
+Six Prize Cards face-down at game start. Each knockout of an opponent's Pokemon lets you take one Prize Card into your hand. Take all six and win. Pokemon ex, Pokemon V, and multi-Prize Pokemon give two Prize Cards when knocked out, making them high-value targets and the reason they are powerful: you must knock out fewer of them, but they are worth more when they go down.
+
+## Common Beginner Mistakes
+
+**Not attaching Energy every turn**: The single most common mistake. Miss one Energy attachment and you fall behind on your attack progression, often permanently.
+
+**Not understanding Supporter timing**: Playing a Supporter, then wanting to play another. You get one per turn. Choose carefully.
+
+**Benching too few Pokemon**: A player who benches only one or two Pokemon can lose immediately to a "bench-out": if all their Pokemon are knocked out simultaneously or their bench is too small to promote a new Active.
+
+**Over-extending into knockouts**: Putting high-Prize Pokemon active too early gives your opponent easy Prize acceleration.
+
+## What to Buy First in Australia
+
+Battle Decks (AU$20-35 each) are the easiest start. The [C3 Shop](/shop.html#pokemon) lists confirmed current Amazon AU availability. Two Battle Decks from the same set give a balanced two-player experience immediately.
+
+Check the [C3 Release Calendar](/calendar) for upcoming Pokemon events and set releases.
+
+## Frequently Asked Questions
+
+### How long does it take to learn Pokemon?
+The basic rules can be learned in a single afternoon with a patient opponent or by following the official tutorial. Strategic depth takes months to develop. Most new players find the game enjoyable before they have mastered it.
+
+### Do I need to buy specific cards to learn Pokemon?
+No. Starter decks or preconstructed decks give you everything needed for your first games. You do not need to know card values or build your own deck to start playing.
+
+### Is there a free digital version to practise?
+Most major TCGs have a free or low-cost digital version. Check the relevant game's official website for their digital platform options.

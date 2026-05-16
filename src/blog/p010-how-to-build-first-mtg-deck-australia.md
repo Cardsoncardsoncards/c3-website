@@ -1,7 +1,7 @@
 ---
 game: mtg
 title: "How to Build Your First MTG Deck: Step-by-Step for Beginners"
-description: "Building your first Magic: The Gathering deck doesn't have to be complicated. This step-by-step guide walks Australian beginners through deck construction from scratch, covering format, mana, and card selection."
+description: "Building your first Magic: The Gathering deck doesn't have to be complicated. This step-by-step guide walks Australian beginners through deck."
 date: 2026-04-07
 category: "beginner-guides"
 tags:
@@ -23,7 +23,7 @@ Building your first Magic deck is one of those things that looks complicated fro
 
 Most beginner deck building guides are written by experienced players and skip the parts that experienced players consider obvious. This guide doesn't do that. It starts from zero and walks through every step of building your first playable deck.
 
-The focus here is Commander — the format where you build a 100-card deck around a legendary creature. Commander is the most popular format in Australia and the most forgiving for new players learning to build decks.
+The focus here is Commander: the format where you build a 100-card deck around a legendary creature. Commander is the most popular format in Australia and the most forgiving for new players learning to build decks.
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
@@ -38,7 +38,7 @@ Here's why: building a functional Commander deck from scratch requires understan
 
 A Commander precon gives you a complete, functional 100-card deck immediately. Play it for 10–20 games. You'll develop a feel for what the deck needs, what's working, and what you'd change. That experience makes your first deck building decisions dramatically better than building cold.
 
-That said, many players learn by doing — including building a deck. This guide covers both paths: modifying a precon, and building from scratch.
+That said, many players learn by doing. including building a deck. This guide covers both paths: modifying a precon, and building from scratch.
 
 ## Understanding the Commander Format Rules
 
@@ -50,7 +50,7 @@ Before building, you need to understand the specific rules that shape Commander 
 
 **Colour identity.** Every card in your deck must match your commander's colour identity. If your commander is white and blue, you can only use white cards, blue cards, colourless cards, and cards with both white and blue (Azorius) in their casting costs or rules text. You cannot include red, green, or black cards.
 
-**The commander lives in the Command Zone.** Your commander starts the game in a special zone (the Command Zone) rather than your deck. You can cast it from there at any time you have the mana, and if it dies or goes to exile, you can return it to the Command Zone and cast it again — though it costs an extra 2 mana each time it's been cast this way.
+**The commander lives in the Command Zone.** Your commander starts the game in a special zone (the Command Zone) rather than your deck. You can cast it from there at any time you have the mana, and if it dies or goes to exile, you can return it to the Command Zone and cast it again. though it costs an extra 2 mana each time it's been cast this way.
 
 **Multiplayer.** Commander is typically played with four players. Each player starts at 40 life. There is also a Commander Damage rule: if a single commander deals 21 combat damage to you, you lose regardless of your life total.
 
@@ -60,19 +60,19 @@ Your commander is the heart of the deck. Every other card decision flows from it
 
 For a first deck, look for a commander that:
 
-**Has a clear, readable ability.** If you need to read the card three times to understand what it does, it's probably not the right starting point. Look for commanders with straightforward abilities — "whenever you cast a spell, draw a card" or "creatures you control get +1/+1" are easy to build around.
+**Has a clear, readable ability.** If you need to read the card three times to understand what it does, it's probably not the right starting point. Look for commanders with straightforward abilities , "whenever you cast a spell, draw a card" or "creatures you control get +1/+1" are easy to build around.
 
 **Tells you what cards to include.** The best commanders for beginners effectively write part of your deck list for you. A commander that cares about dragons tells you to include dragons. A commander that cares about lifegain tells you to include lifegain cards.
 
 **Has two colours or fewer.** More colours mean more flexibility but also more complexity in building your mana base. One or two-colour commanders are simpler for first builds.
 
-You don't need to own your commander to choose it — decide on the commander first, then acquire the card. Singles from our eBay store are almost always cheaper than pulling for a specific legendary creature from booster packs.
+You don't need to own your commander to choose it: decide on the commander first, then acquire the card. Singles from our eBay store are almost always cheaper than pulling for a specific legendary creature from booster packs.
 
 ## Step 2: Understand Your Colour Identity and Card Pool
 
 Once you have your commander, you know your colours. This determines the entire card pool you can draw from.
 
-Use Scryfall (scryfall.com) — a free card search engine — to explore cards within your colour identity. You can search by colour, card type, rules text, and mana cost. This is an essential tool for deck building and it's free.
+Use Scryfall (scryfall.com). a free card search engine. to look at cards within your colour identity. You can search by colour, card type, rules text, and mana cost. This is an essential tool for deck building and it's free.
 
 Search for cards that:
 - Match your commander's theme (if your commander cares about tokens, search for "create token" in your colours)
@@ -80,7 +80,7 @@ Search for cards that:
 
 ## Step 3: Understand the 100-Card Structure
 
-A functional Commander deck follows a rough structure. This is not a rigid rule — experienced players deviate based on strategy — but it's a reliable starting framework for beginners:
+A functional Commander deck follows a rough structure. This is not a rigid rule. experienced players deviate based on strategy. but it's a reliable starting framework for beginners:
 
 **Lands: 37–38**
 The backbone of your deck. Most beginner Commander decks run 37–38 lands. More lands means more consistent ability to play your spells on time. Starting with 37 is safe.
@@ -143,7 +143,7 @@ Your lands are your mana base. For a first Commander deck, a simplified mana bas
 
 **Basic lands:** A significant portion of your land slots should be basic lands (Plains, Islands, Swamps, Mountains, Forests) in whatever combination your colours require.
 
-**Dual lands:** Lands that tap for two different colours of mana. Command Tower is the most important dual land in Commander — it taps for any colour in your commander's identity and goes in every Commander deck regardless of strategy.
+**Dual lands:** Lands that tap for two different colours of mana. Command Tower is the most important dual land in Commander. it taps for any colour in your commander's identity and goes in every Commander deck regardless of strategy.
 
 **Utility lands:** Some lands do things beyond producing mana. Temple of the False God (produces two mana when you have five or more lands), Reliquary Tower (no maximum hand size), and cycle lands (pay mana to draw a card) are popular utility options.
 
@@ -210,7 +210,7 @@ Browse our eBay store for MTG singles with Australian shipping.
 37–38 is the standard recommendation for most Commander decks. Decks with lots of ramp can run 35–36. Decks with high mana curves may want 38–40. Start at 37 and adjust based on how the deck plays.
 
 **Can I put any card in a Commander deck?**
-No. Every card must be within your commander's colour identity. Colourless cards (artifacts with no colour symbols in their rules text, colourless spells) can go in any deck. Some cards are also banned in Commander — check the official Commander banned list at mtgcommander.net.
+No. Every card must be within your commander's colour identity. Colourless cards (artifacts with no colour symbols in their rules text, colourless spells) can go in any deck. Some cards are also banned in Commander. check the official Commander banned list at mtgcommander.net.
 
 **How much does it cost to build a Commander deck from scratch in Australia?**
 A functional Commander deck built from singles can be put together for AU$80–200 depending on card choices. Avoiding format staples (which command premium prices) and focusing on synergy over raw power keeps costs lower. Budget Commander deckbuilding is a well-established approach with a large online community.

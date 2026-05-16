@@ -22,7 +22,7 @@ Unleashed booster boxes (24 packs, 14 cards per pack) are priced at approximatel
 
 **Where can I buy Riftbound singles in Australia?**
 
-eBay AU is currently the primary Australian singles market. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards) carries Riftbound singles with Australian shipping.
+eBay AU is currently the primary Australian singles market. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Riftbound singles with Australian shipping.
 
 **Do I need to know League of Legends to play Riftbound?**
 
@@ -58,7 +58,7 @@ Yes, and growing fast. RQ Sydney (May 15-17) at Sydney Showground is the first A
 
 **What is the difference between Constructed and Sealed play?**
 
-Constructed means you build your deck beforehand from cards you own. This is the format for Regional Qualifiers. Sealed means you are given a pool of product at the event and build a deck from only those cards on the spot. Pre-Rift events (local prereleases) use Sealed format and are ideal for new players.
+Constructed means you build your deck beforehand from cards you own. This is the format for Regional Qualifiers. Sealed means you are given a pool of product at the event and build a deck from only those cards on the spot. Pre-Rift events (local prereleases) use Sealed format and are right for new players.
 
 **Will Riftbound get more Australian events after Sydney?**
 
@@ -77,3 +77,47 @@ Start now. The Unleashed meta is fresh, the player base is small enough that new
 Track your Riftbound cards with our [Free TCG Tracker](/tracker.html).
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games.
+
+
+## More Questions Australian Riftbound Players Are Asking
+
+### Is Riftbound legal in tournaments if I bought it from overseas?
+
+Yes. Official English-language Riftbound products are tournament legal regardless of where you purchased them. The product must be in English and from an official release (not proxies or fan-made cards). Japanese or Chinese-language cards are not tournament legal in English events.
+
+### Do I need to own the same Champion card as my opponent to play?
+
+No. Each player has their own Champion card that stays in their Champion Zone. You and your opponent will have different Champions (that is the point of the format). You only need one copy of your Champion card for your own deck.
+
+### Can I use cards from Origins (Set 1) in the current format?
+
+Yes. Riftbound currently runs a format with no rotation: all sets from Origins onwards are legal in constructed play. Rotation may be announced as the game matures, but as of May 2026 the entire card pool is legal.
+
+### How does the prize pool work at events like RQ Sydney?
+
+At RQ Sydney 2026, the top 32 players shared a USD$25,000 prize pool. First place received USD$6,000. More importantly, top 64 finishers earn invitations to the Regional Championship, which feeds toward the first Riftbound World Championship. Prize money and invitation qualification are separate: you can earn an invitation without finishing in the top 8.
+
+### Where can I watch Riftbound competitive play in Australia?
+
+Riot Games and event organisers stream RQ and Regional events. The Riftbound Australia Discord and Facebook group share stream links when events are live. Post-event coverage is available on the official Riftbound YouTube channel.
+
+### Is Riftbound going to last as a TCG?
+
+This is impossible to predict with certainty. The indicators are positive: Riot Games has the resources to support the game long-term, the IP (League of Legends) has a massive global audience, and the global competitive circuit is structured and growing. RQ Sydney being the first APAC event suggests Riot is committed to the region. Nothing is guaranteed in TCGs, but Riftbound has stronger structural backing than most new games.
+
+### How does Riftbound compare to Pokemon and MTG in Australia?
+
+Riftbound is significantly smaller in player base than both Pokemon and MTG in Australia. This is expected for a game launched in 2024. The player base is growing quickly, particularly after RQ Sydney, and organised play structures are in place. For players who want the largest community and most established game, Pokemon and MTG remain ahead. For players who want to be part of building a competitive scene from the ground floor, Riftbound is an interesting option.
+
+Check current Riftbound card prices at the [C3 Card Vault](/cards/riftbound) and use the [C3 Card Compare tool](/compare) for Australian pricing comparisons.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

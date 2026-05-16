@@ -1,7 +1,7 @@
 ---
 game: lorcana
-title: "Where to Buy Lorcana Cards in Australia: Online vs Local Game Stores"
-description: "Where should you buy Disney Lorcana cards in Australia? This guide covers every buying option — Amazon AU, local game stores, eBay, and Facebook — with honest pros and cons for each."
+title: "Where to Buy Lorcana Cards in Australia"
+description: "Where should you buy Disney Lorcana cards in Australia? This guide covers every buying option — Amazon AU, local game stores, eBay."
 date: 2026-04-07
 category: "buying-guides"
 tags:
@@ -18,16 +18,16 @@ featured: false
 layout: post
 ---
 
-Lorcana is available through more channels in Australia than many players realise. Amazon AU, local game stores, eBay, Facebook groups, and major retailers all sell Lorcana product — and the right channel depends on whether you're buying sealed product, singles, or hunting something specific that's out of stock elsewhere.
+Lorcana is available through more channels in Australia than many players realise. Amazon AU, local game stores, eBay, Facebook groups, and major retailers all sell Lorcana product. and the right channel depends on whether you're buying sealed product, singles, or hunting something specific that's out of stock elsewhere.
 
 This guide covers every option with honest pros and cons so you can find the best source for what you actually need.
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>For sealed product (booster displays, Illumineer's Troves, Starter Decks), Amazon AU and local game stores are the primary options with broadly competitive pricing. For singles (individual cards), eBay Australia is the most liquid Australian marketplace. For older or out-of-print products, eBay and Facebook groups are often the only options. Buy from the channel that best matches what you need — not one channel for everything.</p>
+<p>For sealed product (booster displays, Illumineer's Troves, Starter Decks), Amazon AU and local game stores are the primary options with broadly competitive pricing. For singles (individual cards), eBay Australia is the most liquid Australian marketplace. For older or out-of-print products, eBay and Facebook groups are often the only options. Buy from the channel that best matches what you need. not one channel for everything.</p>
 </div>
 
-## Amazon AU — Best for Sealed Product
+## Amazon AU. Best for Sealed Product
 
 Amazon AU is one of the most reliable sources for current and recent Lorcana sealed product in Australia. The range covers Booster Displays, Illumineer's Troves, Starter Decks, and Bundles from current and many older sets.
 
@@ -39,7 +39,7 @@ Amazon AU is one of the most reliable sources for current and recent Lorcana sea
 
 [Browse Lorcana sealed product on Amazon AU →](/shop.html#lorcana)
 
-## Local Game Stores — Best for Community and Pre-Releases
+## Local Game Stores. Best for Community and Pre-Releases
 
 Established game stores in Australian cities are the centre of the Lorcana community. They run sealed events, Prerelease nights when new sets launch, and regular organised play.
 
@@ -51,23 +51,23 @@ Established game stores in Australian cities are the centre of the Lorcana commu
 
 **Finding stores:** The Ravensburger Lorcana website has a store locator for official event venues in Australia.
 
-## eBay Australia — Best for Singles and Older Products
+## eBay Australia. Best for Singles and Older Products
 
 eBay Australia is the most liquid marketplace for individual Lorcana cards and for sealed product from older or out-of-print sets.
 
-**Singles:** If you need specific cards for a deck or collection — particular Enchanted rarity cards, competitive staples, or cards from specific sets — eBay AU has the widest selection of individual listings from Australian sellers. Check completed sales to understand current market prices before bidding or buying.
+**Singles:** If you need specific cards for a deck or collection. particular Enchanted rarity cards, competitive staples, or cards from specific sets. eBay AU has the widest selection of individual listings from Australian sellers. Check completed sales to understand current market prices before bidding or buying.
 
 **Older sealed product:** Sets like The First Chapter, Rise of the Floodborn, and Into the Inklands that aren't being actively restocked in retail may only be available on eBay at this point, often at prices above original retail reflecting their scarcity.
 
 **Advantages:** Widest selection of individual cards, access to older products, buyer protection through eBay's Money Back Guarantee, price transparency through sold listings.
 
-**Disadvantages:** Variable seller quality — check feedback before buying high-value items. Condition descriptions vary. Postage costs add to the effective price.
+**Disadvantages:** Variable seller quality. check feedback before buying high-value items. Condition descriptions vary. Postage costs add to the effective price.
 
 **Best for:** Individual cards, completing sets, finding older sealed product, and price discovery for what cards are actually selling for in Australia.
 
 Our eBay store stocks Lorcana singles alongside other TCGs with clear photos and accurate descriptions.
 
-## Facebook Groups and Marketplace — Best for Local Deals and Bulk
+## Facebook Groups and Marketplace. Best for Local Deals and Bulk
 
 **Lorcana Australia Buy/Sell/Trade** and similar Facebook groups are active communities for private sales, trades, and bulk transactions.
 
@@ -77,9 +77,9 @@ Our eBay store stocks Lorcana singles alongside other TCGs with clear photos and
 
 **Best for:** Bulk card lots, local pickups, trading with community members, and moving cards without paying platform fees.
 
-## Major Retailers — Limited Range but Convenient
+## Major Retailers. Limited Range but Convenient
 
-JB Hi-Fi, Target, and Big W have stocked Lorcana product at various points — typically Booster Packs, Starter Decks, and occasionally Illumineer's Troves. The range is narrower than game stores or Amazon AU, and stock is inconsistent.
+JB Hi-Fi, Target, and Big W have stocked Lorcana product at various points: typically Booster Packs, Starter Decks, and occasionally Illumineer's Troves. The range is narrower than game stores or Amazon AU, and stock is inconsistent.
 
 **Best for:** Convenience when you need something immediately and don't want to wait for delivery. Check stock online before making a dedicated trip.
 
@@ -121,16 +121,21 @@ Australian shipping on all listings. Clear photos and accurate descriptions.
 
 </div>
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
 ## Frequently Asked Questions
 
 **Is Amazon AU the cheapest place to buy Lorcana in Australia?**
-Generally competitive but not always cheapest. Local game stores sometimes offer better pricing on pre-releases. eBay can be cheaper for older products. There's no single universally cheapest channel — check multiple sources for high-value purchases.
+Generally competitive but not always cheapest. Local game stores sometimes offer better pricing on pre-releases. eBay can be cheaper for older products. There's no single universally cheapest channel. check multiple sources for high-value purchases.
 
 **Can I buy Lorcana at Kmart or Woolworths in Australia?**
 Lorcana distribution in grocery and general merchandise stores is more limited than Pokemon. Some Kmart locations have stocked Lorcana; availability varies by store and changes over time. Game stores and Amazon AU are more reliable sources.
 
 **Are Lorcana prices the same across Australia?**
-Roughly, but there's variation. Amazon AU prices are consistent nationally. Local game stores set their own prices — metropolitan stores in competitive markets tend to price similarly to Amazon AU, while regional stores with less competition may price higher.
+Roughly, but there's variation. Amazon AU prices are consistent nationally. Local game stores set their own prices. metropolitan stores in competitive markets tend to price similarly to Amazon AU, while regional stores with less competition may price higher.
 
 **Is it safe to buy Lorcana singles from eBay Australia?**
 From sellers with established positive feedback and clear card photos, yes. Check the seller's feedback rating and read recent reviews before buying high-value singles. eBay's Money Back Guarantee covers items not as described.

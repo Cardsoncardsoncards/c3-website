@@ -1,7 +1,7 @@
 ---
 game: tcg
-title: "How to Track Your TCG Collection Value Over Time Using Free Tools in Australia"
-description: "Most TCG players have no idea what their collection is actually worth. This guide shows how to track collection value over time using free tools available to Australian players — including the C3 collection tracker."
+title: "How to Track TCG Collection Value in Australia"
+description: "Most TCG players have no idea what their collection is actually worth. This guide shows how to track collection value over time using free tools."
 date: 2026-05-05
 category: "tools-and-trackers"
 tags:
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-Most TCG collectors know approximately how much they've spent on cards. Very few know what their collection is currently worth. The gap between those two numbers is often significant — and knowing it changes how you think about buying, selling, and holding.
+Most TCG collectors know approximately how much they've spent on cards. Very few know what their collection is currently worth. The gap between those two numbers is often significant. and knowing it changes how you think about buying, selling, and holding.
 
 This guide covers how to track TCG collection value over time using free tools available in Australia.
 
@@ -61,7 +61,7 @@ Workflow: open the card vault, search your 10 most valuable cards, update the pr
 
 ## Manabox (MTG-specific app)
 
-Manabox is a free MTG collection tracking app with camera scanning functionality. Point your phone at a card and it identifies it and logs it. Prices are USD (US market) rather than AUD, so you'll need to convert — but for fast cataloguing of a large collection, it's faster than manual entry.
+Manabox is a free MTG collection tracking app with camera scanning functionality. Point your phone at a card and it identifies it and logs it. Prices are USD (US market) rather than AUD, so you'll need to convert: but for fast cataloguing of a large collection, it's faster than manual entry.
 
 After cataloguing with Manabox, cross-reference the top-value cards against eBay AU sold for accurate AUD prices.
 
@@ -103,3 +103,32 @@ The [free C3 collection tracker](/tracker.html) is the fastest starting point fo
 ---
 
 *Download the free tracker at [Cards on Cards on Cards](/tracker.html). Check live MTG prices at [C3 MTG Card Vault](/cards/mtg).*
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

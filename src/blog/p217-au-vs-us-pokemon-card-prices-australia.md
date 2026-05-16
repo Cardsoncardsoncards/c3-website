@@ -1,9 +1,9 @@
 ---
 game: pokemon
-title: "AU vs US Pokemon Card Prices: Why the Gap Exists and How to Use It"
-description: "Pokemon card prices in Australia are consistently higher than US prices. This guide explains the exact reasons for the gap and shows Australian collectors how to use that knowledge to buy smarter."
+title: "AU vs US Pokemon Card Prices Explained"
+description: "Pokemon card prices in Australia are consistently higher than US prices. This guide explains the exact reasons for the gap and shows Australian."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - pokemon
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-Australian Pokemon card collectors face a consistent reality: the same card costs more in Australia than in the United States. Understanding why this happens — and how large the gap actually is — helps you make smarter buying decisions.
+Australian Pokemon card collectors face a consistent reality: the same card costs more in Australia than in the United States. Understanding why this happens. and how large the gap actually is. helps you make smarter buying decisions.
 
 ## The Actual Size of the Gap
 
@@ -71,3 +71,18 @@ SIR and AR cards (bought by collectors for their art) tend to maintain a larger 
 If you're buying for competitive play: the gap is smallest. If you're buying for collection completion: expect the full gap.
 
 Track your Pokemon collection value in AUD with the [free C3 tracker](/tracker.html).
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

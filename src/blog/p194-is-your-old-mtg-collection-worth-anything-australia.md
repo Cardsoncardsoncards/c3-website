@@ -1,9 +1,9 @@
 ---
 game: mtg
-title: "Is Your Old MTG Collection Worth Anything? How to Find Out in Australia"
-description: "Found an old MTG collection? This guide shows exactly how to check whether your cards have value — which ones to look at first, how to check Australian prices, and what to do if you find something valuable."
+title: "Is Your Old MTG Collection Worth Anything? How to Find Out in"
+description: "Found an old MTG collection? This guide shows exactly how to check whether your cards have value — which ones to look at first."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - mtg
@@ -26,7 +26,7 @@ The honest answer: some collections contain hundreds or thousands of dollars in 
 
 Before checking any prices, do a fast visual scan. MTG cards with potential value share recognisable physical characteristics:
 
-**Older card frames**: cards printed before 2003 have a different frame design — more text-heavy, different colour scheme, a distinct "classic" look. Older cards from sets like Revised, Fourth Edition, Ice Age, Mirage, Urza's Saga, and earlier are worth examining closely.
+**Older card frames**: cards printed before 2003 have a different frame design: more text-heavy, different colour scheme, a distinct "classic" look. Older cards from sets like Revised, Fourth Edition, Ice Age, Mirage, Urza's Saga, and earlier are worth examining closely.
 
 **Black borders**: cards with a black border around the card edge (as opposed to a white border) are either Alpha/Beta (the original print runs) or from the first printing of a set. Black-bordered cards command significant premiums over white-bordered equivalents.
 
@@ -34,7 +34,7 @@ Before checking any prices, do a fast visual scan. MTG cards with potential valu
 
 **Special foil treatment**: foil cards have a reflective sheen. Foils from older sets (pre-2000) are rare and potentially very valuable.
 
-**Unusual art**: if a card has art you don't recognise from other copies you've seen, it may be a special printing — a prerelease promo, a judge promo, a special edition reprint.
+**Unusual art**: if a card has art you don't recognise from other copies you've seen, it may be a special printing: a prerelease promo, a judge promo, a special edition reprint.
 
 ## The Twenty Cards to Check First
 
@@ -89,3 +89,18 @@ The [free C3 collection tracker](/tracker.html) lets you log every card you iden
 ---
 
 *Check any MTG card price instantly at the [C3 MTG Card Vault](/cards/mtg).*
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

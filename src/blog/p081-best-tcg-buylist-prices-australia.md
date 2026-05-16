@@ -1,9 +1,9 @@
 ---
 game: tcg
-title: "Best TCG Buylist Prices in Australia — Where to Get the Most for Your Cards"
-description: "Not all TCG buylists pay the same. This guide explains how buylist prices work in Australia, which factors affect your offer, and how to find the best price for your cards."
+title: "Best TCG Buylist Prices in Australia"
+description: "Not all TCG buylists pay the same. This guide explains how buylist prices work in Australia, which factors affect your offer."
 date: 2026-04-16
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - mtg
@@ -20,7 +20,7 @@ featured: false
 layout: post
 ---
 
-Not every Australian game store pays the same price for the same card. Buylist prices vary significantly between stores depending on their current stock levels, customer demand, and how aggressively they're trying to fill gaps in their inventory. Getting the best price means knowing how the system works — and taking five minutes to compare before you commit.
+Not every Australian game store pays the same price for the same card. Buylist prices vary significantly between stores depending on their current stock levels, customer demand, and how aggressively they're trying to fill gaps in their inventory. Getting the best price means knowing how the system works. and taking five minutes to compare before you commit.
 
 This guide explains how TCG buylists work in Australia, what drives the price differences between stores, and the practical steps to make sure you're getting a fair return on your cards.
 
@@ -31,14 +31,14 @@ This guide explains how TCG buylists work in Australia, what drives the price di
 
 ## How TCG Buylists Work in Australia
 
-A buylist is a publicly listed set of prices a game store is willing to pay for specific cards. Most stores update their buylists regularly — some weekly, some in real time as stock levels change. When a store needs a card badly, their buylist price goes up. When they already have 10 copies, it drops or disappears entirely.
+A buylist is a publicly listed set of prices a game store is willing to pay for specific cards. Most stores update their buylists regularly: some weekly, some in real time as stock levels change. When a store needs a card badly, their buylist price goes up. When they already have 10 copies, it drops or disappears entirely.
 
 The mechanics are straightforward:
 
 1. You find a card you want to sell and look it up on a store's buylist
 2. If the store wants it, they list a cash price and usually a store credit price
 3. You send the card or bring it in, they assess condition, and pay the agreed price if condition checks out
-4. Store credit is almost always higher than cash — typically 10–20% more
+4. Store credit is almost always higher than cash. typically 10–20% more
 
 The catch is that most sellers accept the first offer they see without checking whether another store would pay significantly more for the same card. On a AU$50 card, that difference can be AU$10–$20. On a collection of 50 cards, the gap between the best and worst buylist can be hundreds of dollars.
 
@@ -58,7 +58,7 @@ Several factors drive the price variation you'll see between Australian stores:
 
 ## Cash vs Store Credit: Which Should You Take?
 
-Most Australian buylists offer two payment options: cash and store credit. Store credit is almost always higher — typically 10–20% more than the cash offer.
+Most Australian buylists offer two payment options: cash and store credit. Store credit is almost always higher. typically 10–20% more than the cash offer.
 
 Store credit is the right choice if you actively buy from that store and would spend the credit anyway. Taking a higher credit amount on a trade-in effectively lets you buy future products at a discount.
 
@@ -68,7 +68,7 @@ One important note: store credit almost never expires at most Australian game st
 
 ## How to Find the Best Buylist Price in Australia
 
-The fastest method is a buylist aggregator — a tool that lets you enter your cards once and see offers from multiple stores simultaneously. This removes the need to manually visit each store's website and check card by card.
+The fastest method is a buylist aggregator: a tool that lets you enter your cards once and see offers from multiple stores simultaneously. This removes the need to manually visit each store's website and check card by card.
 
 Without an aggregator, the manual process is:
 
@@ -77,7 +77,7 @@ Without an aggregator, the manual process is:
 3. Note the best price for each card, including whether it's cash or credit
 4. Contact the highest-paying store and confirm the process for sending cards or bringing them in
 
-Allow for condition assessment — stores will downgrade condition if the card doesn't match what they expect, which affects the final payout. When in doubt, grade conservatively and be transparent about wear.
+Allow for condition assessment. stores will downgrade condition if the card doesn't match what they expect, which affects the final payout. When in doubt, grade conservatively and be transparent about wear.
 
 **Australian stores with active online buylists** include Ace Comics, Good Games, Mindmaster, and Card Merchant, among others. Stock and pricing change frequently so always check current buylist pages directly rather than relying on cached or outdated information.
 
@@ -85,7 +85,7 @@ C3 is building a dedicated buylist comparison tool for Australian sellers. [Join
 
 ## Condition Grading: Why It Matters More Than Most Sellers Expect
 
-Buylist prices are quoted for Near Mint condition. If your card is Lightly Played, Moderately Played, or Heavily Played, the store will apply a condition reduction — typically:
+Buylist prices are quoted for Near Mint condition. If your card is Lightly Played, Moderately Played, or Heavily Played, the store will apply a condition reduction. typically:
 
 - Lightly Played: 80–90% of NM buylist price
 - Moderately Played: 50–70% of NM buylist price
@@ -126,10 +126,18 @@ There's no universal answer. The right choice depends on card value, your time, 
 
 </div>
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
+
 ## Frequently Asked Questions
 
 **What percentage of card value do Australian game stores pay on buylists?**
-Cash buylist offers typically run 30–50% of current market value. Store credit offers are usually 10–20% higher than cash. The exact percentage varies by store, card demand, and current stock levels. High-demand staples in short supply can push buylist prices above 50% of market.
+Cash buylist offers typically run 30–50% of current market value. Store credit offers are usually 10–20% higher than cash. The exact percentage varies by store, card demand, and current stock levels. High-demand staples supply can push buylist prices above 50% of market.
 
 **Do all Australian game stores have a buylist?**
 No. Smaller stores and stores that don't have an active singles section often don't maintain a buylist at all. Stores with active online single sales almost always have a buylist because they need a reliable supply pipeline for their inventory.
@@ -138,7 +146,7 @@ No. Smaller stores and stores that don't have an active singles section often do
 It varies by store. Some stores update prices weekly, others update in real time as stock changes. For high-value cards, it's worth checking the buylist on the day you intend to sell rather than relying on prices you checked a week earlier.
 
 **Can I negotiate buylist prices at an Australian game store?**
-Occasionally, but it's not standard practice. Buylist prices are generally fixed. You're more likely to get movement if you're selling a large collection in one transaction — stores may pay a slight premium for volume because it saves them sourcing time.
+Occasionally, but it's not standard practice. Buylist prices are generally fixed. You're more likely to get movement if you're selling a large collection in one transaction. stores may pay a slight premium for volume because it saves them sourcing time.
 
 **Is it better to sell to a buylist or on Facebook Marketplace?**
-Facebook Marketplace returns more cash than a buylist for most cards because there's no store margin involved. The trade-off is effort and time — you need to photograph, list, negotiate, meet or post, and handle the transaction yourself. Buylists are faster and simpler at the cost of a lower payout.
+Facebook Marketplace returns more cash than a buylist for most cards because there's no store margin involved. The trade-off is effort and time. you need to photograph, list, negotiate, meet or post, and handle the transaction yourself. Buylists are faster and simpler at the cost of a lower payout.

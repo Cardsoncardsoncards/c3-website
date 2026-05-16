@@ -1,7 +1,7 @@
 ---
 game: tcg
 title: "What Is a TCG Buylist and How Does It Work in Australia?"
-description: "A TCG buylist is a store's public list of cards it wants to buy, with set prices for cash or store credit. Here is exactly how the process works in Australia and what to expect."
+description: "A TCG buylist is a store's public list of cards it wants to buy, with set prices for cash or store credit. Here is exactly how the process works in."
 date: 2026-04-18
 category: "selling-guides"
 tags:
@@ -17,7 +17,12 @@ cta_type: "buylist"
 cta_link: "/contact.html"
 featured: false
 layout: post
+
+redirect_to: "/blog/what-is-a-tcg-buylist-australia/"
 ---
+> **Note:** This content has been consolidated. For the most complete and up-to-date version, see the [updated guide](/blog/what-is-a-tcg-buylist-australia/).
+
+
 
 If you have played trading card games for any length of time, you have almost certainly accumulated cards you no longer need. A TCG buylist is the most straightforward way to turn those cards into cash or store credit without the effort of listing them individually on eBay.
 
@@ -25,7 +30,7 @@ This guide explains exactly what a buylist is, how the process works in Australi
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>A TCG buylist is a public list published by a card store showing which cards it wants to buy and what it will pay for each one. In Australia, major stores including Good Games, TCG Singles, Gameology, and Ronin Games all run active buylists. You submit a list of cards you want to sell, the store checks their current buylist prices, and pays you either in cash or store credit — with store credit almost always paying 20 to 30 percent more than the cash rate.</p>
+<p>A TCG buylist is a public list published by a card store showing which cards it wants to buy and what it will pay for each one. In Australia, major stores including Good Games, TCG Singles, Gameology, and Ronin Games all run active buylists. You submit a list of cards you want to sell, the store checks their current buylist prices, and pays you either in cash or store credit. with store credit almost always paying 20 to 30 percent more than the cash rate.</p>
 </div>
 
 ## What Is a TCG Buylist?
@@ -34,7 +39,7 @@ A TCG buylist (also called a buy list or trade-in list) is a document or online 
 
 Buylists exist because card stores need a constant supply of singles to sell to other customers. Rather than waiting for walk-ins, stores publish their buying prices publicly so sellers can check whether their cards are wanted before making a trip or posting cards in.
 
-The buylist price is always lower than the store's selling price for the same card. The difference is the store's margin. A card selling for AU$20 on a store's website might have a buylist price of AU$10 cash or AU$13 store credit. That spread is normal and expected — it is how stores operate.
+The buylist price is always lower than the store's selling price for the same card. The difference is the store's margin. A card selling for AU$20 on a store's website might have a buylist price of AU$10 cash or AU$13 store credit. That spread is normal and expected. it is how stores operate.
 
 ## How the Buylist Process Works in Australia
 
@@ -44,7 +49,7 @@ The process is broadly the same across Australian stores, with minor variations.
 
 **Step 2: Build your submission list.** You search for each card you want to sell, select the condition (Near Mint, Lightly Played, etc.), and add it to your list. The tool calculates your total offer in real time.
 
-**Step 3: Submit and confirm.** Once you submit, the store reviews your list and sends a confirmation. This is also when they lock in the price — some stores note that prices can change between submission and processing.
+**Step 3: Submit and confirm.** Once you submit, the store reviews your list and sends a confirmation. This is also when they lock in the price. some stores note that prices can change between submission and processing.
 
 **Step 4: Send your cards or drop them in.** Most Australian stores accept mail-in submissions for any location, and in-store drop-off for local customers. Cards should be sent unsleeved, unsorted to match your submission list, and with your buylist reference number included.
 
@@ -64,13 +69,13 @@ Store credit makes sense if you are an active buyer at that store. Cash makes se
 
 Every Australian buylist specifies a minimum card condition. Near Mint (NM) is the standard accepted condition at most stores. Lightly Played (LP) is accepted at some stores at a reduced rate. Moderately Played (MP) and below is typically rejected.
 
-Before submitting, read the store's condition guide carefully. Most stores publish photo examples of what they consider Near Mint versus Lightly Played. Submitting cards in worse condition than stated will result in either a price reduction or rejection of those cards — and some stores charge a processing fee if a significant portion of your submission does not match your stated conditions.
+Before submitting, read the store's condition guide carefully. Most stores publish photo examples of what they consider Near Mint versus Lightly Played. Submitting cards in worse condition than stated will result in either a price reduction or rejection of those cards. and some stores charge a processing fee if a significant portion of your submission does not match your stated conditions.
 
 ## What Cards Are on a Buylist?
 
 Not every card in existence appears on every buylist. Stores list cards they actually need for their inventory based on customer demand. High-demand singles from current and recent sets are almost always listed. Bulk commons and low-value cards are typically bought in bulk by weight rather than individually.
 
-A card missing from a buylist does not necessarily mean it is worthless — it may simply mean that particular store has enough copies in stock already. This is one of the core reasons why comparing buylists across multiple stores matters.
+A card missing from a buylist does not necessarily mean it is worthless. it may simply mean that particular store has enough copies in stock already. This is one of the core reasons why comparing buylists across multiple stores matters.
 
 ## The Problem With Checking One Buylist
 
@@ -78,7 +83,10 @@ Australian TCG sellers typically check one store's buylist and accept whatever o
 
 Buylist prices vary significantly between stores for the same card. One store might be paying AU$8 cash for a specific card while another is paying AU$14 for the same card in the same condition, simply because the second store has higher demand for it at that point in time.
 
-Without checking multiple stores, you have no way of knowing whether the offer you have received is competitive. This is the problem that a buylist aggregator solves — pulling prices from multiple Australian stores into one view so sellers can see the best available offer for each card without visiting every store individually.
+Without checking multiple stores, you have no way of knowing whether the offer you have received is competitive. This is the problem that a buylist aggregator solves. pulling prices from multiple Australian stores into one view so sellers can see the best available offer for each card without visiting every store individually.
+
+
+Think you know this game? Test it at the [C3 TCG Quiz](/quiz). Questions cover cards, rules, set knowledge, and format history.
 
 <div class="related-guides">
 
@@ -92,7 +100,7 @@ Without checking multiple stores, you have no way of knowing whether the offer y
 <div class="cta-block">
 
 **Free: Download the C3 TCG Collection Tracker**
-Catalogue your cards before you submit a buylist. Knowing exactly what you have makes the process faster and ensures you do not miss valuable cards in your collection.
+Catalogue your cards before you submit a buylist. Knowing exactly what you have makes the process faster and keeps you do not miss valuable cards in your collection.
 
 [Get the Free Tracker →](/tracker.html)
 
@@ -100,11 +108,16 @@ Catalogue your cards before you submit a buylist. Knowing exactly what you have 
 
 <div class="cta-block">
 
-**C3 Buylist Aggregator — Coming Soon**
+**C3 Buylist Aggregator. Coming Soon**
 We are building a tool that compares buylist prices across Australian stores in one place. Join the early access list to be the first to use it when it launches.
 
 [Join the Buylist Early Access List →](/contact.html)
 
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions
@@ -122,7 +135,7 @@ Most Australian stores process buylist submissions within 2 to 5 business days o
 eBay typically returns more money per card but requires listing, photography, packaging, postage, and fees. A buylist is faster and simpler but pays less. For large collections or bulk cards, buylists save significant time. For high-value individual cards, eBay usually pays more.
 
 **What condition do my cards need to be for a buylist?**
-Near Mint is the standard condition accepted at full buylist price. Lightly Played is accepted at most stores at a reduced rate. Check the specific store's condition guide before submitting — the definitions vary slightly between stores.
+Near Mint is the standard condition accepted at full buylist price. Lightly Played is accepted at most stores at a reduced rate. Check the specific store's condition guide before submitting: the definitions vary slightly between stores.
 
 **Can I negotiate buylist prices?**
 Generally no. Buylist prices are set by the store and apply equally to all sellers. Some stores may make exceptions for very large collections or very high-value individual cards, but this is not the norm.

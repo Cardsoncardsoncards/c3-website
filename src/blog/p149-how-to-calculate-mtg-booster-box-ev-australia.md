@@ -1,7 +1,7 @@
 ---
 game: mtg
 title: "How to Calculate MTG Booster Box EV in Australia"
-description: "How do you calculate MTG booster box expected value in Australia? This guide walks through the exact methodology used by the C3 EV Calculator — pull rates, AUD pricing, and the full calculation explained."
+description: "How do you calculate MTG booster box expected value in Australia? This guide walks through the exact methodology used by the C3 EV Calculator — pull."
 date: 2026-04-20
 category: "buying-guides"
 tags:
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-Most MTG EV guides tell you the result. This one tells you how to get there. If you want to understand the methodology behind EV calculations rather than just trusting a tool to do it for you, this guide walks through the full process — the pull rate data, the pricing inputs, the calculation, and the specific adjustments needed for Australian players.
+Most MTG EV guides tell you the result. This one tells you how to get there. If you want to understand the methodology behind EV calculations rather than just trusting a tool to do it for you, this guide walks through the full process: the pull rate data, the pricing inputs, the calculation, and the specific adjustments needed for Australian players.
 
 The C3 EV Calculator does all of this automatically. But understanding how it works helps you interpret the results and know when to trust them.
 
@@ -46,13 +46,13 @@ Pull rates are the probability of getting each rarity in a given pack. Wizards o
 - **Foil Rare or Mythic:** approximately 1 in 14 packs within the foil slot
 - **Special Treatment / Bonus Slot:** varies significantly by set (1 in 5 to 1 in 8 packs)
 
-These rates are sourced from official Wizards documentation and community-verified opening data. Rates vary by set — some sets have different booster structures. The C3 EV Calculator uses set-specific rates rather than generic averages.
+These rates are sourced from official Wizards documentation and community-verified opening data. Rates vary by set. some sets have different booster structures. The C3 EV Calculator uses set-specific rates rather than generic averages.
 
 ## Input 2: Average Card Values by Rarity
 
 This is where Australian players need to pay close attention.
 
-Most EV guides use TCGPlayer prices — a USD-denominated US marketplace. These prices differ from what Australian players actually pay on eBay AU for several reasons:
+Most EV guides use TCGPlayer prices: a USD-denominated US marketplace. These prices differ from what Australian players actually pay on eBay AU for several reasons:
 
 **Currency conversion.** USD to AUD conversion adds approximately 50-55 percent to the USD price at current rates.
 
@@ -62,17 +62,17 @@ Most EV guides use TCGPlayer prices — a USD-denominated US marketplace. These 
 
 **Supply differences.** The Australian MTG market is smaller than the US market. Some cards are harder to find locally, creating supply premiums.
 
-For accurate Australian EV, you need AUD prices from eBay AU sold listings — not TCGPlayer converted to AUD. The difference can be 15 to 30 percent on a per-card basis and meaningfully affects the total box EV calculation.
+For accurate Australian EV, you need AUD prices from eBay AU sold listings. not TCGPlayer converted to AUD. The difference can be 15 to 30 percent on a per-card basis and meaningfully affects the total box EV calculation.
 
 ## How the C3 EV Calculator Handles Pricing
 
 The C3 EV Calculator uses conservative mid-range estimates based on recent eBay AU sold listing data for each rarity tier:
 
-**Mythic Rare average value:** The weighted average across all mythics in the set, accounting for the wide spread between chase mythics (AU$20-80+) and bulk mythics (AU$3-6). This is not the price of the best mythic — it is the average across all mythics weighted by how many of each exist in the set.
+**Mythic Rare average value:** The weighted average across all mythics in the set, accounting for the wide spread between chase mythics (AU$20-80+) and bulk mythics (AU$3-6). This is not the price of the best mythic. it is the average across all mythics weighted by how many of each exist in the set.
 
 **Rare average value:** Similarly weighted. Most sets have 60-80 rares. A handful are worth AU$5-15+, most are AU$0.50-3.00. The weighted average for a typical standard set is AU$1.50-3.00 per rare.
 
-**Foil premium:** Foil versions of rares and mythics command premiums over non-foil. The foil multiplier varies by card — some foils are worth 2-5x the non-foil price, others barely more. The calculator uses conservative foil premium estimates rather than peak foil prices.
+**Foil premium:** Foil versions of rares and mythics command premiums over non-foil. The foil multiplier varies by card: some foils are worth 2-5x the non-foil price, others barely more. The calculator uses conservative foil premium estimates rather than peak foil prices.
 
 **Bonus slot average:** Sets with Mystical Archive, Enchanting Tales, Multiverse Legends, Retro Artifacts, or other bonus sheets have an additional EV component from that slot. The bonus slot average is calculated across the full bonus sheet, weighted by pull rate and market value.
 
@@ -90,7 +90,7 @@ Using approximate values for a typical 2024 standard set:
 **EV per pack = AU$5.81**
 **Total box EV (36 packs) = AU$209.16**
 
-At AU$180 purchase price, EV coverage is 116 percent — Worth Opening verdict.
+At AU$180 purchase price, EV coverage is 116 percent. Worth Opening verdict.
 
 Note: this is an illustrative example with simplified inputs. Real sets have set-specific pull rates, bonus slots, and market prices that produce different results. Always run the calculator for your specific set.
 
@@ -100,7 +100,7 @@ The calculation above gives you the mathematical expectation. In practice, you w
 
 This means:
 
-**Your individual result will differ from EV.** Opening a box that has AU$240 EV gives you a statistical expectation of AU$240 in cards — not a guarantee. You might pull AU$120 or AU$380. The more boxes you open, the closer your average result gets to the EV.
+**Your individual result will differ from EV.** Opening a box that has AU$240 EV gives you a statistical expectation of AU$240 in cards. not a guarantee. You might pull AU$120 or AU$380. The more boxes you open, the closer your average result gets to the EV.
 
 **EV is a long-run average, not a prediction.** Use it to assess whether a product is reasonably priced for the opening experience, not to predict what your specific box will contain.
 
@@ -133,9 +133,14 @@ This takes approximately two to four hours per set and requires updating wheneve
 The C3 EV Calculator does this automatically for 43 MTG sets using current AUD market data. It also allows you to input your specific purchase price rather than using a default retail price, giving you a personalised verdict.
 
 <div style="margin:28px 0;padding:20px 24px;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.25);border-left:3px solid #C9A84C;border-radius:8px;">
-<p style="font-size:14px;color:rgba(240,242,255,.85);margin-bottom:12px;font-weight:600;">Calculate EV for Your MTG Set — Australia</p>
+<p style="font-size:14px;color:rgba(240,242,255,.85);margin-bottom:12px;font-weight:600;">Calculate EV for Your MTG Set. Australia</p>
 <p style="font-size:13px;color:rgba(240,242,255,.65);margin-bottom:14px;">43 sets covered. Enter your purchase price for a current AUD verdict.</p>
 <a href="/ev-calculator.html" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#7A621E,#C9A84C);color:#0A0C14;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Run the EV Calculator →</a>
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions
@@ -147,17 +152,17 @@ TCGPlayer is a US marketplace with USD pricing. Australian players buying single
 Pull rates sourced from official Wizards of the Coast documentation are accurate. Community-derived pull rates have more uncertainty. The C3 EV Calculator uses official data where available and notes where estimates are used.
 
 **Can I calculate EV for Pokemon or other TCGs the same way?**
-Yes. The methodology is identical — pull rates multiplied by card values, summed across rarities, multiplied by pack count. The inputs differ by game (Pokemon uses different rarity tiers and pull structures than MTG) but the calculation framework is the same.
+Yes. The methodology is identical. pull rates multiplied by card values, summed across rarities, multiplied by pack count. The inputs differ by game (Pokemon uses different rarity tiers and pull structures than MTG) but the calculation framework is the same.
 
 **Should I calculate EV before every box purchase?**
 For purchases of AU$100 or more, yes. The calculation takes thirty seconds using the C3 EV Calculator and gives you the information to make an informed decision. For smaller purchases (single packs, bundle packs under AU$50) the overhead of running the calculation may not be worth it.
 
 **What EV percentage should I aim for when buying a box?**
-The C3 EV Calculator uses 90 percent coverage as the Worth Opening threshold. This means your expected card value covers 90 percent or more of your purchase price — you are paying a 10 percent or less premium for the opening experience. Below 70 percent coverage (Avoid verdict) means you are paying a 30 percent or more premium, at which point buying singles is meaningfully better value in most cases.
+The C3 EV Calculator uses 90 percent coverage as the Worth Opening threshold. This means your expected card value covers 90 percent or more of your purchase price. you are paying a 10 percent or less premium for the opening experience. Below 70 percent coverage (Avoid verdict) means you are paying a 30 percent or more premium, at which point buying singles is meaningfully better value in most cases.
 
 ## Related Guides
 
-- [MTG EV Calculator Hub — All 43 Sets](/ev-calculator.html)
+- [MTG EV Calculator Hub. All 43 Sets](/ev-calculator.html)
 - [What Is Expected Value in TCG? A Beginner's Guide for Australian Players](/blog/what-is-expected-value-tcg-australia/)
 - [Should I Open My MTG Booster Box or Sell It Sealed?](/blog/should-i-open-mtg-booster-box-or-sell-it-sealed-australia/)
 - [MTG Singles vs Booster Boxes: Which Is Better Value in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)

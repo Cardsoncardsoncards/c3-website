@@ -1,7 +1,7 @@
 ---
 game: dnd
 title: "D&D Storage and Bags in Australia: Organising Your Gear"
-description: "A practical guide to D&D storage bags, backpacks and organiser cases available in Australia. Covers what fits in each type and who actually needs dedicated storage."
+description: "Keeping your dice, minis, and accessories organised makes game nights easier. This guide covers the best D&D storage options available in Australia."
 date: 2026-04-09
 category: "buying-guides"
 tags:
@@ -36,13 +36,13 @@ If you're playing at home in one location and nothing needs to move, storage sol
 
 ## Types of Storage Available
 
-**Dedicated RPG backpacks:** Designed specifically for tabletop RPG gear. Features typically include: padded compartments for books, interior pockets for dice and accessories, external attachment points for rolled battle mats, and sometimes a built-in organiser tray. The ENHANCE Collector's Edition and DnD Bag of Holding-style backpacks in the C3 D&D shop are in this category. AU$60 to AU$120 range.
+**Dedicated RPG backpacks:** built specifically for tabletop RPG gear. Features typically include: padded compartments for books, interior pockets for dice and accessories, external attachment points for rolled battle mats, and sometimes a built-in organiser tray. The ENHANCE Collector's Edition and DnD Bag of Holding-style backpacks in the C3 D&D shop are in this category. AU$60 to AU$120 range.
 
 **Adventurer bags (smaller format):** Smaller than full backpacks, suitable for players who want organised storage for a character's worth of gear rather than a full DM kit. The ENHANCE Adventurer's Travel Bag and similar products cover this. AU$40 to AU$70 range.
 
-**Hard-shell RPG cases:** Rigid travel cases for protecting valuable or fragile components — premium dice sets, miniatures, accessories. The ALIZERO Tabletop RPG Hard-Shell Travel Case and similar products. More protective than soft bags, less flexible. AU$50 to AU$100 range.
+**Hard-shell RPG cases:** Rigid travel cases for protecting valuable or fragile components: premium dice sets, miniatures, accessories. The ALIZERO Tabletop RPG Hard-Shell Travel Case and similar products. More protective than soft bags, less flexible. AU$50 to AU$100 range.
 
-**RPG organiser cases:** Smaller cases designed to hold and organise accessories: dice, minis, tokens, spell cards, and similar components. The ENHANCE and Futhark organiser cases in the C3 D&D shop cover this. Most useful as supplemental storage inside a larger bag rather than as a primary carry solution.
+**RPG organiser cases:** Smaller cases Built to hold and organise accessories: dice, minis, tokens, spell cards, and similar components. The ENHANCE and Futhark organiser cases in the C3 D&D shop cover this. Most useful as supplemental storage inside a larger bag rather than as a primary carry solution.
 
 **Dragon Shield Roleplaying Game Master Companion:** Arcane Tinmen's organiser specifically designed for tabletop RPG accessories. Holds dice, condition tokens, note pads, and similar small components in organised compartments. Compact enough to sit on the table during play.
 
@@ -86,7 +86,7 @@ All products confirmed available with Australian shipping.
 Most players don't. A dice bag and any standard bag for the Player's Handbook is sufficient. Dedicated RPG storage is most useful for DMs transporting a full collection of books, accessories, and materials.
 
 **What is the "Bag of Holding" in D&D storage products?**
-It's a reference to the magical item from D&D lore — a bag that holds more than its exterior suggests. Several storage products use this name as branding. Functionally they're padded RPG backpacks with organised interior compartments.
+It's a reference to the magical item from D&D lore: a bag that holds more than its exterior suggests. Several storage products use this name as branding. Functionally they're padded RPG backpacks with organised interior compartments.
 
 **How much does dedicated D&D storage cost in Australia?**
 Dice bags start at approximately AU$10 to AU$20. Compact organiser cases range from AU$40 to AU$70. Full RPG backpacks range from AU$60 to AU$120. Hard-shell cases are AU$50 to AU$100.

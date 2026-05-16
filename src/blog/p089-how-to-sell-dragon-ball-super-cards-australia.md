@@ -3,7 +3,7 @@ game: dragon-ball-super
 title: "How to Sell Dragon Ball Super Card Game Cards in Australia"
 description: "Selling Dragon Ball Super Card Game cards in Australia? This guide covers every platform, realistic prices, and what's actually worth listing individually."
 date: 2026-04-16
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - dragon-ball-super
@@ -25,7 +25,7 @@ This guide covers every selling option for Australian DBS TCG sellers, with hone
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>eBay AU is the most reliable platform for DBS TCG singles worth AU$10 or more. Facebook community groups (Dragon Ball Super Card Game Australia) are better for bulk lots and collections. Local game store buylists are the fastest option but pay 30–50% of market value. The DBS secondary market in Australia is active but smaller than MTG or Pokemon — patience and accurate pricing are more important in this market.</p>
+<p>eBay AU is the most reliable platform for DBS TCG singles worth AU$10 or more. Facebook community groups (Dragon Ball Super Card Game Australia) are better for bulk lots and collections. Local game store buylists are the fastest option but pay 30–50% of market value. The DBS secondary market in Australia is active but smaller than MTG or Pokemon. patience and accurate pricing are more important in this market.</p>
 </div>
 
 ## What DBS TCG Cards Are Worth Selling Individually?
@@ -44,11 +44,11 @@ For DBS TCG singles worth AU$10 or more, eBay AU is the best option. The buyer p
 
 **DBS-specific eBay listing tips:**
 
-- Include the set code and card number in your listing title — DBS cards appear across many series and collectors need the exact reference
+- Include the set code and card number in your listing title. DBS cards appear across many series and collectors need the exact reference
 - State rarity clearly: SR, SPR, SCR, SIG
 - Photograph the actual card, not a stock image. DBS foiling and card finish varies by rarity and is difficult to judge without a clear photo
-- For SPR versions, photograph from an angle that shows the special foiling — this is a major part of the value
-- Check eBay AU sold listings to price accurately. DBS singles can have volatile prices — check what's actually sold in the last 30–60 days
+- For SPR versions, photograph from an angle that shows the special foiling. this is a major part of the value
+- Check eBay AU sold listings to price accurately. DBS singles can have volatile prices. check what's actually sold in the last 30–60 days
 
 Given the smaller buyer pool, longer sell times are normal for DBS. If a card doesn't sell in 30 days, reassess your price using recent sold listings rather than relisting at the same price.
 
@@ -58,8 +58,8 @@ The Facebook Dragon Ball Super Card Game Australia group is actively used for bu
 
 Facebook suits DBS selling well because:
 
-- The buyer pool in DBS FB groups is highly targeted — everyone in the group is a DBS player
-- Trade offers are common alongside straight sales — you can often trade DBS cards for other DBS cards you need, which is more efficient than selling and buying separately
+- The buyer pool in DBS FB groups is highly targeted. everyone in the group is a DBS player
+- Trade offers are common alongside straight sales. you can often trade DBS cards for other DBS cards you need, which is more efficient than selling and buying separately
 - No platform fees means the full sale amount goes to you
 
 Pricing in Facebook groups tends to be 10–20% below eBay market price, which is standard for direct community sales. For sellers who are also active buyers, trading in-group for cards you want is often the most value-efficient use of surplus cards.
@@ -68,7 +68,7 @@ Pricing in Facebook groups tends to be 10–20% below eBay market price, which i
 
 Not every Australian game store maintains a DBS TCG buylist. Stores need an active DBS community in their local area to justify carrying and buying DBS singles. Before making a trip, call or check online to confirm the store actively buys DBS cards.
 
-Stores that do buy DBS typically offer 30–50% of market value in cash, consistent with other TCGs. DBS buylist prices tend to be less competitive than Pokemon or MTG buylists at equivalent stores because turnover is lower — the store is taking on more risk buying a card that will take longer to resell.
+Stores that do buy DBS typically offer 30–50% of market value in cash, consistent with other TCGs. DBS buylist prices tend to be less competitive than Pokemon or MTG buylists at equivalent stores because turnover is lower: the store is taking on more risk buying a card that will take longer to resell.
 
 For DBS sellers, buylists are most useful when:
 
@@ -88,7 +88,7 @@ Accurate pricing is the most important factor in selling DBS cards efficiently i
 - **Facebook group transaction history:** Posts in the DBS Australia group often show what cards have actually traded hands at, providing additional price data points
 - **TCGPlayer (US prices):** Useful as a directional reference. Apply an AUD/USD conversion and factor in that AU prices typically run 10–20% above USD equivalent due to smaller market size and import costs
 
-Don't price based on current eBay asking prices — these are often aspirational. Sold prices are the real market.
+Don't price based on current eBay asking prices. these are often aspirational. Sold prices are the real market.
 
 ## DBS TCG Selling: Patience and Community Are the Key Factors
 
@@ -106,12 +106,20 @@ The community aspect is also more important in DBS than in larger TCG markets. A
 
 </div>
 
+
+Track what you own with the [free C3 collection tracker](/tracker.html). Log cards, quantities, and conditions across all TCGs.
+
 <div class="cta-block">
 
-**Browse Dragon Ball Super Card Game singles at the C3 eBay store — 23,000+ TCG listings.**
+**Browse Dragon Ball Super Card Game singles at the C3 eBay store , 23,000+ TCG listings.**
 
 [Visit the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1)
 
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions

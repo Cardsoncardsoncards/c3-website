@@ -1,7 +1,7 @@
 ---
 game: riftbound
-title: "Riftbound Unleashed Set Review: Best Cards and What to Buy in Australia"
-description: "Riftbound Unleashed launched May 8 with 220+ cards, the new Ultimate rarity, and four new Champions. Here's what's worth buying and what to hunt in Australia."
+title: "Riftbound Unleashed Set Review"
+description: "Riftbound Unleashed launched May 8 with 220+ cards, the new Ultimate rarity, and four new Champions. Here's what's worth buying and what to hunt in."
 date: 2026-05-07
 category: buying-guides
 emoji: "🃏"
@@ -55,3 +55,32 @@ Our recommendation with our four boxes: open two after RQ Sydney when the single
 ---
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games.
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

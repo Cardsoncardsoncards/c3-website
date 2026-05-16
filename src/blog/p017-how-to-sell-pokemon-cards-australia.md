@@ -1,9 +1,9 @@
 ---
 game: pokemon
-title: "How to Sell Pokemon Cards in Australia: Platforms, Prices and Tips"
-description: "Want to sell your Pokemon cards in Australia? This guide covers every platform, real fee breakdowns, how to price cards correctly, and how to get the most money from your collection."
+title: "How to Sell Pokemon Cards in Australia"
+description: "Want to sell your Pokemon cards in Australia? This guide covers every platform, real fee breakdowns, how to price cards correctly."
 date: 2026-04-07
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - pokemon
@@ -19,13 +19,13 @@ featured: false
 layout: post
 ---
 
-Selling Pokemon cards in Australia is one of the most accessible ways to turn a hobby collection into real money — the buyer pool is large, the mainstream recognition of Pokemon means non-hobbyist buyers exist, and the product range from sub-dollar bulk commons to thousand-dollar holographic rares means there's a selling approach for every collection size.
+Selling Pokemon cards in Australia is one of the most accessible ways to turn a hobby collection into real money: the buyer pool is large, the mainstream recognition of Pokemon means non-hobbyist buyers exist, and the product range from sub-dollar bulk commons to thousand-dollar holographic rares means there's a selling approach for every collection size.
 
 But the platform you choose, how you price, and what you actually try to sell individually versus in bulk all determine whether the exercise is worth your time. This guide covers the full picture honestly.
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>eBay Australia is the best platform for valuable Pokemon singles (AU$5+) and complete collections. Facebook Marketplace and Pokemon-specific Facebook groups work well for bulk lots and local sales. Local card stores offer convenience but pay the least — typically 30–50% of market value in cash. Know your card values before listing anywhere, and factor in eBay's ~13–15% fees when setting your prices.</p>
+<p>eBay Australia is the best platform for valuable Pokemon singles (AU$5+) and complete collections. Facebook Marketplace and Pokemon-specific Facebook groups work well for bulk lots and local sales. Local card stores offer convenience but pay the least. typically 30–50% of market value in cash. Know your card values before listing anywhere, and factor in eBay's ~13–15% fees when setting your prices.</p>
 </div>
 
 ## Check Your Card Values Before You Do Anything Else
@@ -34,21 +34,21 @@ Pokemon card values vary enormously and change constantly. A card that was worth
 
 **How to check values accurately:**
 
-**eBay Australia sold listings** are the most accurate source for what Australian buyers are actually paying. Search the card name plus set name on eBay AU, then filter results to "Sold" listings. This shows completed transactions, not asking prices. Asking prices are often wishful — sold prices are reality.
+**eBay Australia sold listings** are the most accurate source for what Australian buyers are actually paying. Search the card name plus set name on eBay AU, then filter results to "Sold" listings. This shows completed transactions, not asking prices. Asking prices are often wishful. sold prices are reality.
 
 **PriceCharting (pricecharting.com)** tracks Pokemon card prices in USD with historical data. Convert to AUD using the current exchange rate for a cross-reference.
 
 **Facebook groups** (Pokemon Australia Buy/Sell/Trade, and similar) show current asking prices from active Australian sellers. This is useful for understanding local market sentiment.
 
-Check condition carefully when comparing prices. A Near Mint (NM) card commands full market price. A Heavily Played (HP) copy might be worth 40–60% of that. Be honest about your cards' condition — misrepresenting condition damages your selling reputation and results in disputes.
+Check condition carefully when comparing prices. A Near Mint (NM) card commands full market price. A Heavily Played (HP) copy might be worth 40–60% of that. Be honest about your cards' condition. misrepresenting condition damages your selling reputation and results in disputes.
 
 ## Platform Breakdown
 
-### eBay Australia — Best for Valuable Singles and Collections
+### eBay Australia. Best for Valuable Singles and Collections
 
 eBay is the largest secondhand marketplace in Australia and has the most liquid buyer base for Pokemon singles. If you have cards worth AU$5 or more individually, eBay listings will almost always return the most money.
 
-**The fees:** eBay Australia charges approximately 13.5% of the total transaction value including postage. This is the critical number to build into your pricing. On a AU$30 card with AU$4 postage, eBay takes roughly AU$4.59. Price accordingly — if you want AU$25 in hand, list at approximately AU$29.
+**The fees:** eBay Australia charges approximately 13.5% of the total transaction value including postage. This is the critical number to build into your pricing. On a AU$30 card with AU$4 postage, eBay takes roughly AU$4.59. Price accordingly: if you want AU$25 in hand, list at approximately AU$29.
 
 **What sells well on eBay AU:** Full-art and alt-art rares, ex cards and high-rarity variants from current sets, vintage holographic cards from Base Set and early sets, graded cards (PSA/BGS/CGC slabs), and complete collection lots.
 
@@ -62,23 +62,23 @@ eBay is the largest secondhand marketplace in Australia and has the most liquid 
 
 Facebook works best for bulk lots, local meetups without postage, and mid-range cards where the eBay fee isn't worth absorbing.
 
-**Pokemon Australia Buy/Sell/Trade** is the largest and most active Pokemon trading Facebook group in Australia. Read the posting rules before listing — most groups have specific formats required for sale posts and prohibit certain listing styles.
+**Pokemon Australia Buy/Sell/Trade** is the largest and most active Pokemon trading Facebook group in Australia. Read the posting rules before listing. most groups have specific formats required for sale posts and prohibit certain listing styles.
 
 **Zero platform fees** is the main advantage. The disadvantage is a smaller active buyer pool than eBay for specific cards, and more frequent negotiation attempts. Price with room to negotiate if you want to avoid accepting offers below your target.
 
-**Local pickup** eliminates postage costs and disputes about card condition — the buyer inspects before paying. This is the strongest advantage of Facebook for in-person transactions in your city.
+**Local pickup** eliminates postage costs and disputes about card condition: the buyer inspects before paying. This is the strongest advantage of Facebook for in-person transactions in your city.
 
-### Local Card Stores — Fast but Low Returns
+### Local Card Stores. Fast but Low Returns
 
 Every established game store and card store in Australia that sells Pokemon will typically buy collections from the public. Walk in, they assess, they make an offer.
 
-The reality of trade-in offers: most stores pay 30–50% of market value in cash, or slightly more in store credit. This isn't a rip-off — they need operating margin and carry the risk of holding inventory. But it means you'll receive significantly less than selling directly.
+The reality of trade-in offers: most stores pay 30–50% of market value in cash, or slightly more in store credit. This isn't a rip-off. they need operating margin and carry the risk of holding inventory. But it means you'll receive significantly less than selling directly.
 
 **When local stores make sense:** You have a large unsorted collection and don't want to spend weeks managing individual listings. You need cash quickly. You have bulk low-value cards where the time cost of individual listing exceeds the difference in return.
 
 **When they don't make sense:** You have high-value singles or vintage cards. The difference between a store's cash offer and your eBay proceeds on a AU$200 card is too significant to ignore.
 
-### Gumtree — Limited Viability
+### Gumtree. Limited Viability
 
 Gumtree has an active Australian buyer base for many categories but is not the strongest platform for Pokemon cards specifically. The buyer base for collectible cards is smaller than eBay or Facebook. Worth listing on if you're already listing elsewhere, but not a primary platform.
 
@@ -86,7 +86,7 @@ Gumtree has an active Australian buyer base for many categories but is not the s
 
 **Use sold listings, not asking prices.** Filter eBay AU to completed/sold listings for your specific card and set. Price at or slightly below the median of recent sales for faster movement.
 
-**Account for condition.** Near Mint cards command full market price. Lightly Played is typically 80–90%. Moderately Played is 60–75%. Heavily Played is 40–55%. Be accurate — buyers can see scans.
+**Account for condition.** Near Mint cards command full market price. Lightly Played is typically 80–90%. Moderately Played is 60–75%. Heavily Played is 40–55%. Be accurate. buyers can see scans.
 
 **Build in your fees.** If the card is worth AU$20 at market, list it at approximately AU$23 on eBay to net AU$20 after fees. Decide beforehand what you actually want to receive, then work backward.
 
@@ -133,6 +133,9 @@ Always photograph your cards from multiple angles before packing, and keep the t
 
 </div>
 
+
+Track what you own with the [free C3 collection tracker](/tracker.html). Log cards, quantities, and conditions across all TCGs.
+
 <div class="cta-block">
 
 **Browse Pokemon singles from our eBay store.**
@@ -140,6 +143,11 @@ Active listings across all eras with Australian shipping.
 
 [Visit Our eBay Store →](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1)
 
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions
@@ -151,7 +159,7 @@ Approximately 13–15% of the total transaction value including postage. Calcula
 Check eBay Australia sold listings. Cards regularly selling for AU$5 or more individually justify individual listing effort. Cards under AU$2 are usually better sold in bulk lots.
 
 **What are the most valuable Pokemon cards from current sets?**
-High-rarity variants — Special Illustration Rares, Hyper Rares, and Gold card treatments — from current Scarlet and Violet sets tend to command the highest prices. Check eBay AU sold listings for current values as these shift regularly.
+High-rarity variants. Special Illustration Rares, Hyper Rares, and Gold card treatments. from current Scarlet and Violet sets tend to command the highest prices. Check eBay AU sold listings for current values as these shift regularly.
 
 **Do I need to declare income from selling Pokemon cards to the ATO?**
 Selling personal items at a loss or cost recovery generally doesn't create taxable income. Regular buying and selling for profit may be classified as business income. Consult a tax professional if you're selling at scale. This guide is not tax advice.

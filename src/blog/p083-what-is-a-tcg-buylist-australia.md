@@ -1,9 +1,9 @@
 ---
 game: tcg
-title: "What Is a TCG Buylist? A Plain-English Guide for Australian Sellers"
+title: "What Is a TCG Buylist? Guide for Australians"
 description: "New to selling TCG cards in Australia? This guide explains exactly what a buylist is, how it works, and whether it's the right way to sell your cards."
 date: 2026-04-16
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - mtg
@@ -22,7 +22,7 @@ layout: post
 
 If you've got TCG cards you want to sell and someone's mentioned "checking the buylist," you might be wondering what that actually means and whether it's the right option for you. Buylists are one of the most common ways players convert unwanted cards to cash or credit in Australia, but they work quite differently to selling on eBay or Facebook.
 
-This guide explains the whole process plainly — what a buylist is, how stores set their prices, what you can expect to receive, and how to decide whether a buylist sale is your best option.
+This guide explains the whole process plainly. what a buylist is, how stores set their prices, what you can expect to receive, and how to decide whether a buylist sale is your best option.
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
@@ -31,11 +31,11 @@ This guide explains the whole process plainly — what a buylist is, how stores 
 
 ## What Is a Buylist?
 
-A buylist is exactly what the name suggests: a list of cards a store wants to buy. Game stores that sell individual TCG cards — called singles — need a consistent supply of those cards. Rather than only buying collections from players who walk in, most stores publish a public list of cards they're actively seeking, with the price they're willing to pay for each one.
+A buylist is exactly what the name suggests: a list of cards a store wants to buy. Game stores that sell individual TCG cards. called singles. need a consistent supply of those cards. Rather than only buying collections from players who walk in, most stores publish a public list of cards they're actively seeking, with the price they're willing to pay for each one.
 
 You can think of it like a job listing, but for cards. The store is saying: "We need these specific cards. If you have them and they're in acceptable condition, we'll pay you this amount."
 
-Buylists are updated regularly — sometimes daily — as store stock levels change. When a store sells its last copy of a card and has buyers waiting, the buylist price for that card goes up to attract sellers. When they're well-stocked on a card, the price drops or the card disappears from the list entirely.
+Buylists are updated regularly. sometimes daily. as store stock levels change. When a store sells its last copy of a card and has buyers waiting, the buylist price for that card goes up to attract sellers. When they're well-stocked on a card, the price drops or the card disappears from the list entirely.
 
 ## How Do I Use a Buylist?
 
@@ -43,7 +43,7 @@ The process varies slightly between stores but follows the same basic structure:
 
 **1. Check the buylist.** Most stores with a singles section have their buylist published on their website. Search for the cards you want to sell by name and set. You'll see the cash price and often a store credit price listed for each card.
 
-**2. Assess your card condition.** Buylist prices are quoted for Near Mint condition. If your card has any wear, the price will be adjusted down. Be honest with yourself about condition — submitting Moderately Played cards as Near Mint creates disputes and delays.
+**2. Assess your card condition.** Buylist prices are quoted for Near Mint condition. If your card has any wear, the price will be adjusted down. Be honest with yourself about condition. submitting Moderately Played cards as Near Mint creates disputes and delays.
 
 **3. Choose: in-store or postal submission.** Many stores accept postal submissions, meaning you can sell cards to a store in Melbourne or Sydney from anywhere in Australia. You package your cards carefully and send them with a submission form. Some stores are in-store only.
 
@@ -70,13 +70,13 @@ Buylist prices in Australia are typically 30–50% of the card's current market 
 
 This is the main trade-off with buylists: they're fast and convenient, but you're accepting a significant discount in exchange for that convenience. The store needs to make a profit when they resell the card, and the spread between what they pay you and what they sell it for is how they do that.
 
-For comparison, selling the same AU$40 card individually on eBay AU would typically net you AU$34–$35 after fees — roughly double the buylist cash offer. The additional AU$14–$15 is compensation for your time photographing, listing, packing, and posting the card.
+For comparison, selling the same AU$40 card individually on eBay AU would typically net you AU$34–$35 after fees. roughly double the buylist cash offer. The additional AU$14–$15 is compensation for your time photographing, listing, packing, and posting the card.
 
 ## Is a Buylist the Right Option for Your Cards?
 
 A buylist makes sense in these situations:
 
-**You want cash quickly.** eBay sales can take days to weeks to complete. A buylist — especially an in-store visit — can convert cards to cash the same day.
+**You want cash quickly.** eBay sales can take days to weeks to complete. A buylist. especially an in-store visit. can convert cards to cash the same day.
 
 **You have a bulk collection.** Listing 100 cards individually on eBay is a significant time investment. If the total value is under AU$200–$300, the time cost of individual listings may not be worth the premium.
 
@@ -133,6 +133,11 @@ There's no universally correct method. The right choice depends on your card val
 
 </div>
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
 ## Frequently Asked Questions
 
 **What does buylist mean in TCG?**
@@ -142,10 +147,10 @@ A buylist is a published list of cards a game store is willing to purchase from 
 No. Stores only buy cards they expect to resell. Common cards, heavily reprinted bulk rares, and cards with no current demand typically won't appear on any buylist. Only cards with active buyer demand get a buylist entry.
 
 **How do I find game stores with buylists in Australia?**
-Search for the store's website and look for a "Sell Cards," "Buylist," or "Trade-In" section. Most stores with an active singles section will have this. You can also ask in local Facebook TCG groups — other players will know which stores in your area have active buylists.
+Search for the store's website and look for a "Sell Cards," "Buylist," or "Trade-In" section. Most stores with an active singles section will have this. You can also ask in local Facebook TCG groups. other players will know which stores in your area have active buylists.
 
 **Is it safe to send cards by post to a buylist?**
 Yes, provided you use a reputable store with a clear postal submission process. Use bubble mailers, sleeve your cards in penny sleeves, and place them between rigid cardboard to prevent bending. Use tracked postage for anything worth more than AU$20 total. Confirm the store's lost-in-transit policy before sending.
 
 **What is the difference between a buylist and a trade-in?**
-A trade-in typically means exchanging cards for store credit or other cards in a one-on-one swap. A buylist is the store's purchase programme — they're buying cards from you for cash or credit at their listed prices. Some stores use these terms interchangeably, but most larger stores treat them as distinct programmes.
+A trade-in typically means exchanging cards for store credit or other cards in a one-on-one swap. A buylist is the store's purchase programme. they're buying cards from you for cash or credit at their listed prices. Some stores use these terms interchangeably, but most larger stores treat them as distinct programmes.

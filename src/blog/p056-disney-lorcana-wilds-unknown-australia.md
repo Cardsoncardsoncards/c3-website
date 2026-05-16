@@ -1,7 +1,7 @@
 ---
 game: lorcana
-title: "Disney Lorcana Wilds Unknown: Australia Release Guide and What to Expect"
-description: "Disney Lorcana Wilds Unknown releases 15 May 2026 and introduces Pixar characters for the first time. Here is everything Australian collectors and players need to know before it drops."
+title: "Disney Lorcana Wilds Unknown: Australia Release Guide and What"
+description: "Disney Lorcana Wilds Unknown releases 15 May 2026 and introduces Pixar characters for the first time. Here is everything Australian collectors and."
 date: 2026-04-08
 category: "buying-guides"
 tags:
@@ -51,7 +51,7 @@ The main sealed product. 24 booster packs per display, each pack containing 12 r
 Lorcana's equivalent of a bundle. Approximately AU$50 to AU$65 based on previous sets. Includes 8 booster packs plus storage accessories, deck boxes, and damage counters. Strong value entry point for players who want a manageable amount of product without committing to a full booster display.
 
 **Two-Player Starter Set (Elastigirl / Buzz Lightyear)**
-A brand new product format for Lorcana, replacing the single-player starter decks that have been the entry-point product since launch. The Two-Player Starter Set includes two complete 60-card decks (Amethyst/Ruby for Elastigirl and Amber/Emerald for Buzz Lightyear), foil promo cards, playmats, lore trackers, and tokens. MSRP is approximately AU$55 to AU$70. This is an excellent gift product and a genuine improvement over buying two separate starter decks.
+A brand new product format for Lorcana, replacing the single-player starter decks that have been the entry-point product since launch. The Two-Player Starter Set includes two complete 60-card decks (Amethyst/Ruby for Elastigirl and Amber/Emerald for Buzz Lightyear), foil promo cards, playmats, lore trackers, and tokens. MSRP is approximately AU$55 to AU$70. This is a strong gift product and a genuine improvement over buying two separate starter decks.
 
 **Prerelease Pack**
 New for Lorcana and available at local game stores from 8 May. Contains 6 booster packs from the Wilds Unknown set, one of six possible Traveler promo cards, a cardboard deck box, four lore tracker dice, a special set-specific item, and a rules sheet. MSRP approximately AU$55 to AU$65. Only available in English for this release.
@@ -109,7 +109,7 @@ Enchanted rarity versions of the most popular Pixar characters (Woody, Buzz, Ela
 
 ## Looking Further Ahead
 
-Wilds Unknown is the beginning of the Pixar chapter for Lorcana, not the end. Ravensburger has confirmed Pixar's presence continues across all remaining 2026 sets. Monsters, Inc. arrives in Q3 (Attack of the Vine), and Coco appears in Q4. If you are building a collection focused on Pixar characters across Lorcana, now is the time to establish your position.
+Wilds Unknown is the beginning of the Pixar chapter for Lorcana, not the end. Ravensburger has confirmed Pixar's presence continues across all remaining 2026 sets. Monsters, Inc: arrives in Q3 (Attack of the Vine), and Coco appears in Q4. If you are building a collection focused on Pixar characters across Lorcana, now is the time to establish your position.
 
 <div class="cta-block">
 

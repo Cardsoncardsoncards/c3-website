@@ -1,9 +1,9 @@
 ---
 game: mtg
 title: "How to Sell Your MTG Cards in Australia and Get the Best Price"
-description: "Want to sell your Magic: The Gathering cards in Australia? This guide covers every platform, the real fees, what sells and what doesn't, and how to get the most money for your collection."
+description: "Want to sell your Magic: The Gathering cards in Australia? This guide covers every platform, the real fees, what sells and what doesn't, and how to."
 date: 2026-04-07
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - mtg
@@ -21,11 +21,11 @@ layout: post
 
 Most Australian TCG players end up with a pile of cards they don't need. Maybe you opened too many booster boxes chasing specific pulls. Maybe you quit a format and have a full Standard deck sitting idle. Maybe you inherited a collection and have no idea what any of it is worth.
 
-Whatever the situation, selling MTG cards in Australia is genuinely viable — but the platform you choose, the way you price, and what you actually try to sell all affect your outcome significantly. This guide covers the full picture honestly, including what doesn't work and where people lose money.
+Whatever the situation, selling MTG cards in Australia is genuinely viable: but the platform you choose, the way you price, and what you actually try to sell all affect your outcome significantly. This guide covers the full picture honestly, including what doesn't work and where people lose money.
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>eBay Australia is the largest and most liquid marketplace for MTG singles in Australia. Facebook Marketplace works well for bulk lots and local sales without fees. Local game stores offer convenience but typically pay 30–50% of market value. For high-value singles (AU$50+), eBay individual listings almost always return the most money. Know your fees before pricing — eBay takes roughly 13–15% all-in including payment processing.</p>
+<p>eBay Australia is the largest and most liquid marketplace for MTG singles in Australia. Facebook Marketplace works well for bulk lots and local sales without fees. Local game stores offer convenience but typically pay 30–50% of market value. For high-value singles (AU$50+), eBay individual listings almost always return the most money. Know your fees before pricing. eBay takes roughly 13–15% all-in including payment processing.</p>
 </div>
 
 ## Know What You Have Before You Sell Anything
@@ -36,7 +36,7 @@ The single biggest mistake Australian sellers make is pricing cards without chec
 
 MTGGoldfish (mtggoldfish.com) shows card prices in USD and tracks price history. It's the most reliable reference for current market values, though you need to account for the AUD/USD exchange rate when translating to local pricing.
 
-eBay Australia completed listings are the most accurate indicator of what cards actually sell for locally. Search the card name on eBay AU, then filter to "Sold listings" — this shows you real completed sales, not just asking prices. Asking prices are often wishful. Sold prices are reality.
+eBay Australia completed listings are the most accurate indicator of what cards actually sell for locally. Search the card name on eBay AU, then filter to "Sold listings": this shows you real completed sales, not just asking prices. Asking prices are often wishful. Sold prices are reality.
 
 Facebook groups like MTG Australia Buy/Sell/Trade show local asking prices and completed deals. The community here is active and the pricing reflects Australian shipping realities.
 
@@ -44,9 +44,9 @@ Do not rely on memory or what you paid for a card. Check current prices every ti
 
 ## Platform Breakdown: Where to Sell MTG Cards in Australia
 
-### eBay Australia — Best for Singles AU$5 and Above
+### eBay Australia. Best for Singles AU$5 and Above
 
-eBay is the largest secondhand marketplace in Australia and has the most active buyer base for MTG singles. If you have individually valuable cards — rares and mythics worth AU$5 or more each — eBay individual listings will almost always return the most money.
+eBay is the largest secondhand marketplace in Australia and has the most active buyer base for MTG singles. If you have individually valuable cards. rares and mythics worth AU$5 or more each. eBay individual listings will almost always return the most money.
 
 **The fees:** eBay Australia charges a final value fee of approximately 13.5% on the total sale price including postage. This is the most important number to internalise before pricing. If you sell a card for AU$20 with AU$4 postage, eBay takes roughly AU$3.24. Your actual take-home is closer to AU$20.76 before postage costs.
 
@@ -58,27 +58,27 @@ eBay also has listing limits for new sellers. Start with buy-it-now listings at 
 
 **Postage:** Untracked letter postage via Australia Post works for cards under AU$20 sent in a toploader and cardboard sleeve inside a standard envelope. For cards over AU$20, use tracked postage. For cards over AU$100, registered post is worth the extra cost for the insurance and proof of delivery.
 
-### Facebook Marketplace and Facebook Groups — Best for Bulk and Local Sales
+### Facebook Marketplace and Facebook Groups. Best for Bulk and Local Sales
 
-Facebook Marketplace is the best option for bulk card lots — a box of mixed cards, a full Commander deck, or a collection you want to move quickly without the overhead of individual eBay listings.
+Facebook Marketplace is the best option for bulk card lots: a box of mixed cards, a full Commander deck, or a collection you want to move quickly without the overhead of individual eBay listings.
 
 The advantage is zero platform fees. The disadvantage is a smaller buyer pool and more negotiation. Expect buyers on Facebook to offer 60–80% of your asking price as an opening position. Price accordingly.
 
-**MTG Australia Buy/Sell/Trade** is the main Facebook group for Australian MTG transactions. It has an active membership and a culture of reasonable pricing. Read the group rules before posting — most groups prohibit certain listing styles and have specific formats for posts.
+**MTG Australia Buy/Sell/Trade** is the main Facebook group for Australian MTG transactions. It has an active membership and a culture of reasonable pricing. Read the group rules before posting. most groups prohibit certain listing styles and have specific formats for posts.
 
 Local meetups and game store communities on Facebook can also be good for in-person trades, which allow you to avoid postage entirely.
 
-### Local Game Stores — Convenient but Low Returns
+### Local Game Stores. Convenient but Low Returns
 
-Every established local game store in Australia that sells MTG cards will buy cards from the public. The process is simple — you bring cards in, they assess them, they make an offer.
+Every established local game store in Australia that sells MTG cards will buy cards from the public. The process is simple: you bring cards in, they assess them, they make an offer.
 
-The trade-off is significant: most local game stores pay 30–50% of market value in cash, or slightly more in store credit. This is not a criticism of game stores — they need margin to operate, and they carry the risk of cards sitting in their inventory unsold.
+The trade-off is significant: most local game stores pay 30–50% of market value in cash, or slightly more in store credit. This is not a criticism of game stores: they need margin to operate, and they carry the risk of cards sitting in their inventory unsold.
 
 If you value speed and convenience over maximising returns, local game store buyouts are a legitimate option. If you want the most money, they're the worst option.
 
 **When local game stores make sense:** Large collections you don't want to manage individually. Cards you need to move quickly. Cards where the eBay effort isn't worth it for the marginal extra return.
 
-### TCGPlayer and Card Kingdom — Limited AU Viability
+### TCGPlayer and Card Kingdom. Limited AU Viability
 
 TCGPlayer and Card Kingdom are the dominant US card marketplaces. Both are primarily USD-denominated and designed for the US market.
 
@@ -106,13 +106,13 @@ Not all cards are worth the effort of selling. Here's a practical framework:
 
 ## Pricing Strategy
 
-Price based on sold listings, not asking prices. On eBay AU, search your card and filter to completed/sold — price at or slightly below the median of recent sales for faster movement.
+Price based on sold listings, not asking prices. On eBay AU, search your card and filter to completed/sold. price at or slightly below the median of recent sales for faster movement.
 
 Don't undercut your own cards. If you're listing multiple copies of the same card, stagger your listings so you're not competing with yourself.
 
 Factor in fees before setting your price. If you want AU$15 in hand for a card, you need to list it at approximately AU$17.50 to account for eBay fees.
 
-**Condition matters.** Near Mint (NM) and Lightly Played (LP) cards command full market price. Moderately Played (MP) cards typically sell for 70–80% of NM price. Heavily Played (HP) cards may be 40–60%. Be honest about condition in your listings — misrepresenting condition damages your seller feedback and results in returns.
+**Condition matters.** Near Mint (NM) and Lightly Played (LP) cards command full market price. Moderately Played (MP) cards typically sell for 70–80% of NM price. Heavily Played (HP) cards may be 40–60%. Be honest about condition in your listings. misrepresenting condition damages your seller feedback and results in returns.
 
 ## Packing and Posting MTG Cards in Australia
 
@@ -128,7 +128,7 @@ Poor packing is the fastest way to damage your seller reputation. Cards should a
 
 ## The Counter-Argument: Is It Worth Selling at All?
 
-For smaller collections or individual low-value cards, honestly — sometimes no. The time to photograph, list, pack, and post 50 cards worth AU$2 each is probably three to four hours. That's AU$100 for four hours of work before fees, netting roughly AU$85. Reasonable, but not compelling if your time has high opportunity cost.
+For smaller collections or individual low-value cards, honestly. sometimes no. The time to photograph, list, pack, and post 50 cards worth AU$2 each is probably three to four hours. That's AU$100 for four hours of work before fees, netting roughly AU$85. Reasonable, but not compelling if your time has high opportunity cost.
 
 The calculation changes significantly for high-value singles. One AU$200 card listed and sold on eBay takes the same effort as a AU$5 card and returns dramatically more.
 
@@ -143,6 +143,9 @@ Be honest about whether the volume of selling you're contemplating is worth the 
 
 </div>
 
+
+Track what you own with the [free C3 collection tracker](/tracker.html). Log cards, quantities, and conditions across all TCGs.
+
 <div class="cta-block">
 
 **Browse MTG singles from our active eBay store.**
@@ -150,6 +153,11 @@ Be honest about whether the volume of selling you're contemplating is worth the 
 
 [Visit Our eBay Store →](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1)
 
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions

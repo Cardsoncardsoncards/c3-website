@@ -1,9 +1,9 @@
 ---
 game: pokemon
-title: "Pokemon Destined Rivals: Is It Still Worth Buying in Australia in 2026?"
-description: "Pokemon TCG Destined Rivals released May 2025 with Team Rocket returning for the first time in 25 years. This guide covers whether it is still worth buying in Australia, the top chase cards, and current market values."
+title: "Pokemon Destined Rivals: Is It Still Worth Buying in Australia"
+description: "Pokemon TCG Destined Rivals released May 2025 with Team Rocket returning for the first time in 25 years. This guide covers whether it is still worth."
 date: 2026-04-08
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - pokemon
@@ -124,6 +124,11 @@ Team Rocket returns. Booster Box confirmed in stock.
 
 </div>
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
 ## Frequently Asked Questions
 
 **When did Pokemon Destined Rivals release in Australia?**
@@ -143,6 +148,9 @@ At Australian retail pricing, booster boxes are broadly at retail value in secon
 
 **Is Destined Rivals the last Team Rocket Pokemon set?**
 No confirmed information. Ravensburger makes Lorcana decisions, not Pokemon. Team Rocket could return in future Pokemon sets. Destined Rivals is the first Team Rocket-featuring set in 25 years and currently the only one in the Scarlet and Violet era.
+
+
+Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
 
 <div class="related-guides">
 

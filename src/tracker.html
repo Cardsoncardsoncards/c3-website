@@ -281,7 +281,7 @@ footer a:hover{color:var(--white)}
   const CAMPID = '5339146789';
 
   function cardHTML(card, slugPrefix, accentColor) {
-    const img = card.image_uri_small || card.image_url || card.image_uri || null;
+    const img = card.image || card.image_uri_small || card.image_url || card.image_uri || null;
     const priceAud = card.price_aud
       ? parseFloat(card.price_aud)
       : (parseFloat(card.price_usd || card.market_price || 0) * 1.58);

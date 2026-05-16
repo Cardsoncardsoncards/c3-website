@@ -1,7 +1,7 @@
 ---
 game: one-piece
-title: "One Piece TCG OP-10 Royal Blood: Australia Buying Guide and Where to Get It Now"
-description: "One Piece TCG OP-10 Royal Blood is available in Australia now. This guide covers every product, where to buy, current AU pricing, and whether to buy sealed or singles in 2026."
+title: "One Piece TCG OP-10 Royal Blood"
+description: "One Piece TCG OP-10 Royal Blood is available in Australia now. This guide covers every product, where to buy, current AU pricing."
 date: 2026-04-16
 category: "buying-guides"
 tags:
@@ -107,6 +107,11 @@ Three things distinguish Royal Blood from the broader OPTCG catalogue.
 - [One Piece TCG Sleeves and Deck Boxes in Australia](/blog/one-piece-tcg-sleeves-deck-boxes-australia/)
 
 ---
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
 
 ## Frequently Asked Questions
 

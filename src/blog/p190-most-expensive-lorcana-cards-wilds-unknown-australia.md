@@ -1,9 +1,9 @@
 ---
 game: lorcana
-title: "Most Expensive Lorcana Cards in Wilds of the Unknown Australia: Price Guide"
-description: "The highest-value Disney Lorcana cards from the Wilds of the Unknown set with current AUD pricing. Chase Enchanted cards, alternate arts, and the most valuable pulls for Australian collectors."
+title: "Most Expensive Lorcana Cards in Wilds Unknown Australia"
+description: "The highest-value Disney Lorcana cards from the Wilds Unknown set with current AUD pricing. Chase Enchanted cards, alternate arts."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - lorcana
@@ -17,53 +17,101 @@ cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=lorcana+wilds+unknown+cards+a
 featured: false
 layout: post
 ---
+Disney Lorcana Wilds Unknown is the twelfth Lorcana set, released in May 2026. It introduced Pixar characters to Lorcana for the first time, including characters from The Incredibles, Toy Story, Brave, and Atlantis. The set produced some of the most valuable Lorcana cards since the original First Chapter.
 
-Disney Lorcana's Wilds of the Unknown set (released 2025) introduced new characters and continued the Enchanted card treatment — the set's rarest and most collectible cards. This guide covers the most valuable Wilds of the Unknown cards with current AUD pricing for Australian collectors.
+<div class="quick-answer">
+<strong>Quick Answer:</strong>
+<p>The most expensive Wilds Unknown cards are its Enchanted versions, particularly The Incredibles characters. Mrs Incredible and Touch the Sky from Brave reached around AU$300 at launch. Frozone and Jack-Jack Enchanteds are also among the top pulls. Check current AU prices at the <a href="/cards/lorcana">C3 Lorcana Card Vault</a>.</p>
+</div>
 
-Note: Lorcana card prices fluctuate with the secondary market. All values below are approximate based on eBay AU sold data as of May 2026.
+## Understanding Lorcana Wilds Unknown Rarities
 
-## Understanding Lorcana Rarity
+Wilds Unknown uses Lorcana's standard rarity structure but adds the Epic rarity (Raised Foil variants numbered above 204) as the top tier. These are distinct from Enchanted cards.
 
-Lorcana has several rarity levels that determine collectibility and value:
+**Common, Uncommon, Rare:** The bulk of the set. Most under AU$2.
 
-**Common / Uncommon / Rare**: most of the set. Typically under AU$2 each.
+**Super Rare:** Typically AU$2 to AU$10. Some competitively played Super Rares push higher.
 
-**Super Rare**: typically AU$2 to AU$10. Some competitively relevant Super Rares push higher.
+**Legendary:** The highest printed rarity featuring fan-favourite characters. Typically AU$8 to AU$30.
 
-**Legendary**: the highest printed rarity. Featured characters are fan favourites. Typically AU$8 to AU$25.
+**Enchanted:** The chase rarity in standard packs. Alternate art with the Lore Nouveau art style, featuring Art Nouveau aesthetics blended with adventure themes. One Enchanted per Legendary character.
 
-**Enchanted**: the chase rarity. Alternate art with special foil treatment. One Enchanted card exists per Legendary character in each set. These are the most valuable and collectible Lorcana cards in any set.
+**Epic (Raised Foil):** Numbered above 204. These are the first Epics in Lorcana history and appear at approximately one per ten packs.
 
-## Chase Enchanted Cards from Wilds of the Unknown
+## The Most Expensive Wilds Unknown Cards
 
-Wilds of the Unknown includes Enchanted versions of Legendary characters introduced in the set and returning fan favourites.
+### Mrs Incredible, Determined Rescuer (Enchanted, card 239)
 
-**Pixar character Enchanteds**: Wilds of the Unknown introduced the first Pixar-themed characters to Lorcana (see our [Pixar in Lorcana guide](/blog/first-pixar-lorcana-wilds-unknown-collectors/)). Enchanted versions of debut Pixar characters command significant premiums from both Disney and Lorcana collectors.
+One of the top two most valuable cards in the set at launch. The Incredibles' superhero stretching across the card border in the Lore Nouveau art style created significant collector demand. She has a useful ability that grants other characters Resist, making her a strong competitive card alongside her collector value.
 
-**Estimated Enchanted price range**: AU$30 to AU$200+ depending on character popularity. The most beloved Disney characters in Enchanted treatment consistently trade at the upper end of this range or above.
+**Current AUD estimate:** AU$250 to AU$350+. Prices were volatile at launch due to the set being brand new. Check [live pricing at C3](/cards/lorcana).
 
-Check current eBay AU sold listings for exact pricing on specific Enchanted cards: [Lorcana Enchanted Australia](https://www.ebay.com.au/sch/i.html?_nkw=lorcana+enchanted+wilds+unknown&campid=5339146789).
+### Touch the Sky (Enchanted, card 240)
 
-## Competitively Relevant Cards
+Merida from Brave scaling a clifftop in Lore Nouveau style. The Song card type and the Brave thematic connection drove early demand. At launch TCGPlayer listed this at USD$200.
 
-Some Wilds of the Unknown cards see strong competitive demand in Lorcana tournament play, pushing their prices above typical rare treatment values:
+**Current AUD estimate:** AU$250 to AU$350+. Check [live pricing at C3](/cards/lorcana).
 
-**Meta-relevant Legends and Super Rares**: cards that define the current Lorcana meta typically sit AU$5 to AU$20 for the standard version. Foil versions add a 30% to 100% premium.
+### Frozone, Super Cool (Enchanted, card 226)
 
-**Ink staples**: cards that go in most decks of their colour due to raw efficiency. These maintain value regardless of meta shifts.
+Frozone skating on self-created ice while engaging an Omnidroid. Screen Rant revealed this card as an exclusive, which drove pre-release awareness. The character is enormously popular and the artwork captures his cool factor well.
 
-## Is Wilds of the Unknown Worth Opening?
+**Current AUD estimate:** AU$150 to AU$280. Check [live pricing at C3](/cards/lorcana).
 
-Lorcana booster boxes in Australia (24 packs) retail at approximately AU$130 to AU$160. Each box is expected to contain approximately 1 to 2 Legendary cards and a very small chance of an Enchanted (roughly 1 in 4 to 1 in 6 boxes on average for any given Enchanted).
+### Jack-Jack Parr (Enchanted)
 
-For the chase Enchanted cards, the expected value calculation usually favours buying singles rather than opening boxes.
+Jack-Jack's versatile powers from The Incredibles translated into an Enchanted card with adaptable gameplay. The Pixar-style artwork on the Enchanted version showing Jack-Jack in a new Lorcana environment is widely praised.
 
-For players who enjoy the opening experience and collect casually: opening a box for fun remains worthwhile if the entertainment value justifies the cost.
+**Current AUD estimate:** AU$100 to AU$200. Check [live pricing at C3](/cards/lorcana).
 
-## Tracking Your Lorcana Collection
+### Mr Incredible, Bob Parr (Enchanted)
 
-The [free C3 collection tracker](/tracker.html) tracks Lorcana alongside MTG, Pokemon, and other TCGs. Log your Wilds of the Unknown pulls and monitor collection value over time.
+Rounding out The Incredibles family Enchanted cards, Mr Incredible's Enchanted version has a useful combat ability and the Superhero designation that synergises with other Superhero cards.
 
----
+**Current AUD estimate:** AU$80 to AU$160. Check [live pricing at C3](/cards/lorcana).
 
-*See also: [What Is Disney Lorcana?](/blog/what-is-disney-lorcana-australia/) and [Are Lorcana Cards a Good Investment in Australia?](/blog/are-lorcana-cards-investment-australia/)*
+### Merida, Defiant Daughter (Enchanted Legendary)
+
+One of the Brave characters with multiple versions in the set. The Enchanted Legendary version of Merida features the full Lore Nouveau treatment.
+
+**Current AUD estimate:** AU$50 to AU$120. Check [live pricing at C3](/cards/lorcana).
+
+## The Epic Cards (New Rarity)
+
+Wilds Unknown introduced Epics as the first new rarity in Lorcana's history. These Raised Foil versions of existing characters are numbered above 204 and appear approximately once per ten packs. We pulled nine Epics from our four-box opening.
+
+**Top Epic pulls from our boxes:** Edna Mode, Doc, Buzz Lightyear, Kida, Bruno Madrigal, Minnie Mouse, Pocahontas, Incrediboy.
+
+Epic prices are settling as the set finds its market level. Check the [C3 Lorcana Card Vault](/cards/lorcana) for current AUD pricing.
+
+## Why Wilds Unknown Produced High-Value Cards
+
+The Pixar debut was the key driver. The Incredibles in particular has a dedicated collector base who were waiting years for these characters to appear in Lorcana. First appearances of beloved characters in a TCG tend to produce the highest prices in the set's lifetime, because subsequent printings of the same characters rarely match the nostalgia premium of the debut version.
+
+## Buying Wilds Unknown Singles in Australia
+
+Singles from Wilds Unknown including Enchanted cards and Epic variants are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=wilds-unknown-blog&toolid=10001&mkevt=1) with Australian shipping.
+
+<div class="tool-callout">
+<p>Compare Wilds Unknown Enchanted prices at the <a href="/compare">C3 Card Compare tool</a>. See current AUD buy and sell prices side by side.</p>
+</div>
+
+<div class="related-guides">
+
+**Related guides:**
+- [Lorcana Wilds Unknown: Full Australia Set Guide](/blog/disney-lorcana-wilds-unknown-australia/)
+- [I Opened 4 Boxes of Lorcana Wilds Unknown](/blog/p252-lorcana-wilds-unknown-box-opening/)
+- [Are Lorcana Cards Worth Investing In Australia?](/blog/are-lorcana-cards-investment-australia/)
+
+</div>
+
+## Frequently Asked Questions
+
+### What is the most expensive Wilds Unknown card in Australia?
+Mrs Incredible, Determined Rescuer (Enchanted, card 239) and Touch the Sky from Brave (Enchanted, card 240) are the top pulls, both around AU$250-350+. Check current live prices at the [C3 Lorcana Card Vault](/cards/lorcana).
+
+### Are Lorcana Wilds Unknown Enchanted cards worth buying?
+At AU$100-350+ each, Enchanted cards are the premium tier. If you collect Enchanteds of specific characters, buying singles is more reliable than opening packs hoping to pull a specific one. Epic cards at one per ten packs are easier to target via singles.
+
+### How many Epic cards are in Wilds Unknown?
+Wilds Unknown has multiple Epic cards numbered above 204. We pulled nine from four booster boxes (approximately one per ten packs). See our [full box opening breakdown](/blog/p252-lorcana-wilds-unknown-box-opening/).

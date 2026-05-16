@@ -1,7 +1,7 @@
 ---
 game: riftbound
-title: "Riftbound Melbourne 2026: The Second Australian Event and What You Need to Know"
-description: "Riftbound is coming to Melbourne October 10-12, 2026. Here's what Australian players need to know about the event, the exclusive Ahri promo card, and what to expect."
+title: "Riftbound Melbourne 2026: What Australians Need to Know"
+description: "Riftbound is coming to Melbourne October 10-12, 2026. Here's what Australian players need to know about the event, the exclusive Ahri promo card."
 date: 2026-05-07
 category: buying-guides
 emoji: "⚔️"
@@ -18,7 +18,7 @@ Australia is getting a second Riftbound event in 2026. Following RQ Sydney in Ma
 
 **Location:** Melbourne, Australia
 
-**Format:** Convention-style event with competitive Riftbound play. This is not an RQ -- it is an official Riftbound event with demos available and a confirmed exclusive promo card.
+**Format:** Convention-style event with competitive Riftbound play. This is not an RQ, it is an official Riftbound event with demos available and a confirmed exclusive promo card.
 
 **Exclusive promo card:** Ahri, Alluring. This card is available at the Melbourne event and is not obtainable elsewhere through standard product. It is tournament-legal.
 
@@ -26,11 +26,11 @@ This event was confirmed in the official Riftbound upcoming events list alongsid
 
 ## Why Melbourne Is Worth Attending Even If You Are Not Competing
 
-The Ahri promo card alone is the reason. Exclusive event promos in Riftbound follow the same pattern established by the Karma playmat and alternate art Poppy at RQ Sydney -- once the event ends, supply is permanently fixed. Ahri is one of the most popular champions in League of Legends globally. A playable, tournament-legal card with unique art available only at Melbourne is a genuine collector's piece and will have secondary market value after the event.
+The Ahri promo card alone is the reason. Exclusive event promos in Riftbound follow the same pattern established by the Karma playmat and alternate art Poppy at RQ Sydney, once the event ends, supply is permanently fixed. Ahri is one of the most popular champions in League of Legends globally. A playable, tournament-legal card with unique art available only at Melbourne is a genuine collector's piece and will have secondary market value after the event.
 
 Beyond the promo: community events, demo tables, side tournaments, and trading are all confirmed parts of convention-style Riftbound events. For players who did not attend RQ Sydney, Melbourne is the next opportunity to engage with the Australian Riftbound scene in person.
 
-## The Timing Is Perfect for the Radiance Meta
+## The Timing Is great for the Radiance Meta
 
 October 10-12 falls just before Radiance (Set 5) releases on October 23. This means Melbourne plays in the Vendetta meta (Set 4), which releases July 31. By October, Vendetta will have been the format for two months and the meta will be well-understood. Players attending Melbourne will have time to develop strong Vendetta builds and test them at a real event before the Radiance meta reset.
 
@@ -57,3 +57,32 @@ We will publish a full Melbourne preparation guide as more event details are con
 ---
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games. Event details sourced from official Riftbound event announcements current as of May 2026.
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

@@ -1,7 +1,7 @@
 ---
 game: mtg
-title: "MTG Secrets of Strixhaven: Everything You Need to Know Before It Drops in Australia"
-description: "Secrets of Strixhaven releases 24 April 2026. This guide covers every product, the key cards to know, what is available to pre-order on Amazon AU right now, and whether it is worth buying."
+title: "MTG Secrets of Strixhaven: Australia Buying Guide"
+description: "Secrets of Strixhaven releases 24 April 2026. This guide covers every product, the key cards to know, what is available to pre-order on Amazon AU."
 date: 2026-04-08
 category: "buying-guides"
 tags:
@@ -51,8 +51,8 @@ Releases 15 May 2026, approximately three weeks after the main set. Contains 2 o
 **Commander Decks**
 Five Commander precon decks release alongside the main set on 24 April 2026, one for each college. The confirmed decks are:
 
-- Silverquill Influence — Orzhov (white/black), led by Killian, Decisive Mentor. Auras and Goad theme.
-- Witherbloom Pestilence — Golgari (black/green), led by Dina, Essence Brewer. Aristocrats and life drain theme.
+- Silverquill Influence. Orzhov (white/black), led by Killian, Decisive Mentor. Auras and Goad theme.
+- Witherbloom Pestilence. Golgari (black/green), led by Dina, Essence Brewer. Aristocrats and life drain theme.
 
 Additional Commander decks covering Lorehold, Prismari, and Quandrix are confirmed but check the shop page for current Amazon AU availability on each.
 
@@ -94,7 +94,7 @@ Each Mystical Archive card also has a Japanese variant with alternate artwork an
 The chase card of the set. Only 500 serialised copies exist, all in Collector Boosters, featuring a double rainbow foil treatment and throwback full-art frame by Mark Poole, the original artist of Ancestral Recall. The card itself lets you cast Ancestral Recall while in the prepared state. As a mechanically unique serialised card with Power Nine DNA, expect this to be among the most valuable individual Magic cards released in 2026.
 
 **Ral Zarek, Guest Lecturer and Professor Dellian Fel**
-The only two planeswalker cards in the main set. Both receive borderless treatments. With only two planeswalkers in the entire set, they occupy a unique position in terms of collector scarcity.
+The only two planeswalker cards in the main set. Both receive borderless treatments. With only two planeswalkers in the entire set, they occupy a unique position For collector scarcity.
 
 **Lorehold, the Historian and the Elder Dragon Cycle**
 All five Elder Dragons representing the Strixhaven colleges are mythic rares with borderless treatments. As potential Commanders with thematic depth, the borderless versions are expected to be strong sellers.

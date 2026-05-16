@@ -1,7 +1,7 @@
 ---
 game: mtg
-title: "Commander Pod Night: How to Run the Perfect 4-Player Game Night in Australia"
-description: "Running a regular Commander night takes more than shuffling decks. This guide covers everything — seating, power level communication, house rules, and how to make it a night people actually want to come back to."
+title: "How to Run a Commander Pod Night in Australia"
+description: "Running a regular Commander night takes more than shuffling decks. This guide covers everything — seating, power level communication, house rules."
 date: 2026-05-05
 category: "general-tcg"
 tags:
@@ -20,29 +20,29 @@ layout: post
 
 A Commander pod is four players, four decks, one table. The logistics are simple. The social architecture underneath is not.
 
-The difference between a Commander night that becomes a recurring event and one that people enjoyed but never came back to is usually in the setup — how power levels were communicated, how long the game ran, whether everyone got to play their deck or sat waiting to respawn after turn 4.
+The difference between a Commander night that becomes a recurring event and one that people enjoyed but never came back to is usually in the setup: how power levels were communicated, how long the game ran, whether everyone got to play their deck or sat waiting to respawn after turn 4.
 
 This guide covers how to run a Commander night that people want to repeat.
 
 ## Before the Night: Power Level Communication
 
-The most common source of Commander disappointment is a power level mismatch. One player brings a highly optimised combo deck; another brings a fun theme deck they built around a Dragon they like. The first player wins by turn 5. Nobody had a good time.
+The most common source of Commander disappointment is a power level mismatch. One player brings a tightly built combo deck; another brings a fun theme deck they built around a Dragon they like. The first player wins by turn 5. Nobody had a good time.
 
 Solve this before anyone arrives. Use a simple scale:
 
-**Level 1 to 3**: Preconstructed Commander decks, jank theme decks, decks built to be fun rather than efficient.
+**Level 1 to 3**: Preconstructed Commander decks, jank theme decks, decks meant to be fun rather than efficient.
 
-**Level 4 to 6**: Upgraded precons, focused theme decks with some staples, functional but not optimised. Most kitchen table Commander lives here.
+**Level 4 to 6**: Upgraded precons, focused theme decks with some staples, functional but not improved. Most kitchen table Commander lives here.
 
 **Level 7 to 8**: Tuned decks with good mana bases, powerful staples, some synergy-based wins. Competitive kitchen table.
 
-**Level 9 to 10**: Near-cEDH. Optimised for winning as fast and consistently as possible.
+**Level 9 to 10**: Near-cEDH. built around winning as fast and consistently as possible.
 
-When inviting people, specify: "We're playing around level 5 tonight — upgraded precons or focused theme decks, nothing combo-focused." This one sentence prevents most power level conflicts.
+When inviting people, specify: "We're playing around level 5 tonight: upgraded precons or focused theme decks, nothing combo-focused." This one sentence prevents most power level conflicts.
 
 ## The Four-Player Seating
 
-Seat players randomly or by deck power if there's a slight mismatch. Seating affects early game politics — players tend to attack the player to their left more often because it's the natural first combat direction.
+Seat players randomly or by deck power if there's a slight mismatch. Seating affects early game politics. players tend to attack the player to their left more often because it's the natural first combat direction.
 
 If one player has a clearly more powerful deck, seat them between the two strongest remaining players so they face early pressure from multiple directions.
 
@@ -74,7 +74,7 @@ Commander games can run long. Set expectations:
 
 **Casual night**: 90 minutes to 2 hours per game is normal. Accommodate 1 to 2 games per night.
 
-**If a game runs past 2.5 hours**: consider whether the game state is actually progressing. Stalled board states where nobody can win but nobody is dying are common. A group agreement to "speed things up" — everyone draws 3 extra cards at the start of their turn — is a casual fix some groups use.
+**If a game runs past 2.5 hours**: consider whether the game state is actually progressing. Stalled board states where nobody can win but nobody is dying are common. A group agreement to "speed things up". everyone draws 3 extra cards at the start of their turn. is a casual fix some groups use.
 
 **Eliminate players decisively**: don't keep damaged players alive out of politeness. A player with 3 life and no board is not having a better experience by surviving two more turns before dying. Finish the game.
 
@@ -101,3 +101,14 @@ This debrief is where the game becomes something people remember. Don't rush peo
 A regular Commander pod that meets every 2 to 4 weeks becomes genuinely better over time as players learn each other's decks and develop history. Aim for a consistent 4-person group if possible rather than a rotating cast.
 
 Find Commander precons for everyone to start with at the [C3 shop](/shop.html#mtg). Use the [Random Commander Generator](/cards/mtg/random-commander) if your group wants a random deck challenge night.
+
+## Frequently Asked Questions
+
+### What is the best Commander deck for a new player in Australia?
+Any Commander preconstructed deck from a recent set is a good starting point. Pick the theme or colour combination that appeals to you most. Current options from Tarkir: Dragonstorm and Lorwyn Eclipsed are available on Amazon AU.
+
+### Can I use a Commander precon in tournament play?
+Commander preconstructed decks are legal for casual Commander play and official Commander events. The individual cards are legal in Commander, Legacy, and Vintage. The precon as a whole is not competitive at high-level play but works fine for regular Commander nights.
+
+### Where can I find Commander singles in Australia?
+Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.

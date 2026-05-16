@@ -1,9 +1,9 @@
 ---
 game: dnd
 title: "Best D&D Campaigns for Beginners in Australia: Where to Start"
-description: "New to D&D and not sure which campaign to run or play first? This guide covers the best official campaigns for beginner Dungeon Masters and players in Australia, with honest assessments of each."
+description: "New to D&D and not sure which campaign to run or play first? This guide covers the best official campaigns for beginner Dungeon Masters and players."
 date: 2026-04-16
-category: "game-guides"
+category: "how-to-play"
 tags:
   - post
   - dnd
@@ -19,7 +19,7 @@ featured: false
 layout: post
 ---
 
-One of the most common questions new D&D players and DMs ask is which campaign to start with. The answer genuinely matters — a well-suited starting campaign creates momentum, while a campaign that's too complex, too long, or poorly matched to your group's style can stall out before anyone has a chance to fall in love with the game.
+One of the most common questions new D&D players and DMs ask is which campaign to start with. The answer genuinely matters: a well-suited starting campaign creates momentum, while a campaign that's too complex, too long, or poorly matched to your group's style can stall out before anyone has a chance to fall in love with the game.
 
 This guide covers the best official campaign options available in Australia for beginners, with clear explanations of what makes each one suitable or not for new groups.
 
@@ -30,7 +30,7 @@ This guide covers the best official campaign options available in Australia for 
 
 ## Why Campaign Choice Matters for Beginners
 
-D&D campaigns vary enormously in length, complexity, assumed DM experience, player engagement requirements, and tone. A campaign designed for experienced groups with an established DM running 100+ sessions is a very different experience to a compact adventure designed to introduce the game.
+D&D campaigns vary enormously in length, complexity, assumed DM experience, player engagement requirements, and tone. A campaign designed for experienced groups with an established DM running 100+ sessions is a very different experience to a compact adventure Built to introduce the game.
 
 Beginners tend to do best with campaigns that are:
 
@@ -62,7 +62,7 @@ Includes the adventure, rulebook, dice, and pre-made characters.
 
 </div>
 
-## Phandelver and Below: The Shattered Obelisk — Extending the Beginning
+## Phandelver and Below: The Shattered Obelisk. Extending the Beginning
 
 **Format:** Standalone hardcover (AU$65–$75)
 **Length:** 30–50+ sessions
@@ -78,7 +78,7 @@ If your group finishes Phandelver and wants to keep playing together, this is th
 **Length:** 40–70 sessions
 **Suitable for:** Groups that want a full campaign with a beginner-friendly tone and structure
 
-The Wild Beyond the Witchlight is the most beginner-accessible full-length campaign that Wizards of the Coast has published. Its distinguishing feature is that the entire adventure can be completed without a single combat encounter — though combat is possible, the campaign emphasises social interaction, exploration, and clever problem-solving as equally valid solutions to every challenge.
+The Wild Beyond the Witchlight is the most beginner-accessible full-length campaign that Wizards of the Coast has published. Its distinguishing feature is that the entire adventure can be completed without a single combat encounter. though combat is possible, the campaign emphasises social interaction, exploration, and clever problem-solving as equally valid solutions to every challenge.
 
 This makes it particularly forgiving for new DMs who are less confident in combat encounter balancing, and for groups with players who are more interested in the story and character aspects of D&D than tactical combat.
 
@@ -98,7 +98,7 @@ Either Phandelver or Icespire Peak is a fine starting point. Groups that like st
 
 ## Campaigns to Avoid as a First Adventure
 
-**Curse of Strahd:** Frequently recommended by experienced players and just as frequently the cause of first-time group meltdowns. It's a horror-themed campaign with morally grey NPCs, genuine player character death consequences, and a tone that requires experienced DM judgment to run well. It's an excellent campaign — for an experienced group.
+**Curse of Strahd:** Frequently recommended by experienced players and just as frequently the cause of first-time group meltdowns. It's a horror-themed campaign with morally grey NPCs, genuine player character death consequences, and a tone that requires experienced DM judgment to run well. It's an excellent campaign. for an experienced group.
 
 **Tomb of Annihilation:** A death-heavy campaign with a campaign-wide ticking clock mechanic (characters are constantly dying via a magical curse). Not a good fit for new players still learning the rules.
 

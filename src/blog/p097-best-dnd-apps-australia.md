@@ -1,9 +1,9 @@
 ---
 game: dnd
 title: "Best D&D Apps in Australia: What's Actually Worth Using"
-description: "A practical guide to the best Dungeons and Dragons apps available in Australia — for players, Dungeon Masters, and everyone in between. What each does and whether it's worth it."
+description: "A practical guide to the best Dungeons and Dragons apps available in Australia — for players, Dungeon Masters, and everyone in between. What each."
 date: 2026-04-16
-category: "game-guides"
+category: "how-to-play"
 tags:
   - post
   - dnd
@@ -21,11 +21,11 @@ layout: post
 
 D&D has a surprisingly rich ecosystem of digital tools. Some are genuinely useful and used by most active Australian players. Others are paid subscriptions that duplicate free features. Knowing which apps are worth your time and money before you sign up or pay for anything saves both.
 
-This guide covers the most useful D&D apps available in Australia — for character management, session play, DM prep, and finding games — with honest assessments of what each is actually good for.
+This guide covers the most useful D&D apps available in Australia: for character management, session play, DM prep, and finding games. with honest assessments of what each is actually good for.
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>D&D Beyond is the most essential D&D app for Australian players — free tier covers the basics, paid content unlocks the full ruleset. Roll20 is the standard for online play. Google Docs or Notion handles session notes and campaign organisation without a dedicated app. Beyond that, most other D&D apps are supplements rather than essentials. Start with D&D Beyond free and add from there.</p>
+<p>D&D Beyond is the most essential D&D app for Australian players: free tier covers the basics, paid content unlocks the full ruleset. Roll20 is the standard for online play. Google Docs or Notion handles session notes and campaign organisation without a dedicated app. Beyond that, most other D&D apps are supplements rather than essentials. Start with D&D Beyond free and add from there.</p>
 </div>
 
 ## D&D Beyond: The Core App for Australian Players
@@ -98,11 +98,11 @@ This combination is free at the basic level and covers everything needed to play
 
 **Dicemancer:** iOS and Android. More features than basic dice rollers, including macros and saved dice configurations for different character abilities.
 
-Any of these work. Dice apps are supplements, not essentials — most players use physical dice and only reach for apps when travelling light.
+Any of these work. Dice apps are supplements, not essentials. most players use physical dice and only reach for apps when travelling light.
 
 ## Notes and Campaign Organisation
 
-D&D sessions and campaigns generate a significant amount of written information: character backstories, session notes, world details, NPC names, quest logs. There's no single dominant app for this — most groups use general-purpose tools:
+D&D sessions and campaigns generate a significant amount of written information: character backstories, session notes, world details, NPC names, quest logs. There's no single dominant app for this, most groups use general-purpose tools:
 
 **Notion:** Popular for DMs building full world wikis and session logs. The flexible database and linked pages work well for tracking campaign elements. Free tier is generous.
 
@@ -159,7 +159,7 @@ Roll20 for maps and session management, D&D Beyond for character sheets and rule
 No. In-person D&D needs physical books (or the free Basic Rules), physical dice, and paper character sheets at a minimum. Apps are helpful supplements but not required for in-person play.
 
 **Is Foundry VTT better than Roll20?**
-Technically yes in most areas, but it requires the DM to either self-host or pay for hosting. Roll20's main advantage is that it's zero-setup for all players — everyone logs in via browser. Foundry is worth considering for a committed group where the DM is technically comfortable.
+Technically yes in most areas, but it requires the DM to either self-host or pay for hosting. Roll20's main advantage is that it's zero-setup for all players. everyone logs in via browser. Foundry is worth considering for a committed group where the DM is technically comfortable.
 
 **What app do most D&D Dungeon Masters use for notes in Australia?**
 There's no single dominant answer. Notion, Obsidian, and Google Docs are all commonly used. The best choice is whichever tool you already know and will actually use consistently.

@@ -1,9 +1,9 @@
 ---
 game: mtg
-title: "Should You Sell Your MTG Collection Now or Wait? How to Decide in Australia"
-description: "Timing matters when selling MTG cards in Australia. This guide gives a framework for deciding whether to sell now or hold — based on the cards you have, the current market, and your personal situation."
+title: "Should You Sell Your MTG Collection Now or Wait?"
+description: "Timing matters when selling MTG cards in Australia. This guide gives a framework for deciding whether to sell now or hold — based on the cards you have."
 date: 2026-05-05
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - mtg
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-"Should I sell my MTG cards now or wait?" is one of the most common questions in card collecting — and it rarely has one right answer. The correct answer depends on which cards you have, what the current market looks like, why you're considering selling, and what you'd do with the money.
+"Should I sell my MTG cards now or wait?" is one of the most common questions in card collecting. and it rarely has one right answer. The correct answer depends on which cards you have, what the current market looks like, why you're considering selling, and what you'd do with the money.
 
 This guide gives you a framework to make the call.
 
@@ -32,7 +32,7 @@ The answer to "sell now or wait?" changes based on your reason for selling:
 
 **You're consolidating into fewer cards**: sell the ones you're removing from your collection now, at whatever the current price is. Holding cards you've already decided to move adds risk without adding value.
 
-**You think prices will go up**: this is speculation. Evaluate it like any other speculative position — what's the evidence prices will rise, and what happens if they don't?
+**You think prices will go up**: this is speculation. Evaluate it like any other speculative position: what's the evidence prices will rise, and what happens if they don't?
 
 ## How to Evaluate Each Card
 
@@ -68,8 +68,23 @@ Check live AUD prices at the [C3 MTG Card Vault](/cards/mtg) before making any s
 
 eBay AU sold listings (filter: Sold Items) give you the most current Australian prices with actual transaction data.
 
-Log your full collection value in the [free C3 tracker](/tracker.html) so you have a clear baseline — you can't make good selling decisions without knowing what everything is currently worth.
+Log your full collection value in the [free C3 tracker](/tracker.html) so you have a clear baseline. you can't make good selling decisions without knowing what everything is currently worth.
 
 ---
 
 *See also: [Best Time to Sell MTG Cards in Australia](/blog/best-time-sell-mtg-cards-australia/) and [How to Price MTG Singles for eBay Australia](/blog/how-to-price-mtg-singles-ebay-australia/).*
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Is eBay or a buylist better for selling TCG cards in Australia?
+eBay returns more money per card but takes more time and has fees of roughly 13-15% all-in. Buylists pay less (typically 30-50% of market value in cash) but are instant. Use eBay for individual valuable cards. Use buylists for bulk lots where eBay effort is not worthwhile.
+
+### What fees does eBay charge for selling TCG cards in Australia?
+eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia/).
+
+### How do I know what my TCG cards are worth in Australia?
+Check eBay AU completed listings (filter to sold listings) for the most accurate local pricing. The [C3 Card Vault](/cards) also shows live pricing from eBay AU sold data across multiple TCGs.

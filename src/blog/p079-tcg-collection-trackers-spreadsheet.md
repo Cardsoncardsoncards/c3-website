@@ -1,9 +1,9 @@
 ---
 game: tcg
 title: "TCG Collection Trackers: Why a Spreadsheet Beats a Shoebox"
-description: "A practical guide to tracking your TCG collection in Australia. Covers what collection tracking actually solves, what free tools exist, and when a premium tracker is worth buying."
+description: "A practical guide to tracking your TCG collection in Australia. Covers what collection tracking actually solves, what free tools exist."
 date: 2026-04-09
-category: "free-tools"
+category: "tools-and-trackers"
 tags:
   - post
   - general-tcg
@@ -20,11 +20,11 @@ featured: false
 layout: post
 ---
 
-Most TCG collectors reach the same point eventually. The cards are in boxes, binders, or both. Some are sleeved, some aren't. Some are in a deck, some are in storage. A card you need turns out to already be in your collection somewhere — but finding it takes longer than just buying another copy. This is the problem collection tracking solves.
+Most TCG collectors reach the same point eventually. The cards are in boxes, binders, or both. Some are sleeved, some aren't. Some are in a deck, some are in storage. A card you need turns out to already be in your collection somewhere. but finding it takes longer than just buying another copy. This is the problem collection tracking solves.
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>A TCG collection tracker is a spreadsheet or app that records what cards you own, where they're stored, their condition, and optionally their value. Free options like TCGPlayer collection manager, Moxfield (MTG), and spreadsheet templates handle this. A structured spreadsheet tracker gives you more control and works across games. The C3 free tracker and premium tracker cover MTG, Pokemon, One Piece, Lorcana, and more in a single organised spreadsheet — available on the C3 tracker page and through the BLAS Digital Etsy store.</p>
+<p>A TCG collection tracker is a spreadsheet or app that records what cards you own, where they're stored, their condition, and optionally their value. Free options like TCGPlayer collection manager, Moxfield (MTG), and spreadsheet templates handle this. A structured spreadsheet tracker gives you more control and works across games. The C3 free tracker and premium tracker cover MTG, Pokemon, One Piece, Lorcana, and more in a single organised spreadsheet. available on the C3 tracker page and through the BLAS Digital Etsy store.</p>
 </div>
 
 ## What Collection Tracking Actually Solves
@@ -51,7 +51,7 @@ Most TCG collectors reach the same point eventually. The cards are in boxes, bin
 
 **Spreadsheets:** Google Sheets or Excel. Total flexibility. You control the structure, the fields, and the games covered. Takes time to set up from scratch and requires you to design your own schema.
 
-**The C3 Free TCG Tracker:** Available at no cost from the C3 tracker page. A pre-built Google Sheets template covering MTG, Pokemon, One Piece, and Lorcana with consistent structure across all four games. No setup required — download and start entering cards.
+**The C3 Free TCG Tracker:** Available at no cost from the C3 tracker page. A pre-built Google Sheets template covering MTG, Pokemon, One Piece, and Lorcana with consistent structure across all four games. No setup required. download and start entering cards.
 
 ## When a Free Tracker Is Enough
 
@@ -112,10 +112,13 @@ The main advantage of using a pre-built template over building your own is time.
 
 </div>
 
+
+Track what you own with the [free C3 collection tracker](/tracker.html). Log cards, quantities, and conditions across all TCGs.
+
 <div class="cta-block">
 
 **Browse TCG collection trackers and tools on BLAS Digital.**
-Premium trackers, fee calculators, ROI tools and more — instant Google Sheets download.
+Premium trackers, fee calculators, ROI tools and more. instant Google Sheets download.
 
 [Browse TCG Tools on Etsy →](https://www.etsy.com/shop/blasdigital/?etsrc=sdt&section_id=58030769)
 
@@ -127,7 +130,7 @@ Premium trackers, fee calculators, ROI tools and more — instant Google Sheets 
 For MTG, Moxfield and TCGPlayer's collection manager are both strong free options. For Pokemon, Limitless TCG is well maintained. For players collecting across multiple games, a pre-built spreadsheet template gives consistent structure that individual game apps don't provide.
 
 **Does TCGPlayer work in Australia?**
-TCGPlayer is a US marketplace and the pricing reflects US market rates. The collection management tools work for Australian players tracking what they own — the value tracking will reflect US prices rather than Australian market prices, which differ.
+TCGPlayer is a US marketplace and the pricing reflects US market rates. The collection management tools work for Australian players tracking what they own: the value tracking will reflect US prices rather than Australian market prices, which differ.
 
 **How do I track cards across multiple TCGs?**
 A multi-tab spreadsheet with one tab per game is the most flexible approach. Pre-built multi-game templates cover this without requiring you to design the structure yourself.

@@ -1,9 +1,9 @@
 ---
 game: mtg
-title: "Why MTG Cards Cost More in Australia Than the US (And What You Can Do About It)"
-description: "Australian MTG prices are consistently higher than US prices. This guide explains exactly why the gap exists — and practical ways to reduce what you pay for cards in Australia."
+title: "Why MTG Cards Cost More in Australia Than the US"
+description: "Australian MTG prices are consistently higher than US prices. This guide explains exactly why the gap exists — and practical ways to reduce what you."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - mtg
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-If you've ever compared Australian MTG prices to US prices, you've noticed the gap. A card selling for US$10 on TCGplayer often sells for AU$20 to AU$25 on eBay AU. That's not just the exchange rate — even after converting, Australian prices run 15% to 30% higher than US equivalents in many cases.
+If you've ever compared Australian MTG prices to US prices, you've noticed the gap. A card selling for US$10 on TCGplayer often sells for AU$20 to AU$25 on eBay AU. That's not just the exchange rate: even after converting, Australian prices run 15% to 30% higher than US equivalents in many cases.
 
 Here's exactly why, and what Australian players can do about it.
 
@@ -26,7 +26,7 @@ Here's exactly why, and what Australian players can do about it.
 
 The Australian dollar typically trades at 0.60 to 0.65 USD. So US$10 = approximately AU$15.40 to AU$16.70 at the exchange rate alone.
 
-When you see Australian prices of AU$20 to AU$25 for a card listed at US$10, the gap above exchange rate is roughly 20% to 50% — and that excess comes from several compounding factors.
+When you see Australian prices of AU$20 to AU$25 for a card listed at US$10, the gap above exchange rate is roughly 20% to 50%. and that excess comes from several compounding factors.
 
 ## Factor 1: Freight and Import Costs
 
@@ -46,7 +46,7 @@ Since 2018, GST applies to imported goods under AU$1,000 sold to Australian cons
 
 The US MTG market is enormous. TCGplayer alone has thousands of sellers competing on price, which drives margins down. Australia has far fewer sellers. Less competition means less downward price pressure.
 
-For popular cards, this gap is smaller — enough sellers chase the same cards. For niche cards, the gap can be extreme.
+For popular cards, this gap is smaller. enough sellers chase the same cards. For niche cards, the gap can be extreme.
 
 ## Factor 5: Distribution Lag
 
@@ -54,20 +54,35 @@ New sets release in Australia at the same time as the US (since 2022 Wizards sta
 
 ## What Australian Players Can Do
 
-**Shop eBay AU aggressively.** eBay AU is the most competitive Australian TCG marketplace. Sellers undercut each other and Buy It Now prices reflect market reality. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards) stocks MTG singles, and you can search [all eBay AU listings here](https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&campid=5339146789).
+**Shop eBay AU aggressively.** eBay AU is the most competitive Australian TCG marketplace. Sellers undercut each other and Buy It Now prices reflect market reality. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles, and you can search [all eBay AU listings here](https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&campid=5339146789).
 
 **Use the C3 Card Vault to track prices.** The [C3 MTG Card Vault](/cards/mtg) shows live AUD prices on over 96,000 cards sourced from eBay AU data. Check here before buying to confirm you're paying a fair Australian market rate.
 
 **Check international sellers on eBay.** Some international sellers ship to Australia at reasonable postage rates. For high-value singles (AU$40+), international sourcing can save money even with postage costs.
 
-**Time your purchases around reprints.** When a card is reprinted in a Commander precon or Masters set, prices drop — sometimes 40% to 60%. Watch for reprint announcements and buy after the reprint hits the market.
+**Time your purchases around reprints.** When a card is reprinted in a Commander precon or Masters set, prices drop. sometimes 40% to 60%. Watch for reprint announcements and buy after the reprint hits the market.
 
 **Buy collections rather than singles where possible.** Buying a collection or bulk lot from a local seller removes the international freight factor entirely. The savings per card can be significant.
 
 ## The Bottom Line
 
-The 15% to 30% premium Australians pay over US prices is real and structural — exchange rate, GST, freight, and market size all compound. It's not gouging; it's the cost of being a small, geographically isolated market.
+The 15% to 30% premium Australians pay over US prices is real and structural: exchange rate, GST, freight, and market size all compound. It's not gouging; it's the cost of being a small, geographically isolated market.
 
 The practical response is to buy locally where possible, use price tracking to time purchases well, and know when international sourcing is genuinely worth the postage.
 
 Check live AUD prices at the [C3 Card Vault](/cards/mtg) before any significant MTG purchase.
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

@@ -1,7 +1,7 @@
 ---
 game: pokemon
-title: "How to Run a Pokemon Draft at Home in Australia: Step-by-Step Guide"
-description: "Pokemon TCG can be drafted just like MTG. This guide covers how to run a fun, balanced Pokemon draft night at home in Australia — rules, cost, and what makes it better than regular play."
+title: "How to Run a Pokemon Draft at Home in Australia"
+description: "Pokemon TCG can be drafted just like MTG. This guide covers how to run a fun, balanced Pokemon draft night at home in Australia — rules, cost."
 date: 2026-05-05
 category: "general-tcg"
 tags:
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-Pokemon Draft is one of the most fun ways to play Pokemon TCG with a group and doesn't get nearly the attention it deserves. No existing decks required. Everyone starts from the same card pool. The skills are card evaluation and deck building under constraints — not who has the better collection.
+Pokemon Draft is one of the most fun ways to play Pokemon TCG with a group and doesn't get nearly the attention it deserves. No existing decks required. Everyone starts from the same card pool. The skills are card evaluation and deck building under constraints. not who has the better collection.
 
 This guide covers how to run a Pokemon draft at home in Australia.
 
@@ -36,7 +36,7 @@ The appeal: no existing collection advantage. Everyone starts equal. The skill i
 
 **Booster packs**: 3 packs per player. For 4 players: 12 packs. For 6 players: 18 packs.
 
-**Basic Energy**: you don't draft Energy cards — instead, have a shared energy station with a pile of each basic Energy type. Players pick as many basic Energy cards as they need to complete their 40-card deck.
+**Basic Energy**: you don't draft Energy cards: instead, have a shared energy station with a pile of each basic Energy type. Players pick as many basic Energy cards as they need to complete their 40-card deck.
 
 **Cost**: Pokemon booster packs cost approximately AU$7 to AU$9 each. 3 packs per player = approximately AU$21 to AU$27 per person. Players keep their drafted cards.
 
@@ -57,7 +57,7 @@ From your 45 drafted cards, build a 40-card deck:
 - Minimum 40 cards total
 - You choose the Energy type(s) based on what Pokemon you drafted
 - No limit on Energy cards (draw from the communal pile)
-- All 45 cards are in play — choose your best 40 and exclude the others (your sideboard)
+- All 45 cards are in play. choose your best 40 and exclude the others (your sideboard)
 
 **The key decision**: which 1 or 2 Energy types to run. Most Pokemon in a limited card pool require 1 or 2 types of Energy for their attacks. Focusing on 1 type gives better consistency.
 
@@ -97,4 +97,15 @@ Some Pokemon sets draft better than others. Sets with:
 
 Each player keeps the 45 cards they drafted, regardless of how they performed in matches. A night of Pokemon Draft costs approximately AU$23 per person all-in.
 
-Browse Pokemon booster packs at the [C3 shop](/shop.html#pokemon) or check the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards) for singles after the event.
+Browse Pokemon booster packs at the [C3 shop](/shop.html#pokemon) or check the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) for singles after the event.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

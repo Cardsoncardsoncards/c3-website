@@ -1,7 +1,7 @@
 ---
 game: mtg
-title: "Random Commander Challenge: We Rolled 4 Commanders and Built the Decks"
-description: "We used the C3 Random Commander Generator to roll 4 random Commanders — then actually built decks around them. Here's what we rolled, what it cost in Australia, and whether any of them are actually good."
+title: "Random Commander Challenge: 4 Builds, One Roll"
+description: "We used the C3 Random Commander Generator to roll 4 random Commanders — then actually built decks around them. Here's what we rolled, what it cost."
 date: 2026-05-05
 category: "general-tcg"
 tags:
@@ -32,7 +32,7 @@ A mono-white human soldier that returns a tapped non-token creature you control 
 
 **First reaction**: who?
 
-**Second reaction**: wait, this is actually interesting. Bouncing your own creatures to reuse ETB (enters the battlefield) triggers in white is a legitimate strategy. Cards like Charming Prince, Restoration Angel, and Cloudshift already do this — Tobias does it as a passive that scales with how many tapped creatures you have.
+**Second reaction**: wait, this is actually interesting. Bouncing your own creatures to reuse ETB (enters the battlefield) triggers in white is a legitimate strategy. Cards like Charming Prince, Restoration Angel, and Cloudshift already do this. Tobias does it as a passive that scales with how many tapped creatures you have.
 
 **Budget verdict**: AU$65. An accessible build. Tobias himself is under AU$2.
 
@@ -76,7 +76,7 @@ A mono-blue rabbit that taps to let each player draw a card and gain 3 life.
 
 ## The Actual Results
 
-Running all four decks at a casual table produced genuinely different games. Maga executed the fastest win (turn 8, Cabal Coffers into a lethal X-spell cast). Brudiclad produced the most chaotic game — we turned 12 tokens into copies of an opponent's Serra's Emissary and the table had to spend three turns dealing with the lockout.
+Running all four decks at a casual table produced genuinely different games. Maga executed the fastest win (turn 8, Cabal Coffers into a lethal X-spell cast). Brudiclad produced the most chaotic game. we turned 12 tokens into copies of an opponent's Serra's Emissary and the table had to spend three turns dealing with the lockout.
 
 Kwain lost the most consistently but created the funniest political tension. Tobias held its own through the mid-game before running out of steam.
 
@@ -84,8 +84,19 @@ Kwain lost the most consistently but created the funniest political tension. Tob
 
 The [C3 Random Commander Generator](/cards/mtg/random-commander) lets you filter by colour identity, mana value, and count. Run it with your playgroup and see what you roll.
 
-Check the current AUD price of any card you roll at the [C3 MTG Card Vault](/cards/mtg) — every card page shows live eBay AU pricing.
+Check the current AUD price of any card you roll at the [C3 MTG Card Vault](/cards/mtg). every card page shows live eBay AU pricing.
 
 ---
 
 *What's the best Commander you've ever rolled randomly? The most unexpected? Drop a reply on our socials.*
+
+## Frequently Asked Questions
+
+### What is the best Commander deck for a new player in Australia?
+Any Commander preconstructed deck from a recent set is a good starting point. Pick the theme or colour combination that appeals to you most. Current options from Tarkir: Dragonstorm and Lorwyn Eclipsed are available on Amazon AU.
+
+### Can I use a Commander precon in tournament play?
+Commander preconstructed decks are legal for casual Commander play and official Commander events. The individual cards are legal in Commander, Legacy, and Vintage. The precon as a whole is not competitive at high-level play but works fine for regular Commander nights.
+
+### Where can I find Commander singles in Australia?
+Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.

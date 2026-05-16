@@ -1,7 +1,7 @@
 ---
 game: dnd
 title: "DM Screens in Australia: What to Look For"
-description: "A practical guide to Dungeon Master screens for D&D available in Australia. Covers what a DM screen does, official versus third-party options, and what features matter."
+description: "A DM screen keeps your notes hidden and puts key rules at eye level. This guide covers the official DM screen options, third-party alternatives,."
 date: 2026-04-09
 category: "buying-guides"
 tags:
@@ -28,21 +28,21 @@ A DM screen is a folding panel the Dungeon Master places between themselves and 
 
 ## What a DM Screen Actually Does
 
-**Hiding information:** The primary function. A DM screen prevents players from seeing your dice results, your maps, your notes, and your NPC tracking. This is important for maintaining tension — players shouldn't know how close a monster is to being defeated, or that the DM just rolled a critical hit they're about to describe dramatically.
+**Hiding information:** The primary function. A DM screen prevents players from seeing your dice results, your maps, your notes, and your NPC tracking. This is important for maintaining tension. players shouldn't know how close a monster is to being defeated, or that the DM just rolled a critical hit they're about to describe dramatically.
 
 **Rules reference:** The inside of the screen typically includes frequently referenced tables: conditions and their effects, action types, common DCs for skill checks, combat actions, and environmental rules. A well-designed DM screen means you're flipping the rulebook less often during sessions.
 
-**Psychological table presence:** A DM behind a screen signals to players that there are things they don't know. It creates a physical separation between the world-runner and the world-explorers. Some DMs prefer not to use a screen for transparency reasons — both approaches are legitimate. Many experienced DMs use a screen specifically because players second-guess rolls less when they can't see the dice.
+**Psychological table presence:** A DM behind a screen signals to players that there are things they don't know. It creates a physical separation between the world-runner and the world-explorers. Some DMs prefer not to use a screen for transparency reasons. both approaches are legitimate. Many experienced DMs use a screen specifically because players second-guess rolls less when they can't see the dice.
 
 ## The Official D&D DM Screen (2024)
 
 The 2024 D&D Dungeon Master's Screen is the current official release, updated to reference the 2024 rules. Four-panel landscape orientation. The exterior features official D&D artwork, the interior panels display reference tables relevant to the current rules.
 
-The Dungeon Master's Screen Reincarnated is an older version still available, based on the 2014 rules. It remains functional — the core tables (conditions, actions, skills) don't change significantly between editions.
+The Dungeon Master's Screen Reincarnated is an older version still available, based on the 2014 rules. It remains functional: the core tables (conditions, actions, skills) don't change significantly between editions.
 
 The Dungeon Master's Screen: Dungeon Kit is a variant that comes with an additional DM kit including maps and supplemental dungeon reference material.
 
-The Eberron Deluxe DM Screen is a setting-specific screen with interior references tailored to the Eberron campaign setting. Relevant for DMs running Eberron campaigns, niche otherwise.
+The Eberron Deluxe DM Screen is a setting-specific screen with interior references adjusted to the Eberron campaign setting. Relevant for DMs running Eberron campaigns, niche otherwise.
 
 ## Third-Party DM Screens
 
@@ -70,7 +70,7 @@ All DM screens listed above are available through the [C3 D&D shop](/shop.html#d
 
 **Dice ledges:** A built-in ledge at the base of the screen keeps dice from rolling to the floor. Small quality-of-life feature worth having.
 
-**Customisability:** If you run unconventional campaigns or homebrewed settings, a screen with replaceable interior sleeves lets you tailor the reference material to your specific game.
+**Customisability:** If you run unconventional campaigns or homebrewed settings, a screen with replaceable interior sleeves lets you adjust the reference material to your specific game.
 
 <div class="related-guides">
 
@@ -102,7 +102,7 @@ Landscape screens are wider than they are tall, giving the DM a lower profile ba
 Yes. Any physical barrier works for hiding rolls and notes. The advantage of a dedicated DM screen is the interior reference tables. You can replicate this by printing reference sheets and attaching them to a makeshift screen.
 
 **Are third-party DM screens compatible with official D&D rules?**
-Yes. A DM screen is a physical tool — any screen works with any edition or ruleset. Third-party screens may have different interior reference tables than the official Wizards of the Coast versions.
+Yes. A DM screen is a physical tool. any screen works with any edition or ruleset. Third-party screens may have different interior reference tables than the official Wizards of the Coast versions.
 
 **How much do DM screens cost in Australia?**
 Official screens are approximately AU$20 to AU$35 on Amazon AU. Premium faux leather third-party screens range from AU$35 to AU$75 depending on size and materials.

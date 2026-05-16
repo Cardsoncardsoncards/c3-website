@@ -56,7 +56,7 @@ Australian prices are typically 10-20% above US prices after exchange rate conve
 
 ## Where to Buy in Australia
 
-Cherry Collectables, Gameology, Good Games, Zing, and most major Australian TCG retailers stock One Piece. For singles, eBay AU is your best option. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards) carries One Piece singles. For Amazon AU sealed product, check our [Shop page](/shop.html).
+Cherry Collectables, Gameology, Good Games, Zing, and most major Australian TCG retailers stock One Piece. For singles, eBay AU is your best option. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries One Piece singles. For Amazon AU sealed product, check our [Shop page](/shop.html).
 
 ## Is One Piece Worth Starting in 2026?
 
@@ -67,3 +67,49 @@ Yes, for three reasons. OP-15 is the first simultaneous global release, meaning 
 Track your One Piece collection with our [Free TCG Tracker](/tracker.html).
 
 Not affiliated with Bandai. One Piece and all associated marks are property of Eiichiro Oda and Shueisha.
+
+
+## The One Piece Card Game Structure
+
+The One Piece Card Game is a two-player competitive TCG where each player builds a 50-card main deck centred on a specific Leader card. Leaders are the face cards that define your deck's colour, play style, and win condition.
+
+**Leaders**: Your Leader card sits in the Leader Zone and cannot be removed from the game. It has its own life system: 5 Don!! cards representing your life. When your opponent attacks your Leader successfully, you take a Life card into your hand.
+
+**Don!! Cards**: The energy system. Each turn you add one Don!! card to your Don Area. Don!! cards are spent (attached to cards or used for effects) and refill each turn. You start with 1, reach the maximum of 10 as the game progresses.
+
+**Win conditions**: Deal damage to your opponent's Leader until their Leader's life is 0. Your next successful attack wins the game.
+
+## Why One Piece TCG Has Grown in Australia
+
+One Piece TCG arrived in English in late 2022 and grew quickly through the Scarlet and Violet era of Pokemon competition. Several factors drove Australian interest:
+
+**Strong IP**: One Piece is one of the top-selling manga of all time and has a massive anime fanbase in Australia. Players connected to the characters before playing the game.
+
+**Competitive depth**: The Counter mechanic creates constant interaction: both players are always involved in every attack. The hand management required is more complex than Pokemon but more accessible than Yu-Gi-Oh.
+
+**Scarcity premium**: The smaller English print run compared to Pokemon or MTG creates genuine card scarcity. Top cards hold value better in relative terms.
+
+## Where Australian One Piece Players Compete
+
+Bandai runs Organised Play for One Piece Card Game in Australia including Regional Championships with travel and prize support. Local game stores in Sydney, Melbourne, Brisbane, and Perth run weekly events.
+
+The Australian One Piece Card Game community is active on Facebook and Discord. Finding opponents at local game stores is generally easy in metro areas.
+
+Check the [C3 Release Calendar](/calendar) for upcoming One Piece events and set releases in Australia.
+
+## Building Your First One Piece Deck
+
+Start with one or two Starter Decks built around Leaders you find appealing. Play 15 to 20 games before buying any additional cards. After that foundation, buy singles for the specific 4-of cards your strategy needs rather than opening booster boxes.
+
+Use the [C3 Card Compare tool](/compare) for current AUD pricing on One Piece singles. See our [One Piece deck building guide](/blog/one-piece-tcg-deck-building-guide-australia/) for strategy recommendations once you are ready to improve.
+
+## Frequently Asked Questions
+
+### How much does it cost to start playing One Piece in Australia?
+The minimum entry cost depends on the game. Most TCGs have starter or preconstructed decks in the AU$20-90 range that give you everything needed for your first games. See the specific cost breakdown in this guide.
+
+### Is One Piece popular in Australia?
+Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
+
+### Where can I find other One Piece players in Australia?
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.

@@ -1,9 +1,9 @@
 ---
 game: lorcana
-title: "First Pixar Characters in Lorcana: What Wilds Unknown Means for Collectors in Australia"
-description: "Disney Lorcana Wilds Unknown is the first set to feature Pixar characters. Here is what that means for collectors in Australia, which cards to chase, and whether now is the time to buy in."
+title: "First Pixar Characters in Lorcana"
+description: "Disney Lorcana Wilds Unknown is the first set to feature Pixar characters. Here is what that means for collectors in Australia, which cards to chase."
 date: 2026-04-08
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - lorcana
@@ -49,7 +49,7 @@ The most valuable Enchanted cards in previous sets have been characters with the
 For Wilds Unknown, the Enchanted versions of Woody, Buzz Lightyear, and Elastigirl are the cards to watch. These characters have immediate mainstream recognition that extends well beyond the Lorcana community. An Enchanted Buzz Lightyear card shown in a glass case on social media will reach Toy Story fans who have never seen a Lorcana booster pack.
 
 **Iconic Rarity Cards**
-Wilds Unknown introduces 2 Iconic rarity cards. Iconic is above Enchanted in terms of rarity and visual spectacle. Previous Iconic cards from the Fabled set have been among the rarest and most sought-after cards in Lorcana's history. The two Iconic cards in Wilds Unknown are not yet revealed. If either features a Pixar character, expect significant collector attention.
+Wilds Unknown introduces 2 Iconic rarity cards. Iconic is above Enchanted For rarity and visual spectacle. Previous Iconic cards from the Fabled set have been among the rarest and most sought-after cards in Lorcana's history. The two Iconic cards in Wilds Unknown are not yet revealed. If either features a Pixar character, expect significant collector attention.
 
 **Foil Promo Cards from the Two-Player Starter Set**
 The Two-Player Starter Set includes foil promo versions of Buzz Lightyear (Amber/Emerald deck) and Elastigirl (Amethyst/Ruby deck). Starter deck exclusives with foil treatments have historically become collector items in their own right because the only way to obtain them is through that specific product. If you want the foil Buzz Lightyear starter promo, you need to buy the starter set.
@@ -70,7 +70,7 @@ If you want to attend prerelease events and open product for the experience of b
 
 If you want specific Enchanted or Iconic cards from the set, waiting two to four weeks after the 15 May retail release and then buying singles from eBay AU at stabilised prices is the most efficient approach.
 
-## How This Changes the Game Going Forward
+## How This Changes the Game from here
 
 Wilds Unknown is not the end of the Pixar expansion. It is the beginning.
 
@@ -78,7 +78,7 @@ Ravensburger has confirmed the full 2026 Lorcana calendar includes Pixar in ever
 - Q3: Attack of the Vine (Monsters, Inc., Turning Red)
 - Q4: Unnamed set (Coco confirmed)
 
-For collectors building a Pixar-focused Lorcana collection, the entry point is now. The first-ever Pixar Lorcana cards from Wilds Unknown carry the same kind of milestone status that first-run set cards typically carry. Once Monsters, Inc. appears in Q3, the Toy Story and Incredibles cards from Wilds Unknown are no longer the newest but they remain the first.
+For collectors building a Pixar-focused Lorcana collection, the entry point is now. The first-ever Pixar Lorcana cards from Wilds Unknown carry the same kind of milestone status that first-run set cards typically carry. Once Monsters, Inc: appears in Q3, the Toy Story and Incredibles cards from Wilds Unknown are no longer the newest but they remain the first.
 
 This milestone status matters for long-term collector appeal. The first printing of a new character type in any TCG has historically held a premium over later printings of the same character. The first Enchanted Buzz Lightyear, whenever it is pulled, is the first one that has ever existed.
 

@@ -1,9 +1,9 @@
 ---
 game: dnd
 title: "How to Start Playing D&D in Australia: What You Actually Need"
-description: "Thinking about starting Dungeons and Dragons in Australia? This guide covers what you actually need to begin, what's optional, and where to find players and products locally."
+description: "Thinking about starting Dungeons and Dragons in Australia? This guide covers what you actually need to begin, what's optional, and where to find."
 date: 2026-04-09
-category: "game-guides"
+category: "how-to-play"
 tags:
   - post
   - dnd
@@ -23,7 +23,7 @@ Dungeons and Dragons has more Australian players now than at any point in its hi
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>To start playing D&D in Australia you need three things: a way to learn the rules (a starter set, the free basic rules, or the 2024 Player's Handbook), a set of polyhedral dice, and at least two other people to play with. Everything else — battle mats, miniatures, DM screens, printed resources — is optional and can be added as you go. You do not need to buy everything at once.</p>
+<p>To start playing D&D in Australia you need three things: a way to learn the rules (a starter set, the free basic rules, or the 2024 Player's Handbook), a set of polyhedral dice, and at least two other people to play with. Everything else: battle mats, miniatures, DM screens, printed resources. is optional and can be added as you go. You do not need to buy everything at once.</p>
 </div>
 
 ## The Minimum Required to Play
@@ -34,7 +34,7 @@ D&D requires remarkably little to get started. The core requirements are:
 
 **Dice.** A standard polyhedral dice set includes seven dice: a d4, d6, d8, d10, d10 (percentile), d12, and d20. These are available as inexpensive plastic sets through Amazon AU and dedicated dice retailers. You do not need premium dice to play.
 
-**People.** D&D is typically played with one Dungeon Master (DM) and two to five players. The DM runs the world and story, players each control a character. Finding a group is often the harder part of starting — see below.
+**People.** D&D is typically played with one Dungeon Master (DM) and two to five players. The DM runs the world and story, players each control a character. Finding a group is often the harder part of starting. see below.
 
 **Somewhere to play.** A kitchen table works fine. You don't need a dedicated gaming room or any special setup for your first sessions.
 
@@ -46,7 +46,7 @@ If you want everything in one box, starter sets bundle a simplified rulebook, a 
 
 Three starter sets are currently available in Australia:
 
-**Dungeons and Dragons Starter Set: Dragons of Stormwreck Isle** is the most recent beginner option. It includes a 48-page rulebook covering levels 1 to 3, six pre-made characters, an adventure designed to take 10 to 20 hours, and a set of dice. One person at the table takes the DM role and reads the adventure book, everyone else plays the pre-made characters. Designed to be run with no prior D&D experience.
+**Dungeons and Dragons Starter Set: Dragons of Stormwreck Isle** is the most recent beginner option. It includes a 48-page rulebook covering levels 1 to 3, six pre-made characters, an adventure Built to take 10 to 20 hours, and a set of dice. One person at the table takes the DM role and reads the adventure book, everyone else plays the pre-made characters. written to be run with no prior D&D experience.
 
 **Dungeons and Dragons Starter Set: Heroes of the Borderlands** follows the same format with a different adventure setting. Suitable for groups of two to five players.
 
@@ -103,7 +103,7 @@ The simplest path from zero to playing:
 3. Find two to four other people willing to try. One person volunteers to be DM and reads the adventure book while everyone else reads the player section.
 4. Schedule a session. Three to four hours for a first session is realistic.
 5. Play the starter adventure through to completion over two to four sessions.
-6. After finishing, decide together whether to continue with a full campaign, a different starter set, or dive into the full Player's Handbook.
+6. After finishing, decide together whether to continue with a full campaign, a different starter set, or get into the full Player's Handbook.
 
 The 2024 core books, dice options, battle mats, miniatures, and accessories are all available through the [C3 D&D shop](/shop.html#dnd), curated from confirmed Amazon AU stock with Australian shipping.
 

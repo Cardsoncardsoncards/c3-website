@@ -1,7 +1,7 @@
 ---
 game: mtg
-title: "Budget Commander Decks Under AU$100: How to Build One From Scratch in Australia"
-description: "You don't need to spend AU$500 to play Commander. This guide shows exactly how to build a functional, fun Commander deck for under AU$100 in Australia — with specific card recommendations."
+title: "Budget Commander Decks Under AU$100"
+description: "You don't need to spend AU$500 to play Commander. This guide shows exactly how to build a functional, fun Commander deck for under AU$100 in."
 date: 2026-05-05
 category: "buying-guides"
 tags:
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-Commander decks get expensive fast. Powerful staples, dual lands, and premium commanders add up quickly. But a budget Commander deck doesn't have to be underpowered — it just has to be smart.
+Commander decks get expensive fast. Powerful staples, dual lands, and premium commanders add up quickly. But a budget Commander deck doesn't have to be underpowered. it just has to be smart.
 
 This guide shows you exactly how to build a Commander deck for under AU$100 in Australia, with realistic pricing based on current eBay AU sold data.
 
@@ -59,7 +59,7 @@ All of these have clear strategies that don't require expensive payoffs to funct
 
 ## Budget Mana Base (Under AU$20)
 
-Avoid fetch lands and shock lands — they're expensive. Instead, use:
+Avoid fetch lands and shock lands. they're expensive. Instead, use:
 
 - **Command Tower** (AU$1 to AU$3): every Commander deck's best land
 - **Evolving Wilds / Terramorphic Expanse** (AU$0.50 to AU$1 each): budget fetch lands
@@ -82,23 +82,23 @@ These are all under AU$3 each:
 
 ## Budget Removal (Under AU$12)
 
-- **Swords to Plowshares** (white) — AU$2 to AU$6
-- **Path to Exile** (white) — AU$2 to AU$5
-- **Doom Blade** (black) — AU$0.50 to AU$1
-- **Hero's Downfall** (black) — AU$0.50 to AU$1
-- **Naturalize** (green) — AU$0.50
-- **Vandalblast** (red) — AU$1 to AU$3
-- **Counterspell** (blue) — AU$2 to AU$5
-- **Cyclonic Rift** — AU$25 to AU$50 (save for upgrade later)
+- **Swords to Plowshares** (white). AU$2 to AU$6
+- **Path to Exile** (white). AU$2 to AU$5
+- **Doom Blade** (black). AU$0.50 to AU$1
+- **Hero's Downfall** (black). AU$0.50 to AU$1
+- **Naturalize** (green). AU$0.50
+- **Vandalblast** (red). AU$1 to AU$3
+- **Counterspell** (blue). AU$2 to AU$5
+- **Cyclonic Rift**. AU$25 to AU$50 (save for upgrade later)
 
 ## Budget Card Draw (Under AU$12)
 
-- **Phyrexian Arena** (black) — AU$3 to AU$8
-- **Rhystic Study** — AU$15 to AU$40 (future upgrade)
-- **Harmonize** (green) — AU$1 to AU$2
-- **Divination** (blue) — AU$0.50
-- **Night's Whisper** (black) — AU$0.50 to AU$1
-- **Read the Bones** (black) — AU$0.50
+- **Phyrexian Arena** (black). AU$3 to AU$8
+- **Rhystic Study**. AU$15 to AU$40 (future upgrade)
+- **Harmonize** (green). AU$1 to AU$2
+- **Divination** (blue). AU$0.50
+- **Night's Whisper** (black). AU$0.50 to AU$1
+- **Read the Bones** (black). AU$0.50
 
 ## Building for Your Commander's Theme
 
@@ -110,9 +110,9 @@ For Wilhelt: cheap Zombies plus sacrifice outlets plus recursion. Gravecrawler (
 
 ## Where to Buy Budget Cards in Australia
 
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards) stocks MTG singles with flat AU$ pricing. For bulk commons and uncommons, local game stores often sell singles for AU$0.50 to AU$2.
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles with flat AU$ pricing. For bulk commons and uncommons, local game stores often sell singles for AU$0.50 to AU$2.
 
-Use the [C3 MTG Card Vault](/cards/mtg) to check live AUD prices before you buy — see exactly what each card costs in Australia without currency conversion.
+Use the [C3 MTG Card Vault](/cards/mtg) to check live AUD prices before you buy. see exactly what each card costs in Australia without currency conversion.
 
 ## Upgrading Over Time
 
@@ -128,3 +128,14 @@ Use the [free C3 collection tracker](/tracker.html) to log what you have and tra
 ---
 
 *Track live AUD prices on every card at [C3 MTG Card Vault](/cards/mtg). Use the [Random Commander Generator](/cards/mtg/random-commander) to find your next build.*
+
+## Frequently Asked Questions
+
+### What is the best Commander deck for a new player in Australia?
+Any Commander preconstructed deck from a recent set is a good starting point. Pick the theme or colour combination that appeals to you most. Current options from Tarkir: Dragonstorm and Lorwyn Eclipsed are available on Amazon AU.
+
+### Can I use a Commander precon in tournament play?
+Commander preconstructed decks are legal for casual Commander play and official Commander events. The individual cards are legal in Commander, Legacy, and Vintage. The precon as a whole is not competitive at high-level play but works fine for regular Commander nights.
+
+### Where can I find Commander singles in Australia?
+Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.

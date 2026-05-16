@@ -1,7 +1,7 @@
 ---
 game: riftbound
-title: "Riftbound Vendetta (Set 4): Release Date, What We Know, and What to Expect"
-description: "Riftbound Set 4, Vendetta, releases July 31, 2026. Here's everything confirmed, including global release parity and what Australian players should plan for."
+title: "Riftbound Vendetta: Release Date and What to Expect"
+description: "Riftbound Set 4, Vendetta, releases July 31, 2026. Here's everything confirmed, including global release parity and what Australian players should."
 date: 2026-05-09
 category: buying-guides
 emoji: "🗡️"
@@ -47,3 +47,32 @@ We will publish a full Vendetta preview breakdown when Riot begins card reveals 
 ---
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games. All set information is based on official Riot announcements current as of May 2026.
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

@@ -1,9 +1,9 @@
 ---
 game: pokemon
-title: "Pokemon TCG Rotation Australia: What It Is and How to Prepare for It"
-description: "Pokemon TCG rotation removes older sets from Standard format each year. This guide explains how rotation works in Australia, which sets rotate when, and how to manage your collection around it."
+title: "Pokemon TCG Rotation Australia"
+description: "Pokemon TCG rotation removes older sets from Standard format each year. This guide explains how rotation works in Australia, which sets rotate when."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - pokemon
@@ -24,7 +24,7 @@ Pokemon TCG rotation is one of the most financially impactful events in the Poke
 
 The Pokemon TCG Standard format only allows cards from a certain number of recent sets. Each year (typically announced in the middle of the year and taking effect around August to September), a "rotation" occurs: the oldest sets in the Standard card pool are removed from legal play.
 
-After rotation, cards from those older sets are still legal in Expanded format (which has a larger legal card pool) and in casual play. But they cannot be used in Standard competitive events — the format most Australian stores and tournaments use.
+After rotation, cards from those older sets are still legal in Expanded format (which has a larger legal card pool) and in casual play. But they cannot be used in Standard competitive events: the format most Australian stores and tournaments use.
 
 ## Why Rotation Happens
 
@@ -60,7 +60,7 @@ The exact sets that rotate are announced by Pokemon Company International (The P
 
 ## How Australian Players Should Manage This
 
-**Sell competitive singles before rotation if you won't play Expanded**: if a card is a current Standard staple but you don't play Expanded, sell it 2 to 3 months before anticipated rotation — before prices decline. Prices start to soften as rotation becomes expected, not just when it's announced.
+**Sell competitive singles before rotation if you won't play Expanded**: if a card is a current Standard staple but you don't play Expanded, sell it 2 to 3 months before anticipated rotation. before prices decline. Prices start to soften as rotation becomes expected, not just when it's announced.
 
 **Buy rotating cards for Expanded after rotation**: if a card has Expanded format relevance, prices often drop sharply at rotation even though the card remains legal in Expanded. Buying for Expanded players is cheapest in the months immediately following rotation.
 
@@ -70,7 +70,7 @@ The exact sets that rotate are announced by Pokemon Company International (The P
 
 ## The Regulation Mark System
 
-Pokemon uses a Regulation Mark — a letter (currently in the D, E, F progression for Scarlet and Violet era cards) — to define which cards rotate together. All cards with the same regulation mark rotate together.
+Pokemon uses a Regulation Mark: a letter (currently in the D, E, F progression for Scarlet and Violet era cards). to define which cards rotate together. All cards with the same regulation mark rotate together.
 
 This is printed on every Pokemon TCG card from recent sets. Checking the regulation mark tells you which rotation cycle a card belongs to.
 
@@ -81,3 +81,28 @@ The [free C3 collection tracker](/tracker.html) lets you tag cards by set and tr
 ---
 
 *See also: [Best Pokemon Booster Boxes in Australia](/blog/best-pokemon-booster-boxes-australia/)*
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

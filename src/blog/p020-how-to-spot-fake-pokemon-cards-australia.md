@@ -1,7 +1,7 @@
 ---
 game: pokemon
 title: "How to Spot Fake Pokemon Cards When Buying Online in Australia"
-description: "Counterfeit Pokemon cards are a real problem in the Australian online market. This practical guide covers the key checks to identify fakes before you buy or trade."
+description: "Counterfeit Pokemon cards are a real problem in the Australian online market. This practical guide covers the key checks to identify fakes before you."
 date: 2026-04-07
 category: "general-tcg"
 tags:
@@ -19,7 +19,7 @@ featured: false
 layout: post
 ---
 
-Counterfeit Pokemon cards have been a problem for as long as the cards have existed, but the quality of modern fakes has improved significantly. Cards that would have been obvious counterfeits a decade ago are now convincing enough to fool buyers who don't know what to look for. The Australian online market — primarily eBay and Facebook Marketplace — has its share of fakes, and buyers who don't know the checks are vulnerable.
+Counterfeit Pokemon cards have been a problem for as long as the cards have existed, but the quality of modern fakes has improved significantly. Cards that would have been obvious counterfeits a decade ago are now convincing enough to fool buyers who don't know what to look for. The Australian online market. primarily eBay and Facebook Marketplace: has its share of fakes, and buyers who don't know the checks are vulnerable.
 
 This guide covers the practical, actionable checks for identifying fake Pokemon cards. These apply whether you're buying singles online, purchasing a collection in person, or trading with someone you've just met.
 
@@ -56,10 +56,10 @@ Fake cards often either lack this black inner layer entirely (showing as lighter
 Genuine Pokemon cards have a specific texture and flexibility that experienced handlers recognise immediately. The card has a slight give when gently flexed and snaps back cleanly. The surface texture has a slight roughness rather than being perfectly smooth.
 
 Common fake tells in the feel test:
-- Too stiff — many fakes use thicker cardstock that doesn't have the same flex
-- Too thin and floppy — some fakes use thinner cardstock
-- Wrong surface texture — either too smooth (plasticky) or too rough
-- Wrong weight — fakes are often noticeably lighter or heavier than genuine cards
+- Too stiff. many fakes use thicker cardstock that doesn't have the same flex
+- Too thin and floppy. some fakes use thinner cardstock
+- Wrong surface texture. either too smooth (plasticky) or too rough
+- Wrong weight. fakes are often noticeably lighter or heavier than genuine cards
 
 This check is most reliable when you have a known genuine card of the same type to compare directly.
 
@@ -77,7 +77,7 @@ Compare the suspect card to a verified genuine card of the same set if possible.
 
 ### Card Template and Layout
 
-The overall card template — the positioning of text boxes, the size of the artwork window, the HP placement, the set symbol position and size, the card number format — should match genuine cards from the same set exactly.
+The overall card template: the positioning of text boxes, the size of the artwork window, the HP placement, the set symbol position and size, the card number format. should match genuine cards from the same set exactly.
 
 Fake cards often have subtle layout errors:
 - Text boxes slightly mispositioned
@@ -101,9 +101,9 @@ Compare the holo effect under consistent lighting against a known genuine card. 
 
 ### The Print Quality Check
 
-Examine the card closely — ideally with a loupe or magnifying glass for high-value purchases.
+Examine the card closely. ideally with a loupe or magnifying glass for high-value purchases.
 
-Genuine Pokemon cards use a specific printing process with a characteristic dot pattern (CMYK halftone) when examined under magnification. Fakes often use different printing processes that look different under magnification — either no dot pattern (inkjet-style continuous tone) or wrong dot structure.
+Genuine Pokemon cards use a specific printing process with a characteristic dot pattern (CMYK halftone) when examined under magnification. Fakes often use different printing processes that look different under magnification. either no dot pattern (inkjet-style continuous tone) or wrong dot structure.
 
 On cards printed on inkjet or laser printers, the colour distribution looks grainy or watercolour-like under magnification compared to genuine offset printing. This check is more technical but very reliable for high-value card purchases.
 
@@ -121,7 +121,7 @@ On cards printed on inkjet or laser printers, the colour distribution looks grai
 
 ## What to Do If You Receive a Fake
 
-If you purchase a card on eBay Australia that turns out to be counterfeit, you have consumer protection options. eBay's Money Back Guarantee covers items that are not as described — a fake card sold as genuine qualifies.
+If you purchase a card on eBay Australia that turns out to be counterfeit, you have consumer protection options. eBay's Money Back Guarantee covers items that are not as described: a fake card sold as genuine qualifies.
 
 Document everything: photograph the card showing the fake tells, screenshot the listing, and raise a dispute through eBay's resolution centre promptly. eBay generally sides with buyers in counterfeiting cases.
 
@@ -157,7 +157,7 @@ Clear photos, accurate descriptions, and Australian shipping on every listing.
 Selling counterfeit goods as genuine is illegal under Australian consumer law. Buying fakes is generally not illegal for the buyer, but you have no legal recourse against the seller outside of consumer protection channels like eBay's resolution process.
 
 **Can graded cards be fake?**
-Graded cards in genuine grading company slabs (PSA, BGS, CGC) with intact tamper-evident seals are highly reliable. However, counterfeit slabs with fake cards inside do exist — examine the slab itself for signs of tampering or inconsistencies in the label printing. Buy graded cards from reputable sellers and verify the certification number on the grading company's website.
+Graded cards in genuine grading company slabs (PSA, BGS, CGC) with intact tamper-evident seals are highly reliable. However, counterfeit slabs with fake cards inside do exist. examine the slab itself for signs of tampering or inconsistencies in the label printing. Buy graded cards from reputable sellers and verify the certification number on the grading company's website.
 
 **Are fake Pokemon cards ever sold in retail stores?**
 Genuine retail stores (JB Hi-Fi, Target, Big W, game stores) sell authentic product from legitimate distribution channels. The fake problem is almost entirely in the private seller and grey-market space. Sealed retail product from major retailers is not typically a fake risk.
@@ -166,7 +166,7 @@ Genuine retail stores (JB Hi-Fi, Target, Big W, game stores) sell authentic prod
 If the lot is priced well below market value for the cards included, be suspicious. Request more photos if buying online, particularly close-up shots of the card backs, fonts, and holo patterns on any valuable cards in the lot. The light test can be performed on receipt as a quick verification.
 
 **What should I do if I receive fake cards from an eBay seller?**
-Photograph the fake tells clearly, screenshot the listing, and open a dispute through eBay's resolution centre using the "item not as described" reason. eBay's Money Back Guarantee covers counterfeits sold as genuine. Act promptly — eBay has time limits on dispute eligibility.
+Photograph the fake tells clearly, screenshot the listing, and open a dispute through eBay's resolution centre using the "item not as described" reason. eBay's Money Back Guarantee covers counterfeits sold as genuine. Act promptly. eBay has time limits on dispute eligibility.
 
 **Is it worth getting cheap cards authenticated?**
-Generally no — the cost of professional authentication typically exceeds the value of inexpensive cards. Use the self-check methods in this guide for cards under AU$50. For cards worth AU$100+, professional grading through PSA or CGC provides authentication as part of the grading process and adds documented provenance.
+Generally no: the cost of professional authentication typically exceeds the value of inexpensive cards. Use the self-check methods in this guide for cards under AU$50. For cards worth AU$100+, professional grading through PSA or CGC provides authentication as part of the grading process and adds documented provenance.

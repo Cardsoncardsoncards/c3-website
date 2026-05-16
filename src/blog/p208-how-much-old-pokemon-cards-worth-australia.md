@@ -1,9 +1,9 @@
 ---
 game: pokemon
-title: "How Much Are Your Old Pokemon Cards Worth in Australia? A Real Guide"
-description: "Found a collection of old Pokemon cards? This honest guide explains which ones are actually valuable, how to check current Australian prices, and what to do if you find something worth selling."
+title: "How Much Are Old Pokemon Cards Worth in Australia?"
+description: "Found a collection of old Pokemon cards? This honest guide explains which ones are actually valuable, how to check current Australian prices."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - pokemon
@@ -24,7 +24,7 @@ This guide gives you a real framework for assessing an old Pokemon card collecti
 
 ## The First Thing to Know
 
-The vast majority of base set, Jungle, Fossil, and Team Rocket era Pokemon cards — the ones from 1998 to 2002 — are worth AU$0.10 to AU$2 each in typical played condition.
+The vast majority of base set, Jungle, Fossil, and Team Rocket era Pokemon cards: the ones from 1998 to 2002. are worth AU$0.10 to AU$2 each in typical played condition.
 
 The ones worth significant money are the exceptions, not the rule. But those exceptions do exist and can be worth hundreds or thousands of dollars.
 
@@ -32,7 +32,7 @@ The ones worth significant money are the exceptions, not the rule. But those exc
 
 Four factors determine Pokemon card value:
 
-**1. The Pokemon depicted**: Charizard is more valuable than Bulbasaur. Pikachu more than Rattata. This reflects demand — some Pokemon have far more collectors than others.
+**1. The Pokemon depicted**: Charizard is more valuable than Bulbasaur. Pikachu more than Rattata. This reflects demand. some Pokemon have far more collectors than others.
 
 **2. Rarity**: Base Set holofoils (with the holographic treatment in the artwork) are rarer and more valuable than non-holo rares, which are more valuable than uncommons and commons.
 
@@ -50,7 +50,7 @@ From a typical old collection, pull these out and check them first:
 
 **Gold Star cards**: from sets like EX Team Rocket Returns and EX Dragon Frontiers (2005 to 2006). Small gold star in the name. Very valuable.
 
-**Shadowless Base Set**: look at the card frame around the Pokemon art. If there's no shadow on the right and bottom side of the art frame, it's Shadowless — the second rarest Base Set printing.
+**Shadowless Base Set**: look at the card frame around the Pokemon art. If there's no shadow on the right and bottom side of the art frame, it's Shadowless: the second rarest Base Set printing.
 
 **Crystal Pokemon**: from Aquapolis and Skyridge sets. Rare and sought-after.
 
@@ -66,7 +66,7 @@ From a typical old collection, pull these out and check them first:
 
 Most old cards that were played in the 1990s and early 2000s are in Heavily Played or Moderately Played condition. Children played with these cards in school playgrounds, kept them in rubber-banded stacks, and generally treated them as toys rather than collectibles.
 
-A Near Mint old Pokemon card requires being stored carefully since it was new. This was rare. If you have cards that look genuinely pristine, that's unusual and valuable. If they have corner wear, surface scratches, or edge damage — that's normal and significantly reduces value.
+A Near Mint old Pokemon card requires being stored carefully since it was new. This was rare. If you have cards that look genuinely pristine, that's unusual and valuable. If they have corner wear, surface scratches, or edge damage. that's normal and significantly reduces value.
 
 Be honest about condition when pricing. Overgrading is the most common mistake sellers make and leads to returns and negative feedback on eBay.
 
@@ -80,8 +80,23 @@ Grading makes sense for cards worth AU$100+ in Near Mint condition. The grading 
 
 Sleeve it immediately (don't clean it). Then check eBay AU sold prices for accurate current valuation. For anything potentially worth AU$100+, consider having it independently verified at a reputable card shop before selling.
 
-Track what you find with the [free C3 collection tracker](/tracker.html) — log each card, its estimated condition, and its current value so you have a clear record.
+Track what you find with the [free C3 collection tracker](/tracker.html): log each card, its estimated condition, and its current value so you have a clear record.
 
 ---
 
 *See also: [How to Sell Pokemon Cards in Australia](/blog/how-to-sell-pokemon-cards-australia/).*
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

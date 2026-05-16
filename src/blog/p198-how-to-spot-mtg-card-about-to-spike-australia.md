@@ -1,9 +1,9 @@
 ---
 game: mtg
 title: "How to Spot a MTG Card About to Spike in Price Australia"
-description: "MTG card prices can double or triple overnight when a new deck, combo, or reprint announcement hits. This guide explains the signals to watch — and how Australian players can act on them faster."
+description: "MTG card prices can double or triple overnight when a new deck, combo, or reprint announcement hits. This guide explains the signals to watch — and."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - mtg
@@ -26,7 +26,7 @@ This guide covers the main spike triggers and how Australian players can track t
 
 ### 1. Competitive Format Results
 
-When a card appears in a top-8 decklist at a major tournament (Grand Prix, Pro Tour equivalent, Regional Championship), demand spikes within hours. Competitive players copy winning lists — and they need the cards.
+When a card appears in a top-8 decklist at a major tournament (Grand Prix, Pro Tour equivalent, Regional Championship), demand spikes within hours. Competitive players copy winning lists. and they need the cards.
 
 How fast it moves: prices on TCGplayer (US market) often move within 6 to 12 hours of results being published. Australian eBay AU prices typically lag by 12 to 48 hours as local sellers update their listings.
 
@@ -36,7 +36,7 @@ How fast it moves: prices on TCGplayer (US market) often move within 6 to 12 hou
 
 A popular MTG content creator (Command Zone, Game Knights, The Professor, etc.) featuring a specific card in a deck video can cause significant price movement. Commander players form the largest buyer segment for the majority of MTG singles.
 
-Cards that spike from content are usually cards that people hadn't considered before — the "I didn't know this card existed but now I want it for my deck" effect.
+Cards that spike from content are usually cards that people hadn't considered before. the "I didn't know this card existed but now I want it for my deck" effect.
 
 Watch for: content featuring a specific card with an unusual or powerful application, or content from YouTube channels with 500k+ subscribers.
 
@@ -78,11 +78,26 @@ This is not reliable or frequent enough to build a strategy around, but being aw
 
 If you hold cards speculatively:
 
-- Set a target sell price and sell when it's reached — don't wait for a higher peak that may not come
+- Set a target sell price and sell when it's reached. don't wait for a higher peak that may not come
 - Diversify across multiple cards rather than concentrating in one spike play
 - Reserve List cards have lower reprint risk (by definition, no reprint)
-- Know that Australian market liquidity is lower than the US — exiting positions takes longer
+- Know that Australian market liquidity is lower than the US. exiting positions takes longer
 
 Track your speculative holdings separately in the [free C3 collection tracker](/tracker.html) with their purchase price and current value clearly recorded.
 
 Check live AUD prices on any MTG card at the [C3 MTG Card Vault](/cards/mtg).
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

@@ -1,7 +1,7 @@
 ---
 game: tcg
-title: "How to Store and Protect Your TCG Cards in Australia: The Complete Guide"
-description: "Australian climate is tough on TCG cards. Here's exactly how to sleeve, store, and protect your MTG, Pokemon, Riftbound, and One Piece cards to preserve their value."
+title: "How to Store and Protect Your TCG Cards in Australia"
+description: "Australian climate is tough on TCG cards. Here's exactly how to sleeve, store, and protect your MTG, Pokemon, Riftbound, and One Piece cards to."
 date: 2026-05-08
 category: accessories
 emoji: "📦"
@@ -75,3 +75,14 @@ For Unleashed Riftbound cards: graded Baron Nashor Ultimate Rares and Signature 
 Log your collection value and condition with our [Free TCG Tracker](/tracker.html).
 
 No affiliation with Dragon Shield, Ultra Pro, BCW, PSA, BGS, or SGC. Products mentioned are illustrative examples.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

@@ -1,7 +1,7 @@
 ---
 game: tcg
 title: "What Is Expected Value in TCG? A Beginner's Guide for Australian Players"
-description: "What is expected value in TCG and why does it matter for Australian players? This plain-English guide explains EV, how it is calculated, and how to use it to make smarter buying decisions in AUD."
+description: "What is expected value in TCG and why does it matter for Australian players? This plain-English guide explains EV, how it is calculated."
 date: 2026-04-20
 category: "buying-guides"
 tags:
@@ -24,7 +24,7 @@ It is not. Expected value is a straightforward calculation that takes about thir
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>Expected value (EV) in TCG is the average total value of cards you would expect to open from a booster box, calculated in dollars. If a box costs AU$180 and the EV is AU$150, you are paying AU$30 above EV for the experience of opening. If EV is AU$200 and the box costs AU$180, the numbers are in your favour. EV is an average — individual results vary significantly — but it tells you whether you are paying a reasonable premium for the opening experience or a very large one.</p>
+<p>Expected value (EV) in TCG is the average total value of cards you would expect to open from a booster box, calculated in dollars. If a box costs AU$180 and the EV is AU$150, you are paying AU$30 above EV for the experience of opening. If EV is AU$200 and the box costs AU$180, the numbers are in your favour. EV is an average. individual results vary significantly. but it tells you whether you are paying a reasonable premium for the opening experience or a very large one.</p>
 </div>
 
 ## The Simple Version
@@ -36,13 +36,13 @@ You open a booster box. Inside are some cards worth a lot, most worth very littl
 
 Multiply pull rate by value, sum across all rarities, multiply by the number of packs. That is EV.
 
-A box EV of AU$160 on a box that costs AU$180 means you are paying AU$20 above EV. That AU$20 is the price you are paying for the experience of opening packs — the excitement of not knowing what you will pull. Whether that is worth it is a personal decision. EV just gives you the number to make an informed one.
+A box EV of AU$160 on a box that costs AU$180 means you are paying AU$20 above EV. That AU$20 is the price you are paying for the experience of opening packs: the excitement of not knowing what you will pull. Whether that is worth it is a personal decision. EV just gives you the number to make an informed one.
 
 ## Why EV Matters More for Australian Players
 
 Australian MTG and TCG players pay more for sealed product than almost any other market. A booster box that costs USD$120 in the United States retails for AU$150-180 in Australia after import costs, local distribution margins, and currency conversion.
 
-This matters for EV because the secondary market for individual cards in Australia is also different from the US market. TCGPlayer prices are USD-denominated and do not reflect what Australian buyers actually pay on eBay AU. A card listed at USD$10 on TCGPlayer might sell for AU$18-22 on eBay AU after currency conversion and AU shipping costs — or it might sell for AU$12 if Australian demand for that specific card is lower.
+This matters for EV because the secondary market for individual cards in Australia is also different from the US market. TCGPlayer prices are USD-denominated and do not reflect what Australian buyers actually pay on eBay AU. A card listed at USD$10 on TCGPlayer might sell for AU$18-22 on eBay AU after currency conversion and AU shipping costs. or it might sell for AU$12 if Australian demand for that specific card is lower.
 
 The C3 EV Calculator uses AUD-denominated prices sourced from the Australian eBay secondary market rather than converted USD figures. This makes it significantly more accurate for Australian buyers than US-based EV tools.
 
@@ -73,10 +73,10 @@ You enter how many packs you are opening and your purchase price. The calculator
 - Your cost per pack in AUD
 - A verdict: Worth Opening, Borderline, or Avoid
 
-The verdict thresholds are set at 90 percent EV coverage (Worth Opening), 70-90 percent coverage (Borderline), and below 70 percent coverage (Avoid — Buy Singles Instead).
+The verdict thresholds are set at 90 percent EV coverage (Worth Opening), 70-90 percent coverage (Borderline), and below 70 percent coverage (Avoid. Buy Singles Instead).
 
 <div style="margin:28px 0;padding:20px 24px;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.25);border-left:3px solid #C9A84C;border-radius:8px;">
-<p style="font-size:14px;color:rgba(240,242,255,.85);margin-bottom:12px;font-weight:600;">Run the MTG EV Calculator — Australia</p>
+<p style="font-size:14px;color:rgba(240,242,255,.85);margin-bottom:12px;font-weight:600;">Run the MTG EV Calculator. Australia</p>
 <p style="font-size:13px;color:rgba(240,242,255,.65);margin-bottom:14px;">43 MTG sets covered. Enter your purchase price for a current AUD verdict.</p>
 <a href="/ev-calculator.html" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#7A621E,#C9A84C);color:#0A0C14;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Go to the EV Calculator Hub →</a>
 </div>
@@ -87,7 +87,7 @@ The verdict thresholds are set at 90 percent EV coverage (Worth Opening), 70-90 
 
 **Borderline (EV covers 70-90% of cost):** You are paying a moderate premium above EV. Whether this is acceptable depends on how much you value the opening experience. For players who enjoy opening packs, borderline is often still a reasonable choice. For pure value-seekers, singles are better.
 
-**Avoid — Buy Singles (EV covers below 70% of cost):** You are paying a significant premium above EV. The cards you statistically expect to pull are worth substantially less than what you paid for the box. Buying the specific singles you want directly will give significantly better value.
+**Avoid. Buy Singles (EV covers below 70% of cost):** You are paying a significant premium above EV. The cards you statistically expect to pull are worth substantially less than what you paid for the box. Buying the specific singles you want directly will give significantly better value.
 
 ## A Practical Example
 
@@ -100,9 +100,9 @@ You run the C3 EV Calculator. It returns:
 - EV coverage: 91.7%
 - Verdict: Worth Opening
 
-The calculator is telling you that based on official pull rates and current AU secondary market prices, the average box at AU$180 contains cards worth approximately AU$165. You are paying AU$15 above EV — a small premium of about 8 percent for the experience of opening.
+The calculator is telling you that based on official pull rates and current AU secondary market prices, the average box at AU$180 contains cards worth approximately AU$165. You are paying AU$15 above EV: a small premium of about 8 percent for the experience of opening.
 
-If the same calculator showed AU$120 EV on an AU$180 box (66.7% coverage), the verdict would be Avoid. You would be paying AU$60 above EV — a 50 percent premium over what the cards are statistically worth. Buying the specific singles you want would save AU$60 per box in that scenario.
+If the same calculator showed AU$120 EV on an AU$180 box (66.7% coverage), the verdict would be Avoid. You would be paying AU$60 above EV: a 50 percent premium over what the cards are statistically worth. Buying the specific singles you want would save AU$60 per box in that scenario.
 
 ## When to Ignore EV
 
@@ -115,6 +115,14 @@ EV is a tool, not a rule. There are valid reasons to open packs even when EV say
 
 EV is most useful when you are trying to make a rational financial decision about whether opening or buying singles gives better value for your money. It is not a judgement on players who open for other reasons.
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
+
 ## Frequently Asked Questions
 
 **What is a good EV for a MTG booster box in Australia?**
@@ -124,7 +132,7 @@ A box EV covering 90 percent or more of the purchase price is considered good. C
 Yes. The C3 EV Calculator includes foil pull rates and average foil values in the calculation. Foil pulls can significantly raise EV for sets with high foil demand.
 
 **How often does the EV Calculator update prices?**
-The EV Calculator uses market data that reflects current AU secondary market conditions. Prices shift as the market evolves — always run the calculator with current data rather than relying on calculations from weeks or months ago.
+The EV Calculator uses market data that reflects current AU secondary market conditions. Prices shift as the market evolves. always run the calculator with current data rather than relying on calculations from weeks or months ago.
 
 **Can I use EV for Pokemon or other TCGs?**
 The C3 EV Calculator currently covers MTG sets. Pokemon, Lorcana, and One Piece calculators are planned for future release. The concept of EV applies identically to all TCGs.
@@ -134,7 +142,7 @@ Not exactly. EV represents the total market value of cards you statistically exp
 
 ## Related Guides
 
-- [MTG EV Calculator Hub — All 43 Sets](/ev-calculator.html)
+- [MTG EV Calculator Hub. All 43 Sets](/ev-calculator.html)
 - [Should I Open My MTG Booster Box or Sell It Sealed?](/blog/should-i-open-mtg-booster-box-or-sell-it-sealed-australia/)
 - [MTG Singles vs Booster Boxes: Which Is Better Value in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)
 - [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)

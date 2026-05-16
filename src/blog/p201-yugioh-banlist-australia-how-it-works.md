@@ -1,9 +1,9 @@
 ---
 game: yugioh
-title: "Yu-Gi-Oh Banlist Australia: How It Works and Why It Destroys Card Values Overnight"
-description: "The Yu-Gi-Oh Forbidden and Limited List updates several times per year. This guide explains how the banlist works, when it changes, and how to protect your Australian card investments."
+title: "Yu-Gi-Oh Banlist in Australia: How It Works"
+description: "The Yu-Gi-Oh Forbidden and Limited List updates several times per year. This guide explains how the banlist works, when it changes."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - yugioh
@@ -32,13 +32,13 @@ The Yu-Gi-Oh Forbidden and Limited List (often called the "banlist") is maintain
 
 **Semi-Limited**: maximum 2 copies per deck.
 
-**Unlimited**: 3 copies allowed. This is the default — cards not on the list can be played at 3 copies.
+**Unlimited**: 3 copies allowed. This is the default. cards not on the list can be played at 3 copies.
 
 Cards move between these categories as Konami adjusts the format's balance. A card can move from Unlimited to Forbidden in a single update.
 
 ## How Often the List Updates
 
-Konami updates the banlist approximately three to four times per year. The schedule is not perfectly predictable — Konami releases the list roughly one month before each major event season.
+Konami updates the banlist approximately three to four times per year. The schedule is not perfectly predictable. Konami releases the list roughly one month before each major event season.
 
 For Australian players, the OCG (Japanese/Asian market) and TCG (Western market including Australia) ban lists are separate. A card banned in the OCG is not necessarily banned in the TCG, and vice versa. Australia uses the TCG list.
 
@@ -85,3 +85,14 @@ Use eBay AU sold listings to track current Australian prices for Yu-Gi-Oh single
 ---
 
 *See also: [Yu-Gi-Oh Booster Boxes Australia](/blog/yugioh-booster-boxes-australia/) and [How to Sell Yu-Gi-Oh Cards in Australia](/blog/how-to-sell-yugioh-cards-australia/).*
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

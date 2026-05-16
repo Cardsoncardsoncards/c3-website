@@ -1,7 +1,7 @@
 ---
 game: tcg
-title: "How to Start a Family TCG Collection Without Spending a Fortune in Australia"
-description: "A family TCG collection can become a shared hobby for years — or an expensive impulse that takes over. This guide shows Australian families how to start, structure, and sustain a TCG collection without the cost spiral."
+title: "How to Start a Family TCG Collection in Australia"
+description: "A family TCG collection can become a shared hobby for years — or an expensive impulse that takes over. This guide shows Australian families how to."
 date: 2026-05-05
 category: "buying-guides"
 tags:
@@ -40,7 +40,7 @@ Start with one game. Play it for three to six months. Then decide if a second ga
 
 Every major TCG offers a Starter Kit or equivalent that provides two complete playable decks for AU$20 to AU$25. This is always the correct first purchase.
 
-Two people can play with one Starter Kit. Four people can play with two Starter Kits (two different themed kits gives four distinct deck matchups). This cost — AU$40 to AU$50 for four people — is the entire entry investment for a family game night.
+Two people can play with one Starter Kit. Four people can play with two Starter Kits (two different themed kits gives four distinct deck matchups). This cost. AU$40 to AU$50 for four people. is the entire entry investment for a family game night.
 
 Do not buy booster packs in the first month. The randomness of booster packs creates card envy and collection imbalance before the family has established whether they enjoy the game.
 
@@ -83,3 +83,28 @@ Rotate who chooses the format: one month is Pokemon, next month is a Commander d
 The [free C3 collection tracker](/tracker.html) covers all major TCGs and is shareable via Google Sheets. One family member maintains the tracker, logging every significant card added to the collection. This serves two purposes: it shows the real value of the collection, and it prevents duplicate purchases.
 
 Browse current starter products at the [C3 shop](/shop.html).
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

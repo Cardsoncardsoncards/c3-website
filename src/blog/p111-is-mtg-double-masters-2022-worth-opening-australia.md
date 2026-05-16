@@ -1,7 +1,7 @@
 ---
 game: mtg
 title: "Is MTG Double Masters 2022 Worth Opening in Australia?"
-description: "Is the MTG Double Masters 2022 booster box worth opening in Australia? Two rares guaranteed per pack. Full AUD expected value breakdown with chase cards and honest verdict."
+description: "Is the MTG Double Masters 2022 booster box worth opening in Australia? Two rares guaranteed per pack. Full AUD expected value breakdown with chase."
 date: 2026-04-20
 category: "buying-guides"
 tags:
@@ -24,7 +24,7 @@ For Australian buyers the proposition is straightforward: more rares per pack, h
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>MTG Double Masters 2022 is one of the best value MTG booster products available on Amazon AU. Two rares or mythics are guaranteed in every single pack — double the rare floor of standard sets. The reprint list includes Dockside Extortionist, Wrenn and Six, Imperial Seal, and Kozilek Butcher of Truth. At AU$180 for a 24-pack box, the EV calculation is among the most favourable of any non-Masters set on this list. Use the C3 EV Calculator for a current AUD verdict.</p>
+<p>MTG Double Masters 2022 is one of the best value MTG booster products available on Amazon AU. Two rares or mythics are guaranteed in every single pack. double the rare floor of standard sets. The reprint list includes Dockside Extortionist, Wrenn and Six, Imperial Seal, and Kozilek Butcher of Truth. At AU$180 for a 24-pack box, the EV calculation is among the most favourable of any non-Masters set on this list. Use the C3 EV Calculator for a current AUD verdict.</p>
 </div>
 
 ## What Is Double Masters 2022 and Why Does It Matter for Australian Players?
@@ -36,18 +36,18 @@ Double Masters 2022 is a premium reprint set not sold in big box stores, designe
 Before going further, run the numbers for your specific purchase price. The C3 EV Calculator uses official Wizards of the Coast pull rate data and current AUD secondary market pricing to give you a personalised verdict.
 
 <div style="margin:28px 0;padding:20px 24px;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.25);border-left:3px solid #C9A84C;border-radius:8px;">
-<p style="font-size:14px;color:rgba(240,242,255,.85);margin-bottom:12px;font-weight:600;">MTG Double Masters 2022 EV Calculator — Australia</p>
+<p style="font-size:14px;color:rgba(240,242,255,.85);margin-bottom:12px;font-weight:600;">MTG Double Masters 2022 EV Calculator. Australia</p>
 <p style="font-size:13px;color:rgba(240,242,255,.65);margin-bottom:14px;">Enter your purchase price and number of packs to get a current AUD verdict: Worth Opening, Borderline, or Avoid.</p>
 <a href="/ev-calculator/mtg-double-masters-2022.html" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#7A621E,#C9A84C);color:#0A0C14;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Run the Double Masters 2022 EV Calculator →</a>
 </div>
 
 ## Chase Cards and What to Look For
 
-Dockside Extortionist is the headline mythic — a Commander staple that was AU$80+ before this reprinting and still holds AU$30-60+ in this version. Wrenn and Six is a Modern and Legacy staple worth AU$25-50+. Imperial Seal is a Reserved List-adjacent tutor worth AU$40-80+. Kozilek Butcher of Truth and Emrakul the Aeons Torn anchor the Eldrazi mythic targets. High-value rare reprints include Smothering Tithe, Fierce Guardianship, and The Scarab God.
+Dockside Extortionist is the headline mythic: a Commander staple that was AU$80+ before this reprinting and still holds AU$30-60+ in this version. Wrenn and Six is a Modern and Legacy staple worth AU$25-50+. Imperial Seal is a Reserved List-adjacent tutor worth AU$40-80+. Kozilek Butcher of Truth and Emrakul the Aeons Torn anchor the Eldrazi mythic targets. High-value rare reprints include Smothering Tithe, Fierce Guardianship, and The Scarab God.
 
 ## Australian Market Context
 
-Amazon AU stocks Double Masters 2022 Draft Booster boxes at AU$180 with Prime delivery. As a 2022 set the supply is stable but not unlimited — this is a premium product with a smaller print run than standard sets. The AU secondary market is active for all the headline reprints with consistent eBay AU sold listings demonstrating ongoing demand from Commander and Legacy players.
+Amazon AU stocks Double Masters 2022 Draft Booster boxes at AU$180 with Prime delivery. As a 2022 set the supply is stable but not unlimited. this is a premium product with a smaller print run than standard sets. The AU secondary market is active for all the headline reprints with consistent eBay AU sold listings demonstrating ongoing demand from Commander and Legacy players.
 
 ## Should You Open or Buy Singles?
 
@@ -57,11 +57,11 @@ This is the central question the EV Calculator answers. The short version:
 
 **Buy singles if:** the EV Calculator verdict is Avoid, you want specific cards rather than a spread across the set, or you are building a Commander deck targeting particular cards.
 
-If EV suggests buying singles, the C3 eBay store stocks MTG singles. Dockside Extortionist and Wrenn and Six are available as singles at current market rates — buying them directly is more predictable than gambling on which reprints appear in your specific box.
+If EV suggests buying singles, the C3 eBay store stocks MTG singles. Dockside Extortionist and Wrenn and Six are available as singles at current market rates. buying them directly is more predictable than gambling on which reprints appear in your specific box.
 
 <div style="margin:24px 0;padding:16px 20px;background:rgba(107,107,255,.07);border:1px solid rgba(107,107,255,.2);border-radius:9px;">
 <p style="font-size:13px;color:rgba(240,242,255,.75);margin-bottom:10px;">Looking for Double Masters 2022 singles? Browse the C3 eBay store for current MTG singles including Double Masters 2022 cards at AU market prices.</p>
-<a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=mtg-double-masters-2022Blog&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(107,107,255,.15);border:1px solid rgba(107,107,255,.35);color:#9898FF;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Shop MTG Singles — C3 eBay Store ↗</a>
+<a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=mtg-double-masters-2022Blog&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(107,107,255,.15);border:1px solid rgba(107,107,255,.35);color:#9898FF;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Shop MTG Singles. C3 eBay Store ↗</a>
 </div>
 
 ## Buy the Box on Amazon AU
@@ -69,11 +69,19 @@ If EV suggests buying singles, the C3 eBay store stocks MTG singles. Dockside Ex
 If the EV Calculator returns a Worth Opening or Borderline verdict and you decide to open, this is the confirmed Amazon AU listing for Double Masters 2022:
 
 <div style="margin:24px 0;padding:20px 22px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-radius:12px;">
-<p style="font-family:Cinzel,serif;font-size:15px;font-weight:700;color:#F0F2FF;margin-bottom:6px;">MTG Double Masters 2022 — Play Booster Box (24 Packs)</p>
+<p style="font-family:Cinzel,serif;font-size:15px;font-weight:700;color:#F0F2FF;margin-bottom:6px;">MTG Double Masters 2022. Play Booster Box (24 Packs)</p>
 <p style="font-size:22px;font-weight:700;color:#C9A84C;font-family:Cinzel,serif;margin-bottom:8px;">AU$180.00</p>
-<p style="font-size:13px;color:rgba(240,242,255,.6);margin-bottom:14px;">24 Play Boosters. Free Prime delivery. Sold and shipped by Amazon AU. Price may vary — always check current listing before purchasing.</p>
+<p style="font-size:13px;color:rgba(240,242,255,.6);margin-bottom:14px;">24 Play Boosters. Free Prime delivery. Sold and shipped by Amazon AU. Price may vary. always check current listing before purchasing.</p>
 <a href="https://www.amazon.com.au/dp/B09ZJBNL83?tag=blasdigital-22" target="_blank" rel="noopener sponsored" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:#F59E0B;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">View on Amazon AU ↗</a>
 </div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
 
 ## Frequently Asked Questions
 
@@ -91,7 +99,7 @@ Yes. Borderless and textless treatment versions of key cards in Double Masters 2
 
 ## Track Your Pulls
 
-Already opened your box? The C3 EV Calculator includes a pull tracker — enter your actual mythics, rares, and special treatments to see how your box compared to expected value. Results save in your browser.
+Already opened your box? The C3 EV Calculator includes a pull tracker: enter your actual mythics, rares, and special treatments to see how your box compared to expected value. Results save in your browser.
 
 The free C3 Collection Tracker is also available for logging your full collection across sets.
 
@@ -102,8 +110,8 @@ The free C3 Collection Tracker is also available for logging your full collectio
 
 ## Related Guides
 
-- [MTG Double Masters 2022 EV Calculator — Run the Numbers in AUD](/ev-calculator/mtg-double-masters-2022.html)
-- [MTG Commander Masters EV Calculator — Compare the Sets](/ev-calculator/mtg-commander-masters.html)
-- [MTG Modern Horizons 2 EV Calculator — Compare the Sets](/ev-calculator/mtg-modern-horizons-2.html)
+- [MTG Double Masters 2022 EV Calculator. Run the Numbers in AUD](/ev-calculator/mtg-double-masters-2022.html)
+- [MTG Commander Masters EV Calculator. Compare the Sets](/ev-calculator/mtg-commander-masters.html)
+- [MTG Modern Horizons 2 EV Calculator. Compare the Sets](/ev-calculator/mtg-modern-horizons-2.html)
 - [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
-- [Full MTG EV Calculator Hub — All Sets](/ev-calculator.html)
+- [Full MTG EV Calculator Hub. All Sets](/ev-calculator.html)

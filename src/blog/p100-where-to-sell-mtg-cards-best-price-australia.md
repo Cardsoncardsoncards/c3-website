@@ -1,7 +1,7 @@
 ---
 game: mtg
 title: "Where to Sell MTG Cards for the Best Price in Australia"
-description: "You have four main options: eBay, local stores, buylists, and Facebook groups. Here is what each pays, what each costs in time, and which is right for your situation."
+description: "You have four main options: eBay, local stores, buylists, and Facebook groups. Here is what each pays, what each costs in time."
 date: 2026-04-18
 category: "selling-guides"
 tags:
@@ -25,7 +25,7 @@ This guide covers every realistic selling option available to Australian MTG pla
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>eBay returns the most money per card but costs time and fees. Australian TCG store buylists (Good Games, TCG Singles, Ronin Games) are faster and simpler but pay 40 to 60 percent of market value in cash, or up to 80 percent in store credit. Facebook groups sit in between — better than buylists, less effort than eBay. For bulk cards, buylists are the only realistic option. For high-value singles, eBay or direct sales beat every alternative.</p>
+<p>eBay returns the most money per card but costs time and fees. Australian TCG store buylists (Good Games, TCG Singles, Ronin Games) are faster and simpler but pay 40 to 60 percent of market value in cash, or up to 80 percent in store credit. Facebook groups sit in between: better than buylists, less effort than eBay. For bulk cards, buylists are the only realistic option. For high-value singles, eBay or direct sales beat every alternative.</p>
 </div>
 
 ## Your Four Main Options for Selling MTG Cards in Australia
@@ -62,7 +62,7 @@ Australia has active TCG Facebook groups including MTG Australia Buy/Sell/Trade,
 
 **What it pays:** Closer to market value than buylists, minus any PayPal fees on payment. Typically 70 to 90 percent of market value for desirable cards.
 
-**What it costs you:** Time to post, respond to messages, negotiate, package, and post. Also some trust risk — you are selling to individuals rather than established stores.
+**What it costs you:** Time to post, respond to messages, negotiate, package, and post. Also some trust risk. you are selling to individuals rather than established stores.
 
 **Best for:** Mid-value singles (AU$5 to AU$50) where the premium over a buylist is worth the effort. Especially useful for cards in high current demand within the community.
 
@@ -84,7 +84,7 @@ Walk-in trade values at most Australian stores are equivalent to or lower than t
 
 **Selling 10 to 50 cards of mixed value:** Split the collection. High-value cards to eBay or Facebook. Everything else to a buylist.
 
-**Selling a large collection (100+ cards):** Buylists are the only realistic option unless you have months to list individually. Check at least two or three store buylists before submitting — the price variation between stores on the same cards is often substantial.
+**Selling a large collection (100+ cards):** Buylists are the only realistic option unless you have months to list individually. Check at least two or three store buylists before submitting: the price variation between stores on the same cards is often substantial.
 
 **Selling bulk commons and uncommons:** Buylists that buy by weight or bulk lot. Most stores pay AU$5 to AU$10 per 1,000 bulk cards. eBay bulk lots exist but are time-intensive to list and ship.
 
@@ -98,6 +98,9 @@ Each Australian store sets its buylist prices independently based on its current
 
 This is the problem a buylist aggregator solves: a single tool that shows you the best available Australian buylist price for each card in your collection without visiting every store individually.
 
+
+Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
+
 <div class="related-guides">
 
 **Related guides:**
@@ -110,7 +113,7 @@ This is the problem a buylist aggregator solves: a single tool that shows you th
 <div class="cta-block">
 
 **Free: Download the C3 TCG Collection Tracker**
-Catalogue your collection before you sell. Knowing exactly what you have — and its approximate value — lets you make a faster, more informed decision about which selling method to use.
+Catalogue your collection before you sell. Knowing exactly what you have. and its approximate value: lets you make a faster, more informed decision about which selling method to use.
 
 [Get the Free Tracker →](/tracker.html)
 
@@ -118,11 +121,16 @@ Catalogue your collection before you sell. Knowing exactly what you have — and
 
 <div class="cta-block">
 
-**C3 Buylist Aggregator — Coming Soon**
+**C3 Buylist Aggregator. Coming Soon**
 Compare buylist prices across Australian stores in one place. Join the early access list now.
 
 [Join the Buylist Early Access List →](/contact.html)
 
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions
@@ -131,13 +139,13 @@ Compare buylist prices across Australian stores in one place. Join the early acc
 It depends on the card value and your available time. eBay returns the most per card but costs time and fees. Buylists are faster but pay less. For high-value singles, eBay. For bulk or large collections, buylists.
 
 **How much do Australian stores pay for MTG singles?**
-Typically 40 to 60 percent of market value in cash, or 60 to 80 percent in store credit. Prices vary by store and by card — a card in high demand at one store may fetch significantly more than at another.
+Typically 40 to 60 percent of market value in cash, or 60 to 80 percent in store credit. Prices vary by store and by card: a card in high demand at one store may fetch significantly more than at another.
 
 **Should I sell MTG cards on eBay or to a store?**
-For cards worth AU$10 or more, eBay usually pays more after fees. For bulk, older cards, or large collections, store buylists are more practical. Many experienced sellers use both — eBay for high-value singles and buylists for everything else.
+For cards worth AU$10 or more, eBay usually pays more after fees. For bulk, older cards, or large collections, store buylists are more practical. Many experienced sellers use both. eBay for high-value singles and buylists for everything else.
 
 **Do Australian card stores buy all MTG sets?**
-Most active buylists cover current and recent sets comprehensively. Older sets are covered to varying degrees depending on the store. Very old or obscure sets may have limited or no buylist coverage. Check the specific store's buylist for the sets you hold.
+Most active buylists cover current and recent sets in full. Older sets are covered to varying degrees depending on the store. Very old or obscure sets may have limited or no buylist coverage. Check the specific store's buylist for the sets you hold.
 
 **Is it safe to mail cards to an Australian TCG store?**
 Yes, as long as you use a tracked postage option. Most stores are established businesses with clear terms and processes. Use tracking and keep your buylist confirmation email until payment is received.

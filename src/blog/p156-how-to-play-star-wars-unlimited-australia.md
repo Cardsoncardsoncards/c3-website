@@ -1,7 +1,7 @@
 ---
 game: star-wars-unlimited
-title: "How to Play Star Wars Unlimited: Full Beginner Rules Guide for Australians"
-description: "Star Wars Unlimited explained from scratch — base, leader, resources, and how combat works. A complete rules guide for Australian beginners wanting to try the game."
+title: "How to Play Star Wars Unlimited"
+description: "How to play Star Wars Unlimited explained step by step. Covers Aspects, the Base mechanic, how combat works, and what makes this game different."
 date: 2026-05-05
 category: "beginner-guides"
 tags:
@@ -18,7 +18,7 @@ featured: false
 layout: post
 ---
 
-Star Wars Unlimited launched in 2024 and quickly built a strong player community in Australia. It uses an alternating-activation system — each player takes one action at a time rather than completing a full turn — which makes it feel more interactive than most TCGs.
+Star Wars Unlimited launched in 2024 and quickly built a strong player community in Australia. It uses an alternating-activation system: each player takes one action at a time rather than completing a full turn. which makes it feel more interactive than most TCGs.
 
 This guide covers the rules you need to play your first game.
 
@@ -26,7 +26,7 @@ This guide covers the rules you need to play your first game.
 
 Destroy your opponent's Base before they destroy yours.
 
-Your Base has a health value (typically 30). When it reaches 0, you lose. No life totals, no decking out — the single goal is destroying the Base.
+Your Base has a health value (typically 30). When it reaches 0, you lose. No life totals, no decking out: the single goal is destroying the Base.
 
 ## What You Need
 
@@ -40,7 +40,7 @@ Starter Sets come with two ready-to-play decks plus Leader and Base cards for bo
 
 **Base Cards**: Your headquarters. Has a health value. Protect it.
 
-**Unit Cards**: Your fighters — ground troops and space ships. Played to two zones: Ground Arena and Space Arena.
+**Unit Cards**: Your fighters. ground troops and space ships. Played to two zones: Ground Arena and Space Arena.
 
 **Event Cards**: One-time effects played from hand.
 
@@ -52,7 +52,7 @@ Every card in your hand can be played for its effect, or placed face-down as a R
 
 Most cards have a cost in the top-left corner. Pay that many resources by exhausting (tapping sideways) that many resource cards.
 
-This is the same card-as-resource decision seen in Dragon Ball Super — every card is a potential resource.
+This is the same card-as-resource decision seen in Dragon Ball Super. every card is a potential resource.
 
 ## How Turns Work (Alternating Activation)
 
@@ -95,3 +95,53 @@ Leaders start the game deployed at the side of the battlefield, not in an arena.
 See our [Star Wars Unlimited booster boxes guide](/blog/star-wars-unlimited-booster-boxes-australia/) for more.
 
 Track your collection with the [free C3 tracker](/tracker.html).
+
+
+## Aspects: The Alignment System
+
+Star Wars Unlimited uses Aspects to represent faction and moral alignment. Cards have one or two Aspects from: Vigilance (blue), Command (green), Aggression (red), Cunning (yellow), Villainy (black), Heroism (white).
+
+Your Leader and Base each provide one Aspect each. Playing cards whose Aspects match your Leader or Base is efficient. Playing cards outside your Aspects costs 2 additional resources per unmatched Aspect. This is the deck construction constraint that creates faction identity.
+
+## After the Attack: How Combat Resolves
+
+Both the attacker and the defender deal damage equal to their Power simultaneously. If either unit takes damage equal to or greater than its HP, it's defeated and removed from the arena.
+
+Unlike many TCGs, combat in Star Wars Unlimited doesn't require the defender to tap (exhaust). Your units can defend without being committed: but they can only be used to defend against one attack per round.
+
+## Common Mistakes New Players Make
+
+**Ignoring the Initiative token**: The Initiative marker lets one player go first in the next round. Taking it costs your action for that turn, but controlling initiative gives you significant strategic advantage. New players often ignore it entirely.
+
+**Playing all units to the same arena**: Spreading units between Ground and Space creates multiple attack angles. Stacking everything in one arena leaves the other Base undefended.
+
+**Not reading Aspects before deckbuilding**: Playing cards outside your Aspects costs 2 extra resources per violation. Ignoring Aspect restrictions destroys your economy. Build decks that align with your Leader and Base Aspects.
+
+## Building Your First Star Wars Unlimited Deck
+
+Two-Player Starter Sets come with two complete decks, Leader Cards, Base Cards, and everything needed for both players. Available in Australia at local game stores and online for approximately AU$25 to AU$35.
+
+The format is 50-card constructed plus one Leader and one Base (both separate from the main deck). Up to 3 copies of any card are allowed. Aspect restrictions apply as described above.
+
+The competitive meta in Star Wars Unlimited has developed quickly. Check our [Star Wars Unlimited deck building guide](/blog/star-wars-unlimited-deck-building-australia/) for current competitive and budget build options.
+
+## Star Wars Unlimited Community in Australia
+
+Star Wars Unlimited has a growing organised play scene across Australian capital cities. Asmodee runs Premier events including Planetary Championships with prize support. Local game stores in Sydney, Melbourne, Brisbane, and Perth run weekly Constructed and Draft events.
+
+See the [C3 Release Calendar](/calendar) for upcoming Star Wars Unlimited events near you.
+
+## Checking Star Wars Unlimited Card Prices in Australia
+
+Current AUD prices for Star Wars Unlimited singles are tracked at the [C3 Card Vault](/cards/starwars). Use the [C3 Card Compare tool](/compare) to check multiple cards side by side before purchasing.
+
+## Frequently Asked Questions
+
+### How long does it take to learn Star Wars Unlimited?
+The basic rules can be learned in a single afternoon with a patient opponent or by following the official tutorial. Strategic depth takes months to develop. Most new players find the game enjoyable before they have mastered it.
+
+### Do I need to buy specific cards to learn Star Wars Unlimited?
+No. Starter decks or preconstructed decks give you everything needed for your first games. You do not need to know card values or build your own deck to start playing.
+
+### Is there a free digital version to practise?
+Most major TCGs have a free or low-cost digital version. Check the relevant game's official website for their digital platform options.

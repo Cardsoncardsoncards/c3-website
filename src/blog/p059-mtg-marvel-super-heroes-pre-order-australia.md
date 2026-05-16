@@ -1,7 +1,7 @@
 ---
 game: mtg
-title: "MTG Marvel Super Heroes: Full Pre-Order Guide for Australia (June 2026)"
-description: "Magic: The Gathering Marvel Super Heroes releases 26 June 2026. This guide covers every product, confirmed characters, Commander decks, and whether to pre-order on Amazon AU right now."
+title: "MTG Marvel Super Heroes: Australia Buying Guide"
+description: "Magic: The Gathering Marvel Super Heroes releases 26 June 2026. This guide covers every product, confirmed characters, Commander decks."
 date: 2026-04-08
 category: "buying-guides"
 tags:
@@ -115,7 +115,7 @@ Collector Booster pricing has increased for this set versus previous sets (USD$3
 
 **Commander Decks (Collector's Edition): Yes, for the Doom Prevails deck specifically.** All Surge Foil Commander deck at this price point is the premium product for Doctor Doom collectors. Pre-ordering now is the cleanest way to guarantee one.
 
-**Play Booster Display: Wait and assess.** The Spider-Man set's sealed product had inconsistent market performance post-release. Marvel Super Heroes has a stronger roster and better-received design, but Universes Beyond booster boxes have variable long-term value depending on IP reception. Pre-order if you plan to draft or crack packs for fun. If you are trying to optimise value, assess post-release.
+**Play Booster Display: Wait and assess.** The Spider-Man set's sealed product had inconsistent market performance post-release. Marvel Super Heroes has a stronger roster and better-received design, but Universes Beyond booster boxes have variable long-term value depending on IP reception. Pre-order if you plan to draft or crack packs for fun. If you are trying to improve value, assess post-release.
 
 **Collector Booster Box: Only if you are a dedicated collector.** The premium price point and the Classic Comic / Borderless Source Material cards make these compelling for serious Marvel-MTG crossover collectors. Pull rates for specific character versions will be competitive-level scarcity.
 
@@ -135,6 +135,11 @@ Doom Prevails Collector Commander Deck confirmed. Releases 26 June 2026.
 - Full worldwide release: 26 June 2026
 - God of Mischief (Loki) special Commander event: 17 to 23 July 2026 (three-vs-one format)
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
 ## Frequently Asked Questions
 
 **Is Marvel Super Heroes on MTG Arena?**
@@ -151,6 +156,9 @@ Buy the deck or decks whose colour combinations and characters appeal to you as 
 
 **What is Surge Foil?**
 Surge Foil is a premium foiling treatment used for Collector's Edition Commander decks and some Collector Booster exclusives. It features a distinctive etched foil pattern that is different from standard foil treatment.
+
+
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
 <div class="related-guides">
 

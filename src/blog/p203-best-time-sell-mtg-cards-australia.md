@@ -1,9 +1,9 @@
 ---
 game: mtg
-title: "Best Time to Sell MTG Cards in Australia: When to Hold and When to Cash Out"
-description: "MTG card values follow predictable patterns tied to set releases, tournament seasons, and reprint cycles. This guide helps Australian sellers identify the best moments to sell for maximum return."
+title: "Best Time to Sell MTG Cards in Australia"
+description: "MTG card values follow predictable patterns tied to set releases, tournament seasons, and reprint cycles. This guide helps Australian sellers."
 date: 2026-05-05
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - mtg
@@ -40,7 +40,7 @@ MTG card prices are highest when demand is highest relative to available supply.
 
 Commander cards don't rotate. A card played in Commander today will be played in Commander next year and five years from now (barring a ban). This makes Commander-relevant cards more stable price-wise than format-specific cards.
 
-**Best time to sell Commander staples**: when there's a price spike from new content (a popular video featuring the card), a new set that synergises with it, or news that creates short-term demand. These windows often last days to weeks — sell into the excitement.
+**Best time to sell Commander staples**: when there's a price spike from new content (a popular video featuring the card), a new set that synergises with it, or news that creates short-term demand. These windows often last days to weeks. sell into the excitement.
 
 **When not to sell Commander staples**: during a price dip caused by reprints that haven't hit the market yet. Once a reprint is confirmed, prices drop significantly. If you missed the sell window before the reprint announcement, wait for the floor and then decide whether to hold or accept the reduced price.
 
@@ -63,7 +63,7 @@ Selling 2 to 4 weeks before expected reprint products release (when spoilers sug
 
 Australian eBay AU prices typically lag US TCGplayer prices by 12 to 48 hours. When a US price spike occurs (tournament results, new combo discovered), you often have a brief window to sell at the pre-spike Australian price before local sellers update their listings.
 
-Similarly, when a price crash occurs in the US (reprint announcement, ban), local Australian sellers may not update immediately — creating a brief opportunity to sell at still-inflated Australian prices.
+Similarly, when a price crash occurs in the US (reprint announcement, ban), local Australian sellers may not update immediately. creating a brief opportunity to sell at still-inflated Australian prices.
 
 ## Practical Selling Calendar for Australian MTG Players
 
@@ -82,3 +82,18 @@ Similarly, when a price crash occurs in the US (reprint announcement, ban), loca
 Track your card values monthly with the [free C3 collection tracker](/tracker.html). When a card has moved significantly from your purchase price and you're in one of the favourable selling windows described above, that combination is the signal to act.
 
 Check live AUD prices at the [C3 MTG Card Vault](/cards/mtg) before making any selling decision.
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Is eBay or a buylist better for selling TCG cards in Australia?
+eBay returns more money per card but takes more time and has fees of roughly 13-15% all-in. Buylists pay less (typically 30-50% of market value in cash) but are instant. Use eBay for individual valuable cards. Use buylists for bulk lots where eBay effort is not worthwhile.
+
+### What fees does eBay charge for selling TCG cards in Australia?
+eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia/).
+
+### How do I know what my TCG cards are worth in Australia?
+Check eBay AU completed listings (filter to sold listings) for the most accurate local pricing. The [C3 Card Vault](/cards) also shows live pricing from eBay AU sold data across multiple TCGs.

@@ -1,7 +1,7 @@
 ---
 game: mtg
 title: "How to Run a Booster Draft at Home in Australia: Complete Guide"
-description: "Booster Draft is one of the best ways to play MTG with 4 to 8 friends without needing pre-built decks. This guide covers the full format — how drafting works, what to buy, and how to run a great night."
+description: "Booster Draft is one of the best ways to play MTG with 4 to 8 friends without needing pre-built decks. This guide covers the full format — how."
 date: 2026-05-05
 category: "beginner-guides"
 tags:
@@ -18,9 +18,9 @@ featured: false
 layout: post
 ---
 
-Booster Draft is one of the best ways to play MTG with a group. Everyone starts from scratch, building their deck from the same pool of cards opened on the night. No existing collection required. No optimised decks. Just the cards you draft.
+Booster Draft is one of the best ways to play MTG with a group. Everyone starts from scratch, building their deck from the same pool of cards opened on the night. No existing collection required. No tuned decks. Just the cards you draft.
 
-This guide covers how to run a Draft at home in Australia — what to buy, how the format works, and how to make it a great night.
+This guide covers how to run a Draft at home in Australia: what to buy, how the format works, and how to make it a great night.
 
 ## What Booster Draft Is
 
@@ -59,7 +59,7 @@ Each player keeps the cards they draft. The per-person cost is roughly equivalen
 
 **Pack 3**: open third pack, pass clockwise again.
 
-**Signals**: during the draft, the cards that come around tell you what others are drafting. If blue cards keep arriving late, blue is likely open (not being drafted heavily). This is "reading signals" — adjusting your picks based on what's available.
+**Signals**: during the draft, the cards that come around tell you what others are drafting. If blue cards keep arriving late, blue is likely open (not being drafted heavily). This is "reading signals". adjusting your picks based on what's available.
 
 ## Deckbuilding After the Draft
 
@@ -68,7 +68,7 @@ Each player takes their 45 drafted cards and builds a minimum 40-card deck. The 
 - 17 lands
 - 23 other cards
 
-You don't use every drafted card — typically you'll have 45 cards to choose from and select your best 23 non-land cards. Cards not included in your deck are your "sideboard" and can be swapped between games in a match.
+You don't use every drafted card. typically you'll have 45 cards to choose from and select your best 23 non-land cards. Cards not included in your deck are your "sideboard" and can be swapped between games in a match.
 
 Two-colour decks are usually strongest in limited formats. Three colours can work with the right mana fixing.
 
@@ -99,3 +99,67 @@ Check the [C3 shop](/shop.html#mtg) for currently available booster boxes in Aus
 **Start with a modern set.** Some older formats have very complex card interactions. Recent sets are designed with draft complexity appropriate for moderate experience levels.
 
 Check current MTG booster box prices in Australia at the [C3 shop](/shop.html#mtg) or browse singles at the [C3 MTG Card Vault](/cards/mtg).
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+## The Draft Mechanics in Detail
+
+### How to Pass Packs Correctly
+
+With 8 players in pods of 8, each player opens Pack 1 simultaneously, selects one card, then passes the remaining cards to the left (clockwise). This continues until all cards from Pack 1 are selected. Then Pack 2 is opened and passed to the right (counter-clockwise). Pack 3 returns to clockwise.
+
+The direction alternation ensures you see different cards from different players in each pack, reducing the ability to "signal" easily.
+
+### Pick Priority Basics
+
+New drafters often don't know what to prioritise. General guidance:
+
+**Pick 1-3 (the early picks)**: Take the single best card in the pack regardless of colour. Don't commit to a colour yet.
+
+**Pick 4-8**: Start noticing which colours are flowing to you (cards you want are still available late, meaning your neighbours aren't taking them). Begin consolidating toward two colours.
+
+**Pick 9+**: Commit. Fill your curve. Take signals seriously.
+
+**Signals**: If you see a strong card for a specific colour in pack 4 or later, it likely means the players passing to you aren't in that colour. This is a signal to consider moving in.
+
+### Building Your Sealed/Draft Deck
+
+After the draft, players build a minimum 40-card deck (including lands) from their drafted cards. You keep all cards you drafted and can use any number of basic lands for free.
+
+Standard Draft deck structure: 17 lands, 23 spells. Two colours. Removal first.
+
+## Keeping Track of the Draft
+
+For larger drafts, using numbered seating (1 through 8) and consistent passing direction helps prevent confusion. Designate one player as the caller: they announce "open packs", "pick one", "pass" at each stage.
+
+A timer helps: 75 seconds per pick in rounds 1-5, 60 seconds in rounds 6-10, 45 seconds for the remainder. This keeps the draft moving without rushing early picks.
+
+## Prizes and Incentives for Home Drafts
+
+Home drafts don't need formal prizes, but having some reward for good performance encourages engagement:
+
+**Keep your picks**: The draft prize is your drafted cards. This is the standard convention.
+
+**First pick bonus**: The player who finishes first in the mini-tournament gets first selection from any remaining uncut packs.
+
+**Draft challenge**: Each player secretly writes a prediction (e.g. "I will have 2 or more rares", "I will win at least 2 games"). Anyone who succeeds gets a bonus pack.
+
+## Current MTG Booster Boxes for Draft in Australia
+
+Play Booster boxes (36 packs, 6 players) and Draft Booster boxes (36 packs, 6 players) both work for home draft. Check the [C3 shop](/shop.html#mtg) for confirmed current Australian availability.
+
+Use the [C3 EV Calculator](/ev-calculator) to check whether the current box price is reasonable for a draft event before purchasing.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

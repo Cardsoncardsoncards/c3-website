@@ -1,7 +1,7 @@
 ---
 game: lorcana
-title: "Disney Lorcana Wilds Unknown Pre-Order Guide for Australia: Every Confirmed Product and How to Buy"
-description: "Disney Lorcana Wilds Unknown releases in Australia on 15 May 2026. This guide covers every confirmed product, pre-order options, Amazon AU availability, and what to buy first."
+title: "Disney Lorcana Wilds Unknown Pre-Order Guide for Australia"
+description: "Disney Lorcana Wilds Unknown releases in Australia on 15 May 2026. This guide covers every confirmed product, pre-order options, Amazon AU availability."
 date: 2026-04-16
 category: "buying-guides"
 tags:
@@ -18,6 +18,8 @@ cta_link: "/shop.html#lorcana"
 featured: false
 layout: post
 ---
+
+> **Updated May 2026:** This product has now released. Language below has been updated from pre-order to reflect current availability.
 
 Disney Lorcana Wilds Unknown releases in Australia on 15 May 2026, with local game store prerelease events beginning 8 May. This is the twelfth set for the game and the first to introduce Pixar characters. If you are planning to buy Wilds Unknown, this guide covers every confirmed product, where to pre-order in Australia, Amazon AU status, and what each product delivers for different buyer types.
 
@@ -118,6 +120,14 @@ Ravensburger's confirmation that Pixar continues through 2026 and into 2027 mean
 - [Where to Buy Lorcana Cards in Australia](/blog/where-to-buy-lorcana-cards-australia/)
 
 ---
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
 ## Frequently Asked Questions
 

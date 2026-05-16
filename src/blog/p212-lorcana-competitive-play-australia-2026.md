@@ -1,7 +1,7 @@
 ---
 game: lorcana
-title: "Lorcana Competitive Play Australia: Is There a Tournament Scene Worth Joining?"
-description: "Disney Lorcana has a growing competitive scene in Australia. This guide covers the state of Lorcana tournaments in 2026 — what events exist, what level of investment is needed, and whether it's worth getting into."
+title: "Lorcana Competitive Play Australia"
+description: "Disney Lorcana has a growing competitive scene in Australia. This guide covers the state of Lorcana tournaments in 2026 — what events exist, what."
 date: 2026-05-05
 category: "general-tcg"
 tags:
@@ -32,11 +32,11 @@ Ravensburger (Lorcana's publisher) organises official play through a tiered even
 
 **Quest Organised Play**: Ravensburger's ongoing quarterly organised play structure that gives players points toward higher-tier event invites.
 
-Check with your local game store about Lorcana organised play events — most participating stores advertise upcoming events on social media.
+Check with your local game store about Lorcana organised play events. most participating stores advertise upcoming events on social media.
 
 ## The Competitive Card Investment
 
-Competitive Lorcana differs from casual Lorcana primarily in card quality and deck optimisation.
+Competitive Lorcana differs from casual Lorcana primarily in card quality and deck improvation.
 
 **The top competitive decks in Australia (2026)**: the meta shifts with each new set. The most common competitive archetypes tend to be aggressive tempo decks (low-cost characters, fast Lore accumulation) and control variants (disruption plus mid-late game dominance).
 
@@ -48,7 +48,7 @@ For a realistic competitive deck: expect AU$150 to AU$250 if you're not running 
 
 ## Is Competitive Lorcana Worth It?
 
-**Yes if**: you already enjoy Lorcana casually, have a local game store with an active community, and are interested in improving your play through competitive pressure. Store Championships are approachable and social — they're not intimidating events.
+**Yes if**: you already enjoy Lorcana casually, have a local game store with an active community, and are interested in improving your play through competitive pressure. Store Championships are approachable and social. they're not intimidating events.
 
 **Maybe if**: you're drawn to the competitive structure but don't have regular access to a strong local Lorcana community. Online play through digital simulators can supplement local play.
 
@@ -56,7 +56,7 @@ For a realistic competitive deck: expect AU$150 to AU$250 if you're not running 
 
 ## The Casual vs Competitive Balance
 
-One advantage of Lorcana's design: the game is genuinely fun at the casual level with non-competitive decks. Many players participate in Store Championships with upgraded-but-not-optimised decks and enjoy the experience without the full competitive card investment.
+One advantage of Lorcana's design: the game is genuinely fun at the casual level with non-competitive decks. Many players participate in Store Championships with upgraded-but-not-tuned decks and enjoy the experience without the full competitive card investment.
 
 Starting with a Starter Deck (AU$20 to AU$25), upgrading with some targeted singles over a few months, and entering a Store Championship before investing in a full competitive build is a sensible progression path.
 
@@ -65,3 +65,14 @@ Browse current Lorcana product at the [C3 shop](/shop.html#lorcana). Check Lorca
 ---
 
 *See also: [Is Disney Lorcana Worth Starting in 2026?](/blog/is-disney-lorcana-worth-starting-2026-australia/) and [Best Lorcana Booster Boxes Australia](/blog/best-lorcana-booster-boxes-australia/).*
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

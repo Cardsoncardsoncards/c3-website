@@ -1,7 +1,7 @@
 ---
 game: mtg
-title: "How to Use the C3 Random Commander Generator to Build Better MTG Decks"
-description: "The C3 Random Commander Generator does more than roll random Commanders — it's a deck inspiration tool with colour, mana value, and count filters. Here's how to use it effectively."
+title: "How to Use the C3 Random Commander Generator"
+description: "The C3 Random Commander Generator does more than roll random Commanders — it's a deck inspiration tool with colour, mana value, and count filters."
 date: 2026-05-05
 category: "tools-and-trackers"
 tags:
@@ -42,7 +42,7 @@ The value is seeing Commanders you wouldn't normally think to build. Many powerf
 
 - Roll with no filters first for maximum surprise
 - If the result is familiar, hit reroll on that slot
-- If you're completely stuck, try the pod format (count=4) — sometimes building around a single Commander from a four-player roll is easier than choosing from scratch
+- If you're completely stuck, try the pod format (count=4). sometimes building around a single Commander from a four-player roll is easier than choosing from scratch
 
 ## Use Case 2: Pod Challenge with Friends
 
@@ -56,7 +56,7 @@ The shareable URL is one of the most useful features. After generating, the URL 
 
 ## Use Case 3: Focused Colour Exploration
 
-Use colour filters to explore what's available in a specific colour identity before committing to a build.
+Use colour filters to see what is available in a specific colour identity before committing to a build.
 
 **Example workflow:**
 
@@ -64,7 +64,7 @@ Use colour filters to explore what's available in a specific colour identity bef
 2. Set colour to W + U (Azorius)
 3. Set mana value to 4 or less (budget-friendly curve)
 4. Generate 4 results
-5. Click through to the [C3 Card Vault](/cards/mtg) page for any that interest you — card pages show current AUD pricing on all printings
+5. Click through to the [C3 Card Vault](/cards/mtg) page for any that interest you. card pages show current AUD pricing on all printings
 
 This is faster than searching Scryfall manually and shows you Australian prices immediately.
 
@@ -91,7 +91,7 @@ Each generated Commander has a "Reroll this one" button. This replaces just that
 
 ## Practical Tips
 
-**Check the EDHREC rank badge**: if a Commander shows "Commander staple" or "Popular in Commander," it has a large established community. Decklists, guides, and upgrade paths are easily found online. If a Commander shows "Niche" or has no rank, you're building into less explored territory — either a challenge or an opportunity depending on your preference.
+**Check the EDHREC rank badge**: if a Commander shows "Commander staple" or "Popular in Commander," it has a large established community. Decklists, guides, and upgrade paths are easily found online. If a Commander shows "Niche" or has no rank, you're building into less explored territory. either a challenge or an opportunity depending on your preference.
 
 **Filter by budget**: setting mana value to 3 or less doesn't filter by price, but lower-mana-value Commanders tend to be cheaper since they've been printed more times. Adjust your colour filter for maximum budget efficiency.
 
@@ -104,3 +104,28 @@ Each generated Commander has a "Reroll this one" button. This replaces just that
 ---
 
 *Browse live AUD prices on every Commander card at [C3 MTG Card Vault](/cards/mtg).*
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### What is the best Commander deck for a new player in Australia?
+Any Commander preconstructed deck from a recent set is a good starting point. Pick the theme or colour combination that appeals to you most. Current options from Tarkir: Dragonstorm and Lorwyn Eclipsed are available on Amazon AU.
+
+### Can I use a Commander precon in tournament play?
+Commander preconstructed decks are legal for casual Commander play and official Commander events. The individual cards are legal in Commander, Legacy, and Vintage. The precon as a whole is not competitive at high-level play but works fine for regular Commander nights.
+
+### Where can I find Commander singles in Australia?
+Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.

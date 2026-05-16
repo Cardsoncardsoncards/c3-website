@@ -1,9 +1,9 @@
 ---
 game: tcg
-title: "The Real Cost of Selling Cards on eBay Australia (Fees, Time, and What You Actually Take Home)"
-description: "eBay AU fees are more complex than they appear. This guide breaks down exactly what you actually take home when selling MTG, Pokemon, or other TCG cards on eBay in Australia."
+title: "Real Cost of Selling TCG Cards on eBay Australia"
+description: "eBay AU fees are more complex than they appear. This guide breaks down exactly what you actually take home when selling MTG, Pokemon."
 date: 2026-05-05
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - general-tcg
@@ -32,7 +32,7 @@ TCG singles sell in the "Collectible Card Games" category. The current fee struc
 
 **Promoted Listings**: optional. You set a percentage of the sale price to "promote" your listing. Typical effective rate for TCG is 3% to 7% of sale. This is optional but significantly affects visibility.
 
-**PayPal/Payment Processing**: eBay processes payments directly. This is already included in the Final Value Fee structure as of 2023 — no additional PayPal fee.
+**PayPal/Payment Processing**: eBay processes payments directly. This is already included in the Final Value Fee structure as of 2023. no additional PayPal fee.
 
 ## The Real Numbers
 
@@ -100,3 +100,18 @@ Alternatively, use the [free C3 collection tracker](/tracker.html) to track your
 ---
 
 *See also: [How to Sell MTG Cards in Australia](/blog/how-to-sell-mtg-cards-australia/) and [Buylist vs eBay: Which Gets You More?](/blog/buylist-vs-ebay-australia/)*
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Is eBay or a buylist better for selling TCG cards in Australia?
+eBay returns more money per card but takes more time and has fees of roughly 13-15% all-in. Buylists pay less (typically 30-50% of market value in cash) but are instant. Use eBay for individual valuable cards. Use buylists for bulk lots where eBay effort is not worthwhile.
+
+### What fees does eBay charge for selling TCG cards in Australia?
+eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia/).
+
+### How do I know what my TCG cards are worth in Australia?
+Check eBay AU completed listings (filter to sold listings) for the most accurate local pricing. The [C3 Card Vault](/cards) also shows live pricing from eBay AU sold data across multiple TCGs.

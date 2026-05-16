@@ -1,6 +1,6 @@
 ---
 game: riftbound
-title: "Riftbound vs Pokemon vs MTG vs One Piece: Which TCG Is Worth Starting in Australia?"
+title: "Riftbound vs Pokemon vs MTG vs One Piece"
 description: "Comparing the major TCGs available in Australia in 2026. Cost to start, competitive depth, collection value, and which one is right for you in AUD."
 date: 2026-05-09
 category: buying-guides
@@ -53,7 +53,7 @@ One Piece and Riftbound have the lowest barrier to competitive entry right now. 
 
 ## The One You Should Start With
 
-Start with Pokemon if you want the safest investment in terms of established collector market and the widest community in Australia.
+Start with Pokemon if you want the safest investment For established collector market and the widest community in Australia.
 
 Start with MTG if you want the deepest game with the most long-term competitive and casual content, and you are willing to invest more upfront.
 
@@ -66,3 +66,28 @@ Most serious TCG players play more than one game. Start with one, learn it prope
 ---
 
 Not affiliated with The Pokemon Company, Wizards of the Coast, Bandai, or Riot Games.
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

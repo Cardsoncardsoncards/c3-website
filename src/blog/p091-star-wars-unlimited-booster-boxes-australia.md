@@ -1,7 +1,7 @@
 ---
 game: star-wars-unlimited
-title: "Star Wars: Unlimited Booster Boxes in Australia — What to Buy and What to Expect"
-description: "Looking at Star Wars: Unlimited booster boxes in Australia? This guide covers current sets, realistic pull rates, where to buy, and whether sealed product is worth it."
+title: "Star Wars Unlimited Booster Boxes in Australia"
+description: "Looking at Star Wars: Unlimited booster boxes in Australia? This guide covers current sets, realistic pull rates, where to buy."
 date: 2026-04-16
 category: "buying-guides"
 tags:
@@ -47,7 +47,7 @@ Star Wars: Unlimited uses a higher base card count per pack (16 vs the 9–10 ty
 
 Understanding the rarity tiers helps you evaluate what you're chasing:
 
-**Common:** Core gameplay cards. Many strong playable cards appear at this rarity — unlike some TCGs where competitive play is entirely gated behind rare tiers.
+**Common:** Core gameplay cards. Many strong playable cards appear at this rarity. unlike some TCGs where competitive play is entirely gated behind rare tiers.
 
 **Uncommon:** Useful utility and support cards. Several per pack.
 
@@ -63,17 +63,17 @@ One notable design choice in Star Wars: Unlimited is that the game's most powerf
 
 Booster box EV in Star Wars: Unlimited varies by set and by how the secondary market prices each set's cards. The general pattern:
 
-- Showcase cards are the primary value driver in each box — a Showcase that's also a popular character can be worth AU$40–$100+
+- Showcase cards are the primary value driver in each box: a Showcase that's also a popular character can be worth AU$40–$100+
 - Legendary cards vary widely in value depending on competitive relevance
 - The strong Common and Uncommon card quality means more of the box has functional value even if it's not high monetary value
 
 To calculate current EV for a specific set, check eBay AU sold listings for each Legendary and the set's Showcases. Factor in the guaranteed Showcase and expected number of Legendaries per box, and compare the total to the retail box price.
 
-As with all TCGs, boxes with strong EV sell out quickly — the secondary market prices adjust as more boxes are opened. Current sets at launch tend to have higher EV windows than the same set months later when supply normalises.
+As with all TCGs, boxes with strong EV sell out quickly: the secondary market prices adjust as more boxes are opened. Current sets at launch tend to have higher EV windows than the same set months later when supply normalises.
 
 ## Where to Buy Star Wars: Unlimited Booster Boxes in Australia
 
-**Amazon AU:** Current sets available with Prime shipping. Price-check against local stores before buying — Amazon isn't always the cheapest for booster boxes.
+**Amazon AU:** Current sets available with Prime shipping. Price-check against local stores before buying. Amazon isn't always the cheapest for booster boxes.
 
 **Local game stores:** Best for current releases and for stores running organised play. Many LGS with an active SWU community pre-order allocations for popular sets.
 
@@ -114,6 +114,11 @@ One point worth noting: Star Wars: Unlimited Showcase cards have shown stronger 
 
 [Shop Star Wars: Unlimited at C3](/shop.html#starwars)
 
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions

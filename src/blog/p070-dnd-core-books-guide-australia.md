@@ -1,9 +1,9 @@
 ---
 game: dnd
-title: "D&D Core Books: A Guide for New and Returning Players in Australia"
-description: "A guide to the 2024 Dungeons and Dragons core books available in Australia. Covers what each book does, who needs it, and how the 2024 revision changes things for returning players."
+title: "D&D Core Books Guide for Australian Players"
+description: "The 2024 D&D Player's Handbook is the most important purchase for new players. This guide covers every core book, what each adds to your game, and current Australian pricing."
 date: 2026-04-09
-category: "game-guides"
+category: "how-to-play"
 tags:
   - post
   - dnd
@@ -23,7 +23,7 @@ The 2024 D&D core books represent the first major revision to the 5th Edition ru
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>The three 2024 D&D core books are the Player's Handbook, the Dungeon Master's Guide, and the Monster Manual. New players need the Player's Handbook first — it covers everything required to create a character and play the game. The Dungeon Master's Guide is for whoever runs the game. The Monster Manual is for DMs building their own encounters. All three are revised and updated from the 2014 versions. They are backwards compatible with older 5e content.</p>
+<p>The three 2024 D&D core books are the Player's Handbook, the Dungeon Master's Guide, and the Monster Manual. New players need the Player's Handbook first. it covers everything required to create a character and play the game. The Dungeon Master's Guide is for whoever runs the game. The Monster Manual is for DMs building their own encounters. All three are revised and updated from the 2014 versions. They are backwards compatible with older 5e content.</p>
 </div>
 
 ## The 2024 Player's Handbook
@@ -40,7 +40,7 @@ The Player's Handbook (PHB) is the core rulebook for players. It covers:
 
 **Who needs it:** Every player who wants to build and run a character. In a group of five, ideally multiple people have access to a copy. The DM also benefits from owning one.
 
-**2024 changes worth knowing about for returning players:** The class designs have been streamlined. Several subclasses have been reworked. The background system now contributes ability score increases rather than the point-buy system being entirely separate. The spell lists have been adjusted. If you've been playing 5e since 2014, the game is recognisably the same but there are meaningful differences in specific mechanics worth reviewing.
+**2024 changes worth knowing about for returning players:** The class designs have been cleaner. Several subclasses have been reworked. The background system now contributes ability score increases rather than the point-buy system being entirely separate. The spell lists have been adjusted. If you've been playing 5e since 2014, the game is recognisably the same but there are meaningful differences in specific mechanics worth reviewing.
 
 The 2024 PHB is available in standard hardcover. An alternate cover version also exists.
 
@@ -59,7 +59,7 @@ The Dungeon Master's Guide (DMG) is for the person running the game. It covers:
 
 **2024 changes:** The 2024 DMG has been significantly reorganised compared to the 2014 version. The structure is clearer and more useful as a practical reference. Returning DMs who felt the old DMG was disorganised may find the new version considerably more useful.
 
-The 2024 DMG is available in standard hardcover. An older 2014 edition is also still available if price is a consideration — the 2014 version covers the same core DMG material, just with the older structure.
+The 2024 DMG is available in standard hardcover. An older 2014 edition is also still available if price is a consideration: the 2014 version covers the same core DMG material, just with the older structure.
 
 ## The 2024 Monster Manual
 
@@ -75,7 +75,7 @@ The Monster Manual (MM) gives the DM a complete reference of creature stat block
 
 ## The Older 2014 Editions
 
-The original 2014 Player's Handbook, Dungeon Master's Guide, and Monster Manual are still available on Amazon AU, typically at lower prices than the 2024 editions. The 2024 and 2014 versions are broadly backwards compatible — you can mix and match, run published adventures from either era, and use older supplements with the new core books.
+The original 2014 Player's Handbook, Dungeon Master's Guide, and Monster Manual are still available on Amazon AU, typically at lower prices than the 2024 editions. The 2024 and 2014 versions are broadly backwards compatible. you can mix and match, run published adventures from either era, and use older supplements with the new core books.
 
 If you're on a strict budget or primarily plan to run published adventures using pre-written content, the 2014 editions work fine. The 2024 editions are the current standard and include revisions that experienced players generally find meaningful.
 
@@ -85,7 +85,7 @@ Beyond the three core books, two supplemental rulebooks are widely used in 5e ga
 
 **Tasha's Cauldron of Everything:** Adds additional subclasses, optional class features, new spells, and expanded rules options. Useful once you're comfortable with the core game and want more options.
 
-**Xanathar's Guide to Everything:** Similar in scope — additional subclasses, more spells, and expanded rules for thieves' tools, downtime activities, and other systems. Also useful once you have the core books.
+**Xanathar's Guide to Everything:** Similar in scope. additional subclasses, more spells, and expanded rules for thieves' tools, downtime activities, and other systems. Also useful once you have the core books.
 
 Both are available through the [C3 D&D shop](/shop.html#dnd) and are included in the Rules Expansion Gift Set bundle.
 
@@ -107,7 +107,7 @@ All core books and supplements mentioned here are available through the [C3 D&D 
 <div class="cta-block">
 
 **Browse the 2024 D&D core books and supplements on Amazon AU.**
-Player's Handbook, Dungeon Master's Guide, Monster Manual and more — all confirmed in stock.
+Player's Handbook, Dungeon Master's Guide, Monster Manual and more. all confirmed in stock.
 
 [Browse the D&D Shop →](/shop.html#dnd)
 
@@ -119,7 +119,7 @@ Player's Handbook, Dungeon Master's Guide, Monster Manual and more — all confi
 No. New players need the Player's Handbook. The DM benefits from the Dungeon Master's Guide, but can manage early sessions with a starter set or published adventure in place of it. The Monster Manual is optional for DMs running published adventures.
 
 **Should I buy the 2024 or 2014 Player's Handbook?**
-If you're new to D&D, buy the 2024 edition — it's the current standard and the version most new content is written around. If you already own the 2014 PHB and have an active group, upgrading is useful but not urgent.
+If you're new to D&D, buy the 2024 edition. it's the current standard and the version most new content is written around. If you already own the 2014 PHB and have an active group, upgrading is useful but not urgent.
 
 **Are the 2024 D&D books compatible with older 5e content?**
 Broadly yes. The 2024 books are backwards compatible with 5e supplements, adventures, and content. There are minor rule differences but nothing that prevents using older material.

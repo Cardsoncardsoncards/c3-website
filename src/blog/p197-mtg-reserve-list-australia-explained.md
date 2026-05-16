@@ -1,9 +1,9 @@
 ---
 game: mtg
-title: "MTG Reserve List Australia: What It Is and Why It Matters for Your Collection"
-description: "The MTG Reserved List guarantees certain cards will never be reprinted. This guide explains what the list is, why it exists, and how it affects card values for Australian collectors."
+title: "MTG Reserve List in Australia Explained"
+description: "The MTG Reserved List guarantees certain cards will never be reprinted. This guide explains what the list is, why it exists."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - mtg
@@ -54,7 +54,7 @@ This means:
 
 ## The "Spirit of the Reserved List" Issue
 
-Wizards has explored workarounds. Proxy tournaments allow non-original copies. Collector Boosters include alternate art reprints that are technically different cards even if mechanically equivalent. The official position is that the Reserved List prevents "functionally identical" reprints — not every version of a card with the same name.
+Wizards has explored workarounds. Proxy tournaments allow non-original copies. Collector Boosters include alternate art reprints that are technically different cards even if mechanically equivalent. The official position is that the Reserved List prevents "functionally identical" reprints. not every version of a card with the same name.
 
 The community debate around this is ongoing. Some players believe workarounds violate the spirit of the commitment. Others see it as a reasonable evolution.
 
@@ -64,12 +64,23 @@ For practical purposes: original printings of Reserved List cards maintain their
 
 The [C3 MTG Card Vault](/cards/mtg) tracks live AUD prices for Reserved List cards on eBay AU. Use it to check current market values for any specific card.
 
-For older Reserved List cards, always check the specific printing — Alpha, Beta, Unlimited, and Revised versions of the same card have meaningfully different values.
+For older Reserved List cards, always check the specific printing. Alpha, Beta, Unlimited, and Revised versions of the same card have meaningfully different values.
 
 ## Should You Buy Reserved List Cards?
 
 If you're playing Legacy or Commander and need a Dual Land or other Reserved List card for your deck: yes, buy what you need. These cards are playable investments. The cost is high but the functional value is genuine.
 
-If you're speculating purely for price appreciation: Reserved List cards have historically appreciated, but past performance is not predictive. Market liquidity is lower than typical cards — buying and selling takes longer because the buyer pool is smaller.
+If you're speculating purely for price appreciation: Reserved List cards have historically appreciated, but past performance is not predictive. Market liquidity is lower than typical cards. buying and selling takes longer because the buyer pool is smaller.
 
 Track any Reserved List cards in your collection with the [free C3 tracker](/tracker.html) to monitor value over time.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

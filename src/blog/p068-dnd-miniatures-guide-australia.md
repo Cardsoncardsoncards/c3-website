@@ -1,7 +1,7 @@
 ---
 game: dnd
 title: "D&D Miniatures in Australia: What to Know Before You Buy"
-description: "A practical guide to D&D miniatures available in Australia. Covers pre-painted versus unpainted options, scale, types of sets, and what actually makes sense to buy."
+description: "D&D miniatures add a visual dimension to your game but navigating the options is confusing. This guide covers plastic vs resin vs metal minis,."
 date: 2026-04-09
 category: "buying-guides"
 tags:
@@ -23,7 +23,7 @@ Miniatures are one of the most optional parts of D&D that nevertheless make comb
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>D&D miniatures are optional visual aids for tracking combat positions on a grid. Pre-painted plastic sets (like WizKids Icons of the Realms) are ready to use out of the box. Unpainted sets (like WizKids Nolzur's Marvellous) are cheaper and meant for painting. Budget multi-packs of generic fantasy figures give the most pieces for the least money. You do not need miniatures to play D&D — many groups play "theatre of the mind" without any visual aids at all.</p>
+<p>D&D miniatures are optional visual aids for tracking combat positions on a grid. Pre-painted plastic sets (like WizKids Icons of the Realms) are ready to use out of the box. Unpainted sets (like WizKids Nolzur's Marvellous) are cheaper and meant for painting. Budget multi-packs of generic fantasy figures give the most pieces for the least money. You do not need miniatures to play D&D. many groups play "theatre of the mind" without any visual aids at all.</p>
 </div>
 
 ## Do You Actually Need Miniatures?
@@ -42,7 +42,7 @@ If your group tries theatre of the mind and finds it creates confusion in combat
 
 **Pre-painted plastic miniatures (WizKids Icons of the Realms):** Ready to place on the table with no painting required. WizKids is the official D&D miniatures licence holder. The Icons of the Realms line covers a vast range of monsters, player character types, and iconic D&D creatures. Quality varies by set but is generally acceptable for tabletop use at normal viewing distance. These come as random booster packs (you don't know exactly which figures you'll get) or as set box sets with known contents.
 
-**Unpainted plastic miniatures (WizKids Nolzur's Marvellous):** The same quality plastic as the pre-painted line but supplied in grey plastic without paint. Designed for players or DMs who want to paint their miniatures. Significantly cheaper per figure than pre-painted. Not useful if you don't intend to paint them — grey plastic on a grey grid mat is difficult to distinguish.
+**Unpainted plastic miniatures (WizKids Nolzur's Marvellous):** The same quality plastic as the pre-painted line but supplied in grey plastic without paint. Designed for players or DMs who want to paint their miniatures. Significantly cheaper per figure than pre-painted. Not useful if you don't intend to paint them. grey plastic on a grey grid mat is difficult to distinguish.
 
 **Multi-pack budget sets:** Generic fantasy RPG miniature sets from third-party manufacturers, typically sold as 20 to 170 pieces per set. Not branded as D&D but include adventurers, monsters, and creature types that cover most standard encounters. Often 2D flat acrylic standee-style figures rather than full 3D models. The most cost-efficient option for a DM who needs broad coverage across creature types.
 
@@ -50,9 +50,9 @@ If your group tries theatre of the mind and finds it creates confusion in combat
 
 ## Scale: What 28mm Means
 
-Most D&D miniatures are produced at 28mm scale — a human-sized character is approximately 28mm tall from base to eye level. This scale is compatible with standard D&D grid mats where each square represents 5 feet (approximately 25mm). Most miniatures, battle mats, and accessories are designed around this standard.
+Most D&D miniatures are produced at 28mm scale: a human-sized character is approximately 28mm tall from base to eye level. This scale is compatible with standard D&D grid mats where each square represents 5 feet (approximately 25mm). Most miniatures, battle mats, and accessories are designed around this standard.
 
-When buying miniatures and battle mats separately, confirm both are 1-inch grid scale (25mm squares) to ensure miniatures fit correctly on the grid.
+When buying miniatures and battle mats separately, confirm both are 1-inch grid scale (25mm squares) to make sure miniatures fit correctly on the grid.
 
 ## Sets Worth Knowing About
 
@@ -112,7 +112,7 @@ All products confirmed available with Australian shipping.
 No. Many groups play entirely without miniatures using theatre of the mind. Miniatures are an optional visual aid that some groups find makes combat clearer.
 
 **What scale are D&D miniatures?**
-Most D&D miniatures are 28mm scale, designed to fit on a 1-inch (25mm) grid. Check that any battle mat you use is also on a 1-inch grid for proper compatibility.
+Most D&D miniatures are 28mm scale, Built to fit on a 1-inch (25mm) grid. Check that any battle mat you use is also on a 1-inch grid for proper compatibility.
 
 **What is the difference between WizKids Icons of the Realms and Nolzur's Marvellous?**
 Icons of the Realms are pre-painted, ready to use. Nolzur's Marvellous are unpainted grey plastic, designed for players who want to paint their own figures. If you don't plan to paint, stick with Icons of the Realms or budget pre-painted sets.

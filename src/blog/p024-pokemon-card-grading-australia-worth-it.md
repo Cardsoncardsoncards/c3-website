@@ -1,9 +1,9 @@
 ---
 game: pokemon
-title: "Pokemon TCG Grading in Australia: Is It Worth Getting Cards Graded?"
-description: "Thinking about getting your Pokemon cards graded in Australia? This honest guide covers the costs, turnaround times, which cards are worth submitting, and what grading actually does for value."
+title: "Pokemon TCG Grading in Australia"
+description: "Thinking about getting your Pokemon cards graded in Australia? This honest guide covers the costs, turnaround times, which cards are worth submitting."
 date: 2026-04-07
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - pokemon
@@ -19,7 +19,7 @@ featured: false
 layout: post
 ---
 
-Card grading — submitting Pokemon cards to a grading company to receive an official condition grade in a tamper-evident case — has gone from a niche collector practice to a mainstream topic in the Australian Pokemon community. PSA grades on vintage cards have sold for extraordinary prices. Graded slabs fill display cases at game stores. The question of whether to grade your own cards comes up constantly.
+Card grading. submitting Pokemon cards to a grading company to receive an official condition grade in a tamper-evident case. has gone from a niche collector practice to a mainstream topic in the Australian Pokemon community. PSA grades on vintage cards have sold for extraordinary prices. Graded slabs fill display cases at game stores. The question of whether to grade your own cards comes up constantly.
 
 The honest answer is that grading is worth it for a specific subset of cards under specific conditions. For most cards most Australian collectors own, grading costs more than it returns. This guide gives you the real picture so you can make an informed decision.
 
@@ -46,9 +46,9 @@ All three companies are US-based, which means Australian submitters are shipping
 
 This is where many Australian collectors get surprised. The cost of grading from Australia is not just the grading fee.
 
-**Grading fees:** PSA's economy service starts at approximately USD$25–30 per card (pricing changes periodically — check current rates at psacard.com). BGS and CGC have similar entry-level pricing. Express and faster service tiers cost significantly more per card.
+**Grading fees:** PSA's economy service starts at approximately USD$25–30 per card (pricing changes periodically. check current rates at psacard.com). BGS and CGC have similar entry-level pricing. Express and faster service tiers cost significantly more per card.
 
-**International shipping to the US:** Sending cards to a US grading company requires secure tracked international postage. For a small submission (10–20 cards), expect AU$50–100 for outbound shipping depending on the service used. Cards must be packaged carefully — any damage in transit before they reach the grader is your problem.
+**International shipping to the US:** Sending cards to a US grading company requires secure tracked international postage. For a small submission (10–20 cards), expect AU$50–100 for outbound shipping depending on the service used. Cards must be packaged carefully. any damage in transit before they reach the grader is your problem.
 
 **Return shipping from the US:** Graded slabs are heavier and bulkier than raw cards. Return shipping for a submission of 10–20 slabs typically costs AU$80–150 depending on speed and the number of cards.
 
@@ -56,15 +56,15 @@ This is where many Australian collectors get surprised. The cost of grading from
 
 **Total cost example:** 10 cards submitted to PSA at USD$30 per card = USD$300 in grading fees (approximately AU$460). Add AU$75 outbound shipping and AU$120 return shipping. Total: approximately AU$655 for 10 cards, or AU$65.50 per card in costs before the grade.
 
-For a card to be worth grading, the expected value of the graded card needs to exceed its raw value by more than the per-card cost — and that's only if it grades well.
+For a card to be worth grading, the expected value of the graded card needs to exceed its raw value by more than the per-card cost. and that's only if it grades well.
 
 ## The Grade Uncertainty Problem
 
 Here is the most significant risk in grading: you don't know what grade your card will receive until after you've paid and waited.
 
-A card you believe is NM might come back as PSA 7 or PSA 8. The difference in value between a PSA 7 and a PSA 10 of the same card can be enormous. A PSA 7 of a card worth AU$150 raw might be worth AU$120 graded — you've spent AU$65 in costs and lost value. A PSA 10 of the same card might be worth AU$600 — a strong positive outcome.
+A card you believe is NM might come back as PSA 7 or PSA 8. The difference in value between a PSA 7 and a PSA 10 of the same card can be enormous. A PSA 7 of a card worth AU$150 raw might be worth AU$120 graded. you've spent AU$65 in costs and lost value. A PSA 10 of the same card might be worth AU$600: a strong positive outcome.
 
-The issue is that without the grade, you don't know which outcome you'll get. Cards that look NM to the naked eye sometimes have centering issues, surface scratches under magnification, or edge wear that push them to PSA 8 or lower. Grading companies use standardised equipment and trained eyes — they often see flaws that casual examination misses.
+The issue is that without the grade, you don't know which outcome you'll get. Cards that look NM to the naked eye sometimes have centering issues, surface scratches under magnification, or edge wear that push them to PSA 8 or lower. Grading companies use standardised equipment and trained eyes. they often see flaws that casual examination misses.
 
 This uncertainty is why the break-even calculation for grading requires a meaningful margin above costs even in the expected case, not just the best case.
 
@@ -74,25 +74,25 @@ This uncertainty is why the break-even calculation for grading requires a meanin
 
 Base Set holos, Jungle and Fossil era cards, and early 2000s holos in genuinely Near Mint or better condition are the primary candidates for worthwhile grading. These cards have documented value at PSA 9 and 10 that significantly exceeds their raw value, and genuine NM examples from this era are rare enough that a high grade adds real premium.
 
-For a Base Set Charizard that you're confident is PSA 9 or 10 condition, grading makes economic sense. The value difference between raw and graded at those grades is multiple hundreds of dollars — more than enough to justify the submission costs.
+For a Base Set Charizard that you're confident is PSA 9 or 10 condition, grading makes economic sense. The value difference between raw and graded at those grades is multiple hundreds of dollars. more than enough to justify the submission costs.
 
 ### Current Set Special Illustration Rares in Pristine Condition
 
-Some Special Illustration Rares from current Scarlet and Violet sets are worth enough raw (AU$100–400+) that grading at PSA 9 or 10 would add meaningful premium. However, current cards need to maintain their value through the grading wait period — and value can shift significantly on current set cards as new sets release and demand moves.
+Some Special Illustration Rares from current Scarlet and Violet sets are worth enough raw (AU$100–400+) that grading at PSA 9 or 10 would add meaningful premium. However, current cards need to maintain their value through the grading wait period. and value can shift significantly on current set cards as new sets release and demand moves.
 
 Current set grading is higher risk than vintage grading because the card value may have changed by the time you get your slab back.
 
 ### Cards You're Certain About the Grade
 
-The best grading candidates are cards you're objectively confident about after careful examination — centered, clean corners and edges, no surface scratches under a loupe or magnifying glass, and undeniable gem quality. If you have any doubt about whether a card will grade highly, the economics don't favour submission at standard service tier pricing.
+The best grading candidates are cards you're objectively confident about after careful examination. centered, clean corners and edges, no surface scratches under a loupe or magnifying glass, and undeniable gem quality. If you have any doubt about whether a card will grade highly, the economics don't favour submission at standard service tier pricing.
 
 ## When Grading Doesn't Make Sense
 
-- Cards worth under AU$100 raw — the cost per card almost always exceeds the value premium
-- Cards in LP or lower condition — these won't grade high enough to justify the cost
-- Cards you're not confident about the grade — grade uncertainty eliminates the economic case
-- Cards where you need liquidity — your capital and cards are locked up for months
-- Impulse submissions — "I'll grade these and see what happens" is an expensive way to learn
+- Cards worth under AU$100 raw: the cost per card almost always exceeds the value premium
+- Cards in LP or lower condition. these won't grade high enough to justify the cost
+- Cards you're not confident about the grade. grade uncertainty eliminates the economic case
+- Cards where you need liquidity. your capital and cards are locked up for months
+- Impulse submissions , "I'll grade these and see what happens" is an expensive way to learn
 
 ## Alternatives to Full Grading
 
@@ -100,9 +100,15 @@ For cards you want to protect and authenticate without the full grading submissi
 
 **Toploaders and one-touch cases** provide physical protection at a fraction of the cost. A AU$2 one-touch magnetic case protects your card from damage without the months-long submission process.
 
-**BGS sub-grade tiers** (half-grades like 9.5, 8.5) are sometimes available for cards that are very good but not quite PSA 10 territory — these can still command premiums at lower submission cost tiers than chasing a PSA 10.
+**BGS sub-grade tiers** (half-grades like 9.5, 8.5) are sometimes available for cards that are very good but not quite PSA 10 territory. these can still command premiums at lower submission cost tiers than chasing a PSA 10.
 
-**Self-grading for sale purposes** — accurately grading your own card's condition and listing it clearly on eBay AU as NM or LP with clear photos serves most selling needs without the submission cost and delay.
+**Self-grading for sale purposes**. accurately grading your own card's condition and listing it clearly on eBay AU as NM or LP with clear photos serves most selling needs without the submission cost and delay.
+
+
+Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
+
+
+Think you know this game? Test it at the [C3 TCG Quiz](/quiz). Questions cover cards, rules, set knowledge, and format history.
 
 <div class="related-guides">
 
@@ -122,6 +128,11 @@ Current sets and back catalogue confirmed in stock.
 
 </div>
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
 ## Frequently Asked Questions
 
 **How long does it take to get Pokemon cards graded from Australia?**
@@ -131,13 +142,13 @@ Several months minimum at economy service tiers, often longer during peak submis
 For high-value vintage cards in genuine NM or better condition, yes. For most modern cards and any card worth less than AU$100 raw, the costs typically outweigh the value premium the grade adds.
 
 **Can I submit cards directly to PSA from Australia?**
-Yes — PSA accepts international submissions. You create an account at psacard.com, package your cards per their instructions, and ship internationally. The process is documented on their website. Check current submission requirements before packing.
+Yes. PSA accepts international submissions. You create an account at psacard.com, package your cards per their instructions, and ship internationally. The process is documented on their website. Check current submission requirements before packing.
 
 **What is the difference between PSA 9 and PSA 10?**
-PSA 9 (Mint) indicates near-perfect condition with one or two minor flaws. PSA 10 (Gem Mint) indicates essentially perfect condition. The value difference between PSA 9 and PSA 10 is significant for popular cards — PSA 10 examples often trade at 2–5x the PSA 9 price for desirable cards.
+PSA 9 (Mint) indicates near-perfect condition with one or two minor flaws. PSA 10 (Gem Mint) indicates essentially perfect condition. The value difference between PSA 9 and PSA 10 is significant for popular cards. PSA 10 examples often trade at 2–5x the PSA 9 price for desirable cards.
 
 **Should I get modern Pokemon cards graded?**
 Only if they're worth AU$100+ raw, you're confident about the grade, and you can wait the required time. Modern cards carry the additional risk of value shift during the grading period. The economics are harder to justify for modern cards than for vintage.
 
 **Are graded Pokemon cards harder to sell in Australia?**
-Graded cards sell through eBay Australia, which has an active buyer base for slabs. High-grade examples of popular cards sell reliably. Lower-grade slabs (PSA 6 and below) can be harder to move at a price that justifies the grading cost — buyers can often find raw cards in better condition for less.
+Graded cards sell through eBay Australia, which has an active buyer base for slabs. High-grade examples of popular cards sell reliably. Lower-grade slabs (PSA 6 and below) can be harder to move at a price that justifies the grading cost. buyers can often find raw cards in better condition for less.

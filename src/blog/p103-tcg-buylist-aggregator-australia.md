@@ -1,7 +1,7 @@
 ---
 game: tcg
-title: "Why Australia Needs a TCG Buylist Aggregator and What One Actually Does"
-description: "Australian TCG sellers lose money every time they check one buylist and stop. A buylist aggregator solves this by comparing every store's prices in one search. Here is how it works."
+title: "Why Australia Needs a TCG Buylist Aggregator and What One"
+description: "Australian TCG sellers lose money every time they check one buylist and stop. A buylist aggregator solves this by comparing every store's prices in."
 date: 2026-04-18
 category: "selling-guides"
 tags:
@@ -51,7 +51,7 @@ The sellers who lose the most are those with mid-to-large collections who sell t
 
 Building a buylist aggregator requires access to each store's pricing data in a usable format. Australian TCG stores publish their buylists as user-facing tools, not as structured data feeds designed for third-party consumption.
 
-This is a technical problem — the stores are not set up for their data to be pulled automatically — and a relationship problem. An aggregator needs cooperation from or agreements with the stores it covers to access current price data reliably.
+This is a technical problem: the stores are not set up for their data to be pulled automatically. and a relationship problem. An aggregator needs cooperation from or agreements with the stores it covers to access current price data reliably.
 
 It is not technically impossible. It is a problem that requires building the right infrastructure and establishing the right store relationships. US-based tools have done this. Australia simply has not had a dedicated platform willing to build it yet.
 
@@ -59,7 +59,7 @@ It is not technically impossible. It is a problem that requires building the rig
 
 Not all aggregators are equal. The specific features that would make an Australian TCG buylist aggregator genuinely useful are:
 
-**Real-time or near-real-time pricing.** Buylist prices change frequently. A tool showing yesterday's prices is worse than useless — it gives sellers false confidence in numbers that may no longer apply. Prices need to be current.
+**Real-time or near-real-time pricing.** Buylist prices change frequently. A tool showing yesterday's prices is worse than useless. it gives sellers false confidence in numbers that may no longer apply. Prices need to be current.
 
 **Coverage of the major Australian stores.** Good Games, TCG Singles, Ronin Games, and Gameology are the minimum meaningful set. A tool missing major stores is only partially useful.
 
@@ -73,7 +73,7 @@ Not all aggregators are equal. The specific features that would make an Australi
 
 **Large collection sellers.** Anyone selling 50 or more cards at a time. The price variation across stores on a large submission is where the aggregator pays for itself most clearly.
 
-**Regular sellers.** Players who sell cards regularly as part of their hobby cycle — upgrading decks, rotating collections, clearing sets after a new release. These sellers make the comparison calculation repeatedly and benefit from a tool that makes it fast.
+**Regular sellers.** Players who sell cards regularly as part of their hobby cycle: upgrading decks, rotating collections, clearing sets after a new release. These sellers make the comparison calculation repeatedly and benefit from a tool that makes it fast.
 
 **New sellers.** Someone selling their first TCG collection has no baseline knowledge of which stores pay well for which cards. An aggregator gives them immediate visibility without requiring them to research the Australian store landscape from scratch.
 
@@ -114,6 +114,11 @@ Be the first to use the aggregator when it launches. No spam, just a notificatio
 
 </div>
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
 ## Frequently Asked Questions
 
 **What is a buylist aggregator?**
@@ -132,4 +137,4 @@ The C3 aggregator will be free for sellers. Join the early access list to be not
 On a collection of 50 cards with an average buylist value of AU$10 per card, using the highest-paying store for each card rather than one store for everything typically adds AU$50 to AU$150 to the total return. The exact amount depends on your specific cards and the price variation between stores at the time of your sale.
 
 **Is a buylist aggregator the same as a price guide?**
-No. A price guide shows what cards are worth on the open market. A buylist aggregator shows what specific stores are currently willing to pay to buy those cards. These are different numbers — buylist prices are always lower than market prices.
+No. A price guide shows what cards are worth on the open market. A buylist aggregator shows what specific stores are currently willing to pay to buy those cards. These are different numbers. buylist prices are always lower than market prices.

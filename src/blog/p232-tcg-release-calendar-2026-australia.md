@@ -1,6 +1,6 @@
 ---
 game: tcg
-title: "TCG Release Calendar 2026: Every Major Set and Tournament Date for Australia"
+title: "TCG Release Calendar 2026 for Australia"
 description: "The complete 2026 TCG release and tournament calendar for Australian players. MTG, Pokemon, Riftbound, Lorcana, One Piece, and more, all dates in AEST."
 date: 2026-05-07
 category: general-tcg
@@ -118,3 +118,14 @@ Card Vault: our price database at [/cards](/cards) covers all games we track, up
 ---
 
 Dates sourced from official publisher announcements. Australian retail dates may vary. Not affiliated with Riot Games, Wizards of the Coast, The Pokemon Company, Ravensburger, Bandai, Konami, or Fantasy Flight Games.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

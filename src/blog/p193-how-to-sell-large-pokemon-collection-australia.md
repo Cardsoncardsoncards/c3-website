@@ -1,9 +1,9 @@
 ---
 game: pokemon
-title: "How to Sell a Large Pokemon Card Collection in Australia: Step-by-Step Guide"
-description: "Selling a large Pokemon card collection in Australia is overwhelming without a plan. This guide covers how to sort, value, and sell — whether that's eBay, buylist, or bulk — to maximise what you get."
+title: "How to Sell a Large Pokemon Card Collection in Australia"
+description: "Selling a large Pokemon card collection in Australia is overwhelming without a plan. This guide covers how to sort, value, and sell — whether."
 date: 2026-05-05
-category: "selling-and-money"
+category: "selling-guides"
 tags:
   - post
   - pokemon
@@ -28,7 +28,7 @@ Do not try to value every card as you go through the collection. This takes fore
 
 Sort into categories first:
 
-**Pile A**: holofoils, ex, V, VMAX, full arts, rainbow rares — anything with a special treatment or obvious rarity
+**Pile A**: holofoils, ex, V, VMAX, full arts, rainbow rares. anything with a special treatment or obvious rarity
 **Pile B**: rares without special treatment (standard rare symbol)
 **Pile C**: uncommons
 **Pile D**: commons
@@ -41,11 +41,11 @@ Pile A contains the money. Go through each card in Pile A and check the current 
 
 Sort Pile A further:
 
-**Pile A1**: cards worth AU$5 or more — these get individual eBay listings
-**Pile A2**: cards worth AU$1 to AU$5 — these can go in a bulk lot or low-price individual listings
-**Pile A3**: cards worth under AU$1 — these go with your bulk
+**Pile A1**: cards worth AU$5 or more. these get individual eBay listings
+**Pile A2**: cards worth AU$1 to AU$5. these can go in a bulk lot or low-price individual listings
+**Pile A3**: cards worth under AU$1. these go with your bulk
 
-Cards worth AU$5+ are almost always worth individual eBay listing. Cards worth AU$1 to AU$5 are borderline — the time investment in listing must justify the marginal return over bulk.
+Cards worth AU$5+ are almost always worth individual eBay listing. Cards worth AU$1 to AU$5 are borderline: the time investment in listing must justify the marginal return over bulk.
 
 ## Step 3: Know Your Bulk Rates
 
@@ -83,7 +83,7 @@ For any single card worth more than approximately AU$80 to AU$100, professional 
 
 Grading fees and turnaround times vary. PSA's bulk services are the most accessible starting point.
 
-Do not grade cards worth under AU$50 in raw form — the grading fee will not be recouped in most cases.
+Do not grade cards worth under AU$50 in raw form: the grading fee will not be recouped in most cases.
 
 ## Step 6: Track What You Sell and For How Much
 
@@ -93,10 +93,25 @@ Use the [free C3 collection tracker](/tracker.html) to log what you've sold and 
 
 **Selling an entire collection as one lot without sorting**: you'll receive 30% to 50% of what the valuable cards are worth individually. Always pull the valuable cards out first.
 
-**Misjudging condition**: what looks NM to you may look LP to a buyer. Grade conservatively — it's better to be pleasantly surprised than to deal with returns.
+**Misjudging condition**: what looks NM to you may look LP to a buyer. Grade conservatively. it's better to be pleasantly surprised than to deal with returns.
 
 **Not knowing the current market**: Pokemon prices move quickly. A card worth AU$30 in January may be worth AU$12 in June if the meta shifted or reprints arrived. Check current sold prices, not prices you remember.
 
 ---
 
 *See also: [How to Sell Pokemon Cards in Australia](/blog/how-to-sell-pokemon-cards-australia/) and the [free C3 collection tracker](/tracker.html).*
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+## Frequently Asked Questions
+
+### Is eBay or a buylist better for selling TCG cards in Australia?
+eBay returns more money per card but takes more time and has fees of roughly 13-15% all-in. Buylists pay less (typically 30-50% of market value in cash) but are instant. Use eBay for individual valuable cards. Use buylists for bulk lots where eBay effort is not worthwhile.
+
+### What fees does eBay charge for selling TCG cards in Australia?
+eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia/).
+
+### How do I know what my TCG cards are worth in Australia?
+Check eBay AU completed listings (filter to sold listings) for the most accurate local pricing. The [C3 Card Vault](/cards) also shows live pricing from eBay AU sold data across multiple TCGs.

@@ -1,7 +1,7 @@
 ---
 game: riftbound
-title: "Riftbound Unleashed Pre-Order Guide for Australia: What It Is and Whether to Buy"
-description: "Riftbound Unleashed releases 8 May 2026. This guide covers the new set, every confirmed product, Amazon AU availability, and whether to buy in for the third Riftbound expansion."
+title: "Riftbound Unleashed: Australia Buying Guide"
+description: "Riftbound Unleashed releases 8 May 2026. This guide covers the new set, every confirmed product, Amazon AU availability."
 date: 2026-04-16
 category: "buying-guides"
 tags:
@@ -19,11 +19,13 @@ featured: false
 layout: post
 ---
 
-Riftbound Unleashed releases on 8 May 2026 and is the third set for Riftbound, the competitive TCG from Riot Games, the studio behind League of Legends. If you are already playing Riftbound or are considering getting into it, this guide covers what Unleashed adds to the game, what products are confirmed, where to buy in Australia, and whether this is a good entry point for new players.
+> **Updated May 2026:** This product has now released. Language below has been updated from pre-order to reflect current availability.
+
+Riftbound Unleashed released on 8 May 2026 2026 and is the third set for Riftbound, the competitive TCG from Riot Games, the studio behind League of Legends. If you are already playing Riftbound or are considering getting into it, this guide covers what Unleashed adds to the game, what products are confirmed, where to buy in Australia, and whether this is a good entry point for new players.
 
 <div class="quick-answer">
 <strong>Quick Answer:</strong>
-<p>Riftbound Unleashed releases 8 May 2026. It is the third set and focuses on escalated champion customisation and equipment-based strategies. Amazon AU's Riftbound listing history has been inconsistent by set. Check the C3 Riftbound shop page for current availability. Local game stores are the most reliable day-one source if Amazon AU does not have it listed. New players can start with Riftbound at any set. The Origins starter set remains the recommended entry point before buying into Unleashed.</p>
+<p>Riftbound Unleashed released 8 May 2026. It is the third set and focuses on escalated champion customisation and equipment-based strategies. Amazon AU's Riftbound listing history has been inconsistent by set. Check the C3 Riftbound shop page for current availability. Local game stores are the most reliable day-one source if Amazon AU does not have it listed. New players can start with Riftbound at any set. The Origins starter set remains the recommended entry point before buying into Unleashed.</p>
 </div>
 
 ## What Is Riftbound?
@@ -58,7 +60,7 @@ As of mid-April, confirmed product types and ASINs for Unleashed on Amazon AU ar
 
 ### If You Already Play Riftbound
 
-Yes. Unleashed is a competitive expansion, not a standalone product. If you are playing Riftbound in the current format with Origins and Spiritforged cards, Unleashed adds new champions, new equipment options, and new cards that will affect the competitive meta. Buy the set and update your decks accordingly. Check spoilers in the two weeks before release to identify which specific cards matter for your current champion archetype.
+Yes. Unleashed is a competitive expansion, not a standalone product. If you are playing Riftbound in the current format with Origins and Spiritforged cards, Unleashed adds new champions, new equipment options, and new cards that will affect the competitive meta. Buy the set and update your decks accordingly. Check spoilers in the two weeks at launch to identify which specific cards matter for your current champion archetype.
 
 ### If You Want to Start Riftbound
 
@@ -70,7 +72,7 @@ Once you have played through the Origins starter set and understand the champion
 
 ### If You Are Curious But Not Committed
 
-Attend a local game store launch event on or around 8 May. Riot runs structured events for Riftbound releases that are designed to be accessible to new players. Trying the game at a launch event before buying sealed product is the lowest-risk way to assess whether Riftbound suits your play style.
+Attend a local game store launch event on or around 8 May. Riot runs structured events for Riftbound releases that are accessible to new players. Trying the game at a launch event before buying sealed product is the lowest-risk way to assess whether Riftbound suits your play style.
 
 ### If You Collect Multiple TCGs
 
@@ -102,6 +104,14 @@ Riftbound occupies a specific niche. It is a competitive-first game with limited
 - [Which TCG Should You Start in Australia?](/blog/which-tcg-to-start-australia/)
 
 ---
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
 ## Frequently Asked Questions
 

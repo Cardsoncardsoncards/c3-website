@@ -1,7 +1,7 @@
 ---
 game: lorcana
 title: "How to Build Your First Lorcana Deck in Australia"
-description: "Ready to build your first Disney Lorcana deck? This step-by-step guide covers ink colour selection, card types, deck structure, and where to get the cards you need in Australia."
+description: "Ready to build your first Disney Lorcana deck? This step-by-step guide covers ink colour selection, card types, deck structure."
 date: 2026-04-07
 category: "beginner-guides"
 tags:
@@ -29,7 +29,7 @@ That said, there are real decisions to make and common mistakes to avoid. This g
 
 ## Start With a Starter Deck First
 
-Before building from scratch, the most honest recommendation is to play a Starter Deck for 10–20 games first. The same advice applies here as with Magic Commander precons — playing an existing functional deck teaches you what good deck construction looks like in Lorcana before you start making those decisions yourself.
+Before building from scratch, the most honest recommendation is to play a Starter Deck for 10–20 games first. The same advice applies here as with Magic Commander precons. playing an existing functional deck teaches you what good deck construction looks like in Lorcana before you start making those decisions yourself.
 
 A Lorcana Starter Deck costs AU$25–35 and gives you a complete 60-card deck. After playing it, you'll understand the Ink system, you'll know how the Lore race plays out, and you'll have a feel for which strategies appeal to you. That experience makes your first deck-building decisions dramatically better than building cold from a card list.
 
@@ -39,7 +39,7 @@ If you've already played a Starter Deck and want to build your own, this guide c
 
 **60 cards exactly.** No more, no less.
 
-**Two ink colours maximum.** You can build a one-colour deck, but two is standard. Three or more colours is not supported by the rules — every card must match your chosen inks.
+**Two ink colours maximum.** You can build a one-colour deck, but two is standard. Three or more colours is not supported by the rules. every card must match your chosen inks.
 
 **Up to four copies of any card.** Unlike Magic Commander (one copy of each card), Lorcana allows up to four copies of the same card in your deck. Running four copies of your best cards is normal and expected.
 
@@ -69,7 +69,7 @@ Lorcana has four card types, and a functional deck needs a mix:
 
 **Character cards** are your primary Lore generators and combat pieces. Characters have an Ink cost (how much Ink to play them), Strength (how much damage they deal in challenges), Willpower (how much damage they can take before being banished), and a Lore value (how much Lore they gain when you send them to quest). Characters are the backbone of your deck.
 
-**Action cards** are one-time effects — draw cards, deal damage, move Lore, return characters. They're played and then go to your discard pile.
+**Action cards** are one-time effects: draw cards, deal damage, move Lore, return characters. They're played and then go to your discard pile.
 
 **Item cards** are permanent cards that stay in play and provide ongoing effects or abilities you can activate. Many competitive decks run several key items.
 
@@ -95,15 +95,15 @@ This isn't a rigid formula. Some strategies run more low-cost characters for agg
 
 Every Lorcana deck needs ways to draw cards, deal with opponent threats, and generate extra Lore. Your support package covers these roles.
 
-**Card draw:** Running out of cards in hand is losing in Lorcana. Include cards that replenish your hand — Sapphire ink has the best card draw, but all colours have options.
+**Card draw:** Running out of cards in hand is losing in Lorcana. Include cards that replenish your hand. Sapphire ink has the best card draw, but all colours have options.
 
 **Character removal:** Ways to challenge or banish opponent characters that are questing for Lore. You can challenge with your own characters, but action-based removal gives you more flexibility.
 
-**Lore acceleration:** Cards that gain Lore beyond just questing with characters — certain songs and actions can push you toward 20 Lore faster than raw questing.
+**Lore acceleration:** Cards that gain Lore beyond just questing with characters. certain songs and actions can push you toward 20 Lore faster than raw questing.
 
 ## Step 5: Check Your Inkable Ratio
 
-Before finalising your deck, count your Inkable cards. You want approximately 45–50 of your 60 cards to be Inkable. This ensures you can reliably play Ink to fund your more expensive cards.
+Before finalising your deck, count your Inkable cards. You want approximately 45–50 of your 60 cards to be Inkable. This keeps you can reliably play Ink to fund your more expensive cards.
 
 If your deck has too many Non-Inkable cards (say, 20 or more), you'll frequently have turns where you can't play anything because you don't have enough Ink. Non-Inkable cards are powerful but need to be used selectively.
 
@@ -113,7 +113,7 @@ If your deck has too many Non-Inkable cards (say, 20 or more), you'll frequently
 
 Our eBay store stocks singles across all TCGs including Lorcana. Buying the specific cards you need costs a fraction of what opening booster packs to find them would cost.
 
-**Booster Displays and packs** are a good way to explore the full card pool of a set you're interested in, but are rarely efficient for acquiring specific cards you've identified for a deck.
+**Booster Displays and packs** are a good way to Check the full card pool of a set you're interested in, but are rarely efficient for acquiring specific cards you've identified for a deck.
 
 **Trading** with your playgroup or in Facebook groups and Discord servers can be extremely cost-efficient, particularly for lower-value staple cards.
 
@@ -155,7 +155,7 @@ Browse our eBay store for singles with Australian shipping.
 Up to four copies of any card. Unlike Magic Commander (singleton), Lorcana allows full playsets of four. Running four copies of your best cards is standard practice.
 
 **Can I use cards from all Lorcana sets in one deck?**
-Yes. Lorcana uses an Eternal format — all released sets are legal in the main constructed format. You can mix cards from The First Chapter, Whispers in the Well, and everything in between.
+Yes. Lorcana uses an Eternal format. all released sets are legal in the main constructed format. You can mix cards from The First Chapter, Whispers in the Well, and everything in between.
 
 **How much does it cost to build a competitive Lorcana deck in Australia?**
 A competitive Standard Lorcana deck built from singles typically costs AU$80–200 depending on the archetype and which specific cards it requires. Budget decks using less expensive staples can be built for less.
@@ -167,4 +167,4 @@ Dreamborn.ink and Pixelborn are the main Lorcana deck-building resources. They l
 Buy a Starter Deck first. Play it enough to understand the game. Then build your own with that experience informing your card choices. Building cold without playing experience produces weaker first decks.
 
 **Can I trade Lorcana cards with Pokemon or MTG players?**
-Cards from different TCGs don't trade against each other for gameplay. But the buying and selling community overlaps — many TCG Facebook groups and Discord servers handle multiple games, and sellers on eBay often sell across multiple TCGs.
+Cards from different TCGs don't trade against each other for gameplay. But the buying and selling community overlaps. many TCG Facebook groups and Discord servers handle multiple games, and sellers on eBay often sell across multiple TCGs.

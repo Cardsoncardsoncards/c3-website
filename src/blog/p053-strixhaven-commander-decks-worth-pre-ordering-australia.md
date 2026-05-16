@@ -1,9 +1,9 @@
 ---
 game: mtg
-title: "Are the MTG Secrets of Strixhaven Commander Decks Worth Pre-Ordering in Australia?"
-description: "Five Commander precon decks release with Secrets of Strixhaven on 24 April 2026. This guide breaks down each deck, the reprint value, and which ones are worth pre-ordering in Australia."
+title: "Strixhaven Commander Decks: Worth Buying in Australia?"
+description: "Five Commander precon decks release with Secrets of Strixhaven on 24 April 2026. This guide breaks down each deck, the reprint value."
 date: 2026-04-08
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - mtg
@@ -90,7 +90,7 @@ Prismari Artistry has the highest confirmed reprint value of the five decks base
 
 Dina is a generically strong sacrifice Commander. She rewards sacrificing creatures with life gain, card draw through a limited draw engine, and stackable counters. Pair her with Pest token producers and free sacrifice outlets like Ashnod's Altar and the deck generates substantial value from each sacrifice.
 
-This is the most immediately legible deck of the five. Sacrifice strategies are among the most popular in Commander because they create consistent advantage through repeated small interactions. Dina does not break new ground but executes the archetype cleanly and the deck is designed to work well straight out of the box.
+This is the most immediately legible deck of the five. Sacrifice strategies are among the most popular in Commander because they create consistent advantage through repeated small interactions. Dina does not break new ground but executes the archetype cleanly and the deck is works well straight out of the box.
 
 **Standout reprints:** Blood Artist, Beledros Witherbloom, Gilded Goose, Mazirek Kraul Death Priest, Jadar Ghoulcaller of Nephalia.
 
@@ -173,6 +173,11 @@ Silverquill Influence and Witherbloom Pestilence confirmed. More decks listing w
 
 </div>
 
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
 ## Frequently Asked Questions
 
 **How many cards are in each Commander deck?**
@@ -188,7 +193,13 @@ No. Commander decks are standalone products. The 12 new cards in each deck are l
 No. Cards unique to Commander decks (marked with a C stamp) are not Standard legal.
 
 **Which Commander deck has the best reprints for upgrade potential?**
-Prismari Artistry. Faerie Mastermind, Goldspan Dragon, Brazen Borrower, and Dig Through Time are all directly upgradeable or useful in a wide range of other Commander decks, which means the reprints have value even if you choose to rebuild the deck around a different commander.
+Prismari Artistry. Faerie Mastermind, Goldspan Dragon, Brazen Borrower, and Dig Through Time are all directly upgradeable or useful in many other Commander decks, which means the reprints have value even if you choose to rebuild the deck around a different commander.
+
+
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+
+
+Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
 
 <div class="related-guides">
 

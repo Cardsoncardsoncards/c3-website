@@ -1,7 +1,7 @@
 ---
 game: tcg
-title: "How to Compare TCG Buylist Offers in Australia and Get the Best Price"
-description: "Accepting the first buylist offer you find costs Australian TCG sellers money every time. Here is the exact process for comparing offers across stores and getting the most for your cards."
+title: "How to Compare TCG Buylist Offers in Australia and Get the"
+description: "Accepting the first buylist offer you find costs Australian TCG sellers money every time. Here is the exact process for comparing offers across."
 date: 2026-04-18
 category: "selling-guides"
 tags:
@@ -44,7 +44,7 @@ Before checking any buylists, do a rough sort. Separate cards you believe are wo
 
 **Step 2: Choose two or three stores to check.**
 
-For MTG: Good Games, TCG Singles, and Ronin Games are the main options with comprehensive online buylists.
+For MTG: Good Games, TCG Singles, and Ronin Games are the main options with thorough online buylists.
 
 For Pokemon: Good Games and Gameology cover most of the market. TCG Singles also buys Pokemon.
 
@@ -58,7 +58,7 @@ Most buylist tools are slow and require searching one card at a time. This is th
 
 **Step 4: Add up the totals.**
 
-Sum your totals across all three stores. In most cases, one store will come out ahead on the majority of your cards. In some cases, you may find it worth splitting your submission — sending certain cards to Store A and others to Store B to capture the best price at each.
+Sum your totals across all three stores. In most cases, one store will come out ahead on the majority of your cards. In some cases, you may find it worth splitting your submission. sending certain cards to Store A and others to Store B to capture the best price at each.
 
 Splitting a submission adds postage costs and processing time. Whether it is worth it depends on the dollar difference. A AU$15 difference across 50 cards split between two stores costs two tracked postage parcels (roughly AU$15 to AU$20 combined). The numbers need to work in your favour before splitting is worth it.
 
@@ -118,11 +118,16 @@ Catalogue your cards before you start comparing buylists. A structured list make
 
 <div class="cta-block">
 
-**C3 Buylist Aggregator — Coming Soon**
+**C3 Buylist Aggregator. Coming Soon**
 One search. Every Australian store's buylist price. Free to use. Join the early access list now.
 
 [Join the Buylist Early Access List →](/contact.html)
 
+</div>
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
 </div>
 
 ## Frequently Asked Questions

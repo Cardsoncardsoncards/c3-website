@@ -1,7 +1,7 @@
 ---
 game: pokemon
-title: "Pokemon Destined Rivals Pre-Order Guide for Australia: What to Buy and Where"
-description: "Pokemon TCG Destined Rivals is available now on Amazon AU. This guide covers every product, what to pre-order, current AU pricing, and how to get the best value on the Team Rocket set."
+title: "Pokemon Destined Rivals Pre-Order Guide for Australia"
+description: "Pokemon TCG Destined Rivals is available now on Amazon AU. This guide covers every product, what to pre-order, current AU pricing."
 date: 2026-04-16
 category: "buying-guides"
 tags:
@@ -18,6 +18,8 @@ cta_link: "/shop.html#pokemon"
 featured: false
 layout: post
 ---
+
+> **Updated May 2026:** This product has now released. Language below has been updated from pre-order to reflect current availability.
 
 Pokemon TCG Destined Rivals brought Team Rocket back to the TCG for the first time in 25 years when it released in May 2025. If you missed the initial release window or are buying in now, this guide covers exactly which products are available on Amazon AU, current pricing, what each product delivers, and how to approach buying Destined Rivals in 2026.
 
@@ -103,6 +105,14 @@ If Team Rocket matters to you as a collector, this set is not going to get cheap
 - [Free Pokemon Collection Tracker](/blog/free-pokemon-collection-tracker-australia/)
 
 ---
+
+
+<div class="tool-callout">
+<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
+</div>
+
+
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
 ## Frequently Asked Questions
 

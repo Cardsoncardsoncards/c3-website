@@ -1,9 +1,9 @@
 ---
 game: mtg
-title: "What AU$200 Gets You in MTG: Singles vs Booster Boxes vs Commander Precons"
-description: "AU$200 is a meaningful MTG budget. This guide shows exactly what you get from each spending path — singles, booster boxes, and Commander precons — so you can make the right choice for your situation."
+title: "What AU$200 Gets You in MTG: Singles vs Booster Boxes vs"
+description: "AU$200 is a meaningful MTG budget. This guide shows exactly what you get from each spending path — singles, booster boxes."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - mtg
@@ -73,9 +73,9 @@ Commander precons retail at AU$60 to AU$80 each. AU$200 buys:
 
 **What you can do tonight**: invite 1 to 2 other people who also buy a precon each, and have a complete Commander pod for AU$60 to AU$80 per person.
 
-**Pros**: immediately playable, designed to be balanced against each other, no deck building required, includes Commander card included.
+**Pros**: immediately playable, meant to be balanced against each other, no deck building required, includes Commander card included.
 
-**Cons**: not optimised, may overlap with what you already own, weaker individually than a focused singles-built deck.
+**Cons**: not improved, may overlap with what you already own, weaker individually than a focused singles-built deck.
 
 **Verdict for**: players who want to start playing immediately, play with others who are also new, or want multiple distinct decks.
 
@@ -94,3 +94,14 @@ Check current precon prices at the [C3 shop](/shop.html#mtg). Check singles pric
 ---
 
 *See also: [MTG Singles vs Booster Boxes Australia](/blog/mtg-singles-vs-booster-boxes-australia/) and [Budget Commander Decks Under AU$100](/blog/budget-commander-deck-under-100-australia/).*
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

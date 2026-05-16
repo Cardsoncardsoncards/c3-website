@@ -1,7 +1,7 @@
 ---
 game: riftbound
 title: "Riftbound RQ Singapore 2026: The Australian Player's Guide to the Second APAC Qualifier"
-description: "RQ Singapore runs September 4-6, 2026. Badges go on sale July 8. Here's everything Australian players need to know about competing, travelling, and preparing."
+description: "RQ Singapore runs September 4-6, 2026. Badges go on sale July 8. Here's everything Australian players need to know about competing, travelling, and."
 date: 2026-05-07
 category: buying-guides
 emoji: "🌏"
@@ -32,7 +32,7 @@ Set a calendar reminder now for July 8 at 11am AEST.
 
 ## The Meta Going Into Singapore
 
-Singapore plays in the Vendetta meta. Vendetta (Set 4) releases July 31, giving players roughly five weeks of Vendetta experience before the event. This is a short window -- the meta will not be fully settled by September 4.
+Singapore plays in the Vendetta meta. Vendetta (Set 4) releases July 31, giving players roughly five weeks of Vendetta experience before the event. This is a short window, the meta will not be fully settled by September 4.
 
 What this means for preparation:
 
@@ -69,7 +69,7 @@ You have four months. Here is the sequence:
 
 **Late June (Vendetta previews):** Evaluate which new cards slot into your chosen Legend's deck and whether any new Legends are better positioned for the meta you expect at Singapore.
 
-**July 31 (Vendetta release):** Finalise your deck list. Buy singles immediately for cards you need -- early Vendetta singles prices will spike on the first weekend then stabilise.
+**July 31 (Vendetta release):** Finalise your deck list. Buy singles immediately for cards you need, early Vendetta singles prices will spike on the first weekend then stabilise.
 
 **July 24-30 (Pre-Rift):** Play Sealed to get hands-on Vendetta experience. Note which new mechanics interact with your deck.
 
@@ -88,3 +88,14 @@ For Riftbound singles shopping in Singapore, the local TCG market will have Vend
 Subscribe to our newsletter at [/tracker.html](/tracker.html) for RQ Singapore updates as the venue, badge details, and meta previews are confirmed.
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games. Event details current as of May 2026.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

@@ -1,7 +1,7 @@
 ---
 game: mtg
 title: "Best Simic (Blue-Green) Commanders in MTG Australia 2026"
-description: "The strongest Simic commanders in MTG ranked by power and current AUD price. Blue-green offers the best card draw plus ramp combination in the format — here are the top choices."
+description: "The strongest Simic commanders in MTG ranked by power and current AUD price. Blue-green offers the best card draw plus ramp combination in the format."
 date: 2026-05-05
 category: "buying-guides"
 tags:
@@ -74,3 +74,55 @@ Not a Commander traditionally, but note: Allosaurus Shepherd makes green spells 
 ## Random Simic Commander
 
 Use the [C3 Random Commander Generator](/cards/mtg/random-commander) with the U and G filters together to get Simic-identity commanders. Browse live AU prices at [C3 Card Vault](/cards/mtg).
+
+
+## More Simic Commanders Worth Considering
+
+### Zegana, Utopian Speaker
+
+When Zegana enters, if you control another creature with a +1/+1 counter, draw a card. Other creatures with +1/+1 counters gain Trample. She draws on entry and makes your counter creatures push through blockers.
+
+**Current AU price**: approximately AU$2 to AU$4.
+
+### Grothama, All-Devouring
+
+Any creature can fight Grothama during your turn. When Grothama dies, each player draws cards equal to the damage dealt to Grothama during this turn. A high-risk group-hug political commander: opponents may attack Grothama (their choice) for massive card draw, creating complex politics.
+
+**Current AU price**: approximately AU$3 to AU$6.
+
+### Rashmi, Eternities Crafter
+
+Whenever you cast your first spell each turn, reveal the top card of your library. If that card has lower mana cost than the spell you cast, you may cast it for free. Otherwise, put it in your hand. Generates massive free-spell advantage in the right build.
+
+**Current AU price**: approximately AU$4 to AU$10.
+
+### Momir Vig, Simic Visionary
+
+Whenever you cast a green creature spell, search your library for a creature card and reveal it. Whenever you cast a blue creature spell, put the top card of your library into your hand. Chains tutor effects whenever you play creatures in both colours.
+
+**Current AU price**: approximately AU$3 to AU$8.
+
+## Simic Upgrade Path
+
+**Priority 1. Ramp**: Simic is the premier ramping colour combination. Cultivate (AU$1 to AU$3), Kodama's Reach (AU$1 to AU$3), Skyshroud Claim (AU$3 to AU$8), and Oracle of Mul Daya (AU$20 to AU$40) at the high end.
+
+**Priority 2. Card draw**: Simic does not lack card draw. Rhystic Study is available through blue. Green adds Beast Whisperer (AU$2 to AU$6), Guardian Project (AU$5 to AU$12), and Shamanic Revelation (AU$2 to AU$5).
+
+**Priority 3. Interaction**: Counterspell (AU$2 to AU$5), Arcane Denial (AU$3 to AU$6), Cyclonic Rift (AU$25 to AU$50). Green's interaction is mostly creature-based: Beast Within (AU$2 to AU$6) is the key piece.
+
+**Priority 4. Win conditions**: Simic wins through overwhelming size and combat, combo (Thrasios/Tymna infinite mana loops), or Laboratory Maniac (AU$3 to AU$8) combos. Choose based on your playgroup's power level.
+
+## Checking Prices in Australia
+
+Browse all Simic Commander options and staple prices at the [C3 MTG Card Vault](/cards/mtg). Use the [Random Commander Generator](/cards/mtg/random-commander) filtered to Green and Blue for the full list. The [C3 Card Compare tool](/compare) lets you compare staple prices across printings.
+
+## Frequently Asked Questions
+
+### What is the best Commander deck for a new player in Australia?
+Any Commander preconstructed deck from a recent set is a good starting point. Pick the theme or colour combination that appeals to you most. Current options from Tarkir: Dragonstorm and Lorwyn Eclipsed are available on Amazon AU.
+
+### Can I use a Commander precon in tournament play?
+Commander preconstructed decks are legal for casual Commander play and official Commander events. The individual cards are legal in Commander, Legacy, and Vintage. The precon as a whole is not competitive at high-level play but works fine for regular Commander nights.
+
+### Where can I find Commander singles in Australia?
+Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.

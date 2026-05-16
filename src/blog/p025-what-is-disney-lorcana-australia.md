@@ -1,7 +1,7 @@
 ---
 game: lorcana
 title: "What Is Disney Lorcana? The Complete Beginner's Guide for Australians"
-description: "Never heard of Disney Lorcana or not sure if it's worth starting? This plain-English guide covers how the game works, what to buy first in Australia, and who it's actually for."
+description: "Never heard of Disney Lorcana or not sure if it's worth starting? This plain-English guide covers how the game works, what to buy first in."
 date: 2026-04-07
 category: "beginner-guides"
 tags:
@@ -33,19 +33,19 @@ Lorcana uses familiar card game concepts but with a clever twist that makes it f
 
 Each player builds a 60-card deck using Disney character cards, action cards, item cards, and song cards. The cards are divided into six ink colours (Amber, Amethyst, Emerald, Ruby, Sapphire, Steel), each representing a different playstyle. You can build decks using one or two ink colours.
 
-**The core resource system:** To play cards, you need Ink. You generate Ink by turning cards face-down in your Inkwell — a special zone in front of you. Most cards in the game are "Inkable," meaning they can be placed face-down in your Inkwell for Ink. Cards that are "Non-Inkable" are typically more powerful and cannot be used as Ink.
+**The core resource system:** To play cards, you need Ink. You generate Ink by turning cards face-down in your Inkwell: a special zone in front of you. Most cards in the game are "Inkable," meaning they can be placed face-down in your Inkwell for Ink. Cards that are "Non-Inkable" are typically more powerful and cannot be used as Ink.
 
-**The win condition:** Players race to collect 20 Lore. You gain Lore primarily by sending your characters on quests — tapping them (turning them sideways) to collect Lore equal to the number shown on the card. The first player to reach 20 Lore wins.
+**The win condition:** Players race to collect 20 Lore. You gain Lore primarily by sending your characters on quests. tapping them (turning them sideways) to collect Lore equal to the number shown on the card. The first player to reach 20 Lore wins.
 
-**Characters can also challenge each other** — sending your character to challenge an opponent's character damages both characters based on their Strength values. Characters with damage equal to or greater than their Willpower are removed from play (banished).
+**Characters can also challenge each other**. sending your character to challenge an opponent's character damages both characters based on their Strength values. Characters with damage equal to or greater than their Willpower are removed from play (banished).
 
-**Song cards** are unique to Lorcana — they're action cards that can be played for free by "exerting" a character of the right cost to sing them.
+**Song cards** are unique to Lorcana. they're action cards that can be played for free by "exerting" a character of the right cost to sing them.
 
-The game is designed to be learnable in a single session and is genuinely approachable for players new to card games. The Disney theming makes cards immediately recognisable and engaging even before you understand all the mechanics.
+The game is meant to be learnable in a single session and is genuinely approachable for players new to card games. The Disney theming makes cards immediately recognisable and engaging even before you understand all the mechanics.
 
 ## The Six Ink Colours and Their Playstyles
 
-**Amber** focuses on support, healing, and characters that help your team. It's the protective colour — it shores up weaknesses and keeps your characters healthy.
+**Amber** focuses on support, healing, and characters that help your team. It's the protective colour. it shores up weaknesses and keeps your characters healthy.
 
 **Amethyst** is the magic and manipulation colour. It controls the game through actions, moves characters around, and uses song cards effectively.
 
@@ -61,21 +61,21 @@ Most competitive decks use two colours that complement each other. Common pairin
 
 ## The Sets Available in Australia
 
-Lorcana has released multiple sets since its 2023 launch and all of them are legal for play in constructed formats (Lorcana doesn't rotate sets the way Pokemon Standard does — all legal sets remain in the format).
+Lorcana has released multiple sets since its 2023 launch and all of them are legal for play in constructed formats (Lorcana doesn't rotate sets the way Pokemon Standard does. all legal sets remain in the format).
 
 **Current and recent sets confirmed on Amazon AU:**
 
-**Whispers in the Well** — current 2025 release with new characters and mechanics, available as Booster Display and Bundle.
+**Whispers in the Well**. current 2025 release with new characters and mechanics, available as Booster Display and Bundle.
 
-**Fabled** — a 2025 release with the Fabled rarity tier introducing full-bleed alt-art cards. Available as Illumineer's Trove, Booster Sleeved Pack, and Single-Player Deck.
+**Fabled**. a 2025 release with the Fabled rarity tier introducing full-bleed alt-art cards. Available as Illumineer's Trove, Booster Sleeved Pack, and Single-Player Deck.
 
-**Archazia's Island, Azurite Sea, Shimmering Skies, Ursula's Return, Reign of Jafar** — 2024 releases all confirmed on Amazon AU as Booster Displays and Illumineer's Troves.
+**Archazia's Island, Azurite Sea, Shimmering Skies, Ursula's Return, Reign of Jafar** , 2024 releases all confirmed on Amazon AU as Booster Displays and Illumineer's Troves.
 
-**Into the Inklands, The First Chapter, Rise of the Floodborn** — the original launch sets from 2023. Still available and all legal in competitive formats.
+**Into the Inklands, The First Chapter, Rise of the Floodborn**. the original launch sets from 2023. Still available and all legal in competitive formats.
 
 ## What to Buy First in Australia
 
-### Starter Decks — Best for Playing Immediately
+### Starter Decks. Best for Playing Immediately
 
 Lorcana releases Starter Decks alongside major sets. These are pre-built two-colour decks that come ready to play straight out of the box.
 
@@ -83,13 +83,13 @@ Lorcana releases Starter Decks alongside major sets. These are pre-built two-col
 
 For two people who want to play together: buy two different Starter Decks and play them against each other. The decks are balanced to provide a fair learning experience.
 
-### Illumineer's Trove — Best Gift and Complete Experience
+### Illumineer's Trove. Best Gift and Complete Experience
 
-The Illumineer's Trove is Lorcana's premium box product — a large collector-oriented box containing multiple booster packs plus exclusive promotional items and accessories. It's the prestige entry product for each set.
+The Illumineer's Trove is Lorcana's premium box product: a large collector-oriented box containing multiple booster packs plus exclusive promotional items and accessories. It's the prestige entry product for each set.
 
 Available for multiple current and recent sets on Amazon AU, the Illumineer's Trove is the go-to gift for a Lorcana fan who doesn't already own it.
 
-### Booster Displays — For Collectors and Pack Openers
+### Booster Displays. For Collectors and Pack Openers
 
 Booster Displays (24 packs) are the standard pack product for collectors who want to open a significant quantity of packs from a specific set. Each pack contains 12 cards including at least one rare or higher.
 
@@ -101,15 +101,18 @@ One of Lorcana's defining characteristics is its appeal to people who aren't car
 
 **Gift buyers** who recognise Disney characters and feel comfortable buying Lorcana for family members even without understanding card game mechanics.
 
-**Casual family play** — Lorcana is genuinely accessible for family game nights in a way that more complex TCGs like Magic aren't.
+**Casual family play**. Lorcana is genuinely accessible for family game nights in a way that more complex TCGs like Magic aren't.
 
-This broader audience is both a strength (larger total market) and something to be aware of as a collector — collector demand from non-players creates price pressure on popular characters that doesn't always reflect competitive playability.
+This broader audience is both a strength (larger total market) and something to be aware of as a collector. collector demand from non-players creates price pressure on popular characters that doesn't always reflect competitive playability.
 
 ## Australian Availability and Pricing
 
 Lorcana is well distributed in Australia. Amazon AU stocks a strong range across current and recent sets. Local game stores carry Lorcana alongside other TCGs. Major retailers including JB Hi-Fi and Big W have stocked Lorcana at various points.
 
-Pricing on Amazon AU follows the same pattern as other imported TCGs — higher than US retail due to exchange rates, import costs, and GST. Booster Displays typically run AU$130–170. Illumineer's Troves run AU$70–100. Starter Decks run AU$20–35.
+Pricing on Amazon AU follows the same pattern as other imported TCGs. higher than US retail due to exchange rates, import costs, and GST. Booster Displays typically run AU$130–170. Illumineer's Troves run AU$70–100. Starter Decks run AU$20–35.
+
+
+Think you know this game? Test it at the [C3 TCG Quiz](/quiz). Questions cover cards, rules, set knowledge, and format history.
 
 <div class="related-guides">
 
@@ -123,7 +126,7 @@ Pricing on Amazon AU follows the same pattern as other imported TCGs — higher 
 <div class="cta-block">
 
 **Browse current Disney Lorcana products on Amazon AU.**
-Booster Displays, Illumineer's Troves, and Starter Decks — all confirmed in stock.
+Booster Displays, Illumineer's Troves, and Starter Decks. all confirmed in stock.
 
 [Shop Lorcana on Amazon AU →](/shop.html#lorcana)
 
@@ -147,4 +150,4 @@ Yes. The Disney branding and accessible rules make it suitable for children from
 As of early 2026, Lorcana does not have an official digital client equivalent to Pokemon TCG Live or Magic: The Gathering Arena. Check the official Ravensburger Lorcana website for the latest on digital plans.
 
 **Will older Lorcana cards be rotated out of competitive play?**
-Lorcana uses an "Eternal" format that keeps all sets legal — unlike Pokemon Standard which rotates annually. All Lorcana sets released so far remain legal in the main constructed format.
+Lorcana uses an "Eternal" format that keeps all sets legal. unlike Pokemon Standard which rotates annually. All Lorcana sets released so far remain legal in the main constructed format.

@@ -1,7 +1,7 @@
 ---
 game: mtg
 title: "How to Use the C3 MTG Card Vault: Full Feature Guide"
-description: "The C3 MTG Card Vault has 96,000+ Magic: The Gathering cards with live AUD pricing. This guide covers every feature — search, set browsing, card pages, printings carousel, and the Random Commander tool."
+description: "The C3 MTG Card Vault has 96,000+ Magic: The Gathering cards with live AUD pricing. This guide covers every feature — search, set browsing, card pages."
 date: 2026-05-05
 category: "tools-and-trackers"
 tags:
@@ -38,7 +38,7 @@ Type any card name in the search box and press Search or Enter. Results are filt
 
 Search tips:
 - Partial names work: "sol ring" returns Sol Ring
-- Spell the name correctly — the search is exact-match on the first few characters
+- Spell the name correctly: the search is exact-match on the first few characters
 - If a card doesn't appear, it may be a token or digital-only card not in the main database
 
 ## Reading a Card Page
@@ -47,7 +47,7 @@ Each card page at `/cards/mtg/[slug]` shows:
 
 **Hero section (left column)**:
 - Card art from the primary printing
-- Current AUD price (converted from USD using 1.58 rate)
+- Current AUD price (converted from USD using the live exchange rate rate)
 - eBay AU buy link
 
 **Card details (right column)**:
@@ -80,7 +80,7 @@ Each set page at `/cards/mtg/sets/[set-slug]` shows:
 - Full card grid with filter controls (by name, colour, type, rarity, mana value)
 - Sticky filter bar that stays visible as you scroll
 
-Filters work in combination — filter by "Rare" and "Blue" simultaneously to see all rare blue cards in a set.
+Filters work in combination. filter by "Rare" and "Blue" simultaneously to see all rare blue cards in a set.
 
 ## The Random Commander Generator
 
@@ -99,7 +99,7 @@ See the [full Random Commander guide](/blog/how-to-use-c3-random-commander-gener
 Prices on C3 Card Vault are:
 
 - Sourced from Scryfall's pricing data (which aggregates from TCGplayer for the USD price)
-- Converted to AUD at a fixed rate of 1.58
+- Converted to AUD at a fixed current rate
 - Updated when the Netlify function serves the page (not live real-time, but regularly refreshed)
 
 For the most precise current Australian market price, cross-reference with eBay AU sold listings. The C3 prices are a reliable benchmark but eBay AU sold is the definitive source for what Australian buyers actually pay.
@@ -111,3 +111,28 @@ Every card page and search result includes a direct eBay AU buy link (with C3's 
 ---
 
 *Start exploring at [C3 MTG Card Vault](/cards/mtg). Try the [Random Commander Generator](/cards/mtg/random-commander).*
+
+
+## Getting Started in Australia
+
+If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+
+1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
+2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
+3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
+4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+
+The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+
+If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+## Frequently Asked Questions
+
+### Where can I check current TCG card prices in Australia?
+The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+
+### How do I compare card prices in Australia?
+The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
+
+### Where can I buy singles and sealed TCG products in Australia?
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).

@@ -1,9 +1,9 @@
 ---
 game: pokemon
-title: "Most Expensive Pokemon Cards in Destined Rivals Australia: Full Price Guide"
-description: "The highest-value cards in Pokemon TCG Destined Rivals with current AUD pricing. Chase rares, alt arts, and the most valuable pulls from this set for Australian collectors."
+title: "Most Expensive Pokemon Cards in Destined Rivals Australia"
+description: "The highest-value cards in Pokemon TCG Destined Rivals with current AUD pricing. Chase rares, alt arts, and the most valuable pulls from this set for."
 date: 2026-05-05
-category: "value-and-worth"
+category: "market-and-prices"
 tags:
   - post
   - pokemon
@@ -17,57 +17,85 @@ cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=destined+rivals+pokemon+cards
 featured: false
 layout: post
 ---
+Pokemon Destined Rivals released in May 2025 and brought Team Rocket back to the Pokemon TCG for the first time since 2004. The set covers characters from the Gold and Silver games alongside Team Rocket antagonists, and produced some of the most valuable cards of the Scarlet and Violet era.
 
-Destined Rivals is part of the Scarlet and Violet series and was released in early 2025. The set focuses on rival trainer matchups and features several chase cards that have maintained strong secondary market value. This guide covers the most valuable Destined Rivals cards with current AUD pricing for Australian collectors.
+<div class="quick-answer">
+<strong>Quick Answer:</strong>
+<p>Team Rocket's Mewtwo ex Special Illustration Rare is the top card in Destined Rivals, sitting above AU$700 in near mint condition. Cynthia's Garchomp ex SIR, Team Rocket's Crobat ex SIR, and Team Rocket's Nidoking ex SIR round out the top pulls. Check live AUD pricing at the <a href="/cards/pokemon">C3 Pokemon Card Vault</a>.</p>
+</div>
 
-Note: Pokemon card prices move quickly. All values below are approximate based on eBay AU sold data as of May 2026. Treat these as reference points and check current listings for accurate pricing.
+## The Most Expensive Destined Rivals Cards
 
-## The Most Valuable Cards
+### Team Rocket's Mewtwo ex (Special Illustration Rare)
 
-### Top-Tier Pulls (AU$50+)
+The single most valuable card in Destined Rivals. This SIR depicts Mewtwo as Team Rocket's ultimate weapon alongside Giovanni, with menacing artwork by Iwamoto05. The card has 280HP and an attack called Deletion Sphere that scales damage based on other Team Rocket Pokemon in play.
 
-The highest value cards in Destined Rivals are alternate art Special Illustration Rare (SIR) versions featuring unique, full-art illustrated treatments.
+**Why it holds value:** Giovanni and Mewtwo together is a historically charged combination. The artwork quality is exceptional. The 21-year gap since Team Rocket appeared in the TCG created enormous nostalgia demand.
 
-**Rival SIR Trainer Cards**: the Destined Rivals set emphasises rival trainer relationships. Alternate art trainer cards depicting rival pairings with full-art illustrated scenes are among the most collectible cards in the set. Top examples can trade at AU$50 to AU$200+.
+**Current AUD estimate:** AU$700 to AU$900+ in near mint. Graded PSA 10 copies command significantly more. Check current prices at the [C3 Pokemon Card Vault](/cards/pokemon).
 
-**Special Illustration Rare Pokemon**: the chase Pokemon of the set in their SIR treatment. Value varies significantly based on the Pokemon depicted and the quality of the alternate art.
+### Cynthia's Garchomp ex (SIR)
 
-Check current pricing at eBay AU [Destined Rivals listings](https://www.ebay.com.au/sch/i.html?_nkw=destined+rivals+sir+pokemon&campid=5339146789).
+Runner-up for top card in the set. Cynthia is one of the most beloved Pokemon Champions and her Garchomp has iconic status in the Pokemon game series. The artwork shows their in-game dynamic with Garchomp using a ground attack against a dramatic backdrop.
 
-### Mid-Tier Pulls (AU$15 to AU$50)
+**Current AUD estimate:** AU$200 to AU$400. Check [live pricing at C3](/cards/pokemon).
 
-**Full Art Trainer cards (SAR)**: Special Art Rare trainer cards feature unique treatments compared to standard versions. Typically trade at AU$15 to AU$40.
+### Team Rocket's Crobat ex (SIR)
 
-**Illustration Rare (IR) Pokemon**: large-art illustration rare versions of popular Pokemon. AU$10 to AU$30 range.
+Crobat leading a swarm of Golbat and Zubat with a Team Rocket Grunt visible below. The layered artwork showing multiple Pokemon in motion makes this one of the more visually striking SIRs in the set. Crobat is a new card rather than a revisit of an older version, which added collector interest.
 
-**Pokemon ex and tera variants**: the playable ultra rares from the set. Value depends on competitive viability. AU$10 to AU$30 for meta-relevant cards.
+**Current AUD estimate:** AU$150 to AU$300. Check [live pricing at C3](/cards/pokemon).
 
-### Budget Pulls (Under AU$15)
+### Team Rocket's Nidoking ex (SIR)
 
-Most Destined Rivals commons, uncommons, and standard rares are under AU$5. Double Rare Pokemon ex cards without the special art treatment typically run AU$5 to AU$15.
+Giovanni alongside his signature Nidoking. For collectors who remember Nidoking from the original game as a powerhouse, this card delivers strong nostalgia alongside genuine gameplay stats (330HP, 240 damage on its second attack).
 
-## Is Destined Rivals Worth Buying in Australia?
+**Current AUD estimate:** AU$100 to AU$200. Check [live pricing at C3](/cards/pokemon).
 
-For collectors prioritising chase art: Destined Rivals has strong SIR appeal, particularly for players with attachment to the rival trainer storylines.
+### Ethan's Ho-Oh (SIR)
 
-For players looking for playable cards: the ex and tera cards are functionally relevant in Standard format until rotation, after which their value typically drops.
+Ethan, the playable trainer from the Gold and Silver games, alongside Ho-Oh. Ho-Oh is the first legendary Ash ever sees in the anime, flying overhead as he leaves Pallet Town. That connection to the anime starting point gives this card particular resonance for long-time fans.
 
-For investors: early-set prices for SIR cards are often near their floor after initial market discovery. Sets that remain in print for 6 to 12 months see stable or declining prices as supply increases.
+**Current AUD estimate:** AU$80 to AU$180. Check [live pricing at C3](/cards/pokemon).
 
-See our [full Destined Rivals analysis](/blog/pokemon-destined-rivals-worth-buying-australia/) for the complete breakdown.
+### Team Rocket's Moltres ex (SIR)
 
-## Opening vs Buying Singles
+For collectors building a complete Team Rocket collection, Moltres alongside Team Rocket antagonists is a notable card. The SIR treatment gives it the full artwork experience.
 
-A Destined Rivals booster box in Australia (36 packs) typically contains approximately 2 to 4 IR/SIR cards from the pull rates. With boxes retailing at approximately AU$160 to AU$200, the expected card value from opening is typically below the box cost.
+**Current AUD estimate:** AU$80 to AU$150. Check [live pricing at C3](/cards/pokemon).
 
-For the chase SIR cards, singles sourced from eBay AU are typically more cost-effective than opening boxes hoping to hit them.
+## The Gold Card: Team Rocket's Mewtwo ex (Hyper Rare)
 
-Use the [C3 EV Calculator](/ev-calculator.html) to model expected value before opening.
+The gold card version of Team Rocket's Mewtwo ex sits below the SIR in value but above most of the rest of the set. Hyper Rares (gold cards) have performed well across the Scarlet and Violet era and this is among the more desirable pulls in that tier.
 
-## Track Your Destined Rivals Pulls
+**Current AUD estimate:** AU$60 to AU$120. Check [live pricing at C3](/cards/pokemon).
 
-The [free C3 collection tracker](/tracker.html) supports Pokemon TCG tracking. Log your Destined Rivals pulls and track value over time.
+## How to Buy Destined Rivals Singles in Australia
 
----
+Singles from Destined Rivals are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=destined-rivals-blog&toolid=10001&mkevt=1) with Australian shipping.
 
-*See also: [Are Pokemon Booster Boxes Worth It in Australia?](/blog/are-pokemon-booster-boxes-investment-australia/)*
+<div class="tool-callout">
+<p>Compare Destined Rivals card prices at the <a href="/compare">C3 Card Compare tool</a>. Check buy and sell values side by side before making any purchase.</p>
+</div>
+
+For sealed product EV analysis, use the [C3 EV Calculator](/ev-calculator).
+
+<div class="related-guides">
+
+**Related guides:**
+- [Pokemon Destined Rivals: Worth Buying in Australia?](/blog/pokemon-destined-rivals-worth-buying-australia/)
+- [Best Pokemon Booster Boxes in Australia](/blog/best-pokemon-booster-boxes-australia/)
+- [Pokemon Card Price Guide for Australia](/blog/pokemon-card-price-guide-australia/)
+
+</div>
+
+## Frequently Asked Questions
+
+### What is the most expensive card in Pokemon Destined Rivals?
+Team Rocket's Mewtwo ex Special Illustration Rare is the top pull, currently around AU$700-900+ in near mint. It is one of the most valuable Pokemon cards of the Scarlet and Violet era.
+
+### Are Destined Rivals SIR cards worth buying in Australia?
+At AU$100-900+ each depending on the card, SIRs are expensive. Whether they are worth it depends on your collecting goals. As investment pieces, Team Rocket nostalgia cards have shown sustained demand. As singles for your collection, they are unique artworks unlikely to be reprinted in this treatment.
+
+### Where can I track Destined Rivals prices in Australia?
+Live AUD prices from eBay AU sold data are available at the [C3 Pokemon Card Vault](/cards/pokemon). Use the [C3 Card Compare tool](/compare) to check two specific cards against each other.
