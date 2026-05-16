@@ -294,8 +294,10 @@ async function handleRandomCard(req) {
   };
 
   const cfg = TABLE_MAP[game] || TABLE_MAP.mtg;
-  // Use offset randomisation - get a random page from the first 10000 cards with images
-  const offset = Math.floor(Math.random() * (9000 - limit));
+  // Per-game max offset to avoid exceeding row count on smaller tables
+  const GAME_MAX_OFFSET = { mtg: 9000, pokemon: 9000, yugioh: 9000, lorcana: 3000, onepiece: 6000, dragonball: 4000, starwars: 3500, riftbound: 1000 };
+  const maxOffset = (GAME_MAX_OFFSET[game] || 9000) - limit;
+  const offset = Math.floor(Math.random() * maxOffset);
   let query = `${cfg.table}?${cfg.imgCol}=not.is.null&limit=${limit}&offset=${offset}&select=${cfg.slugCol},${cfg.nameCol},${cfg.imgCol},${cfg.priceCol},price_aud,${cfg.extraCols}`;
 
   if (rarity && rarity !== 'all') {
