@@ -331,8 +331,8 @@ async function drawCards(game, count) {
             ${metaHtml ? `<div class="result-meta">${metaHtml}</div>` : ''}
             <div class="result-price">${c.price_aud ? ("AU$" + parseFloat(c.price_aud).toFixed(2)) : "Price TBC"}</div>
             <div class="result-links">
-              <a href="${c.cardUrl}" class="btn-view" onclick="event.stopPropagation()">View Card &rarr;</a>
-              <a href="${c.ebayUrl}" target="_blank" rel="noopener sponsored" class="btn-ebay" onclick="event.stopPropagation()">Buy on eBay &#8599;</a>
+              <a href="${c.path || '#'}" class="btn-view" onclick="event.stopPropagation()">View Card &rarr;</a>
+              <a href="${'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(c.name + ' ' + c.game) + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=generators&toolid=10001&mkevt=1'}" target="_blank" rel="noopener sponsored" class="btn-ebay" onclick="event.stopPropagation()">Buy on eBay &#8599;</a>
             </div>
           </div>
         </div>`;

@@ -106,18 +106,14 @@ export default async (req) => {
     .nav-link{font-size:11px;padding:5px 9px;border-radius:6px;border:1px solid var(--border);color:var(--silver);text-decoration:none;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;white-space:nowrap}
     .nav-link:hover{color:var(--text);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
     .nav-link--active{color:var(--accent);border-color:rgba(56,189,248,.4);background:rgba(56,189,248,.07)}
-    .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.3)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF}
-    .nav-link--vault{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:var(--gold)}
-    .nav-link--compare{color:#a78bfa;border-color:rgba(167,139,250,.3)}.nav-link--compare:hover{background:rgba(167,139,250,.06);border-color:#a78bfa}
-    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.3)}.nav-link--market:hover{background:rgba(74,222,128,.06);border-color:#4ADE80}
-    .nav-link--shop{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--shop:hover{background:rgba(201,168,76,.06)}
-    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.3)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1}
-    .nav-link--ev{color:#60A5FA;border-color:rgba(96,165,250,.3)}.nav-link--ev:hover{background:rgba(96,165,250,.06);border-color:#60A5FA}
-    .nav-link--tracker{color:#FB923C;border-color:rgba(251,146,60,.3)}.nav-link--tracker:hover{background:rgba(251,146,60,.06);border-color:#FB923C}
-    .nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.3)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6}
-    .nav-link--calendar{color:#F87171;border-color:rgba(248,113,113,.3)}.nav-link--calendar:hover{background:rgba(248,113,113,.06);border-color:#F87171}
-    .nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.3)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE}
-    .nav-link--ebay{color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.05)}.nav-link--ebay:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
+    /* === C3 NAV COLOURS === */
+    .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover,.nav-link--vault.active{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
+    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover,.nav-link--compare.active{background:rgba(167,139,250,.1);border-color:#A78BFA;color:#C4B5FD}
+    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover,.nav-link--market.active{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86EFAC}
+    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover,.nav-link--tools.active{background:rgba(251,146,60,.1);border-color:#FB923C;color:#FDBA74}
+    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover,.nav-link--play.active{background:rgba(244,114,182,.1);border-color:#F472B6;color:#F9A8D4}
+    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover,.nav-link--blog.active{background:rgba(126,203,161,.1);border-color:#7ECBA1;color:#A5DFC0}
+    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA;color:#93C5FD}
     .release-ticker{background:rgba(56,189,248,.06);border-bottom:1px solid rgba(56,189,248,.15);height:34px;display:flex;align-items:center;overflow:hidden;position:relative}
     .release-ticker::before,.release-ticker::after{content:'';position:absolute;top:0;bottom:0;width:50px;z-index:2;pointer-events:none}
     .release-ticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
@@ -194,17 +190,12 @@ export default async (req) => {
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"></a>
     <div class="nav-links">
-      <a href="/" class="nav-link nav-link--home">Home</a>
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/cards" class="nav-link nav-link--vault active">Card Vault</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
       <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
-      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
   </div>

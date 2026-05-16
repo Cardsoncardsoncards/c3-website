@@ -989,14 +989,13 @@ function renderPage({ cards, allTokens, usdToAud }) {
       <span>Cards on Cards on Cards</span>
     </a>
     <div class="nav-links">
-      <a href="/" class="nav-link">Home</a>
-      <a href="/cards/mtg" class="nav-link">MTG</a>
-      <a href="/cards/pokemon" class="nav-link">Pokemon</a>
-      <a href="/compare" class="nav-link nav-link--active">Compare</a>
-      <a href="/market" class="nav-link">Market</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link nav-link--compare active">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>
