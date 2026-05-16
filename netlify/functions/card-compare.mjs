@@ -1,9 +1,12 @@
 // netlify/functions/card-compare.mjs
-// C3 Card Compare — full rebuild May 2026
+// C3 Card Compare — v2 rebuild May 2026
 // Features: verdict banner, stat strips, radar chart, game-aware legality,
 // colour identity pips, Reserve List badge, combine cost, recent history (localStorage),
 // slot customid eBay tracking, game chip active + placeholder feedback,
-// 150ms CSS transitions, flavour copy, String.fromCharCode(10) safe newlines
+// 150ms CSS transitions, String.fromCharCode(10) safe newlines,
+// buy/sell view toggle, pricing source picker (global + per-slot),
+// help tooltips on/off toggle, price info tooltips, data source labels,
+// sparkline timeframe label, ban status tooltips, CK buylist pricing
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -50,7 +53,7 @@ async function fetchMTGCard(slug, usdToAud) {
   const card = cards[0];
 
   const [snapshots, cheapestPrinting] = await Promise.all([
-    supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=14`).catch(() => []),
+    supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=14&select=snapshot_date,price_aud,price_usd,price_buy_ck_aud,price_buy_ck_usd`).catch(() => []),
     supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&slug=neq.${encodeURIComponent(slug)}&select=slug,set_name,price_aud,price_usd&order=price_aud.asc.nullslast&limit=1`).catch(() => [])
   ]);
 
@@ -94,6 +97,12 @@ async function fetchMTGCard(slug, usdToAud) {
     const colorIdentity = card.color_identity || [];
     const keywords      = card.keywords || [];
 
+    // CK buylist — latest snapshot value
+    const latestCKSnap = snapshots && snapshots.length ? snapshots[snapshots.length - 1] : null;
+    const ckBuylistAud = latestCKSnap && latestCKSnap.price_buy_ck_aud ? parseFloat(latestCKSnap.price_buy_ck_aud) : null;
+    const ckBuylistUsd = latestCKSnap && latestCKSnap.price_buy_ck_usd ? parseFloat(latestCKSnap.price_buy_ck_usd) : null;
+    const snapshotDate = latestCKSnap && latestCKSnap.snapshot_date ? latestCKSnap.snapshot_date : null;
+
     return {
       slug, game: 'mtg',
       name:         card.name,
@@ -101,6 +110,10 @@ async function fetchMTGCard(slug, usdToAud) {
       setName:      card.set_name || null,
       rarity:       card.rarity || null,
       priceAud, priceUsd, priceAudFoil,
+      ckBuylistAud, ckBuylistUsd,
+      snapshotDate,
+      priceSource:  'Scryfall / TCGPlayer',
+      priceType:    'buy',
       sevenDayChange,
       sparklinePoints,
       isSpiked: sevenDayChange && sevenDayChange.up && parseFloat(sevenDayChange.pct) >= 15,
@@ -171,6 +184,11 @@ async function fetchNonMTGCard(game, slug, usdToAud, cfg) {
     rarity:         card.rarity || null,
     priceAud, priceUsd,
     priceAudFoil:   null,
+    ckBuylistAud:   null,
+    ckBuylistUsd:   null,
+    snapshotDate:   card.last_price_update || null,
+    priceSource:    'TCGapi',
+    priceType:      'buy',
     sevenDayChange,
     sparklinePoints,
     isSpiked:       sevenDayChange && sevenDayChange.up && parseFloat(sevenDayChange?.pct || 0) >= 15,
@@ -374,11 +392,19 @@ function renderSlots(cards, allTokens, usdToAud) {
       ? `<span class="trend ${card.sevenDayChange.up ? 'trend-up' : 'trend-down'}">${card.sevenDayChange.up ? '▲' : '▼'} ${Math.abs(card.sevenDayChange.pct)}%</span>`
       : '';
 
-    const buySignalHtml = card.buySignal === 'below-avg'
-      ? '<div class="buy-signal-good">↓ Below recent avg — good time to buy</div>'
-      : card.buySignal === 'above-avg'
-      ? '<div class="buy-signal-warn">↑ Above recent avg</div>'
-      : '';
+    // Buy signal with percentage
+    let buySignalHtml = '';
+    if (card.buySignal === 'below-avg') {
+      const recentPrices = card.sparklinePoints.slice(-7);
+      const avg = recentPrices.length ? recentPrices.reduce((a,b) => a+b, 0) / recentPrices.length : card.priceAud;
+      const pct = avg && card.priceAud ? Math.abs(((card.priceAud - avg) / avg) * 100).toFixed(1) : null;
+      buySignalHtml = '<div class="buy-signal-good">↓ ' + (pct ? pct + '% ' : '') + 'below 7-day average</div>';
+    } else if (card.buySignal === 'above-avg') {
+      const recentPrices = card.sparklinePoints.slice(-7);
+      const avg = recentPrices.length ? recentPrices.reduce((a,b) => a+b, 0) / recentPrices.length : card.priceAud;
+      const pct = avg && card.priceAud ? Math.abs(((card.priceAud - avg) / avg) * 100).toFixed(1) : null;
+      buySignalHtml = '<div class="buy-signal-warn">↑ ' + (pct ? pct + '% ' : '') + 'above 7-day average</div>';
+    }
 
     const cheapestHtml = card.cheapestPrinting
       ? `<div class="slot-cheapest">Cheaper: <strong>${fmtAUD(card.cheapestPrinting.priceAud)}</strong> · ${card.cheapestPrinting.setName || ''}</div>`
@@ -410,11 +436,20 @@ function renderSlots(cards, allTokens, usdToAud) {
       <div class="slot-price aud-val" data-aud="${card.priceAud || 0}" data-usd="${card.priceUsd || 0}">${aud}</div>
       ${usd ? `<div class="slot-price-usd usd-val" style="display:none">${usd}</div>` : ''}
       ${trendHtml}
-      ${spark ? `<div class="slot-sparkline" title="Price trend">${spark}</div>` : ''}
+      ${spark ? `<div class="slot-sparkline"><div class="sparkline-label">14-day trend</div>${spark}</div>` : ''}
       ${buySignalHtml}
       ${cheapestHtml}
       ${reservedHtml}
+      <div class="price-source-row">
+        <span class="price-source-label" title="Market buy price from ${card.priceSource}. Updated: ${card.snapshotDate || 'daily'}. Converted to AUD at live rate.">${card.priceSource} · Buy price <span class="info-icon help-item">?</span></span>
+        <select class="slot-source-picker" data-slot="${i}" aria-label="Pricing source for this card">
+          <option value="market" selected>Market (buy)</option>
+          ${card.ckBuylistAud ? '<option value="ck">Card Kingdom buylist (sell)</option>' : ''}
+        </select>
+      </div>
+      ${card.ckBuylistAud ? `<div class="ck-buylist-row help-item" title="Card Kingdom is a major US TCG retailer. This is what they pay YOU for this card — a sell price.">Sell to Card Kingdom: <strong>${fmtAUD(card.ckBuylistAud)}</strong> <span class="info-icon">?</span></div>` : ''}
       <a href="${ebayUrl}" target="_blank" rel="noopener" class="slot-buy-btn" style="background:${card.color}" data-gtag-game="${card.game}" data-gtag-card="${card.name.replace(/"/g,'&quot;')}" data-gtag-pos="${i}">Buy on eBay AU →</a>
+      <div class="ebay-disclaimer help-item">eBay AU prices may vary from listed price</div>
       <button class="slot-versions-btn" data-game="${card.game}" data-name="${card.name.replace(/"/g,'&quot;')}" data-slot="${i}" aria-label="View other versions">⇄ Other versions</button>
       <div class="slot-versions-panel" id="versions-${i}" style="display:none"></div>
     </div>`;
@@ -524,6 +559,7 @@ function renderCompareTable(cards) {
   const hasMtg      = cards.some(c => c.game === 'mtg');
   const hasColors   = cards.some(c => c.color_identity && c.color_identity.length);
   const hasPT       = cards.some(c => c.power || c.toughness);
+  const hasCK       = cards.some(c => c.ckBuylistAud);
   const colCount    = cards.length + 1;
 
   const rarityRow = `<tr><th class="tbl-label">Rarity</th>${cards.map(c =>
@@ -549,7 +585,11 @@ function renderCompareTable(cards) {
     return `<td class="tbl-val"><div class="cheapest-wrap"><span class="cheapest-price">${fmtAUD(c.cheapestPrinting.priceAud)}</span><span class="cheapest-set">${c.cheapestPrinting.setName || ''}</span><a href="${eu}" target="_blank" rel="noopener" class="cheapest-link">Buy cheapest →</a></div></td>`;
   }).join('')}</tr>`;
 
-  const edhRow = hasEdh ? `<tr><th class="tbl-label">EDHREC Rank</th>${cards.map((c, i) =>
+  const ckRow = hasCK ? `<tr><th class="tbl-label">Sell to Card Kingdom <span class="info-icon help-item" title="Card Kingdom (CK) is a major US TCG retailer. This is what they pay YOU for this card — converted to AUD at live rate. Card Kingdom buylist prices are updated daily.">?</span></th>${cards.map(c =>
+    c.ckBuylistAud ? `<td class="tbl-val"><span class="cheapest-price">${fmtAUD(c.ckBuylistAud)}</span><span style="font-size:10px;color:var(--text3);display:block">Sell price · cardkingdom.com</span></td>` : '<td class="tbl-val tbl-dim">Not available</td>'
+  ).join('')}</tr>` : '';
+
+  const edhRow = hasEdh ? `<tr><th class="tbl-label">Community Ranking <span class="info-icon help-item" title="EDHREC (Elder Dragon Highlander RECommendations) tracks how often a card appears in Commander decks worldwide. Lower number = more popular. #1 means the most-played card in Commander.">?</span></th>${cards.map((c, i) =>
     cell(i, edhWin, c.edhrec_rank ? `<span class="tbl-edh">#${c.edhrec_rank.toLocaleString()}</span>` : '<span class="tbl-dim">N/A</span>')
   ).join('')}</tr>` : '';
 
@@ -561,8 +601,8 @@ function renderCompareTable(cards) {
     `<td class="tbl-val">${c.power && c.toughness ? `${c.power} / ${c.toughness}` : '<span class="tbl-dim">—</span>'}</td>`
   ).join('')}</tr>` : '';
 
-  const reservedRow = hasReserved ? `<tr><th class="tbl-label">Reserve List</th>${cards.map(c =>
-    `<td class="tbl-val">${c.reserved ? '<span class="reserve-badge">🔒 Never reprinted</span>' : '—'}</td>`
+  const reservedRow = hasReserved ? `<tr><th class="tbl-label">Reserve List <span class="info-icon help-item" title="The Reserved List is a Wizards of the Coast policy guaranteeing certain older MTG cards will never be reprinted. This makes them scarcer over time, which supports long-term value.">?</span></th>${cards.map(c =>
+    `<td class="tbl-val">${c.reserved ? '<span class="reserve-badge" title="This card is on the Reserved List — it will never be officially reprinted, making it increasingly scarce.">🔒 Never reprinted</span>' : '—'}</td>`
   ).join('')}</tr>` : '';
 
   const colorsRow = hasColors ? `<tr><th class="tbl-label">Colour Identity</th>${cards.map(c =>
@@ -577,7 +617,8 @@ function renderCompareTable(cards) {
       ${cards.map(c => {
         if (c.game !== 'mtg') return `<td class="tbl-val" style="background:var(--bg3)"><span style="font-size:10px;color:var(--text3)">N/A</span></td>`;
         const status = c.legalities[fmt] || 'not_legal';
-        return `<td class="tbl-val"><span class="pip pip-${status === 'legal' ? 'legal' : status === 'banned' ? 'banned' : 'no'}">${status === 'legal' ? '✓' : status === 'banned' ? 'Banned' : '–'}</span></td>`;
+        const banTip = status === 'banned' ? ' title="Banned in ' + fmt.charAt(0).toUpperCase() + fmt.slice(1) + ' — this card is not legal to play in this format. It was banned due to power level concerns."' : '';
+        return '<td class="tbl-val"><span class="pip pip-' + (status === 'legal' ? 'legal' : status === 'banned' ? 'banned' : 'no') + '"' + banTip + '>' + (status === 'legal' ? '✓' : status === 'banned' ? 'Banned ⚠' : '–') + '</span></td>';
       }).join('')}
     </tr>`).join('') : '';
 
@@ -598,9 +639,9 @@ function renderCompareTable(cards) {
         </tr>
       </thead>
       <tbody>
-        ${rarityRow}${priceRow}${foilRow}${trendRow}${cheapRow}
+        ${rarityRow}${priceRow}${foilRow}${ckRow}${trendRow}${cheapRow}
         ${edhRow}${cmcRow}${ptRow}${colorsRow}${reservedRow}
-        ${legalityRows ? `<tr><td colspan="${colCount}" class="tbl-section-head">Format Legality (MTG)</td></tr>${legalityRows}` : ''}
+        ${legalityRows && hasMtg ? `<tr><td colspan="${colCount}" class="tbl-section-head">Format Legality <span style="font-size:10px;font-weight:400;color:var(--text3)">(MTG only — N/A = not applicable to this game)</span></td></tr>${legalityRows}` : ''}
         ${bestValueRow}
       </tbody>
     </table>
@@ -628,7 +669,7 @@ function renderEmptyState() {
     <div class="empty-icon">⚖️</div>
     <h2>Compare Cards Across All 8 TCGs</h2>
     <p>Search above to compare up to 5 cards. See AUD prices, trends, format legality and who wins on value.</p>
-    <div class="suggestions-label">Popular comparisons</div>
+    <div class="suggestions-label">See it in action — try a comparison</div>
     <div class="suggestions-grid">${suggestionsHTML}</div>
     <div id="recent-comparisons" style="margin-top:24px;display:none">
       <div class="suggestions-label">Your recent comparisons</div>
@@ -887,11 +928,55 @@ function renderPage({ cards, allTokens, usdToAud }) {
     footer a{color:var(--text2);margin:0 10px}
     footer a:hover{color:var(--text)}
 
+    /* PAGE CONTROLS */
+    .page-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .view-toggle{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+    .view-btn{padding:7px 12px;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);transition:all .15s;letter-spacing:.04em;cursor:pointer}
+    .view-btn.active{background:var(--green);color:#000}
+    .view-btn.active.sell-active{background:#7c6af5;color:#fff}
+    .help-toggle-btn{padding:7px 12px;font-size:11px;font-weight:700;border:1px solid var(--border);border-radius:8px;background:var(--bg3);color:var(--text2);transition:all .15s;cursor:pointer}
+    .help-toggle-btn.active{border-color:rgba(201,168,76,.4);color:var(--accent);background:rgba(201,168,76,.06)}
+
+    /* PAGE LABEL ROW */
+    .page-label-row{max-width:1300px;margin:10px auto 0;padding:0 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+    .page-label-item{font-size:12px;color:var(--text2)}
+
+    /* SELL VIEW */
+    .sell-view .slot-buy-btn{display:none}
+    .sell-view .ck-buylist-row{font-size:13px;font-weight:700;color:#81c784;background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.2);border-radius:6px;padding:8px;text-align:center;width:100%}
+    .sell-view .slot-price.aud-val[data-source="market"]{opacity:.5}
+    .sell-view-banner{max-width:1300px;margin:12px auto 0;padding:0 24px}
+    .sell-view-inner{background:rgba(124,106,245,.08);border:1px solid rgba(124,106,245,.25);border-radius:var(--radius);padding:10px 16px;font-size:12px;color:var(--text2);display:flex;align-items:center;gap:10px}
+    .sell-view-inner strong{color:#a78bfa}
+
+    /* HELP ITEMS — hidden when help is off */
+    body.help-off .help-item{display:none!important}
+    body.help-off .ebay-disclaimer{display:none!important}
+    body.help-off .price-source-label .info-icon{display:none!important}
+
+    /* PRICE SOURCE ROW */
+    .price-source-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px}
+    .price-source-label{font-size:10px;color:var(--text3);display:flex;align-items:center;gap:3px}
+    .slot-source-picker{font-size:9px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);border-radius:4px;padding:2px 4px;cursor:pointer;max-width:120px}
+    .ck-buylist-row{font-size:11px;color:#81c784;width:100%;text-align:center;padding:3px 0;cursor:default}
+    .ck-buylist-row strong{font-weight:700}
+    .ebay-disclaimer{font-size:10px;color:var(--text3);text-align:center;width:100%}
+
+    /* INFO ICON */
+    .info-icon{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:1px solid var(--text3);color:var(--text3);font-size:9px;font-weight:700;cursor:help;flex-shrink:0;line-height:1}
+    .info-icon:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* SPARKLINE LABEL */
+    .slot-sparkline{width:100%}
+    .sparkline-label{font-size:9px;color:var(--text3);text-align:center;margin-bottom:2px}
+
     @media(max-width:640px){
       .page-header{flex-direction:column;align-items:flex-start}
+      .page-controls{justify-content:flex-start}
       .share-bar{gap:6px}
       .verdict-banner{flex-direction:column;align-items:flex-start}
       .market-teaser-inner{flex-direction:column;text-align:center}
+      .page-label-row{gap:10px}
     }
   </style>
 </head>
@@ -921,10 +1006,24 @@ function renderPage({ cards, allTokens, usdToAud }) {
     <h1 class="page-title">⚖️ C3 Card Compare</h1>
     <p class="page-subtitle">Compare up to 5 cards across all 8 TCGs. AUD prices, updated daily. Live rate: 1 USD = AU$${usdToAud.toFixed(4)}</p>
   </div>
-  <div class="currency-toggle" role="group" aria-label="Currency selector">
-    <button class="currency-btn active" id="btn-aud" onclick="setCurrency('aud')" aria-pressed="true">AUD</button>
-    <button class="currency-btn" id="btn-usd" onclick="setCurrency('usd')" aria-pressed="false">USD</button>
+  <div class="page-controls">
+    <div class="currency-toggle" role="group" aria-label="Currency selector">
+      <button class="currency-btn active" id="btn-aud" onclick="setCurrency('aud')" aria-pressed="true">AUD</button>
+      <button class="currency-btn" id="btn-usd" onclick="setCurrency('usd')" aria-pressed="false">USD</button>
+    </div>
+    <div class="view-toggle" role="group" aria-label="Price view selector" title="Switch between buy prices (what you pay) and sell prices (what you receive)">
+      <button class="view-btn active" id="btn-buy">📈 Buying</button>
+      <button class="view-btn" id="btn-sell">💰 Selling</button>
+    </div>
+    <button class="help-toggle-btn" id="help-toggle-btn" title="Show or hide explanatory tooltips and labels across the page" aria-pressed="true">❓ Help on</button>
   </div>
+</div>
+
+<div class="page-label-row">
+  <span class="page-label-item">⚖️ Compare up to 5 cards</span>
+  <span class="page-label-item">💰 AUD prices updated daily</span>
+  <span class="page-label-item">🌏 8 TCGs supported</span>
+  <span class="page-label-item">📊 Buy &amp; sell pricing</span>
 </div>
 
 <div class="toolbar">
@@ -940,6 +1039,12 @@ function renderPage({ cards, allTokens, usdToAud }) {
 
 ${hasCards ? `
 ${verdictHtml}
+
+<div id="sell-view-banner" class="sell-view-banner" style="display:none">
+  <div class="sell-view-inner">
+    <strong>💰 Sell view active</strong> — prices shown are what you could receive for these cards. Card Kingdom (CK) buylist prices are in USD converted to AUD. eBay sell prices will vary.
+  </div>
+</div>
 
 <div class="slots-section">
   <div class="slots-row">${renderSlots(cards, allTokens, usdToAud)}</div>
@@ -974,7 +1079,7 @@ ${cards.length >= 2 ? `
           return `<div class="radar-legend-item"><div class="radar-swatch" style="background:${colors[i] || '#888'}"></div><span>${c.name}</span></div>`;
         }).join('')}
       </div>
-      <div style="font-size:10px;color:var(--text3);margin-top:14px;line-height:1.6">Price Access · EDHREC · Formats<br>Trend · Rarity · Versatility</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:14px;line-height:1.6">Scores computed from price, community ranking,<br>format legality, 7-day trend, rarity and versatility.<br>Higher = stronger in that dimension.</div>
     </div>
   </div>
 </div>
@@ -1031,6 +1136,52 @@ function setCurrency(cur) {
   });
   gtag('event', 'compare_currency_toggled', { currency: cur });
 }
+
+// Buy / Sell view toggle
+function setView(view) {
+  var isSell = view === 'sell';
+  document.getElementById('btn-buy').classList.toggle('active', !isSell);
+  document.getElementById('btn-sell').classList.toggle('active', isSell);
+  document.getElementById('btn-sell').classList.toggle('sell-active', isSell);
+  document.getElementById('btn-buy').classList.toggle('sell-active', false);
+  var banner = document.getElementById('sell-view-banner');
+  if (banner) banner.style.display = isSell ? '' : 'none';
+  document.body.classList.toggle('sell-view', isSell);
+  // In sell view, show CK buylist rows more prominently
+  document.querySelectorAll('.ck-buylist-row').forEach(function(el) {
+    el.style.fontSize = isSell ? '14px' : '';
+    el.style.fontWeight = isSell ? '700' : '';
+  });
+  gtag('event', 'compare_view_toggled', { view: view });
+}
+
+// Help tooltips toggle
+function toggleHelp() {
+  var isOn = !document.body.classList.contains('help-off');
+  if (isOn) {
+    document.body.classList.add('help-off');
+    var btn = document.getElementById('help-toggle-btn');
+    if (btn) { btn.textContent = '❓ Help off'; btn.classList.remove('active'); }
+    try { localStorage.setItem('c3_help_off', '1'); } catch {}
+  } else {
+    document.body.classList.remove('help-off');
+    var btn = document.getElementById('help-toggle-btn');
+    if (btn) { btn.textContent = '❓ Help on'; btn.classList.add('active'); }
+    try { localStorage.removeItem('c3_help_off'); } catch {}
+  }
+}
+
+// Apply saved help preference on load
+try {
+  if (localStorage.getItem('c3_help_off') === '1') {
+    document.body.classList.add('help-off');
+    var helpBtn = document.getElementById('help-toggle-btn');
+    if (helpBtn) { helpBtn.textContent = '❓ Help off'; helpBtn.classList.remove('active'); }
+  } else {
+    var helpBtn = document.getElementById('help-toggle-btn');
+    if (helpBtn) helpBtn.classList.add('active');
+  }
+} catch {}
 
 function setGameFilter(game) {
   var chips = document.querySelectorAll('.game-chip');
@@ -1251,6 +1402,12 @@ document.addEventListener('click', function(e) {
   if (versionItem) { switchVersion(versionItem.dataset.game, versionItem.dataset.slug, parseInt(versionItem.dataset.slot, 10)); return; }
   var vBtn = e.target.closest('.slot-versions-btn');
   if (vBtn) { loadVersions(vBtn.dataset.game, vBtn.dataset.name, parseInt(vBtn.dataset.slot, 10)); return; }
+  // Buy/sell view toggle
+  if (e.target.id === 'btn-buy') { setView('buy'); return; }
+  if (e.target.id === 'btn-sell') { setView('sell'); return; }
+  // Help toggle
+  if (e.target.id === 'help-toggle-btn') { toggleHelp(); return; }
+
   var suggCard = e.target.closest('.suggestion-card[data-suggestion-label]');
   if (suggCard && typeof gtag !== 'undefined') { gtag('event', 'compare_suggestion_clicked', { label: suggCard.dataset.suggestionLabel }); }
   var buyBtn = e.target.closest('.slot-buy-btn');
@@ -1268,6 +1425,31 @@ document.addEventListener('click', function(e) {
 });
 
 saveToHistory();
+
+// Per-slot source picker
+document.querySelectorAll('.slot-source-picker').forEach(function(select) {
+  select.addEventListener('change', function() {
+    var slotIdx = this.dataset.slot;
+    var val = this.value;
+    var slot = document.getElementById('slot-' + slotIdx);
+    if (!slot) return;
+    var ckRow = slot.querySelector('.ck-buylist-row');
+    var priceEl = slot.querySelector('.slot-price.aud-val');
+    var sourceLabel = slot.querySelector('.price-source-label');
+    if (val === 'ck') {
+      // Show CK buylist price prominently, dim market price
+      if (ckRow) ckRow.style.fontSize = '15px';
+      if (priceEl) priceEl.style.opacity = '0.5';
+      if (sourceLabel) sourceLabel.textContent = 'Card Kingdom buylist (sell) ';
+      gtag('event', 'compare_source_switched', { slot: slotIdx, source: 'ck' });
+    } else {
+      if (ckRow) ckRow.style.fontSize = '';
+      if (priceEl) priceEl.style.opacity = '';
+      if (sourceLabel) sourceLabel.textContent = 'Market price (buy) ';
+      gtag('event', 'compare_source_switched', { slot: slotIdx, source: 'market' });
+    }
+  });
+});
 loadRecentHistory();
 
 var _games = [];
