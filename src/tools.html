@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TCG Tools Australia | Compare Cards, EV Calculator, Price Tracker | Cards on Cards on Cards</title>
+<meta name="description" content="Free TCG tools for Australian players. Compare card prices in AUD, calculate booster box EV, track your collection value, and watch for price alerts across 8 TCGs.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/tools">
+<link rel="icon" type="image/png" href="/c3logo.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:10px 0;backdrop-filter:blur(18px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
+.nav-link:hover{color:var(--white);text-decoration:none}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--vault:hover{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
+.nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
+.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA;color:#C4B5FD}
+.nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}
+.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86EFAC}
+.nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35);background:rgba(251,146,60,.08)}
+.nav-link--tools:hover,.nav-link--tools.active{background:rgba(251,146,60,.14);border-color:#FB923C;color:#FDBA74}
+.nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}
+.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6;color:#F9A8D4}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1;color:#A5DFC0}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}
+.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA;color:#93C5FD}
+/* PAGE */
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.hero{padding:56px 0 40px;text-align:center}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FB923C;margin-bottom:12px}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,48px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:14px}
+.hero h1 span{color:#FB923C}
+.hero p{font-size:15px;color:var(--text2);max-width:540px;margin:0 auto}
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(251,146,60,.4),#FB923C,rgba(251,146,60,.4),transparent);margin:40px 0}
+/* TOOL GRID */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:48px}
+.tool-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:12px;transition:all .22s;position:relative;overflow:hidden;text-decoration:none}
+.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:.5;transition:opacity .25s}
+.tool-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4);text-decoration:none}
+.tool-card:hover::before{opacity:1}
+.tool-card--compare::before{background:#A78BFA}
+.tool-card--compare{border-color:rgba(167,139,250,.2)}
+.tool-card--compare:hover{border-color:rgba(167,139,250,.5)}
+.tool-card--ev::before{background:#FB923C}
+.tool-card--ev{border-color:rgba(251,146,60,.2)}
+.tool-card--ev:hover{border-color:rgba(251,146,60,.5)}
+.tool-card--market::before{background:#4ADE80}
+.tool-card--market{border-color:rgba(74,222,128,.2)}
+.tool-card--market:hover{border-color:rgba(74,222,128,.5)}
+.tool-card--tracker::before{background:#F472B6}
+.tool-card--tracker{border-color:rgba(244,114,182,.2)}
+.tool-card--tracker:hover{border-color:rgba(244,114,182,.5)}
+.tool-icon{font-size:28px;margin-bottom:4px}
+.tool-tag{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px}
+.tool-card--compare .tool-tag{color:#A78BFA}
+.tool-card--ev .tool-tag{color:#FB923C}
+.tool-card--market .tool-tag{color:#4ADE80}
+.tool-card--tracker .tool-tag{color:#F472B6}
+.tool-title{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:var(--white);line-height:1.3}
+.tool-desc{font-size:13px;color:var(--text2);line-height:1.55;flex:1}
+.tool-cta{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:4px;opacity:.7}
+.tool-card--compare .tool-cta{color:#A78BFA}
+.tool-card--ev .tool-cta{color:#FB923C}
+.tool-card--market .tool-cta{color:#4ADE80}
+.tool-card--tracker .tool-cta{color:#F472B6}
+.tool-card:hover .tool-cta{opacity:1}
+/* SECTION */
+.section-head{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--white);margin:0 0 16px}
+.section-sub{font-size:13px;color:var(--text2);margin-bottom:24px;max-width:560px}
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2)}
+footer a{color:var(--text2);margin:0 8px}
+footer a:hover{color:var(--white)}
+.footer-copy{margin-top:12px;font-size:11px;opacity:.5}
+@media(max-width:640px){.tools-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <div class="nav-links">
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">C3 Tools &middot; Free for Australian Players</div>
+    <h1>TCG <span>Tools</span></h1>
+    <p>Data-driven tools built for Australian TCG players. Every price in AUD, updated daily across 8 games.</p>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <p class="section-head">All Tools</p>
+  <p class="section-sub">Built on live Supabase price data. No sign-up required for any tool.</p>
+
+  <div class="tools-grid">
+
+    <a href="/compare" class="tool-card tool-card--compare">
+      <div class="tool-icon">&#9878;</div>
+      <div class="tool-tag">Compare &middot; Cross-game</div>
+      <div class="tool-title">C3 Card Compare</div>
+      <div class="tool-desc">Compare up to 5 cards side by side in AUD. Cross-game comparison, 14-day price trend, Card Kingdom buylist pricing, buy vs sell view, and radar chart. The only Australian TCG price comparison tool.</div>
+      <div class="tool-cta">Open Compare &#8594;</div>
+    </a>
+
+    <a href="/ev-calculator.html" class="tool-card tool-card--ev">
+      <div class="tool-icon">&#127922;</div>
+      <div class="tool-tag">EV Calculator &middot; MTG</div>
+      <div class="tool-title">Booster Box EV Calculator</div>
+      <div class="tool-desc">Is a booster box worth opening in Australia? Expected Value calculations for 43 MTG sets using live AUD card prices and official pull rates. Open vs buy singles, answered with data.</div>
+      <div class="tool-cta">Calculate EV &#8594;</div>
+    </a>
+
+    <a href="/market" class="tool-card tool-card--market">
+      <div class="tool-icon">&#128200;</div>
+      <div class="tool-tag">Market Insights &middot; 8 Games</div>
+      <div class="tool-title">Market Insights</div>
+      <div class="tool-desc">What is trending in Australian TCG right now? Cards spiking in price, biggest movers this week, and market overview across MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Dragon Ball, Star Wars and Riftbound.</div>
+      <div class="tool-cta">View Market &#8594;</div>
+    </a>
+
+    <a href="/tracker.html" class="tool-card tool-card--tracker">
+      <div class="tool-icon">&#128218;</div>
+      <div class="tool-tag">Tracker &middot; Free</div>
+      <div class="tool-title">Collection Value Tracker</div>
+      <div class="tool-desc">Track the AUD value of your TCG collection. Add cards from any of the 8 supported games, watch your portfolio value update daily, and get price alerts when cards hit your target. Free, no account needed.</div>
+      <div class="tool-cta">Open Tracker &#8594;</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <p>
+    <a href="/">Home</a>
+    <a href="/cards">Card Vault</a>
+    <a href="/compare">Compare</a>
+    <a href="/market">Market</a>
+    <a href="/ev-calculator.html">EV Calc</a>
+    <a href="/tracker.html">Tracker</a>
+    <a href="/play">Play</a>
+    <a href="/blog">Blog</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/legal.html">Legal</a>
+  </p>
+  <p class="footer-copy">&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au &middot; Affiliate links may earn a commission at no extra cost to you.</p>
+</footer>
+</body>
+</html>

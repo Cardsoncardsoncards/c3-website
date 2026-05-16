@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TCG Play Hub | Random Card Generators, Quizzes, Release Calendar | Cards on Cards on Cards</title>
+<meta name="description" content="Draw random TCG cards across 8 games, take personality quizzes, and check the Australian TCG release calendar. Free tools for MTG, Pokemon, Yu-Gi-Oh, Lorcana and more.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/play">
+<link rel="icon" type="image/png" href="/c3logo.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+nav{position:sticky;top:0;z-index:100;background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:10px 0;backdrop-filter:blur(18px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
+.nav-link:hover{color:var(--white);text-decoration:none}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--vault:hover{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
+.nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
+.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA;color:#C4B5FD}
+.nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}
+.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86EFAC}
+.nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}
+.nav-link--tools:hover{background:rgba(251,146,60,.1);border-color:#FB923C;color:#FDBA74}
+.nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35);background:rgba(244,114,182,.08)}
+.nav-link--play:hover,.nav-link--play.active{background:rgba(244,114,182,.14);border-color:#F472B6;color:#F9A8D4}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1;color:#A5DFC0}
+.nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}
+.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA;color:#93C5FD}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.hero{padding:56px 0 40px;text-align:center}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#F472B6;margin-bottom:12px}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,48px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:14px}
+.hero h1 span{color:#F472B6}
+.hero p{font-size:15px;color:var(--text2);max-width:540px;margin:0 auto}
+.gold-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(244,114,182,.4),#F472B6,rgba(244,114,182,.4),transparent);margin:40px 0}
+.section-head{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin:0 0 6px}
+.section-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
+/* PLAY GRID */
+.play-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:48px}
+.play-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:10px;transition:all .22s;position:relative;overflow:hidden;text-decoration:none}
+.play-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:.5;transition:opacity .25s}
+.play-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4);text-decoration:none}
+.play-card:hover::before{opacity:1}
+/* Generator cards - by game colour */
+.play-card--mtg::before{background:#A78BFA}
+.play-card--mtg{border-color:rgba(167,139,250,.2)}
+.play-card--mtg:hover{border-color:rgba(167,139,250,.5)}
+.play-card--pokemon::before{background:#FFCC00}
+.play-card--pokemon{border-color:rgba(255,204,0,.2)}
+.play-card--pokemon:hover{border-color:rgba(255,204,0,.5)}
+.play-card--yugioh::before{background:#9333EA}
+.play-card--yugioh{border-color:rgba(147,51,234,.2)}
+.play-card--yugioh:hover{border-color:rgba(147,51,234,.5)}
+.play-card--lorcana::before{background:#38BDF8}
+.play-card--lorcana{border-color:rgba(56,189,248,.2)}
+.play-card--lorcana:hover{border-color:rgba(56,189,248,.5)}
+.play-card--onepiece::before{background:#DC3030}
+.play-card--onepiece{border-color:rgba(220,48,48,.2)}
+.play-card--onepiece:hover{border-color:rgba(220,48,48,.5)}
+.play-card--dragonball::before{background:#F97316}
+.play-card--dragonball{border-color:rgba(249,115,22,.2)}
+.play-card--dragonball:hover{border-color:rgba(249,115,22,.5)}
+.play-card--starwars::before{background:#FFE81F}
+.play-card--starwars{border-color:rgba(255,232,31,.2)}
+.play-card--starwars:hover{border-color:rgba(255,232,31,.5)}
+.play-card--riftbound::before{background:#5865F2}
+.play-card--riftbound{border-color:rgba(88,101,242,.2)}
+.play-card--riftbound:hover{border-color:rgba(88,101,242,.5)}
+.play-card--quiz::before{background:#F472B6}
+.play-card--quiz{border-color:rgba(244,114,182,.2)}
+.play-card--quiz:hover{border-color:rgba(244,114,182,.5)}
+.play-card--calendar::before{background:#F87171}
+.play-card--calendar{border-color:rgba(248,113,113,.2)}
+.play-card--calendar:hover{border-color:rgba(248,113,113,.5)}
+.play-icon{font-size:24px}
+.play-tag{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.7}
+.play-card--mtg .play-tag{color:#A78BFA}
+.play-card--pokemon .play-tag{color:#FFCC00}
+.play-card--yugioh .play-tag{color:#C084FC}
+.play-card--lorcana .play-tag{color:#38BDF8}
+.play-card--onepiece .play-tag{color:#F87171}
+.play-card--dragonball .play-tag{color:#FB923C}
+.play-card--starwars .play-tag{color:#FDE68A}
+.play-card--riftbound .play-tag{color:#818CF8}
+.play-card--quiz .play-tag{color:#F472B6}
+.play-card--calendar .play-tag{color:#F87171}
+.play-title{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white);line-height:1.3}
+.play-desc{font-size:12.5px;color:var(--text2);line-height:1.5;flex:1}
+.play-cta{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.65;margin-top:2px}
+.play-card:hover .play-cta{opacity:1}
+.play-card--mtg .play-cta{color:#A78BFA}
+.play-card--pokemon .play-cta{color:#FFCC00}
+.play-card--yugioh .play-cta{color:#C084FC}
+.play-card--lorcana .play-cta{color:#38BDF8}
+.play-card--onepiece .play-cta{color:#F87171}
+.play-card--dragonball .play-cta{color:#FB923C}
+.play-card--starwars .play-cta{color:#FDE68A}
+.play-card--riftbound .play-cta{color:#818CF8}
+.play-card--quiz .play-cta{color:#F472B6}
+.play-card--calendar .play-cta{color:#F87171}
+footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2)}
+footer a{color:var(--text2);margin:0 8px}
+footer a:hover{color:var(--white)}
+.footer-copy{margin-top:12px;font-size:11px;opacity:.5}
+@media(max-width:640px){.play-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <div class="nav-links">
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">C3 Play Hub &middot; Australia</div>
+    <h1>Play &amp; <span>Explore</span></h1>
+    <p>Random card generators, TCG personality quizzes, and the Australian release calendar. All free.</p>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <p class="section-head">Random Card Generators</p>
+  <p class="section-sub">Draw random cards from any of the 8 TCGs in the C3 vault. Filter by rarity, add to compare, share your pull.</p>
+
+  <div class="play-grid">
+    <a href="/generators#mtg" class="play-card play-card--mtg">
+      <div class="play-icon">&#9878;</div>
+      <div class="play-tag">MTG &middot; 80,000+ cards</div>
+      <div class="play-title">MTG Random Card Generator</div>
+      <div class="play-desc">Draw random Magic: The Gathering cards with AUD prices. Filter by rarity including Mythic Only. Includes Commander generator.</div>
+      <div class="play-cta">Draw MTG Cards &#8594;</div>
+    </a>
+    <a href="/generators#pokemon" class="play-card play-card--pokemon">
+      <div class="play-icon">&#9889;</div>
+      <div class="play-tag">Pokemon &middot; 39,000+ cards</div>
+      <div class="play-title">Pokemon Random Card Generator</div>
+      <div class="play-desc">Draw random Pokemon TCG cards with live AUD prices. Filter by rarity including Ultra Rare and Secret Rare.</div>
+      <div class="play-cta">Draw Pokemon Cards &#8594;</div>
+    </a>
+    <a href="/generators#yugioh" class="play-card play-card--yugioh">
+      <div class="play-icon">&#128302;</div>
+      <div class="play-tag">Yu-Gi-Oh &middot; 46,000+ cards</div>
+      <div class="play-title">Yu-Gi-Oh Random Card Generator</div>
+      <div class="play-desc">Draw random Yu-Gi-Oh cards across 610 sets. Filter by Super Rare, Ultra Rare, or Secret Rare.</div>
+      <div class="play-cta">Draw Yu-Gi-Oh Cards &#8594;</div>
+    </a>
+    <a href="/generators#lorcana" class="play-card play-card--lorcana">
+      <div class="play-icon">&#10024;</div>
+      <div class="play-tag">Lorcana &middot; 3,100+ cards</div>
+      <div class="play-title">Lorcana Random Card Generator</div>
+      <div class="play-desc">Draw random Disney Lorcana cards with AUD prices. Filter by Super Rare or Enchanted.</div>
+      <div class="play-cta">Draw Lorcana Cards &#8594;</div>
+    </a>
+    <a href="/generators#onepiece" class="play-card play-card--onepiece">
+      <div class="play-icon">&#9875;</div>
+      <div class="play-tag">One Piece &middot; 6,600+ cards</div>
+      <div class="play-title">One Piece Random Card Generator</div>
+      <div class="play-desc">Draw random One Piece TCG cards with live AUD prices. Filter by rarity or Leader cards.</div>
+      <div class="play-cta">Draw One Piece Cards &#8594;</div>
+    </a>
+    <a href="/generators#dragonball" class="play-card play-card--dragonball">
+      <div class="play-icon">&#128165;</div>
+      <div class="play-tag">Dragon Ball &middot; 4,200+ cards</div>
+      <div class="play-title">Dragon Ball Random Card Generator</div>
+      <div class="play-desc">Draw random Dragon Ball Super Card Game cards with AUD prices. Filter by Super Rare and above.</div>
+      <div class="play-cta">Draw Dragon Ball Cards &#8594;</div>
+    </a>
+    <a href="/generators#starwars" class="play-card play-card--starwars">
+      <div class="play-icon">&#11088;</div>
+      <div class="play-tag">Star Wars &middot; 3,900+ cards</div>
+      <div class="play-title">Star Wars Random Card Generator</div>
+      <div class="play-desc">Draw random Star Wars Unlimited cards with AUD prices. Filter by Rare and Legendary.</div>
+      <div class="play-cta">Draw Star Wars Cards &#8594;</div>
+    </a>
+    <a href="/generators#riftbound" class="play-card play-card--riftbound">
+      <div class="play-icon">&#9889;</div>
+      <div class="play-tag">Riftbound &middot; 1,100+ cards</div>
+      <div class="play-title">Riftbound Random Card Generator</div>
+      <div class="play-desc">Draw random Riftbound (League of Legends TCG) cards with AUD prices. Filter by Rare and Epic.</div>
+      <div class="play-cta">Draw Riftbound Cards &#8594;</div>
+    </a>
+  </div>
+
+  <p class="section-head">Quizzes</p>
+  <p class="section-sub">TCG personality quizzes for Australian players. Find your game, archetype, or identity.</p>
+  <div class="play-grid">
+    <a href="/quizzes" class="play-card play-card--quiz">
+      <div class="play-icon">&#10067;</div>
+      <div class="play-tag">All Quizzes &middot; 10 available</div>
+      <div class="play-title">TCG Quiz Hub</div>
+      <div class="play-desc">Which TCG should you start? What is your Commander archetype? Which Lorcana ink are you? Ten free quizzes for Australian TCG players with AUD card links in every result.</div>
+      <div class="play-cta">Browse All Quizzes &#8594;</div>
+    </a>
+  </div>
+
+  <p class="section-head">Release Calendar</p>
+  <p class="section-sub">Australian and US TCG release dates, pre-release windows, and upcoming sets across all 8 games.</p>
+  <div class="play-grid">
+    <a href="/calendar" class="play-card play-card--calendar">
+      <div class="play-icon">&#128197;</div>
+      <div class="play-tag">Calendar &middot; 2026 to 2027</div>
+      <div class="play-title">TCG Release Calendar Australia</div>
+      <div class="play-desc">Australia-first TCG release dates with US comparison. Pre-release windows, collector edition dates, and upcoming sets across MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Dragon Ball, Star Wars and Riftbound.</div>
+      <div class="play-cta">View Calendar &#8594;</div>
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <a href="/">Home</a>
+    <a href="/cards">Card Vault</a>
+    <a href="/compare">Compare</a>
+    <a href="/market">Market</a>
+    <a href="/tools">Tools</a>
+    <a href="/generators">Generators</a>
+    <a href="/quizzes">Quizzes</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/blog">Blog</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/legal.html">Legal</a>
+  </p>
+  <p class="footer-copy">&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+</footer>
+</body>
+</html>
