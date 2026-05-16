@@ -36,6 +36,8 @@ const STATIC_PAGES = [
   { path: '/tracker.html',        priority: '0.8', changefreq: 'weekly'  },
   { path: '/ev-calculator.html',  priority: '0.7', changefreq: 'weekly'  },
   { path: '/calendar',            priority: '0.7', changefreq: 'weekly'  },
+  { path: '/tools',               priority: '0.8', changefreq: 'weekly'  },
+  { path: '/play',                priority: '0.8', changefreq: 'weekly'  },
   { path: '/dnd',                 priority: '0.6', changefreq: 'monthly' },
   { path: '/shop.html',           priority: '0.6', changefreq: 'weekly'  },
   { path: '/contact.html',        priority: '0.4', changefreq: 'monthly' },

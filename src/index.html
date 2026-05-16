@@ -216,6 +216,11 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .nav-link--contact:hover{color:#CBD5E1;border-color:#94A3B8;background:rgba(148,163,184,.06)}
 /* Active page override */
 .nav-link--active{color:#E8C86A!important;border-color:#C9A84C!important;background:rgba(201,168,76,.10)!important}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover,.nav-link--vault.active{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
+.nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover,.nav-link--compare.active{background:rgba(167,139,250,.1);border-color:#A78BFA;color:#C4B5FD}
+.nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover,.nav-link--market.active{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86EFAC}
+.nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover,.nav-link--tools.active{background:rgba(251,146,60,.1);border-color:#FB923C;color:#FDBA74}
+.nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover,.nav-link--play.active{background:rgba(244,114,182,.1);border-color:#F472B6;color:#F9A8D4}
 
 
 /* CARD VAULT ADDITIONS */
@@ -309,16 +314,13 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <img src="/c3-logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
     </a>
     <div class="nav-links">
-      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
-      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
-      <a href="/dnd" class="nav-link nav-link--dnd">D&amp;D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="/contact.html" class="nav-link nav-link--contact">Contact Us</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>
@@ -499,7 +501,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
   <div class="mission">
     <p class="section-eyebrow" style="margin-bottom:12px">Our Approach</p>
-    <p class="mission-text">We manually confirm every product on amazon.com.au before it goes live. <strong>We found them so you don't have to.</strong> Every click earns a small commission that keeps the site running &#8212; at no extra cost to you.</p>
+    <p class="mission-text">We help TCG players across Australia find the cards and products they are looking for, on eBay, Amazon, and beyond. When you buy through our links, a small commission comes back to C3 at no extra cost to you. That is how we keep the prices updated, the data live, and the tools free.</p>
   </div>
 
 </div>
@@ -512,7 +514,15 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/blog" class="footer-link">Blog</a>
       <a href="/tracker.html" class="footer-link">Tracker</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
-      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link">Etsy D&amp;D Tools</a>
+      <a href="/cards" class="footer-link" style="color:#C9A84C">Card Vault</a>
+      <a href="/compare" class="footer-link" style="color:#A78BFA">Compare</a>
+      <a href="/market" class="footer-link" style="color:#4ADE80">Market</a>
+      <a href="/tools" class="footer-link" style="color:#FB923C">Tools</a>
+      <a href="/play" class="footer-link" style="color:#F472B6">Play</a>
+      <a href="/blog" class="footer-link" style="color:#7ECBA1">Blog</a>
+      <a href="/contact.html" class="footer-link">Contact</a>
+      <a href="/legal.html" class="footer-link">Legal</a>
+      <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" class="footer-link" style="color:#F97316">D&amp;D Tools on Etsy &#8599;</a>
       <a href="/contact.html" class="footer-link">Contact Us</a>
     </div>
     <div class="footer-copy">&#169; 2026 Cards on Cards on Cards. All rights reserved.</div>
