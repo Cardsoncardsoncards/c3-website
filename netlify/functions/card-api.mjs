@@ -285,7 +285,7 @@ async function handleRandomCard(req) {
   const TABLE_MAP = {
     mtg: { table: 'mtg_cards', imgCol: 'image_uri_small', priceCol: 'price_usd', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity,color_identity,type_line' },
     pokemon: { table: 'pokemon_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity' },
-    yugioh: { table: 'yugioh_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity,type,attribute' },
+    yugioh: { table: 'yugioh_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity,attribute' },
     lorcana: { table: 'lorcana_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity,ink' },
     onepiece: { table: 'onepiece_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity' },
     dragonball: { table: 'dragonball_cards', imgCol: 'image_url', priceCol: 'market_price', slugCol: 'slug', nameCol: 'name', extraCols: 'set_name,rarity' },

@@ -277,7 +277,7 @@ function renderPage({ gainers, losers, buySignals, sellSignals, selectedGame, up
     /* Nav */
     nav{background:rgba(8,11,18,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
     .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .nav-logo{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+    .nav-logo{display:flex;align-items:center;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;color:#C9A84C;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;white-space:nowrap;flex-shrink:0}
     .nav-links{display:flex;gap:6px;flex-wrap:wrap}
     .nav-link{font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);color:var(--text2);text-decoration:none;font-weight:600;letter-spacing:.05em;text-transform:uppercase;transition:all .2s}
     .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover,.nav-link--vault.active{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
@@ -398,7 +398,7 @@ function renderPage({ gainers, losers, buySignals, sellSignals, selectedGame, up
 
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">C3</a>
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;margin-right:8px"><span>Cards on Cards on Cards</span></a>
     <div class="nav-links">
       <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
