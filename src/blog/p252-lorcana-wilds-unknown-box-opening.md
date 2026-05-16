@@ -4,7 +4,6 @@ title: "I Opened 4 Boxes of Lorcana Wilds Unknown: Pull Rate Breakdown and Hones
 description: "Four booster boxes, 96 packs, 1,077 listed singles, 9 Epics. The real numbers from a box opening we did to build our store inventory."
 date: 2026-05-16
 category: "general-tcg"
-game: lorcana
 emoji: "📦"
 tags: [lorcana, wilds-unknown, box-opening, pull-rates, australia, honest-review, epic-cards, set-12]
 layout: post

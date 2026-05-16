@@ -4,7 +4,6 @@ title: "Lorcana Wilds Unknown Set Review: Is It Worth Opening in Australia?"
 description: "Wilds Unknown is Lorcana Set 12. We opened four booster boxes and tracked every card. Here is the pull rate data, the standout singles, and an honest answer to whether opening boxes makes financial sense in Australia right now."
 date: 2026-05-16
 category: "set-reviews"
-game: lorcana
 emoji: "🏰"
 tags: [lorcana, wilds-unknown, set-review, australia, box-opening, pull-rates, disney, set-12]
 layout: post

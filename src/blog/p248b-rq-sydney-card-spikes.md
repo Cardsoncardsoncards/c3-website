@@ -4,7 +4,6 @@ title: "After RQ Sydney: Which MTG Cards Are Moving and Which Ones Flatlined"
 description: "The post-event price check. Simon Linabury won the ANZ Regional Championship with Mono Green Landfall. Here is what moved, what did not, and what to buy before the rest of the market catches up."
 date: 2026-03-18
 category: "market-and-prices"
-game: mtg
 emoji: "📈"
 tags: [mtg, standard, market, card-prices, mono-green-landfall, izzet-prowess, australia]
 layout: post

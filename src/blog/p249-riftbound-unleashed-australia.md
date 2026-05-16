@@ -4,7 +4,6 @@ title: "Riftbound Unleashed: What Australians Need to Know Before Buying"
 description: "The League of Legends TCG has landed in Australia. Here is what the set looks like, what a booster box actually costs, what you get in each pack, and whether it is worth getting into right now."
 date: 2026-05-16
 category: "set-reviews"
-game: riftbound
 emoji: "🎮"
 tags: [riftbound, set-review, australia, booster-box, unleashed, league-of-legends, tcg-buying-guide]
 layout: post

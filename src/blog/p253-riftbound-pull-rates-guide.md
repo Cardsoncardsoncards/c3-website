@@ -4,7 +4,6 @@ title: "Riftbound Unleashed Pull Rates Explained: What to Expect From a Booster 
 description: "The complete pull rate guide for Riftbound Unleashed. Alternate arts, overnumbered cards, signed cards, foil rates. What the official rates say and what we actually got from four boxes."
 date: 2026-05-16
 category: "general-tcg"
-game: riftbound
 emoji: "🎯"
 tags: [riftbound, pull-rates, booster-box, unleashed, australia, guide, alternate-art, overnumbered]
 layout: post

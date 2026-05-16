@@ -4,7 +4,6 @@ title: "I Opened 4 Boxes of Riftbound Unleashed: Here Is Exactly What I Got"
 description: "Real numbers from four booster boxes of Riftbound Unleashed. Every foil, every alternate art, every insert card counted. No fluff, no estimates."
 date: 2026-05-16
 category: "general-tcg"
-game: riftbound
 emoji: "📦"
 tags: [riftbound, box-opening, pull-rates, unleashed, australia, honest-review, personal]
 layout: post
