@@ -176,9 +176,15 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="cat-filter" id="catFilter">
       <button class="cat-btn active" data-filter="all" onclick="applyFilters()">All</button>
       <button class="cat-btn" data-filter="buying-guides" onclick="applyFilters()">Buying Guides</button>
-      <button class="cat-btn" data-filter="beginner-guides" onclick="applyFilters()">Game Guides</button>
+      <button class="cat-btn" data-filter="beginner-guides" onclick="applyFilters()">Beginner Guides</button>
+      <button class="cat-btn" data-filter="set-reviews" onclick="applyFilters()">Set Reviews</button>
+      <button class="cat-btn" data-filter="competitive-play" onclick="applyFilters()">Competitive</button>
+      <button class="cat-btn" data-filter="market-and-prices" onclick="applyFilters()">Prices</button>
+      <button class="cat-btn" data-filter="selling-guides" onclick="applyFilters()">Selling</button>
+      <button class="cat-btn" data-filter="how-to-play" onclick="applyFilters()">How to Play</button>
       <button class="cat-btn" data-filter="accessories" onclick="applyFilters()">Accessories</button>
-      <button class="cat-btn" data-filter="tools-and-trackers" onclick="applyFilters()">Free Tools</button>
+      <button class="cat-btn" data-filter="tools-and-trackers" onclick="applyFilters()">Tools</button>
+      <button class="cat-btn" data-filter="general-tcg" onclick="applyFilters()">General</button>
     </div>
     <div class="filter-divider"></div>
     <div class="filter-label">Filter by game</div>
@@ -201,7 +207,19 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <div class="blog-card-img">{{ post.data.emoji | default("🃏") }}</div>
       <div class="blog-card-body">
         <div class="blog-card-meta">
-          <span class="post-tag {{ post.data.category | tagClass }}">{{ post.data.category | tagLabel }}</span>
+          {%- set cat = post.data.category -%}
+          {%- if cat == "buying-guides" %}<span class="post-tag tag-guide">Buying Guide</span>
+          {%- elif cat == "beginner-guides" %}<span class="post-tag tag-game">Game Guide</span>
+          {%- elif cat == "set-reviews" %}<span class="post-tag tag-review">Set Review</span>
+          {%- elif cat == "competitive-play" %}<span class="post-tag tag-guide" style="color:#F97316;border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.07)">Competitive</span>
+          {%- elif cat == "market-and-prices" %}<span class="post-tag tag-review" style="color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.07)">Prices</span>
+          {%- elif cat == "selling-guides" %}<span class="post-tag tag-guide" style="color:#60A5FA;border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.07)">Selling</span>
+          {%- elif cat == "how-to-play" %}<span class="post-tag tag-game">How to Play</span>
+          {%- elif cat == "accessories" %}<span class="post-tag tag-accessory">Accessories</span>
+          {%- elif cat == "tools-and-trackers" %}<span class="post-tag tag-tool">Free Tools</span>
+          {%- elif cat == "general-tcg" %}<span class="post-tag tag-accessory">Guide</span>
+          {%- else %}<span class="post-tag tag-guide">{{ cat }}</span>
+          {%- endif %}
           <span class="post-date">{{ post.data.date | dateDisplay }}</span>
         </div>
         <h3>{{ post.data.title }}</h3>
@@ -266,14 +284,14 @@ function applyFilters() {
   const cat = document.querySelector('#catFilter .cat-btn.active')?.dataset.filter || 'all';
   const game = document.querySelector('#gameFilter .cat-btn.active')?.dataset.game || 'all';
 
-  const guideCategories = ['buying-guides','value-and-worth','product-comparisons','selling-and-money'];
+  const guideCategories = ['buying-guides','beginner-guides','set-reviews','competitive-play','market-and-prices','selling-guides','how-to-play','accessories','tools-and-trackers','general-tcg'];
   let visibleCount = 0;
 
   document.querySelectorAll('#blogGrid .blog-card').forEach(card => {
     const c = card.dataset.category || '';
     const g = card.dataset.game || 'general';
 
-    const catMatch = cat === 'all' || c === cat || (cat === 'buying-guides' && guideCategories.includes(c));
+    const catMatch = cat === 'all' || c === cat;
     const gameMatch = game === 'all' || g === game;
 
     if (catMatch && gameMatch) {
