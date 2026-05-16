@@ -77,7 +77,7 @@ export default async (req) => {
   } else {
     imageFilter  = `image_url=not.is.null`;
     // Base filter: always exclude sealed/null
-    const baseRarity = `&rarity=not.is.null&rarity=neq.None`;
+    const baseRarity = ``; // No rarity filter when 'all' selected - let all cards through
     // Game-specific rarity mappings based on actual DB values
     const rarityMap = {
       pokemon: {

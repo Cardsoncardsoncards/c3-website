@@ -307,8 +307,8 @@ async function drawCards(game, count) {
     grid.className = 'cards-result';
 
     cards.forEach((c, i) => {
-      const imgHtml = c.image
-        ? `<img src="${c.image}" alt="${c.name}" class="result-img" onerror="this.style.display='none'">`
+      const imgHtml = c.image_url
+        ? `<img src="${c.image_url}" alt="${c.name}" class="result-img" onerror="this.style.display='none'">`
         : '<div style="height:180px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:12px">No image</div>';
 
       const rarityBadgeHtml = getRarityBadge(c.rarity);
@@ -329,7 +329,7 @@ async function drawCards(game, count) {
             ${imgHtml}
             <div class="result-name">${c.name}</div>
             ${metaHtml ? `<div class="result-meta">${metaHtml}</div>` : ''}
-            <div class="result-price">${c.price_aud ? ("AU$" + parseFloat(c.price_aud).toFixed(2)) : "Price TBC"}</div>
+            <div class="result-price">${c.priceDisplay}</div>
             <div class="result-links">
               <a href="${c.path || '#'}" class="btn-view" onclick="event.stopPropagation()">View Card &rarr;</a>
               <a href="${'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(c.name + ' ' + c.game) + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=generators&toolid=10001&mkevt=1'}" target="_blank" rel="noopener sponsored" class="btn-ebay" onclick="event.stopPropagation()">Buy on eBay &#8599;</a>
