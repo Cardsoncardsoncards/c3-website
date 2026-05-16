@@ -4,7 +4,6 @@ title: "RQ Sydney 2026: Results, Archetypes, Card Spikes and What It All Means f
 description: "A deep dive into the ANZ Super Series Cycle 11 Regional Championship in Sydney. 208 players, two Mono Green Landfall decks in the finals, and a metagame that tells a very specific story about where Standard is heading."
 date: 2026-03-16
 category: "competitive-play"
-game: mtg
 emoji: "🏆"
 tags: [mtg, standard, regional-championship, sydney, anz-super-series, competitive, meta-analysis]
 layout: post

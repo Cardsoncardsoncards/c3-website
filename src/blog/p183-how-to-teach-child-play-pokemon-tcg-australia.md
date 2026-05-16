@@ -1,7 +1,7 @@
 ---
 game: pokemon
-title: "How to Teach Kids to Play Pokemon TCG in Australia"s Step-by-Step Guide"
-description: "Pokemon TCG is one of the best games to play with kids — if you teach it in the right order. This guide shows exactly how to introduce the game to."
+title: "How to Teach Kids to Play Pokemon TCG in Australia"
+description: "Pokemon TCG is playable by kids aged 6 and up if you teach it in the right order. Covers age-by-age rules, what to buy first, and common teaching mistakes."
 date: 2026-05-05
 category: "beginner-guides"
 tags:
