@@ -266,7 +266,14 @@ ${tickerHTML}
     <div class="market-widget" id="market-widget">
       <div class="market-widget-label">&#128200; What the Market Is Doing Right Now</div>
       <div class="market-cards" id="market-cards">
-        <div style="font-size:12px;color:var(--text2);padding:8px">Loading market signals...</div>
+        \${topCards.slice(0,3).map(c => {
+          const price = c.price_aud ? parseFloat(c.price_aud) : 0;
+          return \`<a href="/cards/mtg/\${c.slug}" class="market-card">
+            <div class="market-card-name">\${c.name}</div>
+            <div class="market-card-price" style="color:#C9A84C">AU\$\${price.toFixed(2)}</div>
+            <div class="market-card-change" style="color:var(--text2);font-size:10px">\${c.rarity || ''}</div>
+          </a>\`;
+        }).join('')}
       </div>
       <div style="margin-top:12px;font-size:11px;color:var(--text2)">Based on 7-day price movement in the C3 MTG price database. <a href="/market" style="color:var(--gold)">See full market report &rarr;</a></div>
     </div>
@@ -343,27 +350,7 @@ function filterSets(q) {
 }
 
 // Market signal widget — top movers from MTG price snapshots
-(async function() {
-  try {
-    const res = await fetch('/api/tcg-prices?game=mtg&limit=3');
-    if (!res.ok) return;
-    const data = await res.json();
-    const cards = data.cards || data.movers || [];
-    if (!cards.length) return;
-    const el = document.getElementById('market-cards');
-    el.innerHTML = cards.slice(0,3).map(c => {
-      const price = parseFloat(c.price_aud || c.priceAud || 0);
-      const change = parseFloat(c.change_7d || c.change || 0);
-      const cls = change >= 0 ? 'change-up' : 'change-down';
-      const sign = change >= 0 ? '+' : '';
-      return '<a href="/cards/mtg/' + (c.slug||'') + '" class="market-card">'
-        + '<div class="market-card-name">' + (c.name||'') + '</div>'
-        + '<div class="market-card-price">AU$' + price.toFixed(2) + '</div>'
-        + (change ? '<div class="market-card-change ' + cls + '">' + sign + change.toFixed(1) + '% this week</div>' : '')
-        + '</a>';
-    }).join('');
-  } catch(e) {}
-})();
+// Market signals rendered server-side
 </script>
 </body>
 </html>`, { status: 200, headers });

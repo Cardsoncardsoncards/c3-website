@@ -30,7 +30,7 @@ export default async (req) => {
 
   const [sets, topCards] = await Promise.all([
     supabaseGet('starwars_sets?order=release_date.desc&limit=300&select=id,name,slug,abbreviation,card_count,release_date'),
-    supabaseGet('starwars_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name')
+    supabaseGet('starwars_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=neq.None&limit=24&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name')
   ]);
 
   const azFilterHTML = buildAZFilter(sets);
@@ -60,7 +60,7 @@ export default async (req) => {
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Star Wars Unlimited Card Prices Australia | AUD Updated Daily | C3</title>
+  <title>Star Wars Unlimited Card Prices Australia | C3</title>
   <meta name="description" content="Browse ${sets.length}+ Star Wars Unlimited sets. Live AUD card prices, eBay AU buy links. Australia's Star Wars Unlimited price guide updated daily.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/starwars">
   <link rel="icon" type="image/png" href="/c3logo.png">

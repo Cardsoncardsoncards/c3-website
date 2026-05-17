@@ -45,7 +45,7 @@ function buildTickerHTML(events) {
 function buildAZFilter(sets) {
   const letters = new Set();
   sets.forEach(s => {
-    const ch = (s.set_name || s.name || '').trim()[0];
+    const ch = (s.name || s.name || '').trim()[0];
     if (ch) letters.add(/[A-Z]/.test(ch.toUpperCase()) ? ch.toUpperCase() : '0-9');
   });
   const sorted = ['All', '0-9', ...[...letters].filter(l => l !== '0-9').sort()];
@@ -56,8 +56,8 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
   const [sets, topCards] = await Promise.all([
-    supabaseGet('yugioh_sets?order=release_date.desc&limit=700&select=id,set_name,abbreviation,release_date,num_of_cards'),
-    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,type,attribute,image_url,market_price,rarity,set_name')
+    supabaseGet('yugioh_sets?order=release_date.desc&limit=700&select=id,name,abbreviation,release_date,card_count'),
+    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=neq.None&limit=24&select=slug,name,type,attribute,image_url,market_price,rarity,set_name')
   ]);
 
   const tickerHTML = buildTickerHTML(CALENDAR_EVENTS);
@@ -77,11 +77,11 @@ export default async (req) => {
   }).join('') : '<div class="sync-msg">Cards sync daily after 10am AEST.</div>';
 
   const setListHTML = sets.length ? sets.map(s => {
-    const name = s.set_name || s.name || '';
+    const name = s.name || s.name || '';
     const ch = name.trim()[0] ? name.trim()[0].toUpperCase() : '';
     const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
     const year = s.release_date ? s.release_date.slice(0,4) : '';
-    const count = s.num_of_cards ? ` &middot; ${s.num_of_cards} cards` : '';
+    const count = s.card_count ? ` &middot; ${s.card_count} cards` : '';
     return `<a href="/cards/yugioh/sets/${encodeURIComponent(s.abbreviation||s.id)}" class="set-tile" data-name="${name.toLowerCase().replace(/"/g,'&quot;')}" data-letter="${letterKey}">
       <span class="set-tile-name">${name}</span>
       <span class="set-tile-meta">${year}${count}</span>
@@ -93,7 +93,7 @@ export default async (req) => {
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Yu-Gi-Oh Card Prices Australia | AUD Prices Updated Daily | C3</title>
-  <meta name="description" content="Browse Yu-Gi-Oh card prices in AUD. ${sets.length}+ sets including Quarter Century Stampede. Live eBay AU buy links updated daily. Australia's Yu-Gi-Oh price guide.">
+  <meta name="description" content="Browse Yu-Gi-Oh card prices in AUD. ${sets.length}+ sets with live eBay AU buy links. Australia's Yu-Gi-Oh price guide updated daily.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/yugioh">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
@@ -249,7 +249,14 @@ ${tickerHTML}
     <div class="market-widget" id="market-widget">
       <div class="market-widget-label">&#128200; What the Market Is Doing Right Now</div>
       <div class="market-cards" id="market-cards">
-        <div style="font-size:12px;color:var(--text2);padding:8px">Loading market signals...</div>
+        \${topCards.slice(0,3).map(c => {
+          const price = c.market_price ? (parseFloat(c.market_price) * 1.58) : 0;
+          return \`<a href="/cards/yugioh/\${c.slug}" class="market-card">
+            <div class="market-card-name">\${c.name}</div>
+            <div class="market-card-price" style="color:#c8a332">~AU\$\${price.toFixed(2)}</div>
+            <div class="market-card-change" style="color:var(--text2);font-size:10px">\${c.type ? c.type.split(' ')[0] : ''}</div>
+          </a>\`;
+        }).join('')}
       </div>
       <div style="margin-top:12px;font-size:11px;color:var(--text2)">Based on 7-day price movement across Yu-Gi-Oh singles. <a href="/market" style="color:var(--accent)">See full market report &rarr;</a></div>
     </div>
@@ -329,27 +336,7 @@ function filterSets(q) {
 }
 
 // Market signal widget — fetch top movers from Yu-Gi-Oh price snapshots
-(async function() {
-  try {
-    const res = await fetch('/api/tcg-prices?game=yugioh&limit=3');
-    if (!res.ok) return;
-    const data = await res.json();
-    const cards = data.cards || data.movers || [];
-    if (!cards.length) return;
-    const el = document.getElementById('market-cards');
-    el.innerHTML = cards.slice(0,3).map(c => {
-      const price = c.price_aud || c.priceAud || 0;
-      const change = c.change_7d || c.change || 0;
-      const changeClass = change >= 0 ? 'change-up' : 'change-down';
-      const changeSign = change >= 0 ? '+' : '';
-      return '<a href="/cards/yugioh/' + (c.slug||'') + '" class="market-card">'
-        + '<div class="market-card-name">' + (c.name||'') + '</div>'
-        + '<div class="market-card-price">AU$' + parseFloat(price).toFixed(2) + '</div>'
-        + (change ? '<div class="market-card-change ' + changeClass + '">' + changeSign + parseFloat(change).toFixed(1) + '% this week</div>' : '')
-        + '</a>';
-    }).join('');
-  } catch(e) {}
-})();
+// Market signals rendered server-side
 </script>
 </body>
 </html>`, { status: 200, headers });

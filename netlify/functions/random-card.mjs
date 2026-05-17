@@ -19,7 +19,7 @@ const GAME_TABLES = {
 };
 
 const GAME_COUNTS = {
-  mtg: 96480, pokemon: 31642, yugioh: 46588, lorcana: 3153,
+  mtg: 96480, pokemon: 31642, yugioh: 46588, lorcana: 2000,  // conservative: not all have images
   onepiece: 6289, riftbound: 1159, starwars: 6113, dragonball: 6261,
 };
 
@@ -51,7 +51,7 @@ function json(data, status = 200) {
 export default async (req) => {
   const url   = new URL(req.url);
   const game  = (url.searchParams.get('game') || '').toLowerCase();
-  const limit = Math.min(parseInt(url.searchParams.get('limit') || '1'), 6);
+  const limit = Math.min(parseInt(url.searchParams.get('limit') || '1'), 20);
   const rarityParam = (url.searchParams.get('rarity') || 'all').toLowerCase();
 
   if (!game || !GAME_TABLES[game]) {
@@ -63,10 +63,15 @@ export default async (req) => {
   const cardPath  = GAME_PATHS[game];
   const imgField  = getImageField(game);
 
-  const offset = Math.floor(Math.random() * Math.max(1, total - limit));
+  const sortParam = (url.searchParams.get('sort') || 'random').toLowerCase();
+  const usePrice = sortParam === 'price';
+
+  // When using price sort, start from offset 0 (top cards)
+  // When random, use a safe offset capped at half the total to avoid empty results
+  const safeMax = Math.max(1, Math.floor(total * 0.7) - limit);
+  const offset = usePrice ? 0 : Math.floor(Math.random() * safeMax);
 
   // MTG: filter on image_uri_small; others: filter on image_url
-  // MTG has no rarity column in the same way -- skip rarity filter for MTG
   let imageFilter, rarityFilter, selectFields;
   if (game === 'mtg') {
     imageFilter  = `image_uri_small=not.is.null&tcgplayer_id=not.is.null`;
@@ -76,8 +81,8 @@ export default async (req) => {
     selectFields = `id,slug,name,image_uri_small,price_aud,price_usd,rarity,set_code,set_name`;
   } else {
     imageFilter  = `image_url=not.is.null`;
-    // Base filter: always exclude sealed/null
-    const baseRarity = ``; // No rarity filter when 'all' selected - let all cards through
+    // Base filter: exclude rarity=None (sealed product in starwars/dragonball)
+    const baseRarity = `&rarity=neq.None`;
     // Game-specific rarity mappings based on actual DB values
     const rarityMap = {
       pokemon: {
@@ -116,9 +121,17 @@ export default async (req) => {
     selectFields = `id,slug,name,number,image_url,market_price,price_aud,rarity,set_name`;
   }
 
-  // MTG uses tcgplayer_id (bigint) for ordering; UUID id column breaks OFFSET pagination
-  const orderCol = game === 'mtg' ? 'tcgplayer_id' : 'id';
-  const query = `${SUPABASE_URL}/rest/v1/${table}?${imageFilter}${rarityFilter}&order=${orderCol}&limit=${limit}&offset=${offset}&select=${selectFields}`;
+  // Order: price sort uses price_aud desc (or market_price for non-MTG), random uses id/tcgplayer_id
+  let orderStr;
+  if (usePrice) {
+    if (game === 'mtg') orderStr = 'price_aud.desc.nullslast';
+    else orderStr = 'market_price.desc.nullslast';
+  } else {
+    orderStr = game === 'mtg' ? 'tcgplayer_id' : 'id';
+  }
+  // Add price > 0 filter when sorting by price to avoid zero-price cards
+  const priceFilter = usePrice ? (game === 'mtg' ? '&price_aud=gt.0' : '&market_price=gt.0') : '';
+  const query = `${SUPABASE_URL}/rest/v1/${table}?${imageFilter}${rarityFilter}${priceFilter}&order=${orderStr}&limit=${limit}&offset=${offset}&select=${selectFields}`;
 
   try {
     const res = await fetch(query, {

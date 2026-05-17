@@ -57,7 +57,7 @@ const NAV = `<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px)
       <span>Cards on Cards on Cards</span>
     </a>
     <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
-      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Card Vault</a>
+      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;background:rgba(201,168,76,.1);white-space:nowrap">Card Vault</a>
       <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
       <a href="/market" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ADE80;white-space:nowrap">Market</a>
       <a href="/tools" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(251,146,60,.35);color:#FB923C;white-space:nowrap">Tools</a>
@@ -79,6 +79,7 @@ export default async (req) => {
   <title>Set Not Found | Lorcana | Cards on Cards on Cards</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="/c3logo.png">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -120,7 +121,7 @@ export default async (req) => {
 
   let set = sets && sets[0];
   try {
-    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,card_text,price_change_7d`) : [];
+    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=200&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,price_change_7d`) : [];
   } catch (e) {
     console.error('[lorcana-set-page] cards fetch error:', e.message);
     cards = [];
@@ -133,6 +134,7 @@ export default async (req) => {
   <title>Set Not Found | Lorcana | Cards on Cards on Cards</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="/c3logo.png">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -255,6 +257,7 @@ export default async (req) => {
 <title>${set.name} Card Prices Australia | Disney Lorcana | Cards on Cards on Cards</title>
 <meta name="description" content="Browse all ${cards.length} ${set.name} Disney Lorcana cards with live AUD pricing. Filter by ink colour and rarity. eBay AU buy links. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana/sets/${setCode}">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" href="/c3logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">

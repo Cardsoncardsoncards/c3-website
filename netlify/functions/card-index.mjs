@@ -167,6 +167,7 @@ function renderCardHub(sets, topCards) {
   <title>MTG Card Prices Australia | Cards on Cards on Cards</title>
   <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, 52-week price ranges, and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   ${BASE_STYLES}
 </head>
 <body>
@@ -222,7 +223,7 @@ ${NAV}
       <input type="text" id="set-search" placeholder="Type a set name e.g. Strixhaven, Commander..."
         style="width:100%;max-width:500px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box"
         oninput="filterSets(this.value)" autocomplete="off">
-      <span style="font-size:11px;color:var(--text2);margin-left:12px">Sets with <span style="color:var(--gold)">+N</span> have sub-sets — click the + button to expand them</span>
+      <span style="font-size:11px;color:var(--text2);margin-left:12px">Sets with <span style="color:var(--gold)">+N</span> have sub-sets, click the + button to expand them</span>
     </div>
     <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px">
       ${setListHTML}
@@ -422,6 +423,7 @@ function renderRandomCommander() {
   <title>Random MTG Commander Generator Australia | Cards on Cards on Cards</title>
   <meta name="description" content="Generate 1 to 4 random Magic: The Gathering Commanders. Filter by colour identity and mana value. Share your results with friends.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/random-commander">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   ${BASE_STYLES}
   <style>
     .color-btn{width:38px;height:38px;border-radius:50%;border:2px solid transparent;cursor:pointer;font-size:15px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;transition:all .2s}
@@ -487,7 +489,7 @@ ${NAV}
     <span style="font-size:20px">⚔️</span>
     <div style="flex:1;min-width:180px">
       <div style="font-size:13px;font-weight:700;color:var(--text)">Roll your pod. Dare a friend.</div>
-      <div style="font-size:12px;color:var(--text2)">Generate 4 random Commanders and share the link — see who builds the better deck.</div>
+      <div style="font-size:12px;color:var(--text2)">Generate 4 random Commanders and share the link to see who builds the better deck.</div>
     </div>
   </div>
 
@@ -516,7 +518,7 @@ ${NAV}
         <button class="color-btn" style="background:#f9aa8f;color:#500" data-color="R" onclick="toggleColor(this)" title="Red">R</button>
         <button class="color-btn" style="background:#9bd3ae;color:#030" data-color="G" onclick="toggleColor(this)" title="Green">G</button>
       </div>
-      <div class="how-tip">🎨 <strong>How colour filtering works:</strong> Selecting W + B shows commanders whose identity fits <em>within</em> those colours — so mono-white, mono-black, and Orzhov (W/B) commanders all appear. Leave blank to roll from all 5 colours.</div>
+      <div class="how-tip">🎨 <strong>How colour filtering works:</strong> Selecting W + B shows commanders whose identity fits <em>within</em> those colours ,  so mono-white, mono-black, and Orzhov (W/B) commanders all appear. Leave blank to roll from all 5 colours.</div>
     </div>
 
     <div style="margin-bottom:28px;margin-top:18px">
@@ -542,7 +544,7 @@ ${NAV}
     <div class="challenge-bar">
       <div style="font-size:32px;margin-bottom:8px">⚔️</div>
       <div class="challenge-title">Think You Can Build Better?</div>
-      <div class="challenge-sub">Send your friend this exact Commander pod and see who builds the stronger deck. No excuses — same pool, best builder wins.</div>
+      <div class="challenge-sub">Send your friend this exact Commander pod and see who builds the stronger deck. No excuses, same pool, best builder wins.</div>
       <div class="share-row">
         <button class="sbtn sbtn-discord" onclick="shareDiscord()">Discord</button>
         <a class="sbtn sbtn-reddit" id="reddit-btn" href="#" target="_blank" rel="noopener">Reddit</a>
@@ -578,7 +580,7 @@ ${NAV}
 </div>
 
 <footer>
-  <p><a href="/">Home</a><a href="/cards/mtg">MTG Cards</a><a href="/cards/mtg/random-commander">Random Commander</a><a href="/ev-calculator.html">EV Calculator</a><a href="/blog">Blog</a></p>
+  <p><a href="/">Home</a><a href="/cards/mtg">MTG Cards</a><a href="/cards/mtg/random-commander">Random Commander</a><a href="/ev-calculator.html">EV Calculator</a><a href="/blog">Blog</a></p><p style="font-size:11px;opacity:.5;margin-top:8px">Affiliate links may earn a commission at no extra cost to you.</p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
 </footer>
 
@@ -1169,7 +1171,9 @@ ${NAV}
     </div>
     <div style="font-size:11px;color:rgba(160,168,192,.25)">© 2026 Cards on Cards on Cards</div>
   </div>
-</footer>
+
+    <p style="font-size:11px;opacity:.4;margin-top:8px;text-align:center">Affiliate links may earn a commission at no extra cost to you.</p>
+  </footer>
 
 <script>
 // ── Multi-select filter state (Sets of values) ──────────────────────
@@ -1354,5 +1358,5 @@ export default async (req) => {
 };
 
 export const config = {
-  path: ['/cards/mtg', '/cards/mtg/', '/cards/mtg/random-commander', '/cards/mtg/sets/:setSlug']
+  path: ['/cards/mtg/random-commander', '/cards/mtg/sets/:setSlug']
 };
