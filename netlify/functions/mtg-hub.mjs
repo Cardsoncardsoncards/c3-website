@@ -1,5 +1,5 @@
 // netlify/functions/mtg-hub.mjs
-// Serves: /cards/mtg  — MTG hub with set browser, search, and A-Z filter
+// Serves: /cards/mtg
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -17,16 +17,23 @@ async function supabaseGet(path) {
   }
 }
 
+function eraColor(year) {
+  if (!year) return '#C9A84C';
+  const y = parseInt(year, 10);
+  if (y >= 2020) return '#4ADE80';
+  if (y >= 2010) return '#60A5FA';
+  return '#C9A84C';
+}
+
 export default async () => {
   const [sets, topCards] = await Promise.all([
     supabaseGet('mtg_sets?order=set_name.asc&limit=1000&digital=eq.false'),
     supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
   ]);
 
-  // Group sets: parents (no parent_set_code) and children
   const parentMap = new Map();
   const childMap  = new Map();
-  sets.forEach(s => {
+  sets.forEach(function(s) {
     if (!s.parent_set_code) {
       parentMap.set(s.set_code, s);
     } else {
@@ -34,44 +41,48 @@ export default async () => {
       childMap.get(s.parent_set_code).push(s);
     }
   });
-  const sortedParents = [...parentMap.values()].sort((a, b) => a.set_name.localeCompare(b.set_name));
+  const sortedParents = Array.from(parentMap.values()).sort(function(a, b) {
+    return a.set_name.localeCompare(b.set_name);
+  });
 
-  const setListHTML = sortedParents.map(parent => {
-    const children = (childMap.get(parent.set_code) || []).sort((a, b) => a.set_name.localeCompare(b.set_name));
+  const setListHTML = sortedParents.map(function(parent) {
+    const children = (childMap.get(parent.set_code) || []).sort(function(a, b) {
+      return a.set_name.localeCompare(b.set_name);
+    });
+    const year = parent.release_date ? parent.release_date.slice(0, 4) : '';
+    const color = eraColor(year);
+    const firstChar = (parent.set_name[0] || '').toUpperCase();
+    const letterKey = /[0-9]/.test(firstChar) ? '0' : firstChar;
     const childBadge = children.length
-      ? `<span style="font-size:9px;background:rgba(201,168,76,.15);color:#C9A84C;border-radius:4px;padding:1px 5px;margin-left:4px">+${children.length}</span>`
+      ? `<span class="child-badge">+${children.length}</span>`
       : '';
-    const firstLetter = (parent.set_name[0] || '').toUpperCase();
-    const letterKey = /[0-9]/.test(firstLetter) ? '0' : firstLetter;
-    const childrenJson = JSON.stringify(
-      children.map(c => ({ url: '/cards/mtg/sets/' + c.set_slug, label: c.set_name, year: c.release_date ? c.release_date.slice(0, 4) : '' }))
+    const childrenData = JSON.stringify(
+      children.map(function(c) {
+        return { url: '/cards/mtg/sets/' + c.set_slug, label: c.set_name, year: c.release_date ? c.release_date.slice(0, 4) : '' };
+      })
     ).replace(/"/g, '&quot;');
-    return `<div class="set-parent-item" data-name="${parent.set_name.toLowerCase()}${children.map(c => ' ' + c.set_name.toLowerCase()).join('')}" data-letter="${letterKey}">
-      <div style="display:flex;align-items:center;gap:4px">
-        <a href="/cards/mtg/sets/${parent.set_slug}" style="flex:1;display:block;padding:7px 12px;background:#22263a;border:1px solid #2d3254;border-radius:6px;text-decoration:none;font-size:12px;transition:border-color .15s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
-          <span style="color:#e8eaf0;font-weight:600">${parent.set_name}</span>
-          <span style="color:#9ba3c4;font-size:10px;margin-left:6px">${parent.release_date ? parent.release_date.slice(0, 4) : ''}</span>
+    const toggleBtn = children.length
+      ? `<button id="btn-${parent.set_code}" class="toggle-btn" data-setcode="${parent.set_code}" data-setname="${parent.set_name.replace(/"/g, '&quot;')}" data-children="${childrenData}" onclick="handleToggle(this)">+</button>`
+      : '';
+    return `<div class="set-item" data-name="${parent.set_name.toLowerCase()}${children.map(function(c){ return ' ' + c.set_name.toLowerCase(); }).join('')}" data-letter="${letterKey}" style="border-left:3px solid ${color}">
+      <div class="set-item-inner">
+        <a href="/cards/mtg/sets/${parent.set_slug}" class="set-link">
+          <span class="set-name">${parent.set_name}</span>
+          <span class="set-year">${year}</span>
           ${childBadge}
         </a>
-        ${children.length ? `<button
-          id="btn-${parent.set_code}"
-          data-setcode="${parent.set_code}"
-          data-setname="${parent.set_name.replace(/"/g, '&quot;')}"
-          data-children="${childrenJson}"
-          onclick="handleToggle(this)"
-          style="background:none;border:1px solid #2d3254;color:#9ba3c4;width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0"
-          title="Show variants">+</button>` : ''}
+        ${toggleBtn}
       </div>
     </div>`;
   }).join('');
 
-  const topCardHTML = topCards.map(c => {
+  const topCardHTML = topCards.map(function(c) {
     const price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * 1.58 : 0);
-    const priceStr = (c.price_usd && c.price_usd >= 3 && price > 0) ? `~AU$${price.toFixed(0)}` : '';
-    return `<a href="/cards/mtg/${c.slug}" style="background:#1a1d2e;border:1px solid #2d3254;border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
-      ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px" loading="lazy">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:#9ba3c4;font-size:11px">${c.name}</div>`}
-      <div style="font-size:11px;margin-top:4px;color:#e8eaf0">${c.name}</div>
-      <div style="font-size:12px;color:#f5a623;font-weight:bold">${priceStr}</div>
+    const priceStr = (c.price_usd && c.price_usd >= 3 && price > 0) ? '~AU$' + price.toFixed(0) : '';
+    return `<a href="/cards/mtg/${c.slug}" class="top-card">
+      ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" loading="lazy">` : `<div class="top-card-placeholder">${c.name}</div>`}
+      <div class="top-card-name">${c.name}</div>
+      <div class="top-card-price">${priceStr}</div>
     </a>`;
   }).join('');
 
@@ -95,12 +106,14 @@ export default async () => {
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
     .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
-    .btn{display:inline-block;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;border:none;font-size:14px;text-decoration:none}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;border:none;font-size:13px;text-decoration:none;transition:opacity .2s}
+    .btn:hover{opacity:.85;text-decoration:none}
     .btn-primary{background:var(--accent);color:#000}
     .btn-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
-    input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-size:14px}
+    input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-size:14px;width:100%}
     footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:13px;margin-top:48px}
     footer a{color:var(--text2);margin:0 10px}
+    /* NAV */
     nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
     .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
@@ -109,29 +122,53 @@ export default async () => {
     .nav-links::-webkit-scrollbar{display:none}
     .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
     .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
-    .nav-link--active,.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+    .nav-link--active{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
     .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA}
     .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
     .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover{background:rgba(251,146,60,.1);border-color:#FB923C}
     .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6}
     .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1}
     .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA}
-    /* A-Z filter buttons */
-    .az-btn{padding:4px 8px;border-radius:5px;border:1px solid #2d3254;background:none;color:#9ba3c4;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;min-width:28px}
-    .az-btn:hover,.az-btn.active{background:#f5a623;border-color:#f5a623;color:#000}
-    /* Commander carousel */
+    /* SET LIST */
+    .set-item{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .15s}
+    .set-item:hover{border-color:var(--accent)}
+    .set-item-inner{display:flex;align-items:center;gap:4px}
+    .set-link{flex:1;display:block;padding:7px 10px;text-decoration:none;color:var(--text)}
+    .set-link:hover{text-decoration:none;color:var(--text)}
+    .set-name{font-weight:600;font-size:12px;color:var(--text)}
+    .set-year{font-size:10px;color:var(--text2);margin-left:6px}
+    .child-badge{font-size:9px;background:rgba(201,168,76,.15);color:var(--gold);border-radius:4px;padding:1px 5px;margin-left:4px}
+    .toggle-btn{background:none;border:1px solid var(--border);color:var(--text2);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0;margin-right:4px;transition:border-color .15s}
+    .toggle-btn:hover{border-color:var(--accent);color:var(--accent)}
+    /* AZ FILTER */
+    .az-btn{padding:4px 8px;border-radius:5px;border:1px solid var(--border);background:none;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;min-width:28px}
+    .az-btn:hover{background:var(--bg3);border-color:var(--text2);color:var(--text)}
+    .az-btn.active{background:var(--accent);border-color:var(--accent);color:#000}
+    /* TOP CARDS */
+    .top-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color .2s;text-decoration:none}
+    .top-card:hover{border-color:var(--accent);text-decoration:none}
+    .top-card img{width:100%;border-radius:6px}
+    .top-card-placeholder{height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px}
+    .top-card-name{font-size:11px;margin-top:4px;color:var(--text)}
+    .top-card-price{font-size:12px;color:var(--accent);font-weight:bold}
+    /* ERA LEGEND */
+    .era-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+    /* DRAWER */
+    .drawer-link{padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;text-decoration:none;font-size:12px;color:var(--text);display:inline-block;transition:border-color .15s}
+    .drawer-link:hover{border-color:var(--accent);text-decoration:none}
+    /* COMMANDER CAROUSEL */
     @keyframes cmd-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.8}}
     .cmd-track{display:flex;gap:12px;width:max-content}
     .cmd-track.loaded{animation:cmd-scroll 50s linear infinite}
     .cmd-track:hover{animation-play-state:paused}
     .cmd-card{display:inline-flex;flex-direction:column;min-width:140px;max-width:155px;background:rgba(107,107,255,.06);border:1px solid rgba(107,107,255,.2);border-radius:10px;overflow:hidden;text-decoration:none;transition:all .22s;flex-shrink:0}
-    .cmd-card:hover{transform:translateY(-3px);border-color:rgba(107,107,255,.5);box-shadow:0 8px 24px rgba(107,107,255,.15)}
+    .cmd-card:hover{transform:translateY(-3px);border-color:rgba(107,107,255,.5);box-shadow:0 8px 24px rgba(107,107,255,.15);text-decoration:none}
     .cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
     .cmd-card-body{padding:7px 9px 9px;display:flex;flex-direction:column;gap:2px}
     .cmd-card-name{font-family:Cinzel,serif;font-size:9.5px;font-weight:700;color:#C0C0FF;line-height:1.3}
     .cmd-card-identity{font-size:9px;color:rgba(160,168,192,.5)}
     .cmd-card-cta{font-size:8.5px;font-weight:600;color:#9898FF;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
-    @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.8}}
   </style>
 </head>
 <body>
@@ -139,8 +176,8 @@ export default async () => {
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span style="font-family:Cinzel,serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-transform:uppercase">Cards on Cards on Cards</span></a>
     <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault nav-link--active">Card Vault</a>
-      <a href="/cards/mtg" class="nav-link" style="color:#C9A84C;border-color:rgba(201,168,76,.4)">MTG</a>
+      <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
+      <a href="/cards/mtg" class="nav-link" style="color:#C9A84C;border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.08)">MTG</a>
       <a href="/card-compare.html" class="nav-link nav-link--compare">Compare</a>
       <a href="/market.html" class="nav-link nav-link--market">Market</a>
       <a href="/tools.html" class="nav-link nav-link--tools">Tools</a>
@@ -168,7 +205,7 @@ export default async () => {
   <div style="margin-bottom:32px;padding:24px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:var(--radius);overflow:hidden">
     <div style="text-align:center;margin-bottom:20px">
       <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#9898FF;margin-bottom:6px">Commander Spotlight</p>
-      <h2 id="cmd-mtg-carousel-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin:0">Your Next Commander Awaits</h2>
+      <h2 id="cmd-mtg-carousel-title" style="font-family:Cinzel,serif;font-size:20px;color:var(--text);margin:0">Your Next Commander Awaits</h2>
     </div>
     <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)">
       <div id="cmd-mtg-carousel-track" class="cmd-track">
@@ -180,29 +217,36 @@ export default async () => {
       </div>
     </div>
     <div style="text-align:center;margin-top:14px">
-      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF;text-decoration:none">Generate a random Commander &rarr;</a>
+      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF">Generate a random Commander &rarr;</a>
     </div>
   </div>
 
   <!-- Card Search -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
     <h2 style="font-size:18px;margin-bottom:16px">Search MTG Cards</h2>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <input type="text" id="card-search" placeholder="Card name e.g. Black Lotus, Lightning Bolt..." style="flex:1;min-width:200px" onkeyup="if(event.key==='Enter')searchCard()">
-      <button class="btn btn-primary" onclick="searchCard()">Search</button>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <input type="text" id="card-search" placeholder="Card name e.g. Black Lotus, Lightning Bolt..." style="flex:1;min-width:200px;width:auto" onkeyup="if(event.key==='Enter')searchCard()">
+      <button class="btn btn-primary" onclick="searchCard()" style="flex-shrink:0">Search</button>
     </div>
     <div id="search-results" style="margin-top:16px"></div>
   </div>
 
-  <!-- Browse by Set -->
+  <!-- Set Browser -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
       <h2 style="font-size:18px">${totalSets}+ MTG Sets</h2>
-      <span style="color:var(--text2);font-size:12px">Click any set to view cards and prices</span>
+      <span style="font-size:12px;color:var(--text2)">Click any set to view cards and prices</span>
+    </div>
+
+    <!-- Era legend -->
+    <div style="display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--text2)"><span class="era-dot" style="background:#4ADE80"></span>2020 and newer</span>
+      <span style="font-size:11px;color:var(--text2)"><span class="era-dot" style="background:#60A5FA"></span>2010 to 2019</span>
+      <span style="font-size:11px;color:var(--text2)"><span class="era-dot" style="background:#C9A84C"></span>Pre-2010</span>
     </div>
 
     <!-- A-Z Filter -->
-    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px" id="az-filter-row">
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
       <button class="az-btn active" onclick="filterAZ('all',this)">All</button>
       <button class="az-btn" onclick="filterAZ('0',this)">0-9</button>
       <button class="az-btn" onclick="filterAZ('A',this)">A</button>
@@ -233,20 +277,18 @@ export default async () => {
       <button class="az-btn" onclick="filterAZ('Z',this)">Z</button>
     </div>
 
-    <!-- Set Name Search -->
-    <div style="margin-bottom:12px">
-      <input type="text" id="set-search" placeholder="Search sets e.g. Bloomburrow, Tarkir, Modern Horizons..."
-        style="width:100%;max-width:500px"
-        oninput="filterSets(this.value)" autocomplete="off">
-      <span style="font-size:11px;color:var(--text2);margin-left:12px">Sets with <span style="color:var(--gold)">+N</span> have sub-sets</span>
+    <!-- Set name search -->
+    <div style="margin-bottom:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <input type="text" id="set-search" placeholder="Search sets e.g. Bloomburrow, Tarkir, Modern Horizons..." oninput="filterSets(this.value)" autocomplete="off" style="max-width:500px;width:100%">
+      <span style="font-size:11px;color:var(--text2);white-space:nowrap">Sets with <span style="color:var(--gold)">+N</span> have sub-sets</span>
     </div>
 
-    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px">
+    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px">
       ${setListHTML}
     </div>
 
     <!-- Sub-set drawer -->
-    <div id="set-child-drawer" style="display:none;margin-top:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
+    <div id="set-child-drawer" style="display:none;margin-top:10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
         <span id="set-drawer-title" style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em"></span>
         <button onclick="closeDrawer()" style="background:none;border:none;color:var(--text2);cursor:pointer;font-size:18px;line-height:1">&times;</button>
@@ -276,27 +318,27 @@ export default async () => {
     </div>
     <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
       <h3 style="color:var(--accent);margin-bottom:8px">&#127922; Random Commander</h3>
-      <p style="color:var(--text2);font-size:14px">Generate a random Commander for your next deck build. Filter by colour identity and budget.</p>
+      <p style="color:var(--text2);font-size:14px">Generate a random Commander for your next deck. Filter by colour identity and budget.</p>
     </div>
   </div>
 
-  <!-- Related blog posts -->
+  <!-- Blog guides -->
   <div style="margin-bottom:48px">
     <h2 style="font-size:18px;margin-bottom:16px">MTG Guides</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
-      <a href="/blog/best-mtg-booster-boxes-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);text-decoration:none;display:block">
+      <a href="/blog/best-mtg-booster-boxes-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);display:block;text-decoration:none">
         <div style="font-weight:bold;margin-bottom:4px;color:var(--accent)">Best MTG Booster Boxes in Australia</div>
         <div style="font-size:13px;color:var(--text2)">Which boxes are worth opening right now and where to buy at the best price.</div>
       </a>
-      <a href="/blog/mtg-singles-vs-booster-boxes-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);text-decoration:none;display:block">
+      <a href="/blog/mtg-singles-vs-booster-boxes-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);display:block;text-decoration:none">
         <div style="font-weight:bold;margin-bottom:4px;color:var(--accent)">Singles vs Booster Boxes</div>
         <div style="font-size:13px;color:var(--text2)">Should you buy the card you want directly or gamble on packs? The honest answer.</div>
       </a>
-      <a href="/blog/how-to-sell-mtg-cards-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);text-decoration:none;display:block">
+      <a href="/blog/how-to-sell-mtg-cards-australia/" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);display:block;text-decoration:none">
         <div style="font-weight:bold;margin-bottom:4px;color:var(--accent)">How to Sell MTG Cards in Australia</div>
         <div style="font-size:13px;color:var(--text2)">eBay, local stores, or buylist? Here is what actually gets you the best price.</div>
       </a>
-      <a href="/ev-calculator.html" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);text-decoration:none;display:block">
+      <a href="/ev-calculator.html" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);display:block;text-decoration:none">
         <div style="font-weight:bold;margin-bottom:4px;color:var(--accent)">MTG EV Calculator</div>
         <div style="font-size:13px;color:var(--text2)">Is your booster box worth opening? Calculate expected value before you crack it.</div>
       </a>
@@ -316,64 +358,65 @@ function searchCard() {
   var res = document.getElementById('search-results');
   res.innerHTML = '<p style="color:#9ba3c4">Searching...</p>';
   fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&limit=8&select=slug,name,price_usd,image_uri_small&price_usd=gt.0&order=price_usd.desc', {
-    headers: { 'apikey': '${SUPABASE_ANON_KEY}' }
+    headers: { apikey: '${SUPABASE_ANON_KEY}' }
   })
-  .then(function(r){ return r.json(); })
-  .then(function(data){
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
     if (!data || !data.length) {
       res.innerHTML = '<p style="color:#9ba3c4">No cards found. <a href="https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(q + ' mtg') + '&campid=${EPN_CAMPID}" target="_blank">Search eBay AU &rarr;</a></p>';
       return;
     }
-    res.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px">' +
-      data.map(function(c){
-        return '<a href="/cards/mtg/' + c.slug + '" style="background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:8px;text-align:center;display:block">' +
-          '<img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '">' +
-          '<div style="font-size:11px;margin-top:4px">' + c.name + '</div>' +
-          '<div style="font-size:12px;color:#f5a623">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.58).toFixed(0) : '') + '</div></a>';
-      }).join('') + '</div>';
+    var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px">';
+    for (var i = 0; i < data.length; i++) {
+      var c = data[i];
+      html += '<a href="/cards/mtg/' + c.slug + '" class="top-card">';
+      html += '<img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '">';
+      html += '<div class="top-card-name">' + c.name + '</div>';
+      html += '<div class="top-card-price">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.58).toFixed(0) : '') + '</div>';
+      html += '</a>';
+    }
+    html += '</div>';
+    res.innerHTML = html;
   })
-  .catch(function(){ res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; });
+  .catch(function() { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; });
 }
 
 function filterAZ(letter, btn) {
-  var allBtns = document.querySelectorAll('.az-btn');
-  allBtns.forEach(function(b){ b.classList.remove('active'); });
+  var btns = document.querySelectorAll('.az-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
   btn.classList.add('active');
-  var items = document.querySelectorAll('.set-parent-item');
-  items.forEach(function(item){
-    if (letter === 'all') {
-      item.style.display = '';
-    } else {
-      item.style.display = (item.dataset.letter === letter) ? '' : 'none';
-    }
-  });
   document.getElementById('set-search').value = '';
+  var items = document.querySelectorAll('.set-item');
+  for (var j = 0; j < items.length; j++) {
+    items[j].style.display = (letter === 'all' || items[j].dataset.letter === letter) ? '' : 'none';
+  }
 }
 
 function filterSets(query) {
   var q = query.toLowerCase().trim();
-  var allBtns = document.querySelectorAll('.az-btn');
-  allBtns.forEach(function(b){ b.classList.remove('active'); });
-  document.querySelector('.az-btn').classList.add('active');
-  var items = document.querySelectorAll('.set-parent-item');
-  items.forEach(function(item){
-    var name = item.dataset.name || '';
-    item.style.display = (!q || name.includes(q)) ? '' : 'none';
-  });
+  var btns = document.querySelectorAll('.az-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  btns[0].classList.add('active');
+  var items = document.querySelectorAll('.set-item');
+  for (var j = 0; j < items.length; j++) {
+    var name = items[j].dataset.name || '';
+    items[j].style.display = (!q || name.indexOf(q) !== -1) ? '' : 'none';
+  }
 }
 
 var openSetCode = null;
 function handleToggle(btn) {
   var setCode = btn.dataset.setcode;
   var setName = btn.dataset.setname;
-  var childrenData = JSON.parse(btn.dataset.children.replace(/&quot;/g, '"'));
+  var raw = btn.dataset.children.replace(/&quot;/g, '"');
+  var childrenData = JSON.parse(raw);
   toggleChildren(setCode, setName, childrenData, btn);
 }
 
 function toggleChildren(setCode, setName, childrenData, btn) {
   var drawer = document.getElementById('set-child-drawer');
-  var title  = document.getElementById('set-drawer-title');
-  var items  = document.getElementById('set-drawer-items');
+  var titleEl = document.getElementById('set-drawer-title');
+  var itemsEl = document.getElementById('set-drawer-items');
   if (!btn) btn = document.getElementById('btn-' + setCode);
   if (openSetCode === setCode) {
     drawer.style.display = 'none';
@@ -382,15 +425,17 @@ function toggleChildren(setCode, setName, childrenData, btn) {
     return;
   }
   if (openSetCode) {
-    var prevBtn = document.getElementById('btn-' + openSetCode);
-    if (prevBtn) prevBtn.textContent = '+';
+    var prev = document.getElementById('btn-' + openSetCode);
+    if (prev) prev.textContent = '+';
   }
   openSetCode = setCode;
-  title.textContent = setName + ' variants';
-  items.innerHTML = childrenData.map(function(c){
-    return '<a href="' + c.url + '" style="padding:6px 14px;background:#1a1d2e;border:1px solid #2d3254;border-radius:6px;text-decoration:none;font-size:12px;color:#e8eaf0;transition:border-color .15s" onmouseover="this.style.borderColor=\'#f5a623\'" onmouseout="this.style.borderColor=\'#2d3254\'">' +
-      c.label + ' <span style="font-size:10px;color:#9ba3c4">(' + c.year + ')</span></a>';
-  }).join('');
+  titleEl.textContent = setName + ' variants';
+  var html = '';
+  for (var i = 0; i < childrenData.length; i++) {
+    var c = childrenData[i];
+    html += '<a href="' + c.url + '" class="drawer-link">' + c.label + ' <span style="font-size:10px;color:#9ba3c4">(' + c.year + ')</span></a>';
+  }
+  itemsEl.innerHTML = html;
   drawer.style.display = '';
   if (btn) btn.textContent = '\u2212';
   drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -407,20 +452,26 @@ function closeDrawer() {
 </script>
 
 <script>
-(function(){
+(function() {
   function buildCmdCard(c) {
+    var img = c.image
+      ? '<img src="' + c.image + '" alt="' + c.name.replace(/"/g, '&quot;') + '" loading="lazy">'
+      : '<div style="aspect-ratio:745/1040;background:rgba(107,107,255,.1);display:flex;align-items:center;justify-content:center;font-size:28px">&#127922;</div>';
     return '<a href="' + c.cardVaultUrl + '" class="cmd-card">'
-      + (c.image ? '<img src="' + c.image + '" alt="' + c.name.replace(/"/g, '&quot;') + '" loading="lazy">'
-                 : '<div style="aspect-ratio:745/1040;background:rgba(107,107,255,.1);display:flex;align-items:center;justify-content:center;font-size:28px">&#127922;</div>')
-      + '<div class="cmd-card-body"><div class="cmd-card-name">' + c.name + '</div><div class="cmd-card-identity">' + c.identityName + '</div><div class="cmd-card-cta">View Card &rarr;</div></div></a>';
+      + img
+      + '<div class="cmd-card-body">'
+      + '<div class="cmd-card-name">' + c.name + '</div>'
+      + '<div class="cmd-card-identity">' + c.identityName + '</div>'
+      + '<div class="cmd-card-cta">View Card &rarr;</div>'
+      + '</div></a>';
   }
   function loadCommanders() {
     var track = document.getElementById('cmd-mtg-carousel-track');
     if (!track) return;
     fetch('/.netlify/functions/commander-carousel?mode=top')
-      .then(function(r){ return r.json(); })
-      .then(function(data){
-        if (!data.commanders || data.commanders.length === 0) {
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.commanders || !data.commanders.length) {
           track.innerHTML = '<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders found.</p>';
           return;
         }
@@ -430,11 +481,12 @@ function closeDrawer() {
           var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
         }
         var twenty = arr.slice(0, 20);
-        var html = twenty.map(buildCmdCard).join('');
+        var html = '';
+        for (var k = 0; k < twenty.length; k++) html += buildCmdCard(twenty[k]);
         track.innerHTML = html + html;
         track.classList.add('loaded');
       })
-      .catch(function(){
+      .catch(function() {
         track.innerHTML = '<p style="color:#A0A8C0;font-size:12px;padding:12px">Could not load commanders.</p>';
       });
   }
