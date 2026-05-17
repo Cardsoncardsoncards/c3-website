@@ -1,17 +1,16 @@
-// netlify/functions/sync-lorcana.mjs
-// Scheduled: daily at 4:30am UTC (2:30pm AEST)
-// Fetches all Lorcana sets + cards + prices from tcgapi.dev Pro
+// netlify/functions/sync-lorcana-background.mjs
+// Group B sync (Tue/Thu/Sat) - schedule: 0 0 * * 3,5,0 UTC
+// Fetches all lorcana-tcg sets + cards + prices from tcgapi.dev Pro
 // Upserts into lorcana_sets, lorcana_cards, lorcana_price_snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
+const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const GAME_SLUG            = 'lorcana-tcg';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
-const MAX_PAGES            = 50; // hard cap on pagination to prevent runaway loops
-
-// --- Helpers ---
+const MAX_PAGES            = 50;
 
 function slugify(name, number, setAbbr) {
   const base = name
@@ -20,7 +19,6 @@ function slugify(name, number, setAbbr) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   const withNumber = number ? `${base}-${number.replace(/[^a-z0-9]/gi, '-').toLowerCase()}` : base;
-  // Always prefix with set abbreviation to prevent cross-set slug collisions
   const prefix = setAbbr
     ? setAbbr.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
     : null;
@@ -47,14 +45,12 @@ async function tcgapiGet(path) {
   }
   const text = await res.text();
   let data;
-  try {
-    data = JSON.parse(text);
-  } catch {
+  try { data = JSON.parse(text); } catch {
     throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
   }
   const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
   if (remaining < RATE_LIMIT_BUFFER) {
-    throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
+    throw new Error(`Rate limit low: ${remaining} remaining. Aborting.`);
   }
   return data;
 }
@@ -76,6 +72,7 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
+
 async function supabaseUpsertSnapshots(table, rows) {
   if (!rows.length) return;
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
@@ -94,19 +91,19 @@ async function supabaseUpsertSnapshots(table, rows) {
   }
 }
 
-// --- Main ---
-
 export default async (req) => {
   console.log('[sync-lorcana] Starting (background function)...');
   const start = Date.now();
 
-  // Validate env vars first
+  const secret = req.headers.get('x-sync-secret');
+  const isScheduled = !secret;
+  if (!isScheduled && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
+    return new Response('Unauthorised', { status: 401 });
+  }
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.error('[sync-lorcana] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
   }
   if (!TCGAPI_KEY) {
-    console.error('[sync-lorcana] TCGAPI_KEY not set');
     return new Response('TCGAPI_KEY missing', { status: 500 });
   }
 
@@ -114,8 +111,7 @@ export default async (req) => {
     const audRate = await getExchangeRate();
     console.log(`[sync-lorcana] AUD rate: ${audRate}`);
 
-    // Step 1: Fetch all sets (hard cap at MAX_PAGES)
-    console.log('[sync-lorcana] Fetching sets...');
+    // Step 1: Fetch all sets
     const allSets = [];
     let page = 1;
     while (page <= MAX_PAGES) {
@@ -138,23 +134,18 @@ export default async (req) => {
       game_slug:    GAME_SLUG,
       updated_at:   new Date().toISOString()
     }));
-
     for (let i = 0; i < setRows.length; i += 100) {
       await supabaseUpsert('lorcana_sets', setRows.slice(i, i + 100));
     }
-    console.log(`[sync-lorcana] Upserted ${setRows.length} sets`);
 
-    // Step 3: For each set, fetch cards
+    // Step 3: For each set, fetch cards + bulk prices
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-lorcana] Syncing set: ${set.name} (id:${set.id})`);
       const setCards = [];
       let cardPage = 1;
-
-      // Hard cap on card pages per set
       while (cardPage <= MAX_PAGES) {
         const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
         const cards = data.data || [];
@@ -162,29 +153,21 @@ export default async (req) => {
         if (cards.length < 100) break;
         cardPage++;
       }
-
       if (!setCards.length) continue;
 
-      // Fetch bulk prices
       const cardIds = setCards.map(c => c.id);
       const priceMap = new Map();
-
       for (let i = 0; i < cardIds.length; i += 500) {
         const batch = cardIds.slice(i, i + 500);
         try {
           const priceData = await tcgapiGet(`/bulk/prices?ids=${batch.join(',')}`);
-          const prices = priceData.data || [];
-          for (const p of prices) {
-            priceMap.set(p.card_id, p);
-          }
+          for (const p of priceData.data || []) priceMap.set(p.card_id, p);
         } catch (e) {
-          // Re-throw rate limit errors — do not swallow them
           if (e.message.includes('Rate limit low')) throw e;
-          console.error(`[sync-lorcana] Bulk price fetch failed for set ${set.id}:`, e.message);
+          console.error(`[sync-lorcana] Bulk price error set ${set.id}:`, e.message);
         }
       }
 
-      // Build rows
       const cardRows = [];
       const slugsSeen = new Set();
       const snapRows = [];
@@ -193,8 +176,8 @@ export default async (req) => {
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
         const marketPrice = price.market_price || null;
-        const lowPrice = price.low_price || null;
-        const foilPrice = price.foil_market_price || null;
+        const lowPrice    = price.low_price || null;
+        const foilPrice   = price.foil_market_price || null;
         let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
@@ -228,15 +211,13 @@ export default async (req) => {
 
         if (marketPrice && marketPrice >= 0.50) {
           snapRows.push({
-            card_id:        card.id,
-            snapshot_date:  today,
-            market_price:   marketPrice,
-            low_price:      lowPrice,
-            foil_price:     foilPrice,
-            price_aud:      parseFloat((marketPrice * audRate).toFixed(2)),
-            aud_rate:       audRate,
-            price_usd_foil: foilPrice || null,
-            price_aud_foil: foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null
+            card_id:       card.id,
+            snapshot_date: today,
+            market_price:  marketPrice,
+            low_price:     lowPrice,
+            foil_price:    foilPrice,
+            price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
+            aud_rate:      audRate
           });
         }
       }
@@ -250,12 +231,15 @@ export default async (req) => {
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
-      console.log(`[sync-lorcana] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      console.log(`[sync-lorcana] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-lorcana] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
-    return new Response('OK', { status: 200 });
+    console.log(`[sync-lorcana] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
+    return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
 
   } catch (err) {
     console.error('[sync-lorcana] FATAL:', err.message);
@@ -264,6 +248,6 @@ export default async (req) => {
 };
 
 export const config = {
-  schedule: "30 4 * * *",
+  schedule: "0 0 * * 3,5,0",
   type: "background"
 };

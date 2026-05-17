@@ -1,6 +1,6 @@
-// netlify/functions/sync-riftbound.mjs
-// Manual trigger only -- POST with header x-sync-secret: <SYNC_SECRET>
-// Fetches all Riftbound sets + cards + prices from tcgapi.dev Pro
+// netlify/functions/sync-riftbound-background.mjs
+// Group B sync (Tue/Thu/Sat) - schedule: 0 1 * * 3,5,0 UTC
+// Fetches all riftbound-league-of-legends-trading-card-game sets + cards + prices from tcgapi.dev Pro
 // Upserts into riftbound_sets, riftbound_cards, riftbound_price_snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
@@ -45,14 +45,12 @@ async function tcgapiGet(path) {
   }
   const text = await res.text();
   let data;
-  try {
-    data = JSON.parse(text);
-  } catch {
+  try { data = JSON.parse(text); } catch {
     throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
   }
   const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
   if (remaining < RATE_LIMIT_BUFFER) {
-    throw new Error(`Rate limit low: ${remaining} requests remaining. Aborting to protect quota.`);
+    throw new Error(`Rate limit low: ${remaining} remaining. Aborting.`);
   }
   return data;
 }
@@ -74,6 +72,7 @@ async function supabaseUpsert(table, rows) {
     throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
   }
 }
+
 async function supabaseUpsertSnapshots(table, rows) {
   if (!rows.length) return;
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
@@ -96,21 +95,15 @@ export default async (req) => {
   console.log('[sync-riftbound] Starting (background function)...');
   const start = Date.now();
 
-  // Auth check -- must be POST with correct secret
-  // Auth: accept scheduled trigger (no header) OR manual POST with secret
   const secret = req.headers.get('x-sync-secret');
   const isScheduled = !secret;
   if (!isScheduled && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
-    console.error('[sync-riftbound] Unauthorised');
     return new Response('Unauthorised', { status: 401 });
   }
-
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.error('[sync-riftbound] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
   }
   if (!TCGAPI_KEY) {
-    console.error('[sync-riftbound] TCGAPI_KEY not set');
     return new Response('TCGAPI_KEY missing', { status: 500 });
   }
 
@@ -119,7 +112,6 @@ export default async (req) => {
     console.log(`[sync-riftbound] AUD rate: ${audRate}`);
 
     // Step 1: Fetch all sets
-    console.log('[sync-riftbound] Fetching sets...');
     const allSets = [];
     let page = 1;
     while (page <= MAX_PAGES) {
@@ -142,22 +134,18 @@ export default async (req) => {
       game_slug:    GAME_SLUG,
       updated_at:   new Date().toISOString()
     }));
-
     for (let i = 0; i < setRows.length; i += 100) {
       await supabaseUpsert('riftbound_sets', setRows.slice(i, i + 100));
     }
-    console.log(`[sync-riftbound] Upserted ${setRows.length} sets`);
 
-    // Step 3: For each set, fetch cards + prices
+    // Step 3: For each set, fetch cards + bulk prices
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
 
     for (const set of allSets) {
-      console.log(`[sync-riftbound] Syncing set: ${set.name} (id:${set.id})`);
       const setCards = [];
       let cardPage = 1;
-
       while (cardPage <= MAX_PAGES) {
         const data = await tcgapiGet(`/sets/${set.id}/cards?per_page=100&page=${cardPage}`);
         const cards = data.data || [];
@@ -165,21 +153,18 @@ export default async (req) => {
         if (cards.length < 100) break;
         cardPage++;
       }
-
       if (!setCards.length) continue;
 
       const cardIds = setCards.map(c => c.id);
       const priceMap = new Map();
-
       for (let i = 0; i < cardIds.length; i += 500) {
         const batch = cardIds.slice(i, i + 500);
         try {
           const priceData = await tcgapiGet(`/bulk/prices?ids=${batch.join(',')}`);
-          const prices = priceData.data || [];
-          for (const p of prices) priceMap.set(p.card_id, p);
+          for (const p of priceData.data || []) priceMap.set(p.card_id, p);
         } catch (e) {
           if (e.message.includes('Rate limit low')) throw e;
-          console.error(`[sync-riftbound] Bulk price fetch failed for set ${set.id}:`, e.message);
+          console.error(`[sync-riftbound] Bulk price error set ${set.id}:`, e.message);
         }
       }
 
@@ -191,8 +176,8 @@ export default async (req) => {
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
         const marketPrice = price.market_price || null;
-        const lowPrice = price.low_price || null;
-        const foilPrice = price.foil_market_price || null;
+        const lowPrice    = price.low_price || null;
+        const foilPrice   = price.foil_market_price || null;
         let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
@@ -246,11 +231,11 @@ export default async (req) => {
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
-      console.log(`[sync-riftbound] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      console.log(`[sync-riftbound] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-riftbound] Done. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    console.log(`[sync-riftbound] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
@@ -263,6 +248,6 @@ export default async (req) => {
 };
 
 export const config = {
-  schedule: "0 6 * * *",
+  schedule: "0 1 * * 3,5,0",
   type: "background"
 };

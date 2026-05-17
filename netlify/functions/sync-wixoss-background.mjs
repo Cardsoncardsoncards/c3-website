@@ -1,13 +1,13 @@
-// netlify/functions/sync-starwars-background.mjs
-// Group A sync (Mon/Wed/Fri/Sun) - schedule: 15 22 * * 0,1,3,5 UTC
-// Fetches all star-wars-unlimited sets + cards + prices from tcgapi.dev Pro
-// Upserts into starwars_sets, starwars_cards, starwars_price_snapshots
+// netlify/functions/sync-wixoss-background.mjs
+// Group A sync (Mon/Wed/Fri/Sun) - schedule: 45 22 * * 0,1,3,5 UTC
+// Fetches all wixoss sets + cards + prices from tcgapi.dev Pro
+// Upserts into wixoss_sets, wixoss_cards, wixoss_price_snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
-const GAME_SLUG            = 'star-wars-unlimited';
+const GAME_SLUG            = 'wixoss';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
@@ -92,7 +92,7 @@ async function supabaseUpsertSnapshots(table, rows) {
 }
 
 export default async (req) => {
-  console.log('[sync-starwars] Starting (background function)...');
+  console.log('[sync-wixoss] Starting (background function)...');
   const start = Date.now();
 
   const secret = req.headers.get('x-sync-secret');
@@ -109,7 +109,7 @@ export default async (req) => {
 
   try {
     const audRate = await getExchangeRate();
-    console.log(`[sync-starwars] AUD rate: ${audRate}`);
+    console.log(`[sync-wixoss] AUD rate: ${audRate}`);
 
     // Step 1: Fetch all sets
     const allSets = [];
@@ -121,7 +121,7 @@ export default async (req) => {
       if (sets.length < 100) break;
       page++;
     }
-    console.log(`[sync-starwars] Found ${allSets.length} sets`);
+    console.log(`[sync-wixoss] Found ${allSets.length} sets`);
 
     // Step 2: Upsert sets
     const setRows = allSets.map(s => ({
@@ -135,7 +135,7 @@ export default async (req) => {
       updated_at:   new Date().toISOString()
     }));
     for (let i = 0; i < setRows.length; i += 100) {
-      await supabaseUpsert('starwars_sets', setRows.slice(i, i + 100));
+      await supabaseUpsert('wixoss_sets', setRows.slice(i, i + 100));
     }
 
     // Step 3: For each set, fetch cards + bulk prices
@@ -164,7 +164,7 @@ export default async (req) => {
           for (const p of priceData.data || []) priceMap.set(p.card_id, p);
         } catch (e) {
           if (e.message.includes('Rate limit low')) throw e;
-          console.error(`[sync-starwars] Bulk price error set ${set.id}:`, e.message);
+          console.error(`[sync-wixoss] Bulk price error set ${set.id}:`, e.message);
         }
       }
 
@@ -223,31 +223,31 @@ export default async (req) => {
       }
 
       for (let i = 0; i < cardRows.length; i += 200) {
-        await supabaseUpsert('starwars_cards', cardRows.slice(i, i + 200));
+        await supabaseUpsert('wixoss_cards', cardRows.slice(i, i + 200));
       }
       for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsertSnapshots('starwars_price_snapshots', snapRows.slice(i, i + 500));
+        await supabaseUpsertSnapshots('wixoss_price_snapshots', snapRows.slice(i, i + 500));
       }
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
-      console.log(`[sync-starwars] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      console.log(`[sync-wixoss] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-starwars] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
+    console.log(`[sync-wixoss] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
 
   } catch (err) {
-    console.error('[sync-starwars] FATAL:', err.message);
+    console.error('[sync-wixoss] FATAL:', err.message);
     return new Response(err.message, { status: 500 });
   }
 };
 
 export const config = {
-  schedule: "15 22 * * 0,1,3,5",
+  schedule: "45 22 * * 0,1,3,5",
   type: "background"
 };
