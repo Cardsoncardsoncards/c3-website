@@ -33,8 +33,11 @@ async function getEbayToken() {
 async function getEbayListings(q, token) {
   if (!token) return [];
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
     const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${encodeURIComponent(q)}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=-price&limit=10`;
-    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU' } });
+    const res = await fetch(url, { signal: controller.signal, headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU' } });
+    clearTimeout(timeout);
     if (!res.ok) return [];
     const d = await res.json();
     return d.itemSummaries || [];

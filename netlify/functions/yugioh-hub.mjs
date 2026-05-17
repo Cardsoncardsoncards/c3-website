@@ -1,7 +1,7 @@
 // netlify/functions/yugioh-hub.mjs
 // Serves /cards/yugioh
 // Built from riftbound-hub.mjs pattern (confirmed working)
-// Set links use s.abbreviation (yugioh-set-page.mjs looks up by abbreviation)
+// Set links use s.slug (abbreviation is NULL for all sets in DB)
 // yugioh_cards columns: slug, name, image_url, market_price, price_aud, rarity, set_name
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
@@ -56,7 +56,7 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
   const [sets, topCards] = await Promise.all([
-    supabaseGet('yugioh_sets?order=release_date.desc&limit=700&select=id,name,abbreviation,release_date,card_count'),
+    supabaseGet('yugioh_sets?order=release_date.desc&limit=700&select=id,name,slug,release_date,card_count'),
     supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name')
   ]);
 
@@ -76,14 +76,15 @@ export default async (req) => {
     </a>`;
   }).join('') : '<div class="sync-msg">Cards sync daily after 10am AEST.</div>';
 
-  // Set links use abbreviation (e.g. "BLVO") - yugioh-set-page.mjs looks up by abbreviation=ilike.${setCode}
+  // Set links use slug - yugioh-set-page.mjs falls back to slug=eq.${setCode} lookup
+  // abbreviation column is NULL for all 611 sets in DB
   const setListHTML = sets.length ? sets.map(s => {
     const name = s.name || '';
     const ch = name.trim()[0] ? name.trim()[0].toUpperCase() : '';
     const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
     const year = s.release_date ? s.release_date.slice(0,4) : '';
     const count = s.card_count ? ` &middot; ${s.card_count}` : '';
-    const urlId = encodeURIComponent(s.abbreviation || s.id);
+    const urlId = encodeURIComponent(s.slug || s.id);
     return `<a href="/cards/yugioh/sets/${urlId}" class="set-tile" data-name="${name.toLowerCase().replace(/"/g,'&quot;')}" data-letter="${letterKey}">
       <span class="set-tile-name">${name}</span>
       <span class="set-tile-meta">${year}${count}</span>
