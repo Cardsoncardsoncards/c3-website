@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found | Cards on Cards on Cards</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="This page doesn't exist. But 200,000+ TCG cards in AUD do. Head back to the Card Vault.">
+<link rel="icon" type="image/png" href="/c3logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WR68HPE92S');
+  gtag('event', 'page_view', { page_title: '404 Not Found', page_location: window.location.href });
+</script>
+<style>
+:root{
+  --bg:#0A0C14;--bg2:#111420;--border:#252840;
+  --gold:#C9A84C;--gold-lit:#E8C86A;--gold-dim:#7A621E;
+  --silver:#A0A8C0;--white:#F0F2FF;--text2:#9ba3c4;
+  --red:#EF4444;--purple:#818CF8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%,rgba(201,168,76,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 80%,rgba(129,140,248,.04) 0%,transparent 50%),
+    radial-gradient(ellipse 40% 30% at 80% 70%,rgba(239,68,68,.03) 0%,transparent 50%);
+}
+
+/* NAV */
+nav{
+  background:rgba(10,12,20,.97);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:12px 0;
+  position:sticky;top:0;z-index:100;
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:1100px;margin:0 auto;padding:0 24px;gap:12px;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:9px;
+  font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;
+  letter-spacing:.12em;color:var(--gold);text-decoration:none;
+  text-transform:uppercase;white-space:nowrap;flex-shrink:0;
+}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{
+  display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;
+  font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;
+  text-transform:uppercase;border:1px solid var(--border);color:var(--silver);
+  white-space:nowrap;transition:all .2s;
+}
+.nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
+
+/* MAIN */
+main{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:60px 24px;position:relative;z-index:1;
+}
+.container{max-width:640px;width:100%;text-align:center}
+
+/* ERROR CODE */
+.error-code{
+  font-family:'Cinzel',serif;
+  font-size:clamp(80px,18vw,160px);
+  font-weight:900;
+  line-height:1;
+  margin-bottom:8px;
+  background:linear-gradient(135deg,var(--gold-dim) 0%,var(--gold) 40%,var(--gold-lit) 60%,var(--gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  opacity:.9;
+}
+
+/* CARD FLIP ANIMATION */
+.card-icon{
+  font-size:clamp(40px,8vw,64px);
+  margin-bottom:20px;
+  display:block;
+  animation:floatCard 3s ease-in-out infinite;
+}
+@keyframes floatCard{
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-10px) rotate(3deg)}
+}
+
+/* MESSAGE */
+.message-wrap{min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:32px}
+.message-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(18px,4vw,26px);
+  font-weight:700;
+  color:var(--white);
+  margin-bottom:10px;
+  line-height:1.3;
+  transition:opacity .3s;
+}
+.message-body{
+  font-size:clamp(13px,2vw,15px);
+  color:var(--text2);
+  line-height:1.6;
+  max-width:480px;
+  transition:opacity .3s;
+}
+.message-title.fade,.message-body.fade{opacity:0}
+
+/* CTA BUTTONS */
+.cta-row{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:40px;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:12px 22px;border-radius:8px;
+  font-size:13px;font-weight:600;
+  font-family:'DM Sans',sans-serif;
+  text-decoration:none;transition:all .22s;
+  white-space:nowrap;
+}
+.btn-gold{background:var(--gold);color:#0A0C14;border:none}
+.btn-gold:hover{background:var(--gold-lit);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.btn-ghost{background:none;color:var(--silver);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
+.btn-outline-gold{background:none;color:var(--gold);border:1px solid var(--gold-dim)}
+.btn-outline-gold:hover{background:rgba(201,168,76,.08);border-color:var(--gold)}
+
+/* DIVIDER */
+.divider{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+  margin:0 0 28px;
+}
+
+/* QUICK LINKS */
+.quick-label{
+  font-size:10px;font-weight:700;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--silver);
+  margin-bottom:14px;
+}
+.quick-links{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+}
+.quick-link{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:8px;
+  font-size:12px;font-weight:500;
+  text-decoration:none;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  color:var(--silver);
+  transition:all .2s;
+}
+.quick-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.07)}
+
+/* MESSAGE COUNTER */
+.message-counter{
+  margin-top:28px;
+  font-size:11px;color:rgba(160,168,192,.35);
+  letter-spacing:.05em;
+}
+.counter-dots{display:inline-flex;gap:5px;margin-top:6px}
+.dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--border);
+  transition:background .3s;
+  cursor:pointer;
+}
+.dot.active{background:var(--gold)}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:16px 24px;text-align:center;
+  font-size:11px;color:rgba(160,168,192,.35);
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-links">
+      <a href="/cards" class="nav-link">Card Vault</a>
+      <a href="/shop.html" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/compare" class="nav-link">Compare</a>
+      <a href="/ev-calculator.html" class="nav-link">EV Calc</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <span class="card-icon" id="card-icon">&#127183;</span>
+    <div class="error-code">404</div>
+
+    <div class="message-wrap">
+      <div class="message-title" id="msg-title">You've shuffled into the void.</div>
+      <div class="message-body" id="msg-body">This page doesn't exist. We checked the graveyard, the exile zone, and under the playmat. Nothing.</div>
+    </div>
+
+    <div class="cta-row">
+      <a href="/cards" class="btn btn-gold">Open the Card Vault &#8594;</a>
+      <a href="/shop.html" class="btn btn-outline-gold">Visit the Shop</a>
+      <a href="/blog" class="btn btn-ghost">Read the Blog</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="quick-label">Or go straight to a game</div>
+    <div class="quick-links">
+      <a href="/cards/mtg" class="quick-link">&#9876;&#65039; MTG</a>
+      <a href="/cards/pokemon" class="quick-link">&#9889; Pokemon</a>
+      <a href="/cards/lorcana" class="quick-link">&#127984; Lorcana</a>
+      <a href="/cards/yugioh" class="quick-link">&#128065; Yu-Gi-Oh</a>
+      <a href="/cards/onepiece" class="quick-link">&#9875; One Piece</a>
+      <a href="/cards/riftbound" class="quick-link">&#9876; Riftbound</a>
+    </div>
+
+    <div class="message-counter">
+      <div id="counter-label">message 1 of 12</div>
+      <div class="counter-dots" id="counter-dots"></div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 Cards on Cards on Cards &middot; <a href="/" style="color:inherit;text-decoration:none">cardsoncardsoncards.com.au</a>
+</footer>
+
+<script>
+const MESSAGES = [
+  {
+    icon: '&#127183;',
+    title: "You've shuffled into the void.",
+    body: "This page doesn't exist. We checked the graveyard, the exile zone, and under the playmat. Nothing."
+  },
+  {
+    icon: '&#9876;&#65039;',
+    title: "This card has been banned in all formats.",
+    body: "Including this website. The URL you followed has been hit with a full Format Restricted notice. No appeals."
+  },
+  {
+    icon: '&#128269;',
+    title: "Scrying revealed: this page does not exist.",
+    body: "We looked at the top 7. None of them were what you were looking for. We put them all on the bottom."
+  },
+  {
+    icon: '&#129299;',
+    title: "404: Failed to find target.",
+    body: "Your Trainer used SEARCH. But the wild page fled. It was last seen somewhere between a bad link and your browser history."
+  },
+  {
+    icon: '&#127922;',
+    title: "You rolled a 1 on navigation.",
+    body: "Critical failure. The page you sought crumbled to dust. Your party looks at you. You have no explanation."
+  },
+  {
+    icon: '&#128081;',
+    title: "No cards here. Only darkness and regret.",
+    body: "Like pulling a basic land from a AU$250 collector booster. The feeling is the same. We are sorry."
+  },
+  {
+    icon: '&#9889;',
+    title: "This page is not in the Pokedex.",
+    body: "Professor Oak told you not to go there. You went anyway. Now look at you."
+  },
+  {
+    icon: '&#127984;',
+    title: "Even Elsa couldn't find this page.",
+    body: "She searched the whole enchanted kingdom. She let it go. So should you."
+  },
+  {
+    icon: '&#128202;',
+    title: "EV analysis complete: this page is worth AU$0.00.",
+    body: "Expected value of clicking a broken link: negative. We ran the numbers. Please use the Card Vault instead."
+  },
+  {
+    icon: '&#9875;',
+    title: "Not on this Grand Line.",
+    body: "You've sailed into uncharted water. No island here. No treasure. Just a 404 and a strong suggestion to head home."
+  },
+  {
+    icon: '&#128204;',
+    title: "Card not found in any set.",
+    body: "We searched every printing across every expansion. This URL is not legal in any format, on any continent, in any timeline."
+  },
+  {
+    icon: '&#127775;',
+    title: "This page was on the Reserved List.",
+    body: "Wizards of the Coast promised never to reprint it. They kept that promise. It does not exist and it never will again."
+  },
+];
+
+let current = 0;
+let timer = null;
+
+const titleEl = document.getElementById('msg-title');
+const bodyEl = document.getElementById('msg-body');
+const iconEl = document.getElementById('card-icon');
+const counterLabel = document.getElementById('counter-label');
+const dotsWrap = document.getElementById('counter-dots');
+
+// Pick a random starting message
+current = Math.floor(Math.random() * MESSAGES.length);
+
+function buildDots() {
+  dotsWrap.innerHTML = '';
+  MESSAGES.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === current ? ' active' : '');
+    d.addEventListener('click', () => { clearInterval(timer); showMessage(i); startTimer(); });
+    dotsWrap.appendChild(d);
+  });
+}
+
+function showMessage(index) {
+  current = index;
+  const m = MESSAGES[current];
+  titleEl.classList.add('fade');
+  bodyEl.classList.add('fade');
+  setTimeout(() => {
+    titleEl.innerHTML = m.title;
+    bodyEl.innerHTML = m.body;
+    iconEl.innerHTML = m.icon;
+    counterLabel.textContent = 'message ' + (current + 1) + ' of ' + MESSAGES.length;
+    titleEl.classList.remove('fade');
+    bodyEl.classList.remove('fade');
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }, 300);
+}
+
+function startTimer() {
+  timer = setInterval(() => {
+    showMessage((current + 1) % MESSAGES.length);
+  }, 5000);
+}
+
+buildDots();
+showMessage(current);
+startTimer();
+</script>
+
+</body>
+</html>
