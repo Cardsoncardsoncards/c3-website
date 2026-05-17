@@ -1,16 +1,17 @@
 // netlify/functions/yugioh-hub.mjs
 // Serves /cards/yugioh
-// Pattern: identical to lorcana-hub.mjs (confirmed working)
-// Set links use s.abbreviation (matches yugioh-set-page.mjs lookup)
+// Built from riftbound-hub.mjs pattern (confirmed working)
+// Set links use s.abbreviation (yugioh-set-page.mjs looks up by abbreviation)
+// yugioh_cards columns: slug, name, image_url, market_price, price_aud, rarity, set_name
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 
 const CALENDAR_EVENTS = [
-  { date: '2026-06-12', name: 'Quarter Century Stampede', type: 'Set Release' },
-  { date: '2026-07-10', name: 'Maze of Millennia II',    type: 'Set Release' },
-  { date: '2026-08-01', name: 'Australian YCS',          type: 'Tournament'  },
+  {date:'2026-06-12',name:'Quarter Century Stampede', type:'Set Release'},
+  {date:'2026-07-10',name:'Maze of Millennia II',     type:'Set Release'},
+  {date:'2026-08-01',name:'Australian YCS',           type:'Tournament'},
 ];
 
 async function supabaseGet(path) {
@@ -30,8 +31,7 @@ function daysUntil(dateStr) {
 
 function buildTickerHTML(events) {
   const today = new Date(); today.setHours(0,0,0,0);
-  const upcoming = events.filter(e => new Date(e.date + 'T00:00:00') >= today)
-    .sort((a,b) => a.date.localeCompare(b.date));
+  const upcoming = events.filter(e => new Date(e.date + 'T00:00:00') >= today).sort((a,b) => a.date.localeCompare(b.date));
   if (!upcoming.length) return '';
   const items = upcoming.map(e => {
     const days = daysUntil(e.date);
@@ -45,7 +45,7 @@ function buildTickerHTML(events) {
 function buildAZFilter(sets) {
   const letters = new Set();
   sets.forEach(s => {
-    const ch = (s.name || '').trim()[0];
+    const ch = (s.name||'').trim()[0];
     if (ch) letters.add(/[A-Z]/.test(ch.toUpperCase()) ? ch.toUpperCase() : '0-9');
   });
   const sorted = ['All', '0-9', ...[...letters].filter(l => l !== '0-9').sort()];
@@ -57,37 +57,37 @@ export default async (req) => {
 
   const [sets, topCards] = await Promise.all([
     supabaseGet('yugioh_sets?order=release_date.desc&limit=700&select=id,name,abbreviation,release_date,card_count'),
-    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=neq.None&limit=24&select=slug,name,type,attribute,image_url,market_price,rarity,set_name')
+    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name')
   ]);
 
   const tickerHTML = buildTickerHTML(CALENDAR_EVENTS);
   const azFilterHTML = buildAZFilter(sets);
 
-  const carouselHTML = sets.length || topCards.length ? topCards.map(c => {
-    const aud = c.market_price ? `~AU$${(parseFloat(c.market_price) * 1.58).toFixed(0)}` : '';
-    return `<a href="/cards/yugioh/${c.slug}" class="carousel-card">`
-      + `<div class="carousel-img-wrap"><img src="${c.image_url}" alt="${c.name.replace(/"/g,'')}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#128065;</div>'"></div>`
-      + `<div class="carousel-name">${c.name}</div>`
-      + (c.rarity ? `<div class="carousel-rarity">${c.rarity}</div>` : '')
-      + `<div class="carousel-price">${aud}</div>`
-      + `<div class="carousel-buy-row"><span class="carousel-buy-btn">View Card &#8599;</span></div>`
-      + `</a>`;
+  const carouselHTML = topCards.length ? topCards.map(c => {
+    const aud = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.58).toFixed(0)}` : '';
+    return `<a href="/cards/yugioh/${c.slug}" class="carousel-card">
+      <div class="carousel-img-wrap">
+        <img src="${c.image_url}" alt="${c.name.replace(/"/g,'')}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#128065;</div>'">
+      </div>
+      <div class="carousel-name">${c.name}</div>
+      ${c.rarity ? `<div class="carousel-rarity">${c.rarity}</div>` : ''}
+      <div class="carousel-price">${aud}</div>
+      <div class="carousel-buy-row"><span class="carousel-buy-btn">View Card &#8599;</span></div>
+    </a>`;
   }).join('') : '<div class="sync-msg">Cards sync daily after 10am AEST.</div>';
 
-  // IMPORTANT: Set links use abbreviation (e.g. "BLVO"), not numeric id
-  // yugioh-set-page.mjs looks up by: abbreviation=ilike.${setCode}
+  // Set links use abbreviation (e.g. "BLVO") - yugioh-set-page.mjs looks up by abbreviation=ilike.${setCode}
   const setListHTML = sets.length ? sets.map(s => {
     const name = s.name || '';
     const ch = name.trim()[0] ? name.trim()[0].toUpperCase() : '';
     const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
     const year = s.release_date ? s.release_date.slice(0,4) : '';
-    const count = s.card_count ? ` &middot; ${s.card_count} cards` : '';
-    // Use abbreviation for the URL - this matches what yugioh-set-page.mjs expects
-    const setIdentifier = s.abbreviation || s.id;
-    return `<a href="/cards/yugioh/sets/${encodeURIComponent(setIdentifier)}" class="set-tile" data-name="${name.toLowerCase().replace(/"/g,'&quot;')}" data-letter="${letterKey}">`
-      + `<span class="set-tile-name">${name}</span>`
-      + `<span class="set-tile-meta">${year}${count}</span>`
-      + `</a>`;
+    const count = s.card_count ? ` &middot; ${s.card_count}` : '';
+    const urlId = encodeURIComponent(s.abbreviation || s.id);
+    return `<a href="/cards/yugioh/sets/${urlId}" class="set-tile" data-name="${name.toLowerCase().replace(/"/g,'&quot;')}" data-letter="${letterKey}">
+      <span class="set-tile-name">${name}</span>
+      <span class="set-tile-meta">${year}${count}</span>
+    </a>`;
   }).join('') : '<div class="sync-msg">Sets sync daily after 10am AEST.</div>';
 
   return new Response(`<!DOCTYPE html>
@@ -95,7 +95,7 @@ export default async (req) => {
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Yu-Gi-Oh Card Prices Australia | AUD Prices Updated Daily | C3</title>
-  <meta name="description" content="Browse Yu-Gi-Oh card prices in AUD. ${sets.length}+ sets, live eBay AU buy links. Australia's Yu-Gi-Oh price guide updated daily.">
+  <meta name="description" content="Browse ${sets.length}+ Yu-Gi-Oh sets. Live AUD card prices, eBay AU buy links. Australia's Yu-Gi-Oh price guide updated daily.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/yugioh">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
@@ -104,7 +104,7 @@ export default async (req) => {
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
   <style>
-    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--gold:#C9A84C;--accent:#c8a332;--text:#e8eaf0;--text2:#9ba3c4;--border:#242840;--silver:#A0A8C0}
+    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--gold:#C9A84C;--accent:#c8a332;--text:#e8eaf0;--text2:#9ba3c4;--border:#242840;--radius:12px;--silver:#A0A8C0}
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(200,163,50,.05),transparent 60%)}
@@ -116,20 +116,20 @@ export default async (req) => {
     .nav-links::-webkit-scrollbar{display:none}
     .nav-link{font-size:11px;padding:5px 9px;border-radius:6px;border:1px solid var(--border);color:var(--silver);text-decoration:none;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;white-space:nowrap}
     .nav-link:hover{color:var(--text);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
-    .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{background:rgba(201,168,76,.1);border-color:#C9A84C}
+    .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
     .nav-link--ygo{color:#c8a332;border-color:rgba(200,163,50,.4);background:rgba(200,163,50,.08)}
-    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA}
-    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
-    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover{background:rgba(251,146,60,.1);border-color:#FB923C}
-    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6}
-    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1}
-    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA}
+    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover{background:rgba(167,139,250,.1)}
+    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover{background:rgba(74,222,128,.1)}
+    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover{background:rgba(251,146,60,.1)}
+    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover{background:rgba(244,114,182,.1)}
+    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1)}
+    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12)}
     .release-ticker{background:rgba(200,163,50,.06);border-bottom:1px solid rgba(200,163,50,.15);height:34px;display:flex;align-items:center;overflow:hidden;position:relative}
     .release-ticker::before,.release-ticker::after{content:'';position:absolute;top:0;bottom:0;width:50px;z-index:2;pointer-events:none}
     .release-ticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
     .release-ticker::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
     .ticker-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);white-space:nowrap;padding:0 14px 0 18px;flex-shrink:0;z-index:3}
-    .ticker-track{display:flex;gap:0;animation:tickerScroll 40s linear infinite}
+    .ticker-track{display:flex;gap:0;animation:tickerScroll 50s linear infinite}
     .ticker-track:hover{animation-play-state:paused}
     @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:11.5px;color:var(--silver);white-space:nowrap}
@@ -156,41 +156,43 @@ export default async (req) => {
     .carousel-track{display:flex;gap:12px;padding:4px 24px 12px;animation:scrollLeft 40s linear infinite}
     .carousel-track:hover{animation-play-state:paused}
     @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-    .carousel-card{flex-shrink:0;width:148px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .25s;display:block}
+    .carousel-card{flex-shrink:0;width:155px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .25s;display:block}
     .carousel-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 20px rgba(200,163,50,.12);text-decoration:none}
-    .carousel-img-wrap{width:100%;aspect-ratio:3/4;overflow:hidden;border-radius:6px;margin-bottom:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center}
-    .carousel-img-wrap img{width:100%;height:100%;object-fit:contain}
-    .card-placeholder{font-size:28px}
-    .carousel-name{font-size:11px;color:var(--text);font-weight:600;line-height:1.3;margin-bottom:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-    .carousel-rarity{font-size:10px;color:var(--text2);margin-bottom:3px}
-    .carousel-price{font-size:12px;font-weight:700;color:var(--accent)}
+    .carousel-img-wrap{height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:7px;overflow:hidden}
+    .carousel-img-wrap img{max-height:130px;max-width:100%;object-fit:contain;border-radius:4px;transition:transform .3s}
+    .carousel-card:hover .carousel-img-wrap img{transform:scale(1.05)}
+    .card-placeholder{width:80px;height:110px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--text2)}
+    .carousel-name{font-size:11px;color:var(--text);font-weight:600;line-height:1.3;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .carousel-rarity{font-size:10px;color:var(--text2)}
+    .carousel-price{font-size:13px;color:var(--accent);font-weight:700;margin-top:3px}
     .carousel-buy-row{margin-top:6px}
-    .carousel-buy-btn{font-size:10px;font-weight:700;color:var(--accent);text-decoration:none;text-transform:uppercase;letter-spacing:.05em}
-    .sync-msg{font-size:13px;color:var(--text2);padding:24px;text-align:center}
+    .carousel-buy-btn{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.04em}
+    .sync-msg{color:var(--text2);font-size:14px;padding:20px}
     .wrap{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
-    .section{padding:28px 0}
-    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
-    .section-title{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--text)}
-    .az-filter{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px}
-    .az-btn{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
-    .az-btn:hover,.az-btn--active{background:rgba(200,163,50,.1);border-color:rgba(200,163,50,.4);color:var(--accent)}
-    .set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
-    .set-tile{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;text-decoration:none;display:flex;flex-direction:column;gap:4px;transition:all .2s}
-    .set-tile:hover{border-color:rgba(200,163,50,.4);transform:translateY(-1px);text-decoration:none}
-    .set-tile-name{font-size:13px;font-weight:600;color:var(--text);line-height:1.3}
-    .set-tile-meta{font-size:11px;color:var(--text2)}
-    .no-results{font-size:13px;color:var(--text2);padding:24px;text-align:center;grid-column:1/-1;display:none}
-    .search-input{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px;color:var(--text);width:240px;outline:none;font-family:'DM Sans',sans-serif}
-    .search-input::placeholder{color:var(--text2)}
-    .search-input:focus{border-color:rgba(200,163,50,.4)}
-    .cta-banner{background:linear-gradient(135deg,rgba(200,163,50,.06),rgba(200,163,50,.02));border:1px solid rgba(200,163,50,.2);border-radius:12px;padding:24px;margin-bottom:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-    .cta-banner-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
-    .cta-banner-sub{font-size:13px;color:var(--text2)}
-    .cta-banner-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:9px;background:rgba(200,163,50,.12);border:1px solid rgba(200,163,50,.3);color:var(--accent);font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
-    .cta-banner-btn:hover{background:rgba(200,163,50,.2);text-decoration:none}
-    footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2)}
-    footer a{color:var(--text2);margin:0 8px;text-decoration:none}
-    footer a:hover{color:var(--text)}
+    .section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:20px}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+    .section-title{font-size:17px;font-weight:700;color:var(--text)}
+    .section-hint{font-size:12px;color:var(--text2)}
+    input[type=text]{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;width:100%;max-width:440px;transition:border-color .2s}
+    input[type=text]::placeholder{color:var(--text2)}
+    input[type=text]:focus{outline:none;border-color:var(--accent)}
+    .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+    .btn:hover{opacity:.85;text-decoration:none}
+    .btn-primary{background:var(--accent);color:#000}
+    #search-results{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:8px}
+    .az-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px}
+    .az-btn{padding:5px 9px;border-radius:6px;font-size:11.5px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'DM Sans',sans-serif;transition:all .2s;letter-spacing:.04em}
+    .az-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .az-btn--active{background:var(--accent);color:#000;border-color:var(--accent)}
+    .set-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:5px;margin-top:8px}
+    .set-tile{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:8px 12px;text-decoration:none;transition:all .2s;min-width:0}
+    .set-tile:hover{border-color:var(--accent);background:rgba(200,163,50,.04);text-decoration:none;transform:translateX(2px)}
+    .set-tile-name{flex:1;font-size:12.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+    .set-tile-meta{font-size:10px;color:var(--text2);flex-shrink:0;white-space:nowrap}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{animation:fadeUp .5s ease both}.fade-up-1{animation-delay:.08s}.fade-up-2{animation-delay:.16s}.fade-up-3{animation-delay:.24s}
+    footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
+    footer a{color:var(--text2);margin:0 7px;text-decoration:none}footer a:hover{color:var(--text)}
   </style>
 </head>
 <body>
@@ -210,8 +212,8 @@ export default async (req) => {
   </div>
 </nav>
 ${tickerHTML}
-<div class="hero">
-  <div class="hero-eyebrow">Card Vault &middot; Yu-Gi-Oh</div>
+<div class="hero fade-up">
+  <div class="hero-eyebrow">Card Vault &#183; Yu-Gi-Oh</div>
   <h1>Yu-Gi-Oh Card Prices <span>in Australia</span></h1>
   <p class="hero-sub">Yu-Gi-Oh card prices in AUD. Browse every set with live eBay AU buy links. Updated daily.</p>
   <div class="stat-bar">
@@ -221,13 +223,14 @@ ${tickerHTML}
     <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-label">Updates</div></div>
   </div>
 </div>
-<div class="quick-links">
+<div class="quick-links fade-up fade-up-1">
   <a href="https://www.ebay.com.au/sch/i.html?_nkw=yugioh+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#7a6020,var(--accent));color:#000">&#128722; Shop Yu-Gi-Oh on eBay &#8599;</a>
   <a href="/compare" class="quick-link" style="background:rgba(200,163,50,.08);border-color:rgba(200,163,50,.3);color:var(--accent)">&#9878; Compare Cards &#8594;</a>
   <a href="/blog/yugioh-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128214; Best YGO Boxes &#8594;</a>
-  <a href="/blog/yugioh-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128218; Beginners Guide &#8594;</a>
+  <a href="/blog/yugioh-tcg-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128218; Beginners Guide &#8594;</a>
 </div>
-${topCards.length ? `<section class="carousel-section">
+${topCards.length ? `
+<section class="carousel-section fade-up fade-up-2">
   <div class="carousel-label">Most Valuable</div>
   <div class="carousel-title">Top Yu-Gi-Oh Cards by Price (AUD)</div>
   <div class="carousel-track-wrap">
@@ -235,36 +238,32 @@ ${topCards.length ? `<section class="carousel-section">
   </div>
 </section>` : ''}
 <div class="wrap">
-  <div class="section">
+  <div class="section fade-up fade-up-2">
+    <div class="section-header"><div class="section-title">Search Yu-Gi-Oh Cards</div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <input type="text" id="card-search" placeholder="Card name e.g. Blue-Eyes, Dark Magician, Ash Blossom..." onkeyup="if(event.key==='Enter')searchCard()">
+      <button class="btn btn-primary" onclick="searchCard()">Search</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+  <div class="section fade-up fade-up-3">
     <div class="section-header">
       <div class="section-title">${sets.length}+ Yu-Gi-Oh Sets</div>
-      <input type="text" class="search-input" placeholder="Search sets..." oninput="filterSets(this.value)">
+      <div class="section-hint">Click any set to view cards and prices</div>
     </div>
-    <div class="az-filter" id="az-filter">${azFilterHTML}</div>
-    <div class="set-grid" id="set-grid">
-      ${setListHTML}
-      <div class="no-results" id="no-results">No sets match your search.</div>
-    </div>
-  </div>
-  <div class="cta-banner">
-    <div>
-      <div class="cta-banner-title">Compare Any Two Yu-Gi-Oh Cards</div>
-      <div class="cta-banner-sub">Buy signals, price trends and AUD pricing across all TCGs.</div>
-    </div>
-    <a href="/compare" class="cta-banner-btn">Open Card Compare &rarr;</a>
+    <div class="az-row">${azFilterHTML}</div>
+    <input type="text" id="set-search" placeholder="Search sets e.g. Rarity Collection, Phantom Nightmare..." oninput="filterSets(this.value)" style="margin-bottom:12px">
+    <div id="set-list" class="set-grid">${setListHTML}</div>
   </div>
 </div>
 <footer>
-  <a href="/">Home</a>
-  <a href="/cards" style="color:#C9A84C">Card Vault</a>
-  <a href="/cards/mtg">MTG</a>
-  <a href="/cards/pokemon">Pokemon</a>
-  <a href="/cards/lorcana">Lorcana</a>
-  <a href="/cards/yugioh" style="color:var(--accent)">Yu-Gi-Oh</a>
-  <a href="/compare">Compare</a>
-  <a href="/market">Market</a>
-  <a href="/blog">Blog</a>
-  <p style="margin-top:10px;font-size:11px;opacity:.4">&copy; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au &middot; Affiliate links may earn a commission at no extra cost to you.</p>
+  <div style="margin-bottom:10px">
+    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/yugioh">Yu-Gi-Oh</a>
+    <a href="/cards/mtg">MTG</a><a href="/cards/pokemon">Pokemon</a><a href="/cards/lorcana">Lorcana</a>
+    <a href="/compare">Compare</a><a href="/market">Market</a><a href="/blog">Blog</a>
+  </div>
+  <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate links may earn a commission at no extra cost to you.</p>
 </footer>
 <script>
 let activeAZ = 'All';
@@ -276,18 +275,34 @@ function filterAZ(letter, btn) {
 }
 function filterSets(q) { applyFilters(q); }
 function applyFilters(q) {
-  const search = (q !== undefined ? q : (document.querySelector('.search-input')||{}).value||'').toLowerCase().trim();
-  const tiles = document.querySelectorAll('.set-tile');
-  let visible = 0;
-  tiles.forEach(function(t) {
-    const matchLetter = activeAZ === 'All' || t.dataset.letter === activeAZ;
-    const matchSearch = !search || t.dataset.name.includes(search);
-    const show = matchLetter && matchSearch;
-    t.style.display = show ? '' : 'none';
-    if (show) visible++;
+  const search = q !== undefined ? q : (document.getElementById('set-search') ? document.getElementById('set-search').value : '');
+  const lower = search.toLowerCase();
+  document.querySelectorAll('#set-list .set-tile').forEach(el => {
+    const nameMatch = !lower || el.dataset.name.includes(lower);
+    const letterMatch = activeAZ === 'All' || el.dataset.letter === activeAZ;
+    el.style.display = (nameMatch && letterMatch) ? '' : 'none';
   });
-  var nr = document.getElementById('no-results');
-  if (nr) nr.style.display = visible === 0 ? 'block' : 'none';
+}
+async function searchCard() {
+  const q = document.getElementById('card-search').value.trim();
+  if (!q) return;
+  const results = document.getElementById('search-results');
+  results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">Searching...</div>';
+  try {
+    const res = await fetch('/api/compare-search?q=' + encodeURIComponent(q) + '&game=yugioh&limit=24');
+    const data = await res.json();
+    const cards = data.results || data.cards || data || [];
+    if (!cards.length) { results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">No cards found.</div>'; return; }
+    results.innerHTML = cards.map(c => {
+      const img = c.image_url || '';
+      const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price*1.58).toFixed(0) : '';
+      return '<a href="/cards/yugioh/'+c.slug+'" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">'
+        + (img ? '<img src="'+img+'" alt="'+c.name.replace(/"/g,'')+'" style="width:100%;border-radius:6px;max-height:130px;object-fit:contain">' : '')
+        + '<div style="font-size:11px;color:var(--text);margin-top:4px;line-height:1.3">'+c.name+'</div>'
+        + '<div style="font-size:12px;color:var(--accent);font-weight:700">'+price+'</div>'
+        + '</a>';
+    }).join('');
+  } catch(e) { results.innerHTML = '<div style="color:#f88;font-size:13px">Search error. Try again.</div>'; }
 }
 </script>
 </body>
