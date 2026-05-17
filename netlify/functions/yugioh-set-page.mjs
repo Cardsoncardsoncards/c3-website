@@ -140,9 +140,9 @@ export default async (req) => {
   // yugioh_cards has no set linkage column - cannot filter by set
   const cards = [];
 
-  const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.set_name+' yugioh')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.set_name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  const ebayListings = await getEbayListings(`${set.set_name} yugioh card`, ebayToken);
+  const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebayListings = await getEbayListings(`${set.name} yugioh card`, ebayToken);
 
   const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * 1.58 : 0;
   const pricedCards = cards.filter(c => toAud(c) > 0);
@@ -152,8 +152,8 @@ export default async (req) => {
 
   const topTwo = pricedCards.slice(0, 2);
   const contextText = topTwo.length >= 2
-    ? `${set.set_name} contains ${cards.length} Yu-Gi-Oh cards. The most valuable are <strong>${topTwo[0].name}</strong> at ~AU$${toAud(topTwo[0]).toFixed(0)} and <strong>${topTwo[1].name}</strong> at ~AU$${toAud(topTwo[1]).toFixed(0)}. Prices converted daily.`
-    : `${set.set_name} contains ${cards.length} Yu-Gi-Oh cards. Prices updated daily in AUD.`;
+    ? `${set.name} contains ${cards.length} Yu-Gi-Oh cards. The most valuable are <strong>${topTwo[0].name}</strong> at ~AU$${toAud(topTwo[0]).toFixed(0)} and <strong>${topTwo[1].name}</strong> at ~AU$${toAud(topTwo[1]).toFixed(0)}. Prices converted daily.`
+    : `${set.name} contains ${cards.length} Yu-Gi-Oh cards. Prices updated daily in AUD.`;
 
   const top5HTML = top5.map(c => {
     const aud = toAud(c);
@@ -181,7 +181,7 @@ export default async (req) => {
   const ebayCarouselHTML = ebayListings.length ? `
     <div style="margin-top:40px;padding:28px;background:rgba(200,163,50,.04);border:1px solid rgba(200,163,50,.15);border-radius:14px">
       <p style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#c8a332;margin-bottom:6px">Live eBay AU Listings</p>
-      <h2 style="font-family:'Cinzel',serif;font-size:18px;color:#F0F2FF;margin-bottom:16px">${set.set_name} on eBay Australia</h2>
+      <h2 style="font-family:'Cinzel',serif;font-size:18px;color:#F0F2FF;margin-bottom:16px">${set.name} on eBay Australia</h2>
       <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:12px">
         ${ebayListings.map(item => {
           const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
@@ -198,7 +198,7 @@ export default async (req) => {
       </div>
       <div style="text-align:right;margin-top:8px"><a href="${ebaySearchURL}" target="_blank" rel="noopener" style="font-size:12px;color:#c8a332;text-decoration:none;opacity:.7">View all listings ↗</a></div>
     </div>` : `<div style="margin-top:32px;text-align:center;padding:20px;background:#0e1118;border:1px solid #1e2235;border-radius:12px">
-      <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(200,163,50,.12);border:1px solid rgba(200,163,50,.3);color:#c8a332;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Shop ${set.set_name} on eBay AU ↗</a>
+      <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(200,163,50,.12);border:1px solid rgba(200,163,50,.3);color:#c8a332;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Shop ${set.name} on eBay AU ↗</a>
     </div>`;
 
   const attrFilterHTML = attributes.length ? `
@@ -216,15 +216,15 @@ export default async (req) => {
     </div>` : '';
 
   const releaseDate = set.tcg_date ? new Date(set.tcg_date).toLocaleDateString('en-AU', {day:'numeric',month:'long',year:'numeric'}) : null;
-  const schemaLD = JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":`${set.set_name} Yu-Gi-Oh Card Prices Australia`,"description":`Browse all ${cards.length} ${set.set_name} Yu-Gi-Oh cards with AUD prices and eBay AU buy links.`,"url":`https://cardsoncardsoncards.com.au/cards/yugioh/sets/${setCode}`});
+  const schemaLD = JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":`${set.name} Yu-Gi-Oh Card Prices Australia`,"description":`Browse all ${cards.length} ${set.name} Yu-Gi-Oh cards with AUD prices and eBay AU buy links.`,"url":`https://cardsoncardsoncards.com.au/cards/yugioh/sets/${setCode}`});
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${set.set_name} Card Prices Australia | Yu-Gi-Oh | Cards on Cards on Cards</title>
-<meta name="description" content="Browse all ${cards.length} ${set.set_name} Yu-Gi-Oh cards with live AUD pricing. Filter by attribute and rarity. eBay AU buy links. Updated daily.">
+<title>${set.name} Card Prices Australia | Yu-Gi-Oh | Cards on Cards on Cards</title>
+<meta name="description" content="Browse all ${cards.length} ${set.name} Yu-Gi-Oh cards with live AUD pricing. Filter by attribute and rarity. eBay AU buy links. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/yugioh/sets/${setCode}">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -250,9 +250,9 @@ ${NAV}
     <a href="/" style="color:var(--text2)">Home</a> ›
     <a href="/cards" style="color:var(--text2)">Card Vault</a> ›
     <a href="/cards/yugioh" style="color:var(--text2)">Yu-Gi-Oh TCG</a> ›
-    <span style="color:var(--accent)">${set.set_name}</span>
+    <span style="color:var(--accent)">${set.name}</span>
   </div>
-  <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.set_name} <span style="color:var(--accent)">Card Prices</span></h1>
+  <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.name} <span style="color:var(--accent)">Card Prices</span></h1>
   <p style="color:var(--text2);margin-bottom:20px;font-size:14px">${cards.length} cards${set.set_code ? ` · ${set.set_code}` : ''}${releaseDate ? ` · Released ${releaseDate}` : ''} · AUD prices updated daily</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
     <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="background:rgba(200,163,50,.12);border:1px solid rgba(200,163,50,.3);color:#c8a332;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay AU ↗</a>
@@ -294,11 +294,11 @@ ${NAV}
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:36px">
     <h2 style="font-family:'Cinzel',serif;font-size:16px;margin-bottom:8px">Frequently Asked Questions</h2>
     <details style="margin-top:12px;border-bottom:1px solid var(--border);padding-bottom:12px">
-      <summary style="cursor:pointer;font-size:14px;font-weight:600">How many cards in ${set.set_name}?</summary>
-      <p style="font-size:13px;color:var(--text2);margin-top:8px">${set.set_name} contains ${cards.length} Yu-Gi-Oh cards in the C3 database.</p>
+      <summary style="cursor:pointer;font-size:14px;font-weight:600">How many cards in ${set.name}?</summary>
+      <p style="font-size:13px;color:var(--text2);margin-top:8px">${set.name} contains ${cards.length} Yu-Gi-Oh cards in the C3 database.</p>
     </details>
     <details style="margin-top:12px;padding-bottom:4px">
-      <summary style="cursor:pointer;font-size:14px;font-weight:600">What is the most valuable ${set.set_name} card?</summary>
+      <summary style="cursor:pointer;font-size:14px;font-weight:600">What is the most valuable ${set.name} card?</summary>
       <p style="font-size:13px;color:var(--text2);margin-top:8px">${pricedCards.length ? `The most valuable card is <strong style="color:var(--text)">${pricedCards[0].name}</strong> at ~AU$${toAud(pricedCards[0]).toFixed(2)}.` : 'Check eBay AU for current prices.'}</p>
     </details>
   </div>

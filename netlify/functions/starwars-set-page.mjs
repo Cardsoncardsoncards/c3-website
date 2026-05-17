@@ -40,9 +40,13 @@ async function getEbayListings(q, token) {
   if (!token) return [];
   try {
     const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${encodeURIComponent(q)}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=-price&limit=8`;
+    const listingsController = new AbortController();
+    const listingsTimeout = setTimeout(() => listingsController.abort(), 4000);
     const res = await fetch(url, {
+      signal: listingsController.signal,
       headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU', 'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${EPN_CAMPID}` }
     });
+    clearTimeout(listingsTimeout);
     if (!res.ok) return [];
     const d = await res.json();
     return d.itemSummaries || [];

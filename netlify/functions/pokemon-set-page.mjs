@@ -1,5 +1,5 @@
 // netlify/functions/pokemon-set-page.mjs
-// Serves /cards/pokemon/sets/:setId
+// Serves /cards/pokemon/sets/:setSlug
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -77,8 +77,8 @@ const getRarityColour = (r) => {
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
-  const setId = url.pathname.replace(/^\/cards\/pokemon\/sets\//, '').replace(/\/$/, '');
-  if (!setId) return new Response(`<!DOCTYPE html>
+  const setSlug = url.pathname.replace(/^\/cards\/pokemon\/sets\//, '').replace(/\/$/, '');
+  if (!setSlug) return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -92,8 +92,8 @@ export default async (req) => {
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
   const [sets, cards, ebayToken] = await Promise.all([
-    supabaseGet(`pokemon_sets?id=eq.${parseInt(setId,10)}&limit=1`),
-    supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(setId)}&order=market_price.desc.nullslast&limit=400&select=slug,name,image_url,market_price,price_aud,number`),
+    supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
+    supabaseGet(`pokemon_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,image_url,market_price,price_aud,rarity,number`),
     getEbayToken()
   ]);
 
@@ -213,7 +213,7 @@ export default async (req) => {
     "@context":"https://schema.org","@type":"CollectionPage",
     "name":`${set.name} Pokemon Card Prices Australia`,
     "description":`Browse all ${cards.length} ${set.name} Pokemon cards with AUD prices and eBay AU buy links.`,
-    "url":`https://cardsoncardsoncards.com.au/cards/pokemon/sets/${setId}`
+    "url":`https://cardsoncardsoncards.com.au/cards/pokemon/sets/${setSlug}`
   });
 
   const faqSchema = JSON.stringify({
@@ -232,7 +232,7 @@ export default async (req) => {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${set.name} Card Prices Australia | Pokemon TCG | Cards on Cards on Cards</title>
 <meta name="description" content="Browse all ${cards.length} ${set.name} Pokemon cards with live AUD pricing and eBay AU buy links. Filter by rarity and type. Updated daily.">
-<link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/pokemon/sets/${setId}">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/pokemon/sets/${setSlug}">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -404,4 +404,4 @@ applyFilters();
   return new Response(html, { status: 200, headers });
 };
 
-export const config = { path: '/cards/pokemon/sets/:setId+' };
+export const config = { path: '/cards/pokemon/sets/:slug+' };
