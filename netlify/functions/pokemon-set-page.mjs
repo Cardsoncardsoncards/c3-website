@@ -376,4 +376,4 @@ document.addEventListener('DOMContentLoaded', applyFilters);
   }
 };
 
-export const config = { path: '/cards/pokemon/sets/:slug+' };
+export const config = { path: '/cards/pokemon/sets/:setId+' };

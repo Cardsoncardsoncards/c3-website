@@ -80,10 +80,3 @@
   from = "/blog/what-is-magic-the-gathering-australia/"
   to = "/blog/what-is-mtg/"
   status = 301
-
-# ── MTG set pages -> MTG hub (no set page function exists) ───
-[[redirects]]
-  from = "/cards/mtg/sets/*"
-  to = "/cards/mtg"
-  status = 301
-
