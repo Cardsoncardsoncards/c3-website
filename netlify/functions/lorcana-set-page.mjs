@@ -19,11 +19,15 @@ async function getEbayToken() {
   if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
   try {
     const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
+    const tokenController = new AbortController();
+    const tokenTimeout = setTimeout(() => tokenController.abort(), 4000);
     const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
       method: 'POST',
+      signal: tokenController.signal,
       headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
       body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
     });
+    clearTimeout(tokenTimeout);
     if (!res.ok) return null;
     const d = await res.json();
     return d.access_token || null;
@@ -33,11 +37,8 @@ async function getEbayToken() {
 async function getEbayListings(q, token) {
   if (!token) return [];
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 4000);
     const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${encodeURIComponent(q)}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=-price&limit=10`;
-    const res = await fetch(url, { signal: controller.signal, headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU' } });
-    clearTimeout(timeout);
+    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU' } });
     if (!res.ok) return [];
     const d = await res.json();
     return d.itemSummaries || [];
@@ -53,20 +54,21 @@ const INK_COLOURS = {
   'Steel':    { bg:'#6B7280', text:'#fff' },
 };
 
-const NAV = `<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100">
-  <div style="display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap">
-    <a href="/" style="display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0">
-      <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0">
+const NAV = `<nav style="background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:#C9A84C;text-transform:uppercase">
+      <img src="/c3-logo.png" alt="C3" style="height:28px;width:28px;border-radius:5px;object-fit:cover;flex-shrink:0">
       <span>Cards on Cards on Cards</span>
     </a>
-    <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
-      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;background:rgba(201,168,76,.1);white-space:nowrap">Card Vault</a>
-      <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
-      <a href="/market" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ADE80;white-space:nowrap">Market</a>
-      <a href="/tools" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(251,146,60,.35);color:#FB923C;white-space:nowrap">Tools</a>
-      <a href="/play" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(244,114,182,.35);color:#F472B6;white-space:nowrap">Play</a>
-      <a href="/blog" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(126,203,161,.35);color:#7ECBA1;white-space:nowrap">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(96,165,250,.35);color:#60A5FA;background:rgba(96,165,250,.05);white-space:nowrap">Shop eBay &#8599;</a>
+    <div style="display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
+      <a href="/" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(160,196,255,.35);color:#A0C4FF;white-space:nowrap">← Home</a>
+      <a href="/cards" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Card Vault</a>
+      <a href="/cards/lorcana" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(1,137,196,.35);color:#0189C4;background:rgba(1,137,196,.08);white-space:nowrap">Lorcana</a>
+      <a href="/cards/pokemon" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap">Pokemon</a>
+      <a href="/calendar" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(248,113,113,.35);color:#F87171;white-space:nowrap">Calendar</a>
+      <a href="/generators" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(34,211,238,.35);color:#22D3EE;white-space:nowrap">Generators</a>
+      <a href="/shop.html" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Shop</a>
+      <a href="/tracker.html" style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(192,132,252,.35);color:#C084FC;white-space:nowrap">Tracker</a>
     </div>
   </div>
 </nav>`;
@@ -82,7 +84,6 @@ export default async (req) => {
   <title>Set Not Found | Lorcana | Cards on Cards on Cards</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="/c3logo.png">
-  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -124,7 +125,7 @@ export default async (req) => {
 
   let set = sets && sets[0];
   try {
-    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&rarity=neq.None&order=market_price.desc.nullslast&limit=200&select=slug,name,image_url,market_price,price_aud,rarity,price_change_7d`) : [];
+    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=300&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,card_text`) : [];
   } catch (e) {
     console.error('[lorcana-set-page] cards fetch error:', e.message);
     cards = [];
@@ -137,7 +138,6 @@ export default async (req) => {
   <title>Set Not Found | Lorcana | Cards on Cards on Cards</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="/c3logo.png">
-  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -169,7 +169,7 @@ export default async (req) => {
   const pricedCards = cards.filter(c => toAud(c) > 0);
   const top5 = pricedCards.slice(0, 5);
   const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();
-  const inks = [...new Set(cards.map(c => "").filter(Boolean))].sort();
+  const inks = [...new Set(cards.map(c => c.ink).filter(Boolean))].sort();
 
   const topTwo = pricedCards.slice(0, 2);
   const contextText = topTwo.length >= 2
@@ -178,10 +178,10 @@ export default async (req) => {
 
   const top5HTML = top5.map(c => {
     const aud = toAud(c);
-    const fullName = c.name;
-    const ink = INK_COLOURS[''] || { bg:'#888', text:'#fff' };
+    const fullName = c.version ? `${c.name} — ${c.version}` : c.name;
+    const ink = INK_COLOURS[c.ink] || { bg:'#888', text:'#fff' };
     return `<a href="/cards/lorcana/${c.slug}" style="flex:0 0 150px;background:#0e1118;border:1px solid rgba(1,137,196,.25);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s;display:block" onmouseover="this.style.borderColor='#0189C4';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(1,137,196,.25)';this.style.transform='none'">
-      
+      <div style="position:absolute;top:6px;left:6px;background:${ink.bg};color:${ink.text};font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase">${c.ink||''}</div>
       ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
       <div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">${fullName}</div>
       <div style="font-family:'Cinzel',serif;font-size:14px;color:#0189C4;font-weight:700;margin-top:3px">~AU$${aud.toFixed(0)}</div>
@@ -191,15 +191,12 @@ export default async (req) => {
   const cardGrid = cards.map(c => {
     const aud = toAud(c);
     const priceDisplay = aud >= 0.50 ? `~AU$${aud.toFixed(0)}` : `<span style="color:rgba(160,168,192,.35);font-size:9px">no price</span>`;
-    const fullName = c.name;
-    const ink = INK_COLOURS[''] || { bg:'#888' };
-    const trendL = c.price_change_7d && Math.abs(parseFloat(c.price_change_7d)) >= 5 ? parseFloat(c.price_change_7d) : null;
-    return `<a href="/cards/lorcana/${c.slug}" class="card-item" data-rarity="${(c.rarity||'')}.toLowerCase()}" data-ink="" data-price="${aud.toFixed(2)}">
-      <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${ink.bg}"></div>${trendL ? `<div style="position:absolute;top:4px;left:4px;width:7px;height:7px;border-radius:50%;background:${trendL>0?'#4dbd5f':'#e57373'}" title="${trendL>0?'+':''}" ></div>` : ''}
+    const fullName = c.version ? `${c.name} — ${c.version}` : c.name;
+    const ink = INK_COLOURS[c.ink] || { bg:'#888' };
+    return `<a href="/cards/lorcana/${c.slug}" class="card-item" data-rarity="${(c.rarity||'').toLowerCase()}" data-ink="${(c.ink||'').toLowerCase()}" data-price="${aud.toFixed(2)}">
+      <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${ink.bg}"></div>
       ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
       <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${fullName}</div>
-      ${c.number || "" ? `<div style="font-size:9px;color:#8892b0;margin-top:1px">#${c.number || ""}</div>` : ''}
-      ${c.rarity ? `<div style="font-size:9px;color:#0189C4;font-weight:700;margin-top:1px;text-transform:uppercase;letter-spacing:.04em">${c.rarity}</div>` : ''}
       <div style="font-size:11px;color:#0189C4;font-weight:700;margin-top:2px">${priceDisplay}</div>
     </a>`;
   }).join('');
@@ -260,7 +257,6 @@ export default async (req) => {
 <title>${set.name} Card Prices Australia | Disney Lorcana | Cards on Cards on Cards</title>
 <meta name="description" content="Browse all ${cards.length} ${set.name} Disney Lorcana cards with live AUD pricing. Filter by ink colour and rarity. eBay AU buy links. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana/sets/${setCode}">
-  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" href="/c3logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -289,29 +285,10 @@ ${NAV}
   </div>
   <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.name} <span style="color:var(--accent)">Card Prices</span></h1>
   <p style="color:var(--text2);margin-bottom:20px;font-size:14px">${cards.length} cards${releaseDate ? ` · Released ${releaseDate}` : ''} · AUD prices updated daily</p>
-  ${pricedCards.length >= 2 ? `
-  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;padding:16px;background:#0e1118;border:1px solid #0189C422;border-radius:10px">
-    <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Set Total Value</div><div style="font-size:18px;font-weight:700;color:#0189C4;font-family:'Cinzel',serif">AU$${pricedCards.reduce((s,c)=>s+toAud(c),0).toFixed(0)}</div></div>
-    <div style="width:1px;background:#1e2235"></div>
-    <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Most Valuable</div><div style="font-size:14px;font-weight:700;color:#e8eaf0">${pricedCards[0].name}${pricedCards[0].version ? ' - '+pricedCards[0].version : ''}</div><div style="font-size:12px;color:#0189C4">AU$${toAud(pricedCards[0]).toFixed(2)}</div></div>
-    <div style="width:1px;background:#1e2235"></div>
-    <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Avg Card Value</div><div style="font-size:18px;font-weight:700;color:#e8eaf0;font-family:'Cinzel',serif">AU$${(pricedCards.reduce((s,c)=>s+toAud(c),0)/pricedCards.length).toFixed(2)}</div></div>
-  </div>` : ''}
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
     <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="background:rgba(1,137,196,.12);border:1px solid rgba(1,137,196,.3);color:#0189C4;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay AU ↗</a>
     <a href="${ebayBoxURL}" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60A5FA;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📦 Buy Booster Box ↗</a>
     <a href="/blog/best-lorcana-booster-boxes-australia/" style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:9px 16px;border-radius:8px;font-size:13px;text-decoration:none">📖 Is it Worth Opening?</a>
-  </div>
-  <div style="background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:20px 24px;margin-bottom:28px;position:relative;overflow:hidden">
-    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5),transparent)"></div>
-    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:10px">&#128230; Sealed Product</div>
-    <div style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#F0F2FF;margin-bottom:8px">Singles vs Sealed: Know Before You Buy</div>
-    <p style="font-size:13px;color:#7a8099;line-height:1.6;margin-bottom:14px">Buying singles is cheaper if you want specific cards. Sealed boxes are for the opening experience and the chance at chase pulls. Run the EV before you open any box.</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <a href="${ebayBoxURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C;font-size:12px;font-weight:700;text-decoration:none">Find Sealed on eBay AU &#8599;</a>
-      <a href="/ev-calculator.html" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);color:#FB923C;font-size:12px;font-weight:700;text-decoration:none">Run the EV Calculator &#8594;</a>
-      <a href="/compare" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);color:#A78BFA;font-size:12px;font-weight:700;text-decoration:none">Compare Card Prices &#8594;</a>
-    </div>
   </div>
   <div style="background:rgba(1,137,196,.04);border:1px solid rgba(1,137,196,.15);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.6">${contextText}</div>
   ${top5.length ? `<div style="margin-bottom:32px"><p style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:14px">Top Cards by Value</p><div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px">${top5HTML}</div></div>` : ''}

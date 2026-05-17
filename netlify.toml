@@ -29,6 +29,12 @@
 [functions."compare-search"]
   timeout = 10
 
+[functions."dragonball-set-page"]
+  timeout = 26
+
+[functions."starwars-set-page"]
+  timeout = 26
+
 # ── Blog redirects (old URLs -> current slugs) ──────────────
 [[redirects]]
   from = "/blog/lorcana-booster-box-guide/"

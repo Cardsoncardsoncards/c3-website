@@ -1,6 +1,6 @@
 // netlify/functions/dragonball-set-page.mjs
 // Serves /cards/dragonball/sets/:slug+
-// Rebuilt with: movers panel, rarity filters, full sort options
+// Set page for Dragon Ball Super Card Game
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -21,11 +21,15 @@ async function getEbayToken() {
   if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
   try {
     const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
+    const tokenController = new AbortController();
+    const tokenTimeout = setTimeout(() => tokenController.abort(), 4000);
     const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
       method: 'POST',
+      signal: tokenController.signal,
       headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
       body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
     });
+    clearTimeout(tokenTimeout);
     if (!res.ok) return null;
     const d = await res.json();
     return d.access_token || null;
@@ -50,13 +54,13 @@ function graceful404(setSlug) {
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Set Not Found | Dragon Ball Super | Cards on Cards on Cards</title>
+  <title>Set Not Found | Dragon Ball | Cards on Cards on Cards</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}.wrap{max-width:420px}.icon{font-size:48px;margin-bottom:16px}h1{font-family:'Cinzel',serif;color:#EAB308;font-size:22px;margin-bottom:10px}p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}.btn{display:inline-block;background:#EAB308;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}.btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}</style>
 </head>
-<body><div class="wrap"><div class="icon">🃏</div><h1>Set Not Found</h1><p>We couldn't find the Dragon Ball Super set "${setSlug}". It may not be in our database yet.</p><a href="/cards/dragonball" class="btn">Browse All Dragon Ball Cards</a><a href="/" class="btn btn-sec">← Home</a></div></body>
+<body><div class="wrap"><div class="icon">🃏</div><h1>Set Not Found</h1><p>We couldn't find the Dragon Ball set "${setSlug}". It may not be in our database yet.</p><a href="/cards/dragonball" class="btn">Browse All Dragon Ball Cards</a><a href="/" class="btn btn-sec">← Home</a></div></body>
 </html>`;
 }
 
@@ -78,63 +82,19 @@ export default async (req) => {
     const set = sets[0];
 
     const [cards, ebayListings] = await Promise.all([
-      supabaseGet(`dragonball_cards?set_id=eq.${set.id}&rarity=neq.None&order=market_price.desc.nullslast&limit=200&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,price_change_7d,price_change_30d`),
-      getEbayListings(`${set.name}  riftbound card`, ebayToken)
+      supabaseGet(`dragonball_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
+      getEbayListings(`${set.name}  dragon ball super card`, ebayToken)
     ]);
 
     const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
     const pricedCards = (cards || []).filter(c => toAud(c) > 0);
     const top5 = pricedCards.slice(0, 5);
-    // Biggest movers: min AU$0.50 price, need 5+ eligible cards to show panel
-    const moversEligible = (cards||[]).filter(c => c.price_change_7d != null && parseFloat(c.price_aud||0) > 0.50);
-    const gainers = [...moversEligible].filter(c => parseFloat(c.price_change_7d) > 0).sort((a,b) => parseFloat(b.price_change_7d)-parseFloat(a.price_change_7d)).slice(0,3);
-    const losers  = [...moversEligible].filter(c => parseFloat(c.price_change_7d) < 0).sort((a,b) => parseFloat(a.price_change_7d)-parseFloat(b.price_change_7d)).slice(0,3);
-    const showMovers = moversEligible.length >= 5;
-    const rarities = [...new Set((cards||[]).map(c => c.rarity).filter(r => r && r !== 'None'))].sort();
     const today = new Date().toISOString().slice(0, 10);
 
-    const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' riftbound')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' dragon ball')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
-
-    function moverCard(c, isGainer) {
-      const aud = toAud(c);
-      const pct = Math.abs(parseFloat(c.price_change_7d||0)).toFixed(1);
-      const arrow = isGainer ? '&#9650;' : '&#9660;';
-      const col = isGainer ? '#EAB308' : '#F87171';
-      return `<a href="/cards/dragonball/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:10px 12px;text-decoration:none;display:flex;align-items:center;gap:10px;transition:border-color .2s" onmouseover="this.style.borderColor='${col}'" onmouseout="this.style.borderColor='#1e2235'">
-        ${c.image_url ? `<img src="${c.image_url}" alt="${c.name.replace(/"/g,'')}" style="width:40px;height:56px;object-fit:contain;border-radius:4px;flex-shrink:0">` : ''}
-        <div style="flex:1;min-width:0">
-          <div style="font-size:12px;color:#e8eaf0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.name}</div>
-          ${c.rarity ? `<div style="font-size:10px;color:#8892b0;margin-top:1px">${c.rarity}</div>` : ''}
-          <div style="font-size:13px;font-weight:700;margin-top:3px;color:#EAB308">${aud > 0 ? `AU$${aud.toFixed(2)}` : ''}</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-size:14px;font-weight:700;color:${col}">${arrow} ${pct}%</div>
-          <div style="font-size:10px;color:#8892b0;margin-top:2px">7 days</div>
-        </div>
-      </a>`;
-    }
-
-    const moversHTML = showMovers ? `
-    <div style="background:linear-gradient(135deg,rgba(234,179,8,.06),rgba(234,179,8,.02));border:1px solid rgba(234,179,8,.2);border-radius:12px;padding:20px;margin-bottom:28px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-        <div style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#F0F2FF">&#128200; This Week's Movers</div>
-        <div style="font-size:11px;color:#8892b0;background:#1e2235;padding:3px 8px;border-radius:4px">7-day % change</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#EAB308;margin-bottom:8px">&#9650; Biggest Gainers</div>
-          <div style="display:flex;flex-direction:column;gap:6px">${gainers.length ? gainers.map(c => moverCard(c, true)).join('') : '<div style="font-size:13px;color:#8892b0;padding:8px 0">No significant gainers this week</div>'}</div>
-        </div>
-        <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#F87171;margin-bottom:8px">&#9660; Biggest Losers</div>
-          <div style="display:flex;flex-direction:column;gap:6px">${losers.length ? losers.map(c => moverCard(c, false)).join('') : '<div style="font-size:13px;color:#8892b0;padding:8px 0">No significant losers this week</div>'}</div>
-        </div>
-      </div>
-    </div>` : '';
-
-        const top5HTML = top5.map(c => {
+    const top5HTML = top5.map(c => {
       const aud = toAud(c);
       return `<a href="/cards/dragonball/${c.slug}" style="flex:0 0 140px;background:#0e1118;border:1px solid rgba(234,179,8,.35);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .2s;display:block" onmouseover="this.style.borderColor='#EAB308';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(234,179,8,.35)';this.style.transform='none'">
         ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
@@ -146,7 +106,7 @@ export default async (req) => {
 
     const allCardsHTML = cards && cards.length ? cards.map(c => {
       const aud = toAud(c);
-      return `<a href="/cards/dragonball/${c.slug}" class="card-item" data-rarity="${(c.rarity||'none').toLowerCase().replace(/ /g,'-')}" data-price="${aud}" data-change7d="${c.price_change_7d||''}" data-name="${(c.name||'').toLowerCase().replace(/"/g,'')}" data-number="${c.number||''}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block;transition:all .2s" onmouseover="this.style.borderColor='#EAB308'" onmouseout="this.style.borderColor='#1e2235'">
+      return `<a href="/cards/dragonball/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block;transition:all .2s" onmouseover="this.style.borderColor='#EAB308'" onmouseout="this.style.borderColor='#1e2235'">
         ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
         <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
         ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
@@ -166,12 +126,12 @@ export default async (req) => {
       </a>`;
     }).join('') : '';
 
-    const metaDesc = `Browse ${cards?.length||0} Dragon Ball Super cards from ${set.name}. View card prices in AUD, find the most valuable cards and buy on eBay AU. Updated daily.`;
+    const metaDesc = `Browse ${cards?.length||0} Dragon Ball cards from ${set.name}. View card prices in AUD, find the most valuable cards and buy on eBay AU. Updated daily.`;
 
 
     const setSchemaLD = {
       "@context": "https://schema.org", "@type": "CollectionPage",
-      "name": `${set.name} Riftbound Card Prices Australia`,
+      "name": `${set.name} Dragon Ball Super Card Prices Australia`,
       "description": `Browse all ${cards?.length||0} ${set.name} Dragon Ball Super cards with AUD prices and eBay AU buy links.`,
       "url": `https://cardsoncardsoncards.com.au/cards/dragonball/sets/${setSlug}`,
       "breadcrumb": {
@@ -188,12 +148,12 @@ export default async (req) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${set.name} | Riftbound Set | Cards on Cards on Cards</title>
+  <title>${set.name} | Dragon Ball Set | Cards on Cards on Cards</title>
   <meta name="description" content="${metaDesc}">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/dragonball/sets/${setSlug}">
   <script type="application/ld+json">${JSON.stringify(setSchemaLD)}</script>
 
-  <meta property="og:title" content="${set.name} | Riftbound | C3">
+  <meta property="og:title" content="${set.name} | Dragon Ball | C3">
   <meta property="og:description" content="${metaDesc}">
   <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards/dragonball/sets/${setSlug}">
   <meta property="og:site_name" content="Cards on Cards on Cards">
@@ -228,8 +188,6 @@ export default async (req) => {
     .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap;transition:all .2s}
     .nav-link.active{border-color:rgba(234,179,8,.35);color:#EAB308;background:rgba(234,179,8,.08)}
     @media(max-width:600px){.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
-    .filt-btn{padding:5px 10px;border-radius:6px;border:1px solid #2a3050;background:none;color:#8892b0;font-size:11px;font-weight:600;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif}
-    .filt-btn:hover,.filt-btn.active{border-color:#EAB308;color:#EAB308;background:rgba(234,179,8,.08)}
   </style>
 </head>
 <body>
@@ -239,7 +197,7 @@ export default async (req) => {
     <div class="nav-links">
       <a href="/" class="nav-link">Home</a>
       <a href="/cards" class="nav-link">Card Vault</a>
-      <a href="/cards/dragonball" class="nav-link active">Dragon Ball Super</a>
+      <a href="/cards/dragonball" class="nav-link active">Dragon Ball</a>
       <a href="/compare" class="nav-link">Compare</a>
       <a href="/market" class="nav-link">Market</a>
       <a href="/shop.html" class="nav-link">Shop</a>
@@ -250,10 +208,10 @@ export default async (req) => {
 
 <div class="wrap">
   <div class="hero">
-    <div class="hero-eyebrow">Dragon Ball Super · Set</div>
+    <div class="hero-eyebrow">Dragon Ball · Set</div>
     <h1 class="hero-title">${set.name}</h1>
     <div class="hero-meta">
-      <span class="meta-badge">Dragon Ball Super</span>
+      <span class="meta-badge">Dragon Ball</span>
       ${set.release_date ? `<span>Released: ${set.release_date.slice(0,10)}</span>` : ''}
       ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
       ${cards?.length ? `<span>${pricedCards.length} priced in AUD</span>` : ''}
@@ -263,7 +221,7 @@ export default async (req) => {
   <div class="cta-row">
     <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary" onclick="if(typeof gtag!=='undefined')gtag('event','ebay_set_click',{set_name:'${set.name}',game:'dragonball'})">Buy Cards on eBay AU →</a>
     <a href="${ebayBoxURL}" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>
-    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' Dragon')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
+    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' Dragon Ball')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
   </div>
 
   ${top5.length ? `<div class="section">
@@ -271,7 +229,6 @@ export default async (req) => {
     <div class="cards-scroll">${top5HTML}</div>
   </div>` : ''}
 
-  ${moversHTML}
   ${ebayListingsHTML ? `<div class="section">
     <div class="section-title">Live eBay AU Listings</div>
     <div class="ebay-grid">${ebayListingsHTML}</div>
@@ -279,33 +236,13 @@ export default async (req) => {
   </div>` : ''}
 
   <div class="section">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-      <div class="section-title">${cards?.length ? `Singles (${cards.length})` : 'Singles'}</div>
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <input type="text" id="card-search" placeholder="Search cards..." oninput="applyFilters()" style="background:#1e2235;border:1px solid #2a3050;color:#e8eaf0;padding:6px 12px;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;width:155px">
-        <select id="sort-sel" onchange="applyFilters()" style="background:#1e2235;border:1px solid #2a3050;color:#e8eaf0;padding:6px 10px;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer">
-          <option value="price-desc">Price: High to Low</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="gainers">Biggest Gainers &#9650;</option>
-          <option value="losers">Biggest Losers &#9660;</option>
-          <option value="name-asc">Name: A to Z</option>
-          <option value="name-desc">Name: Z to A</option>
-          <option value="number">Card Number</option>
-          <option value="rarity">By Rarity</option>
-        </select>
-        <span id="filter-count" style="font-size:12px;color:#8892b0;white-space:nowrap"></span>
-      </div>
-    </div>
-    ${rarities.length > 1 ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
-      <button class="filt-btn active" data-rarity="all" onclick="setRarity('all',this)">All Rarities</button>
-      ${rarities.map(r => `<button class="filt-btn" data-rarity="${r.toLowerCase().replace(/ /g,'-')}" onclick="setRarity('${r.toLowerCase().replace(/ /g,'-')}',this)">${r}</button>`).join('')}
-    </div>` : ''}
-    <div class="cards-grid" id="cards-grid">${allCardsHTML}</div>
+    <div class="section-title">${cards?.length ? `All Cards (${cards.length})` : 'Cards'}</div>
+    <div class="cards-grid">${allCardsHTML}</div>
   </div>
 
   <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0">
-    <strong style="color:#F0F2FF">About this set:</strong> Dragon Ball Super card prices shown in AUD, converted from USD market data at approximately 1.58x. Prices update daily via tcgapi.dev. Always check eBay AU for live Australian market pricing before buying or selling.
-    <div style="margin-top:10px"><a href="/cards/dragonball" style="color:#EAB308">← Back to all Dragon Ball Super cards</a></div>
+    <strong style="color:#F0F2FF">About this set:</strong> Dragon Ball card prices shown in AUD, converted from USD market data at approximately 1.58x. Prices update daily via tcgapi.dev. Always check eBay AU for live Australian market pricing before buying or selling.
+    <div style="margin-top:10px"><a href="/cards/dragonball" style="color:#EAB308">← Back to all Dragon Ball cards</a></div>
   </div>
 </div>
 
@@ -313,59 +250,6 @@ export default async (req) => {
 if(typeof gtag!=='undefined'){
   document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_click',{game:'dragonball',set:'${set.name}'})));
 }
-
-let activeRarity = 'all';
-
-function setRarity(r, btn) {
-  activeRarity = r;
-  document.querySelectorAll('.filt-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  applyFilters();
-}
-
-function applyFilters() {
-  const sort   = document.getElementById('sort-sel')?.value || 'price-desc';
-  const search = (document.getElementById('card-search')?.value || '').toLowerCase().trim();
-  const grid   = document.getElementById('cards-grid');
-  if (!grid) return;
-  const items = [...grid.querySelectorAll('.card-item')];
-  let visible = 0;
-  items.forEach(el => {
-    const show = (activeRarity === 'all' || el.dataset.rarity === activeRarity)
-              && (!search || el.dataset.name.includes(search));
-    el.style.display = show ? '' : 'none';
-    if (show) visible++;
-  });
-  const fc = document.getElementById('filter-count');
-  if (fc) fc.textContent = visible + ' cards';
-  const rarityOrder = ['common','uncommon','rare','super rare','double rare','ultra rare','secret rare','special rare','expansion rare','legendary','epic','showcase','enchanted','promo'];
-  const vis = items.filter(el => el.style.display !== 'none');
-  vis.sort((a, b) => {
-    const pa = parseFloat(a.dataset.price)   || 0;
-    const pb = parseFloat(b.dataset.price)   || 0;
-    const ga = parseFloat(a.dataset.change7d || '-9999');
-    const gb = parseFloat(b.dataset.change7d || '-9999');
-    const na = a.dataset.name || '';
-    const nb = b.dataset.name || '';
-    const numa = isNaN(parseInt(a.dataset.number)) ? 9999 : parseInt(a.dataset.number);
-    const numb = isNaN(parseInt(b.dataset.number)) ? 9999 : parseInt(b.dataset.number);
-    const ra  = rarityOrder.indexOf(a.dataset.rarity);
-    const rb2 = rarityOrder.indexOf(b.dataset.rarity);
-    if (sort === 'price-desc') return pb - pa;
-    if (sort === 'price-asc')  return pa - pb;
-    if (sort === 'gainers')    return gb - ga;
-    if (sort === 'losers')     return ga - gb;
-    if (sort === 'name-asc')   return na.localeCompare(nb);
-    if (sort === 'name-desc')  return nb.localeCompare(na);
-    if (sort === 'number')     return numa - numb;
-    if (sort === 'rarity')     return (ra < 0 ? 99 : ra) - (rb2 < 0 ? 99 : rb2);
-    return 0;
-  });
-  vis.forEach(el => grid.appendChild(el));
-}
-
-document.addEventListener('DOMContentLoaded', applyFilters);
-
 </script>
 </body>
 </html>`, { status: 200, headers });
