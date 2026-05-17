@@ -357,7 +357,7 @@ function searchCard() {
   if (!q) return;
   var res = document.getElementById('search-results');
   res.innerHTML = '<p style="color:#9ba3c4">Searching...</p>';
-  fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&limit=8&select=slug,name,price_usd,image_uri_small&price_usd=gt.0&order=price_usd.desc', {
+  fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&limit=8&select=slug,name,price_usd,image_uri_small&order=name.asc', {
     headers: { apikey: '${SUPABASE_ANON_KEY}' }
   })
   .then(function(r) { return r.json(); })
