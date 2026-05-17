@@ -269,6 +269,17 @@ ${NAV}
     <a href="/blog/best-pokemon-booster-boxes-australia/" style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:9px 16px;border-radius:8px;font-size:13px;text-decoration:none">📖 Is it Worth Opening?</a>
     <a href="/ev-calculator.html" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);color:#FB923C;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📊 EV Calculator</a>
   </div>
+  <div style="background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:20px 24px;margin-bottom:28px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5),transparent)"></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:10px">&#128230; Sealed Product</div>
+    <div style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#F0F2FF;margin-bottom:8px">Singles vs Sealed: Know Before You Buy</div>
+    <p style="font-size:13px;color:#7a8099;line-height:1.6;margin-bottom:14px">Buying singles is cheaper if you want specific cards. Sealed boxes are for the opening experience and the chance at chase pulls. Run the EV before you open any box.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="${ebayBoxURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C;font-size:12px;font-weight:700;text-decoration:none">Find Sealed on eBay AU &#8599;</a>
+      <a href="/ev-calculator.html" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);color:#FB923C;font-size:12px;font-weight:700;text-decoration:none">Run the EV Calculator &#8594;</a>
+      <a href="/compare" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);color:#A78BFA;font-size:12px;font-weight:700;text-decoration:none">Compare Card Prices &#8594;</a>
+    </div>
+  </div>
 
   <div style="background:rgba(255,204,0,.04);border:1px solid rgba(255,204,0,.15);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.6">${contextText}</div>
 

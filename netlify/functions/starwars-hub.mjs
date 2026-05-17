@@ -166,6 +166,20 @@ export default async (req) => {
     </div>
   </div>
 </nav>
+<div class="release-ticker" style="background:rgba(255,232,31,.06);border-bottom:1px solid rgba(255,232,31,.15);height:36px;display:flex;align-items:center;overflow:hidden;position:relative">
+  <div style="position:absolute;top:0;bottom:0;left:0;width:60px;z-index:2;background:linear-gradient(to right,#0A0C14,transparent);pointer-events:none"></div>
+  <div style="position:absolute;top:0;bottom:0;right:0;width:60px;z-index:2;background:linear-gradient(to left,#0A0C14,transparent);pointer-events:none"></div>
+  <span style="font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#FFE81F;white-space:nowrap;padding:0 16px 0 20px;flex-shrink:0;z-index:3">&#128640; Star Wars</span>
+  <div style="display:flex;animation:swTicker 38s linear infinite;flex-shrink:0" onmouseenter="this.style.animationPlayState='paused'" onmouseleave="this.style.animationPlayState='running'">
+    <span style="display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:12px;color:#9ba3c4;white-space:nowrap"><strong>Twilight of the Republic</strong> &middot; Jun 2026</span>
+    <span style="display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:12px;color:#9ba3c4;white-space:nowrap"><strong>Shadows of the Galaxy II</strong> &middot; Aug 2026</span>
+    <span style="display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:12px;color:#9ba3c4;white-space:nowrap"><a href="/calendar" style="color:#FFE81F;text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
+    <span style="display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:12px;color:#9ba3c4;white-space:nowrap"><strong>Twilight of the Republic</strong> &middot; Jun 2026</span>
+    <span style="display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:12px;color:#9ba3c4;white-space:nowrap"><strong>Shadows of the Galaxy II</strong> &middot; Aug 2026</span>
+    <span style="display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:12px;color:#9ba3c4;white-space:nowrap"><a href="/calendar" style="color:#FFE81F;text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
+  </div>
+</div>
+<style>@keyframes swTicker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}</style>
 <div class="hero fade-up">
   <div class="hero-eyebrow">Card Vault &#8212; Star Wars Unlimited</div>
   <h1>Star Wars Unlimited <span>Card Prices AU</span></h1>
