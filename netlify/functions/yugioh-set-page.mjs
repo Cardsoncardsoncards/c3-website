@@ -99,6 +99,7 @@ export default async (req) => {
 </body>
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
+  try {
   const [sets, ebayToken] = await Promise.all([
     supabaseGet(`yugioh_sets?abbreviation=ilike.${encodeURIComponent(setCode)}&limit=1`).then(r =>
       r.length ? r : supabaseGet(`yugioh_sets?slug=eq.${encodeURIComponent(setCode)}&limit=1`)
@@ -345,5 +346,9 @@ applyFilters();
 </body>
 </html>`;
   return new Response(html, { status: 200, headers });
+  } catch(err) {
+    console.error('[yugioh-set-page] Error:', err.message);
+    return new Response('<html><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh"><div style="text-align:center"><h1 style="color:#c8a332">Temporarily Unavailable</h1><p>Please try again in a moment.</p><a href="/cards/yugioh" style="color:#c8a332">Browse Yu-Gi-Oh Cards</a></div></body></html>', { status: 503, headers: {'Content-Type':'text/html'} });
+  }
 };
 export const config = { path: '/cards/yugioh/sets/:setCode+' };
