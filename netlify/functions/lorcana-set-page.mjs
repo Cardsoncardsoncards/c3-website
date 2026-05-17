@@ -121,7 +121,7 @@ export default async (req) => {
 
   let set = sets && sets[0];
   try {
-    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=200&select=slug,name,version,image_url,market_price,price_aud,rarity,ink,collector_number,price_change_7d`) : [];
+    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&rarity=neq.None&order=market_price.desc.nullslast&limit=200&select=slug,name,image_url,market_price,price_aud,rarity,price_change_7d`) : [];
   } catch (e) {
     console.error('[lorcana-set-page] cards fetch error:', e.message);
     cards = [];
@@ -166,7 +166,7 @@ export default async (req) => {
   const pricedCards = cards.filter(c => toAud(c) > 0);
   const top5 = pricedCards.slice(0, 5);
   const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();
-  const inks = [...new Set(cards.map(c => c.ink).filter(Boolean))].sort();
+  const inks = [...new Set(cards.map(c => "").filter(Boolean))].sort();
 
   const topTwo = pricedCards.slice(0, 2);
   const contextText = topTwo.length >= 2
@@ -175,10 +175,10 @@ export default async (req) => {
 
   const top5HTML = top5.map(c => {
     const aud = toAud(c);
-    const fullName = c.version ? `${c.name} — ${c.version}` : c.name;
-    const ink = INK_COLOURS[c.ink] || { bg:'#888', text:'#fff' };
+    const fullName = c.name;
+    const ink = INK_COLOURS[''] || { bg:'#888', text:'#fff' };
     return `<a href="/cards/lorcana/${c.slug}" style="flex:0 0 150px;background:#0e1118;border:1px solid rgba(1,137,196,.25);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s;display:block" onmouseover="this.style.borderColor='#0189C4';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(1,137,196,.25)';this.style.transform='none'">
-      <div style="position:absolute;top:6px;left:6px;background:${ink.bg};color:${ink.text};font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase">${c.ink||''}</div>
+      
       ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
       <div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">${fullName}</div>
       <div style="font-family:'Cinzel',serif;font-size:14px;color:#0189C4;font-weight:700;margin-top:3px">~AU$${aud.toFixed(0)}</div>
@@ -188,14 +188,14 @@ export default async (req) => {
   const cardGrid = cards.map(c => {
     const aud = toAud(c);
     const priceDisplay = aud >= 0.50 ? `~AU$${aud.toFixed(0)}` : `<span style="color:rgba(160,168,192,.35);font-size:9px">no price</span>`;
-    const fullName = c.version ? `${c.name} — ${c.version}` : c.name;
-    const ink = INK_COLOURS[c.ink] || { bg:'#888' };
+    const fullName = c.name;
+    const ink = INK_COLOURS[''] || { bg:'#888' };
     const trendL = c.price_change_7d && Math.abs(parseFloat(c.price_change_7d)) >= 5 ? parseFloat(c.price_change_7d) : null;
-    return `<a href="/cards/lorcana/${c.slug}" class="card-item" data-rarity="${(c.rarity||'')}.toLowerCase()}" data-ink="${(c.ink||'').toLowerCase()}" data-price="${aud.toFixed(2)}">
+    return `<a href="/cards/lorcana/${c.slug}" class="card-item" data-rarity="${(c.rarity||'')}.toLowerCase()}" data-ink="" data-price="${aud.toFixed(2)}">
       <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${ink.bg}"></div>${trendL ? `<div style="position:absolute;top:4px;left:4px;width:7px;height:7px;border-radius:50%;background:${trendL>0?'#4dbd5f':'#e57373'}" title="${trendL>0?'+':''}" ></div>` : ''}
       ${c.image_url ? `<img src="${c.image_url}" alt="${fullName}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${fullName}</div>`}
       <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${fullName}</div>
-      ${c.collector_number ? `<div style="font-size:9px;color:#8892b0;margin-top:1px">#${c.collector_number}</div>` : ''}
+      ${c.number || "" ? `<div style="font-size:9px;color:#8892b0;margin-top:1px">#${c.number || ""}</div>` : ''}
       ${c.rarity ? `<div style="font-size:9px;color:#0189C4;font-weight:700;margin-top:1px;text-transform:uppercase;letter-spacing:.04em">${c.rarity}</div>` : ''}
       <div style="font-size:11px;color:#0189C4;font-weight:700;margin-top:2px">${priceDisplay}</div>
     </a>`;

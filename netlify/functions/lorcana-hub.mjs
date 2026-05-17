@@ -52,7 +52,7 @@ export default async (req) => {
 
   const [sets, topCards] = await Promise.all([
     supabaseGet('lorcana_sets?order=release_date.desc&limit=300&select=id,name,slug,release_date,card_count'),
-    supabaseGet('lorcana_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&limit=24&select=slug,name,version,image_url,market_price,price_aud,ink,rarity')
+    supabaseGet('lorcana_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity')
   ]);
 
   const tickerHTML = buildTickerHTML(CALENDAR_EVENTS);
@@ -63,8 +63,8 @@ export default async (req) => {
       <div class="carousel-img-wrap">
         <img src="${c.image_url}" alt="${c.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#129516;</div>'">
       </div>
-      <div class="carousel-name">${c.version ? c.name+' \u2014 '+c.version : c.name}</div>
-      ${c.ink ? `<div class="carousel-rarity">${c.ink}</div>` : ''}
+      <div class="carousel-name">${c.name}</div>
+      ${c.rarity ? `<div class="carousel-rarity">${c.rarity}</div>` : ''}
       <div class="carousel-price">${c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.58).toFixed(0)}` : ''}</div>
       <div class="carousel-buy-row"><span class="carousel-buy-btn">Buy eBay &#8599;</span></div>
     </a>`).join('');
