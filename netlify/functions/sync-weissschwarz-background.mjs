@@ -127,7 +127,7 @@ export default async (req) => {
     const setRows = allSets.map(s => ({
       id:           s.id,
       name:         s.name,
-      slug:         s.slug || slugify(s.name, null, null),
+      slug:         (s.slug || slugify(s.name, null, null)) + '-' + s.id,
       abbreviation: s.abbreviation || null,
       release_date: s.release_date || null,
       card_count:   s.card_count || 0,
