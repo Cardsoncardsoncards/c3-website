@@ -1448,7 +1448,7 @@ const BANNED_FORMATS = {
       { name: 'Black Lotus', slug: 'black-lotus', legalIn: 'Vintage (Restricted)', reason: 'Produces three mana for zero cost. Banned in every format except Vintage.' },
       { name: 'Channel', slug: 'channel', legalIn: 'Vintage, Legacy', reason: 'Converts life points to mana at a devastating rate. Enables turn-one kills.' },
       { name: 'Emrakul, the Aeons Torn', slug: 'emrakul-the-aeons-torn', legalIn: 'Modern, Legacy', reason: 'Taking an extra turn and granting protection from coloured spells is too oppressive when cheated in.' },
-      { name: 'Erayo, Soratami Ascendant', slug: 'erayo-soratami-ascendant', legalIn: 'Modern, Legacy', reason: 'As a commander, easily locks opponents out of casting spells entirely.' },
+      { name: 'Erayo, Soratami Ascendant', slug: 'erayo-soratami-ascendant-erayos-essence', legalIn: 'Modern, Legacy', reason: 'As a commander, easily locks opponents out of casting spells entirely.' },
       { name: 'Fastbond', slug: 'fastbond', legalIn: 'Vintage (Restricted)', reason: 'Enables playing unlimited lands per turn for one life. Fuels too many degenerate combos.' },
       { name: 'Flash', slug: 'flash', legalIn: 'Vintage (Restricted)', reason: 'With Protean Hulk enables a reliable turn-one or two kill.' },
       { name: 'Golos, Tireless Pilgrim', slug: 'golos-tireless-pilgrim', reason: 'As a commander, too generically powerful. Appeared in every five-colour deck.' },
@@ -1526,7 +1526,7 @@ async function renderBannedPage(slug) {
 
   const cardGrid = format ? format.cards.map(card => {
     const img = imageMap[card.slug]
-      ? `<img src="${imageMap[card.slug]}" alt="${card.name.replace(/"/g,'&quot;')}" loading="lazy">`
+      ? `<img src="${imageMap[card.slug]}" alt="${card.name.replace(/"/g,'&quot;')}" loading="lazy" style="width:60px;height:84px;object-fit:cover;border-radius:4px;display:block">`
       : `<div style="width:60px;height:84px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:22px">&#128683;</div>`;
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sacat=183454&campid=${EPN}&mkevt=1`;
     const legalBadge = card.legalIn ? `<div style="font-size:10px;color:#4ADE80;font-weight:600">&#9989; Legal in: ${card.legalIn.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';

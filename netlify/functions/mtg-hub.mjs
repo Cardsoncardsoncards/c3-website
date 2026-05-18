@@ -345,12 +345,11 @@ export default async () => {
     <a href="/cards/mtg/random-commander" class="btn btn-secondary">&#127922; Random Commander</a>
     <a href="/ev-calculator.html" class="btn btn-secondary">&#128202; EV Calculator</a>
     <a href="/compare" class="btn btn-secondary">&#128203; Compare Cards</a>
-    <a href="/cards/mtg/banned" class="btn btn-secondary">&#128683; Banned Cards</a>
   </div>
 
-  <!-- Format Legality Strip -->
+  <!-- Format Ban Lists Strip -->
   <div style="margin-bottom:28px">
-    <h2 style="font-size:11px;margin-bottom:12px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.08em">Format Legality</h2>
+    <h2 style="font-size:11px;margin-bottom:12px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.08em">Format Ban Lists</h2>
     <div class="fmt-strip">${formatPills}</div>
   </div>
 
@@ -457,18 +456,6 @@ export default async () => {
     <!-- Set list (hidden by default) -->
     <div id="set-list" style="display:none;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px">
       ${setListHTML}
-    </div>
-  </div>
-
-  <!-- Banned Cards -->
-  <div style="margin-bottom:32px;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.15);border-radius:var(--radius);padding:24px">
-    <h2 style="font-size:20px;margin-bottom:8px">&#128683; Banned Cards</h2>
-    <p style="color:var(--text2);font-size:14px;margin-bottom:20px">See the complete banned list for each format, with the reason every card was banned.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
-      <a href="/cards/mtg/banned/standard" style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:8px;padding:14px;color:#4ADE80;text-decoration:none;font-weight:700;text-align:center;transition:all .2s" onmouseover="this.style.background='rgba(74,222,128,.15)'" onmouseout="this.style.background='rgba(74,222,128,.08)'">Standard</a>
-      <a href="/cards/mtg/banned/pioneer"  style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.25);border-radius:8px;padding:14px;color:#60A5FA;text-decoration:none;font-weight:700;text-align:center;transition:all .2s" onmouseover="this.style.background='rgba(96,165,250,.15)'" onmouseout="this.style.background='rgba(96,165,250,.08)'">Pioneer</a>
-      <a href="/cards/mtg/banned/modern"   style="background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);border-radius:8px;padding:14px;color:#A78BFA;text-decoration:none;font-weight:700;text-align:center;transition:all .2s" onmouseover="this.style.background='rgba(167,139,250,.15)'" onmouseout="this.style.background='rgba(167,139,250,.08)'">Modern</a>
-      <a href="/cards/mtg/banned/commander" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.25);border-radius:8px;padding:14px;color:#F97316;text-decoration:none;font-weight:700;text-align:center;transition:all .2s" onmouseover="this.style.background='rgba(249,115,22,.15)'" onmouseout="this.style.background='rgba(249,115,22,.08)'">Commander</a>
     </div>
   </div>
 
