@@ -37,16 +37,57 @@ export default async () => {
     supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
   ]);
 
-  const parentMap = new Map();
-  const childMap  = new Map();
+  // Sub-set types that should group under their parent expansion
+  const SUB_TYPES = new Set(['token','promo','memorabilia','minigame']);
+  // Sets shown as standalone parents (not grouped under anything)
+  // commander, masters, draft_innovation etc get their own entry unless
+  // they share an exact release_date with an expansion of the same name prefix
+
+  const parentMap = new Map(); // set_code -> set
+  const childMap  = new Map(); // parent set_code -> [child sets]
+
+  // First pass: identify parents (expansion, core, masters, draft_innovation, commander standalone, etc.)
   sets.forEach(function(s) {
-    if (!s.parent_set_code) {
+    if (!SUB_TYPES.has(s.set_type)) {
       parentMap.set(s.set_code, s);
-    } else {
-      if (!childMap.has(s.parent_set_code)) childMap.set(s.parent_set_code, []);
-      childMap.get(s.parent_set_code).push(s);
     }
   });
+
+  // Second pass: assign sub-types to their parent by matching name prefix and release_date
+  sets.forEach(function(s) {
+    if (!SUB_TYPES.has(s.set_type)) return; // already a parent
+    // Find the parent: same release_date and s.set_name starts with parent.set_name
+    var matched = false;
+    parentMap.forEach(function(parent) {
+      if (matched) return;
+      if (parent.release_date === s.release_date && (s.set_name.startsWith(parent.set_name + ' ') || s.set_name.startsWith(parent.set_name + ':'))) {
+        if (!childMap.has(parent.set_code)) childMap.set(parent.set_code, []);
+        childMap.get(parent.set_code).push(s);
+        matched = true;
+      }
+    });
+    // If no parent found by date+name, treat as standalone parent
+    if (!matched) parentMap.set(s.set_code, s);
+  });
+
+  // Third pass: handle 'commander' type sets - group them under expansion with same date+prefix
+  sets.forEach(function(s) {
+    if (s.set_type !== 'commander') return;
+    // Check if there is an expansion with same release_date and same name prefix
+    var expansionParent = null;
+    parentMap.forEach(function(parent) {
+      if (parent.set_code === s.set_code) return;
+      if (parent.set_type === 'expansion' && parent.release_date === s.release_date && (s.set_name.startsWith(parent.set_name + ' ') || s.set_name.startsWith(parent.set_name + ':'))) {
+        expansionParent = parent;
+      }
+    });
+    if (expansionParent) {
+      parentMap.delete(s.set_code);
+      if (!childMap.has(expansionParent.set_code)) childMap.set(expansionParent.set_code, []);
+      childMap.get(expansionParent.set_code).push(s);
+    }
+  });
+
   const sortedParents = Array.from(parentMap.values()).sort(function(a, b) {
     return a.set_name.localeCompare(b.set_name);
   });
@@ -418,7 +459,7 @@ function toggleChildren(setCode, setName, childrenData, btn) {
     if (prev) prev.textContent = '+';
   }
   openSetCode = setCode;
-  titleEl.textContent = setName + ' variants';
+  titleEl.textContent = setName + ' - related products';
   var html = '';
   for (var i = 0; i < childrenData.length; i++) {
     var c = childrenData[i];

@@ -18,7 +18,7 @@ const SEARCHABLE_GAMES = [
 
 async function searchGame(cfg, query, limit) {
   const encoded = encodeURIComponent(query);
-  const path = `${cfg.table}?name=ilike.%25${encoded}%25&select=slug,name,${cfg.imgCol},${cfg.priceCol},set_name,rarity&order=${cfg.priceCol}.desc.nullslast&limit=${limit}`;
+  const path = `${cfg.table}?name=ilike.*${encoded}*&select=slug,name,${cfg.imgCol},${cfg.priceCol},set_name,rarity&order=${cfg.priceCol}.desc.nullslast&limit=${limit}`;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 6000);
   try {
