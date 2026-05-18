@@ -1268,6 +1268,14 @@ export default async (req, context) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/mtg/', '').replace(/\/$/, '');
 
+  // Handle banned pages inline - Netlify resolves :slug+ before :format?
+  if (slug === 'banned' || slug.startsWith('banned/')) {
+    const bannedHtml = await renderBannedPage(slug);
+    return new Response(bannedHtml, {
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=86400' }
+    });
+  }
+
   if (!slug || slug === 'random') {
     // Redirect to a random card
     try {
@@ -1379,6 +1387,226 @@ function renderNotFound(slug) {
   </div>
   </body></html>`;
 }
+
+
+// --- Banned Cards Page (inlined - handles /cards/mtg/banned and /cards/mtg/banned/:format) ---
+const BANNED_FORMATS = {
+  standard: {
+    label: 'Standard', color: '#4ADE80',
+    description: 'Standard rotates yearly. As of mid-2026, Standard has zero active bans. Cards listed here were banned during their Standard-legal period before rotating out.',
+    cards: [
+      { name: 'Invoke Despair', slug: 'invoke-despair', reason: 'Banned during Kamigawa-Dominaria Standard (2023). Dominated every midrange and control matchup. Now rotated out of Standard.' },
+      { name: 'Fable of the Mirror-Breaker', slug: 'fable-of-the-mirror-breaker-reflection-of-kiki-jiki', reason: 'Banned during Kamigawa-Dominaria Standard (2023). Three-mana saga that appeared in nearly every red deck. Now rotated out.' },
+      { name: 'The One Ring', slug: 'the-one-ring', legalIn: 'Modern, Legacy, Commander', reason: 'Banned in Standard and Pioneer (2023). Produced too much card advantage with no real downside. Now rotated out of Standard.' },
+    ]
+  },
+  pioneer: {
+    label: 'Pioneer', color: '#60A5FA',
+    description: 'Pioneer covers sets from Return to Ravnica (2012) onward. No fetchlands allowed.',
+    cards: [
+      { name: "Smuggler's Copter", slug: 'smugglers-copter', reason: 'Two-mana vehicle that drew cards and attacked freely. Appeared in every aggressive deck.' },
+      { name: 'Oko, Thief of Crowns', slug: 'oko-thief-of-crowns', reason: 'Three-mana planeswalker that dominated every format it entered.' },
+      { name: 'Nexus of Fate', slug: 'nexus-of-fate', reason: 'Enabled infinite turns through shuffle loops. Created non-games where opponents could not win.' },
+      { name: 'Winota, Joiner of Forces', slug: 'winota-joiner-of-forces', reason: 'Generated too much free value cheating creatures into play.' },
+      { name: 'Expressive Iteration', slug: 'expressive-iteration', reason: 'Two-mana card selection too powerful for Pioneer. Appeared in every blue-red deck.' },
+      { name: 'Fires of Invention', slug: 'fires-of-invention', reason: 'Let players cast spells without spending mana, enabling broken combinations.' },
+      { name: 'Inverter of Truth', slug: 'inverter-of-truth', reason: "Combined with Thassa's Oracle for an instant-win combo too consistent to interact with." },
+      { name: 'Kethis, the Hidden Hand', slug: 'kethis-the-hidden-hand', reason: 'Enabled a legendary-based combo winning on turn three or four consistently.' },
+      { name: 'Walking Ballista', slug: 'walking-ballista', legalIn: 'Modern, Legacy, Commander', reason: 'Combo win condition with Heliod. Banned to break up the combo.' },
+      { name: 'Underworld Breach', slug: 'underworld-breach', legalIn: 'Legacy', reason: 'Enabled powerful graveyard loops generating infinite value with minimal setup.' },
+    ]
+  },
+  modern: {
+    label: 'Modern', color: '#A78BFA',
+    description: 'Modern covers sets from Eighth Edition (2003) onward. A powerful non-rotating format.',
+    cards: [
+      { name: 'Hogaak, Arisen Necropolis', slug: 'hogaak-arisen-necropolis', reason: 'Eight-mana creature costing no mana. Dominated Modern and won the Pro Tour before being banned.' },
+      { name: 'Faithless Looting', slug: 'faithless-looting', legalIn: 'Legacy, Vintage', reason: 'Best enabler for graveyard strategies. Banned to weaken multiple problematic archetypes.' },
+      { name: 'Birthing Pod', slug: 'birthing-pod', legalIn: 'Legacy, Commander', reason: 'Four-mana artifact tutoring creatures into play. Enabled too-consistent creature combo decks.' },
+      { name: 'Splinter Twin', slug: 'splinter-twin', legalIn: 'Legacy, Commander', reason: 'Instant-win combo with Deceiver Exarch. Banned to promote format diversity.' },
+      { name: 'Summer Bloom', slug: 'summer-bloom', reason: 'Enabled Amulet Bloom combo to win on turn two too consistently.' },
+      { name: 'Blazing Shoal', slug: 'blazing-shoal', reason: 'Could deal lethal damage on turn two by pitching high-cost red cards to pump an infect creature.' },
+      { name: 'Cloudpost', slug: 'cloudpost', legalIn: 'Legacy', reason: 'Generated too much mana in multiples. Created insurmountable resource advantages.' },
+      { name: "Green Sun's Zenith", slug: 'green-suns-zenith', legalIn: 'Legacy, Vintage', reason: 'One-mana tutor finding any green creature. Too efficient and consistent for Modern.' },
+      { name: 'Ponder', slug: 'ponder', legalIn: 'Legacy, Vintage, Commander', reason: 'One-mana cantrip too powerful for Modern. Legal in Legacy and Vintage.' },
+      { name: 'Preordain', slug: 'preordain', legalIn: 'Legacy, Vintage, Commander', reason: 'Same reasoning as Ponder. One-mana blue card selection too efficient for Modern.' },
+      { name: 'Gitaxian Probe', slug: 'gitaxian-probe', legalIn: 'Legacy, Vintage', reason: 'Free blue card giving perfect information and fuelling storm counts.' },
+      { name: 'Golgari Grave-Troll', slug: 'golgari-grave-troll', legalIn: 'Legacy, Commander', reason: 'Powerful dredge card enabling Dredge to be too consistent and fast.' },
+      { name: 'Deathrite Shaman', slug: 'deathrite-shaman', legalIn: 'Legacy, Vintage', reason: 'One-mana creature doing too much. Appeared in every deck running green or black.' },
+      { name: "Lurrus of the Dream-Den", slug: 'lurrus-of-the-dream-den', reason: 'Companion warped deck building across every format. Banned in Modern and Legacy.' },
+      { name: "Tibalt's Trickery", slug: 'tibalts-trickery', reason: 'Enabled countering your own spell to cheat a huge threat into play on turn one.' },
+      { name: 'Simian Spirit Guide', slug: 'simian-spirit-guide', legalIn: 'Legacy, Vintage, Commander', reason: 'Free mana powering out too many problematic decks.' },
+      { name: 'Rite of Flame', slug: 'rite-of-flame', legalIn: 'Legacy, Vintage', reason: 'Ritual effect powering out Storm combo too quickly and consistently.' },
+      { name: 'Punishing Fire', slug: 'punishing-fire', legalIn: 'Legacy, Commander', reason: 'With Grove of the Burnwillows, created a recurring removal engine locking out creature decks.' },
+    ]
+  },
+  commander: {
+    label: 'Commander', color: '#F97316',
+    description: 'Commander bans are managed by Wizards of the Coast (as of 2024, previously by the independent Rules Committee).',
+    cards: [
+      { name: 'Ancestral Recall', slug: 'ancestral-recall', legalIn: 'Vintage (Restricted)', reason: 'One of the Power Nine. Drawing three cards for one mana is too powerful for multiplayer.' },
+      { name: 'Black Lotus', slug: 'black-lotus', legalIn: 'Vintage (Restricted)', reason: 'Produces three mana for zero cost. Banned in every format except Vintage.' },
+      { name: 'Channel', slug: 'channel', legalIn: 'Vintage, Legacy', reason: 'Converts life points to mana at a devastating rate. Enables turn-one kills.' },
+      { name: 'Emrakul, the Aeons Torn', slug: 'emrakul-the-aeons-torn', legalIn: 'Modern, Legacy', reason: 'Taking an extra turn and granting protection from coloured spells is too oppressive when cheated in.' },
+      { name: 'Erayo, Soratami Ascendant', slug: 'erayo-soratami-ascendant', legalIn: 'Modern, Legacy', reason: 'As a commander, easily locks opponents out of casting spells entirely.' },
+      { name: 'Fastbond', slug: 'fastbond', legalIn: 'Vintage (Restricted)', reason: 'Enables playing unlimited lands per turn for one life. Fuels too many degenerate combos.' },
+      { name: 'Flash', slug: 'flash', legalIn: 'Vintage (Restricted)', reason: 'With Protean Hulk enables a reliable turn-one or two kill.' },
+      { name: 'Golos, Tireless Pilgrim', slug: 'golos-tireless-pilgrim', reason: 'As a commander, too generically powerful. Appeared in every five-colour deck.' },
+      { name: 'Griselbrand', slug: 'griselbrand', legalIn: 'Modern, Legacy, Vintage', reason: 'Drawing cards equal to life paid enables drawing most of the deck.' },
+      { name: 'Hullbreacher', slug: 'hullbreacher', legalIn: 'Modern, Legacy', reason: "Replaced opponents' card draws with treasures, creating oppressive lock states." },
+      { name: 'Iona, Shield of Emeria', slug: 'iona-shield-of-emeria', legalIn: 'Modern, Legacy', reason: 'Completely locks out mono-colour decks by naming their colour.' },
+      { name: 'Karakas', slug: 'karakas', legalIn: 'Vintage', reason: 'Bouncing legendary creatures for free is too oppressive against commanders.' },
+      { name: 'Leovold, Emissary of Trest', slug: 'leovold-emissary-of-trest', legalIn: 'Legacy, Vintage', reason: 'Combined card draw restriction with damage replacement, creating frustrating lock states.' },
+      { name: 'Library of Alexandria', slug: 'library-of-alexandria', legalIn: 'Vintage (Restricted)', reason: 'Draws an extra card per turn for free. Too powerful where card advantage is paramount.' },
+      { name: 'Limited Resources', slug: 'limited-resources', legalIn: 'Legacy, Vintage', reason: 'Caps total lands in play at five. Prevents opponents ever reaching meaningful mana.' },
+      { name: 'Lutri, the Spellchaser', slug: 'lutri-the-spellchaser', legalIn: 'In the 99 or as Commander only', reason: 'Banned as a companion only (Feb 2026). Can be played in the 99 or as commander, but cannot be a companion.' },
+      { name: 'Paradox Engine', slug: 'paradox-engine', legalIn: 'Modern, Legacy', reason: 'Untapped all non-land permanents whenever a spell was cast. Enabled infinite mana combos.' },
+      { name: 'Primeval Titan', slug: 'primeval-titan', legalIn: 'Modern, Legacy', reason: 'Fetching two lands every attack created insurmountable advantages too quickly.' },
+      { name: 'Prophet of Kruphix', slug: 'prophet-of-kruphix', reason: "Gave all creatures flash and untapped all permanents on opponents' turns." },
+      { name: 'Recurring Nightmare', slug: 'recurring-nightmare', legalIn: 'Legacy', reason: 'Returned creatures from the graveyard repeatedly at minimal cost.' },
+      { name: 'Rofellos, Llanowar Emissary', slug: 'rofellos-llanowar-emissary', legalIn: 'Legacy, Vintage', reason: 'Generated enormous mana in green decks from the command zone too consistently.' },
+      { name: 'Sundering Titan', slug: 'sundering-titan', legalIn: 'Modern, Legacy', reason: 'Destroyed multiple lands entering and leaving play. Too punishing in a many-basics format.' },
+      { name: 'Sylvan Primordial', slug: 'sylvan-primordial', legalIn: 'Modern, Legacy', reason: 'Destroyed a non-land permanent and fetched a forest for each opponent.' },
+      { name: 'Time Vault', slug: 'time-vault', legalIn: 'Vintage (Restricted)', reason: 'Generates infinite extra turns with untap effects. No fair use case in Commander.' },
+      { name: 'Time Walk', slug: 'time-walk', legalIn: 'Vintage (Restricted)', reason: 'Two-mana extra turn spell. Part of the Power Nine. Too powerful for multiplayer.' },
+      { name: 'Tinker', slug: 'tinker', legalIn: 'Vintage (Restricted)', reason: 'Sacrifices an artifact to tutor any artifact into play. Fetches Blightsteel for a single blue mana.' },
+      { name: 'Tolarian Academy', slug: 'tolarian-academy', legalIn: 'Vintage (Restricted)', reason: 'Produces mana equal to artifacts you control. Generates enormous mana in artifact decks.' },
+      { name: 'Trade Secrets', slug: 'trade-secrets', reason: 'Two players draw unlimited cards in a loop, used to give one player a huge advantage.' },
+      { name: 'Upheaval', slug: 'upheaval', legalIn: 'Legacy, Vintage', reason: 'Returned all permanents to hand. Used with floating mana to reset the board with a mana advantage.' },
+      { name: "Yawgmoth's Bargain", slug: 'yawgmoths-bargain', legalIn: 'Vintage (Restricted)', reason: 'Pay life to draw cards. Draws the entire deck for a trivial life cost.' },
+    ]
+  }
+};
+
+async function getBannedImages(slugs) {
+  if (!slugs.length) return {};
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  try {
+    const url = new URL(`${SUPABASE_URL}/rest/v1/mtg_cards`);
+    url.searchParams.set('select', 'slug,image_uri_small');
+    url.searchParams.set('limit', '100');
+    const fetchUrl = url.toString() + '&slug=in.(' + slugs.map(s => '"' + s + '"').join(',') + ')';
+    const res = await fetch(fetchUrl, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    if (!res.ok) return {};
+    const data = await res.json();
+    const map = {};
+    if (Array.isArray(data)) data.forEach(c => { if (c.image_uri_small) map[c.slug] = c.image_uri_small; });
+    return map;
+  } catch { clearTimeout(timer); return {}; }
+}
+
+async function renderBannedPage(slug) {
+  const parts = slug.split('/');
+  const formatKey = parts.length > 1 ? parts[1].toLowerCase() : '';
+  const format = BANNED_FORMATS[formatKey] || null;
+  let imageMap = {};
+  if (format) imageMap = await getBannedImages(format.cards.map(c => c.slug));
+
+  const EPN = EPN_CAMPID;
+  const formatTabs = Object.entries(BANNED_FORMATS).map(([key, f]) => {
+    const active = key === formatKey;
+    const st = active ? `border-color:${f.color};color:${f.color};background:${f.color}15` : '';
+    return `<a href="/cards/mtg/banned/${key}" style="padding:8px 18px;border-radius:8px;border:1px solid ${active ? f.color : '#2d3254'};color:${active ? f.color : '#9ba3c4'};font-size:13px;font-weight:600;text-decoration:none;${st}">${f.label}</a>`;
+  }).join('');
+
+  const overviewCards = Object.entries(BANNED_FORMATS).map(([key, f]) => {
+    return `<a href="/cards/mtg/banned/${key}" style="background:#1a1d2e;border:1px solid ${f.color}33;border-radius:12px;padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:8px;transition:all .2s">
+      <div style="width:40px;height:40px;border-radius:8px;border:1px solid ${f.color}33;background:${f.color}18;color:${f.color};display:flex;align-items:center;justify-content:center;font-size:18px">&#128683;</div>
+      <div style="font-family:Cinzel,serif;font-size:15px;font-weight:700;color:#e8eaf0">${f.label}</div>
+      <div style="font-size:12px;color:#9ba3c4;font-weight:600">${f.cards.length} banned</div>
+      <div style="font-size:12px;color:#9ba3c4;line-height:1.5;flex:1">${f.description}</div>
+      <div style="font-size:12px;font-weight:700;color:${f.color};margin-top:auto">View list &rarr;</div>
+    </a>`;
+  }).join('');
+
+  const cardGrid = format ? format.cards.map(card => {
+    const img = imageMap[card.slug]
+      ? `<img src="${imageMap[card.slug]}" alt="${card.name.replace(/"/g,'&quot;')}" loading="lazy">`
+      : `<div style="width:60px;height:84px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:22px">&#128683;</div>`;
+    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sacat=183454&campid=${EPN}&mkevt=1`;
+    const legalBadge = card.legalIn ? `<div style="font-size:10px;color:#4ADE80;font-weight:600">&#9989; Legal in: ${card.legalIn.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';
+    return `<div style="background:#1a1d2e;border:1px solid #2d3254;border-radius:10px;overflow:hidden;display:flex;gap:12px;padding:12px">
+      <div style="width:60px;flex-shrink:0">${img}</div>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:13px;font-weight:700;color:#e8eaf0">${card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+        <div style="font-size:11px;color:#9ba3c4;line-height:1.5;flex:1">${card.reason.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+        ${legalBadge}
+        <a href="${ebayUrl}" target="_blank" rel="noopener" style="font-size:11px;color:#60A5FA;font-weight:600;text-decoration:none;margin-top:4px">Find on eBay AU &#8599;</a>
+      </div>
+    </div>`;
+  }).join('') : '';
+
+  const pageTitle = format ? `MTG ${format.label} Banned List | Cards on Cards on Cards` : 'MTG Banned Cards by Format | Cards on Cards on Cards';
+  const pageDesc = format ? `Complete list of cards banned in MTG ${format.label} as of 2026. Includes ban reasons and where each card is still legal.` : 'Complete MTG banned card lists for Standard, Pioneer, Modern, and Commander. Updated 2026.';
+
+  return `<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${pageTitle}</title>
+  <meta name="description" content="${pageDesc}">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/${slug}">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <meta property="og:title" content="${pageTitle}">
+  <meta property="og:description" content="${pageDesc}">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}body{background:#0f1117;color:#e8eaf0;font-family:sans-serif;line-height:1.6}a{color:#f5a623;text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1100px;margin:0 auto;padding:0 24px}footer{background:#1a1d2e;border-top:1px solid #2d3254;padding:24px;text-align:center;color:#9ba3c4;font-size:13px;margin-top:48px}footer a{color:#9ba3c4;margin:0 10px}
+    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}.nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}.nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}.nav-links::-webkit-scrollbar{display:none}.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}.nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}.nav-search-wrap{flex:1;min-width:0;max-width:500px;display:flex}.nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none}.nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0}
+    .ban-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+    .fmt-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:40px}
+    @media(max-width:600px){.ban-grid{grid-template-columns:1fr}.nav-links{display:none}.fmt-overview{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+<nav><div class="nav-inner">
+  <a href="/" class="nav-logo" style="text-decoration:none;flex-shrink:0"><img src="/c3logo.png" alt="C3"></a>
+  <div class="nav-search-wrap">
+    <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
+    <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
+  </div>
+  <div class="nav-links">
+    <a href="/cards" class="nav-link">Card Vault</a>
+    <a href="/cards/mtg" class="nav-link" style="color:#C9A84C;border-color:rgba(201,168,76,.5)">MTG</a>
+    <a href="/compare" class="nav-link">Compare</a>
+    <a href="/market" class="nav-link">Market</a>
+    <a href="/tools.html" class="nav-link">Tools</a>
+    <a href="/blog" class="nav-link">Blog</a>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=${EPN}&mkevt=1" target="_blank" rel="noopener" class="nav-link">Shop eBay &#8599;</a>
+  </div>
+</div></nav>
+<div class="wrap" style="padding-top:28px;padding-bottom:48px">
+  <div style="font-size:12px;color:#9ba3c4;margin-bottom:12px"><a href="/" style="color:#9ba3c4">Home</a> &rsaquo; <a href="/cards" style="color:#9ba3c4">Card Vault</a> &rsaquo; <a href="/cards/mtg" style="color:#9ba3c4">MTG</a> &rsaquo; ${format ? `<a href="/cards/mtg/banned" style="color:#9ba3c4">Banned Cards</a> &rsaquo; ${format.label}` : 'Banned Cards'}</div>
+  <h1 style="font-family:Cinzel,serif;font-size:clamp(22px,4vw,32px);margin-bottom:8px">MTG Banned Cards</h1>
+  <p style="color:#9ba3c4;font-size:14px;margin-bottom:20px">Banned lists for Standard, Pioneer, Modern, and Commander. Last updated May 2026. Always verify with the <a href="https://magic.wizards.com/en/banned-restricted-list" target="_blank" rel="noopener" style="color:#C9A84C">official Wizards list</a> before tournament play.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px">${formatTabs}</div>
+  ${format ? `
+  <div style="background:#1a1d2e;border:1px solid #2d3254;border-radius:12px;padding:20px;margin-bottom:24px">
+    <h2 style="font-family:Cinzel,serif;font-size:22px;margin-bottom:8px;color:${format.color}">${format.label} Banned List <span style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:700;margin-left:8px">${format.cards.length} banned</span></h2>
+    <p style="color:#9ba3c4;font-size:14px">${format.description}</p>
+  </div>
+  <div class="ban-grid">${cardGrid}</div>
+  ` : `
+  <p style="color:#9ba3c4;margin-bottom:28px;font-size:14px">Select a format to view its complete banned list with ban reasons and where each card is still legal.</p>
+  <div class="fmt-overview">${overviewCards}</div>
+  `}
+</div>
+<footer>
+  <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/mtg">MTG</a><a href="/cards/mtg/banned">Banned Cards</a><a href="/blog">Blog</a></p>
+  <p style="margin-top:8px;font-size:12px">Ban lists current as of May 2026. &copy; 2026 Cards on Cards on Cards &middot; Affiliate links may earn a small commission.</p>
+</footer>
+</body></html>`;
+}
+
 
 export const config = {
   path: '/cards/mtg/:slug+',
