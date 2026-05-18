@@ -6,13 +6,19 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID = Netlify.env.get('EPN_CAMPID') || '5339146789';
 
 async function supabaseGet(path) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+      signal: controller.signal
     });
+    clearTimeout(timer);
+    if (!res.ok) return [];
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   } catch (e) {
+    clearTimeout(timer);
     return [];
   }
 }
@@ -27,7 +33,7 @@ function eraColor(year) {
 
 export default async () => {
   const [sets, topCards] = await Promise.all([
-    supabaseGet('mtg_sets?order=set_name.asc&limit=1000&digital=eq.false'),
+    supabaseGet('mtg_sets?order=set_name.asc&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,set_type,release_date,parent_set_code'),
     supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
   ]);
 
@@ -64,10 +70,10 @@ export default async () => {
     const toggleBtn = children.length
       ? `<button id="btn-${parent.set_code}" class="toggle-btn" data-setcode="${parent.set_code}" data-setname="${parent.set_name.replace(/"/g, '&quot;')}" data-children="${childrenData}" onclick="handleToggle(this)">+</button>`
       : '';
-    return `<div class="set-item" data-name="${parent.set_name.toLowerCase()}${children.map(function(c){ return ' ' + c.set_name.toLowerCase(); }).join('')}" data-letter="${letterKey}" style="border-left:3px solid ${color}">
+    return `<div class="set-item" data-name="${parent.set_name.toLowerCase().replace(/"/g,'&quot;').replace(/'/g,'&#39;')}${children.map(function(c){ return ' ' + c.set_name.toLowerCase().replace(/"/g,'&quot;'); }).join('')}" data-letter="${letterKey}" style="border-left:3px solid ${color}">
       <div class="set-item-inner">
         <a href="/cards/mtg/sets/${parent.set_slug}" class="set-link">
-          <span class="set-name">${parent.set_name}</span>
+          <span class="set-name">${parent.set_name.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</span>
           <span class="set-year">${year}</span>
           ${childBadge}
         </a>
@@ -80,8 +86,8 @@ export default async () => {
     const price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * 1.58 : 0);
     const priceStr = (c.price_usd && c.price_usd >= 3 && price > 0) ? '~AU$' + price.toFixed(0) : '';
     return `<a href="/cards/mtg/${c.slug}" class="top-card">
-      ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" loading="lazy">` : `<div class="top-card-placeholder">${c.name}</div>`}
-      <div class="top-card-name">${c.name}</div>
+      ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name.replace(/"/g,'&quot;')}" loading="lazy">` : `<div class="top-card-placeholder">${c.name.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</div>`}
+      <div class="top-card-name">${c.name.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</div>
       <div class="top-card-price">${priceStr}</div>
     </a>`;
   }).join('');
@@ -96,6 +102,9 @@ export default async () => {
   <title>MTG Card Prices Australia | Cards on Cards on Cards</title>
   <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, 52-week price ranges, and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <meta property="og:title" content="MTG Card Prices Australia | Cards on Cards on Cards">
+  <meta property="og:description" content="Browse Magic: The Gathering card prices in AUD. Live pricing, 52-week ranges, and eBay AU buy links. Updated daily.">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
@@ -115,10 +124,10 @@ export default async () => {
     footer a{color:var(--text2);margin:0 10px}
     /* NAV */
     nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+    .nav-inner{display:flex;align-items:center;max-width:1100px;margin:0 auto;padding:0 24px;gap:10px}
     .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
     .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}
-    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-width:0}
     .nav-links::-webkit-scrollbar{display:none}
     .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
     .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
@@ -129,6 +138,13 @@ export default async () => {
     .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6}
     .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1}
     .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA}
+    /* NAV SEARCH */
+    .nav-search-wrap{flex:1;min-width:0;max-width:320px;position:relative;display:flex;align-items:center;gap:0}
+    .nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none;transition:border-color .2s}
+    .nav-search-input:focus{border-color:rgba(201,168,76,.45);background:rgba(255,255,255,.09)}
+    .nav-search-input::placeholder{color:#9ba3c4}
+    .nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;transition:background .2s;flex-shrink:0}
+    .nav-search-btn:hover{background:rgba(201,168,76,.3)}
     /* SET LIST */
     .set-item{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .15s}
     .set-item:hover{border-color:var(--accent)}
@@ -169,17 +185,29 @@ export default async () => {
     .cmd-card-name{font-family:Cinzel,serif;font-size:9.5px;font-weight:700;color:#C0C0FF;line-height:1.3}
     .cmd-card-identity{font-size:9px;color:rgba(160,168,192,.5)}
     .cmd-card-cta{font-size:8.5px;font-weight:600;color:#9898FF;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+    /* MOBILE */
+    @media(max-width:768px){
+      .nav-search-wrap{max-width:140px}
+      .nav-search-input{font-size:11px;padding:5px 8px}
+      .nav-links{display:none}
+      .wrap{padding:0 12px}
+      #set-list{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+    }
   </style>
 </head>
 <body>
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span style="font-family:Cinzel,serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-transform:uppercase">Cards on Cards on Cards</span></a>
+    <div class="nav-search-wrap">
+      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
+      <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
+    </div>
     <div class="nav-links">
       <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
       <a href="/cards/mtg" class="nav-link" style="color:#C9A84C;border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.08)">MTG</a>
-      <a href="/card-compare.html" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market.html" class="nav-link nav-link--market">Market</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
       <a href="/tools.html" class="nav-link nav-link--tools">Tools</a>
       <a href="/play.html" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
@@ -197,7 +225,7 @@ export default async () => {
     <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub" target="_blank" rel="noopener" class="btn btn-primary">&#128722; Shop MTG on eBay &#8599;</a>
     <a href="/cards/mtg/random-commander" class="btn btn-secondary">&#127922; Random Commander</a>
     <a href="/ev-calculator.html" class="btn btn-secondary">&#128202; EV Calculator</a>
-    <a href="/card-compare.html" class="btn btn-secondary">&#128203; Compare Cards</a>
+    <a href="/compare" class="btn btn-secondary">&#128203; Compare Cards</a>
     <a href="/blog/best-mtg-booster-boxes-australia/" class="btn btn-secondary">&#128230; Best MTG Boxes</a>
   </div>
 
@@ -219,16 +247,6 @@ export default async () => {
     <div style="text-align:center;margin-top:14px">
       <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF">Generate a random Commander &rarr;</a>
     </div>
-  </div>
-
-  <!-- Card Search -->
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
-    <h2 style="font-size:18px;margin-bottom:16px">Search MTG Cards</h2>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
-      <input type="text" id="card-search" placeholder="Card name e.g. Black Lotus, Lightning Bolt..." style="flex:1;min-width:200px;width:auto" onkeyup="if(event.key==='Enter')searchCard()">
-      <button class="btn btn-primary" onclick="searchCard()" style="flex-shrink:0">Search</button>
-    </div>
-    <div id="search-results" style="margin-top:16px"></div>
   </div>
 
   <!-- Set Browser -->
@@ -284,7 +302,7 @@ export default async () => {
     </div>
 
     <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px">
-      ${setListHTML}
+      ${setListHTML || '<p style="color:var(--text2);font-size:13px;padding:12px 0">Sets syncing, check back shortly.</p>'}
     </div>
 
     <!-- Sub-set drawer -->
@@ -352,35 +370,6 @@ export default async () => {
 </footer>
 
 <script>
-function searchCard() {
-  var q = document.getElementById('card-search').value.trim();
-  if (!q) return;
-  var res = document.getElementById('search-results');
-  res.innerHTML = '<p style="color:#9ba3c4">Searching...</p>';
-  fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&limit=8&select=slug,name,price_usd,image_uri_small&order=name.asc', {
-    headers: { apikey: '${SUPABASE_ANON_KEY}' }
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    if (!data || !data.length) {
-      res.innerHTML = '<p style="color:#9ba3c4">No cards found. <a href="https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(q + ' mtg') + '&campid=${EPN_CAMPID}" target="_blank">Search eBay AU &rarr;</a></p>';
-      return;
-    }
-    var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px">';
-    for (var i = 0; i < data.length; i++) {
-      var c = data[i];
-      html += '<a href="/cards/mtg/' + c.slug + '" class="top-card">';
-      html += '<img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '">';
-      html += '<div class="top-card-name">' + c.name + '</div>';
-      html += '<div class="top-card-price">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.58).toFixed(0) : '') + '</div>';
-      html += '</a>';
-    }
-    html += '</div>';
-    res.innerHTML = html;
-  })
-  .catch(function() { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; });
-}
-
 function filterAZ(letter, btn) {
   var btns = document.querySelectorAll('.az-btn');
   for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
@@ -433,7 +422,7 @@ function toggleChildren(setCode, setName, childrenData, btn) {
   var html = '';
   for (var i = 0; i < childrenData.length; i++) {
     var c = childrenData[i];
-    html += '<a href="' + c.url + '" class="drawer-link">' + c.label + ' <span style="font-size:10px;color:#9ba3c4">(' + c.year + ')</span></a>';
+    html += '<a href="' + c.url + '" class="drawer-link">' + c.label.replace(/</g,'&lt;').replace(/>/g,'&gt;') + ' <span style="font-size:10px;color:#9ba3c4">(' + c.year + ')</span></a>';
   }
   itemsEl.innerHTML = html;
   drawer.style.display = '';
@@ -460,8 +449,8 @@ function closeDrawer() {
     return '<a href="' + c.cardVaultUrl + '" class="cmd-card">'
       + img
       + '<div class="cmd-card-body">'
-      + '<div class="cmd-card-name">' + c.name + '</div>'
-      + '<div class="cmd-card-identity">' + c.identityName + '</div>'
+      + '<div class="cmd-card-name">' + c.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
+      + '<div class="cmd-card-identity">' + (c.identityName||'').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
       + '<div class="cmd-card-cta">View Card &rarr;</div>'
       + '</div></a>';
   }
