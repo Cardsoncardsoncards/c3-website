@@ -123,11 +123,11 @@ export default async (req) => {
     }
     console.log(`[sync-weissschwarz] Found ${allSets.length} sets`);
 
-    // Step 2: Upsert sets
+    // Step 2: Upsert sets - append set ID to slug to guarantee uniqueness
     const setRows = allSets.map(s => ({
       id:           s.id,
       name:         s.name,
-      slug:         s.slug || slugify(s.name, null, null),
+      slug:         (s.slug || slugify(s.name, null, null)) + '-' + s.id,
       abbreviation: s.abbreviation || null,
       release_date: s.release_date || null,
       card_count:   s.card_count || 0,
