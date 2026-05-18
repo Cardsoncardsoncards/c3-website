@@ -17,12 +17,15 @@ const SEARCHABLE_GAMES = [
 ];
 
 async function searchGame(cfg, query, limit) {
-  const encoded = encodeURIComponent(query);
-  const path = `${cfg.table}?name=ilike.*${encoded}*&select=slug,name,${cfg.imgCol},${cfg.priceCol},set_name,rarity&order=${cfg.priceCol}.desc.nullslast&limit=${limit}`;
+  const baseUrl = new URL(`${SUPABASE_URL}/rest/v1/${cfg.table}`);
+  baseUrl.searchParams.set('select', `slug,name,${cfg.imgCol},${cfg.priceCol},set_name,rarity`);
+  baseUrl.searchParams.set('name', `ilike.*${query}*`);
+  baseUrl.searchParams.set('order', `${cfg.priceCol}.desc.nullslast`);
+  baseUrl.searchParams.set('limit', String(limit));
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 6000);
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    const res = await fetch(baseUrl.toString(), {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
       signal: controller.signal
     });
