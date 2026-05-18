@@ -42,9 +42,9 @@ const UPCOMING = [
 
 // Format legality (current Standard sets as of mid-2026)
 const FORMATS = [
-  { name: 'Standard',  color: '#4ADE80', sets: 'Duskmourn, Foundations, Aetherdrift, Tarkir: Dragonstorm', href: '/blog/mtg-standard-rotation-australia/' },
-  { name: 'Pioneer',   color: '#60A5FA', sets: 'Return to Ravnica onward, no fetchlands', href: '/blog/mtg-pioneer-guide-australia/' },
-  { name: 'Modern',    color: '#A78BFA', sets: 'Eighth Edition onward', href: '/blog/mtg-singles-vs-booster-boxes-australia/' },
+  { name: 'Standard',  color: '#4ADE80', sets: 'Duskmourn, Foundations, Aetherdrift, Tarkir: Dragonstorm', href: '/cards/mtg/banned/standard' },
+  { name: 'Pioneer',   color: '#60A5FA', sets: 'Return to Ravnica onward, no fetchlands', href: '/cards/mtg/banned/pioneer' },
+  { name: 'Modern',    color: '#A78BFA', sets: 'Eighth Edition onward', href: '/cards/mtg/banned/modern' },
   { name: 'Commander', color: '#F97316', sets: 'All sets, own banned list', href: '/cards/mtg/banned/commander' },
 ];
 
