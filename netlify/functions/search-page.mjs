@@ -18,7 +18,7 @@ const SEARCHABLE_GAMES = [
 
 async function searchGame(cfg, query, limit) {
   const encoded = encodeURIComponent(query);
-  const path = `${cfg.table}?name=ilike.*${encoded}*&select=slug,name,${cfg.imgCol},${cfg.priceCol},set_name,rarity&order=${cfg.priceCol}.desc.nullslast&limit=${limit}`;
+  const path = `${cfg.table}?name=ilike.%25${encoded}%25&select=slug,name,${cfg.imgCol},${cfg.priceCol},set_name,rarity&order=${cfg.priceCol}.desc.nullslast&limit=${limit}`;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 6000);
   try {
@@ -50,17 +50,20 @@ async function searchGame(cfg, query, limit) {
   } catch { clearTimeout(timer); return []; }
 }
 
-function cardHTML(c) {
+function cardHTML(c, rank) {
   const img = c.image
     ? `<img src="${c.image}" alt="${c.name.replace(/"/g,'&quot;')}" loading="lazy" onerror="this.style.display='none'">`
     : `<div class="card-no-img">${c.emoji}</div>`;
   const badge = `<span class="game-badge" style="background:${c.color}22;color:${c.color};border-color:${c.color}44">${c.label}</span>`;
   const price = c.priceStr
     ? `<div class="card-price">${c.priceStr}</div>`
-    : `<div class="card-price" style="color:var(--text2)">N/A</div>`;
+    : `<div class="card-price no-price">N/A</div>`;
   const set = c.setName ? `<div class="card-set">${c.setName.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</div>` : '';
-  return `<a href="${c.cardPath}" class="result-card">
+  const topBadge = rank === 0 ? `<div class="top-badge">&#127942; Top Find</div>` : '';
+  const rarityNorm = (c.rarity || 'unknown').toLowerCase().replace(/[^a-z0-9]/g,'-');
+  return `<a href="${c.cardPath}" class="result-card${rank === 0 ? ' result-card--top' : ''}" data-price="${c.priceAud || 0}" data-name="${c.name.replace(/"/g,'&quot;')}" data-rarity="${rarityNorm}" data-game="${c.game}">
     <div class="card-img-wrap">${img}</div>
+    ${topBadge}
     <div class="card-info">
       ${badge}
       <div class="card-name">${c.name.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</div>
@@ -98,7 +101,7 @@ export default async (req) => {
 
   const hasResults = results.length > 0;
   const resultsHTML = hasResults
-    ? results.map(cardHTML).join('')
+    ? results.map((c, i) => cardHTML(c, i)).join('')
     : query.length >= 2
       ? `<div class="no-results">
           <div style="font-size:40px;margin-bottom:16px">🔍</div>
@@ -141,7 +144,7 @@ export default async (req) => {
     a{color:var(--gold);text-decoration:none}
     /* NAV */
     nav{background:rgba(10,12,20,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-    .nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:12px}
+    .nav-inner{max-width:1400px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:12px}
     .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
     .nav-logo img{height:34px;width:34px;border-radius:6px;object-fit:cover}
     /* GLOBAL SEARCH in nav */
@@ -161,7 +164,6 @@ export default async (req) => {
     .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1)}
     .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12)}
     /* PAGE */
-    .page-wrap{max-width:1200px;margin:0 auto;padding:32px 20px}
     .search-hero{text-align:center;margin-bottom:32px}
     .search-hero h1{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);color:var(--gold);margin-bottom:16px}
     .search-bar-wrap{display:flex;gap:0;max-width:640px;margin:0 auto}
@@ -180,7 +182,7 @@ export default async (req) => {
     .results-meta{font-size:13px;color:var(--text2);margin-bottom:20px}
     .results-meta strong{color:var(--text)}
     .results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
-    .result-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;text-decoration:none;transition:all .2s;display:flex;flex-direction:column}
+    .result-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;position:relative}
     .result-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
     .card-img-wrap{aspect-ratio:2/3;background:var(--bg3);overflow:hidden;display:flex;align-items:center;justify-content:center}
     .card-img-wrap img{width:100%;height:100%;object-fit:cover}
@@ -195,7 +197,33 @@ export default async (req) => {
     .btn-ebay:hover{background:rgba(96,165,250,.2)}
     footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text2);margin-top:48px}
     footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--text)}
-    @media(max-width:600px){.results-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}.nav-links{display:none}}
+    /* SORT + FILTER */
+    .controls-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:10px}
+    .controls-label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+    .sort-select{background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;outline:none}
+    .rarity-chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+    .rarity-chip{padding:3px 10px;border-radius:12px;border:1px solid var(--border);background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+    .rarity-chip:hover{color:var(--text);border-color:var(--text)}
+    .rarity-chip.active{background:var(--gold);border-color:var(--gold);color:#000}
+    /* LAYOUT */
+    .content-wrap{display:flex;gap:24px;align-items:flex-start;max-width:1400px;margin:0 auto;padding:0 20px}
+    .main-col{flex:1;min-width:0}
+    .sidebar{width:240px;flex-shrink:0;position:sticky;top:80px}
+    .sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px}
+    .sidebar-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+    .sidebar-result{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);text-decoration:none}
+    .sidebar-result:last-child{border-bottom:none}
+    .sidebar-result img{width:32px;height:44px;object-fit:cover;border-radius:3px;flex-shrink:0}
+    .sidebar-result-info{min-width:0}
+    .sidebar-result-name{font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sidebar-result-price{font-size:11px;color:var(--gold);font-weight:700}
+    .sidebar-result-game{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+    /* TOP RESULT */
+    .result-card--top{border-color:var(--gold);box-shadow:0 0 16px rgba(201,168,76,.2)}
+    .top-badge{position:absolute;top:6px;left:6px;background:var(--gold);color:#000;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:.05em}
+    .no-price{color:var(--text2) !important}
+    @media(max-width:900px){.sidebar{display:none}.content-wrap{padding:0 16px}}
+    @media(max-width:600px){.results-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}.nav-links{display:none}.controls-bar{padding:8px 12px}}
   </style>
 </head>
 <body>
@@ -220,17 +248,18 @@ export default async (req) => {
   </div>
 </nav>
 
-<div class="page-wrap">
-  <div class="search-hero">
-    <h1>Search TCG Cards</h1>
-    <form action="/search" method="get">
-      <div class="search-bar-wrap">
-        <input class="search-bar-input" type="text" name="q" value="${safeQuery}" placeholder="Card name e.g. Pikachu, Lightning Bolt, Lola..." autocomplete="off" autofocus>
-        <button type="submit" class="search-bar-btn">Search</button>
-      </div>
-    </form>
-  </div>
+<div class="search-hero" style="max-width:1400px;margin:0 auto;padding:32px 20px 0">
+  <h1>Search TCG Cards</h1>
+  <form action="/search" method="get">
+    <div class="search-bar-wrap">
+      <input class="search-bar-input" type="text" name="q" value="${safeQuery}" placeholder="Card name e.g. Pikachu, Lightning Bolt, Lola..." autocomplete="off" autofocus>
+      <button type="submit" class="search-bar-btn">Search</button>
+    </div>
+  </form>
+</div>
 
+<div class="content-wrap">
+<div class="main-col">
   ${query.length >= 2 ? `
   <div class="tabs-wrap">
     <a href="${allHref}" class="tab${allActive}" style="${!gameFilter ? 'color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.08)' : ''}">All Games${results.length ? ` <span class="tab-count">${results.length}</span>` : ''}</a>
@@ -242,7 +271,34 @@ export default async (req) => {
       : ''}
   </div>` : ''}
 
-  <div class="results-grid">${resultsHTML}</div>
+  ${hasResults ? `<div class="controls-bar">
+    <span class="controls-label">Sort:</span>
+    <select class="sort-select" onchange="sortResults(this.value)">
+      <option value="price-desc">Price: High to Low</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="name-asc">Name: A to Z</option>
+    </select>
+    <span class="controls-label" style="margin-left:8px">Rarity:</span>
+    <div class="rarity-chips" id="rarity-chips"></div>
+  </div>` : ''}
+  <div class="results-grid" id="results-grid">${resultsHTML}</div>
+</div>
+<!-- SIDEBAR - inside content-wrap so flexbox positions it beside main-col -->
+<div class="sidebar" id="sidebar" style="display:${hasResults ? '' : 'none'}">
+  <div class="sidebar-card">
+    <div class="sidebar-title">Top by Game</div>
+    <div id="sidebar-tops"></div>
+  </div>
+  <div class="sidebar-card" style="background:rgba(201,168,76,.04);border-color:rgba(201,168,76,.2)">
+    <div class="sidebar-title" style="color:var(--gold)">Quick Links</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <a href="/compare" style="font-size:12px;color:var(--text2)">&#128203; Compare Prices</a>
+      <a href="/ev-calculator.html" style="font-size:12px;color:var(--text2)">&#128202; EV Calculator</a>
+      <a href="/tracker.html" style="font-size:12px;color:var(--text2)">&#128196; Free Tracker</a>
+      <a href="/market" style="font-size:12px;color:var(--text2)">&#128200; Market Insights</a>
+    </div>
+  </div>
+</div>
 </div>
 
 <footer>
@@ -255,6 +311,90 @@ export default async (req) => {
 </footer>
 
 <script>
+// Build rarity chips and sidebar from rendered results
+(function(){
+  var grid = document.getElementById('results-grid');
+  if (!grid) return;
+  var cards = Array.from(grid.querySelectorAll('.result-card'));
+  if (!cards.length) return;
+
+  // Build rarity chips
+  var rarities = {};
+  cards.forEach(function(el) {
+    var r = el.dataset.rarity || 'unknown';
+    rarities[r] = (rarities[r] || 0) + 1;
+  });
+  var chipsEl = document.getElementById('rarity-chips');
+  if (chipsEl) {
+    var allChip = document.createElement('button');
+    allChip.className = 'rarity-chip active';
+    allChip.textContent = 'All';
+    allChip.onclick = function() { filterRarity('all', this); };
+    chipsEl.appendChild(allChip);
+    Object.keys(rarities).sort().forEach(function(r) {
+      if (r === 'unknown') return;
+      var chip = document.createElement('button');
+      chip.className = 'rarity-chip';
+      chip.textContent = r.replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();})+' ('+rarities[r]+')';
+      chip.onclick = function() { filterRarity(r, this); };
+      chipsEl.appendChild(chip);
+    });
+  }
+
+  // Build sidebar top-by-game
+  var sidebar = document.getElementById('sidebar-tops');
+  if (sidebar) {
+    var seen = {};
+    var tops = [];
+    cards.forEach(function(el) {
+      var g = el.dataset.game;
+      if (!seen[g] && parseFloat(el.dataset.price) > 0) {
+        seen[g] = true;
+        tops.push(el);
+      }
+    });
+    tops.slice(0, 7).forEach(function(el) {
+      var img = el.querySelector('img');
+      var name = el.querySelector('.card-name');
+      var price = el.querySelector('.card-price');
+      var badge = el.querySelector('.game-badge');
+      var a = document.createElement('a');
+      a.href = el.href;
+      a.className = 'sidebar-result';
+      a.innerHTML = (img ? '<img src="'+img.src+'" alt="">' : '<div style="width:32px;height:44px;background:var(--bg3);border-radius:3px;flex-shrink:0"></div>')
+        + '<div class="sidebar-result-info">'
+        + '<div class="sidebar-result-game">'+(badge ? badge.textContent : '')+'</div>'
+        + '<div class="sidebar-result-name">'+(name ? name.textContent : '')+'</div>'
+        + '<div class="sidebar-result-price">'+(price ? price.textContent : '')+'</div>'
+        + '</div>';
+      sidebar.appendChild(a);
+    });
+  }
+})();
+
+function sortResults(val) {
+  var grid = document.getElementById('results-grid');
+  if (!grid) return;
+  var cards = Array.from(grid.querySelectorAll('.result-card'));
+  cards.sort(function(a, b) {
+    if (val === 'price-desc') return parseFloat(b.dataset.price||0) - parseFloat(a.dataset.price||0);
+    if (val === 'price-asc') return parseFloat(a.dataset.price||0) - parseFloat(b.dataset.price||0);
+    if (val === 'name-asc') return (a.dataset.name||'').localeCompare(b.dataset.name||'');
+    return 0;
+  });
+  cards.forEach(function(c) { grid.appendChild(c); });
+}
+
+function filterRarity(rarity, btn) {
+  var chips = document.querySelectorAll('.rarity-chip');
+  chips.forEach(function(c) { c.classList.remove('active'); });
+  btn.classList.add('active');
+  var cards = document.querySelectorAll('.result-card');
+  cards.forEach(function(c) {
+    c.style.display = (rarity === 'all' || c.dataset.rarity === rarity) ? '' : 'none';
+  });
+}
+
 // Submit on Enter in the hero search bar is handled by the form
 // Track search events
 if ('${query.replace(/'/g,"\\'").replace(/</g,'').replace(/>/g,'')}') {

@@ -114,7 +114,7 @@ export default async () => {
     body{background:var(--bg);color:var(--text);font-family:sans-serif;line-height:1.6}
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+    .wrap{max-width:1400px;margin:0 auto;padding:0 24px}
     .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;border:none;font-size:13px;text-decoration:none;transition:opacity .2s}
     .btn:hover{opacity:.85;text-decoration:none}
     .btn-primary{background:var(--accent);color:#000}
@@ -124,7 +124,7 @@ export default async () => {
     footer a{color:var(--text2);margin:0 10px}
     /* NAV */
     nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
-    .nav-inner{display:flex;align-items:center;max-width:1100px;margin:0 auto;padding:0 24px;gap:10px}
+    .nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}
     .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
     .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}
     .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-width:0}
@@ -139,7 +139,7 @@ export default async () => {
     .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1}
     .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA}
     /* NAV SEARCH */
-    .nav-search-wrap{flex:1;min-width:0;max-width:320px;position:relative;display:flex;align-items:center;gap:0}
+    .nav-search-wrap{flex:1;min-width:0;max-width:500px;position:relative;display:flex;align-items:center;gap:0}
     .nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none;transition:border-color .2s}
     .nav-search-input:focus{border-color:rgba(201,168,76,.45);background:rgba(255,255,255,.09)}
     .nav-search-input::placeholder{color:#9ba3c4}
@@ -187,7 +187,7 @@ export default async () => {
     .cmd-card-cta{font-size:8.5px;font-weight:600;color:#9898FF;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
     /* MOBILE */
     @media(max-width:768px){
-      .nav-search-wrap{max-width:140px}
+      .nav-search-wrap{max-width:200px}
       .nav-search-input{font-size:11px;padding:5px 8px}
       .nav-links{display:none}
       .wrap{padding:0 12px}
@@ -198,7 +198,7 @@ export default async () => {
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span style="font-family:Cinzel,serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-transform:uppercase">Cards on Cards on Cards</span></a>
+    <a href="/" class="nav-logo" title="Cards on Cards on Cards"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
     <div class="nav-search-wrap">
       <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
       <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
@@ -301,7 +301,7 @@ export default async () => {
       <span style="font-size:11px;color:var(--text2);white-space:nowrap">Sets with <span style="color:var(--gold)">+N</span> have sub-sets</span>
     </div>
 
-    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px">
+    <div id="set-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px">
       ${setListHTML || '<p style="color:var(--text2);font-size:13px;padding:12px 0">Sets syncing, check back shortly.</p>'}
     </div>
 
