@@ -123,11 +123,11 @@ export default async (req) => {
     }
     console.log(`[sync-weissschwarz] Found ${allSets.length} sets`);
 
-    // Step 2: Upsert sets - append set ID to slug to guarantee uniqueness
+    // Step 2: Upsert sets
     const setRows = allSets.map(s => ({
       id:           s.id,
       name:         s.name,
-      slug:         (s.slug || slugify(s.name, null, null)) + '-' + s.id,
+      slug:         s.slug || slugify(s.name, null, null),
       abbreviation: s.abbreviation || null,
       release_date: s.release_date || null,
       card_count:   s.card_count || 0,
@@ -169,7 +169,6 @@ export default async (req) => {
       }
 
       const cardRows = [];
-      const slugsSeen = new Set();
       const snapRows = [];
       const setAbbr = set.abbreviation || set.slug || String(set.id);
 
@@ -178,9 +177,7 @@ export default async (req) => {
         const marketPrice = price.market_price || null;
         const lowPrice    = price.low_price || null;
         const foilPrice   = price.foil_market_price || null;
-        let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
-        if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
-        slugsSeen.add(slug);
+        const slug = slugify(card.clean_name || card.name, card.number, setAbbr) + '-' + card.id;
 
         cardRows.push({
           id:                card.id,
