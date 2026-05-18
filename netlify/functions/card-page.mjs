@@ -313,6 +313,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   <title>${card.name} Price Australia | ${card.set_name} | Cards on Cards on Cards</title>
   <meta name="description" content="${card.name} is ${priceAud ? `currently ${formatAUD(priceAud)} AUD` : 'available'}. View price history, all printings, format legality, and buy on eBay AU. Australia's MTG price guide.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}">
+  <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="${card.name} Price Australia | Cards on Cards on Cards">
   <meta property="og:description" content="${priceAud ? `${card.name} — ${formatAUD(priceAud)} AUD. ` : ''}MTG card price guide for Australia.">
   ${(card.image_uri_normal || card.image_uri_small) ? `<meta property="og:image" content="${card.image_uri_normal || card.image_uri_small}">` : ''}
@@ -1266,12 +1267,6 @@ if (typeof gtag !== 'undefined') {
 export default async (req, context) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/mtg/', '').replace(/\/$/, '');
-
-  // Redirect banned paths to mtg-banned function (prevent slug+ wildcard swallowing them)
-  if (slug === 'banned' || slug.startsWith('banned/')) {
-    const target = 'https://cardsoncardsoncards.com.au/cards/mtg/' + slug;
-    return Response.redirect(target, 302);
-  }
 
   if (!slug || slug === 'random') {
     // Redirect to a random card

@@ -9,11 +9,11 @@ const FORMATS = {
   standard: {
     label: 'Standard',
     color: '#4ADE80',
-    description: 'Standard rotates yearly. Currently the fewest bans of any sanctioned format.',
+    description: 'Standard rotates yearly. As of mid-2026, Standard has zero active bans. Cards listed here were banned during their Standard-legal period before rotating out.',
     cards: [
-      { name: 'Mana Crypt', slug: 'mana-crypt', reason: 'Produces two colourless mana for zero cost. Too powerful for the Standard card pool, creating unfair starts from turn one.' },
-      { name: 'Invoke Despair', slug: 'invoke-despair', reason: 'Dominated Standard during its legal period. Banned for warping the format around one card too heavily.' },
-      { name: 'Fable of the Mirror-Breaker', slug: 'fable-of-the-mirror-breaker-reflection-of-kiki-jiki', reason: 'Three-mana saga generating too much value. Appeared in nearly every red deck and defined the format.' },
+      { name: 'Invoke Despair', slug: 'invoke-despair', reason: 'Banned during Kamigawa-Dominaria Standard (2023). Dominated every midrange and control matchup. Now rotated out of Standard.' },
+      { name: 'Fable of the Mirror-Breaker', slug: 'fable-of-the-mirror-breaker-reflection-of-kiki-jiki', reason: 'Banned during Kamigawa-Dominaria Standard (2023). Three-mana saga that appeared in nearly every red deck. Now rotated out of Standard.' },
+      { name: 'The One Ring', slug: 'the-one-ring', reason: 'Banned in Standard and Pioneer (2023). Produced too much card advantage with no real downside in midrange decks. Now rotated out of Standard.' },
     ]
   },
   pioneer: {
@@ -36,29 +36,26 @@ const FORMATS = {
   modern: {
     label: 'Modern',
     color: '#A78BFA',
-    description: 'Modern covers sets from Eighth Edition (2003) onward. A powerful, fast non-rotating format.',
+    description: 'Modern covers sets from Eighth Edition (2003) onward. A powerful non-rotating format. Ban list last updated November 2025 - no changes to Modern at that announcement.',
     cards: [
       { name: 'Hogaak, Arisen Necropolis', slug: 'hogaak-arisen-necropolis', reason: 'Eight-mana creature costing no mana. Dominated Modern for months and won the Pro Tour before being banned.' },
-      { name: 'Faithless Looting', slug: 'faithless-looting', reason: 'Best enabler for graveyard strategies. Banned to weaken multiple problematic archetypes simultaneously.' },
-      { name: 'Birthing Pod', slug: 'birthing-pod', reason: 'Four-mana artifact tutoring creatures into play. Enabled too-consistent creature combo decks.' },
-      { name: 'Splinter Twin', slug: 'splinter-twin', reason: 'Created an instant-win combo with Deceiver Exarch. Banned to promote diversity.' },
+      { name: 'Faithless Looting', slug: 'faithless-looting', legalIn: 'Legacy, Vintage', reason: 'Best enabler for graveyard strategies. Banned to weaken multiple problematic archetypes simultaneously.' },
+      { name: 'Birthing Pod', slug: 'birthing-pod', legalIn: 'Legacy, Commander', reason: 'Four-mana artifact tutoring creatures into play. Enabled too-consistent creature combo decks.' },
+      { name: 'Splinter Twin', slug: 'splinter-twin', legalIn: 'Legacy, Commander', reason: 'Created an instant-win combo with Deceiver Exarch. Banned to promote diversity.' },
       { name: 'Summer Bloom', slug: 'summer-bloom', reason: 'Enabled Amulet Bloom combo to win on turn two too consistently.' },
       { name: 'Blazing Shoal', slug: 'blazing-shoal', reason: 'Could deal lethal damage on turn two by pitching high-cost red cards to pump an infect creature.' },
       { name: 'Cloudpost', slug: 'cloudpost', reason: 'Generated too much mana in multiples. Created games with insurmountable resource advantages.' },
-      { name: "Green Sun's Zenith", slug: 'green-suns-zenith', reason: 'One-mana tutor finding any green creature. Too efficient and consistent for Modern.' },
-      { name: 'Ponder', slug: 'ponder', reason: 'One-mana cantrip too powerful for Modern. Legal in Legacy and Vintage.' },
-      { name: 'Preordain', slug: 'preordain', reason: 'Same reasoning as Ponder. One-mana blue card selection too efficient for Modern.' },
-      { name: 'Gitaxian Probe', slug: 'gitaxian-probe', reason: 'Free blue card giving perfect information and fuelling storm counts. Too efficient in too many strategies.' },
+      { name: "Green Sun's Zenith", slug: 'green-suns-zenith', legalIn: 'Legacy, Vintage', reason: 'One-mana tutor finding any green creature. Too efficient and consistent for Modern.' },
+      { name: 'Ponder', slug: 'ponder', legalIn: 'Legacy, Vintage, Commander', reason: 'One-mana cantrip too powerful for Modern. Legal in Legacy and Vintage.' },
+      { name: 'Preordain', slug: 'preordain', legalIn: 'Legacy, Vintage, Commander', reason: 'Same reasoning as Ponder. One-mana blue card selection too efficient for Modern.' },
+      { name: 'Gitaxian Probe', slug: 'gitaxian-probe', legalIn: 'Legacy, Vintage', reason: 'Free blue card giving perfect information and fuelling storm counts. Too efficient in too many strategies.' },
       { name: 'Golgari Grave-Troll', slug: 'golgari-grave-troll', reason: 'Powerful dredge card enabling Dredge to be too consistent and fast.' },
-      { name: 'Deathrite Shaman', slug: 'deathrite-shaman', reason: 'One-mana creature doing too much. Appeared in every deck running green or black.' },
+      { name: 'Deathrite Shaman', slug: 'deathrite-shaman', legalIn: 'Legacy, Vintage', reason: 'One-mana creature doing too much. Appeared in every deck running green or black.' },
       { name: "Lurrus of the Dream-Den", slug: 'lurrus-of-the-dream-den', reason: 'Companion warped deck building across every format. Banned in Modern and Legacy.' },
       { name: "Tibalt's Trickery", slug: 'tibalts-trickery', reason: 'Enabled a combo countering your own spell to cheat a huge threat into play on turn one.' },
-      { name: 'Simian Spirit Guide', slug: 'simian-spirit-guide', reason: 'Free mana powering out too many problematic decks including Ad Nauseam and Belcher variants.' },
-      { name: 'Eye of Ugin', slug: 'eye-of-ugin', reason: 'Combined with Eldrazi Temple to produce broken starts with colourless Eldrazi creatures.' },
+      { name: 'Simian Spirit Guide', slug: 'simian-spirit-guide', legalIn: 'Legacy, Vintage, Commander', reason: 'Free mana powering out too many problematic decks including Ad Nauseam and Belcher variants.' },
       { name: 'Rite of Flame', slug: 'rite-of-flame', reason: 'Ritual effect powering out Storm combo too quickly and consistently.' },
       { name: 'Punishing Fire', slug: 'punishing-fire', reason: 'With Grove of the Burnwillows created a recurring removal engine locking out creature-based decks.' },
-      { name: 'Sensei\'s Divining Top', slug: 'senseis-divining-top', reason: 'Caused excessive slow play with Counterbalance. Banned to speed up Modern gameplay.' },
-      { name: 'Chrome Mox', slug: 'chrome-mox', reason: 'Zero-mana artifact producing coloured mana. Enabled too-fast starts across combo and aggro.' },
     ]
   },
   commander: {
@@ -66,14 +63,13 @@ const FORMATS = {
     color: '#F97316',
     description: 'Commander bans are managed by the independent Rules Committee, not Wizards of the Coast.',
     cards: [
-      { name: 'Ancestral Recall', slug: 'ancestral-recall', reason: 'One of the Power Nine. Drawing three cards for one mana is too powerful for any multiplayer format.' },
-      { name: 'Black Lotus', slug: 'black-lotus', reason: 'Produces three mana of any colour for zero cost. Banned in every sanctioned format except Vintage.' },
-      { name: 'Channel', slug: 'channel', reason: 'Converts life points to mana at a devastating rate. Enables turn-one kills with Fireball variants.' },
+      { name: 'Ancestral Recall', slug: 'ancestral-recall', legalIn: 'Vintage only (Restricted to 1 copy)', reason: 'One of the Power Nine. Drawing three cards for one mana is too powerful for any multiplayer format.' },
+      { name: 'Black Lotus', slug: 'black-lotus', legalIn: 'Vintage only (Restricted to 1 copy)', reason: 'Produces three mana of any colour for zero cost. Banned in every sanctioned format except Vintage.' },
+      { name: 'Channel', slug: 'channel', legalIn: 'Vintage, Legacy', reason: 'Converts life points to mana at a devastating rate. Enables turn-one kills with Fireball variants.' },
       { name: 'Emrakul, the Aeons Torn', slug: 'emrakul-the-aeons-torn', reason: 'Taking an extra turn and granting protection from coloured spells is too oppressive when cheated into play.' },
       { name: 'Erayo, Soratami Ascendant', slug: 'erayo-soratami-ascendant', reason: 'As a commander, easily locks opponents out of casting spells entirely, creating non-games.' },
       { name: 'Fastbond', slug: 'fastbond', reason: 'Enables playing unlimited lands per turn for one life each. Fuels too many degenerate combos.' },
       { name: 'Flash', slug: 'flash', reason: 'Two-mana instant that with Protean Hulk enables a reliable turn-one or two kill.' },
-      { name: 'Gifts Ungiven', slug: 'gifts-ungiven', reason: 'Too powerful a tutor effect. Finds any four cards from the library with no meaningful downside.' },
       { name: 'Golos, Tireless Pilgrim', slug: 'golos-tireless-pilgrim', reason: 'As a commander, too generically powerful. Appeared in every five-colour deck regardless of theme.' },
       { name: 'Griselbrand', slug: 'griselbrand', reason: 'As a commander, drawing cards equal to life paid is too powerful, enabling drawing most of the deck.' },
       { name: 'Hullbreacher', slug: 'hullbreacher', reason: "Replaced opponents' card draws with treasures, creating oppressive lock states in multiplayer." },
@@ -82,8 +78,7 @@ const FORMATS = {
       { name: 'Leovold, Emissary of Trest', slug: 'leovold-emissary-of-trest', reason: 'As a commander, combined card draw restriction with damage replacement created frustrating lock states.' },
       { name: 'Library of Alexandria', slug: 'library-of-alexandria', reason: 'Draws an extra card per turn for free. Too powerful in a format where card advantage is paramount.' },
       { name: 'Limited Resources', slug: 'limited-resources', reason: 'Caps total lands in play at five. Used to prevent opponents ever reaching meaningful mana.' },
-      { name: 'Lutri, the Spellchaser', slug: 'lutri-the-spellchaser', reason: 'Banned as a companion only. Free companion with no meaningful deck-building restriction in singleton.' },
-      { name: 'Panoptic Mirror', slug: 'panoptic-mirror', reason: 'Imprints an instant or sorcery to cast for free every turn. Enables infinite extra turns with Time Walk.' },
+      { name: 'Lutri, the Spellchaser', slug: 'lutri-the-spellchaser', reason: 'Banned as a companion only (updated Feb 2026). Can be played in the 99 or as your commander, but cannot be used as a companion. Free companion with no restriction in singleton was unfair.' },
       { name: 'Paradox Engine', slug: 'paradox-engine', reason: 'Untapped all non-land permanents whenever a spell was cast. Enabled too-easy infinite mana combos.' },
       { name: 'Primeval Titan', slug: 'primeval-titan', reason: 'As a commander, fetching two lands every attack created insurmountable advantages too quickly.' },
       { name: 'Prophet of Kruphix', slug: 'prophet-of-kruphix', reason: "Gave all creatures flash and untapped all permanents on opponents' turns. Too oppressive in multiplayer." },
@@ -92,12 +87,11 @@ const FORMATS = {
       { name: 'Sundering Titan', slug: 'sundering-titan', reason: 'Destroyed multiple lands entering and leaving play. Too punishing in a format built around many basics.' },
       { name: 'Sylvan Primordial', slug: 'sylvan-primordial', reason: 'Destroyed a non-land permanent and fetched a forest for each opponent. Too powerful in multiplayer.' },
       { name: 'Time Vault', slug: 'time-vault', reason: 'Generates infinite extra turns when combined with untap effects. No fair use case in Commander.' },
-      { name: 'Time Walk', slug: 'time-walk', reason: 'Two-mana extra turn spell. Part of the Power Nine. Too powerful for any multiplayer format.' },
+      { name: 'Time Walk', slug: 'time-walk', legalIn: 'Vintage only (Restricted to 1 copy)', reason: 'Two-mana extra turn spell. Part of the Power Nine. Too powerful for any multiplayer format.' },
       { name: 'Tinker', slug: 'tinker', reason: 'Sacrifices an artifact to tutor any artifact into play. Fetches Blightsteel Colossus for a single blue mana.' },
       { name: 'Tolarian Academy', slug: 'tolarian-academy', reason: 'Produces mana equal to artifacts you control. Generates enormous mana in artifact-heavy decks.' },
       { name: 'Trade Secrets', slug: 'trade-secrets', reason: 'Two players draw unlimited cards in a loop. Used in coordinated play to give one player a huge advantage.' },
       { name: 'Upheaval', slug: 'upheaval', reason: 'Returned all permanents to hand. Used with floating mana to reset the board while keeping a mana advantage.' },
-      { name: 'Worldfire', slug: 'worldfire', reason: 'Reset everyone to one life and removed all permanents. Combined with commanders to win with one damage.' },
       { name: "Yawgmoth's Bargain", slug: 'yawgmoths-bargain', reason: 'Pay life to draw cards. Draws the entire deck for a trivial life cost in life-gain focused strategies.' },
     ]
   }
@@ -110,9 +104,10 @@ async function getCardImages(slugs) {
   try {
     const url = new URL(`${SUPABASE_URL}/rest/v1/mtg_cards`);
     url.searchParams.set('select', 'slug,image_uri_small,name');
-    url.searchParams.set('slug', `in.(${slugs.map(s => `"${s}"`).join(',')})`);
     url.searchParams.set('limit', '100');
-    const res = await fetch(url.toString(), {
+    // slug in() filter appended manually - searchParams encodes parens/quotes breaking PostgREST
+    const fetchUrl = url.toString() + '&slug=in.(' + slugs.map(s => '"' + s + '"').join(',') + ')';
+    const res = await fetch(fetchUrl, {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
       signal: controller.signal
     });
@@ -150,11 +145,13 @@ export default async (req) => {
       ? `<img src="${imageMap[card.slug]}" alt="${card.name.replace(/"/g,'&quot;')}" loading="lazy">`
       : `<div class="card-no-img">&#128683;</div>`;
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sacat=183454&campid=${EPN_CAMPID}&mkevt=1`;
+    const legalBadge = card.legalIn ? `<div class="ban-legal-in">&#9989; Legal in: ${card.legalIn.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';
     return `<div class="ban-card">
       <div class="ban-card-img">${img}</div>
       <div class="ban-card-info">
         <div class="ban-card-name">${card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
         <div class="ban-card-reason">${card.reason.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+        ${legalBadge}
         <a href="${ebayUrl}" target="_blank" rel="noopener" class="ban-card-link">Find on eBay AU &#8599;</a>
       </div>
     </div>`;
@@ -258,6 +255,7 @@ export default async (req) => {
     .ban-card-name{font-size:13px;font-weight:700;color:var(--text)}
     .ban-card-reason{font-size:11px;color:var(--text2);line-height:1.5;flex:1}
     .ban-card-link{font-size:11px;color:#60A5FA;font-weight:600;text-decoration:none;margin-top:4px}
+    .ban-legal-in{font-size:10px;color:#4ADE80;font-weight:600;margin-top:2px}
     .ban-card-link:hover{text-decoration:underline}
     @media(max-width:600px){.ban-grid{grid-template-columns:1fr}.nav-links{display:none}.fmt-overview{grid-template-columns:1fr 1fr}}
   </style>
@@ -290,7 +288,7 @@ export default async (req) => {
 
   <div class="page-header">
     <h1 style="font-family:Cinzel,serif;font-size:clamp(22px,4vw,32px);margin-bottom:8px">MTG Banned Cards</h1>
-    <p style="color:var(--text2);font-size:15px">Banned lists for Standard, Pioneer, Modern, and Commander. Includes the reason each card was banned.</p>
+    <p style="color:var(--text2);font-size:15px">Banned lists for Standard, Pioneer, Modern, and Commander with ban reasons. <strong style="color:var(--text2)">Last updated May 2026.</strong> Always verify with the <a href="https://magic.wizards.com/en/banned-restricted-list" target="_blank" rel="noopener" style="color:var(--gold)">official Wizards list</a> before tournament play.</p>
   </div>
 
   <div class="fmt-tabs">${formatTabs}</div>
@@ -319,4 +317,4 @@ export default async (req) => {
   });
 };
 
-export const config = { path: ['/cards/mtg/banned', '/cards/mtg/banned/:format'] };
+export const config = { path: '/cards/mtg/banned/:format?' };

@@ -64,6 +64,14 @@ export default async () => {
   const filteredSets = sets.filter(s => SHOW_TYPES.has(s.set_type));
   const totalSets = filteredSets.length;
 
+  // Count sets per letter for AZ button labels
+  const letterCounts = {};
+  filteredSets.forEach(function(s) {
+    const fc = (s.set_name[0] || '').toUpperCase();
+    const lk = /[0-9]/.test(fc) ? '0' : fc;
+    letterCounts[lk] = (letterCounts[lk] || 0) + 1;
+  });
+
   // Build set list (hidden by default, revealed by filter)
   const setListHTML = filteredSets.map(function(s) {
     const year = s.release_date ? s.release_date.slice(0, 4) : '';
@@ -115,12 +123,13 @@ export default async () => {
   if (moverSids.length > 0) {
     const url = new URL(`${SUPABASE_URL}/rest/v1/mtg_cards`);
     url.searchParams.set('select', 'scryfall_id,name,slug,image_uri_small,set_name');
-    url.searchParams.set('scryfall_id', `in.(${moverSids.map(s => '"' + s + '"').join(',')})`);
     url.searchParams.set('limit', '20');
+    // in() filter appended manually - searchParams encodes parens/quotes breaking PostgREST
+    const moverFetchUrl = url.toString() + '&scryfall_id=in.(' + moverSids.map(s => '"' + s + '"').join(',') + ')';
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 6000);
     try {
-      const res = await fetch(url.toString(), {
+      const res = await fetch(moverFetchUrl, {
         headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
         signal: controller.signal
       });
@@ -263,6 +272,7 @@ export default async () => {
     .az-btn{padding:4px 8px;border-radius:5px;border:1px solid var(--border);background:none;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;min-width:28px}
     .az-btn:hover{background:var(--bg3);border-color:var(--text2);color:var(--text)}
     .az-btn.active{background:var(--accent);border-color:var(--accent);color:#000}
+    .az-count{font-size:9px;opacity:.7;margin-left:2px}
     /* ERA LEGEND */
     .era-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
     /* TOP CARDS */
@@ -405,33 +415,33 @@ export default async () => {
 
     <!-- A-Z Filter -->
     <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
-      <button class="az-btn" onclick="filterAZ('0',this)">0-9</button>
-      <button class="az-btn" onclick="filterAZ('A',this)">A</button>
-      <button class="az-btn" onclick="filterAZ('B',this)">B</button>
-      <button class="az-btn" onclick="filterAZ('C',this)">C</button>
-      <button class="az-btn" onclick="filterAZ('D',this)">D</button>
-      <button class="az-btn" onclick="filterAZ('E',this)">E</button>
-      <button class="az-btn" onclick="filterAZ('F',this)">F</button>
-      <button class="az-btn" onclick="filterAZ('G',this)">G</button>
-      <button class="az-btn" onclick="filterAZ('H',this)">H</button>
-      <button class="az-btn" onclick="filterAZ('I',this)">I</button>
-      <button class="az-btn" onclick="filterAZ('J',this)">J</button>
-      <button class="az-btn" onclick="filterAZ('K',this)">K</button>
-      <button class="az-btn" onclick="filterAZ('L',this)">L</button>
-      <button class="az-btn" onclick="filterAZ('M',this)">M</button>
-      <button class="az-btn" onclick="filterAZ('N',this)">N</button>
-      <button class="az-btn" onclick="filterAZ('O',this)">O</button>
-      <button class="az-btn" onclick="filterAZ('P',this)">P</button>
-      <button class="az-btn" onclick="filterAZ('Q',this)">Q</button>
-      <button class="az-btn" onclick="filterAZ('R',this)">R</button>
-      <button class="az-btn" onclick="filterAZ('S',this)">S</button>
-      <button class="az-btn" onclick="filterAZ('T',this)">T</button>
-      <button class="az-btn" onclick="filterAZ('U',this)">U</button>
-      <button class="az-btn" onclick="filterAZ('V',this)">V</button>
-      <button class="az-btn" onclick="filterAZ('W',this)">W</button>
-      <button class="az-btn" onclick="filterAZ('X',this)">X</button>
-      <button class="az-btn" onclick="filterAZ('Y',this)">Y</button>
-      <button class="az-btn" onclick="filterAZ('Z',this)">Z</button>
+      <button class="az-btn" onclick="filterAZ('0',this)">0-9${letterCounts['0'] ? '<span class="az-count">('+letterCounts['0']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('A',this)">A${letterCounts['A'] ? '<span class="az-count">('+letterCounts['A']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('B',this)">B${letterCounts['B'] ? '<span class="az-count">('+letterCounts['B']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('C',this)">C${letterCounts['C'] ? '<span class="az-count">('+letterCounts['C']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('D',this)">D${letterCounts['D'] ? '<span class="az-count">('+letterCounts['D']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('E',this)">E${letterCounts['E'] ? '<span class="az-count">('+letterCounts['E']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('F',this)">F${letterCounts['F'] ? '<span class="az-count">('+letterCounts['F']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('G',this)">G${letterCounts['G'] ? '<span class="az-count">('+letterCounts['G']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('H',this)">H${letterCounts['H'] ? '<span class="az-count">('+letterCounts['H']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('I',this)">I${letterCounts['I'] ? '<span class="az-count">('+letterCounts['I']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('J',this)">J${letterCounts['J'] ? '<span class="az-count">('+letterCounts['J']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('K',this)">K${letterCounts['K'] ? '<span class="az-count">('+letterCounts['K']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('L',this)">L${letterCounts['L'] ? '<span class="az-count">('+letterCounts['L']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('M',this)">M${letterCounts['M'] ? '<span class="az-count">('+letterCounts['M']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('N',this)">N${letterCounts['N'] ? '<span class="az-count">('+letterCounts['N']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('O',this)">O${letterCounts['O'] ? '<span class="az-count">('+letterCounts['O']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('P',this)">P${letterCounts['P'] ? '<span class="az-count">('+letterCounts['P']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('Q',this)">Q${letterCounts['Q'] ? '<span class="az-count">('+letterCounts['Q']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('R',this)">R${letterCounts['R'] ? '<span class="az-count">('+letterCounts['R']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('S',this)">S${letterCounts['S'] ? '<span class="az-count">('+letterCounts['S']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('T',this)">T${letterCounts['T'] ? '<span class="az-count">('+letterCounts['T']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('U',this)">U${letterCounts['U'] ? '<span class="az-count">('+letterCounts['U']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('V',this)">V${letterCounts['V'] ? '<span class="az-count">('+letterCounts['V']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('W',this)">W${letterCounts['W'] ? '<span class="az-count">('+letterCounts['W']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('X',this)">X${letterCounts['X'] ? '<span class="az-count">('+letterCounts['X']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('Y',this)">Y${letterCounts['Y'] ? '<span class="az-count">('+letterCounts['Y']+')</span>' : ''}</button>
+      <button class="az-btn" onclick="filterAZ('Z',this)">Z${letterCounts['Z'] ? '<span class="az-count">('+letterCounts['Z']+')</span>' : ''}</button>
     </div>
 
     <!-- Set name search -->
