@@ -284,7 +284,7 @@ export default async (req) => {
   });
 };
 
-// Background function: 15-minute timeout, path for HTTP trigger
-export const config = {
-  path: '/api/sync-tcgapi-ids'
-};
+
+// Scheduled background function - no path allowed when schedule set in netlify.toml.
+// Trigger manually via Netlify dashboard Run Now button.
+export const config = {};
