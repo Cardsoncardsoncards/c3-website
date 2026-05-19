@@ -171,6 +171,4 @@ export default async (req) => {
   });
 };
 
-export const config = {
-  path: '/api/sync-ids-mtg-debug'
-};
+export const config = {};
