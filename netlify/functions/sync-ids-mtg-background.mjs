@@ -1,7 +1,8 @@
 // netlify/functions/sync-ids-mtg-background.mjs
-// Resolves tcgplayer_id -> tcgapi.dev internal ID for Dragon Ball cards only.
+// Resolves tcgplayer_id -> tcgapi.dev internal ID for MTG cards only.
 // Background function (15-min timeout), 20 parallel API calls per batch.
 // Self-chains on time limit: fires next invocation automatically until complete.
+// No auth check - background/scheduled functions have no headers to check against.
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -110,10 +111,9 @@ async function processBatch(cards, table, currentRemaining) {
   return { succeeded, failed, remaining, rateLimitHit };
 }
 
-async function selfChain(functionName) {
+async function selfChain() {
   try {
-    const url = `${SITE_URL}/.netlify/functions/${functionName}`;
-    fetch(url, {
+    fetch(`${SITE_URL}/.netlify/functions/sync-ids-mtg-background`, {
       method: 'POST',
       headers: { 'x-sync-secret': SYNC_SECRET }
     });
@@ -121,12 +121,6 @@ async function selfChain(functionName) {
 }
 
 export default async (req) => {
-  const secret = req.headers.get('x-sync-secret');
-  const isScheduled = !secret && !req.headers.get('origin') && !req.headers.get('referer');
-  if (!isScheduled && secret !== SYNC_SECRET) {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
   const startTime = Date.now();
   const { table, priceCol, game } = GAME_CONFIG;
   let totalProcessed = 0, totalSucceeded = 0, totalFailed = 0;
@@ -159,9 +153,8 @@ export default async (req) => {
   const elapsedSec = Math.round((Date.now() - startTime) / 1000);
   const done = !rateLimitHit && !timeLimitHit;
 
-  // Self-chain if time limit hit and not rate limited - more cards still to process
   if (timeLimitHit && !rateLimitHit) {
-    await selfChain('sync-ids-mtg-background');
+    await selfChain();
   }
 
   return new Response(JSON.stringify({ game, totalProcessed, totalSucceeded, totalFailed, rateLimitHit, timeLimitHit, currentRemaining, elapsedSec, done, log }, null, 2), {
