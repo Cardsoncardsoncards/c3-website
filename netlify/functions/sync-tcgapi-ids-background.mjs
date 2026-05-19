@@ -169,8 +169,11 @@ async function processBatch(cards, table, currentRemaining) {
 }
 
 export default async (req) => {
+  // Allow scheduled invocations (Run Now or cron) - Netlify scheduler sends no secret header
+  // Reject external HTTP requests without the correct secret
   const secret = req.headers.get('x-sync-secret');
-  if (secret !== SYNC_SECRET) {
+  const isScheduled = !secret && !req.headers.get('origin') && !req.headers.get('referer');
+  if (!isScheduled && secret !== SYNC_SECRET) {
     return new Response('Unauthorized', { status: 401 });
   }
 
