@@ -13,14 +13,14 @@ const SITE_URL             = Netlify.env.get('URL');
 const GAME_CONFIG = { game: 'pokemon', table: 'pokemon_cards', priceCol: 'market_price' };
 
 const PRICE_CEILING   = 2000;
-const RATE_LIMIT_STOP = 500;
+const RATE_LIMIT_STOP = 50;
 const BATCH_SIZE      = 100;
 const CONCURRENCY     = 20;
 const MAX_RUNTIME_MS  = 13 * 60 * 1000;
 
 async function supabaseGet(path) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 10000);
+  const timer = setTimeout(() => controller.abort(), 20000);
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
       headers: {
@@ -90,18 +90,21 @@ async function processBatch(cards, table, currentRemaining) {
       const card = chunk[j];
       const result = results[j];
       if (result.status === 'rejected') { failed++; continue; }
-      const { ok, status, remaining: rem, data } = result.value;
+      const { ok, remaining: rem, data } = result.value;
       if (rem < remaining) remaining = rem;
       if (remaining <= RATE_LIMIT_STOP) { rateLimitHit = true; break; }
       if (!ok || !data || !data.data) {
-        if (status === 404) {
-          try { await supabasePatch(table, card.tcgplayer_id, { tcgapi_id: -1, tcgapi_synced_at: new Date().toISOString() }); } catch (_) {}
-        }
+        // Mark all failed API calls as -1 so they drop from future runs.
+        // Without this, non-404 failures stay NULL and get reprocessed forever.
+        try { await supabasePatch(table, card.tcgplayer_id, { tcgapi_id: -1, tcgapi_synced_at: new Date().toISOString() }); } catch (_) {}
         failed++; continue;
       }
       const tcgapiId = data.data.id;
       const totalListings = data.data.total_listings ?? null;
-      if (!tcgapiId) { failed++; continue; }
+      if (!tcgapiId) {
+        try { await supabasePatch(table, card.tcgplayer_id, { tcgapi_id: -1, tcgapi_synced_at: new Date().toISOString() }); } catch (_) {}
+        failed++; continue;
+      }
       try {
         await supabasePatch(table, card.tcgplayer_id, { tcgapi_id: tcgapiId, total_listings: totalListings, tcgapi_synced_at: new Date().toISOString() });
         succeeded++;

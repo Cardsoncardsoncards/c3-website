@@ -3,7 +3,6 @@
 // Background function (15-min timeout), 20 parallel API calls per batch.
 // Self-chains on time limit: fires next invocation automatically until complete.
 // No auth check - background/scheduled functions have no headers to check against.
-// HTTP path added for debugging response log.
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -91,18 +90,21 @@ async function processBatch(cards, table, currentRemaining) {
       const card = chunk[j];
       const result = results[j];
       if (result.status === 'rejected') { failed++; continue; }
-      const { ok, status, remaining: rem, data } = result.value;
+      const { ok, remaining: rem, data } = result.value;
       if (rem < remaining) remaining = rem;
       if (remaining <= RATE_LIMIT_STOP) { rateLimitHit = true; break; }
       if (!ok || !data || !data.data) {
-        if (status === 404) {
-          try { await supabasePatch(table, card.tcgplayer_id, { tcgapi_id: -1, tcgapi_synced_at: new Date().toISOString() }); } catch (_) {}
-        }
+        // Mark all failed API calls as -1 so they drop from future runs.
+        // Without this, non-404 failures stay NULL and get reprocessed forever.
+        try { await supabasePatch(table, card.tcgplayer_id, { tcgapi_id: -1, tcgapi_synced_at: new Date().toISOString() }); } catch (_) {}
         failed++; continue;
       }
       const tcgapiId = data.data.id;
       const totalListings = data.data.total_listings ?? null;
-      if (!tcgapiId) { failed++; continue; }
+      if (!tcgapiId) {
+        try { await supabasePatch(table, card.tcgplayer_id, { tcgapi_id: -1, tcgapi_synced_at: new Date().toISOString() }); } catch (_) {}
+        failed++; continue;
+      }
       try {
         await supabasePatch(table, card.tcgplayer_id, { tcgapi_id: tcgapiId, total_listings: totalListings, tcgapi_synced_at: new Date().toISOString() });
         succeeded++;
