@@ -86,3 +86,7 @@
   from = "/blog/what-is-magic-the-gathering-australia/"
   to = "/blog/what-is-mtg/"
   status = 301
+
+# ── Scheduled function: daily sales history sync at 3am AEST (17:00 UTC) ──
+[functions."sync-sales-history"]
+  schedule = "0 17 * * *"
