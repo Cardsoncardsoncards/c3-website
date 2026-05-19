@@ -1,11 +1,13 @@
 // netlify/functions/sync-ids-mtg-background.mjs
-// Resolves tcgplayer_id -> tcgapi.dev internal ID for MTG cards only.
+// Resolves tcgplayer_id -> tcgapi.dev internal ID for Dragon Ball cards only.
 // Background function (15-min timeout), 20 parallel API calls per batch.
-// Safe to re-run - skips already resolved cards.
+// Self-chains on time limit: fires next invocation automatically until complete.
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
+const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
+const SITE_URL             = Netlify.env.get('URL');
 
 const GAME_CONFIG = { game: 'mtg', table: 'mtg_cards', priceCol: 'price_usd' };
 
@@ -108,10 +110,20 @@ async function processBatch(cards, table, currentRemaining) {
   return { succeeded, failed, remaining, rateLimitHit };
 }
 
+async function selfChain(functionName) {
+  try {
+    const url = `${SITE_URL}/.netlify/functions/${functionName}`;
+    fetch(url, {
+      method: 'POST',
+      headers: { 'x-sync-secret': SYNC_SECRET }
+    });
+  } catch (_) {}
+}
+
 export default async (req) => {
   const secret = req.headers.get('x-sync-secret');
   const isScheduled = !secret && !req.headers.get('origin') && !req.headers.get('referer');
-  if (!isScheduled && secret !== Netlify.env.get('SYNC_SECRET')) {
+  if (!isScheduled && secret !== SYNC_SECRET) {
     return new Response('Unauthorized', { status: 401 });
   }
 
@@ -124,7 +136,7 @@ export default async (req) => {
   while (true) {
     if (rateLimitHit || timeLimitHit) break;
     if (Date.now() - startTime > MAX_RUNTIME_MS) {
-      log.push(`TIME LIMIT: ${Math.round((Date.now() - startTime) / 1000)}s elapsed`);
+      log.push(`TIME LIMIT: ${Math.round((Date.now() - startTime) / 1000)}s elapsed - self-chaining`);
       timeLimitHit = true; break;
     }
     const path = `${table}?select=id,tcgplayer_id,name` +
@@ -133,7 +145,7 @@ export default async (req) => {
       `&order=${priceCol}.desc.nullslast&limit=${BATCH_SIZE}`;
     let cards;
     try { cards = await supabaseGet(path); } catch (e) { log.push(`Supabase error: ${e.message}`); break; }
-    if (!Array.isArray(cards) || cards.length === 0) { log.push(`${game}: complete`); break; }
+    if (!Array.isArray(cards) || cards.length === 0) { log.push(`${game}: complete - all cards resolved`); break; }
     const seen = new Set();
     const deduped = cards.filter(c => c.tcgplayer_id && !seen.has(c.tcgplayer_id) && seen.add(c.tcgplayer_id));
     const { succeeded, failed, remaining, rateLimitHit: rlHit } = await processBatch(deduped, table, currentRemaining);
@@ -141,11 +153,18 @@ export default async (req) => {
     totalProcessed += deduped.length;
     totalSucceeded += succeeded;
     totalFailed += failed;
-    if (rlHit) { log.push(`RATE LIMIT: ${remaining} remaining`); rateLimitHit = true; break; }
+    if (rlHit) { log.push(`RATE LIMIT: ${remaining} remaining - stopping`); rateLimitHit = true; break; }
   }
 
   const elapsedSec = Math.round((Date.now() - startTime) / 1000);
-  return new Response(JSON.stringify({ game, totalProcessed, totalSucceeded, totalFailed, rateLimitHit, timeLimitHit, currentRemaining, elapsedSec, done: !rateLimitHit && !timeLimitHit, log }, null, 2), {
+  const done = !rateLimitHit && !timeLimitHit;
+
+  // Self-chain if time limit hit and not rate limited - more cards still to process
+  if (timeLimitHit && !rateLimitHit) {
+    await selfChain('sync-ids-mtg-background');
+  }
+
+  return new Response(JSON.stringify({ game, totalProcessed, totalSucceeded, totalFailed, rateLimitHit, timeLimitHit, currentRemaining, elapsedSec, done, log }, null, 2), {
     headers: { 'Content-Type': 'application/json' }
   });
 };
