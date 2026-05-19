@@ -3,6 +3,7 @@
 // Background function (15-min timeout), 20 parallel API calls per batch.
 // Self-chains on time limit: fires next invocation automatically until complete.
 // No auth check - background/scheduled functions have no headers to check against.
+// HTTP path added for debugging response log.
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -13,14 +14,14 @@ const SITE_URL             = Netlify.env.get('URL');
 const GAME_CONFIG = { game: 'mtg', table: 'mtg_cards', priceCol: 'price_usd' };
 
 const PRICE_CEILING   = 2000;
-const RATE_LIMIT_STOP = 500;
+const RATE_LIMIT_STOP = 50;
 const BATCH_SIZE      = 100;
 const CONCURRENCY     = 20;
 const MAX_RUNTIME_MS  = 13 * 60 * 1000;
 
 async function supabaseGet(path) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 10000);
+  const timer = setTimeout(() => controller.abort(), 20000);
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
       headers: {
@@ -138,8 +139,15 @@ export default async (req) => {
       `&${priceCol}=gte.1&${priceCol}=lte.${PRICE_CEILING}` +
       `&order=${priceCol}.desc.nullslast&limit=${BATCH_SIZE}`;
     let cards;
-    try { cards = await supabaseGet(path); } catch (e) { log.push(`Supabase error: ${e.message}`); break; }
-    if (!Array.isArray(cards) || cards.length === 0) { log.push(`${game}: complete - all cards resolved`); break; }
+    try { cards = await supabaseGet(path); } catch (e) {
+      log.push(`Supabase error: ${e.message}`);
+      break;
+    }
+    if (!Array.isArray(cards) || cards.length === 0) {
+      log.push(`${game}: complete - all cards resolved`);
+      break;
+    }
+    log.push(`Fetched ${cards.length} cards, first: ${cards[0].name}`);
     const seen = new Set();
     const deduped = cards.filter(c => c.tcgplayer_id && !seen.has(c.tcgplayer_id) && seen.add(c.tcgplayer_id));
     const { succeeded, failed, remaining, rateLimitHit: rlHit } = await processBatch(deduped, table, currentRemaining);
@@ -147,6 +155,7 @@ export default async (req) => {
     totalProcessed += deduped.length;
     totalSucceeded += succeeded;
     totalFailed += failed;
+    log.push(`Batch done: succeeded=${succeeded} failed=${failed} remaining_credits=${remaining}`);
     if (rlHit) { log.push(`RATE LIMIT: ${remaining} remaining - stopping`); rateLimitHit = true; break; }
   }
 
@@ -162,4 +171,6 @@ export default async (req) => {
   });
 };
 
-export const config = {};
+export const config = {
+  path: '/api/sync-ids-mtg-debug'
+};
