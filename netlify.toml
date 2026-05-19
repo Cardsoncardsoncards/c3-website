@@ -90,3 +90,7 @@
 # ── Scheduled function: daily sales history sync at 3am AEST (17:00 UTC) ──
 [functions."sync-sales-history"]
   schedule = "0 17 * * *"
+
+# ── TCGapi ID sync: scheduled to enable Run Now button in Netlify dashboard ──
+[functions."sync-tcgapi-ids-background"]
+  schedule = "0 2 * * *"

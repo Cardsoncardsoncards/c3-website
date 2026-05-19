@@ -9,15 +9,16 @@ const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 
+// Ordered smallest to largest eligible cards so each game completes before time limit hits
 const GAMES = [
-  { game: 'mtg',        table: 'mtg_cards',        priceCol: 'price_usd',    idType: 'bigint' },
-  { game: 'pokemon',    table: 'pokemon_cards',     priceCol: 'market_price', idType: 'integer' },
-  { game: 'yugioh',     table: 'yugioh_cards',      priceCol: 'market_price', idType: 'integer' },
-  { game: 'dragonball', table: 'dragonball_cards',  priceCol: 'market_price', idType: 'integer' },
-  { game: 'onepiece',   table: 'onepiece_cards',    priceCol: 'market_price', idType: 'integer' },
-  { game: 'starwars',   table: 'starwars_cards',    priceCol: 'market_price', idType: 'integer' },
-  { game: 'lorcana',    table: 'lorcana_cards',     priceCol: 'market_price', idType: 'integer' },
   { game: 'riftbound',  table: 'riftbound_cards',   priceCol: 'market_price', idType: 'integer' },
+  { game: 'lorcana',    table: 'lorcana_cards',     priceCol: 'market_price', idType: 'integer' },
+  { game: 'starwars',   table: 'starwars_cards',    priceCol: 'market_price', idType: 'integer' },
+  { game: 'onepiece',   table: 'onepiece_cards',    priceCol: 'market_price', idType: 'integer' },
+  { game: 'dragonball', table: 'dragonball_cards',  priceCol: 'market_price', idType: 'integer' },
+  { game: 'yugioh',     table: 'yugioh_cards',      priceCol: 'market_price', idType: 'integer' },
+  { game: 'pokemon',    table: 'pokemon_cards',     priceCol: 'market_price', idType: 'integer' },
+  { game: 'mtg',        table: 'mtg_cards',        priceCol: 'price_usd',    idType: 'bigint' },
 ];
 
 const PRICE_CEILING    = 2000;
