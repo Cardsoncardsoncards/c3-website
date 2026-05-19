@@ -1404,7 +1404,6 @@ const BANNED_FORMATS = {
     label: 'Pioneer', color: '#60A5FA',
     description: 'Pioneer covers sets from Return to Ravnica (2012) onward. No fetchlands allowed.',
     cards: [
-      { name: "Smuggler's Copter", slug: 'smugglers-copter', reason: 'Two-mana vehicle that drew cards and attacked freely. Appeared in every aggressive deck.' },
       { name: 'Oko, Thief of Crowns', slug: 'oko-thief-of-crowns', reason: 'Three-mana planeswalker that dominated every format it entered.' },
       { name: 'Nexus of Fate', slug: 'nexus-of-fate', reason: 'Enabled infinite turns through shuffle loops. Created non-games where opponents could not win.' },
       { name: 'Winota, Joiner of Forces', slug: 'winota-joiner-of-forces', reason: 'Generated too much free value cheating creatures into play.' },
@@ -1459,7 +1458,6 @@ const BANNED_FORMATS = {
       { name: 'Leovold, Emissary of Trest', slug: 'leovold-emissary-of-trest', legalIn: 'Legacy, Vintage', reason: 'Combined card draw restriction with damage replacement, creating frustrating lock states.' },
       { name: 'Library of Alexandria', slug: 'library-of-alexandria', legalIn: 'Vintage (Restricted)', reason: 'Draws an extra card per turn for free. Too powerful where card advantage is paramount.' },
       { name: 'Limited Resources', slug: 'limited-resources', legalIn: 'Legacy, Vintage', reason: 'Caps total lands in play at five. Prevents opponents ever reaching meaningful mana.' },
-      { name: 'Lutri, the Spellchaser', slug: 'lutri-the-spellchaser', legalIn: 'In the 99 or as Commander only', reason: 'Banned as a companion only (Feb 2026). Can be played in the 99 or as commander, but cannot be a companion.' },
       { name: 'Paradox Engine', slug: 'paradox-engine', legalIn: 'Modern, Legacy', reason: 'Untapped all non-land permanents whenever a spell was cast. Enabled infinite mana combos.' },
       { name: 'Primeval Titan', slug: 'primeval-titan', legalIn: 'Modern, Legacy', reason: 'Fetching two lands every attack created insurmountable advantages too quickly.' },
       { name: 'Prophet of Kruphix', slug: 'prophet-of-kruphix', reason: "Gave all creatures flash and untapped all permanents on opponents' turns." },
@@ -1525,15 +1523,18 @@ async function renderBannedPage(slug) {
   }).join('');
 
   const cardGrid = format ? format.cards.map(card => {
+    const cardUrl = `/cards/mtg/${card.slug}`;
+    const safeAlt = card.name.replace(/"/g,'&quot;');
+    const safeName = card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;');
     const img = imageMap[card.slug]
-      ? `<img src="${imageMap[card.slug]}" alt="${card.name.replace(/"/g,'&quot;')}" loading="lazy" style="width:60px;height:84px;object-fit:cover;border-radius:4px;display:block">`
+      ? `<a href="${cardUrl}" style="display:block;text-decoration:none"><img src="${imageMap[card.slug]}" alt="${safeAlt}" loading="lazy" style="width:60px;height:84px;object-fit:cover;border-radius:4px;display:block"></a>`
       : `<div style="width:60px;height:84px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:22px">&#128683;</div>`;
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sacat=183454&campid=${EPN}&mkevt=1`;
     const legalBadge = card.legalIn ? `<div style="font-size:10px;color:#4ADE80;font-weight:600">&#9989; Legal in: ${card.legalIn.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';
     return `<div style="background:#1a1d2e;border:1px solid #2d3254;border-radius:10px;overflow:hidden;display:flex;gap:12px;padding:12px">
       <div style="width:60px;flex-shrink:0">${img}</div>
       <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
-        <div style="font-size:13px;font-weight:700;color:#e8eaf0">${card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+        <a href="${cardUrl}" style="font-size:13px;font-weight:700;color:#C9A84C;text-decoration:none">${safeName}</a>
         <div style="font-size:11px;color:#9ba3c4;line-height:1.5;flex:1">${card.reason.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
         ${legalBadge}
         <a href="${ebayUrl}" target="_blank" rel="noopener" style="font-size:11px;color:#60A5FA;font-weight:600;text-decoration:none;margin-top:4px">Find on eBay AU &#8599;</a>

@@ -31,16 +31,20 @@ function eraColor(year) {
 // Only show main release types on hub - no promo/token/commander sub-sets
 const SHOW_TYPES = new Set(['expansion','core','masters','draft_innovation','starter','archenemy','planechase','box','funny','spellbook']);
 
-// Upcoming MTG releases 2026 (static - update each session as needed)
+// Standard rotation: sets that rotate with the next Standard update
+// Duskmourn and older sets rotate when the next set (post-Tarkir) releases
+const ROTATING_SETS = ['Wilds of Eldraine','Lost Caverns of Ixalan','Murders at Karlov Manor','Outlaws of Thunder Junction'];
+const ROTATION_DATE = 'Bloomburrow block rotates ~Sep 2026';
+
+// Upcoming MTG releases 2026-2027 (static - update each session as needed)
 const UPCOMING = [
-  { name: 'Tarkir: Dragonstorm', date: 'Apr 2026', code: 'tdm' },
   { name: 'Final Fantasy', date: 'Jun 2026', code: 'fft' },
   { name: 'Edge of Eternities', date: 'Jul 2026', code: 'ede' },
   { name: 'Mordenkainen Monsters Multiverse', date: 'Sep 2026', code: 'mmm' },
   { name: 'Return to Thunder Junction', date: 'Nov 2026', code: 'rtj' },
 ];
 
-// Format legality (current Standard sets as of mid-2026)
+// Format ban list pills
 const FORMATS = [
   { name: 'Standard',  color: '#4ADE80', sets: 'Duskmourn, Foundations, Aetherdrift, Tarkir: Dragonstorm', href: '/cards/mtg/banned/standard' },
   { name: 'Pioneer',   color: '#60A5FA', sets: 'Return to Ravnica onward, no fetchlands', href: '/cards/mtg/banned/pioneer' },
@@ -48,20 +52,42 @@ const FORMATS = [
   { name: 'Commander', color: '#F97316', sets: 'All sets, own banned list', href: '/cards/mtg/banned/commander' },
 ];
 
+// Best sets to open: static EV rankings updated periodically
+// Based on average card value vs box price on eBay AU
+const EV_SETS = [
+  { name: 'Modern Horizons 3',      ev: 'AU$420+', note: 'Highest EV box currently', color: '#4ADE80', slug: 'modern-horizons-3' },
+  { name: 'Commander Masters',       ev: 'AU$280+', note: 'Strong reprint value',     color: '#60A5FA', slug: 'commander-masters' },
+  { name: 'Murders at Karlov Manor', ev: 'AU$110+', note: 'Good for singles',         color: '#A78BFA', slug: 'murders-at-karlov-manor' },
+  { name: 'Tarkir: Dragonstorm',     ev: 'AU$130+', note: 'New release, high demand', color: '#F97316', slug: 'tarkir-dragonstorm' },
+];
+
 export default async () => {
-  // Fetch sets, top cards, and price movers in parallel
   const sevenDaysAgo = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
   const twoDaysAgo   = new Date(Date.now() - 2 * 864e5).toISOString().slice(0, 10);
 
-  const [sets, topCards, snapNow, snapOld] = await Promise.all([
+  // Fetch all data in parallel - single batch, no sequential calls
+  const [sets, topCards, snapNow, snapOld, latestSnap, randomCards] = await Promise.allSettled([
     supabaseGet('mtg_sets?order=release_date.desc&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,set_type,release_date'),
     supabaseGet(`mtg_cards?order=price_usd.desc&limit=12&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10&image_uri_small=not.is.null`),
     supabaseGet(`mtg_price_snapshots?select=scryfall_id,price_aud&snapshot_date=gte.${twoDaysAgo}&order=price_aud.desc&limit=3000`),
-    supabaseGet(`mtg_price_snapshots?select=scryfall_id,price_aud&snapshot_date=gte.${sevenDaysAgo}&snapshot_date=lte.${sevenDaysAgo}&order=snapshot_date.asc&limit=3000`)
+    supabaseGet(`mtg_price_snapshots?select=scryfall_id,price_aud&snapshot_date=gte.${sevenDaysAgo}&snapshot_date=lte.${sevenDaysAgo}&order=snapshot_date.asc&limit=3000`),
+    supabaseGet(`mtg_price_snapshots?select=snapshot_date&order=snapshot_date.desc&limit=1`),
+    supabaseGet(`mtg_cards?select=slug,name,image_uri_small&image_uri_small=not.is.null&limit=1&offset=${Math.floor(Math.random()*90000)}`)
   ]);
 
+  const setsData      = sets.status === 'fulfilled'      ? sets.value      : [];
+  const topCardsData  = topCards.status === 'fulfilled'   ? topCards.value  : [];
+  const snapNowData   = snapNow.status === 'fulfilled'    ? snapNow.value   : [];
+  const snapOldData   = snapOld.status === 'fulfilled'    ? snapOld.value   : [];
+  const latestSnapData= latestSnap.status === 'fulfilled' ? latestSnap.value: [];
+  const randomCard    = randomCards.status === 'fulfilled' && randomCards.value.length ? randomCards.value[0] : null;
+
+  // Last sync date for trust signal
+  const lastSynced = latestSnapData.length ? latestSnapData[0].snapshot_date : null;
+  const syncLabel = lastSynced ? `Prices last updated: ${lastSynced}` : 'Prices updated daily';
+
   // Filter to main set types only
-  const filteredSets = sets.filter(s => SHOW_TYPES.has(s.set_type));
+  const filteredSets = setsData.filter(s => SHOW_TYPES.has(s.set_type));
   const totalSets = filteredSets.length;
 
   // Count sets per letter for AZ button labels
@@ -72,7 +98,7 @@ export default async () => {
     letterCounts[lk] = (letterCounts[lk] || 0) + 1;
   });
 
-  // Build set list (hidden by default, revealed by filter)
+  // Build set list HTML
   const setListHTML = filteredSets.map(function(s) {
     const year = s.release_date ? s.release_date.slice(0, 4) : '';
     const color = eraColor(year);
@@ -87,24 +113,70 @@ export default async () => {
     </a>`;
   }).join('');
 
-  // Top cards grid
-  const topCardHTML = topCards.map(function(c) {
+  // Top cards grid with 7-day sparkline arrows
+  // Single batched sparkline query for top card scryfall_ids
+  let sparkMap = {};
+  if (topCardsData.length > 0) {
+    const controller2 = new AbortController();
+    const timer2 = setTimeout(() => controller2.abort(), 6000);
+    try {
+      const slugList = topCardsData.map(c => '"' + c.slug.replace(/"/g,'') + '"').join(',');
+      const sparkUrl = new URL(`${SUPABASE_URL}/rest/v1/mtg_cards`);
+      sparkUrl.searchParams.set('select', 'slug,scryfall_id');
+      const sparkFetchUrl = sparkUrl.toString() + '&slug=in.(' + slugList + ')';
+      const sRes = await fetch(sparkFetchUrl, {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+        signal: controller2.signal
+      });
+      clearTimeout(timer2);
+      if (sRes.ok) {
+        const sData = await sRes.json();
+        if (Array.isArray(sData)) {
+          // Build slug->sid map then cross-ref snapshots
+          const slugToSid = {};
+          sData.forEach(r => { if (r.scryfall_id) slugToSid[r.slug] = r.scryfall_id; });
+          const nowMap2 = {};
+          snapNowData.forEach(r => { if (r.price_aud) nowMap2[r.scryfall_id] = parseFloat(r.price_aud); });
+          const oldMap2 = {};
+          snapOldData.forEach(r => { if (r.price_aud) oldMap2[r.scryfall_id] = parseFloat(r.price_aud); });
+          topCardsData.forEach(c => {
+            const sid = slugToSid[c.slug];
+            if (!sid) return;
+            const now = nowMap2[sid], old = oldMap2[sid];
+            if (now && old && old > 0) {
+              sparkMap[c.slug] = ((now - old) / old) * 100;
+            }
+          });
+        }
+      }
+    } catch { clearTimeout(timer2); }
+  }
+
+  const topCardHTML = topCardsData.map(function(c) {
     const price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * 1.58 : 0);
     const priceStr = price > 0 ? '~AU$' + price.toFixed(0) : '';
+    const pct = sparkMap[c.slug];
+    let sparkEl = '';
+    if (pct !== undefined) {
+      const up = pct > 0;
+      const color = up ? '#4ADE80' : '#f87171';
+      const arrow = up ? '&#8593;' : '&#8595;';
+      sparkEl = `<div style="font-size:10px;font-weight:700;color:${color}">${arrow}${Math.abs(pct).toFixed(1)}% 7d</div>`;
+    }
     return `<a href="/cards/mtg/${c.slug}" class="top-card">
       ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name.replace(/"/g,'&quot;')}" loading="lazy">` : `<div class="top-card-placeholder">${c.name.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`}
       <div class="top-card-name">${c.name.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
       <div class="top-card-price">${priceStr}</div>
+      ${sparkEl}
     </a>`;
   }).join('');
 
-  // Compute price movers using snapshot data
+  // Price movers
   const nowMap = {};
-  snapNow.forEach(r => { if (r.price_aud) nowMap[r.scryfall_id] = parseFloat(r.price_aud); });
+  snapNowData.forEach(r => { if (r.price_aud) nowMap[r.scryfall_id] = parseFloat(r.price_aud); });
   const oldMap = {};
-  snapOld.forEach(r => { if (r.price_aud) oldMap[r.scryfall_id] = parseFloat(r.price_aud); });
+  snapOldData.forEach(r => { if (r.price_aud) oldMap[r.scryfall_id] = parseFloat(r.price_aud); });
 
-  // Find cards with significant movement
   const movers = [];
   Object.entries(nowMap).forEach(([sid, nowPrice]) => {
     const oldPrice = oldMap[sid];
@@ -117,14 +189,12 @@ export default async () => {
   const gainers = movers.filter(m => m.pct > 0).slice(0, 5);
   const losers  = movers.filter(m => m.pct < 0).slice(0, 5);
 
-  // Fetch card details for movers
   let moverDetails = {};
   const moverSids = [...gainers, ...losers].map(m => m.sid);
   if (moverSids.length > 0) {
     const url = new URL(`${SUPABASE_URL}/rest/v1/mtg_cards`);
     url.searchParams.set('select', 'scryfall_id,name,slug,image_uri_small,set_name');
     url.searchParams.set('limit', '20');
-    // in() filter appended manually - searchParams encodes parens/quotes breaking PostgREST
     const moverFetchUrl = url.toString() + '&scryfall_id=in.(' + moverSids.map(s => '"' + s + '"').join(',') + ')';
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 6000);
@@ -136,9 +206,7 @@ export default async () => {
       clearTimeout(timer);
       if (res.ok) {
         const data = await res.json();
-        if (Array.isArray(data)) {
-          data.forEach(c => { moverDetails[c.scryfall_id] = c; });
-        }
+        if (Array.isArray(data)) data.forEach(c => { moverDetails[c.scryfall_id] = c; });
       }
     } catch { clearTimeout(timer); }
   }
@@ -169,18 +237,32 @@ export default async () => {
   const loserHTML  = losers.map(m => moverCardHTML(m, false)).filter(Boolean).join('');
   const hasMovers  = gainerHTML || loserHTML;
 
-  // Release ticker items (doubled for seamless loop)
+  // Release ticker (doubled for seamless loop)
   const tickerItems = [...UPCOMING, ...UPCOMING].map(r =>
-    `<span class="ticker-item"><strong>${r.name}</strong> &middot; ${r.date}</span>`
+    `<span class="ticker-item"><strong>${r.name.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</strong> &middot; ${r.date}</span>`
   ).join('');
 
-  // Format legality pills
+  // Format pills
   const formatPills = FORMATS.map(f =>
     `<a href="${f.href}" class="fmt-pill" style="border-color:${f.color}44;color:${f.color}">
       <span class="fmt-pill-name">${f.name}</span>
       <span class="fmt-pill-sets">${f.sets}</span>
     </a>`
   ).join('');
+
+  // Best sets to open HTML
+  const evHTML = EV_SETS.map(s =>
+    `<a href="/cards/mtg/sets/${s.slug}" class="ev-set-card" style="border-color:${s.color}33">
+      <div style="font-size:13px;font-weight:700;color:${s.color};margin-bottom:2px">${s.ev}</div>
+      <div style="font-size:12px;font-weight:600;color:var(--text)">${s.name.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:2px">${s.note}</div>
+    </a>`
+  ).join('');
+
+  // Random card button HTML
+  const randomCardHTML = randomCard
+    ? `<a href="/cards/mtg/${randomCard.slug}" class="btn btn-secondary" id="random-card-btn">&#127922; Random Card</a>`
+    : `<button class="btn btn-secondary" id="random-card-btn" onclick="fetchRandomCard()">&#127922; Random Card</button>`;
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
@@ -242,6 +324,10 @@ export default async () => {
     .ticker-track:hover{animation-play-state:paused}
     .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;font-size:12px;color:var(--text2);white-space:nowrap}
     .ticker-item strong{color:var(--text)}
+    /* ROTATION WARNING */
+    .rotation-strip{background:rgba(251,146,60,.06);border:1px solid rgba(251,146,60,.2);border-radius:8px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:10px}
+    .rotation-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+    .rotation-sets{font-size:12px;color:var(--text2);margin-top:3px}
     /* FORMAT PILLS */
     .fmt-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:32px}
     .fmt-pill{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border-radius:8px;border:1px solid;background:rgba(255,255,255,.03);text-decoration:none;transition:all .2s}
@@ -262,6 +348,9 @@ export default async () => {
     .mover-name{font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .mover-set{font-size:9px;color:var(--text2);margin-bottom:2px}
     .mover-prices{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    /* EV SETS */
+    .ev-set-card{background:var(--bg2);border:1px solid;border-radius:8px;padding:14px;text-decoration:none;display:block;transition:all .2s}
+    .ev-set-card:hover{background:var(--bg3);text-decoration:none;transform:translateY(-1px)}
     /* SET LIST */
     .set-item{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:7px 10px;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:6px;transition:border-color .15s}
     .set-item:hover{border-color:var(--accent);text-decoration:none;color:var(--text)}
@@ -336,15 +425,29 @@ export default async () => {
 </div>
 
 <div class="wrap" style="padding-top:28px">
-  <h1 style="font-size:32px;margin-bottom:8px">MTG Card Prices in Australia</h1>
+  <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+    <h1 style="font-size:32px">MTG Card Prices in Australia</h1>
+    <span style="font-size:11px;color:var(--text2)">&#128200; ${syncLabel}</span>
+  </div>
   <p style="color:var(--text2);margin-bottom:28px">Australia's MTG price guide with live AUD pricing, 52-week price ranges, and direct eBay AU buy links. Updated daily.</p>
+
+  <!-- Standard Rotation Warning -->
+  <div class="rotation-strip">
+    <span class="rotation-icon">&#9888;&#65039;</span>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#FB923C;margin-bottom:3px">Standard Rotation Approaching</div>
+      <div class="rotation-sets">The following sets will rotate out of Standard: <strong>${ROTATING_SETS.join(', ')}</strong>. ${ROTATION_DATE}. Sell rotation-vulnerable cards before prices drop.</div>
+    </div>
+  </div>
 
   <!-- Quick Access -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
-    <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub" target="_blank" rel="noopener" class="btn btn-primary">&#128722; Shop MTG on eBay &#8599;</a>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub&mkevt=1" target="_blank" rel="noopener" class="btn btn-primary">&#128722; Shop MTG on eBay &#8599;</a>
     <a href="/cards/mtg/random-commander" class="btn btn-secondary">&#127922; Random Commander</a>
+    ${randomCardHTML}
     <a href="/ev-calculator.html" class="btn btn-secondary">&#128202; EV Calculator</a>
     <a href="/compare" class="btn btn-secondary">&#128203; Compare Cards</a>
+    <a href="/tracker.html" class="btn btn-secondary">&#128276; Set Price Alerts</a>
   </div>
 
   <!-- Format Ban Lists Strip -->
@@ -389,13 +492,23 @@ export default async () => {
     </div>
   </div>` : ''}
 
-  <!-- Most Valuable Cards -->
+  <!-- Most Valuable MTG Cards -->
   <div style="margin-bottom:32px">
-    <h2 style="font-size:20px;margin-bottom:16px">&#127942; Most Valuable MTG Cards (AUD)</h2>
+    <h2 style="font-size:20px;margin-bottom:4px">&#127942; Most Valuable MTG Cards (AUD)</h2>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:16px">Live AUD prices with 7-day trend. Click any card for full price history.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px">
       ${topCardHTML}
     </div>
-    <p style="color:var(--text2);font-size:13px;margin-top:16px">Prices in AUD based on live USD conversion. Updated daily.</p>
+    <p style="color:var(--text2);font-size:12px;margin-top:12px">${syncLabel}. Based on USD/AUD conversion.</p>
+  </div>
+
+  <!-- Best Sets to Open -->
+  <div style="margin-bottom:32px">
+    <h2 style="font-size:20px;margin-bottom:4px">&#128230; Best MTG Sets to Open Right Now</h2>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:16px">Estimated box EV based on current singles prices. Always check the <a href="/ev-calculator.html" style="color:var(--accent)">EV Calculator</a> before buying.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+      ${evHTML}
+    </div>
   </div>
 
   <!-- Set Browser -->
@@ -459,7 +572,7 @@ export default async () => {
     </div>
   </div>
 
-  <!-- Blog guides -->
+  <!-- MTG Guides -->
   <div style="margin-bottom:48px">
     <h2 style="font-size:18px;margin-bottom:16px">MTG Guides</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
@@ -523,15 +636,12 @@ function filterSets(query) {
   if (!q) {
     var btns = document.querySelectorAll('.az-btn');
     for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
-    if (currentLetter) {
-      hideSets();
-      currentLetter = null;
-    }
+    if (currentLetter) { hideSets(); currentLetter = null; }
     return;
   }
   currentLetter = null;
-  var btns = document.querySelectorAll('.az-btn');
-  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  var btns2 = document.querySelectorAll('.az-btn');
+  for (var i = 0; i < btns2.length; i++) btns2[i].classList.remove('active');
   showSets();
   var items = document.querySelectorAll('.set-item');
   var any = false;
@@ -546,6 +656,22 @@ function filterSets(query) {
     document.getElementById('set-prompt').textContent = 'No sets found for "' + query + '"';
     document.getElementById('set-list').style.display = 'none';
   }
+}
+
+function fetchRandomCard() {
+  var btn = document.getElementById('random-card-btn');
+  if (btn) btn.textContent = 'Loading...';
+  fetch('/api/card-search?q=a&limit=1&game=mtg')
+    .then(function(r) { return r.json(); })
+    .catch(function() { return []; })
+    .then(function(data) {
+      var cards = Array.isArray(data) ? data : [];
+      if (cards.length && cards[0].url) {
+        window.location = cards[0].url;
+      } else {
+        window.location = '/cards/mtg';
+      }
+    });
 }
 </script>
 

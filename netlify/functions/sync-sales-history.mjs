@@ -265,7 +265,4 @@ export default async (req) => {
   });
 };
 
-export const config = {
-  path: '/api/sync-sales-history',
-  schedule: '0 17 * * *'  // 3am AEST daily (UTC+10, so 17:00 UTC)
-};
+export const config = {};
