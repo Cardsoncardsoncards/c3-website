@@ -91,6 +91,16 @@
 [functions."sync-sales-history"]
   schedule = "0 17 * * *"
 
-# ── TCGapi ID sync: scheduled to enable Run Now button in Netlify dashboard ──
-[functions."sync-tcgapi-ids-background"]
-  schedule = "0 2 * * *"
+
+# ── TCGapi ID sync: per-game background functions for parallel execution ──
+[functions."sync-ids-dragonball-background"]
+  schedule = "0 3 * * *"
+
+[functions."sync-ids-yugioh-background"]
+  schedule = "0 3 * * *"
+
+[functions."sync-ids-pokemon-background"]
+  schedule = "0 3 * * *"
+
+[functions."sync-ids-mtg-background"]
+  schedule = "0 3 * * *"
