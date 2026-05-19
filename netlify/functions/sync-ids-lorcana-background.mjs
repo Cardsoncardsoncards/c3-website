@@ -1,5 +1,5 @@
-// netlify/functions/sync-ids-dragonball-background.mjs
-// Resolves tcgplayer_id -> tcgapi.dev internal ID for Dragon Ball cards only.
+// netlify/functions/sync-ids-lorcana-background.mjs
+// Resolves tcgplayer_id -> tcgapi.dev internal ID for lorcana cards only.
 // Background function (15-min timeout), 20 parallel API calls per batch.
 // Self-chains on time limit: fires next invocation automatically until complete.
 // No auth check - background/scheduled functions have no headers to check against.
@@ -10,7 +10,7 @@ const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const SITE_URL             = Netlify.env.get('URL');
 
-const GAME_CONFIG = { game: 'dragonball', table: 'dragonball_cards', priceCol: 'market_price' };
+const GAME_CONFIG = { game: 'lorcana', table: 'lorcana_cards', priceCol: 'market_price' };
 
 const PRICE_CEILING   = 2000;
 const RATE_LIMIT_STOP = 50;
@@ -116,7 +116,7 @@ async function processBatch(cards, table, currentRemaining) {
 
 async function selfChain() {
   try {
-    fetch(`${SITE_URL}/.netlify/functions/sync-ids-dragonball-background`, {
+    fetch(`${SITE_URL}/.netlify/functions/sync-ids-lorcana-background`, {
       method: 'POST',
       headers: { 'x-sync-secret': SYNC_SECRET }
     });

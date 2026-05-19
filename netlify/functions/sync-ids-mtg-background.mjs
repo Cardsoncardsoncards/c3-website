@@ -141,15 +141,8 @@ export default async (req) => {
       `&${priceCol}=gte.1&${priceCol}=lte.${PRICE_CEILING}` +
       `&order=${priceCol}.desc.nullslast&limit=${BATCH_SIZE}`;
     let cards;
-    try { cards = await supabaseGet(path); } catch (e) {
-      log.push(`Supabase error: ${e.message}`);
-      break;
-    }
-    if (!Array.isArray(cards) || cards.length === 0) {
-      log.push(`${game}: complete - all cards resolved`);
-      break;
-    }
-    log.push(`Fetched ${cards.length} cards, first: ${cards[0].name}`);
+    try { cards = await supabaseGet(path); } catch (e) { log.push(`Supabase error: ${e.message}`); break; }
+    if (!Array.isArray(cards) || cards.length === 0) { log.push(`${game}: complete - all cards resolved`); break; }
     const seen = new Set();
     const deduped = cards.filter(c => c.tcgplayer_id && !seen.has(c.tcgplayer_id) && seen.add(c.tcgplayer_id));
     const { succeeded, failed, remaining, rateLimitHit: rlHit } = await processBatch(deduped, table, currentRemaining);
@@ -157,7 +150,6 @@ export default async (req) => {
     totalProcessed += deduped.length;
     totalSucceeded += succeeded;
     totalFailed += failed;
-    log.push(`Batch done: succeeded=${succeeded} failed=${failed} remaining_credits=${remaining}`);
     if (rlHit) { log.push(`RATE LIMIT: ${remaining} remaining - stopping`); rateLimitHit = true; break; }
   }
 
