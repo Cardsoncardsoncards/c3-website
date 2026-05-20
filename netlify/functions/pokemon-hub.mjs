@@ -294,7 +294,7 @@ export default async (req) => {
         const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
         const year = s.release_date ? s.release_date.slice(0, 4) : '';
         const newBadge = isNew(s.release_date) ? '<span class="new-badge">NEW</span>' : '';
-        return `<a href="/cards/pokemon/sets/${encodeURIComponent(s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}">
+        return `<a href="/cards/pokemon/sets/${encodeURIComponent(s.slug||s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}">
         <span class="set-tile-name">${esc(name)}${newBadge}</span>
         <span class="set-tile-meta">${year}${s.card_count ? ' &middot; ' + s.card_count + ' cards' : ''}</span>
       </a>`;
