@@ -1,5 +1,5 @@
 // netlify/functions/sync-dragonball-background.mjs
-// Group A sync (Mon/Wed/Fri/Sun) - schedule: 30 21 * * 0,1,3,5 UTC
+// Daily sync -- schedule: 0 2 * * * UTC
 // Fetches all dragon-ball-super-ccg sets + cards + prices from tcgapi.dev Pro
 // Upserts into dragonball_sets, dragonball_cards, dragonball_price_snapshots
 
@@ -26,84 +26,124 @@ function slugify(name, number, setAbbr) {
 }
 
 async function getExchangeRate() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
   try {
-    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) return 1.58;
     const data = await res.json();
     return data.rates?.AUD || 1.58;
   } catch {
+    clearTimeout(timeout);
     return 1.58;
   }
 }
 
 async function tcgapiGet(path) {
-  const res = await fetch(`${TCGAPI_BASE}${path}`, {
-    headers: { 'X-API-Key': TCGAPI_KEY }
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(`${TCGAPI_BASE}${path}`, {
+      headers: { 'X-API-Key': TCGAPI_KEY },
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`tcgapi GET ${path} failed ${res.status}: ${err.slice(0, 200)}`);
+    }
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch {
+      throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
+    }
+    const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
+    if (remaining < RATE_LIMIT_BUFFER) {
+      throw new Error(`Rate limit low: ${remaining} remaining. Aborting.`);
+    }
+    return data;
+  } catch (err) {
+    clearTimeout(timeout);
+    throw err;
   }
-  const text = await res.text();
-  let data;
-  try { data = JSON.parse(text); } catch {
-    throw new Error(`tcgapi GET ${path} returned non-JSON: ${text.slice(0, 200)}`);
-  }
-  const remaining = parseInt(res.headers.get('x-ratelimit-remaining') ?? '9999', 10);
-  if (remaining < RATE_LIMIT_BUFFER) {
-    throw new Error(`Rate limit low: ${remaining} remaining. Aborting.`);
-  }
-  return data;
 }
 
 async function supabaseUpsert(table, rows) {
   if (!rows.length) return;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'resolution=merge-duplicates,return=minimal'
-    },
-    body: JSON.stringify(rows)
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify(rows),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
+    }
+  } catch (err) {
+    clearTimeout(timeout);
+    throw err;
   }
 }
 
 async function supabaseUpsertSnapshots(table, rows) {
   if (!rows.length) return;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'resolution=merge-duplicates,return=minimal'
-    },
-    body: JSON.stringify(rows)
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Supabase upsert to ${table} failed: ${err.slice(0, 300)}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify(rows),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Supabase snapshot upsert to ${table} failed: ${err.slice(0, 300)}`);
+    }
+  } catch (err) {
+    clearTimeout(timeout);
+    throw err;
   }
 }
 
 export default async (req) => {
-  console.log('[sync-dragonball] Starting (background function)...');
+  // Auth: accept scheduled trigger OR POST with correct secret
+  const isScheduled = !req.headers.get('x-sync-secret') &&
+                      !req.headers.get('origin') &&
+                      !req.headers.get('referer');
+  if (!isScheduled) {
+    const secret = req.headers.get('x-sync-secret');
+    if (secret !== SYNC_SECRET) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+  }
+
+  console.log('[sync-dragonball] Starting...');
   const start = Date.now();
 
-  const secret = req.headers.get('x-sync-secret');
-  const isScheduled = !secret;
-  if (!isScheduled && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
-    return new Response('Unauthorised', { status: 401 });
-  }
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.error('[sync-dragonball] Missing Supabase env vars');
     return new Response('Supabase env vars missing', { status: 500 });
   }
   if (!TCGAPI_KEY) {
+    console.error('[sync-dragonball] TCGAPI_KEY not set');
     return new Response('TCGAPI_KEY missing', { status: 500 });
   }
 
@@ -134,11 +174,12 @@ export default async (req) => {
       game_slug:    GAME_SLUG,
       updated_at:   new Date().toISOString()
     }));
+
     for (let i = 0; i < setRows.length; i += 100) {
       await supabaseUpsert('dragonball_sets', setRows.slice(i, i + 100));
     }
 
-    // Step 3: For each set, fetch cards + bulk prices
+    // Step 3: For each set, fetch cards + prices
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
@@ -155,22 +196,25 @@ export default async (req) => {
       }
       if (!setCards.length) continue;
 
+      // Bulk prices
       const cardIds = setCards.map(c => c.id);
       const priceMap = new Map();
       for (let i = 0; i < cardIds.length; i += 500) {
         const batch = cardIds.slice(i, i + 500);
         try {
           const priceData = await tcgapiGet(`/bulk/prices?ids=${batch.join(',')}`);
-          for (const p of priceData.data || []) priceMap.set(p.card_id, p);
+          for (const p of (priceData.data || [])) {
+            priceMap.set(p.card_id, p);
+          }
         } catch (e) {
           if (e.message.includes('Rate limit low')) throw e;
-          console.error(`[sync-dragonball] Bulk price error set ${set.id}:`, e.message);
+          console.error(`[sync-dragonball] Bulk price fetch failed for set ${set.id}:`, e.message);
         }
       }
 
       const cardRows = [];
-      const slugsSeen = new Set();
       const snapRows = [];
+      const slugsSeen = new Set();
       const setAbbr = set.abbreviation || set.slug || String(set.id);
 
       for (const card of setCards) {
@@ -178,6 +222,7 @@ export default async (req) => {
         const marketPrice = price.market_price || null;
         const lowPrice    = price.low_price || null;
         const foilPrice   = price.foil_market_price || null;
+
         let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
@@ -205,28 +250,47 @@ export default async (req) => {
           price_change_24h:  price.price_change_24h || null,
           price_change_7d:   price.price_change_7d || null,
           price_change_30d:  price.price_change_30d || null,
+          total_listings:    price.total_listings || null,
+          median_price:      price.median_price || null,
           last_price_update: price.last_updated_at || null,
           updated_at:        new Date().toISOString()
         });
 
-        if (marketPrice && marketPrice >= 0.50) {
+        if (marketPrice && marketPrice >= 0.5) {
           snapRows.push({
-            card_id:       card.id,
-            snapshot_date: today,
-            market_price:  marketPrice,
-            low_price:     lowPrice,
-            foil_price:    foilPrice,
-            price_aud:     parseFloat((marketPrice * audRate).toFixed(2)),
-            aud_rate:      audRate
+            card_id:          card.id,
+            snapshot_date:    today,
+            market_price:     marketPrice,
+            low_price:        lowPrice,
+            foil_price:       foilPrice,
+            price_aud:        parseFloat((marketPrice * audRate).toFixed(2)),
+            aud_rate:         audRate,
+            price_change_7d:  price.price_change_7d  || null,
+            foil_price_aud:   foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
+            price_change_30d: price.price_change_30d || null,
+            total_listings:   price.total_listings   || null,
+            median_price:     price.median_price     || null
           });
         }
       }
 
-      for (let i = 0; i < cardRows.length; i += 200) {
-        await supabaseUpsert('dragonball_cards', cardRows.slice(i, i + 200));
-      }
-      for (let i = 0; i < snapRows.length; i += 500) {
-        await supabaseUpsertSnapshots('dragonball_price_snapshots', snapRows.slice(i, i + 500));
+      const results = await Promise.allSettled([
+        (async () => {
+          for (let i = 0; i < cardRows.length; i += 200) {
+            await supabaseUpsert('dragonball_cards', cardRows.slice(i, i + 200));
+          }
+        })(),
+        (async () => {
+          for (let i = 0; i < snapRows.length; i += 500) {
+            await supabaseUpsertSnapshots('dragonball_price_snapshots', snapRows.slice(i, i + 500));
+          }
+        })()
+      ]);
+
+      for (const r of results) {
+        if (r.status === 'rejected') {
+          console.error(`[sync-dragonball] Upsert error for set ${set.name}:`, r.reason?.message);
+        }
       }
 
       totalCards += cardRows.length;
@@ -248,6 +312,6 @@ export default async (req) => {
 };
 
 export const config = {
-  schedule: "30 21 * * 0,1,3,5",
+  schedule: "0 2 * * *",
   type: "background"
 };
