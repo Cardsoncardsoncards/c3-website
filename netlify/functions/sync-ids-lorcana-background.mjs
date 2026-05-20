@@ -41,7 +41,7 @@ async function supabasePatch(table, tcgplayerId, payload) {
   const timer = setTimeout(() => controller.abort(), 10000);
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/${table}?tcgplayer_id=eq.${tcgplayerId}`,
+      `${SUPABASE_URL}/rest/v1/${table}?tcgplayer_id=eq.${String(tcgplayerId)}`,
       {
         method: 'PATCH',
         headers: {

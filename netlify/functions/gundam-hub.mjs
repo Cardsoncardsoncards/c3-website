@@ -1,25 +1,20 @@
-// netlify/functions/lorcana-hub.mjs
-// Serves /cards/lorcana
-// Rebuilt to MTG hub standard -- 20 May 2026
+// netlify/functions/gundam-hub.mjs
+// Serves /cards/gundam
+// Auto-generated 20 May 2026 -- C3 standard hub
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 
-const GAME        = 'lorcana';
-const GAME_LABEL  = 'Disney Lorcana';
-const ACCENT      = '#38BDF8';
-const ACCENT_RGB  = '56,189,248';
-const EMOJI       = '&#129516;';
-const SEARCH_PH   = 'Elsa, Moana, Stitch, Mickey...';
-const SET_PH      = 'Wilds Unknown, Fabled, Shimmering Skies...';
-const CANONICAL   = 'https://cardsoncardsoncards.com.au/cards/lorcana';
+const GAME_LABEL  = 'Gundam Card Game';
+const ACCENT      = '#64748B';
+const ACCENT_RGB  = '100,116,139';
+const EMOJI       = '&#129302;';
+const SEARCH_PH   = "Amuro, Char, RX-78-2, Zaku...";
+const SET_PH      = "ST-01, EX-01, A New Translation...";
+const CANONICAL   = 'https://cardsoncardsoncards.com.au/cards/gundam';
 
-const CALENDAR_EVENTS = [
-  { date: '2026-05-08', name: 'Wilds Unknown Early Release',  type: 'Set Release' },
-  { date: '2026-05-15', name: 'Wilds Unknown Wide Release',   type: 'Wide Release' },
-  { date: '2026-09-01', name: 'Lorcana Championship Season',  type: 'Tournament'   },
-];
+const CALENDAR_EVENTS = [];
 
 function esc(str) {
   return (str == null ? '' : String(str))
@@ -68,9 +63,9 @@ function buildTickerHTML(events) {
 </div>`;
 }
 
-function isNew(releaseDateStr) {
-  if (!releaseDateStr) return false;
-  return releaseDateStr >= new Date(Date.now() - 45 * 864e5).toISOString().slice(0, 10);
+function isNew(d) {
+  if (!d) return false;
+  return d >= new Date(Date.now() - 45 * 864e5).toISOString().slice(0, 10);
 }
 
 function buildAZButtons(sets) {
@@ -84,9 +79,9 @@ function buildAZButtons(sets) {
     .join('');
 }
 
-function sharedCSS(accent, accentRgb) {
+function css() {
   return `
-    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--gold:#C9A84C;--accent:${accent};--accent-rgb:${accentRgb};--text:#e8eaf0;--text2:#9ba3c4;--border:#242840;--radius:12px;--silver:#A0A8C0}
+    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--gold:#C9A84C;--accent:${ACCENT};--accent-rgb:${ACCENT_RGB};--text:#e8eaf0;--text2:#9ba3c4;--border:#242840;--radius:12px;--silver:#A0A8C0}
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(var(--accent-rgb),.05),transparent 60%)}
@@ -101,7 +96,6 @@ function sharedCSS(accent, accentRgb) {
     .nav-link:hover{color:var(--text);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
     .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.3)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF}
     .nav-link--vault{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:var(--gold)}
-    .nav-link--active{color:var(--accent);border-color:rgba(var(--accent-rgb),.4);background:rgba(var(--accent-rgb),.07)}
     .nav-link--compare{color:#a78bfa;border-color:rgba(167,139,250,.3)}.nav-link--compare:hover{background:rgba(167,139,250,.06);border-color:#a78bfa}
     .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.3)}.nav-link--market:hover{background:rgba(74,222,128,.06);border-color:#4ADE80}
     .nav-link--shop{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--shop:hover{background:rgba(201,168,76,.06);border-color:var(--gold)}
@@ -182,11 +176,75 @@ function sharedCSS(accent, accentRgb) {
     .fade-up{animation:fadeUp .5s ease both}.fade-up-1{animation-delay:.08s}.fade-up-2{animation-delay:.16s}.fade-up-3{animation-delay:.24s}
     footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
     footer a{color:var(--text2);margin:0 7px;text-decoration:none}footer a:hover{color:var(--text)}
-    @media(max-width:600px){.nav-links{gap:2px}.nav-link{font-size:10px;padding:4px 7px}.hero{padding:36px 16px 24px}.quick-links{padding:0 12px}.wrap{padding:0 12px}.set-grid{grid-template-columns:1fr}}`;
+    @media(max-width:600px){.nav-links{gap:2px}.nav-link{font-size:10px;padding:4px 7px}.hero{padding:36px 16px 24px}.quick-links{padding:0 12px}.wrap{padding:0 12px}.set-grid{grid-template-columns:1fr}}
+  `;
 }
 
-function navHTML(epnCampid) {
-  return `<nav>
+export default async (req) => {
+  const headers = {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Cache-Control': 'public, max-age=1800, s-maxage=3600'
+  };
+
+  const [setsResult, topCardsResult] = await Promise.allSettled([
+    supabaseGet('gundam_sets?order=release_date.desc&limit=50&select=id,name,slug,abbreviation,release_date,card_count'),
+    supabaseGet('gundam_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at')
+  ]);
+
+  const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
+  const topCards = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
+
+  const lastUpdated = topCards.length && topCards[0].updated_at ? topCards[0].updated_at.slice(0,10) : null;
+  const syncLabel   = lastUpdated ? `Prices updated ${lastUpdated}` : 'Prices updated daily';
+
+  const tickerHTML = buildTickerHTML(CALENDAR_EVENTS);
+  const azButtons  = buildAZButtons(sets);
+
+  const carouselHTML = topCards.map(c => {
+    const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.58).toFixed(0)}` : '';
+    const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name+' gundam card game')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    return `<a href="/cards/gundam/${c.slug}" class="carousel-card">
+      <div class="carousel-img-wrap"><img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#129302;</div>'"></div>
+      <div class="carousel-name">${esc(c.name)}</div>
+      ${c.rarity ? `<div class="carousel-rarity">${esc(c.rarity)}</div>` : ''}
+      <div class="carousel-price">${price}</div>
+      <div class="carousel-buy-row"><a href="${ebay}" target="_blank" rel="noopener" class="carousel-buy-btn" onclick="event.stopPropagation()">Buy eBay &#8599;</a></div>
+    </a>`;
+  }).join('');
+
+  const setListHTML = sets.length ? sets.map(s => {
+    const name      = s.name || '';
+    const ch        = name.trim()[0] ? name.trim()[0].toUpperCase() : '';
+    const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
+    const year      = s.release_date ? s.release_date.slice(0,4) : '';
+    const newBadge  = isNew(s.release_date) ? '<span class="new-badge">NEW</span>' : '';
+    return `<a href="/cards/gundam/sets/${encodeURIComponent(s.slug||s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}">
+      <span class="set-tile-name">${esc(name)}${newBadge}</span>
+      <span class="set-tile-meta">${year}${s.card_count ? ' &middot; '+s.card_count+' cards' : ''}</span>
+    </a>`;
+  }).join('') : '<div class="sync-msg">Sets loading -- check back after tonight&#39;s sync.</div>';
+
+  const html = `<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gundam Card Game Card Prices Australia | AUD Prices Updated Daily | C3</title>
+  <meta name="description" content="Browse ${sets.length||'20'}+ Gundam Card Game sets. Live AUD card prices and eBay AU buy links updated daily. Australia's Gundam Card Game price guide.">
+  <link rel="canonical" href="${CANONICAL}">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <meta property="og:title" content="Gundam Card Game Card Prices Australia | Cards on Cards on Cards">
+  <meta property="og:description" content="${sets.length||'20'}+ Gundam Card Game sets with live AUD prices and eBay AU buy links.">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+  <meta property="og:url" content="${CANONICAL}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <style>${css()}</style>
+</head>
+<body>
+<nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
     <div class="nav-links">
@@ -201,97 +259,20 @@ function navHTML(epnCampid) {
       <a href="/quizzes.html" class="nav-link nav-link--quiz">Quizzes</a>
       <a href="/calendar.html" class="nav-link nav-link--calendar">Calendar</a>
       <a href="/generators.html" class="nav-link nav-link--generators">Generators</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${epnCampid}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
   </div>
-</nav>`;
-}
-
-export default async (req) => {
-  const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=1800, s-maxage=3600'
-  };
-
-  const [setsResult, topCardsResult] = await Promise.allSettled([
-    supabaseGet('lorcana_sets?order=release_date.desc&limit=100&select=id,name,slug,release_date,card_count'),
-    supabaseGet('lorcana_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at')
-  ]);
-
-  const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
-  const topCards = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
-
-  const lastUpdated = topCards.length && topCards[0].updated_at
-    ? topCards[0].updated_at.slice(0, 10) : null;
-  const syncLabel = lastUpdated ? `Prices updated ${lastUpdated}` : 'Prices updated daily';
-
-  const tickerHTML = buildTickerHTML(CALENDAR_EVENTS);
-  const azButtons  = buildAZButtons(sets);
-
-  const carouselHTML = topCards.map(c => {
-    const price = c.price_aud
-      ? `AU$${parseFloat(c.price_aud).toFixed(0)}`
-      : c.market_price ? `~AU$${(c.market_price * 1.58).toFixed(0)}` : '';
-    const ebaySearch = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name + ' lorcana card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-    return `<a href="/cards/lorcana/${c.slug}" class="carousel-card">
-      <div class="carousel-img-wrap">
-        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>${EMOJI}</div>'">
-      </div>
-      <div class="carousel-name">${esc(c.name)}</div>
-      ${c.rarity ? `<div class="carousel-rarity">${esc(c.rarity)}</div>` : ''}
-      <div class="carousel-price">${price}</div>
-      <div class="carousel-buy-row">
-        <a href="${ebaySearch}" target="_blank" rel="noopener" class="carousel-buy-btn" onclick="event.stopPropagation()">Buy eBay &#8599;</a>
-      </div>
-    </a>`;
-  }).join('');
-
-  // Lorcana set page resolves by slug first, id fallback -- link by id (safe)
-  const setListHTML = sets.length
-    ? sets.map(s => {
-        const name = s.name || '';
-        const ch = name.trim()[0] ? name.trim()[0].toUpperCase() : '';
-        const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
-        const year = s.release_date ? s.release_date.slice(0, 4) : '';
-        const newBadge = isNew(s.release_date) ? '<span class="new-badge">NEW</span>' : '';
-        return `<a href="/cards/lorcana/sets/${encodeURIComponent(s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}">
-        <span class="set-tile-name">${esc(name)}${newBadge}</span>
-        <span class="set-tile-meta">${year}${s.card_count ? ' &middot; ' + s.card_count + ' cards' : ''}</span>
-      </a>`;
-      }).join('')
-    : '<div class="sync-msg">Sets loading -- check back after tonight\'s sync.</div>';
-
-  const html = `<!DOCTYPE html>
-<html lang="en-AU">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Disney Lorcana Card Prices Australia | AUD Prices Updated Daily | C3</title>
-  <meta name="description" content="Browse ${sets.length || '18'}+ Disney Lorcana sets. Live AUD card prices, eBay AU buy links. Australia's Lorcana price guide updated daily.">
-  <link rel="canonical" href="${CANONICAL}">
-  <link rel="icon" type="image/png" href="/c3logo.png">
-  <meta property="og:title" content="Disney Lorcana Card Prices Australia | Cards on Cards on Cards">
-  <meta property="og:description" content="${sets.length || '18'}+ Lorcana sets with live AUD prices and eBay AU buy links updated daily.">
-  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
-  <meta property="og:url" content="${CANONICAL}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
-  <style>${sharedCSS(ACCENT, ACCENT_RGB)}</style>
-</head>
-<body>
-${navHTML(EPN_CAMPID)}
+</nav>
 
 ${tickerHTML}
 
 <div class="hero fade-up">
-  <div class="hero-eyebrow">Card Vault -- Disney Lorcana</div>
-  <h1>Lorcana Card Prices <span>in Australia</span></h1>
-  <p class="hero-sub">Disney Lorcana card prices in AUD. Browse by set or search by card name. eBay AU buy links updated daily.</p>
+  <div class="hero-eyebrow">Card Vault -- Gundam Card Game</div>
+  <h1>Gundam Card Game Card Prices <span>in Australia</span></h1>
+  <p class="hero-sub">Gundam Card Game card prices in AUD. Browse by set or search by card name. eBay AU buy links updated daily.</p>
   <div class="stat-bar">
-    <div class="stat-item"><div class="stat-num">${sets.length || '18'}</div><div class="stat-label">Sets</div></div>
-    <div class="stat-item"><div class="stat-num">3k+</div><div class="stat-label">Cards</div></div>
+    <div class="stat-item"><div class="stat-num">${sets.length||'20'}</div><div class="stat-label">Sets</div></div>
+    <div class="stat-item"><div class="stat-num">1k+</div><div class="stat-label">Cards</div></div>
     <div class="stat-item"><div class="stat-num">AU$</div><div class="stat-label">Live Prices</div></div>
     <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-label">Updates</div></div>
   </div>
@@ -299,17 +280,16 @@ ${tickerHTML}
 </div>
 
 <div class="quick-links fade-up fade-up-1">
-  <a href="https://www.ebay.com.au/sch/i.html?_nkw=disney+lorcana+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#0369a1,${ACCENT});color:#000">&#128722; Shop Lorcana on eBay &#8599;</a>
+  <a href="https://www.ebay.com.au/sch/i.html?_nkw=gundam+card+game&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop Gundam Card Game on eBay &#8599;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
   <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
-  <a href="/blog/best-lorcana-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128230; Best Lorcana Boxes &#8594;</a>
-  <a href="/blog/what-is-disney-lorcana-australia/" class="quick-link" style="background:rgba(${ACCENT_RGB},.08);border-color:rgba(${ACCENT_RGB},.3);color:var(--accent)">&#128214; What is Lorcana? &#8594;</a>
-  <a href="/blog/is-disney-lorcana-worth-starting-2026-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128200; Is Lorcana Worth It in 2026? &#8594;</a>
+  <a href="/blog/gundam-card-game-beginners-guide-australia/" class="quick-link" style="background:rgba(var(--accent-rgb),.08);border-color:rgba(var(--accent-rgb),.3);color:var(--accent)">&#128214; Beginners Guide &#8594;</a>
+  <a href="/blog/best-gundam-card-game-cards-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128230; Most Valuable Cards &#8594;</a>
 </div>
 
 ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
   <div class="carousel-label">Most Valuable</div>
-  <div class="carousel-title">Top Lorcana Cards by Price (AUD)</div>
+  <div class="carousel-title">Top Gundam Card Game Cards by Price (AUD)</div>
   <div class="carousel-track-wrap">
     <div class="carousel-track">${carouselHTML}${carouselHTML}</div>
   </div>
@@ -317,11 +297,9 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
 
 <div class="wrap">
   <div class="section fade-up fade-up-2">
-    <div class="section-header">
-      <div class="section-title">Search Lorcana Cards</div>
-    </div>
+    <div class="section-header"><div class="section-title">Search Gundam Card Game Cards</div></div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <input type="text" id="card-search" placeholder="${esc(SEARCH_PH)}" onkeyup="if(event.key==='Enter')searchCard()">
+      <input type="text" id="card-search" placeholder="${SEARCH_PH}" onkeyup="if(event.key==='Enter')searchCard()">
       <button class="btn btn-primary" onclick="searchCard()">Search</button>
     </div>
     <div id="search-results"></div>
@@ -329,17 +307,17 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
 
   <div class="section fade-up fade-up-3">
     <div class="section-header">
-      <div class="section-title">Browse ${sets.length || '18'} Sets</div>
+      <div class="section-title">Browse ${sets.length||'20'} Sets</div>
       <div class="section-hint">Click any set to view cards and prices</div>
     </div>
     <div class="az-row">${azButtons}</div>
-    <input type="text" id="set-search" placeholder="${esc(SET_PH)}" oninput="filterSets(this.value)" style="margin-bottom:12px">
+    <input type="text" id="set-search" placeholder="${SET_PH}" oninput="filterSets(this.value)" style="margin-bottom:12px">
     <div id="set-list" class="set-grid">${setListHTML}</div>
   </div>
 
-  <div style="background:rgba(${ACCENT_RGB},.04);border:1px solid rgba(${ACCENT_RGB},.15);border-radius:var(--radius);padding:22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
+  <div style="background:rgba(var(--accent-rgb),.04);border:1px solid rgba(var(--accent-rgb),.15);border-radius:var(--radius);padding:22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
     <div>
-      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:5px">Track Your Lorcana Collection</div>
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:5px">Track Your Gundam Card Game Collection</div>
       <p style="font-size:13px;color:var(--text2)">Free Google Sheets tracker. Know what you own and what it is worth in AUD.</p>
     </div>
     <a href="/tracker.html" class="btn btn-primary">Get Free Tracker &#8594;</a>
@@ -348,12 +326,12 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
 
 <footer>
   <div style="margin-bottom:10px">
-    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/lorcana">Lorcana</a>
+    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/gundam">Gundam Card Game</a>
     <a href="/cards/mtg">MTG</a><a href="/cards/pokemon">Pokemon</a><a href="/cards/yugioh">Yu-Gi-Oh</a>
     <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a><a href="/calendar.html">Calendar</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Disney or Ravensburger. USD prices converted to AUD at approximately 1.58.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Sunrise. USD prices converted to AUD at approximately 1.58.</p>
 </footer>
 
 <script>
@@ -380,23 +358,23 @@ async function searchCard() {
   const results = document.getElementById('search-results');
   results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">Searching...</div>';
   try {
-    const res = await fetch('/api/compare-search?q=' + encodeURIComponent(q) + '&game=lorcana&limit=24');
+    const res = await fetch('/api/compare-search?q=' + encodeURIComponent(q) + '&game=gundam&limit=24');
     if (!res.ok) throw new Error('Search failed');
     const data = await res.json();
     const cards = data.results || data.cards || (Array.isArray(data) ? data : []);
     if (!cards.length) { results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">No cards found. Try a different name.</div>'; return; }
     results.innerHTML = cards.map(c => {
-      const img = c.image_url || '';
-      const price = c.price_aud ? 'AU$' + parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$' + (c.market_price * 1.58).toFixed(0) : '';
-      const safeName = (c.name || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-      return '<a href="/cards/lorcana/' + c.slug + '" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">'
-        + (img ? '<img src="' + img.replace(/"/g,'') + '" alt="' + safeName + '" style="width:100%;border-radius:6px;max-height:130px;object-fit:contain" loading="lazy">' : '')
-        + '<div style="font-size:11px;color:var(--text);margin-top:4px;line-height:1.3">' + safeName + '</div>'
-        + (c.rarity ? '<div style="font-size:10px;color:var(--text2)">' + (c.rarity||'').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>' : '')
-        + '<div style="font-size:12px;color:var(--accent);font-weight:700">' + price + '</div>'
-        + '</a>';
+      const img = c.image_url || c.image || '';
+      const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price*1.58).toFixed(0) : c.priceAud ? 'AU$'+parseFloat(c.priceAud).toFixed(0) : '';
+      const safeName = (c.name||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return '<a href="/cards/gundam/'+c.slug+'" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">'
+        +(img ? '<img src="'+img.replace(/"/g,'')+'" alt="'+safeName+'" style="width:100%;border-radius:6px;max-height:130px;object-fit:contain" loading="lazy">' : '')
+        +'<div style="font-size:11px;color:var(--text);margin-top:4px;line-height:1.3">'+safeName+'</div>'
+        +(c.rarity ? '<div style="font-size:10px;color:var(--text2)">'+(c.rarity||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>' : '')
+        +'<div style="font-size:12px;color:var(--accent);font-weight:700">'+price+'</div>'
+        +'</a>';
     }).join('');
-  } catch (e) {
+  } catch(e) {
     results.innerHTML = '<div style="color:#f88;font-size:13px">Search error. Please try again.</div>';
   }
 }
@@ -407,4 +385,4 @@ async function searchCard() {
   return new Response(html, { status: 200, headers });
 };
 
-export const config = { path: '/cards/lorcana' };
+export const config = { path: '/cards/gundam' };

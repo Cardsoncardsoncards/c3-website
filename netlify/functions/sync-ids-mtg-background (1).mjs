@@ -1,5 +1,5 @@
-// netlify/functions/sync-ids-pokemon-background.mjs
-// Resolves tcgplayer_id -> tcgapi.dev internal ID for pokemon cards only.
+// netlify/functions/sync-ids-mtg-background.mjs
+// Resolves tcgplayer_id -> tcgapi.dev internal ID for MTG cards only.
 // Background function (15-min timeout), 20 parallel API calls per batch.
 // Self-chains on time limit: fires next invocation automatically until complete.
 // No auth check - background/scheduled functions have no headers to check against.
@@ -10,7 +10,7 @@ const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const SITE_URL             = Netlify.env.get('URL');
 
-const GAME_CONFIG = { game: 'pokemon', table: 'pokemon_cards', priceCol: 'market_price' };
+const GAME_CONFIG = { game: 'mtg', table: 'mtg_cards', priceCol: 'price_usd' };
 
 const PRICE_CEILING   = 2000;
 const RATE_LIMIT_STOP = 50;
@@ -41,7 +41,7 @@ async function supabasePatch(table, tcgplayerId, payload) {
   const timer = setTimeout(() => controller.abort(), 10000);
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/${table}?tcgplayer_id=eq.${String(tcgplayerId)}`,
+      `${SUPABASE_URL}/rest/v1/${table}?tcgplayer_id=eq.${tcgplayerId}`,
       {
         method: 'PATCH',
         headers: {
@@ -116,7 +116,7 @@ async function processBatch(cards, table, currentRemaining) {
 
 async function selfChain() {
   try {
-    fetch(`${SITE_URL}/.netlify/functions/sync-ids-pokemon-background`, {
+    fetch(`${SITE_URL}/.netlify/functions/sync-ids-mtg-background`, {
       method: 'POST',
       headers: { 'x-sync-secret': SYNC_SECRET }
     });
