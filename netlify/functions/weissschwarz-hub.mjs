@@ -86,12 +86,27 @@ function css() {
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(var(--accent-rgb),.05),transparent 60%)}
     a{color:inherit;text-decoration:none}a:hover{text-decoration:none}
-    nav{background:rgba(10,12,20,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-    .nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:8px}
-    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
-    .nav-logo img{height:34px;width:34px;border-radius:6px;object-fit:cover}
-    .nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
+    .nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}
+    .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+    .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}
+    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-width:0}
     .nav-links::-webkit-scrollbar{display:none}
+    .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
+    .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
+    .nav-link--active{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA}
+    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
+    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover{background:rgba(251,146,60,.1);border-color:#FB923C}
+    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6}
+    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1}
+    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA}
+    .nav-search-wrap{flex:1;min-width:0;max-width:500px;position:relative;display:flex;align-items:center;gap:0}
+    .nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none;transition:border-color .2s}
+    .nav-search-input:focus{border-color:rgba(201,168,76,.45);background:rgba(255,255,255,.09)}
+    .nav-search-input::placeholder{color:#9ba3c4}
+    .nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;transition:background .2s;flex-shrink:0}
+    .nav-search-btn:hover{background:rgba(201,168,76,.3)}
     .nav-link{font-size:11px;padding:5px 9px;border-radius:6px;border:1px solid var(--border);color:var(--silver);text-decoration:none;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;white-space:nowrap}
     .nav-link:hover{color:var(--text);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
     .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.3)}.nav-link--home:hover{background:rgba(160,196,255,.06);border-color:#A0C4FF}
@@ -188,11 +203,18 @@ export default async (req) => {
 
   const [setsResult, topCardsResult] = await Promise.allSettled([
     supabaseGet('weissschwarz_sets?order=release_date.desc&limit=300&select=id,name,slug,abbreviation,release_date,card_count'),
-    supabaseGet('weissschwarz_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at')
+    supabaseGet('weissschwarz_cards?order=market_price.desc&market_price=gt.0.5&market_price=lt.200&image_url=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at')
   ]);
 
   const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
-  const topCards = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
+  const topCardsRaw = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
+  const SEALED_KEYWORDS = ['booster box','booster pack',' case','bundle','display','sealed product',
+    'starter deck','starter set','trial deck','trial set','deck set',
+    'box set','collection box','premium set','gift set','booster display'];
+  const topCards = topCardsRaw.filter(c => {
+    const n = (c.name||'').toLowerCase();
+    return !SEALED_KEYWORDS.some(k => n.includes(k));
+  });
 
   const lastUpdated = topCards.length && topCards[0].updated_at ? topCards[0].updated_at.slice(0,10) : null;
   const syncLabel   = lastUpdated ? `Prices updated ${lastUpdated}` : 'Prices updated daily';
@@ -246,20 +268,20 @@ export default async (req) => {
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
+    <a href="/" class="nav-logo" title="Cards on Cards on Cards"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
+    <div class="nav-search-wrap">
+      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" >
+      <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
+    </div>
     <div class="nav-links">
-      <a href="/" class="nav-link nav-link--home">Home</a>
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
+      <a href="/cards/weissschwarz" class="nav-link" style="color:#EC4899;border-color:#EC489980;background:#EC489914">Weiss Schwarz</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
       <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/tools.html" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play.html" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
-      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
-      <a href="/quizzes.html" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="/calendar.html" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators.html" class="nav-link nav-link--generators">Generators</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>
@@ -311,6 +333,23 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
       <div class="section-hint">Click any set to view cards and prices</div>
     </div>
     <div class="az-row">${azButtons}</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">
+  <button class="ws-group-btn filter-btn active" data-group="All" onclick="filterWSGroup('All')">All</button>
+  <button class="ws-group-btn filter-btn" data-group="Hololive" onclick="filterWSGroup('Hololive')">Hololive</button>
+  <button class="ws-group-btn filter-btn" data-group="Re:ZERO" onclick="filterWSGroup('Re:ZERO')">Re:ZERO</button>
+  <button class="ws-group-btn filter-btn" data-group="Love Live" onclick="filterWSGroup('Love Live')">Love Live</button>
+  <button class="ws-group-btn filter-btn" data-group="SAO / GGO" onclick="filterWSGroup('SAO / GGO')">SAO</button>
+  <button class="ws-group-btn filter-btn" data-group="Fate" onclick="filterWSGroup('Fate')">Fate</button>
+  <button class="ws-group-btn filter-btn" data-group="JoJo's" onclick="filterWSGroup(\"JoJo's\")">JoJo's</button>
+  <button class="ws-group-btn filter-btn" data-group="BanG Dream" onclick="filterWSGroup('BanG Dream')">BanG Dream</button>
+  <button class="ws-group-btn filter-btn" data-group="Overlord" onclick="filterWSGroup('Overlord')">Overlord</button>
+  <button class="ws-group-btn filter-btn" data-group="Konosuba" onclick="filterWSGroup('Konosuba')">Konosuba</button>
+  <button class="ws-group-btn filter-btn" data-group="Blue Archive" onclick="filterWSGroup('Blue Archive')">Blue Archive</button>
+  <button class="ws-group-btn filter-btn" data-group="Persona" onclick="filterWSGroup('Persona')">Persona</button>
+  <button class="ws-group-btn filter-btn" data-group="Frieren" onclick="filterWSGroup('Frieren')">Frieren</button>
+  <button class="ws-group-btn filter-btn" data-group="Fairy Tail" onclick="filterWSGroup('Fairy Tail')">Fairy Tail</button>
+  <button class="ws-group-btn filter-btn" data-group="Other" onclick="filterWSGroup('Other')">Other</button>
+</div>
     <input type="text" id="set-search" placeholder="${SET_PH}" oninput="filterSets(this.value)" style="margin-bottom:12px">
     <div id="set-list" class="set-grid">${setListHTML}</div>
   </div>
@@ -328,7 +367,7 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
   <div style="margin-bottom:10px">
     <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/weissschwarz">Weiss Schwarz</a>
     <a href="/cards/mtg">MTG</a><a href="/cards/pokemon">Pokemon</a><a href="/cards/yugioh">Yu-Gi-Oh</a>
-    <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a><a href="/calendar.html">Calendar</a>
+    <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a><a href="/calendar">Calendar</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bushiroad. USD prices converted to AUD at approximately 1.58.</p>
@@ -344,6 +383,8 @@ function filterAZ(letter, btn) {
 }
 function filterSets(q) { applyFilters(q); }
 function applyFilters(q) {
+  // WS franchise filter
+  var wsGroup = typeof wsCurrentGroup !== 'undefined' ? wsCurrentGroup : 'All';
   const search = q !== undefined ? q : (document.getElementById('set-search') ? document.getElementById('set-search').value : '');
   const lower = search.toLowerCase();
   document.querySelectorAll('#set-list .set-tile').forEach(el => {
@@ -378,6 +419,117 @@ async function searchCard() {
     results.innerHTML = '<div style="color:#f88;font-size:13px">Search error. Please try again.</div>';
   }
 }
+</script>
+<script>
+// Weiss Schwarz franchise filter
+var WS_GROUPS = {
+  'Hololive': ['hololive'],
+  'Re:ZERO': ['re:zero','rezero','re zero'],
+  'Love Live': ['love live'],
+  'Fate': ['fate/zero','fate/stay','fate/grand','fate/'],
+  'JoJo\'s': ['jojo'],
+  'SAO / GGO': ['sword art online','sao alternative','gun gale'],
+  'BanG Dream': ['bang dream','mygo','ave mujica'],
+  'Konosuba': ['konosuba'],
+  'Overlord / Nazarick': ['overlord','nazarick'],
+  'Frieren': ['frieren'],
+  'Fairy Tail': ['fairy tail'],
+  'Blue Archive': ['blue archive'],
+  'Persona': ['persona'],
+  'Rurouni Kenshin': ['rurouni kenshin'],
+  'Dengeki Bunko': ['dengeki bunko'],
+  'Other': []
+};
+function wsGroupOf(setName) {
+  var n = (setName||'').toLowerCase();
+  for (var g in WS_GROUPS) {
+    if (g === 'Other') continue;
+    if (WS_GROUPS[g].some(function(k){return n.indexOf(k) > -1;})) return g;
+  }
+  return 'Other';
+}
+function filterWSByGroup(group) {
+  document.querySelectorAll('.set-tile').forEach(function(el) {
+    var name = el.dataset.name || '';
+    el.style.display = (group === 'All' || wsGroupOf(name) === group) ? '' : 'none';
+  });
+  document.querySelectorAll('.ws-group-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.group === group);
+  });
+}
+</script>
+
+<!-- REPORT BUG WIDGET -->
+<style>
+  .bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}
+  .bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+  .bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}
+  .bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+  .bug-modal.open{display:flex}
+  .bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}
+  .bug-box h3{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px}
+  .bug-box p{font-size:12px;color:#9ba3c4;margin-bottom:18px}
+  .bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer;line-height:1;padding:4px}
+  .bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none;transition:border-color .2s}
+  .bug-form select:focus,.bug-form textarea:focus{border-color:rgba(201,168,76,.5)}
+  .bug-form textarea{resize:vertical;min-height:80px;max-height:160px}
+  .bug-form select option{background:#111420;color:#F0F2FF}
+  .bug-hidden{display:none}
+  .bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}
+  .bug-submit:hover{opacity:.85}
+  .bug-submit:disabled{opacity:.5;cursor:not-allowed}
+  .bug-thanks{display:none;text-align:center;padding:12px 0}
+  .bug-thanks p{color:#4ADE80;font-size:14px;font-weight:600}
+</style>
+<div class="bug-float">
+  <a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a>
+</div>
+<div class="bug-modal" id="bugModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="bug-box">
+    <button class="bug-close" onclick="document.getElementById('bugModal').classList.remove('open')">&#x2715;</button>
+    <h3>&#x1F41B; Report a Bug</h3>
+    <p>Spotted something wrong? Takes 20 seconds.</p>
+    <form class="bug-form" id="bugReportForm" name="bug-report" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="bug-report">
+      <input class="bug-hidden" name="bot-field">
+      <input type="hidden" name="page_url" id="bugPageUrl">
+      <select name="issue_type" required>
+        <option value="" disabled selected>What type of issue?</option>
+        <option value="wrong_price">Wrong price</option>
+        <option value="missing_card">Missing card or set</option>
+        <option value="broken_link">Broken link</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea name="description" placeholder="Describe the issue briefly (e.g. Charizard ex showing wrong price)" maxlength="200" required></textarea>
+      <div class="bug-thanks" id="bugThanks"><p>&#x2713; Thanks, we will look into it.</p></div>
+      <button type="submit" class="bug-submit" id="bugSubmit">Submit Report</button>
+    </form>
+  </div>
+</div>
+<script>
+(function(){
+  var urlInput = document.getElementById('bugPageUrl');
+  if(urlInput) urlInput.value = window.location.href;
+  var form = document.getElementById('bugReportForm');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = document.getElementById('bugSubmit');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    var data = new FormData(form);
+    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: new URLSearchParams(data).toString()})
+      .then(function(){
+        document.getElementById('bugThanks').style.display='block';
+        form.querySelector('select').style.display='none';
+        form.querySelector('textarea').style.display='none';
+        btn.style.display='none';
+        setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);
+      })
+      .catch(function(){btn.disabled=false;btn.textContent='Submit Report';});
+  });
+})();
 </script>
 </body>
 </html>`;
