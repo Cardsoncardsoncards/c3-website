@@ -63,9 +63,22 @@ function graceful404(slug) {
 </div></body></html>`;
 }
 
+
+async function getExchangeRate() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 3000);
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!res.ok) return 1.58;
+    const data = await res.json();
+    return data.rates?.AUD || 1.58;
+  } catch { return 1.58; }
+}
 export default async (req) => {
   const url     = new URL(req.url);
   const slug    = url.pathname.replace(/^\/cards\/dragonballz\//, '').replace(/\/$/, '');
+  const AUD_RATE = await getExchangeRate();
 
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
@@ -89,21 +102,58 @@ export default async (req) => {
   }
 
   // Parallel supporting data
-  const [relatedResult, setResult] = await Promise.allSettled([
+  const [relatedResult, sealedResult, setResult, prevNextResult] = await Promise.allSettled([
+    // Singles only (no sealed products)
     card.set_id
-      ? supabaseGet(`dragonballz_cards?set_id=eq.${card.set_id}&slug=neq.${encodeURIComponent(slug)}&order=market_price.desc.nullslast&limit=12&select=slug,name,image_url,market_price,rarity`)
+      ? supabaseGet(`dragonballz_cards?set_id=eq.${card.set_id}&slug=neq.${encodeURIComponent(slug)}&order=market_price.desc.nullslast&limit=12&select=slug,name,image_url,market_price,price_aud,rarity&$dragonballz_filter`)
       : Promise.resolve([]),
+    // Sealed products for this set
+    card.set_id
+      ? supabaseGet(`dragonballz_cards?set_id=eq.${card.set_id}&select=slug,name,image_url,market_price,price_aud,low_price&order=market_price.desc.nullslast&limit=6`)
+      : Promise.resolve([]),
+    // Set info
     card.set_id
       ? supabaseGet(`dragonballz_sets?id=eq.${card.set_id}&limit=1&select=id,name,slug,release_date`)
+      : Promise.resolve([]),
+    // Prev/next by card number
+    card.set_id
+      ? supabaseGet(`dragonballz_cards?set_id=eq.${card.set_id}&select=slug,name,number&order=number.asc&limit=500`)
       : Promise.resolve([])
   ]);
 
-  const relatedCards = relatedResult.status === 'fulfilled' ? relatedResult.value : [];
-  const setArr       = setResult.status === 'fulfilled' ? setResult.value : [];
-  const set          = setArr[0] || null;
+  const relatedCardsRaw = relatedResult.status === 'fulfilled' ? relatedResult.value : [];
+  const sealedRaw       = sealedResult.status  === 'fulfilled' ? sealedResult.value  : [];
+  const setArr          = setResult.status      === 'fulfilled' ? setResult.value     : [];
+  const allSetCards     = prevNextResult.status === 'fulfilled' ? prevNextResult.value : [];
+  const set             = setArr[0] || null;
+
+  // Split singles vs sealed products
+  const SEALED_KEYS = ['booster box', 'booster pack', ' case', 'bundle', 'display', 'sealed product', 'starter deck', 'starter set', 'trial deck', 'trial set', 'deck set', 'box set', 'collection box', 'premium set', 'gift set', 'booster display'];
+  const relatedCards = relatedCardsRaw.filter(c => {
+    const n = (c.name||'').toLowerCase();
+    return !SEALED_KEYS.some(k => n.includes(k));
+  });
+  const sealedCards = sealedRaw.filter(c => {
+    const n = (c.name||'').toLowerCase();
+    return SEALED_KEYS.some(k => n.includes(k)) && c.market_price > 0;
+  });
+
+  // Prev/next by number
+  const cardIdx  = allSetCards.findIndex(c => c.slug === slug);
+  const prevCard = cardIdx > 0 ? allSetCards[cardIdx - 1] : null;
+  const nextCard = cardIdx >= 0 && cardIdx < allSetCards.length - 1 ? allSetCards[cardIdx + 1] : null;
 
   const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * 1.58 : null;
-  const priceDisplay = priceAud ? `AU$${priceAud.toFixed(2)}` : 'Price TBC';
+
+  // Social share
+  const pageUrl   = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/dragonballz/${slug}`);
+  const shareText = encodeURIComponent(`${card.name} -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
+  const shareBar  = `<button onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/dragonballz/${slug}').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Discord',1500)})" style="padding:6px 12px;background:#5865F2;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">Discord</button>
+    <a href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener" style="padding:6px 12px;background:#FF4500;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">Reddit</a>
+    <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener" style="padding:6px 12px;background:#000;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">&#120143; Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank" rel="noopener" style="padding:6px 12px;background:#1877F2;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">Facebook</a>
+    <a href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener" style="padding:6px 12px;background:#25D366;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">WhatsApp</a>
+    <button onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/dragonballz/${slug}').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})" style="padding:6px 12px;background:#111420;border:1px solid #242840;color:#e8eaf0;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">Copy Link</button>`;  const priceDisplay = priceAud ? `AU$${priceAud.toFixed(2)}` : 'Price TBC';
   const customAttrs  = parseCustomAttrs(card.custom_attributes);
 
   const ebayCardUrl  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((card.name||slug.replace(/-/g,' '))+' dragon ball z score tcg card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
@@ -266,6 +316,21 @@ export default async (req) => {
       <div class="price-block">
         <div class="price-main">${priceDisplay}</div>
         <div class="price-sub">Estimated AUD &middot; Based on TCGPlayer market price &middot; Updated daily</div>
+        <!-- AUD/USD toggle + expanded price breakdown -->
+        ${AUD_RATE ? `<div style="font-size:11px;color:#9ba3c4;font-family:sans-serif;margin-top:4px">Rate: 1 USD = AU$${AUD_RATE.toFixed(4)} (live)</div>` : ''}
+        ${card.market_price > 0 ? `
+        <div style="margin-top:12px;background:#111420;border:1px solid #242840;border-radius:10px;padding:14px;font-family:sans-serif">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#9ba3c4;margin-bottom:10px">Price Breakdown</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
+            <div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Market Price</div><div style="font-weight:700;color:var(--accent)">AU$${(card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price * (AUD_RATE||1.58)).toFixed(2)}</div><div style="color:#9ba3c4;font-size:10px">US$${parseFloat(card.market_price).toFixed(2)}</div></div>
+            ${card.low_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Low Price</div><div style="font-weight:700;color:#4ADE80">AU$${(card.low_price * (AUD_RATE||1.58)).toFixed(2)}</div><div style="color:#9ba3c4;font-size:10px">US$${parseFloat(card.low_price).toFixed(2)}</div></div>` : ''}
+            ${card.median_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Median</div><div style="font-weight:700;color:#e8eaf0">AU$${(card.median_price * (AUD_RATE||1.58)).toFixed(2)}</div></div>` : ''}
+            ${card.buylist_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Buylist (Sell)</div><div style="font-weight:700;color:#F472B6">US$${parseFloat(card.buylist_price).toFixed(2)}</div></div>` : ''}
+          </div>
+          ${card.price_change_7d ? `<div style="margin-top:8px;font-size:11px;color:${parseFloat(card.price_change_7d) >= 0 ? '#4ADE80' : '#F87171'};font-weight:600">${parseFloat(card.price_change_7d) >= 0 ? '▲' : '▼'} ${Math.abs(parseFloat(card.price_change_7d)).toFixed(1)}% this week</div>` : ''}
+          ${card.price_change_30d ? `<div style="font-size:11px;color:${parseFloat(card.price_change_30d) >= 0 ? '#4ADE80' : '#F87171'};font-weight:600">${parseFloat(card.price_change_30d) >= 0 ? '▲' : '▼'} ${Math.abs(parseFloat(card.price_change_30d)).toFixed(1)}% this month</div>` : ''}
+          ${card.total_listings > 0 ? `<div style="margin-top:6px;font-size:11px;color:#9ba3c4">${card.total_listings} listings on TCGPlayer</div>` : ''}
+        </div>` : ''}
         <div class="cta-row">
           <a href="${ebayCardUrl}" target="_blank" rel="noopener" class="btn btn-primary">&#128722; Buy on eBay AU &#8599;</a>
           <a href="${amazonUrl}" target="_blank" rel="noopener" class="btn btn-ebay">Amazon AU &#8599;</a>
@@ -282,6 +347,23 @@ export default async (req) => {
 
   ${attrsHTML}
 
+  
+  <!-- SEALED PRODUCTS CAROUSEL -->
+  ${sealedCards.length ? `<div style="margin-bottom:24px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;padding:0 0 0 4px">Sealed Product</div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none">
+      ${sealedCards.map(p => {
+        const sp = p.price_aud > 0 ? parseFloat(p.price_aud) : p.market_price > 0 ? (p.market_price * (AUD_RATE||1.58)) : 0;
+        const sl = p.low_price > 0 ? (p.low_price * (AUD_RATE||1.58)) : 0;
+        return \`<a href="/cards/dragonballz/${p.slug}" style="flex-shrink:0;width:150px;background:#111420;border:1px solid #242840;border-radius:8px;padding:10px;text-decoration:none;display:block">
+          ${p.image_url ? \`<img src="${esc(p.image_url)}" alt="${esc(p.name)}" style="width:100%;max-height:100px;object-fit:contain;border-radius:4px;margin-bottom:6px" loading="lazy">\` : ''}
+          <div style="font-size:11px;color:#e8eaf0;font-weight:600;line-height:1.3;margin-bottom:4px">${esc(p.name)}</div>
+          ${sp > 0 ? \`<div style="font-size:13px;font-weight:900;color:var(--accent)">AU$${sp.toFixed(2)}</div>\` : ''}
+          ${sl > 0 ? \`<div style="font-size:10px;color:#9ba3c4">Low: AU$${sl.toFixed(2)}</div>\` : ''}
+        </a>\`;
+      }).join('')}
+    </div>
+  </div>` : ''}
   ${relatedCards.length ? `<div class="section">
     <div class="section-title">More Cards from ${esc(set?.name||card.set_name||'This Set')}</div>
     <div class="related-grid">${relatedHTML}</div>
@@ -297,6 +379,12 @@ export default async (req) => {
   </div>
 </div>
 
+
+  <!-- SOCIAL SHARE -->
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 20px;background:rgba(201,168,76,.04);border-top:1px solid rgba(201,168,76,.1);font-family:sans-serif">
+    <span style="font-size:11px;color:#9ba3c4;text-transform:uppercase;letter-spacing:.08em">Share</span>
+    ${shareBar}
+  </div>
 <footer>
   <div style="margin-bottom:8px">
     <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/dragonballz">Dragon Ball Z TCG</a>

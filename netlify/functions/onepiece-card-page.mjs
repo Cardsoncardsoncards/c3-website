@@ -10,13 +10,19 @@ const EPN_CAMPID         = '5339146789';
 const AMAZON_TAG         = 'blasdigital-22';
 
 async function supabaseGet(path) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      signal: controller.signal,
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
+    clearTimeout(timer);
     if (!res.ok) return [];
-    return await res.json();
-  } catch { return []; }
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (e) { clearTimeout(timer); return []; }
+}
 }
 
 async function getEbayToken() {
@@ -52,6 +58,7 @@ const NAV = `<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px)
       <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0">
       <span>Cards on Cards on Cards</span>
     </a>
+    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
     <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
       <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Card Vault</a>
       <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
@@ -74,18 +81,22 @@ function setNotFoundPage(setSlug) {
 
 async function handleSetPage(setSlug, htmlHeaders) {
   const accent = '#CC0000';
-  const [sets, ebayToken] = await Promise.all([
-    supabaseGet(`onepiece_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
+  const [_psr0, _psr1] = await Promise.allSettled([
+    supabaseGet(`onepiece_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`),
     getEbayToken()
   ]);
+  const sets = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
 
   if (!sets || !sets[0]) return new Response(setNotFoundPage(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   const set = sets[0];
 
-  const [cards, ebayListings] = await Promise.all([
+  const [_psr0, _psr1] = await Promise.allSettled([
     supabaseGet(`onepiece_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=400&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
     ebayToken ? getEbayListings(set.name + ' onepiece', ebayToken).catch(() => []) : []
   ]);
+  const cards = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  const ebayListings = _psr1.status === 'fulfilled' ? _psr1.value : [];
 
   const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
@@ -113,7 +124,7 @@ async function handleSetPage(setSlug, htmlHeaders) {
       <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
       ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
     </a>`;
-  }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing — check back after tonight's update.</div>`;
+  }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing -- check back after tonight's update.</div>`;
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
@@ -192,9 +203,28 @@ ${NAV}
   return new Response(html, { status: 200, headers: htmlHeaders });
 }
 
+
+function esc(str) {
+  return (str == null ? '' : String(str))
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+async function getExchangeRate() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 3000);
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!res.ok) return 1.58;
+    const data = await res.json();
+    return data.rates?.AUD || 1.58;
+  } catch { return 1.58; }
+}
 export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/onepiece/', '').replace(/^\/|\/$/g, '');
+  const AUD_RATE = await getExchangeRate();
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
 
   if (!slug) return new Response(notFoundPage(''), { status: 404, headers });
@@ -205,19 +235,21 @@ export default async (req) => {
   }
 
   try {
-    const cards = await supabaseGet(`onepiece_cards?slug=eq.${encodeURIComponent(slug)}&limit=1`);
+    const cards = await supabaseGet(`onepiece_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`);
     if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
     const card = cards[0];
 
     const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.58 : null);
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/onepiece/${card.slug}`);
-    const shareText = encodeURIComponent(`${card.name} One Piece Card Game — ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
+    const shareText = encodeURIComponent(`${card.name} One Piece Card Game -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
     const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' onepiece card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
-    const [relatedCards, ebayToken] = await Promise.all([
-      supabaseGet(`onepiece_cards?set_id=eq.${card.set_id}&slug=neq.${encodeURIComponent(slug)}&market_price=gt.0&image_url=not.is.null&limit=12&order=market_price.desc`).catch(() => []),
+    const [_psr0, _psr1] = await Promise.allSettled([
+      supabaseGet(`onepiece_cards?set_id=eq.${card.set_id}&slug=neq.${encodeURIComponent(slug)}&market_price=gt.0&image_url=not.is.null&limit=12&order=market_price.desc&select=*`).catch(() => []),
       (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null)
     ]);
+  const relatedCards = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
 
     const ebayListings = ebayToken ? await getEbayListings(card.name, ebayToken).catch(() => []) : [];
 
@@ -268,7 +300,7 @@ export default async (req) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${card.name} Price Australia | One Piece | Cards on Cards on Cards</title>
-  <meta name="description" content="${card.name} One Piece card${priceAud ? ` — ~AU$${priceAud.toFixed(2)}` : ''}. ${card.rarity ? `${card.rarity}. ` : ''}View price and buy on eBay AU.">
+  <meta name="description" content="${card.name} One Piece card${priceAud ? ` -- ~AU$${priceAud.toFixed(2)}` : ''}. ${card.rarity ? `${card.rarity}. ` : ''}View price and buy on eBay AU.">
   <meta property="og:site_name" content="Cards on Cards on Cards">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/onepiece/${card.slug}">
   <link rel="icon" type="image/png" href="/c3logo.png">
@@ -381,6 +413,25 @@ document.addEventListener('click',function(e){
   }
 });
 </script>
+<!-- REPORT BUG WIDGET -->
+<style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px}</style>
+<div class="bug-float"><a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a></div>
+<div class="bug-modal" id="bugModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="bug-box">
+    <button class="bug-close" onclick="document.getElementById('bugModal').classList.remove('open')">&#x2715;</button>
+    <h3 style="font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px">&#x1F41B; Report a Bug</h3>
+    <p style="font-size:12px;color:#9ba3c4;margin-bottom:18px">Spotted something wrong? Takes 20 seconds.</p>
+    <form class="bug-form" id="bugReportForm" name="bug-report" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="bug-report"><input class="bug-hidden" name="bot-field">
+      <input type="hidden" name="page_url" id="bugPageUrl">
+      <select name="issue_type" required><option value="" disabled selected>What type of issue?</option><option value="wrong_price">Wrong price</option><option value="missing_card">Missing card or set</option><option value="broken_link">Broken link</option><option value="other">Other</option></select>
+      <textarea name="description" placeholder="Describe the issue briefly" maxlength="200" required></textarea>
+      <div class="bug-thanks" id="bugThanks"><p>&#x2713; Thanks, we will look into it.</p></div>
+      <button type="submit" class="bug-submit" id="bugSubmit">Submit Report</button>
+    </form>
+  </div>
+</div>
+<script>(function(){var u=document.getElementById('bugPageUrl');if(u)u.value=window.location.href;var f=document.getElementById('bugReportForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('bugSubmit');b.disabled=true;b.textContent='Sending...';var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';f.querySelector('select').style.display='none';f.querySelector('textarea').style.display='none';b.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){b.disabled=false;b.textContent='Submit Report';});});})();</script>
 </body>
 </html>`;
 

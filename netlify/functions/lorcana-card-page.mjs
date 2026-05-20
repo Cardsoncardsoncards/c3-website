@@ -9,7 +9,7 @@ const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
 const EPN_CAMPID         = '5339146789';
 const AMAZON_TAG         = 'blasdigital-22';
 
-// Lorcana ink colours — official community palette
+// Lorcana ink colours -- official community palette
 const INK_COLOURS = {
   Amber:    { bg: '#f5a623', text: '#000' },
   Amethyst: { bg: '#7c3aed', text: '#fff' },
@@ -20,11 +20,18 @@ const INK_COLOURS = {
 };
 
 async function supabaseGet(path) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-  });
-  if (!res.ok) throw new Error(`Supabase: ${await res.text()}`);
-  return res.json();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      signal: controller.signal,
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (e) { clearTimeout(timer); return []; }
 }
 
 async function getEbayToken() {
@@ -64,9 +71,9 @@ function loreIcons(lore) {
 async function handleSetPage(setSlug, headers) {
   const accent = '#3B82F6';
   // Try slug first, then numeric id fallback
-  let sets = await supabaseGet(`lorcana_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`);
+  let sets = await supabaseGet(`lorcana_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`);
   if (!sets || !sets[0]) {
-    sets = await supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setSlug)}&limit=1`);
+    sets = await supabaseGet(`lorcana_sets?id=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`);
   }
 
   const notFoundHtml = `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Set Not Found | Lorcana | Cards on Cards on Cards</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;padding:24px;text-align:center"><h1 style="font-family:'Cinzel',serif;color:${accent}">Set Not Found</h1><p style="color:#A0A8C0">We couldn't find Lorcana set "${setSlug}".</p><a href="/cards/lorcana" style="color:${accent}">← Browse All Lorcana</a></body></html>`;
@@ -102,7 +109,7 @@ async function handleSetPage(setSlug, headers) {
       <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${fullName}</div>
       ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
     </a>`;
-  }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing — check back after tonight's update.</div>`;
+  }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing -- check back after tonight's update.</div>`;
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
@@ -151,7 +158,8 @@ async function handleSetPage(setSlug, headers) {
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span>
+    <div class="nav-search-wrap" style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div></a>
     <div class="nav-links">
       <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
@@ -196,9 +204,28 @@ async function handleSetPage(setSlug, headers) {
   return new Response(html, { status: 200, headers });
 }
 
+
+function esc(str) {
+  return (str == null ? '' : String(str))
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+async function getExchangeRate() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 3000);
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!res.ok) return 1.58;
+    const data = await res.json();
+    return data.rates?.AUD || 1.58;
+  } catch { return 1.58; }
+}
 export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/lorcana/', '').replace(/^\/|\/$/g, '');
+  const AUD_RATE = await getExchangeRate();
   if (!slug) return new Response('Not found', { status: 404 });
 
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
@@ -209,14 +236,16 @@ export default async (req) => {
   }
 
   try {
-    const cards = await supabaseGet(`lorcana_cards?slug=eq.${encodeURIComponent(slug)}&limit=1`);
+    const cards = await supabaseGet(`lorcana_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`);
     if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
     const card = cards[0];
 
-    const [relatedCards, ebayToken] = await Promise.all([
-      supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=collector_number.asc`).catch(() => []),
+    const [_psr0, _psr1] = await Promise.allSettled([
+      supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=collector_number.asc&select=*`).catch(() => []),
       (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null)
     ]);
+  const relatedCards = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
 
     const ebayListings = ebayToken
       ? await getEbayListings(card.name, card.version, ebayToken).catch(() => [])
@@ -224,9 +253,9 @@ export default async (req) => {
 
     const priceAud = card.market_price ? (card.market_price * 1.58) : null;
     const inkColour = INK_COLOURS[card.ink] || { bg: '#888', text: '#fff' };
-    const fullName = card.version ? `${card.name} — ${card.version}` : card.name;
+    const fullName = card.version ? `${card.name} -- ${card.version}` : card.name;
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/lorcana/${card.slug}`);
-    const shareText = encodeURIComponent(`${fullName} Lorcana — ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
+    const shareText = encodeURIComponent(`${fullName} Lorcana -- ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
     const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' lorcana')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
     const breadcrumb = {
@@ -242,7 +271,7 @@ export default async (req) => {
     const productSchema = priceAud ? {
       "@context": "https://schema.org", "@type": "Product",
       "name": fullName,
-      "description": card.card_text || `${fullName} — ${card.rarity} Lorcana card from ${card.set_name}`,
+      "description": card.card_text || `${fullName} -- ${card.rarity} Lorcana card from ${card.set_name}`,
       "image": card.image_url || '',
       "offers": { "@type": "Offer", "priceCurrency": "AUD", "price": priceAud.toFixed(2), "availability": "https://schema.org/InStock", "url": `https://cardsoncardsoncards.com.au/cards/lorcana/${card.slug}` }
     } : null;
@@ -287,7 +316,7 @@ export default async (req) => {
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${fullName} Price Australia | ${card.set_name} Lorcana | Cards on Cards on Cards</title>
-  <meta name="description" content="${fullName} (${card.rarity || 'Lorcana'}) from ${card.set_name}${priceAud ? ` — ~AU$${priceAud.toFixed(2)}` : ''}. View price, card details, and buy on eBay AU. Australia's Lorcana price guide.">
+  <meta name="description" content="${fullName} (${card.rarity || 'Lorcana'}) from ${card.set_name}${priceAud ? ` -- ~AU$${priceAud.toFixed(2)}` : ''}. View price, card details, and buy on eBay AU. Australia's Lorcana price guide.">
   <meta property="og:site_name" content="Cards on Cards on Cards">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana/${card.slug}">
   <meta property="og:title" content="${fullName} | ${card.set_name} Lorcana | Cards on Cards on Cards">
@@ -431,7 +460,7 @@ export default async (req) => {
       ${card.lore ? `<div class="stat-box"><div class="stat-label">Lore</div><div class="stat-value">${'◆'.repeat(card.lore)}</div></div>` : ''}
       ${card.rarity ? `<div class="stat-box"><div class="stat-label">Rarity</div><div class="stat-value">${card.rarity}</div></div>` : ''}
       ${card.ink ? `<div class="stat-box"><div class="stat-label">Ink</div><div class="stat-value" style="color:var(--ink)">${card.ink}</div></div>` : ''}
-      ${card.inkwell !== null ? `<div class="stat-box"><div class="stat-label">Inkwell</div><div class="stat-value">${card.inkwell ? 'Yes — Can be inkd' : 'No — Cannot be inkd'}</div></div>` : ''}
+      ${card.inkwell !== null ? `<div class="stat-box"><div class="stat-label">Inkwell</div><div class="stat-value">${card.inkwell ? 'Yes -- Can be inkd' : 'No -- Cannot be inkd'}</div></div>` : ''}
       ${card.move_cost !== null ? `<div class="stat-box"><div class="stat-label">Move Cost</div><div class="stat-value">${card.move_cost}</div></div>` : ''}
     </div>
     ${card.card_text ? `<div class="card-text-block" style="margin-top:20px">${card.card_text}</div>` : ''}
@@ -470,6 +499,25 @@ ${relatedHTML}
   <p>© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Prices are estimates based on USD data converted at approximately 1.58 AUD. Check eBay AU for live pricing.</p>
 </footer>
+<!-- REPORT BUG WIDGET -->
+<style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px}</style>
+<div class="bug-float"><a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a></div>
+<div class="bug-modal" id="bugModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="bug-box">
+    <button class="bug-close" onclick="document.getElementById('bugModal').classList.remove('open')">&#x2715;</button>
+    <h3 style="font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px">&#x1F41B; Report a Bug</h3>
+    <p style="font-size:12px;color:#9ba3c4;margin-bottom:18px">Spotted something wrong? Takes 20 seconds.</p>
+    <form class="bug-form" id="bugReportForm" name="bug-report" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="bug-report"><input class="bug-hidden" name="bot-field">
+      <input type="hidden" name="page_url" id="bugPageUrl">
+      <select name="issue_type" required><option value="" disabled selected>What type of issue?</option><option value="wrong_price">Wrong price</option><option value="missing_card">Missing card or set</option><option value="broken_link">Broken link</option><option value="other">Other</option></select>
+      <textarea name="description" placeholder="Describe the issue briefly" maxlength="200" required></textarea>
+      <div class="bug-thanks" id="bugThanks"><p>&#x2713; Thanks, we will look into it.</p></div>
+      <button type="submit" class="bug-submit" id="bugSubmit">Submit Report</button>
+    </form>
+  </div>
+</div>
+<script>(function(){var u=document.getElementById('bugPageUrl');if(u)u.value=window.location.href;var f=document.getElementById('bugReportForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('bugSubmit');b.disabled=true;b.textContent='Sending...';var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';f.querySelector('select').style.display='none';f.querySelector('textarea').style.display='none';b.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){b.disabled=false;b.textContent='Submit Report';});});})();</script>
 </body>
 </html>`;
 

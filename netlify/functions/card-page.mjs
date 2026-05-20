@@ -14,46 +14,68 @@ const AMAZON_TAG = 'blasdigital-22';
 
 async function supabaseGet(path, useService = false) {
   const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: {
-      'apikey': key,
-      'Authorization': `Bearer ${key}`,
-      'Content-Type': 'application/json'
-    }
-  });
-  if (!res.ok) throw new Error(`Supabase error: ${await res.text()}`);
-  return res.json();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      signal: controller.signal,
+      headers: {
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (e) { clearTimeout(timer); return []; }
 }
 
 async function getEbayToken() {
-  const creds = Buffer.from(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`).toString('base64');
-  const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
-    method: 'POST',
-    headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
-  });
-  const data = await res.json();
-  return data.access_token;
+  if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
+  const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+  try {
+    const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
+      method: 'POST',
+      signal: controller.signal,
+      headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
+    });
+    clearTimeout(timer);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.access_token || null;
+  } catch (e) { clearTimeout(timer); return null; }
 }
 
 async function getEbayListing(cardName, token, fromStore = true) {
+  if (!token) return [];
   const q = encodeURIComponent(`${cardName} mtg`);
   const sellerFilter = fromStore ? '%2Csellers%3A%7Bcardsoncardsoncards%7D' : '';
   const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${q}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D${sellerFilter}&sort=price&limit=3`;
-  const res = await fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU',
-      'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${EPN_CAMPID}`
-    }
-  });
-  const data = await res.json();
-  const items = data.itemSummaries || [];
-  // Extract numeric itemId from Browse API format (v1|123456|0 -> 123456)
-  return items.map(item => ({
-    ...item,
-    itemId: item.itemId && item.itemId.includes('|') ? item.itemId.split('|')[1] : item.itemId
-  }));
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU',
+        'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${EPN_CAMPID}`
+      }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return [];
+    const data = await res.json();
+    const items = data.itemSummaries || [];
+    return items.map(item => ({
+      ...item,
+      itemId: item.itemId && item.itemId.includes('|') ? item.itemId.split('|')[1] : item.itemId
+    }));
+  } catch (e) { clearTimeout(timer); return []; }
 }
 
 function formatAUD(num) {
@@ -167,6 +189,12 @@ function buildPriceChart(snapshots) {
   </div>`;
 }
 
+function esc(str) {
+  return (str == null ? '' : String(str))
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings }) {
   const legalities = formatLegalities(card.legalities);
   const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * 1.58 : null);
@@ -220,7 +248,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     const recent = snapshots.slice(-7).map(s => parseFloat(s.price_aud || 0));
     const first = recent[0], last = recent[recent.length-1];
     if (last > first * 1.05) return ' The price has been trending up over the last week.';
-    if (last < first * 0.95) return ' The price has dipped recently — potentially a good buying window.';
+    if (last < first * 0.95) return ' The price has dipped recently -- potentially a good buying window.';
     return ' The price has been stable recently.';
   })();
   const edhStr = card.edhrec_rank ? (card.edhrec_rank <= 200 ? ' It is a Commander format staple.' : card.edhrec_rank <= 1000 ? ' It sees regular play in Commander.' : '') : '';
@@ -228,7 +256,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
 
   // Share bar
   const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}`);
-  const shareText = encodeURIComponent(`${card.name} — ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
+  const shareText = encodeURIComponent(`${card.name} -- ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
   const shareBar = `<div class="share-bar">
     <span class="share-bar-label">Share</span>
     <button class="share-btn share-discord" onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
@@ -315,7 +343,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="${card.name} Price Australia | Cards on Cards on Cards">
-  <meta property="og:description" content="${priceAud ? `${card.name} — ${formatAUD(priceAud)} AUD. ` : ''}MTG card price guide for Australia.">
+  <meta property="og:description" content="${priceAud ? `${card.name} -- ${formatAUD(priceAud)} AUD. ` : ''}MTG card price guide for Australia.">
   ${(card.image_uri_normal || card.image_uri_small) ? `<meta property="og:image" content="${card.image_uri_normal || card.image_uri_small}">` : ''}
   <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
   ${productSchema ? `<script type="application/ld+json">${JSON.stringify(productSchema)}</script>` : ''}
@@ -333,16 +361,33 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     a:hover { text-decoration: underline; }
 
     /* Nav */
-    .site-nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-    .site-nav .logo { font-weight: bold; font-size: 18px; color: var(--accent); }
-    .site-nav a { color: var(--text2); font-size: 14px; font-family: sans-serif; }
-    .site-nav a:hover { color: var(--text); }
+    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
+    .nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}
+    .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+    .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}
+    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-width:0}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-link-item{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap;transition:all .2s}
+    .nav-link-item:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
+    .nl-vault{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
+    .nl-mtg{color:#C9A84C;border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.08)}
+    .nl-compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
+    .nl-market{color:#4ADE80;border-color:rgba(74,222,128,.35)}
+    .nl-tools{color:#FB923C;border-color:rgba(251,146,60,.35)}
+    .nl-play{color:#F472B6;border-color:rgba(244,114,182,.35)}
+    .nl-blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+    .nl-ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}
+    .nav-search-wrap{flex:1;min-width:0;max-width:500px;display:flex;align-items:center}
+    .nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none}
+    .nav-search-input:focus{border-color:rgba(201,168,76,.45)}
+    .nav-search-input::placeholder{color:#9ba3c4}
+    .nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0}
 
     /* Breadcrumb */
     .breadcrumb { padding: 12px 24px; font-size: 13px; color: var(--text2); font-family: sans-serif; }
     .breadcrumb a { color: var(--text2); }
 
-    /* Card layout — two column: image left, info right */
+    /* Card layout -- two column: image left, info right */
     .card-layout { display: grid; grid-template-columns: 300px 1fr; gap: 32px; max-width: 1100px; margin: 24px auto 0; padding: 0 24px; align-items: start; }
     @media (max-width: 720px) { .card-layout { grid-template-columns: 1fr; } }
     .card-image-col { position: sticky; top: 20px; }
@@ -352,7 +397,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .card-image-back { display: none; }
     .flip-btn { display: none; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-top: 10px; width: 100%; font-family: sans-serif; }
     ${isDoubleFaced ? '.flip-btn { display: block; }' : ''}
-    /* Printings carousel — full width below both columns */
+    /* Printings carousel -- full width below both columns */
     .printings-outer { max-width: 1100px; margin: 20px auto 0; padding: 0 24px; }
     .printings-carousel-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
     .printings-carousel-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text2); display: block; margin-bottom: 10px; font-family: sans-serif; }
@@ -573,15 +618,24 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
 </head>
 <body>
 
-<nav class="site-nav">
-  <a href="/" class="logo">C3</a>
-  <a href="/">Home</a>
-  <a href="/shop.html">Shop</a>
-  <a href="/blog">Blog</a>
-  <a href="/ev-calculator.html">EV Calculator</a>
-  <a href="/cards/mtg">MTG Cards</a>
-  <a href="/cards/mtg/random-commander">Random Commander</a>
-  <a href="/tracker.html">Free Tracker</a>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" title="Cards on Cards on Cards"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
+    <div class="nav-search-wrap">
+      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
+      <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
+    </div>
+    <div class="nav-links">
+      <a href="/cards" class="nav-link-item nl-vault">Card Vault</a>
+      <a href="/cards/mtg" class="nav-link-item nl-mtg">MTG</a>
+      <a href="/compare" class="nav-link-item nl-compare">Compare</a>
+      <a href="/market" class="nav-link-item nl-market">Market</a>
+      <a href="/tools.html" class="nav-link-item nl-tools">Tools</a>
+      <a href="/play.html" class="nav-link-item nl-play">Play</a>
+      <a href="/blog" class="nav-link-item nl-blog">Blog</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link-item nl-ebay">Shop eBay &#8599;</a>
+    </div>
+  </div>
 </nav>
 
 <div class="breadcrumb">
@@ -660,7 +714,7 @@ ${contextPara}
 
       ${priceAud ? `<div class="condition-guide">Condition: NM ${formatAUD(priceAud)} · LP ${formatAUD(priceAud * 0.80)} · Played ${formatAUD(priceAud * 0.60)}</div>` : ''}
       ${priceAud ? `<div class="price-4x">4× playset = ${formatAUD(priceAud * 4)}</div>` : ''}
-      ${verdict ? `<div class="verdict ${verdict.class}">📊 ${verdict.label} — ${verdict.advice}</div>` : ''}
+      ${verdict ? `<div class="verdict ${verdict.class}">📊 ${verdict.label} -- ${verdict.advice}</div>` : ''}
 
       <!-- Card Kingdom (async) -->
       <div id="ck-price-block" style="margin-top:14px;display:none">
@@ -668,15 +722,15 @@ ${contextPara}
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <div id="ck-retail" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:sans-serif;font-size:13px">
             <div style="color:var(--text2);font-size:11px;margin-bottom:2px">CK Retail (USD)</div>
-            <div style="font-weight:700;color:var(--text)">—</div>
+            <div style="font-weight:700;color:var(--text)">--</div>
           </div>
           <div id="ck-buylist" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:sans-serif;font-size:13px">
             <div style="color:var(--text2);font-size:11px;margin-bottom:2px">CK Will Pay (USD)</div>
-            <div style="font-weight:700;color:var(--text)">—</div>
+            <div style="font-weight:700;color:var(--text)">--</div>
           </div>
           <div id="ck-retail-aud" style="background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:10px 14px;font-family:sans-serif;font-size:13px">
             <div style="color:var(--text2);font-size:11px;margin-bottom:2px">CK Retail (~AUD)</div>
-            <div style="font-weight:700;color:var(--accent)">—</div>
+            <div style="font-weight:700;color:var(--accent)">--</div>
           </div>
         </div>
         <div style="font-size:11px;color:var(--text2);font-family:sans-serif;margin-top:6px;opacity:.7">Card Kingdom prices are US market reference only. Not available for purchase through C3.</div>
@@ -704,11 +758,11 @@ ${contextPara}
   </div><!-- end .card-info -->
 </div><!-- end .card-layout -->
 
-<!-- Printings carousel — full width below both columns -->
+<!-- Printings carousel -- full width below both columns -->
 ${otherPrintings && otherPrintings.length > 1 ? `
 <div class="printings-outer">
   <div class="printings-carousel-wrap">
-    <span class="printings-carousel-label">${otherPrintings.length} Printings — click to switch</span>
+    <span class="printings-carousel-label">${otherPrintings.length} Printings -- click to switch</span>
     <div class="printings-scroll-row">
       <button class="printings-arrow" id="arrow-prev" onclick="scrollPrintings(-1)" aria-label="Previous printing">&#8249;</button>
       <div class="printings-track" id="printings-track">
@@ -827,7 +881,7 @@ ${sealedHTML}
       <button class="feedback-star" onclick="setFeedbackRating(5)">★</button>
     </div>
     <textarea id="feedback-text" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;font-size:13px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:sans-serif" placeholder="What can we improve? What features would you like?"></textarea>
-    <input type="email" id="feedback-email" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;font-family:sans-serif" placeholder="Email (optional — if you'd like a reply)">
+    <input type="email" id="feedback-email" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;font-family:sans-serif" placeholder="Email (optional -- if you'd like a reply)">
     <button style="width:100%;background:var(--accent);color:#000;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px" onclick="submitFeedback()">Send Feedback</button>
     <button style="width:100%;background:none;border:none;color:var(--text2);margin-top:8px;cursor:pointer;font-size:12px" onclick="document.getElementById('feedback-overlay').classList.remove('open')">Cancel</button>
     <div id="feedback-msg" style="font-size:13px;margin-top:8px;text-align:center;font-family:sans-serif"></div>
@@ -855,11 +909,12 @@ ${sealedHTML}
     <a href="/contact.html">Contact</a>
   </p>
   <p>Card data via <a href="https://scryfall.com/card/${card.set_code}/${card.collector_number}" target="_blank" rel="noopener">Scryfall</a>. Prices in AUD are estimates based on USD conversion at live rates. Not financial advice.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: Cards on Cards on Cards earns commissions from eBay AU and Amazon AU purchases made through links on this site, at no extra cost to you.</p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · <a href="https://cardsoncardsoncards.com.au">cardsoncardsoncards.com.au</a></p>
 </footer>
 
 <script>
-// Printings carousel — switch hero image, info, and price block on thumb click
+// Printings carousel -- switch hero image, info, and price block on thumb click
 let _currentThumbIdx = (function() {
   // Find the initially active thumb index on page load
   const active = document.querySelector('.printing-thumb.active');
@@ -1258,15 +1313,47 @@ if (typeof gtag !== 'undefined') {
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<!-- REPORT BUG WIDGET -->
+<style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px}</style>
+<div class="bug-float"><a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a></div>
+<div class="bug-modal" id="bugModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="bug-box">
+    <button class="bug-close" onclick="document.getElementById('bugModal').classList.remove('open')">&#x2715;</button>
+    <h3 style="font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px">&#x1F41B; Report a Bug</h3>
+    <p style="font-size:12px;color:#9ba3c4;margin-bottom:18px">Spotted something wrong? Takes 20 seconds.</p>
+    <form class="bug-form" id="bugReportForm" name="bug-report" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="bug-report"><input class="bug-hidden" name="bot-field">
+      <input type="hidden" name="page_url" id="bugPageUrl">
+      <select name="issue_type" required><option value="" disabled selected>What type of issue?</option><option value="wrong_price">Wrong price</option><option value="missing_card">Missing card or set</option><option value="broken_link">Broken link</option><option value="other">Other</option></select>
+      <textarea name="description" placeholder="Describe the issue briefly" maxlength="200" required></textarea>
+      <div class="bug-thanks" id="bugThanks"><p>&#x2713; Thanks, we will look into it.</p></div>
+      <button type="submit" class="bug-submit" id="bugSubmit">Submit Report</button>
+    </form>
+  </div>
+</div>
+<script>(function(){var u=document.getElementById('bugPageUrl');if(u)u.value=window.location.href;var f=document.getElementById('bugReportForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('bugSubmit');b.disabled=true;b.textContent='Sending...';var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';f.querySelector('select').style.display='none';f.querySelector('textarea').style.display='none';b.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){b.disabled=false;b.textContent='Submit Report';});});})();</script>
 </body>
 </html>`;
 }
 
 // --- Main handler ---
 
+
+async function getExchangeRate() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 3000);
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!res.ok) return 1.58;
+    const data = await res.json();
+    return data.rates?.AUD || 1.58;
+  } catch { return 1.58; }
+}
 export default async (req, context) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/mtg/', '').replace(/\/$/, '');
+  const AUD_RATE = await getExchangeRate();
 
   // Handle banned pages inline - Netlify resolves :slug+ before :format?
   if (slug === 'banned' || slug.startsWith('banned/')) {
@@ -1293,7 +1380,7 @@ export default async (req, context) => {
   try {
     // Fetch card data
     const cards = await supabaseGet(
-      `mtg_cards?slug=eq.${encodeURIComponent(slug)}&limit=1`,
+      `mtg_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`,
       false
     );
 
@@ -1313,7 +1400,7 @@ export default async (req, context) => {
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,collector_number&order=collector_number.asc`, false),
       supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}`, false),
-      // Other printings — same card name, different sets/variants. scryfall_id is unique per printing.
+      // Other printings -- same card name, different sets/variants. scryfall_id is unique per printing.
       supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=scryfall_id,slug,set_name,released_at,rarity,collector_number,image_uri_normal,image_uri_small,price_usd,price_aud,price_usd_foil&order=released_at.desc&limit=80`, false)
     ]);
 
@@ -1343,10 +1430,12 @@ export default async (req, context) => {
     let ebayListings = { store: [], all: [] };
     try {
       const token = await getEbayToken();
-      const [storeListings, allListings] = await Promise.all([
+      const [_esr0, _esr1] = await Promise.allSettled([
         getEbayListing(card.name, token, true),
         getEbayListing(card.name, token, false)
       ]);
+      const storeListings = _esr0.status === 'fulfilled' ? _esr0.value : [];
+      const allListings = _esr1.status === 'fulfilled' ? _esr1.value : [];
       ebayListings.store = storeListings;
       ebayListings.all = allListings.filter(l => !storeListings.some(s => s.itemId === l.itemId));
     } catch (e) {
@@ -1555,7 +1644,7 @@ async function renderBannedPage(slug) {
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="${pageTitle}">
   <meta property="og:description" content="${pageDesc}">
-  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
@@ -1581,6 +1670,7 @@ async function renderBannedPage(slug) {
     <a href="/compare" class="nav-link">Compare</a>
     <a href="/market" class="nav-link">Market</a>
     <a href="/tools.html" class="nav-link">Tools</a>
+    <a href="/play.html" class="nav-link">Play</a>
     <a href="/blog" class="nav-link">Blog</a>
     <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=${EPN}&mkevt=1" target="_blank" rel="noopener" class="nav-link">Shop eBay &#8599;</a>
   </div>

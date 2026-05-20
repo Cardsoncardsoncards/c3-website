@@ -9,11 +9,18 @@ const EPN_CAMPID         = '5339146789';
 const AMAZON_TAG         = 'blasdigital-22';
 
 async function supabaseGet(path) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-  });
-  if (!res.ok) return [];
-  return res.json();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      signal: controller.signal,
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (e) { clearTimeout(timer); return []; }
 }
 
 async function getEbayToken() {
@@ -43,16 +50,37 @@ async function getEbayListings(cardName, token) {
   } catch { return []; }
 }
 
+
+function esc(str) {
+  return (str == null ? '' : String(str))
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+async function getExchangeRate() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 3000);
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!res.ok) return 1.58;
+    const data = await res.json();
+    return data.rates?.AUD || 1.58;
+  } catch { return 1.58; }
+}
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
   const slug = url.pathname.replace(/^\/cards\/starwars\//, '').replace(/\/$/, '');
+  const AUD_RATE = await getExchangeRate();
   if (!slug || slug.startsWith('sets/')) return new Response('Not found', { status: 404, headers });
 
-  const [cards, ebayToken] = await Promise.all([
+  const [_psr0, _psr1] = await Promise.allSettled([
     supabaseGet(`starwars_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`),
     getEbayToken()
   ]);
+  const cards = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
 
   const card = cards[0];
   if (!card) return new Response(`<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Card Not Found | C3</title><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px"><h1>Card not found</h1><a href="/cards/starwars" style="color:#FFE81F">← Back to Star Wars Unlimited</a></body></html>`, { status: 404, headers });
@@ -63,7 +91,7 @@ export default async (req) => {
 
   const ebayBuyURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' star wars unlimited')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/starwars/${card.slug}`);
-  const shareText = encodeURIComponent(`${card.name} Star Wars Unlimited — ${priceAUD > 0 ? 'AU$'+priceAUD.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
+  const shareText = encodeURIComponent(`${card.name} Star Wars Unlimited -- ${priceAUD > 0 ? 'AU$'+priceAUD.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
 
   const breadcrumb_starwars = {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
@@ -164,7 +192,8 @@ export default async (req) => {
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3 Logo"><span>Cards on Cards on Cards</span></a>
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3 Logo"><span>Cards on Cards on Cards</span>
+    <div class="nav-search-wrap" style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div></a>
     <div class="nav-links">
       <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
@@ -267,6 +296,25 @@ document.addEventListener('click',function(e){if(e.target.closest('[data-action=
   if(e.target.closest('[data-action="copy-link"]')){const btn=e.target.closest('[data-action="copy-link"]');navigator.clipboard.writeText(location.href).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>{btn.textContent='📋 Copy Link';},1500);});}});
 if(typeof gtag!=='undefined'){document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_card_click',{game:'starwars'})));}
 </script>
+<!-- REPORT BUG WIDGET -->
+<style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px}</style>
+<div class="bug-float"><a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a></div>
+<div class="bug-modal" id="bugModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="bug-box">
+    <button class="bug-close" onclick="document.getElementById('bugModal').classList.remove('open')">&#x2715;</button>
+    <h3 style="font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px">&#x1F41B; Report a Bug</h3>
+    <p style="font-size:12px;color:#9ba3c4;margin-bottom:18px">Spotted something wrong? Takes 20 seconds.</p>
+    <form class="bug-form" id="bugReportForm" name="bug-report" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="bug-report"><input class="bug-hidden" name="bot-field">
+      <input type="hidden" name="page_url" id="bugPageUrl">
+      <select name="issue_type" required><option value="" disabled selected>What type of issue?</option><option value="wrong_price">Wrong price</option><option value="missing_card">Missing card or set</option><option value="broken_link">Broken link</option><option value="other">Other</option></select>
+      <textarea name="description" placeholder="Describe the issue briefly" maxlength="200" required></textarea>
+      <div class="bug-thanks" id="bugThanks"><p>&#x2713; Thanks, we will look into it.</p></div>
+      <button type="submit" class="bug-submit" id="bugSubmit">Submit Report</button>
+    </form>
+  </div>
+</div>
+<script>(function(){var u=document.getElementById('bugPageUrl');if(u)u.value=window.location.href;var f=document.getElementById('bugReportForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('bugSubmit');b.disabled=true;b.textContent='Sending...';var d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';f.querySelector('select').style.display='none';f.querySelector('textarea').style.display='none';b.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){b.disabled=false;b.textContent='Submit Report';});});})();</script>
 </body>
 </html>`, { status: 200, headers });
 };

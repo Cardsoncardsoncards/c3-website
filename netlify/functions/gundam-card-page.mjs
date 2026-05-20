@@ -63,9 +63,22 @@ function graceful404(slug) {
 </div></body></html>`;
 }
 
+
+async function getExchangeRate() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 3000);
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
+    clearTimeout(t);
+    if (!res.ok) return 1.58;
+    const data = await res.json();
+    return data.rates?.AUD || 1.58;
+  } catch { return 1.58; }
+}
 export default async (req) => {
   const url     = new URL(req.url);
   const slug    = url.pathname.replace(/^\/cards\/gundam\//, '').replace(/\/$/, '');
+  const AUD_RATE = await getExchangeRate();
 
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
@@ -103,7 +116,16 @@ export default async (req) => {
   const set          = setArr[0] || null;
 
   const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * 1.58 : null;
-  const priceDisplay = priceAud ? `AU$${priceAud.toFixed(2)}` : 'Price TBC';
+
+  // Social share
+  const pageUrl_s   = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/gundam/${slug}`);
+  const shareText_s = encodeURIComponent(`${(card.name||'').replace(/'/g,"'")} -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
+  const shareBar = `<button onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/gundam/${slug}').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Discord',1500)})" style="padding:6px 12px;background:#5865F2;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">Discord</button>
+    <a href="https://reddit.com/submit?url=${pageUrl_s}&title=${shareText_s}" target="_blank" rel="noopener" style="padding:6px 12px;background:#FF4500;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">Reddit</a>
+    <a href="https://twitter.com/intent/tweet?text=${shareText_s}&url=${pageUrl_s}" target="_blank" rel="noopener" style="padding:6px 12px;background:#000;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">&#120143; Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl_s}" target="_blank" rel="noopener" style="padding:6px 12px;background:#1877F2;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">Facebook</a>
+    <a href="https://wa.me/?text=${shareText_s}%20${pageUrl_s}" target="_blank" rel="noopener" style="padding:6px 12px;background:#25D366;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">WhatsApp</a>
+    <button onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/gundam/${slug}').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})" style="padding:6px 12px;background:#111420;border:1px solid #242840;color:#e8eaf0;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">Copy Link</button>`;  const priceDisplay = priceAud ? `AU$${priceAud.toFixed(2)}` : 'Price TBC';
   const customAttrs  = parseCustomAttrs(card.custom_attributes);
 
   const ebayCardUrl  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((card.name||slug.replace(/-/g,' '))+' gundam card game')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
@@ -297,6 +319,11 @@ export default async (req) => {
   </div>
 </div>
 
+
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 20px;background:rgba(201,168,76,.04);border-top:1px solid rgba(201,168,76,.1);font-family:sans-serif">
+    <span style="font-size:11px;color:#9ba3c4;text-transform:uppercase;letter-spacing:.08em">Share</span>
+    ${shareBar}
+  </div>
 <footer>
   <div style="margin-bottom:8px">
     <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/gundam">Gundam Card Game</a>
