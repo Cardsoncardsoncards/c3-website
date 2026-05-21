@@ -245,6 +245,30 @@ export default async (req) => {
     <a href="${ebaySetURL}" target="_blank" rel="noopener" style="font-size:13px;color:#EAB308;text-decoration:none">See all listings on eBay AU →</a>
   </div>` : ''}
 
+  ${(() => {
+    const SEALED_KEYS = ['booster box','booster pack','display','starter deck','starter set','trial deck','trial set','box set','collection box','premium set'];
+    const sealedItems = (cards||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && c.market_price > 0; });
+    if (!sealedItems.length) return '';
+    const itemsHTML = sealedItems.slice(0,4).map(p => {
+      const price = p.price_aud > 0 ? `AU$${parseFloat(p.price_aud).toFixed(2)}` : `~AU$${(p.market_price*1.58).toFixed(2)}`;
+      const low = p.low_price ? `Low: ~AU$${(p.low_price*1.58).toFixed(2)}` : '';
+      const nm = (p.name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return `<a href="/cards/dragonball/${p.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#F97316'" onmouseout="this.style.borderColor='#1e2235'">
+        ${p.image_url ? `<img src="${p.image_url.replace(/"/g,'&quot;')}" alt="${nm.replace(/"/g,'&quot;')}" style="width:100%;max-height:120px;object-fit:contain;border-radius:6px" loading="lazy">` : ''}
+        <div style="font-size:12px;font-weight:700;color:#e8eaf0;line-height:1.3">${nm}</div>
+        <div style="font-size:15px;font-weight:900;color:#F97316;font-family:'Cinzel',serif">${price}</div>
+        ${low ? `<div style="font-size:11px;color:#8892b0">${low}</div>` : ''}
+      </a>`;
+    }).join('');
+    const setNm = (set.name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return `<div class="section" style="background:#F973160a;border:1px solid #F9731626;border-radius:14px;padding:22px 24px;margin-bottom:32px">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#F97316;margin-bottom:8px">Sealed Product</div>
+      <h2 style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF;margin-bottom:16px">Buy Sealed ${setNm} Product</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:16px">${itemsHTML}</div>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((set.name||'')+' dragon ball super booster')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-weight:700;font-size:12px;text-decoration:none;background:#F97316;color:#fff">&#128722; More sealed on eBay AU &#8599;</a>
+    </div>`;
+  })()}
+
   <div class="section">
     <div class="section-title">${cards?.length ? `All Cards (${cards.length})` : 'Cards'}</div>
     <div class="cards-grid">${allCardsHTML}</div>
