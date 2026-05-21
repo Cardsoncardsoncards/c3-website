@@ -195,6 +195,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   .trust-bar{gap:20px}
   .destinations{grid-template-columns:1fr 1fr}
   .dest-card{padding:22px 18px}
+  .c3-next-grid{grid-template-columns:repeat(2,1fr) !important}
 }
 @media(max-width:400px){
   .destinations{grid-template-columns:1fr}
@@ -433,85 +434,56 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="carousel-viewport"><div id="wilds-carousel" class="carousel-scroll carousel-scroll--right"></div></div>
   </div>
 
-  <div style="margin-bottom:20px">
-    <p style="font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Explore C3</p>
-    <h2 style="font-family:'Cinzel',serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:var(--white);line-height:1.2">Where Do You Want to Go Next?</h2>
-  </div>
-
-  <div class="destinations">
-
-    <a href="/shop.html" class="dest-card dest-card--shop dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--shop">🃏</div>
-        <div>
-          <p class="dest-label">TCG Shop</p>
-          <h2 class="dest-title">Sealed Product on Amazon AU</h2>
-        </div>
-      </div>
-      <p class="dest-body">Pokemon, MTG, One Piece, Lorcana, Dragon Ball, Star Wars Unlimited, Riftbound and Yu-Gi-Oh. Booster boxes, collector boxes, commander decks and accessories — all confirmed on Amazon AU.</p>
-      <p class="dest-arrow">Shop Now →</p>
-    </a>
-
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="dest-card dest-card--ebay dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--ebay">🏪</div>
-        <div>
-          <p class="dest-label">eBay Store</p>
-          <h2 class="dest-title">Singles &amp; Sealed on eBay</h2>
-        </div>
-      </div>
-      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 23,000+ listings across all major TCGs with Australian shipping.</p>
-      <p class="dest-arrow">Visit Store ↗</p>
-    </a>
-
-    <a href="/blog" class="dest-card dest-card--blog dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--blog">📖</div>
-        <div>
-          <p class="dest-label">Blog</p>
-          <h2 class="dest-title">Guides, Reviews &amp; Set Breakdowns</h2>
-        </div>
-      </div>
-      <p class="dest-body">Buying guides, booster box ROI breakdowns, game introductions and set reviews. Written for Australian players, priced in AUD.</p>
-      <p class="dest-arrow">Read Articles →</p>
-    </a>
-
-    <!-- D&D TOOLS — div not <a> to allow nested links -->
-    <div class="dest-card dest-card--dnd" onclick="window.open('https://blasdigital.etsy.com','_blank')">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--dnd">🎲</div>
-        <div>
-          <p class="dest-label">D&amp;D Tools · Etsy Store</p>
-          <h2 class="dest-title">Run Better D&amp;D Sessions</h2>
-        </div>
-      </div>
-      <p class="dest-body">Printable D&amp;D tools from our Etsy store. Tavern mini-games to fill downtime, dungeon traps and puzzles, and DM toolkits to build adventures faster.</p>
-      <div class="dnd-section-links" onclick="event.stopPropagation()">
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56813304" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">🍺</span> Tavern Games
-        </a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=57106584" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">🗝️</span> Traps &amp; Puzzles
-        </a>
-        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56829599" target="_blank" rel="noopener" class="dnd-section-link">
-          <span class="link-icon">📋</span> DM Tools
-        </a>
-      </div>
-      <p class="dest-arrow" style="margin-top:6px">Visit Etsy Shop ↗</p>
+  <div style="margin-bottom:48px">
+    <div style="margin-bottom:20px">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Explore C3</p>
+      <h2 style="font-family:'Cinzel',serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:var(--white);line-height:1.2">Where Do You Want to Go Next?</h2>
     </div>
+    <div class="c3-next-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
 
-    <a href="/tracker.html" class="dest-card dest-card--tracker dest-card--link">
-      <div style="display:flex;align-items:flex-start;gap:14px">
-        <div class="dest-icon dest-icon--tracker">📊</div>
-        <div>
-          <p class="dest-label">Collection Tracker</p>
-          <h2 class="dest-title">Track Your Collection</h2>
-        </div>
-      </div>
-      <p class="dest-body">Log your sealed product, track booster box ROI, and keep a record of what you've opened. Free download — no app required.</p>
-      <p class="dest-arrow">Open Tracker →</p>
-    </a>
+      <a href="/cards" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(201,168,76,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(201,168,76,.25)';this.style.transform=''">
+        <div style="font-size:22px">&#128218;</div>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--gold)">Card Vault</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">250,000+ cards across 27 TCGs with live AUD pricing and eBay AU buy links.</div>
+        <div style="font-size:11px;font-weight:700;color:var(--gold)">Browse cards &#8594;</div>
+      </a>
 
+      <a href="/compare" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(167,139,250,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(167,139,250,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(167,139,250,.25)';this.style.transform=''">
+        <div style="font-size:22px">&#9878;&#65039;</div>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#A78BFA">Compare</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">Side-by-side card comparison across any game. AUD prices, trend data, buy signals.</div>
+        <div style="font-size:11px;font-weight:700;color:#A78BFA">Compare cards &#8594;</div>
+      </a>
+
+      <a href="/market" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(74,222,128,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(74,222,128,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(74,222,128,.25)';this.style.transform=''">
+        <div style="font-size:22px">&#128200;</div>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#4ADE80">Market</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">Price movers, volume trends and market insights across MTG, Pokemon and more.</div>
+        <div style="font-size:11px;font-weight:700;color:#4ADE80">View market &#8594;</div>
+      </a>
+
+      <a href="/tools" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(251,146,60,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(251,146,60,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(251,146,60,.25)';this.style.transform=''">
+        <div style="font-size:22px">&#128295;</div>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#FB923C">Tools</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">EV Calculator, collection tracker, booster box ROI and more free TCG tools.</div>
+        <div style="font-size:11px;font-weight:700;color:#FB923C">Open tools &#8594;</div>
+      </a>
+
+      <a href="/play" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(244,114,182,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(244,114,182,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(244,114,182,.25)';this.style.transform=''">
+        <div style="font-size:22px">&#127918;</div>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#F472B6">Play</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">TCG quizzes, random commander generator and tools to help you play better.</div>
+        <div style="font-size:11px;font-weight:700;color:#F472B6">Start playing &#8594;</div>
+      </a>
+
+      <a href="/blog" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(96,165,250,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(96,165,250,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(96,165,250,.25)';this.style.transform=''">
+        <div style="font-size:22px">&#128214;</div>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#60A5FA">Blog</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">250+ buying guides, set reviews and TCG articles written for Australian players.</div>
+        <div style="font-size:11px;font-weight:700;color:#60A5FA">Read articles &#8594;</div>
+      </a>
+
+    </div>
   </div>
 
   <div class="mission">
