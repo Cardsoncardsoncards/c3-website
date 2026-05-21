@@ -433,70 +433,78 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="carousel-viewport"><div id="wilds-carousel" class="carousel-scroll carousel-scroll--right"></div></div>
   </div>
 
-  <div class="vault-grid">
+  <div class="destinations">
 
-    <a href="/cards/mtg" class="vault-door" style="--door-colour:#A78BFA">
-      <div class="door-icon">&#129497;</div>
-      <div class="door-name">Magic: The Gathering</div>
-      <div class="door-tagline">96,000+ cards &#183; Updated daily</div>
-      <div class="door-status door-status--open">&#9889; Live Now</div>
-      <div class="door-arrow">&#8594;</div>
+    <a href="/shop.html" class="dest-card dest-card--shop dest-card--link">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div class="dest-icon dest-icon--shop">🃏</div>
+        <div>
+          <p class="dest-label">TCG Shop</p>
+          <h2 class="dest-title">Sealed Product on Amazon AU</h2>
+        </div>
+      </div>
+      <p class="dest-body">Pokemon, MTG, One Piece, Lorcana, Dragon Ball, Star Wars Unlimited, Riftbound and Yu-Gi-Oh. Booster boxes, collector boxes, commander decks and accessories — all confirmed on Amazon AU.</p>
+      <p class="dest-arrow">Shop Now →</p>
     </a>
 
-    <a href="/cards/pokemon" class="vault-door" style="--door-colour:#FFCC00">
-      <div class="door-icon">&#9889;</div>
-      <div class="door-name">Pokemon TCG</div>
-      <div class="door-tagline">31,488 cards &middot; Updated daily</div>
-      <div class="door-status door-status--open">&#9889; Live Now</div>
-      <div class="door-arrow">&#8594;</div>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="dest-card dest-card--ebay dest-card--link">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div class="dest-icon dest-icon--ebay">🏪</div>
+        <div>
+          <p class="dest-label">eBay Store</p>
+          <h2 class="dest-title">Singles &amp; Sealed on eBay</h2>
+        </div>
+      </div>
+      <p class="dest-body">Skip the pack lottery. Find the exact card you need from our active eBay store. 23,000+ listings across all major TCGs with Australian shipping.</p>
+      <p class="dest-arrow">Visit Store ↗</p>
     </a>
 
-    <a href="/cards/lorcana" class="vault-door" style="--door-colour:#38BDF8">
-      <div class="door-icon">&#127984;</div>
-      <div class="door-name">Disney Lorcana</div>
-      <div class="door-tagline">2,911 cards &#183; Updated daily</div>
-      <div class="door-status door-status--open">&#9889; Live Now</div>
-      <div class="door-arrow">&#8594;</div>
+    <a href="/blog" class="dest-card dest-card--blog dest-card--link">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div class="dest-icon dest-icon--blog">📖</div>
+        <div>
+          <p class="dest-label">Blog</p>
+          <h2 class="dest-title">Guides, Reviews &amp; Set Breakdowns</h2>
+        </div>
+      </div>
+      <p class="dest-body">Buying guides, booster box ROI breakdowns, game introductions and set reviews. Written for Australian players, priced in AUD.</p>
+      <p class="dest-arrow">Read Articles →</p>
     </a>
 
-    <a href="/cards/yugioh" class="vault-door" style="--door-colour:#C084FC">
-      <div class="door-icon">&#128065;</div>
-      <div class="door-name">Yu-Gi-Oh!</div>
-      <div class="door-tagline">46,588 cards &middot; Updated daily</div>
-      <div class="door-status door-status--open">&#9889; Live Now</div>
-      <div class="door-arrow">&#8594;</div>
-    </a>
+    <!-- D&D TOOLS — div not <a> to allow nested links -->
+    <div class="dest-card dest-card--dnd" onclick="window.open('https://blasdigital.etsy.com','_blank')">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div class="dest-icon dest-icon--dnd">🎲</div>
+        <div>
+          <p class="dest-label">D&amp;D Tools · Etsy Store</p>
+          <h2 class="dest-title">Run Better D&amp;D Sessions</h2>
+        </div>
+      </div>
+      <p class="dest-body">Printable D&amp;D tools from our Etsy store. Tavern mini-games to fill downtime, dungeon traps and puzzles, and DM toolkits to build adventures faster.</p>
+      <div class="dnd-section-links" onclick="event.stopPropagation()">
+        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56813304" target="_blank" rel="noopener" class="dnd-section-link">
+          <span class="link-icon">🍺</span> Tavern Games
+        </a>
+        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=57106584" target="_blank" rel="noopener" class="dnd-section-link">
+          <span class="link-icon">🗝️</span> Traps &amp; Puzzles
+        </a>
+        <a href="https://www.etsy.com/shop/BLASDIGITAL?section_id=56829599" target="_blank" rel="noopener" class="dnd-section-link">
+          <span class="link-icon">📋</span> DM Tools
+        </a>
+      </div>
+      <p class="dest-arrow" style="margin-top:6px">Visit Etsy Shop ↗</p>
+    </div>
 
-    <a href="/cards/onepiece" class="vault-door" style="--door-colour:#F97316">
-      <div class="door-icon">&#9760;&#65039;</div>
-      <div class="door-name">One Piece TCG</div>
-      <div class="door-tagline">6,641 cards &middot; Updated daily</div>
-      <div class="door-status door-status--open">&#9889; Live Now</div>
-      <div class="door-arrow">&rarr;</div>
-    </a>
-
-    <a href="/cards/riftbound" class="vault-door" style="--door-colour:#818CF8">
-      <div class="door-icon">&#9876;&#65039;</div>
-      <div class="door-name">Riftbound</div>
-      <div class="door-tagline">1,159 cards &middot; League of Legends TCG</div>
-      <div class="door-status door-status--open">&#9889; Live Now</div>
-      <div class="door-arrow">&rarr;</div>
-    </a>
-
-    <a href="/cards/starwars" class="vault-door" style="--door-colour:#FFE81F">
-      <div class="door-icon">&#128640;</div>
-      <div class="door-name">Star Wars Unlimited</div>
-      <div class="door-tagline">6,113 cards &middot; Updated daily</div>
-      <div class="door-status door-status--open">&#9889; Live Now</div>
-      <div class="door-arrow">&rarr;</div>
-    </a>
-
-    <a href="/cards/dragonball" class="vault-door" style="--door-colour:#F97316">
-      <div class="door-icon">&#128009;</div>
-      <div class="door-name">Dragon Ball Super</div>
-      <div class="door-tagline">6,261 cards &middot; Updated daily</div>
-      <div class="door-status door-status--open">&#9889; Live Now</div>
-      <div class="door-arrow">&rarr;</div>
+    <a href="/tracker.html" class="dest-card dest-card--tracker dest-card--link">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div class="dest-icon dest-icon--tracker">📊</div>
+        <div>
+          <p class="dest-label">Collection Tracker</p>
+          <h2 class="dest-title">Track Your Collection</h2>
+        </div>
+      </div>
+      <p class="dest-body">Log your sealed product, track booster box ROI, and keep a record of what you've opened. Free download — no app required.</p>
+      <p class="dest-arrow">Open Tracker →</p>
     </a>
 
   </div>
