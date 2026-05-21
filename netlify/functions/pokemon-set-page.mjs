@@ -239,6 +239,7 @@ export default async (req) => {
 <title>${set.name} Card Prices Australia | Pokemon TCG | Cards on Cards on Cards</title>
 <meta name="description" content="Browse all ${cards.length} ${set.name} Pokemon cards with live AUD pricing and eBay AU buy links. Filter by rarity and type. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/pokemon/sets/${setSlug}">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -349,7 +350,7 @@ ${NAV}
 <footer style="border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px">
   <p><a href="/" style="color:var(--text2);margin:0 8px">Home</a><a href="/cards" style="color:var(--text2);margin:0 8px">Card Vault</a><a href="/cards/pokemon" style="color:var(--text2);margin:0 8px">Pokemon TCG</a><a href="/blog" style="color:var(--text2);margin:0 8px">Blog</a><a href="/tracker.html" style="color:var(--text2);margin:0 8px">Tracker</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px">Pokemon card data via TCGdex. Prices in AUD are estimates based on USD conversion. Not financial advice.</p>
+  <p style="margin-top:6px;font-size:11px">Pokemon card data via TCGdex. Prices in AUD are estimates based on USD conversion. Not financial advice. Affiliate links may earn a small commission.</p>
 </footer>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>

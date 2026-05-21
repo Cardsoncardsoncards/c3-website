@@ -163,8 +163,8 @@ export default async (req) => {
       <a href="/cards/vanguard" class="nav-link" style="color:#DC2626;border-color:#DC262680;background:#DC262614">Vanguard</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
       <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools.html" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play.html" class="nav-link nav-link--play">Play</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>

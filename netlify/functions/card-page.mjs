@@ -630,8 +630,8 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
       <a href="/cards/mtg" class="nav-link-item nl-mtg">MTG</a>
       <a href="/compare" class="nav-link-item nl-compare">Compare</a>
       <a href="/market" class="nav-link-item nl-market">Market</a>
-      <a href="/tools.html" class="nav-link-item nl-tools">Tools</a>
-      <a href="/play.html" class="nav-link-item nl-play">Play</a>
+      <a href="/tools" class="nav-link-item nl-tools">Tools</a>
+      <a href="/play" class="nav-link-item nl-play">Play</a>
       <a href="/blog" class="nav-link-item nl-blog">Blog</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link-item nl-ebay">Shop eBay &#8599;</a>
     </div>
@@ -1669,8 +1669,8 @@ async function renderBannedPage(slug) {
     <a href="/cards/mtg" class="nav-link" style="color:#C9A84C;border-color:rgba(201,168,76,.5)">MTG</a>
     <a href="/compare" class="nav-link">Compare</a>
     <a href="/market" class="nav-link">Market</a>
-    <a href="/tools.html" class="nav-link">Tools</a>
-    <a href="/play.html" class="nav-link">Play</a>
+    <a href="/tools" class="nav-link">Tools</a>
+    <a href="/play" class="nav-link">Play</a>
     <a href="/blog" class="nav-link">Blog</a>
     <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=${EPN}&mkevt=1" target="_blank" rel="noopener" class="nav-link">Shop eBay &#8599;</a>
   </div>

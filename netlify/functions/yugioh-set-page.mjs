@@ -227,6 +227,7 @@ export default async (req) => {
 <title>${set.name} Card Prices Australia | Yu-Gi-Oh | Cards on Cards on Cards</title>
 <meta name="description" content="Browse all ${cards.length} ${set.name} Yu-Gi-Oh cards with live AUD pricing. Filter by attribute and rarity. eBay AU buy links. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/yugioh/sets/${setCode}">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">

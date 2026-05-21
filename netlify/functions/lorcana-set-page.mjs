@@ -179,12 +179,12 @@ export default async (req) => {
 
   const topTwo = pricedCards.slice(0, 2);
   const contextText = topTwo.length >= 2
-    ? `${set.name} contains ${cards.length} Lorcana cards. The most valuable are <strong>${topTwo[0].version ? topTwo[0].name+' — '+topTwo[0].version : topTwo[0].name}</strong> at ~AU$${toAud(topTwo[0]).toFixed(0)} and <strong>${topTwo[1].version ? topTwo[1].name+' — '+topTwo[1].version : topTwo[1].name}</strong> at ~AU$${toAud(topTwo[1]).toFixed(0)}. Prices updated daily.`
+    ? `${set.name} contains ${cards.length} Lorcana cards. The most valuable are <strong>${topTwo[0].version ? topTwo[0].name+' - '+topTwo[0].version : topTwo[0].name}</strong> at ~AU$${toAud(topTwo[0]).toFixed(0)} and <strong>${topTwo[1].version ? topTwo[1].name+' - '+topTwo[1].version : topTwo[1].name}</strong> at ~AU$${toAud(topTwo[1]).toFixed(0)}. Prices updated daily.`
     : `${set.name} contains ${cards.length} Lorcana cards. Prices are converted from USD to AUD daily.`;
 
   const top5HTML = top5.map(c => {
     const aud = toAud(c);
-    const fullName = c.version ? `${c.name} — ${c.version}` : c.name;
+    const fullName = c.version ? `${c.name} - ${c.version}` : c.name;
     const ink = INK_COLOURS[c.ink] || { bg:'#888', text:'#fff' };
     return `<a href="/cards/lorcana/${c.slug}" style="flex:0 0 150px;background:#0e1118;border:1px solid rgba(1,137,196,.25);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s;display:block" onmouseover="this.style.borderColor='#0189C4';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(1,137,196,.25)';this.style.transform='none'">
       <div style="position:absolute;top:6px;left:6px;background:${ink.bg};color:${ink.text};font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase">${c.ink||''}</div>
@@ -197,7 +197,7 @@ export default async (req) => {
   const cardGrid = cards.map(c => {
     const aud = toAud(c);
     const priceDisplay = aud >= 0.50 ? `~AU$${aud.toFixed(0)}` : `<span style="color:rgba(160,168,192,.35);font-size:9px">no price</span>`;
-    const fullName = c.version ? `${c.name} — ${c.version}` : c.name;
+    const fullName = c.version ? `${c.name} - ${c.version}` : c.name;
     const ink = INK_COLOURS[c.ink] || { bg:'#888' };
     return `<a href="/cards/lorcana/${c.slug}" class="card-item" data-rarity="${(c.rarity||'').toLowerCase()}" data-ink="${(c.ink||'').toLowerCase()}" data-price="${aud.toFixed(2)}">
       <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${ink.bg}"></div>
@@ -263,6 +263,7 @@ export default async (req) => {
 <title>${set.name} Card Prices Australia | Disney Lorcana | Cards on Cards on Cards</title>
 <meta name="description" content="Browse all ${cards.length} ${set.name} Disney Lorcana cards with live AUD pricing. Filter by ink colour and rarity. eBay AU buy links. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/lorcana/sets/${setCode}">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" href="/c3logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -325,7 +326,7 @@ ${NAV}
     </details>
     <details style="margin-top:12px;padding-bottom:4px">
       <summary style="cursor:pointer;font-size:14px;font-weight:600">What is the most valuable ${set.name} card?</summary>
-      <p style="font-size:13px;color:var(--text2);margin-top:8px">${pricedCards.length ? `The most valuable card is <strong style="color:var(--text)">${pricedCards[0].version ? pricedCards[0].name+' — '+pricedCards[0].version : pricedCards[0].name}</strong> at ~AU$${toAud(pricedCards[0]).toFixed(2)}.` : 'Check eBay AU for current prices.'}</p>
+      <p style="font-size:13px;color:var(--text2);margin-top:8px">${pricedCards.length ? `The most valuable card is <strong style="color:var(--text)">${pricedCards[0].version ? pricedCards[0].name+' - '+pricedCards[0].version : pricedCards[0].name}</strong> at ~AU$${toAud(pricedCards[0]).toFixed(2)}.` : 'Check eBay AU for current prices.'}</p>
     </details>
   </div>
 </div>

@@ -121,7 +121,7 @@ export default async (req) => {
         <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
         ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
       </a>`;
-    }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing — check back after tonight's update.</div>`;
+    }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing, check back after tonight's update.</div>`;
 
     const ebayListingsHTML = ebayListings.length ? ebayListings.slice(0,4).map(item => {
       const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
