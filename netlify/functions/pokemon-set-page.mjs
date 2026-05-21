@@ -97,11 +97,7 @@ export default async (req) => {
 <body><div class="wrap"><div class="icon">🃏</div><h1>Set Not Found</h1><p>This Pokemon set page isn't available yet. Browse all Pokemon cards or return home.</p><a href="/cards/pokemon" class="btn">Browse All Pokemon Cards</a><a href="/" class="btn btn-sec">← Home</a></div></body>
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
-  const [sets, cards, ebayToken] = await Promise.all([
-    supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
-    supabaseGet(`pokemon_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,image_url,market_price,price_aud,rarity,number`),
-    getEbayToken()
-  ]);
+  const sets = await supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`);
 
   if (!sets || !sets[0]) return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
@@ -133,6 +129,13 @@ export default async (req) => {
 </body>
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   const set = sets[0];
+
+  const [cardsRes, ebayTokenRes] = await Promise.allSettled([
+    supabaseGet(`pokemon_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,image_url,market_price,price_aud,rarity,number`),
+    getEbayToken()
+  ]);
+  const cards = cardsRes.status === 'fulfilled' && Array.isArray(cardsRes.value) ? cardsRes.value : [];
+  const ebayToken = ebayTokenRes.status === 'fulfilled' ? ebayTokenRes.value : null;
 
   const ebayListings = await getEbayListings(`${set.name} pokemon card`, ebayToken);
   const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
