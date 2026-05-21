@@ -1,0 +1,47 @@
+name: Syntax Check
+
+# Fast guard against syntax errors in serverless functions and sync scripts
+# before they reach Netlify. Runs `node --check` on every .mjs file.
+
+on:
+  push:
+    paths:
+      - 'netlify/functions/**/*.mjs'
+      - 'scripts/**/*.mjs'
+      - '.github/workflows/syntax-check.yml'
+  pull_request:
+    paths:
+      - 'netlify/functions/**/*.mjs'
+      - 'scripts/**/*.mjs'
+  workflow_dispatch:
+
+jobs:
+  syntax-check:
+    name: node --check all .mjs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Syntax-check every .mjs file
+        run: |
+          set -euo pipefail
+          fail=0
+          count=0
+          while IFS= read -r f; do
+            count=$((count + 1))
+            if ! node --check "$f"; then
+              echo "::error file=$f::Syntax error in $f"
+              fail=1
+            fi
+          done < <(find netlify/functions scripts -type f -name '*.mjs' | sort)
+          echo "Checked $count .mjs file(s)."
+          if [ "$fail" -ne 0 ]; then
+            echo "::error::Syntax check failed — see annotations above."
+            exit 1
+          fi
+          echo "All .mjs files passed syntax check."

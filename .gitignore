@@ -3,6 +3,7 @@ _site/
 .DS_Store
 .env
 .env.local
+.claude/
 scryfall-bulk.json
 !_site/cards.html  
 !_site/legal.html  
