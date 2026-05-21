@@ -67,7 +67,7 @@ function esc(str) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-export default async () => {
+export default async (req) => {
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','starter deck'];
 
   const sevenDaysAgo = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
@@ -441,12 +441,12 @@ export default async () => {
   <div class="ticker-track">${tickerItems}</div>
 </div>
 
-<div class="wrap" style="padding-top:28px">
-  <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
-    <h1 style="font-size:32px">MTG Card Prices in Australia</h1>
-    <span style="font-size:11px;color:var(--text2)">&#128200; ${syncLabel}</span>
-  </div>
-  <p style="color:var(--text2);margin-bottom:28px">Australia's MTG price guide with live AUD pricing, 52-week price ranges, and direct eBay AU buy links. Updated daily.</p>
+<div style="padding:52px 24px 36px;text-align:center;position:relative;z-index:1">
+  <div style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Card Vault -- MTG</div>
+  <h1 style="font-family:'Cinzel',serif;font-size:clamp(24px,5vw,50px);font-weight:900;color:var(--text);margin-bottom:12px;line-height:1.1">MTG Card Prices <span style="color:var(--gold)">in Australia</span></h1>
+  <p style="font-size:14px;color:var(--text2);max-width:520px;margin:0 auto 8px">Australia's MTG price guide with live AUD pricing, 52-week price ranges, and direct eBay AU buy links. Updated daily.</p>
+</div>
+<div class="wrap">
 
   <!-- Stat Bar -->
   <div class="stat-bar">
@@ -481,25 +481,27 @@ export default async () => {
     <div class="fmt-strip">${formatPills}</div>
   </div>
 
-  <!-- Commander Carousel -->
-  <div style="margin-bottom:32px;padding:24px;background:rgba(107,107,255,.04);border:1px solid rgba(107,107,255,.15);border-radius:var(--radius);overflow:hidden">
-    <div style="text-align:center;margin-bottom:20px">
-      <p style="font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#9898FF;margin-bottom:6px">Commander Spotlight</p>
-      <h2 style="font-family:Cinzel,serif;font-size:20px;color:var(--text);margin:0">Your Next Commander Awaits</h2>
-    </div>
-    <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)">
-      <div id="cmd-mtg-carousel-track" class="cmd-track">
-        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s infinite"></div>
-        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .1s infinite"></div>
-        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .2s infinite"></div>
-        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .3s infinite"></div>
-        <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .4s infinite"></div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:14px">
-      <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF">Generate a random Commander &rarr;</a>
+</div>
+
+<!-- Commander Carousel (full-width) -->
+<section class="carousel-section" style="position:relative;z-index:1;margin-bottom:28px">
+  <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#9898FF;margin-bottom:8px;padding:0 24px">Commander Spotlight</div>
+  <div style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;padding:0 24px">Your Next Commander Awaits</div>
+  <div style="overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 4%,black 96%,transparent)">
+    <div id="cmd-mtg-carousel-track" class="cmd-track">
+      <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s infinite"></div>
+      <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .1s infinite"></div>
+      <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .2s infinite"></div>
+      <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .3s infinite"></div>
+      <div style="min-width:140px;height:200px;background:rgba(107,107,255,.08);border-radius:8px;animation:shimmer 1.5s .4s infinite"></div>
     </div>
   </div>
+  <div style="text-align:center;margin-top:14px">
+    <a href="/cards/mtg/random-commander" style="font-size:12px;color:#9898FF">Generate a random Commander &rarr;</a>
+  </div>
+</section>
+
+<div class="wrap">
 
   ${hasMovers ? `<!-- Weekly Market Pulse -->
   <div style="margin-bottom:32px">
