@@ -161,7 +161,7 @@
 <div class="hero fade-up">
   <div class="hero-eyebrow">Australia and Global</div>
   <h1>TCG Release <span>Calendar</span></h1>
-  <p class="hero-sub">Every confirmed set release and tournament date for Australian players. MTG, Pokemon, Riftbound, Lorcana, One Piece and more. Updated regularly.</p>
+  <p class="hero-sub">Every confirmed TCG set release, tournament and event for Australian players. MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Dragon Ball, Star Wars, Riftbound and more. Updated from official publisher sources.</p>
 </div>
 
 <!-- UPCOMING EVENTS CAROUSEL -->
@@ -216,36 +216,51 @@
 <script>
 // ── FULL EVENT DATA ───────────────────────────────────────────────────────────
 const EVENTS = [
-  // MAY 2026
   {date:'2026-05-08',game:'RIFTBOUND',colour:'#EF4444',name:'Unleashed (Set 3)',type:'Set Release',desc:'220+ cards, Ultimate rarity, XP/Hunt/Ambush mechanics. Baron Nashor Ultimate Rare.',status:'confirmed',ebay:'riftbound+unleashed'},
-  {date:'2026-05-08',game:'LORCANA',colour:'#38BDF8',name:'Wilds Unknown',type:'Set Release',desc:'LGS release. Wide retail May 15.',status:'confirmed',ebay:'lorcana+wilds+unknown'},
+  {date:'2026-05-08',game:'LORCANA',colour:'#38BDF8',name:'Wilds Unknown',type:'Set Release',desc:'LGS and prerelease release. Wide retail May 15.',status:'confirmed',ebay:'lorcana+wilds+unknown'},
   {date:'2026-05-15',game:'LORCANA',colour:'#38BDF8',name:'Wilds Unknown',type:'Wide Release',desc:'Wide retail release across Australian stores.',status:'confirmed',ebay:'lorcana+wilds+unknown'},
+  {date:'2026-05-15',game:'OTHER',colour:'#94A3B8',name:'Digimon ST-23 / ST-24',type:'Set Release',desc:'Starter decks Digimon Beatbreak and Data Squad. English region release.',status:'confirmed',ebay:'digimon+card+game'},
   {date:'2026-05-15',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Sydney',type:'Tournament',desc:'Sydney Showground, Olympic Park NSW. First APAC Regional Qualifier. USD$25,000 prize pool.',status:'tournament',ebay:'riftbound+cards'},
+  {date:'2026-05-22',game:'OTHER',colour:'#94A3B8',name:'Digimon Dual Revolution [BT-25]',type:'Set Release',desc:'Main booster set. English region official schedule.',status:'confirmed',ebay:'digimon+dual+revolution'},
+  {date:'2026-05-22',game:'POKEMON',colour:'#FFCC00',name:'Mega Evolution: Chaos Rising',type:'Set Release',desc:'Main expansion. Australian street date aligned with global schedule.',status:'confirmed',ebay:'pokemon+mega+evolution+chaos+rising'},
   {date:'2026-05-23',game:'POKEMON',colour:'#FFCC00',name:'Melbourne Regional Championships',type:'Tournament',desc:'MCEC South Wharf VIC. TCG, VGC and Pokemon GO. Official Championship Points event.',status:'tournament',ebay:'pokemon+cards'},
   {date:'2026-05-29',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Vancouver',type:'Tournament',desc:'Vancouver Convention Centre, Canada.',status:'confirmed',ebay:'riftbound+cards'},
-  // JUNE 2026
+  {date:'2026-06-04',game:'YUGIOH',colour:'#C084FC',name:'Battles of Legend: Glorious Gallery',type:'Set Release',desc:'Booster set. Confirmed AU date aligned with distributor data.',status:'confirmed',ebay:'yugioh+battles+legend+glorious+gallery'},
+  {date:'2026-06-11',game:'ONEPIECE',colour:'#FB923C',name:'OP-16 The Time of Battle',type:'Set Release',desc:'Main booster set. AU typically 1 week after Japanese street date.',status:'confirmed',ebay:'one+piece+card+game+op16'},
   {date:'2026-06-12',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Utrecht',type:'Tournament',desc:'Jaarbeurs Utrecht, Netherlands.',status:'confirmed',ebay:'riftbound+cards'},
+  {date:'2026-06-12',game:'DRAGONBALL',colour:'#F97316',name:'Cross Force [FB10]',type:'Set Release',desc:'Dragon Ball Super Fusion World booster. English release aligned with JP schedule.',status:'confirmed',ebay:'dragon+ball+super+fusion+world+fb10'},
   {date:'2026-06-19',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Hartford',type:'Tournament',desc:'Connecticut Convention Center, USA.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-06-01',game:'POKEMON',colour:'#FFCC00',name:'Extradimensional Crisis',type:'Set Release',desc:'Gen 9 continuation. Australian dates typically 1 week after US street date.',status:'estimated',ebay:'pokemon+extradimensional'},
-  {date:'2026-06-01',game:'MTG',colour:'#A78BFA',name:'Edge of Eternities',type:'Set Release',desc:'New MTG plane. First half 2026 major release.',status:'estimated',ebay:'mtg+edge+eternities'},
-  // JULY 2026
+  {date:'2026-06-26',game:'MTG',colour:'#A78BFA',name:'Marvel Super Heroes',type:'Set Release',desc:'Universes Beyond main set. Avengers, X-Men, Spider-Man and more. High collector demand.',status:'confirmed',ebay:'mtg+marvel+super+heroes'},
+  {date:'2026-07-03',game:'YUGIOH',colour:'#C084FC',name:'Chaos Origins',type:'Set Release',desc:'Booster set. Confirmed via distributor schedule.',status:'confirmed',ebay:'yugioh+chaos+origins'},
+  {date:'2026-07-03',game:'OTHER',colour:'#94A3B8',name:'Digimon Digital World Shambala [EX-12]',type:'Set Release',desc:'Extra booster. English region schedule.',status:'confirmed',ebay:'digimon+ex12'},
   {date:'2026-07-08',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Singapore Badge Sale',type:'Tournament',desc:'Badge sales open 9am SGT (11am AEST). Set a reminder now.',status:'confirmed',ebay:'riftbound+cards'},
+  {date:'2026-07-17',game:'POKEMON',colour:'#FFCC00',name:'Mega Evolution: Pitch Black',type:'Set Release',desc:'Main expansion. Press schedule confirmed, AU dates typically aligned within 1 week.',status:'confirmed',ebay:'pokemon+mega+evolution+pitch+black'},
+  {date:'2026-07-17',game:'STARWARS',colour:'#60A5FA',name:'Ashes of the Empire',type:'Set Release',desc:'Booster set. Month confirmed officially, exact AU date high-confidence secondary source.',status:'confirmed',ebay:'star+wars+unlimited+ashes+empire'},
+  {date:'2026-07-24',game:'LORCANA',colour:'#38BDF8',name:'Attack of the Vine',type:'Set Release',desc:'Wide retail release. Confirmed via Ravensburger press.',status:'confirmed',ebay:'lorcana+attack+vine'},
+  {date:'2026-07-24',game:'OTHER',colour:'#94A3B8',name:'Gundam GD05 Freedom Ascension',type:'Set Release',desc:'Anniversary booster. Confirmed via Bandai schedule.',status:'confirmed',ebay:'gundam+card+game'},
   {date:'2026-07-24',game:'RIFTBOUND',colour:'#EF4444',name:'Vendetta Pre-Rift Week',type:'Release Event',desc:'Local game store prerelease events globally. First chance to play Set 4.',status:'confirmed',ebay:'riftbound+vendetta'},
   {date:'2026-07-31',game:'RIFTBOUND',colour:'#EF4444',name:'Vendetta (Set 4)',type:'Set Release',desc:'First simultaneous global English and Chinese release. New Legends, new mechanics.',status:'confirmed',ebay:'riftbound+vendetta'},
-  {date:'2026-07-01',game:'MTG',colour:'#A78BFA',name:'Bloomburrow 2026',type:'Set Release',desc:'Sequel to popular 2025 set.',status:'estimated',ebay:'mtg+bloomburrow'},
-  // AUGUST 2026
+  {date:'2026-08-14',game:'MTG',colour:'#A78BFA',name:'The Hobbit',type:'Set Release',desc:'Universes Beyond main set. Middle-earth characters and story across the card set.',status:'confirmed',ebay:'mtg+the+hobbit'},
+  {date:'2026-08-21',game:'DRAGONBALL',colour:'#F97316',name:'Story Booster 01 [ST01]',type:'Set Release',desc:'Dragon Ball Super Fusion World first story booster. Confirmed via official schedule.',status:'confirmed',ebay:'dragon+ball+super+fusion+world'},
   {date:'2026-08-21',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Barcelona',type:'Tournament',desc:'Barcelona, Spain.',status:'confirmed',ebay:'riftbound+cards'},
-  // SEPTEMBER 2026
-  {date:'2026-09-01',game:'MTG',colour:'#A78BFA',name:'Duskmourn 2026',type:'Set Release',desc:'Horror plane return.',status:'estimated',ebay:'mtg+duskmourn'},
-  {date:'2026-09-04',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Singapore',type:'Tournament',desc:'Second APAC Regional Qualifier. Badges on sale July 8. Invitation path to World Championship.',status:'confirmed',ebay:'riftbound+cards'},
+  {date:'2026-08-28',game:'ONEPIECE',colour:'#FB923C',name:'OP-17 The World Strongest Warriors',type:'Set Release',desc:'Booster set. Official month confirmed, AU exact distributor date high-confidence.',status:'confirmed',ebay:'one+piece+card+game+op17'},
+  {date:'2026-09-04',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Singapore',type:'Tournament',desc:'Second APAC Regional Qualifier. Invitation path to World Championship.',status:'confirmed',ebay:'riftbound+cards'},
   {date:'2026-09-21',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance Preview Season',type:'Preview',desc:'Set 5 card reveals begin. Features Ekko and Seraphine.',status:'confirmed',ebay:'riftbound+radiance'},
-  // OCTOBER 2026
-  {date:'2026-10-10',game:'RIFTBOUND',colour:'#EF4444',name:'Melbourne Riftbound Event',type:'Tournament',desc:'Ahri, Alluring exclusive promo card. Convention-style event with demos and competitive play.',status:'confirmed',ebay:'riftbound+cards'},
+  {date:'2026-10-02',game:'MTG',colour:'#A78BFA',name:'Reality Fracture',type:'Set Release',desc:'Main set. Confirmed on high-confidence MTG release schedule.',status:'confirmed',ebay:'mtg+reality+fracture'},
+  {date:'2026-10-10',game:'RIFTBOUND',colour:'#EF4444',name:'Melbourne Riftbound Event',type:'Tournament',desc:'Ahri Alluring exclusive promo card. Convention-style event.',status:'confirmed',ebay:'riftbound+cards'},
   {date:'2026-10-16',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance Pre-Rift',type:'Release Event',desc:'Local game store Sealed events globally for Set 5.',status:'confirmed',ebay:'riftbound+radiance'},
   {date:'2026-10-23',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance (Set 5)',type:'Set Release',desc:'Final 2026 set. Features Ekko and Seraphine. Global simultaneous release.',status:'confirmed',ebay:'riftbound+radiance'},
-  {date:'2026-10-25',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Los Angeles',type:'Tournament',desc:'Final 2026 Regional Qualifier. Riot\'s hometown.',status:'confirmed',ebay:'riftbound+cards'},
-  // NOVEMBER 2026
-  {date:'2026-11-01',game:'MTG',colour:'#A78BFA',name:'Final Fantasy Crossover',type:'Set Release',desc:'Universes Beyond collaboration.',status:'estimated',ebay:'mtg+final+fantasy'},
+  {date:'2026-10-23',game:'OTHER',colour:'#94A3B8',name:'Gundam GD06 Stardust Trails',type:'Set Release',desc:'Mobile Suit Gundam ZZ themed booster. Confirmed via Bandai schedule.',status:'confirmed',ebay:'gundam+card+game'},
+  {date:'2026-10-25',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Los Angeles',type:'Tournament',desc:'Final 2026 Regional Qualifier.',status:'confirmed',ebay:'riftbound+cards'},
+  {date:'2026-10-30',game:'LORCANA',colour:'#38BDF8',name:"Illumineer's Quest: The Great Hunny Rescue",type:'Set Release',desc:"Co-op quest product. Month confirmed by Ravensburger.",status:'confirmed',ebay:'lorcana'},
+  {date:'2026-10-31',game:'DRAGONBALL',colour:'#F97316',name:'Brightness of Hope [FB11]',type:'Set Release',desc:'Booster pack. Announced without exact date, October placeholder.',status:'estimated',ebay:'dragon+ball+super+fusion+world'},
+  {date:'2026-11-15',game:'STARWARS',colour:'#60A5FA',name:'Homeworlds',type:'Set Release',desc:'Booster set. Month announced officially.',status:'confirmed',ebay:'star+wars+unlimited+homeworlds'},
+  {date:'2026-11-20',game:'MTG',colour:'#A78BFA',name:'Star Trek',type:'Set Release',desc:'Universes Beyond set. Confirmed on high-confidence MTG release schedule.',status:'confirmed',ebay:'mtg+star+trek'},
+  {date:'2026-12-01',game:'LORCANA',colour:'#38BDF8',name:'Hyperia City / Pixar Coco set',type:'Set Release',desc:'Main set. Quarter announced only. December placeholder.',status:'estimated',ebay:'lorcana'},
+  {date:'2026-12-01',game:'OTHER',colour:'#94A3B8',name:'Digimon BT-27 / ST-25 / ST-26',type:'Set Release',desc:'Booster and starter decks. Tentative schedule.',status:'estimated',ebay:'digimon+card+game'},
+  {date:'2027-01-01',game:'OTHER',colour:'#94A3B8',name:'Digimon EX-14',type:'Set Release',desc:'Extra booster. Tentative schedule.',status:'estimated',ebay:'digimon+card+game'},
+  {date:'2027-03-01',game:'OTHER',colour:'#94A3B8',name:'Digimon BT-28 / ST-27',type:'Set Release',desc:'Booster and starter deck. Tentative schedule.',status:'estimated',ebay:'digimon+card+game'},
+  {date:'2027-03-31',game:'LORCANA',colour:'#38BDF8',name:'Quest / Onward-themed set',type:'Set Release',desc:'Future main set. Theme announced, no confirmed date.',status:'estimated',ebay:'lorcana'},
 ];
 
 const GAME_LABELS = {MTG:'Magic: The Gathering',POKEMON:'Pokemon TCG',LORCANA:'Disney Lorcana',ONEPIECE:'One Piece',YUGIOH:'Yu-Gi-Oh',RIFTBOUND:'Riftbound',STARWARS:'Star Wars Unlimited',DRAGONBALL:'Dragon Ball Super',OTHER:'Other TCGs'};

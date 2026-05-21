@@ -138,8 +138,7 @@ export default async (req) => {
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   const set = sets[0];
 
-  // yugioh_cards has no set linkage column - cannot filter by set
-  const cards = [];
+  const cards = set ? await supabaseGet(`yugioh_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=200&select=slug,name,image_url,market_price,rarity,attribute`) : [];
 
   const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;

@@ -38,10 +38,10 @@ const ROTATION_DATE = 'Bloomburrow block rotates ~Sep 2026';
 
 // Upcoming MTG releases 2026-2027 (static - update each session as needed)
 const UPCOMING = [
-  { name: 'Final Fantasy', date: 'Jun 2026', code: 'fft' },
-  { name: 'Edge of Eternities', date: 'Jul 2026', code: 'ede' },
-  { name: 'Mordenkainen Monsters Multiverse', date: 'Sep 2026', code: 'mmm' },
-  { name: 'Return to Thunder Junction', date: 'Nov 2026', code: 'rtj' },
+  { name: 'Marvel Super Heroes', date: 'Jun 2026', code: 'msh' },
+  { name: 'The Hobbit', date: 'Aug 2026', code: 'hob' },
+  { name: 'Reality Fracture', date: 'Oct 2026', code: 'rfr' },
+  { name: 'Star Trek', date: 'Nov 2026', code: 'trk' },
 ];
 
 // Format ban list pills

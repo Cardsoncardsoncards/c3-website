@@ -3,7 +3,11 @@ const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 
-const CALENDAR_EVENTS = []; // No confirmed AU Dragon Ball events in current data
+const CALENDAR_EVENTS = [
+  { date: '2026-06-12', name: 'Cross Force [FB10]', type: 'Set Release' },
+  { date: '2026-08-21', name: 'Story Booster 01 [ST01]', type: 'Set Release' },
+  { date: '2026-10-31', name: 'Brightness of Hope [FB11]', type: 'Set Release' },
+];
 
 async function supabaseGet(path) {
   const controller = new AbortController();

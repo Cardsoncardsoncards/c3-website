@@ -16,10 +16,10 @@ const SET_PH      = 'Scarlet, Paldea, Temporal Forces...';
 const CANONICAL   = 'https://cardsoncardsoncards.com.au/cards/pokemon';
 
 const CALENDAR_EVENTS = [
+  { date: '2026-05-22', name: 'Mega Evolution: Chaos Rising', type: 'Set Release' },
   { date: '2026-05-23', name: 'Melbourne Regional Championships', type: 'Tournament' },
-  { date: '2026-06-01', name: 'Extradimensional Crisis',          type: 'Set Release' },
-  { date: '2026-06-13', name: 'Prismatic Evolutions Reprint',     type: 'Set Release' },
-  { date: '2026-08-01', name: 'Pokemon World Championships',      type: 'Tournament'  },
+  { date: '2026-07-17', name: 'Mega Evolution: Pitch Black', type: 'Set Release' },
+  { date: '2026-08-01', name: 'Pokemon World Championships', type: 'Tournament' },
 ];
 
 // --- Helpers ---
@@ -294,7 +294,7 @@ export default async (req) => {
         const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
         const year = s.release_date ? s.release_date.slice(0, 4) : '';
         const newBadge = isNew(s.release_date) ? '<span class="new-badge">NEW</span>' : '';
-        return `<a href="/cards/pokemon/sets/${encodeURIComponent(s.slug||s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}">
+        return `<a href="/cards/pokemon/sets/${encodeURIComponent(s.slug||s.abbreviation||s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}">
         <span class="set-tile-name">${esc(name)}${newBadge}</span>
         <span class="set-tile-meta">${year}${s.card_count ? ' &middot; ' + s.card_count + ' cards' : ''}</span>
       </a>`;

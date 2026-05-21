@@ -5,8 +5,9 @@ const EPN_CAMPID        = '5339146789';
 const GAME_COLOUR       = '#38BDF8';
 
 const CALENDAR_EVENTS = [
-  {date:'2026-05-08',name:'Wilds Unknown',type:'Set Release',colour:'#38BDF8'},
-  {date:'2026-05-15',name:'Wilds Unknown Wide Release',type:'Wide Release',colour:'#38BDF8'},
+  { date: '2026-07-24', name: 'Attack of the Vine', type: 'Set Release' },
+  { date: '2026-10-30', name: "Illumineer's Quest: The Great Hunny Rescue", type: 'Set Release' },
+  { date: '2026-12-01', name: 'Hyperia City Set', type: 'Set Release' },
 ];
 
 async function supabaseGet(path) {

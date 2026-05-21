@@ -9,9 +9,8 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 
 const CALENDAR_EVENTS = [
-  {date:'2026-06-12',name:'Quarter Century Stampede', type:'Set Release'},
-  {date:'2026-07-10',name:'Maze of Millennia II',     type:'Set Release'},
-  {date:'2026-08-01',name:'Australian YCS',           type:'Tournament'},
+  { date: '2026-06-04', name: 'Battles of Legend: Glorious Gallery', type: 'Set Release' },
+  { date: '2026-07-03', name: 'Chaos Origins', type: 'Set Release' },
 ];
 
 async function supabaseGet(path) {

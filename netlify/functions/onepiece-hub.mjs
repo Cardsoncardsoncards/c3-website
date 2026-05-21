@@ -3,7 +3,10 @@ const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 
-const CALENDAR_EVENTS = []; // No confirmed AU One Piece events in current data
+const CALENDAR_EVENTS = [
+  { date: '2026-06-11', name: 'OP-16 The Time of Battle', type: 'Set Release' },
+  { date: '2026-08-28', name: 'OP-17 The World Strongest Warriors', type: 'Set Release' },
+];
 
 async function supabaseGet(path) {
   const controller = new AbortController();

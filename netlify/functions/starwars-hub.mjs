@@ -3,7 +3,10 @@ const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 
-const CALENDAR_EVENTS = []; // No confirmed AU Star Wars events in current data
+const CALENDAR_EVENTS = [
+  { date: '2026-07-17', name: 'Ashes of the Empire', type: 'Set Release' },
+  { date: '2026-11-15', name: 'Homeworlds', type: 'Set Release' },
+];
 
 async function supabaseGet(path) {
   const controller = new AbortController();
