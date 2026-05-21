@@ -355,12 +355,12 @@ export default async (req) => {
       ${sealedCards.map(p => {
         const sp = p.price_aud > 0 ? parseFloat(p.price_aud) : p.market_price > 0 ? (p.market_price * (AUD_RATE||1.58)) : 0;
         const sl = p.low_price > 0 ? (p.low_price * (AUD_RATE||1.58)) : 0;
-        return \`<a href="/cards/grandarchive/${p.slug}" style="flex-shrink:0;width:150px;background:#111420;border:1px solid #242840;border-radius:8px;padding:10px;text-decoration:none;display:block">
-          ${p.image_url ? \`<img src="${esc(p.image_url)}" alt="${esc(p.name)}" style="width:100%;max-height:100px;object-fit:contain;border-radius:4px;margin-bottom:6px" loading="lazy">\` : ''}
+        return `<a href="/cards/grandarchive/${p.slug}" style="flex-shrink:0;width:150px;background:#111420;border:1px solid #242840;border-radius:8px;padding:10px;text-decoration:none;display:block">
+          ${p.image_url ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" style="width:100%;max-height:100px;object-fit:contain;border-radius:4px;margin-bottom:6px" loading="lazy">` : ''}
           <div style="font-size:11px;color:#e8eaf0;font-weight:600;line-height:1.3;margin-bottom:4px">${esc(p.name)}</div>
-          ${sp > 0 ? \`<div style="font-size:13px;font-weight:900;color:var(--accent)">AU$${sp.toFixed(2)}</div>\` : ''}
-          ${sl > 0 ? \`<div style="font-size:10px;color:#9ba3c4">Low: AU$${sl.toFixed(2)}</div>\` : ''}
-        </a>\`;
+          ${sp > 0 ? `<div style="font-size:13px;font-weight:900;color:var(--accent)">AU$${sp.toFixed(2)}</div>` : ''}
+          ${sl > 0 ? `<div style="font-size:10px;color:#9ba3c4">Low: AU$${sl.toFixed(2)}</div>` : ''}
+        </a>`;
       }).join('')}
     </div>
   </div>` : ''}

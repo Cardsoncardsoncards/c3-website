@@ -19,7 +19,6 @@ async function supabaseGet(path) {
     return Array.isArray(data) ? data : [];
   } catch (e) { clearTimeout(timer); return []; }
 }
-}
 
 function buildAZFilter(sets) {
   const letters = new Set();

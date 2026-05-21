@@ -23,7 +23,6 @@ async function supabaseGet(path) {
     return Array.isArray(data) ? data : [];
   } catch (e) { clearTimeout(timer); return []; }
 }
-}
 
 async function getEbayToken() {
   if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
@@ -91,12 +90,12 @@ async function handleSetPage(setSlug, htmlHeaders) {
   if (!sets || !sets[0]) return new Response(setNotFoundPage(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   const set = sets[0];
 
-  const [_psr0, _psr1] = await Promise.allSettled([
+  const [_psr2, _psr3] = await Promise.allSettled([
     supabaseGet(`onepiece_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=400&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
     ebayToken ? getEbayListings(set.name + ' onepiece', ebayToken).catch(() => []) : []
   ]);
-  const cards = _psr0.status === 'fulfilled' ? _psr0.value : [];
-  const ebayListings = _psr1.status === 'fulfilled' ? _psr1.value : [];
+  const cards = _psr2.status === 'fulfilled' ? _psr2.value : [];
+  const ebayListings = _psr3.status === 'fulfilled' ? _psr3.value : [];
 
   const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;

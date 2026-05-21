@@ -23,7 +23,6 @@ async function supabaseGet(path) {
     return Array.isArray(data) ? data : [];
   } catch (e) { clearTimeout(timer); return []; }
 }
-}
 
 function daysUntil(dateStr) {
   const today = new Date(); today.setHours(0,0,0,0);
