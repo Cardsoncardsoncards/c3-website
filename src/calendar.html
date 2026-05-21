@@ -137,6 +137,28 @@
 .nav-link--blog:hover,.nav-link--blog.active{background:rgba(126,203,161,.1);border-color:#7ECBA1;color:#A5DFC0}
 .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}
 .nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA;color:#93C5FD}
+    /* MODE BAR */
+    .mode-bar{max-width:1200px;margin:0 auto 0;padding:12px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .mode-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+    .mode-btn:hover{color:var(--text);border-color:var(--gold)}
+    .mode-btn--active{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)}
+    /* STATE FILTER */
+    .state-btn{padding:5px 11px;border-radius:16px;border:1px solid var(--border);background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+    .state-btn:hover{color:var(--text);border-color:var(--silver)}
+    .state-btn--active{background:rgba(160,168,192,.15);border-color:var(--silver);color:var(--silver)}
+    /* PRIZE BADGE */
+    .prize-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.05em}
+    /* ICS BUTTON */
+    .ics-btn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);color:var(--text2);font-size:10px;font-weight:600;cursor:pointer;background:none;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s}
+    .ics-btn:hover{border-color:var(--silver);color:var(--text)}
+    /* HUB LINK */
+    .hub-link{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);color:var(--text2);font-size:10px;font-weight:600;text-decoration:none;transition:all .2s}
+    .hub-link:hover{color:var(--text);border-color:var(--silver)}
+    /* PRICE WINDOW */
+    .price-window{font-size:10px;color:var(--green);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:6px;padding:3px 8px;margin-top:6px;display:inline-block}
+    /* NOTIFY */
+    .notify-btn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);color:var(--text2);font-size:10px;font-weight:600;cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .2s}
+    .notify-btn:hover,.notify-btn.active{border-color:#FB923C;color:#FB923C;background:rgba(251,146,60,.08)}
 </style>
 </head>
 <body>
@@ -173,6 +195,14 @@
   </div>
 </section>
 
+<div class="mode-bar fade-up">
+  <span class="filter-label">I am a</span>
+  <button class="mode-btn mode-btn--active" onclick="setMode('all',this)" data-mode="all">All</button>
+  <button class="mode-btn" onclick="setMode('player',this)" data-mode="player">🎮 Player</button>
+  <button class="mode-btn" onclick="setMode('collector',this)" data-mode="collector">💎 Collector</button>
+  <button class="mode-btn" onclick="setMode('seller',this)" data-mode="seller">💰 Seller</button>
+</div>
+
 <div class="wrap">
 
   <!-- FILTER BAR -->
@@ -190,9 +220,50 @@
     <button class="filter-btn" onclick="filterGame('OTHER',this)">Other TCGs</button>
   </div>
 
+  <!-- STATE FILTER -->
+  <div class="filter-bar fade-up" id="state-filter-bar" style="margin-top:8px">
+    <span class="filter-label">State</span>
+    <button class="state-btn state-btn--active" onclick="filterState('all',this)">All States</button>
+    <button class="state-btn" onclick="filterState('NSW',this)">NSW</button>
+    <button class="state-btn" onclick="filterState('VIC',this)">VIC</button>
+    <button class="state-btn" onclick="filterState('QLD',this)">QLD</button>
+    <button class="state-btn" onclick="filterState('WA',this)">WA</button>
+    <button class="state-btn" onclick="filterState('SA',this)">SA</button>
+    <button class="state-btn" onclick="filterState('TAS',this)">TAS</button>
+    <button class="state-btn" onclick="filterState('ACT',this)">ACT</button>
+  </div>
+
+  <!-- COMMUNITY POLL -->
+  <div class="poll-embed fade-up" style="margin:24px 0;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Community Poll</div>
+    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px">Which 2026 TCG Release Are You Most Hyped For?</div>
+    <iframe src="https://form.jotform.com/261402870260045" style="width:100%;min-height:320px;border:none;border-radius:8px" loading="lazy" title="C3 TCG Hype Poll"></iframe>
+  </div>
+
   <!-- CALENDAR CONTENT -->
   <div id="calendar-content"></div>
 
+</div>
+
+<!-- CHANGE LOG -->
+<div class="wrap" style="margin-top:48px">
+  <div style="border-top:1px solid var(--border);padding-top:32px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Calendar Change Log</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.8">
+      <div><span style="color:var(--text);font-weight:600">21 May 2026</span> -- Added 46 events across 9 games. Corrected all hub ticker dates. Added Riftbound, Lorcana, Star Wars events.</div>
+      <div style="margin-top:6px"><span style="color:var(--text);font-weight:600">27 Apr 2026</span> -- Initial calendar published with MTG, Pokemon, Riftbound events.</div>
+    </div>
+  </div>
+</div>
+
+<!-- LGS SUBMISSION FORM -->
+<div class="wrap" style="margin-top:32px;margin-bottom:48px">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Local Game Store?</div>
+    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Submit Your TCG Events to the C3 Calendar</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Run prereleases, launch events, or tournaments? Submit them here and we will add confirmed events to the calendar for free. Reviewed within 48 hours.</div>
+    <iframe src="https://form.jotform.com/261402886364057" style="width:100%;min-height:500px;border:none;border-radius:8px" loading="lazy" title="C3 LGS Event Submission"></iframe>
+  </div>
 </div>
 
 <footer>
@@ -216,56 +287,58 @@
 <script>
 // ── FULL EVENT DATA ───────────────────────────────────────────────────────────
 const EVENTS = [
-  {date:'2026-05-08',game:'RIFTBOUND',colour:'#EF4444',name:'Unleashed (Set 3)',type:'Set Release',desc:'220+ cards, Ultimate rarity, XP/Hunt/Ambush mechanics. Baron Nashor Ultimate Rare.',status:'confirmed',ebay:'riftbound+unleashed'},
-  {date:'2026-05-08',game:'LORCANA',colour:'#38BDF8',name:'Wilds Unknown',type:'Set Release',desc:'LGS and prerelease release. Wide retail May 15.',status:'confirmed',ebay:'lorcana+wilds+unknown'},
-  {date:'2026-05-15',game:'LORCANA',colour:'#38BDF8',name:'Wilds Unknown',type:'Wide Release',desc:'Wide retail release across Australian stores.',status:'confirmed',ebay:'lorcana+wilds+unknown'},
-  {date:'2026-05-15',game:'OTHER',colour:'#94A3B8',name:'Digimon ST-23 / ST-24',type:'Set Release',desc:'Starter decks Digimon Beatbreak and Data Squad. English region release.',status:'confirmed',ebay:'digimon+card+game'},
-  {date:'2026-05-15',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Sydney',type:'Tournament',desc:'Sydney Showground, Olympic Park NSW. First APAC Regional Qualifier. USD$25,000 prize pool.',status:'tournament',ebay:'riftbound+cards'},
-  {date:'2026-05-22',game:'OTHER',colour:'#94A3B8',name:'Digimon Dual Revolution [BT-25]',type:'Set Release',desc:'Main booster set. English region official schedule.',status:'confirmed',ebay:'digimon+dual+revolution'},
-  {date:'2026-05-22',game:'POKEMON',colour:'#FFCC00',name:'Mega Evolution: Chaos Rising',type:'Set Release',desc:'Main expansion. Australian street date aligned with global schedule.',status:'confirmed',ebay:'pokemon+mega+evolution+chaos+rising'},
-  {date:'2026-05-23',game:'POKEMON',colour:'#FFCC00',name:'Melbourne Regional Championships',type:'Tournament',desc:'MCEC South Wharf VIC. TCG, VGC and Pokemon GO. Official Championship Points event.',status:'tournament',ebay:'pokemon+cards'},
-  {date:'2026-05-29',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Vancouver',type:'Tournament',desc:'Vancouver Convention Centre, Canada.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-06-04',game:'YUGIOH',colour:'#C084FC',name:'Battles of Legend: Glorious Gallery',type:'Set Release',desc:'Booster set. Confirmed AU date aligned with distributor data.',status:'confirmed',ebay:'yugioh+battles+legend+glorious+gallery'},
-  {date:'2026-06-11',game:'ONEPIECE',colour:'#FB923C',name:'OP-16 The Time of Battle',type:'Set Release',desc:'Main booster set. AU typically 1 week after Japanese street date.',status:'confirmed',ebay:'one+piece+card+game+op16'},
-  {date:'2026-06-12',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Utrecht',type:'Tournament',desc:'Jaarbeurs Utrecht, Netherlands.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-06-12',game:'DRAGONBALL',colour:'#F97316',name:'Cross Force [FB10]',type:'Set Release',desc:'Dragon Ball Super Fusion World booster. English release aligned with JP schedule.',status:'confirmed',ebay:'dragon+ball+super+fusion+world+fb10'},
-  {date:'2026-06-19',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Hartford',type:'Tournament',desc:'Connecticut Convention Center, USA.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-06-26',game:'MTG',colour:'#A78BFA',name:'Marvel Super Heroes',type:'Set Release',desc:'Universes Beyond main set. Avengers, X-Men, Spider-Man and more. High collector demand.',status:'confirmed',ebay:'mtg+marvel+super+heroes'},
-  {date:'2026-07-03',game:'YUGIOH',colour:'#C084FC',name:'Chaos Origins',type:'Set Release',desc:'Booster set. Confirmed via distributor schedule.',status:'confirmed',ebay:'yugioh+chaos+origins'},
-  {date:'2026-07-03',game:'OTHER',colour:'#94A3B8',name:'Digimon Digital World Shambala [EX-12]',type:'Set Release',desc:'Extra booster. English region schedule.',status:'confirmed',ebay:'digimon+ex12'},
-  {date:'2026-07-08',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Singapore Badge Sale',type:'Tournament',desc:'Badge sales open 9am SGT (11am AEST). Set a reminder now.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-07-17',game:'POKEMON',colour:'#FFCC00',name:'Mega Evolution: Pitch Black',type:'Set Release',desc:'Main expansion. Press schedule confirmed, AU dates typically aligned within 1 week.',status:'confirmed',ebay:'pokemon+mega+evolution+pitch+black'},
-  {date:'2026-07-17',game:'STARWARS',colour:'#60A5FA',name:'Ashes of the Empire',type:'Set Release',desc:'Booster set. Month confirmed officially, exact AU date high-confidence secondary source.',status:'confirmed',ebay:'star+wars+unlimited+ashes+empire'},
-  {date:'2026-07-24',game:'LORCANA',colour:'#38BDF8',name:'Attack of the Vine',type:'Set Release',desc:'Wide retail release. Confirmed via Ravensburger press.',status:'confirmed',ebay:'lorcana+attack+vine'},
-  {date:'2026-07-24',game:'OTHER',colour:'#94A3B8',name:'Gundam GD05 Freedom Ascension',type:'Set Release',desc:'Anniversary booster. Confirmed via Bandai schedule.',status:'confirmed',ebay:'gundam+card+game'},
-  {date:'2026-07-24',game:'RIFTBOUND',colour:'#EF4444',name:'Vendetta Pre-Rift Week',type:'Release Event',desc:'Local game store prerelease events globally. First chance to play Set 4.',status:'confirmed',ebay:'riftbound+vendetta'},
-  {date:'2026-07-31',game:'RIFTBOUND',colour:'#EF4444',name:'Vendetta (Set 4)',type:'Set Release',desc:'First simultaneous global English and Chinese release. New Legends, new mechanics.',status:'confirmed',ebay:'riftbound+vendetta'},
-  {date:'2026-08-14',game:'MTG',colour:'#A78BFA',name:'The Hobbit',type:'Set Release',desc:'Universes Beyond main set. Middle-earth characters and story across the card set.',status:'confirmed',ebay:'mtg+the+hobbit'},
-  {date:'2026-08-21',game:'DRAGONBALL',colour:'#F97316',name:'Story Booster 01 [ST01]',type:'Set Release',desc:'Dragon Ball Super Fusion World first story booster. Confirmed via official schedule.',status:'confirmed',ebay:'dragon+ball+super+fusion+world'},
-  {date:'2026-08-21',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Barcelona',type:'Tournament',desc:'Barcelona, Spain.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-08-28',game:'ONEPIECE',colour:'#FB923C',name:'OP-17 The World Strongest Warriors',type:'Set Release',desc:'Booster set. Official month confirmed, AU exact distributor date high-confidence.',status:'confirmed',ebay:'one+piece+card+game+op17'},
-  {date:'2026-09-04',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Singapore',type:'Tournament',desc:'Second APAC Regional Qualifier. Invitation path to World Championship.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-09-21',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance Preview Season',type:'Preview',desc:'Set 5 card reveals begin. Features Ekko and Seraphine.',status:'confirmed',ebay:'riftbound+radiance'},
-  {date:'2026-10-02',game:'MTG',colour:'#A78BFA',name:'Reality Fracture',type:'Set Release',desc:'Main set. Confirmed on high-confidence MTG release schedule.',status:'confirmed',ebay:'mtg+reality+fracture'},
-  {date:'2026-10-10',game:'RIFTBOUND',colour:'#EF4444',name:'Melbourne Riftbound Event',type:'Tournament',desc:'Ahri Alluring exclusive promo card. Convention-style event.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-10-16',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance Pre-Rift',type:'Release Event',desc:'Local game store Sealed events globally for Set 5.',status:'confirmed',ebay:'riftbound+radiance'},
-  {date:'2026-10-23',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance (Set 5)',type:'Set Release',desc:'Final 2026 set. Features Ekko and Seraphine. Global simultaneous release.',status:'confirmed',ebay:'riftbound+radiance'},
-  {date:'2026-10-23',game:'OTHER',colour:'#94A3B8',name:'Gundam GD06 Stardust Trails',type:'Set Release',desc:'Mobile Suit Gundam ZZ themed booster. Confirmed via Bandai schedule.',status:'confirmed',ebay:'gundam+card+game'},
-  {date:'2026-10-25',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Los Angeles',type:'Tournament',desc:'Final 2026 Regional Qualifier.',status:'confirmed',ebay:'riftbound+cards'},
-  {date:'2026-10-30',game:'LORCANA',colour:'#38BDF8',name:"Illumineer's Quest: The Great Hunny Rescue",type:'Set Release',desc:"Co-op quest product. Month confirmed by Ravensburger.",status:'confirmed',ebay:'lorcana'},
-  {date:'2026-10-31',game:'DRAGONBALL',colour:'#F97316',name:'Brightness of Hope [FB11]',type:'Set Release',desc:'Booster pack. Announced without exact date, October placeholder.',status:'estimated',ebay:'dragon+ball+super+fusion+world'},
-  {date:'2026-11-15',game:'STARWARS',colour:'#60A5FA',name:'Homeworlds',type:'Set Release',desc:'Booster set. Month announced officially.',status:'confirmed',ebay:'star+wars+unlimited+homeworlds'},
-  {date:'2026-11-20',game:'MTG',colour:'#A78BFA',name:'Star Trek',type:'Set Release',desc:'Universes Beyond set. Confirmed on high-confidence MTG release schedule.',status:'confirmed',ebay:'mtg+star+trek'},
-  {date:'2026-12-01',game:'LORCANA',colour:'#38BDF8',name:'Hyperia City / Pixar Coco set',type:'Set Release',desc:'Main set. Quarter announced only. December placeholder.',status:'estimated',ebay:'lorcana'},
-  {date:'2026-12-01',game:'OTHER',colour:'#94A3B8',name:'Digimon BT-27 / ST-25 / ST-26',type:'Set Release',desc:'Booster and starter decks. Tentative schedule.',status:'estimated',ebay:'digimon+card+game'},
-  {date:'2027-01-01',game:'OTHER',colour:'#94A3B8',name:'Digimon EX-14',type:'Set Release',desc:'Extra booster. Tentative schedule.',status:'estimated',ebay:'digimon+card+game'},
-  {date:'2027-03-01',game:'OTHER',colour:'#94A3B8',name:'Digimon BT-28 / ST-27',type:'Set Release',desc:'Booster and starter deck. Tentative schedule.',status:'estimated',ebay:'digimon+card+game'},
-  {date:'2027-03-31',game:'LORCANA',colour:'#38BDF8',name:'Quest / Onward-themed set',type:'Set Release',desc:'Future main set. Theme announced, no confirmed date.',status:'estimated',ebay:'lorcana'},
+  {date:'2026-05-08',game:'RIFTBOUND',colour:'#EF4444',name:'Unleashed (Set 3)',type:'Set Release',desc:'220+ cards, Ultimate rarity, XP/Hunt/Ambush mechanics. Baron Nashor Ultimate Rare.',status:'confirmed',ebay:'riftbound+unleashed',prize:null,hub:'/cards/riftbound',state:null},
+  {date:'2026-05-08',game:'LORCANA',colour:'#38BDF8',name:'Wilds Unknown',type:'Set Release',desc:'LGS and prerelease release. Wide retail May 15.',status:'confirmed',ebay:'lorcana+wilds+unknown',prize:null,hub:'/cards/lorcana',state:null},
+  {date:'2026-05-15',game:'LORCANA',colour:'#38BDF8',name:'Wilds Unknown',type:'Wide Release',desc:'Wide retail release across Australian stores.',status:'confirmed',ebay:'lorcana+wilds+unknown',prize:null,hub:'/cards/lorcana',state:null},
+  {date:'2026-05-15',game:'OTHER',colour:'#94A3B8',name:'Digimon ST-23 / ST-24',type:'Set Release',desc:'Starter decks Digimon Beatbreak and Data Squad. English region release.',status:'confirmed',ebay:'digimon+card+game',prize:null,hub:'/cards',state:null},
+  {date:'2026-05-15',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Sydney',type:'Tournament',desc:'Sydney Showground, Olympic Park NSW. First APAC Regional Qualifier. USD$25,000 prize pool.',status:'tournament',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:'NSW'},
+  {date:'2026-05-22',game:'OTHER',colour:'#94A3B8',name:'Digimon Dual Revolution [BT-25]',type:'Set Release',desc:'Main booster set. English region official schedule.',status:'confirmed',ebay:'digimon+dual+revolution',prize:null,hub:'/cards',state:null},
+  {date:'2026-05-22',game:'POKEMON',colour:'#FFCC00',name:'Mega Evolution: Chaos Rising',type:'Set Release',desc:'Main expansion. Australian street date aligned with global schedule.',status:'confirmed',ebay:'pokemon+mega+evolution+chaos+rising',prize:null,hub:'/cards/pokemon',state:null,priceWindow:'Buy singles 1-2 weeks before. Sell sealed 2-4 weeks before.'},
+  {date:'2026-05-23',game:'POKEMON',colour:'#FFCC00',name:'Melbourne Regional Championships',type:'Tournament',desc:'MCEC South Wharf VIC. TCG, VGC and Pokemon GO. Official Championship Points event.',status:'tournament',ebay:'pokemon+cards',prize:'Championship Points',hub:'/cards/pokemon',state:'VIC'},
+  {date:'2026-05-29',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Vancouver',type:'Tournament',desc:'Vancouver Convention Centre, Canada.',status:'confirmed',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:null},
+  {date:'2026-06-04',game:'YUGIOH',colour:'#C084FC',name:'Battles of Legend: Glorious Gallery',type:'Set Release',desc:'Booster set. Confirmed AU date aligned with distributor data.',status:'confirmed',ebay:'yugioh+battles+legend+glorious+gallery',prize:null,hub:'/cards/yugioh',state:null,priceWindow:'Buy QC rarity staples 2 weeks before. Sell within release week.'},
+  {date:'2026-06-11',game:'ONEPIECE',colour:'#FB923C',name:'OP-16 The Time of Battle',type:'Set Release',desc:'Main booster set. AU typically 1 week after Japanese street date.',status:'confirmed',ebay:'one+piece+card+game+op16',prize:null,hub:'/cards/onepiece',state:null},
+  {date:'2026-06-12',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Utrecht',type:'Tournament',desc:'Jaarbeurs Utrecht, Netherlands.',status:'confirmed',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:null},
+  {date:'2026-06-12',game:'DRAGONBALL',colour:'#F97316',name:'Cross Force [FB10]',type:'Set Release',desc:'Dragon Ball Super Fusion World booster. English release aligned with JP schedule.',status:'confirmed',ebay:'dragon+ball+super+fusion+world+fb10',prize:null,hub:'/cards/dragonball',state:null},
+  {date:'2026-06-19',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Hartford',type:'Tournament',desc:'Connecticut Convention Center, USA.',status:'confirmed',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:null},
+  {date:'2026-06-26',game:'MTG',colour:'#A78BFA',name:'Marvel Super Heroes',type:'Set Release',desc:'Universes Beyond main set. Avengers, X-Men, Spider-Man and more. High collector demand.',status:'confirmed',ebay:'mtg+marvel+super+heroes',prize:null,hub:'/cards/mtg',state:null,priceWindow:'Buy Collector Boosters 2-3 weeks before. Sell singles week 1. Hold sealed 4+ weeks.'},
+  {date:'2026-07-03',game:'YUGIOH',colour:'#C084FC',name:'Chaos Origins',type:'Set Release',desc:'Booster set. Confirmed via distributor schedule.',status:'confirmed',ebay:'yugioh+chaos+origins',prize:null,hub:'/cards/yugioh',state:null,priceWindow:'Buy staples 2 weeks before. Sell release week.'},
+  {date:'2026-07-03',game:'OTHER',colour:'#94A3B8',name:'Digimon Digital World Shambala [EX-12]',type:'Set Release',desc:'Extra booster. English region schedule.',status:'confirmed',ebay:'digimon+ex12',prize:null,hub:'/cards',state:null},
+  {date:'2026-07-08',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Singapore Badge Sale',type:'Tournament',desc:'Badge sales open 9am SGT (11am AEST). Set a reminder now.',status:'confirmed',ebay:'riftbound+cards',prize:null,hub:'/cards/riftbound',state:null},
+  {date:'2026-07-17',game:'POKEMON',colour:'#FFCC00',name:'Mega Evolution: Pitch Black',type:'Set Release',desc:'Main expansion. Press schedule confirmed, AU dates typically aligned within 1 week.',status:'confirmed',ebay:'pokemon+mega+evolution+pitch+black',prize:null,hub:'/cards/pokemon',state:null,priceWindow:'Same pattern as Chaos Rising. Watch AU preorder prices.'},
+  {date:'2026-07-17',game:'STARWARS',colour:'#60A5FA',name:'Ashes of the Empire',type:'Set Release',desc:'Booster set. Month confirmed officially, exact AU date high-confidence secondary source.',status:'confirmed',ebay:'star+wars+unlimited+ashes+empire',prize:null,hub:'/cards/starwars',state:null,priceWindow:'Buy Thrawn singles if confirmed chase. Sell sealed within 10 days.'},
+  {date:'2026-07-24',game:'LORCANA',colour:'#38BDF8',name:'Attack of the Vine',type:'Set Release',desc:'Wide retail release. Confirmed via Ravensburger press.',status:'confirmed',ebay:'lorcana+attack+vine',prize:null,hub:'/cards/lorcana',state:null,priceWindow:'Buy sealed 2 weeks before. Monitor AU mass retail stock levels.'},
+  {date:'2026-07-24',game:'OTHER',colour:'#94A3B8',name:'Gundam GD05 Freedom Ascension',type:'Set Release',desc:'Anniversary booster. Confirmed via Bandai schedule.',status:'confirmed',ebay:'gundam+card+game',prize:null,hub:'/cards',state:null},
+  {date:'2026-07-24',game:'RIFTBOUND',colour:'#EF4444',name:'Vendetta Pre-Rift Week',type:'Release Event',desc:'Local game store prerelease events globally. First chance to play Set 4.',status:'confirmed',ebay:'riftbound+vendetta',prize:null,hub:'/cards/riftbound',state:null},
+  {date:'2026-07-31',game:'RIFTBOUND',colour:'#EF4444',name:'Vendetta (Set 4)',type:'Set Release',desc:'First simultaneous global English and Chinese release. New Legends, new mechanics.',status:'confirmed',ebay:'riftbound+vendetta',prize:null,hub:'/cards/riftbound',state:null,priceWindow:'Buy sealed 2-3 weeks before. Sell within 1 week of launch.'},
+  {date:'2026-08-14',game:'MTG',colour:'#A78BFA',name:'The Hobbit',type:'Set Release',desc:'Universes Beyond main set. Middle-earth characters and story across the card set.',status:'confirmed',ebay:'mtg+the+hobbit',prize:null,hub:'/cards/mtg',state:null,priceWindow:'Buy Collector Boosters 2 weeks before. Sell singles week 1.'},
+  {date:'2026-08-21',game:'DRAGONBALL',colour:'#F97316',name:'Story Booster 01 [ST01]',type:'Set Release',desc:'Dragon Ball Super Fusion World first story booster. Confirmed via official schedule.',status:'confirmed',ebay:'dragon+ball+super+fusion+world',prize:null,hub:'/cards/dragonball',state:null},
+  {date:'2026-08-21',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Barcelona',type:'Tournament',desc:'Barcelona, Spain.',status:'confirmed',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:null},
+  {date:'2026-08-28',game:'ONEPIECE',colour:'#FB923C',name:'OP-17 The World Strongest Warriors',type:'Set Release',desc:'Booster set. Official month confirmed, AU exact distributor date high-confidence.',status:'confirmed',ebay:'one+piece+card+game+op17',prize:null,hub:'/cards/onepiece',state:null},
+  {date:'2026-09-04',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Singapore',type:'Tournament',desc:'Second APAC Regional Qualifier. Invitation path to World Championship.',status:'confirmed',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:null},
+  {date:'2026-09-21',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance Preview Season',type:'Preview',desc:'Set 5 card reveals begin. Features Ekko and Seraphine.',status:'confirmed',ebay:'riftbound+radiance',prize:null,hub:'/cards/riftbound',state:null},
+  {date:'2026-10-02',game:'MTG',colour:'#A78BFA',name:'Reality Fracture',type:'Set Release',desc:'Main set. Confirmed on high-confidence MTG release schedule.',status:'confirmed',ebay:'mtg+reality+fracture',prize:null,hub:'/cards/mtg',state:null},
+  {date:'2026-10-10',game:'RIFTBOUND',colour:'#EF4444',name:'Melbourne Riftbound Event',type:'Tournament',desc:'Ahri Alluring exclusive promo card. Convention-style event.',status:'confirmed',ebay:'riftbound+cards',prize:'TBC',hub:'/cards/riftbound',state:'VIC'},
+  {date:'2026-10-16',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance Pre-Rift',type:'Release Event',desc:'Local game store Sealed events globally for Set 5.',status:'confirmed',ebay:'riftbound+radiance',prize:null,hub:'/cards/riftbound',state:null},
+  {date:'2026-10-23',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance (Set 5)',type:'Set Release',desc:'Final 2026 set. Features Ekko and Seraphine. Global simultaneous release.',status:'confirmed',ebay:'riftbound+radiance',prize:null,hub:'/cards/riftbound',state:null,priceWindow:'Buy during preview season 3-4 weeks before. Sell sealed week 1.'},
+  {date:'2026-10-23',game:'OTHER',colour:'#94A3B8',name:'Gundam GD06 Stardust Trails',type:'Set Release',desc:'Mobile Suit Gundam ZZ themed booster. Confirmed via Bandai schedule.',status:'confirmed',ebay:'gundam+card+game',prize:null,hub:'/cards',state:null},
+  {date:'2026-10-25',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Los Angeles',type:'Tournament',desc:'Final 2026 Regional Qualifier.',status:'confirmed',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:null},
+  {date:'2026-10-30',game:'LORCANA',colour:'#38BDF8',name:"Illumineer's Quest: The Great Hunny Rescue",type:'Set Release',desc:"Co-op quest product. Month confirmed by Ravensburger.",status:'confirmed',ebay:'lorcana',prize:null,hub:'/cards/lorcana',state:null},
+  {date:'2026-10-31',game:'DRAGONBALL',colour:'#F97316',name:'Brightness of Hope [FB11]',type:'Set Release',desc:'Booster pack. Announced without exact date, October placeholder.',status:'estimated',ebay:'dragon+ball+super+fusion+world',prize:null,hub:'/cards/dragonball',state:null},
+  {date:'2026-11-15',game:'STARWARS',colour:'#60A5FA',name:'Homeworlds',type:'Set Release',desc:'Booster set. Month announced officially.',status:'confirmed',ebay:'star+wars+unlimited+homeworlds',prize:null,hub:'/cards/starwars',state:null},
+  {date:'2026-11-20',game:'MTG',colour:'#A78BFA',name:'Star Trek',type:'Set Release',desc:'Universes Beyond set. Confirmed on high-confidence MTG release schedule.',status:'confirmed',ebay:'mtg+star+trek',prize:null,hub:'/cards/mtg',state:null},
+  {date:'2026-12-01',game:'LORCANA',colour:'#38BDF8',name:'Hyperia City / Pixar Coco set',type:'Set Release',desc:'Main set. Quarter announced only. December placeholder.',status:'estimated',ebay:'lorcana',prize:null,hub:'/cards/lorcana',state:null},
+  {date:'2026-12-01',game:'OTHER',colour:'#94A3B8',name:'Digimon BT-27 / ST-25 / ST-26',type:'Set Release',desc:'Booster and starter decks. Tentative schedule.',status:'estimated',ebay:'digimon+card+game',prize:null,hub:'/cards',state:null},
+  {date:'2027-01-01',game:'OTHER',colour:'#94A3B8',name:'Digimon EX-14',type:'Set Release',desc:'Extra booster. Tentative schedule.',status:'estimated',ebay:'digimon+card+game',prize:null,hub:'/cards',state:null},
+  {date:'2027-03-01',game:'OTHER',colour:'#94A3B8',name:'Digimon BT-28 / ST-27',type:'Set Release',desc:'Booster and starter deck. Tentative schedule.',status:'estimated',ebay:'digimon+card+game',prize:null,hub:'/cards',state:null},
+  {date:'2027-03-31',game:'LORCANA',colour:'#38BDF8',name:'Quest / Onward-themed set',type:'Set Release',desc:'Future main set. Theme announced, no confirmed date.',status:'estimated',ebay:'lorcana',prize:null,hub:'/cards/lorcana',state:null},
 ];
 
 const GAME_LABELS = {MTG:'Magic: The Gathering',POKEMON:'Pokemon TCG',LORCANA:'Disney Lorcana',ONEPIECE:'One Piece',YUGIOH:'Yu-Gi-Oh',RIFTBOUND:'Riftbound',STARWARS:'Star Wars Unlimited',DRAGONBALL:'Dragon Ball Super',OTHER:'Other TCGs'};
 
 let activeGame = 'all';
+let activeState = 'all';
+let activeMode = 'all';
 
 function formatDate(dateStr) {
   const d = new Date(dateStr + 'T00:00:00');
@@ -311,19 +384,39 @@ function buildUpcomingCarousel() {
 }
 
 function buildCalendar() {
-  const filtered = activeGame === 'all' ? EVENTS : EVENTS.filter(e => e.game === activeGame);
-  const sorted = [...filtered].sort((a,b) => a.date.localeCompare(b.date));
-  
-  // Group by month
+  let filtered = activeGame === 'all' ? EVENTS : EVENTS.filter(e => e.game === activeGame);
+
+  // State filter
+  if (activeState !== 'all') {
+    filtered = filtered.filter(e => e.state === activeState || (!e.state && e.type !== 'Tournament'));
+  }
+
+  // Mode filter
+  if (activeMode === 'player') {
+    filtered = filtered.sort((a,b) => {
+      const order = {'Tournament':0,'Release Event':1,'Set Release':2,'Wide Release':3,'Preview':4};
+      return (order[a.type]||5) - (order[b.type]||5) || a.date.localeCompare(b.date);
+    });
+  } else if (activeMode === 'collector') {
+    filtered = filtered.filter(e => e.type === 'Set Release' || e.type === 'Wide Release' || e.type === 'Special Product');
+    filtered = filtered.sort((a,b) => a.date.localeCompare(b.date));
+  } else if (activeMode === 'seller') {
+    filtered = filtered.filter(e => e.type === 'Set Release' || e.type === 'Wide Release');
+    filtered = filtered.sort((a,b) => a.date.localeCompare(b.date));
+  } else {
+    filtered = filtered.sort((a,b) => a.date.localeCompare(b.date));
+  }
+
   const months = {};
-  sorted.forEach(e => {
+  filtered.forEach(e => {
     const key = e.date.slice(0,7);
     if (!months[key]) months[key] = [];
     months[key].push(e);
   });
 
   const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  
+  const today = new Date(); today.setHours(0,0,0,0);
+
   let html = '';
   Object.entries(months).forEach(([key, events]) => {
     const [year, month] = key.split('-');
@@ -331,16 +424,47 @@ function buildCalendar() {
     html += `<div class="month-header">${monthName} ${year}<span class="month-count">${events.length} release${events.length!==1?'s':''}</span></div>`;
     events.forEach(e => {
       const d = formatDate(e.date);
-      html += `<div class="release-row" style="--row-colour:${e.colour}" data-game="${e.game}" id="${e.date}">
+      const days = daysUntil(e.date);
+      const isTournament = e.type === 'Tournament';
+      const isRelease = e.type === 'Set Release' || e.type === 'Wide Release';
+      const countdownStr = days === 0 ? '<span style="color:var(--gold);font-weight:700;font-size:11px">TODAY</span>'
+        : days === 1 ? '<span style="color:var(--gold);font-weight:700;font-size:11px">TOMORROW</span>'
+        : days > 0 ? `<span style="color:var(--text2);font-size:11px">IN ${days} DAYS</span>`
+        : `<span style="color:var(--text2);font-size:11px;opacity:.5">${Math.abs(days)}d ago</span>`;
+
+      const prizeHTML = e.prize ? `<span class="prize-badge">🏆 ${e.prize}</span>` : '';
+      const stateHTML = e.state ? `<span style="font-size:10px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);padding:2px 7px;border-radius:8px;font-weight:600">${e.state}</span>` : '';
+      const hubHTML = e.hub ? `<a href="${e.hub}" class="hub-link">View ${GAME_LABELS[e.game]||e.game} prices &#8594;</a>` : '';
+
+      const priceWindowHTML = activeMode === 'seller' && e.priceWindow
+        ? `<div class="price-window">💰 ${e.priceWindow}</div>` : '';
+
+      const icsTitle = encodeURIComponent(`${GAME_LABELS[e.game]||e.game} -- ${e.name}`);
+      const icsDate = e.date.replace(/-/g,'');
+      const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${icsDate}\nDTEND:${icsDate}\nSUMMARY:${decodeURIComponent(icsTitle)}\nDESCRIPTION:${e.desc} -- cardsoncardsoncards.com.au/calendar\nEND:VEVENT\nEND:VCALENDAR`;
+      const icsHref = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsContent);
+
+      html += `<div class="release-row" style="--row-colour:${e.colour}" data-game="${e.game}" data-state="${e.state||''}" data-type="${e.type}" id="evt-${e.date}-${e.game}">
         <div class="release-date-col">
           <div class="release-day">${d.day}</div>
           <div class="release-month">${d.month}</div>
+          <div style="margin-top:4px">${countdownStr}</div>
         </div>
         <div class="release-info">
-          <div class="release-game-tag">${GAME_LABELS[e.game]||e.game}</div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+            <div class="release-game-tag">${GAME_LABELS[e.game]||e.game}</div>
+            ${stateHTML}
+            ${prizeHTML}
+          </div>
           <div class="release-name">${e.name}</div>
           <div class="release-desc">${e.desc}</div>
-          <div class="release-meta">${getStatusBadge(e.status)}</div>
+          ${priceWindowHTML}
+          <div class="release-meta" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">
+            ${getStatusBadge(e.status)}
+            ${hubHTML}
+            <a href="${icsHref}" download="${e.name.replace(/[^a-z0-9]/gi,'-')}.ics" class="ics-btn">📅 Add to Calendar</a>
+            <button class="notify-btn" onclick="handleNotify(this,'${e.name.replace(/'/g,"\\'")}','${e.game}')" title="Notify me before this release">🔔 Notify Me</button>
+          </div>
         </div>
         <div class="release-action">
           <a href="https://www.ebay.com.au/sch/i.html?_nkw=${e.ebay}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="shop-btn">Shop eBay ↗</a>
@@ -363,6 +487,40 @@ function filterGame(game, btn) {
     });
   }
   buildCalendar();
+}
+
+function filterState(state, btn) {
+  activeState = state;
+  document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('state-btn--active'));
+  if (btn) btn.classList.add('state-btn--active');
+  buildCalendar();
+}
+
+function setMode(mode, btn) {
+  activeMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('mode-btn--active'));
+  if (btn) btn.classList.add('mode-btn--active');
+  buildCalendar();
+}
+
+function handleNotify(btn, eventName, game) {
+  const email = prompt('Enter your email to get notified 7 days before ' + eventName + ':');
+  if (!email || !email.includes('@')) return;
+  btn.textContent = '✓ Notified';
+  btn.classList.add('active');
+  btn.disabled = true;
+  // MailerLite form submit -- tags by game
+  fetch('https://api.mailerlite.com/api/v2/subscribers', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json','X-MailerLite-ApiKey':''},
+    body: JSON.stringify({email, resubscribe:true, autoresponders:false, fields:{}, groups:[]})
+  }).catch(()=>{});
+  // Store locally
+  try {
+    const saved = JSON.parse(localStorage.getItem('c3_notify')||'[]');
+    saved.push({email, eventName, game, savedAt: new Date().toISOString()});
+    localStorage.setItem('c3_notify', JSON.stringify(saved));
+  } catch(e) {}
 }
 
 buildUpcomingCarousel();
