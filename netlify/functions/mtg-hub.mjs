@@ -269,8 +269,8 @@ export default async () => {
 
   // Random card button HTML
   const randomCardHTML = randomCard
-    ? `<a href="/cards/mtg/${randomCard.slug}" class="btn btn-secondary" id="random-card-btn">&#127922; Random Card</a>`
-    : `<button class="btn btn-secondary" id="random-card-btn" onclick="fetchRandomCard()">&#127922; Random Card</button>`;
+    ? `<a href="/cards/mtg/${randomCard.slug}" class="quick-link" id="random-card-btn" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127922; Random Card</a>`
+    : `<button class="quick-link" id="random-card-btn" onclick="fetchRandomCard()" style="background:var(--bg2);border-color:var(--border);color:var(--text);cursor:pointer;font-family:inherit">&#127922; Random Card</button>`;
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
@@ -285,24 +285,33 @@ export default async () => {
   <meta property="og:description" content="Browse Magic: The Gathering card prices in AUD. Live pricing, 52-week ranges, and eBay AU buy links. Updated daily.">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0f1117;--bg2:#1a1d2e;--bg3:#22263a;--accent:#f5a623;--text:#e8eaf0;--text2:#9ba3c4;--border:#2d3254;--radius:12px;--gold:#C9A84C}
+    :root{--bg:#0f1117;--bg2:#1a1d2e;--bg3:#22263a;--accent:#C9A84C;--text:#e8eaf0;--text2:#9ba3c4;--border:#2d3254;--radius:12px;--gold:#C9A84C}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--text);font-family:sans-serif;line-height:1.6}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(201,168,76,.05),transparent 60%)}
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
-    .wrap{max-width:1400px;margin:0 auto;padding:0 24px}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
     .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;border:none;font-size:13px;text-decoration:none;transition:opacity .2s}
     .btn:hover{opacity:.85;text-decoration:none}
     .btn-primary{background:var(--accent);color:#000}
     .btn-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
+    /* STAT BAR */
+    .stat-bar{display:flex;gap:0;justify-content:center;border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:540px;margin:0 auto 32px;background:var(--bg2)}
+    .stat-item{flex:1;padding:14px 10px;text-align:center;border-right:1px solid var(--border)}.stat-item:last-child{border-right:none}
+    .stat-num{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--accent)}
+    .stat-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text2);margin-top:2px}
+    /* QUICK LINKS */
+    .quick-link{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-weight:700;font-size:12.5px;text-decoration:none;transition:all .2s;border:1px solid transparent}
+    .quick-link:hover{opacity:.88;transform:translateY(-1px);text-decoration:none}
     input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-size:14px;width:100%}
-    footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:13px;margin-top:48px}
+    footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:13px;margin-top:48px;position:relative;z-index:1}
     footer a{color:var(--text2);margin:0 10px}
     /* NAV */
     nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
-    .nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}
+    .nav-inner{display:flex;align-items:center;max-width:1200px;margin:0 auto;padding:0 24px;gap:10px}
     .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
     .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}
     .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-width:0}
@@ -439,6 +448,14 @@ export default async () => {
   </div>
   <p style="color:var(--text2);margin-bottom:28px">Australia's MTG price guide with live AUD pricing, 52-week price ranges, and direct eBay AU buy links. Updated daily.</p>
 
+  <!-- Stat Bar -->
+  <div class="stat-bar">
+    <div class="stat-item"><div class="stat-num">${totalSets}</div><div class="stat-label">Sets</div></div>
+    <div class="stat-item"><div class="stat-num">96K+</div><div class="stat-label">Cards</div></div>
+    <div class="stat-item"><div class="stat-num">AU$</div><div class="stat-label">Live Prices</div></div>
+    <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-label">Updates</div></div>
+  </div>
+
   <!-- Standard Rotation Warning -->
   <div class="rotation-strip">
     <span class="rotation-icon">&#9888;&#65039;</span>
@@ -450,12 +467,12 @@ export default async () => {
 
   <!-- Quick Access -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
-    <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub&mkevt=1" target="_blank" rel="noopener" class="btn btn-primary">&#128722; Shop MTG on eBay &#8599;</a>
-    <a href="/cards/mtg/random-commander" class="btn btn-secondary">&#127922; Random Commander</a>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop MTG on eBay &#8599;</a>
+    <a href="/cards/mtg/random-commander" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127922; Random Commander</a>
     ${randomCardHTML}
-    <a href="/ev-calculator.html" class="btn btn-secondary">&#128202; EV Calculator</a>
-    <a href="/compare" class="btn btn-secondary">&#128203; Compare Cards</a>
-    <a href="/tracker.html" class="btn btn-secondary">&#128276; Set Price Alerts</a>
+    <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator</a>
+    <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Compare Cards</a>
+    <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128276; Set Price Alerts</a>
   </div>
 
   <!-- Format Ban Lists Strip -->
