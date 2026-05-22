@@ -102,20 +102,35 @@
     <p>Personality quizzes for Australian TCG players. Free, fun, and all results include AUD card links and eBay buy options.</p>
   </div>
 
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterQuizzes('all',this)">All Quizzes</button>
-    <button class="filter-btn" onclick="filterQuizzes('all-tcg',this)">All TCGs</button>
-    <button class="filter-btn" onclick="filterQuizzes('mtg',this)">MTG</button>
-    <button class="filter-btn" onclick="filterQuizzes('pokemon',this)">Pokemon</button>
-    <button class="filter-btn" onclick="filterQuizzes('lorcana',this)">Lorcana</button>
-    <button class="filter-btn" onclick="filterQuizzes('riftbound',this)">Riftbound</button>
-    <button class="filter-btn" onclick="filterQuizzes('starwars',this)">Star Wars</button>
-    <button class="filter-btn" onclick="filterQuizzes('dragonball',this)">Dragon Ball</button>
+  <div style="margin-bottom:16px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);text-align:center;margin-bottom:8px">What are you looking for?</div>
+    <div class="filter-bar" id="typeFilter">
+      <button class="filter-btn active" onclick="applyFilters('type','all',this)">All Quizzes</button>
+      <button class="filter-btn" onclick="applyFilters('type','findgame',this)">Find My Game</button>
+      <button class="filter-btn" onclick="applyFilters('type','whoami',this)">Who Am I</button>
+      <button class="filter-btn" onclick="applyFilters('type','mindset',this)">My Collection Style</button>
+    </div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);text-align:center;margin:12px 0 8px">Filter by game</div>
+    <div class="filter-bar" id="gameFilter">
+      <button class="filter-btn active" onclick="applyFilters('game','all',this)">All Games</button>
+      <button class="filter-btn" onclick="applyFilters('game','all-tcg',this)">All TCGs</button>
+      <button class="filter-btn" onclick="applyFilters('game','mtg',this)">MTG</button>
+      <button class="filter-btn" onclick="applyFilters('game','pokemon',this)">Pokemon</button>
+      <button class="filter-btn" onclick="applyFilters('game','lorcana',this)">Lorcana</button>
+      <button class="filter-btn" onclick="applyFilters('game','yugioh',this)">Yu-Gi-Oh</button>
+      <button class="filter-btn" onclick="applyFilters('game','onepiece',this)">One Piece</button>
+      <button class="filter-btn" onclick="applyFilters('game','riftbound',this)">Riftbound</button>
+      <button class="filter-btn" onclick="applyFilters('game','starwars',this)">Star Wars</button>
+      <button class="filter-btn" onclick="applyFilters('game','dragonball',this)">Dragon Ball</button>
+      <button class="filter-btn" onclick="applyFilters('game','digimon',this)">Digimon</button>
+      <button class="filter-btn" onclick="applyFilters('game','weissschwarz',this)">Weiss Schwarz</button>
+      <button class="filter-btn" onclick="applyFilters('game','other',this)">Other Games</button>
+    </div>
   </div>
 
   <div class="quiz-grid" id="quiz-grid">
 
-    <a href="/quizzes/which-tcg" class="quiz-card" data-game="all-tcg" style="--card-colour:#C9A84C">
+    <a href="/quizzes/which-tcg" class="quiz-card" data-game="all-tcg" data-type="findgame" style="--card-colour:#C9A84C">
       <div class="quiz-game-tag">All TCGs · Most Popular</div>
       <div class="quiz-title">Which TCG Should I Start?</div>
       <div class="quiz-desc">6 questions. Get a personalised recommendation for the Australian TCG market with AU pricing and buy links for your perfect game.</div>
@@ -124,7 +139,7 @@
       <div class="quiz-stats" id="stats-which-tcg">Loading...</div>
     </a>
 
-    <a href="/quizzes/mtg-archetype" class="quiz-card" data-game="mtg" style="--card-colour:#A78BFA">
+    <a href="/quizzes/mtg-archetype" class="quiz-card" data-game="mtg" data-type="whoami" style="--card-colour:#A78BFA">
       <div class="quiz-game-tag">MTG · Commander</div>
       <div class="quiz-title">What's Your Commander Archetype?</div>
       <div class="quiz-desc">Tokens, Combo, Control, Voltron, Reanimator, Stax, Tribal or Superfriends? 6 questions to reveal your true Commander identity.</div>
@@ -133,7 +148,7 @@
       <div class="quiz-stats" id="stats-mtg-archetype">Loading...</div>
     </a>
 
-    <a href="/quizzes/mtg-colour" class="quiz-card" data-game="mtg" style="--card-colour:#A78BFA">
+    <a href="/quizzes/mtg-colour" class="quiz-card" data-game="mtg" data-type="whoami" style="--card-colour:#A78BFA">
       <div class="quiz-game-tag">MTG · Colour Philosophy</div>
       <div class="quiz-title">Which MTG Colour Identity Are You?</div>
       <div class="quiz-desc">White, Blue, Black, Red, Green or a two-colour guild? Find your true Magic colour identity in 5 questions.</div>
@@ -142,7 +157,7 @@
       <div class="quiz-stats" id="stats-mtg-colour">Loading...</div>
     </a>
 
-    <a href="/quizzes/rarity" class="quiz-card" data-game="all-tcg" style="--card-colour:#F59E0B">
+    <a href="/quizzes/rarity" class="quiz-card" data-game="all-tcg" data-type="mindset" style="--card-colour:#F59E0B">
       <div class="quiz-game-tag">All TCGs · Personality</div>
       <div class="quiz-title">What TCG Rarity Are You?</div>
       <div class="quiz-desc">Common, Uncommon, Rare, Mythic Rare, or Special Illustration Rare? Find out your TCG rarity personality in 5 questions.</div>
@@ -151,7 +166,7 @@
       <div class="quiz-stats" id="stats-rarity">Loading...</div>
     </a>
 
-    <a href="/quizzes/investor-collector" class="quiz-card" data-game="all-tcg" style="--card-colour:#34D399">
+    <a href="/quizzes/investor-collector" class="quiz-card" data-game="all-tcg" data-type="mindset" style="--card-colour:#34D399">
       <div class="quiz-game-tag">All TCGs · Mindset</div>
       <div class="quiz-title">TCG Investor or Collector?</div>
       <div class="quiz-desc">Collector, Investor, Player or Hoarder? 5 questions to reveal how you really think about your trading card collection.</div>
@@ -160,7 +175,7 @@
       <div class="quiz-stats" id="stats-investor-collector">Loading...</div>
     </a>
 
-    <a href="/quizzes/lorcana-ink" class="quiz-card" data-game="lorcana" style="--card-colour:#38BDF8">
+    <a href="/quizzes/lorcana-ink" class="quiz-card" data-game="lorcana" data-type="whoami" style="--card-colour:#38BDF8">
       <div class="quiz-game-tag">Lorcana · Ink Identity</div>
       <div class="quiz-title">Which Lorcana Ink Are You?</div>
       <div class="quiz-desc">Amber, Amethyst, Emerald, Ruby, Sapphire or Steel? Discover your Disney Lorcana ink identity and what it says about your playstyle.</div>
@@ -169,7 +184,7 @@
       <div class="quiz-stats" id="stats-lorcana-ink">Loading...</div>
     </a>
 
-    <a href="/quizzes/pokemon-era" class="quiz-card" data-game="pokemon" style="--card-colour:#FFCC00">
+    <a href="/quizzes/pokemon-era" class="quiz-card" data-game="pokemon" data-type="whoami" style="--card-colour:#FFCC00">
       <div class="quiz-game-tag">Pokemon · Your Era</div>
       <div class="quiz-title">Which Pokemon TCG Era Are You From?</div>
       <div class="quiz-desc">Base Set original, Neo Genesis, EX era, Diamond and Pearl, or modern collector? Find your Pokemon TCG era in 5 questions.</div>
@@ -178,7 +193,7 @@
       <div class="quiz-stats" id="stats-pokemon-era">Loading...</div>
     </a>
 
-    <a href="/quizzes/riftbound-champion" class="quiz-card" data-game="riftbound" style="--card-colour:#818CF8">
+    <a href="/quizzes/riftbound-champion" class="quiz-card" data-game="riftbound" data-type="whoami" style="--card-colour:#818CF8">
       <div class="quiz-game-tag">Riftbound · Champion Identity</div>
       <div class="quiz-title">Which Riftbound Champion Are You?</div>
       <div class="quiz-desc">Jinx, Jayce, Vi, Lux or Thresh? 5 questions to reveal your League of Legends TCG champion identity and playstyle.</div>
@@ -187,7 +202,7 @@
       <div class="quiz-stats" id="stats-riftbound-champion">Loading...</div>
     </a>
 
-    <a href="/quizzes/starwars-affiliation" class="quiz-card" data-game="starwars" style="--card-colour:#FFE81F">
+    <a href="/quizzes/starwars-affiliation" class="quiz-card" data-game="starwars" data-type="whoami" style="--card-colour:#FFE81F">
       <div class="quiz-game-tag">Star Wars Unlimited · Affiliation</div>
       <div class="quiz-title">Are You Light Side or Dark Side?</div>
       <div class="quiz-desc">Jedi, Sith, or Neutral smuggler? 5 questions to reveal your Star Wars Unlimited affiliation and what it means for your playstyle.</div>
@@ -196,13 +211,58 @@
       <div class="quiz-stats" id="stats-starwars-affiliation">Loading...</div>
     </a>
 
-    <a href="/quizzes/dragonball-character" class="quiz-card" data-game="dragonball" style="--card-colour:#F97316">
+    <a href="/quizzes/dragonball-character" class="quiz-card" data-game="dragonball" data-type="whoami" style="--card-colour:#F97316">
       <div class="quiz-game-tag">Dragon Ball Super · Character</div>
       <div class="quiz-title">Which Dragon Ball Character Are You?</div>
       <div class="quiz-desc">Goku, Vegeta, Gohan, Frieza or Beerus? 5 questions to reveal your Dragon Ball Super Card Game fighter identity.</div>
       <div class="quiz-meta"><span>⏱ 2 mins</span><span>❓ 5 questions</span><span>🎯 5 results</span></div>
       <div class="quiz-cta">Take the Quiz →</div>
       <div class="quiz-stats" id="stats-dragonball-character">Loading...</div>
+    </a>
+
+    <a href="/quizzes/which-tcg-extended" class="quiz-card" data-game="all-tcg" data-type="findgame" style="--card-colour:#C9A84C">
+      <div class="quiz-game-tag">All TCGs &middot; Complete 2026 Guide</div>
+      <div class="quiz-title">Which TCG Should You Play? (All Games)</div>
+      <div class="quiz-desc">6 questions covering 12 games including MTG, Pokemon, anime, sci-fi and more. The extended edition for players who want every option covered.</div>
+      <div class="quiz-meta"><span>&#9201; 2 mins</span><span>&#10067; 6 questions</span><span>&#127919; 12 results</span></div>
+      <div class="quiz-cta">Take the Quiz &rarr;</div>
+      <div class="quiz-stats" id="stats-which-tcg-extended">Loading...</div>
+    </a>
+
+    <a href="/quizzes/yugioh-archetype" class="quiz-card" data-game="yugioh" data-type="whoami" style="--card-colour:#A855F7">
+      <div class="quiz-game-tag">Yu-Gi-Oh &middot; Archetype Identity</div>
+      <div class="quiz-title">Which Yu-Gi-Oh Archetype Suits You?</div>
+      <div class="quiz-desc">Blue-Eyes, Dark Magician, Branded, Sky Striker and more. 5 questions to match your playstyle to the right deck.</div>
+      <div class="quiz-meta"><span>&#9201; 2 mins</span><span>&#10067; 5 questions</span><span>&#127919; 8 results</span></div>
+      <div class="quiz-cta">Take the Quiz &rarr;</div>
+      <div class="quiz-stats" id="stats-yugioh-archetype">Loading...</div>
+    </a>
+
+    <a href="/quizzes/onepiece-character" class="quiz-card" data-game="onepiece" data-type="whoami" style="--card-colour:#F97316">
+      <div class="quiz-game-tag">One Piece &middot; Character Identity</div>
+      <div class="quiz-title">Which One Piece Character Are You?</div>
+      <div class="quiz-desc">Luffy, Zoro, Nami, Sanji, Robin and more. 5 questions to find your Straw Hat match.</div>
+      <div class="quiz-meta"><span>&#9201; 2 mins</span><span>&#10067; 5 questions</span><span>&#127919; 8 results</span></div>
+      <div class="quiz-cta">Take the Quiz &rarr;</div>
+      <div class="quiz-stats" id="stats-onepiece-character">Loading...</div>
+    </a>
+
+    <a href="/quizzes/digimon-partner" class="quiz-card" data-game="digimon" data-type="whoami" style="--card-colour:#34D399">
+      <div class="quiz-game-tag">Digimon &middot; Partner Quiz</div>
+      <div class="quiz-title">Which Digimon Would Be Your Partner?</div>
+      <div class="quiz-desc">Agumon, Gabumon, Biyomon and more. 5 questions to find your Digital World partner.</div>
+      <div class="quiz-meta"><span>&#9201; 2 mins</span><span>&#10067; 5 questions</span><span>&#127919; 8 results</span></div>
+      <div class="quiz-cta">Take the Quiz &rarr;</div>
+      <div class="quiz-stats" id="stats-digimon-partner">Loading...</div>
+    </a>
+
+    <a href="/quizzes/weissschwarz-series" class="quiz-card" data-game="weissschwarz" data-type="findgame" style="--card-colour:#EC4899">
+      <div class="quiz-game-tag">Weiss Schwarz &middot; Series Identity</div>
+      <div class="quiz-title">Which Weiss Schwarz Series Should You Play?</div>
+      <div class="quiz-desc">SAO, Re:ZERO, Hololive, Attack on Titan and more. 5 questions to find your perfect anime series.</div>
+      <div class="quiz-meta"><span>&#9201; 2 mins</span><span>&#10067; 5 questions</span><span>&#127919; 8 results</span></div>
+      <div class="quiz-cta">Take the Quiz &rarr;</div>
+      <div class="quiz-stats" id="stats-weissschwarz-series">Loading...</div>
     </a>
 
   </div>
@@ -228,8 +288,12 @@
 
 <script>
 const QUIZ_SLUGS = [
-  'which-tcg','mtg-archetype','mtg-colour','rarity','investor-collector',
-  'lorcana-ink','pokemon-era','riftbound-champion','starwars-affiliation','dragonball-character'
+  'which-tcg','which-tcg-extended',
+  'mtg-archetype','mtg-colour',
+  'rarity','investor-collector',
+  'lorcana-ink','pokemon-era',
+  'riftbound-champion','starwars-affiliation','dragonball-character',
+  'yugioh-archetype','onepiece-character','digimon-partner','weissschwarz-series'
 ];
 
 // Load stats via server-side API (no client Supabase key)
@@ -247,14 +311,31 @@ const QUIZ_SLUGS = [
   }
 })();
 
-function filterQuizzes(game, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#quiz-grid .quiz-card').forEach(card => {
-    if (game === 'all') card.classList.remove('hidden');
-    else card.classList.toggle('hidden', card.dataset.game !== game);
-  });
-}
+  const PRIMARY_GAMES = ['all-tcg','mtg','pokemon','lorcana','yugioh',
+    'onepiece','riftbound','starwars','dragonball','digimon','weissschwarz'];
+  let activeType = 'all';
+  let activeGame = 'all';
+
+  function applyFilters(dimension, value, btn) {
+    if (dimension === 'type') {
+      activeType = value;
+      document.querySelectorAll('#typeFilter .filter-btn').forEach(b => b.classList.remove('active'));
+    } else {
+      activeGame = value;
+      document.querySelectorAll('#gameFilter .filter-btn').forEach(b => b.classList.remove('active'));
+    }
+    btn.classList.add('active');
+    document.querySelectorAll('#quiz-grid .quiz-card').forEach(card => {
+      const cardGame = card.dataset.game || 'other';
+      const cardType = card.dataset.type || 'whoami';
+      const typeMatch = activeType === 'all' || cardType === activeType;
+      let gameMatch;
+      if (activeGame === 'all') gameMatch = true;
+      else if (activeGame === 'other') gameMatch = !PRIMARY_GAMES.includes(cardGame);
+      else gameMatch = cardGame === activeGame;
+      card.classList.toggle('hidden', !(typeMatch && gameMatch));
+    });
+  }
 </script>
 </body>
 </html>
