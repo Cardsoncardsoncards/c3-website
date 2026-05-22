@@ -132,7 +132,7 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
     <div class="quiz-eyebrow">Dragon Ball Quiz · Fighter Identity</div>
     <h1>Which Dragon Ball Character Are You?</h1>
     <p>5 questions to reveal your Dragon Ball Super card game identity. Goku, Vegeta, Gohan, Frieza or Beerus?</p>
-    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 5 possible results</span></div>
+    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 8 possible results</span></div>
   </div>
 
   <div class="quiz-container">
@@ -174,6 +174,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="2" data-v="beerus" onclick="selectOption(this)">
           <span class="option-icon">☁️</span>
           <div><div class="option-text">I am already at my ceiling. It is very high.</div><div class="option-sub">Gods do not train</div></div>
+        </div><div class="option" data-q="2" data-v="piccolo" onclick="selectOption(this)">
+          <span class="option-icon">🧘</span>
+          <div><div class="option-text">Train smart, not hard -- technique over raw power</div><div class="option-sub">Discipline and method</div></div>
+        </div><div class="option" data-q="2" data-v="trunks" onclick="selectOption(this)">
+          <span class="option-icon">⚔️</span>
+          <div><div class="option-text">Train like the future depends on it. It does.</div><div class="option-sub">Urgency drives everything</div></div>
+        </div><div class="option" data-q="2" data-v="android18" onclick="selectOption(this)">
+          <span class="option-icon">🤖</span>
+          <div><div class="option-text">I was built at my limit. I refine the application.</div><div class="option-sub">Perfection is the baseline</div></div>
         </div></div>
     </div><div class="quiz-step" data-step="3">
       <div class="step-num">Question 3 of 5</div>
@@ -193,6 +202,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="3" data-v="beerus" onclick="selectOption(this)">
           <span class="option-icon">👆</span>
           <div><div class="option-text">I destroyed one last week. The other was acceptable.</div><div class="option-sub">Different scale</div></div>
+        </div><div class="option" data-q="3" data-v="piccolo" onclick="selectOption(this)">
+          <span class="option-icon">🎓</span>
+          <div><div class="option-text">Study them carefully. Their weaknesses teach you more than their strengths.</div><div class="option-sub">Every rival is data</div></div>
+        </div><div class="option" data-q="3" data-v="trunks" onclick="selectOption(this)">
+          <span class="option-icon">🔥</span>
+          <div><div class="option-text">Rivals fuel the fire. I need them to push further.</div><div class="option-sub">Motivated by opposition</div></div>
+        </div><div class="option" data-q="3" data-v="android18" onclick="selectOption(this)">
+          <span class="option-icon">😐</span>
+          <div><div class="option-text">Irrelevant until they are a genuine threat. Then dealt with.</div><div class="option-sub">Efficient assessment</div></div>
         </div></div>
     </div><div class="quiz-step" data-step="4">
       <div class="step-num">Question 4 of 5</div>
@@ -231,6 +249,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="5" data-v="beerus" onclick="selectOption(this)">
           <span class="option-icon">😴</span>
           <div><div class="option-text">I was asleep. What happened?</div><div class="option-sub">Above it all</div></div>
+        </div><div class="option" data-q="5" data-v="piccolo" onclick="selectOption(this)">
+          <span class="option-icon">🧠</span>
+          <div><div class="option-text">Note it. Adjust my read of them. Use it.</div><div class="option-sub">Information is useful</div></div>
+        </div><div class="option" data-q="5" data-v="trunks" onclick="selectOption(this)">
+          <span class="option-icon">💪</span>
+          <div><div class="option-text">I have been through worse. This changes nothing.</div><div class="option-sub">Unshakeable</div></div>
+        </div><div class="option" data-q="5" data-v="android18" onclick="selectOption(this)">
+          <span class="option-icon">🥶</span>
+          <div><div class="option-text">Stare at them until they regret it without saying a word.</div><div class="option-sub">Silence is intimidating</div></div>
         </div></div>
     </div>
     <div id="result"><div id="result-inner"></div><div class="suggest-section">
@@ -317,7 +344,7 @@ function showToast(msg) {
 const TOTAL = 5;
 let current = 1;
 const answers = {};
-const RESULTS = {"goku": {"name": "Goku", "tag": "The Limitless Fighter", "why": "You are Goku \u2014 optimistic, powerful, and always pushing past your limits. You see every opponent as an opportunity to grow. Ultra Instinct is not a technique, it is your personality.", "flavour": "My power levels are still rising.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Goku cards australia"}, "vegeta": {"name": "Vegeta", "tag": "The Saiyan Prince", "why": "You are Vegeta \u2014 proud, driven, and absolutely not second place. You train harder than anyone else. The day you surpass Goku is coming and you are already planning the speech.", "flavour": "I am the prince of all Saiyans. Do not forget it.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Vegeta cards australia"}, "gohan": {"name": "Gohan", "tag": "The Scholar-Fighter", "why": "You are Gohan \u2014 the most powerful fighter who keeps accidentally forgetting he is the most powerful fighter. When you finally let go, the game is already over.", "flavour": "I would rather read. But if you insist...", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Gohan cards australia"}, "frieza": {"name": "Frieza", "tag": "The Emperor", "why": "You are Frieza \u2014 calculating, ruthless, and genuinely one of the most powerful beings in existence. You play to win completely. You have exquisite taste in victory.", "flavour": "I have not survived this long by being sentimental.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Frieza cards australia"}, "beerus": {"name": "Beerus", "tag": "God of Destruction", "why": "You are Beerus \u2014 you operate on a different level and everyone knows it. Your standard for a worthy opponent is high. Your standard for acceptable food is higher.", "flavour": "This pudding is acceptable. You are not.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Beerus cards australia"}};
+const RESULTS = {"goku": {"name": "Goku", "tag": "The Limitless Fighter", "why": "You are Goku \u2014 optimistic, powerful, and always pushing past your limits. You see every opponent as an opportunity to grow. Ultra Instinct is not a technique, it is your personality.", "flavour": "My power levels are still rising.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Goku cards australia"}, "vegeta": {"name": "Vegeta", "tag": "The Saiyan Prince", "why": "You are Vegeta \u2014 proud, driven, and absolutely not second place. You train harder than anyone else. The day you surpass Goku is coming and you are already planning the speech.", "flavour": "I am the prince of all Saiyans. Do not forget it.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Vegeta cards australia"}, "gohan": {"name": "Gohan", "tag": "The Scholar-Fighter", "why": "You are Gohan \u2014 the most powerful fighter who keeps accidentally forgetting he is the most powerful fighter. When you finally let go, the game is already over.", "flavour": "I would rather read. But if you insist...", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Gohan cards australia"}, "frieza": {"name": "Frieza", "tag": "The Emperor", "why": "You are Frieza \u2014 calculating, ruthless, and genuinely one of the most powerful beings in existence. You play to win completely. You have exquisite taste in victory.", "flavour": "I have not survived this long by being sentimental.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Frieza cards australia"}, "beerus": {"name": "Beerus", "tag": "God of Destruction", "why": "You are Beerus \u2014 you operate on a different level and everyone knows it. Your standard for a worthy opponent is high. Your standard for acceptable food is higher.", "flavour": "This pudding is acceptable. You are not.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Beerus cards australia"}, "piccolo": {"name": "Piccolo", "tag": "The Eternal Mentor", "why": "You are Piccolo -- strategic, patient, and quietly one of the most capable fighters in the universe. You think before acting, support your team when needed, and carry a quiet intensity that opponents consistently underestimate.", "flavour": "I have been training longer than you have been alive.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Piccolo cards australia"}, "trunks": {"name": "Future Trunks", "tag": "The Determined Survivor", "why": "You are Future Trunks -- relentless, comeback-oriented, and at your best when the situation looks most dire. You carry the weight of what needs to be done and do it anyway. No timeline is too broken to fight for.", "flavour": "I came from a future that should not exist. I will fix it.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Future Trunks cards australia"}, "android18": {"name": "Android 18", "tag": "Composed Powerhouse", "why": "You are Android 18 -- calm, efficient, and vastly more dangerous than opponents anticipate. You win through precise execution and resource efficiency. You rarely show your full hand, and when you act it is decisive.", "flavour": "I was designed to be better than you. I am.", "cardLink": "/cards/dragonball", "shopLink": "/shop.html", "ebay": "Dragon Ball Super Android 18 cards australia"}};
 
 function selectOption(el) {
   const q = el.dataset.q, v = el.dataset.v;
@@ -365,7 +392,7 @@ async function loadStats(resultKey) {
 
 async function showResult() {
   
-  const a = answers, s = {goku:0,vegeta:0,gohan:0,frieza:0,beerus:0};
+  const a = answers, s = {goku:0,vegeta:0,gohan:0,frieza:0,beerus:0,piccolo:0,trunks:0,android18:0};
   Object.values(a).forEach(function(v){if(s[v]!==undefined)s[v]+=4;});
   const resultKey = Object.entries(s).sort(function(a,b){return b[1]-a[1];})[0][0];
   const r = RESULTS[resultKey] || Object.values(RESULTS)[0];

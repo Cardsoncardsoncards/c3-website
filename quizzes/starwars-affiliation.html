@@ -132,7 +132,7 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
     <div class="quiz-eyebrow">Star Wars Unlimited Quiz · Affiliation</div>
     <h1>Are You Light Side or Dark Side?</h1>
     <p>5 questions to reveal your Star Wars Unlimited affiliation. Jedi, Sith, or something in between?</p>
-    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 3 possible results</span></div>
+    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 6 possible results</span></div>
   </div>
 
   <div class="quiz-container">
@@ -149,6 +149,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="1" data-v="neutral" onclick="selectOption(this)">
           <span class="option-icon">🤷</span>
           <div><div class="option-text">Do whatever gets the job done</div><div class="option-sub">Credits talk</div></div>
+        </div><div class="option" data-q="1" data-v="luke" onclick="selectOption(this)">
+          <span class="option-icon">⭐</span>
+          <div><div class="option-text">Believe in yourself and keep training until you are ready</div><div class="option-sub">The Force will guide you</div></div>
+        </div><div class="option" data-q="1" data-v="vader" onclick="selectOption(this)">
+          <span class="option-icon">🌑</span>
+          <div><div class="option-text">Use every advantage available without hesitation</div><div class="option-sub">Power is the only truth</div></div>
+        </div><div class="option" data-q="1" data-v="han" onclick="selectOption(this)">
+          <span class="option-icon">🎲</span>
+          <div><div class="option-text">Move fast, trust your gut, figure it out as you go</div><div class="option-sub">Instinct over planning</div></div>
         </div></div>
     </div><div class="quiz-step" data-step="2">
       <div class="step-num">Question 2 of 5</div>
@@ -162,6 +171,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="2" data-v="neutral" onclick="selectOption(this)">
           <span class="option-icon">💰</span>
           <div><div class="option-text">I work for whoever pays the most</div><div class="option-sub">No politics, just profit</div></div>
+        </div><div class="option" data-q="2" data-v="luke" onclick="selectOption(this)">
+          <span class="option-icon">🌅</span>
+          <div><div class="option-text">The Empire is fear. The Rebellion is hope. Hope wins.</div><div class="option-sub">Idealist</div></div>
+        </div><div class="option" data-q="2" data-v="vader" onclick="selectOption(this)">
+          <span class="option-icon">⚫</span>
+          <div><div class="option-text">The Emperor's vision is correct. Chaos must be ended.</div><div class="option-sub">True believer</div></div>
+        </div><div class="option" data-q="2" data-v="han" onclick="selectOption(this)">
+          <span class="option-icon">🚀</span>
+          <div><div class="option-text">Stay out of trouble, stay off the Empire's radar</div><div class="option-sub">Pragmatic survivor</div></div>
         </div></div>
     </div><div class="quiz-step" data-step="3">
       <div class="step-num">Question 3 of 5</div>
@@ -188,6 +206,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="4" data-v="neutral" onclick="selectOption(this)">
           <span class="option-icon">🎯</span>
           <div><div class="option-text">Whatever the most efficient line is</div><div class="option-sub">Win conditions, not allegiances</div></div>
+        </div><div class="option" data-q="4" data-v="luke" onclick="selectOption(this)">
+          <span class="option-icon">🌟</span>
+          <div><div class="option-text">Build slowly, find the Force, then overwhelm in the late game</div><div class="option-sub">Journey to mastery</div></div>
+        </div><div class="option" data-q="4" data-v="vader" onclick="selectOption(this)">
+          <span class="option-icon">🔴</span>
+          <div><div class="option-text">Deploy elite units and punish every mistake ruthlessly</div><div class="option-sub">The Empire does not forgive</div></div>
+        </div><div class="option" data-q="4" data-v="han" onclick="selectOption(this)">
+          <span class="option-icon">🎯</span>
+          <div><div class="option-text">Fast resource generation and early aggression</div><div class="option-sub">Out before they stabilise</div></div>
         </div></div>
     </div><div class="quiz-step" data-step="5">
       <div class="step-num">Question 5 of 5</div>
@@ -287,7 +314,7 @@ function showToast(msg) {
 const TOTAL = 5;
 let current = 1;
 const answers = {};
-const RESULTS = {"light": {"name": "Light Side", "tag": "Jedi & Rebellion", "why": "You are Light Side \u2014 the Alliance, the Jedi Order, hope against impossible odds. You believe in fighting for something bigger than yourself. May the Force be with you. Always.", "flavour": "Hope is not naive. It is necessary.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited light side cards australia"}, "dark": {"name": "Dark Side", "tag": "Sith & Empire", "why": "You are Dark Side \u2014 the Empire, the Sith, overwhelming force and absolute power. You do not negotiate. Your leader cards are imposing, your deck is efficient.", "flavour": "I find your lack of faith disturbing.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited dark side cards australia"}, "neutral": {"name": "Neutral / Smuggler", "tag": "Never Tell Me the Odds", "why": "You are Neutral \u2014 Han Solo, Boba Fett, the Mandalorian. You work for yourself. You play the most efficient cards regardless of affiliation and win through pure optimisation.", "flavour": "I know what I am worth.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited neutral cards australia"}};
+const RESULTS = {"light": {"name": "Light Side", "tag": "Jedi & Rebellion", "why": "You are Light Side \u2014 the Alliance, the Jedi Order, hope against impossible odds. You believe in fighting for something bigger than yourself. May the Force be with you. Always.", "flavour": "Hope is not naive. It is necessary.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited light side cards australia"}, "dark": {"name": "Dark Side", "tag": "Sith & Empire", "why": "You are Dark Side \u2014 the Empire, the Sith, overwhelming force and absolute power. You do not negotiate. Your leader cards are imposing, your deck is efficient.", "flavour": "I find your lack of faith disturbing.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited dark side cards australia"}, "neutral": {"name": "Neutral / Smuggler", "tag": "Never Tell Me the Odds", "why": "You are Neutral \u2014 Han Solo, Boba Fett, the Mandalorian. You work for yourself. You play the most efficient cards regardless of affiliation and win through pure optimisation.", "flavour": "I know what I am worth.", "cardLink": "/cards/starwars", "shopLink": "/shop.html", "ebay": "Star Wars Unlimited neutral cards australia"}, "luke": {"name": "Luke Skywalker", "tag": "Hope of the Rebellion", "why": "You are Luke -- hopeful, growing, and capable of things no one expected. Luke players build around the Rebel Alliance faction with teamwork and Force-driven abilities. Your strength builds as the game progresses.", "flavour": "I am a Jedi, like my father before me.", "cardLink": "/cards/starwars", "shopLink": "/shop.html#starwars", "ebay": "Star Wars Unlimited Luke Skywalker leader australia"}, "vader": {"name": "Darth Vader", "tag": "Dark Lord of the Sith", "why": "You are Vader -- overwhelming, relentless, and every turn tightens the opponent's options until there are none left. Vader players impose their will on the game. You want a deck that feels inevitable.", "flavour": "I find your lack of faith disturbing.", "cardLink": "/cards/starwars", "shopLink": "/shop.html#starwars", "ebay": "Star Wars Unlimited Darth Vader leader australia"}, "han": {"name": "Han Solo", "tag": "Scruffy-Looking Nerf Herder", "why": "You are Han -- fast, aggressive, never waiting around. You hit hard early and trust your instincts over careful planning. You back yourself to outpace the opponent before they set up.", "flavour": "Never tell me the odds.", "cardLink": "/cards/starwars", "shopLink": "/shop.html#starwars", "ebay": "Star Wars Unlimited Han Solo leader australia"}};
 
 function selectOption(el) {
   const q = el.dataset.q, v = el.dataset.v;
@@ -335,7 +362,7 @@ async function loadStats(resultKey) {
 
 async function showResult() {
   
-  const a = answers, s = {light:0,dark:0,neutral:0};
+  const a = answers, s = {light:0,dark:0,neutral:0,luke:0,vader:0,han:0};
   Object.values(a).forEach(function(v){if(s[v]!==undefined)s[v]+=4;});
   const resultKey = Object.entries(s).sort(function(a,b){return b[1]-a[1];})[0][0];
   const r = RESULTS[resultKey] || Object.values(RESULTS)[0];

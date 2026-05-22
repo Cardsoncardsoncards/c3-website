@@ -292,6 +292,19 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 </footer>
 
 <script>
+const GAME_ALIASES = {
+  'onepiece': ['onepiece','one-piece','one piece'],
+  'starwars': ['starwars','star-wars-unlimited','starwarsunlimited','star wars unlimited'],
+  'dragonball': ['dragonball','dragon-ball-super','dragonball-super','dragon ball super']
+};
+
+function gameMatches(cardGame, activeGame) {
+  if (activeGame === 'all') return true;
+  const aliases = GAME_ALIASES[activeGame];
+  if (aliases) return aliases.includes(cardGame.toLowerCase());
+  return cardGame.toLowerCase() === activeGame.toLowerCase();
+}
+
 function applyFilters() {
   // Read active category
   const activeCat = document.querySelector('#catFilter .cat-btn.active')?.dataset.filter || 'all';
@@ -323,7 +336,7 @@ function applyFilters() {
     const g = card.dataset.game || 'general';
 
     const catMatch = cat === 'all' || c === cat;
-    const gameMatch = game === 'all' || g === game;
+    const gameMatch = gameMatches(g, game);
 
     if (catMatch && gameMatch) {
       card.style.display = 'flex';

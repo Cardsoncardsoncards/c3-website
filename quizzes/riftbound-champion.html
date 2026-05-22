@@ -132,7 +132,7 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
     <div class="quiz-eyebrow">Riftbound Quiz · Champion Identity</div>
     <h1>Which Riftbound Champion Are You?</h1>
     <p>5 questions to reveal your Riftbound champion. Jinx, Jayce, Vi, Lux, or Thresh?</p>
-    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 5 possible results</span></div>
+    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 8 possible results</span></div>
   </div>
 
   <div class="quiz-container">
@@ -155,6 +155,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="1" data-v="thresh" onclick="selectOption(this)">
           <span class="option-icon">⛓️</span>
           <div><div class="option-text">Set the trap and wait for them to fall in</div><div class="option-sub">Patience is power</div></div>
+        </div><div class="option" data-q="1" data-v="caitlyn" onclick="selectOption(this)">
+          <span class="option-icon">🎯</span>
+          <div><div class="option-text">Line up the shot from maximum range</div><div class="option-sub">Positioning is everything</div></div>
+        </div><div class="option" data-q="1" data-v="ekko" onclick="selectOption(this)">
+          <span class="option-icon">⏪</span>
+          <div><div class="option-text">Try something wild, rewind if it does not work</div><div class="option-sub">Time is on your side</div></div>
+        </div><div class="option" data-q="1" data-v="sett" onclick="selectOption(this)">
+          <span class="option-icon">👊</span>
+          <div><div class="option-text">Walk straight up and hit them as hard as possible</div><div class="option-sub">Simple works</div></div>
         </div></div>
     </div><div class="quiz-step" data-step="2">
       <div class="step-num">Question 2 of 5</div>
@@ -193,6 +202,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="3" data-v="thresh" onclick="selectOption(this)">
           <span class="option-icon">💀</span>
           <div><div class="option-text">Grind and generate value over time</div><div class="option-sub">Outlast everyone</div></div>
+        </div><div class="option" data-q="3" data-v="caitlyn" onclick="selectOption(this)">
+          <span class="option-icon">🔭</span>
+          <div><div class="option-text">Patient ranged control -- pick them apart from safety</div><div class="option-sub">Distance is advantage</div></div>
+        </div><div class="option" data-q="3" data-v="ekko" onclick="selectOption(this)">
+          <span class="option-icon">🔄</span>
+          <div><div class="option-text">A combo that rewards reading the opponent's last move</div><div class="option-sub">Tempo and reaction</div></div>
+        </div><div class="option" data-q="3" data-v="sett" onclick="selectOption(this)">
+          <span class="option-icon">💪</span>
+          <div><div class="option-text">All-in aggression from turn one -- no slowing down</div><div class="option-sub">Boss mode</div></div>
         </div></div>
     </div><div class="quiz-step" data-step="4">
       <div class="step-num">Question 4 of 5</div>
@@ -212,6 +230,15 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
         </div><div class="option" data-q="4" data-v="thresh" onclick="selectOption(this)">
           <span class="option-icon">🔮</span>
           <div><div class="option-text">Patience — you already won three turns ago</div><div class="option-sub">The long game always pays</div></div>
+        </div><div class="option" data-q="4" data-v="caitlyn" onclick="selectOption(this)">
+          <span class="option-icon">📐</span>
+          <div><div class="option-text">Precision -- I prepare every angle before committing</div><div class="option-sub">Methodical wins</div></div>
+        </div><div class="option" data-q="4" data-v="ekko" onclick="selectOption(this)">
+          <span class="option-icon">🌀</span>
+          <div><div class="option-text">Adaptability -- I adjust every turn based on what happened</div><div class="option-sub">Never locked in</div></div>
+        </div><div class="option" data-q="4" data-v="sett" onclick="selectOption(this)">
+          <span class="option-icon">🏋️</span>
+          <div><div class="option-text">Raw power -- if the stat block is big enough, it works</div><div class="option-sub">Simplicity wins</div></div>
         </div></div>
     </div><div class="quiz-step" data-step="5">
       <div class="step-num">Question 5 of 5</div>
@@ -317,7 +344,7 @@ function showToast(msg) {
 const TOTAL = 5;
 let current = 1;
 const answers = {};
-const RESULTS = {"jinx": {"name": "Jinx", "tag": "Chaos Reigns", "why": "You are Jinx \u2014 unpredictable, explosive, and impossible to plan around. Chaos is not a strategy, it is your superpower. The table never knows what you are going to do next. Neither do you.", "flavour": "Get jinxed.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Jinx cards australia"}, "jayce": {"name": "Jayce", "tag": "The Innovator", "why": "You are Jayce \u2014 brilliant, calculated, and always one step ahead. You prepare for every scenario. When your plan executes perfectly, the table knows they never had a chance.", "flavour": "Progress. Always progress.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Jayce cards australia"}, "vi": {"name": "Vi", "tag": "The Enforcer", "why": "You are Vi \u2014 direct, powerful, and you never back down. You apply pressure every turn. You do not have a plan B because plan A works if you commit hard enough.", "flavour": "The punch is the plan.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Vi cards australia"}, "lux": {"name": "Lux", "tag": "The Light Mage", "why": "You are Lux \u2014 supportive, strategic, and brilliant at controlling the board. You have an answer for everything and protect your team while setting up a clean win condition.", "flavour": "Illuminated. Always.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Lux cards australia"}, "thresh": {"name": "Thresh", "tag": "The Collector", "why": "You are Thresh \u2014 patient, sinister, and playing the longest of long games. The opponent thinks they are winning for six turns, and then they realise they were never winning.", "flavour": "The lantern shows the way. Into the cage.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Thresh cards australia"}};
+const RESULTS = {"jinx": {"name": "Jinx", "tag": "Chaos Reigns", "why": "You are Jinx \u2014 unpredictable, explosive, and impossible to plan around. Chaos is not a strategy, it is your superpower. The table never knows what you are going to do next. Neither do you.", "flavour": "Get jinxed.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Jinx cards australia"}, "jayce": {"name": "Jayce", "tag": "The Innovator", "why": "You are Jayce \u2014 brilliant, calculated, and always one step ahead. You prepare for every scenario. When your plan executes perfectly, the table knows they never had a chance.", "flavour": "Progress. Always progress.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Jayce cards australia"}, "vi": {"name": "Vi", "tag": "The Enforcer", "why": "You are Vi \u2014 direct, powerful, and you never back down. You apply pressure every turn. You do not have a plan B because plan A works if you commit hard enough.", "flavour": "The punch is the plan.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Vi cards australia"}, "lux": {"name": "Lux", "tag": "The Light Mage", "why": "You are Lux \u2014 supportive, strategic, and brilliant at controlling the board. You have an answer for everything and protect your team while setting up a clean win condition.", "flavour": "Illuminated. Always.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Lux cards australia"}, "thresh": {"name": "Thresh", "tag": "The Collector", "why": "You are Thresh \u2014 patient, sinister, and playing the longest of long games. The opponent thinks they are winning for six turns, and then they realise they were never winning.", "flavour": "The lantern shows the way. Into the cage.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Thresh cards australia"}, "caitlyn": {"name": "Caitlyn", "tag": "Precision Marksman", "why": "You are Caitlyn -- calculated, patient, and dangerous from a distance. You set up the game state before committing, control the board methodically, and win through superior positioning. Caitlyn decks reward players who think two turns ahead.", "flavour": "I never miss.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Caitlyn cards australia"}, "ekko": {"name": "Ekko", "tag": "Time Bandit", "why": "You are Ekko -- creative, unpredictable, and you love surprising opponents. Your rewind mechanics create decision points other decks cannot match. If you enjoy making your opponent regret their last move, Ekko is your champion.", "flavour": "I rewound time to make that look cool.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Ekko cards australia"}, "sett": {"name": "Sett", "tag": "The Boss", "why": "You are Sett -- raw power, close range, and you do not overthink it. You get in, hit hard, and win through brute force. No tricks. No plans. Just overwhelming aggression backed by a body that does not go down.", "flavour": "Pit fights are where I got my start.", "cardLink": "/cards/riftbound", "shopLink": "/shop.html#riftbound", "ebay": "Riftbound Sett cards australia"}};
 
 function selectOption(el) {
   const q = el.dataset.q, v = el.dataset.v;
@@ -365,7 +392,7 @@ async function loadStats(resultKey) {
 
 async function showResult() {
   
-  const a = answers, s = {jinx:0,jayce:0,vi:0,lux:0,thresh:0};
+  const a = answers, s = {jinx:0,jayce:0,vi:0,lux:0,thresh:0,caitlyn:0,ekko:0,sett:0};
   Object.values(a).forEach(function(v){if(s[v]!==undefined)s[v]+=4;});
   const resultKey = Object.entries(s).sort(function(a,b){return b[1]-a[1];})[0][0];
   const r = RESULTS[resultKey] || Object.values(RESULTS)[0];
