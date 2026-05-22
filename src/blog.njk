@@ -181,53 +181,53 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   <div class="filter-section">
     <div class="filter-label">Filter by content type</div>
     <div class="cat-filter" id="catFilter">
-      <button class="cat-btn active" data-filter="all" onclick="applyFilters()">All</button>
-      <button class="cat-btn" data-filter="buying-guides" onclick="applyFilters()">Buying Guides</button>
-      <button class="cat-btn" data-filter="beginner-guides" onclick="applyFilters()">Beginner Guides</button>
-      <button class="cat-btn" data-filter="set-reviews" onclick="applyFilters()">Set Reviews</button>
-      <button class="cat-btn" data-filter="competitive-play" onclick="applyFilters()">Competitive</button>
-      <button class="cat-btn" data-filter="market-and-prices" onclick="applyFilters()">Prices</button>
-      <button class="cat-btn" data-filter="selling-guides" onclick="applyFilters()">Selling</button>
-      <button class="cat-btn" data-filter="how-to-play" onclick="applyFilters()">How to Play</button>
-      <button class="cat-btn" data-filter="accessories" onclick="applyFilters()">Accessories</button>
-      <button class="cat-btn" data-filter="tools-and-trackers" onclick="applyFilters()">Tools</button>
-      <button class="cat-btn" data-filter="general-tcg" onclick="applyFilters()">General</button>
+      <button class="cat-btn active" data-filter="all" onclick="applyFilters(event)">All</button>
+      <button class="cat-btn" data-filter="buying-guides" onclick="applyFilters(event)">Buying Guides</button>
+      <button class="cat-btn" data-filter="beginner-guides" onclick="applyFilters(event)">Beginner Guides</button>
+      <button class="cat-btn" data-filter="set-reviews" onclick="applyFilters(event)">Set Reviews</button>
+      <button class="cat-btn" data-filter="competitive-play" onclick="applyFilters(event)">Competitive</button>
+      <button class="cat-btn" data-filter="market-and-prices" onclick="applyFilters(event)">Prices</button>
+      <button class="cat-btn" data-filter="selling-guides" onclick="applyFilters(event)">Selling</button>
+      <button class="cat-btn" data-filter="how-to-play" onclick="applyFilters(event)">How to Play</button>
+      <button class="cat-btn" data-filter="accessories" onclick="applyFilters(event)">Accessories</button>
+      <button class="cat-btn" data-filter="tools-and-trackers" onclick="applyFilters(event)">Tools</button>
+      <button class="cat-btn" data-filter="general-tcg" onclick="applyFilters(event)">General</button>
     </div>
     <div class="filter-divider"></div>
     <div class="filter-label">Filter by game</div>
     <div class="cat-filter" id="gameFilter">
-      <button class="cat-btn active" data-game="all" onclick="applyFilters()">All Games</button>
-      <button class="cat-btn" data-game="mtg" onclick="applyFilters()">⚔️ MTG</button>
-      <button class="cat-btn" data-game="pokemon" onclick="applyFilters()">⚡ Pokémon</button>
-      <button class="cat-btn" data-game="lorcana" onclick="applyFilters()">🏰 Lorcana</button>
-      <button class="cat-btn" data-game="onepiece" onclick="applyFilters()">☠️ One Piece</button>
-      <button class="cat-btn" data-game="yugioh" onclick="applyFilters()">👁️ Yu-Gi-Oh</button>
-      <button class="cat-btn" data-game="riftbound" onclick="applyFilters()">🎮 Riftbound</button>
-      <button class="cat-btn" data-game="dnd" onclick="applyFilters()">🎲 D&amp;D</button>
-      <button class="cat-btn" data-game="starwars" onclick="applyFilters()">&#9733; Star Wars</button>
-      <button class="cat-btn" data-game="dragonball" onclick="applyFilters()">&#9889; Dragon Ball</button>
-      <button class="cat-btn" data-game="digimon" onclick="applyFilters()">&#128262; Digimon</button>
-      <button class="cat-btn" data-game="alphaclash" onclick="applyFilters()">&#9876; Alpha Clash</button>
-      <button class="cat-btn" data-game="bakugan" onclick="applyFilters()">&#127968; Bakugan</button>
-      <button class="cat-btn" data-game="battlespiritssaga" onclick="applyFilters()">&#9654; Battle Spirits</button>
-      <button class="cat-btn" data-game="buddyfight" onclick="applyFilters()">&#128081; Buddyfight</button>
-      <button class="cat-btn" data-game="finalfantasy" onclick="applyFilters()">&#9670; Final Fantasy</button>
-      <button class="cat-btn" data-game="forceofwill" onclick="applyFilters()">&#9763; Force of Will</button>
-      <button class="cat-btn" data-game="gateruler" onclick="applyFilters()">&#9960; Gate Ruler</button>
-      <button class="cat-btn" data-game="godzilla" onclick="applyFilters()">&#128009; Godzilla</button>
-      <button class="cat-btn" data-game="grandarchive" onclick="applyFilters()">&#128218; Grand Archive</button>
-      <button class="cat-btn" data-game="gundam" onclick="applyFilters()">&#129302; Gundam</button>
-      <button class="cat-btn" data-game="hololive" onclick="applyFilters()">&#127908; Hololive</button>
-      <button class="cat-btn" data-game="metazoo" onclick="applyFilters()">&#128123; MetaZoo</button>
-      <button class="cat-btn" data-game="shadowverse" onclick="applyFilters()">&#128736; Shadowverse</button>
-      <button class="cat-btn" data-game="sorcery" onclick="applyFilters()">&#10024; Sorcery</button>
-      <button class="cat-btn" data-game="unionarena" onclick="applyFilters()">&#128293; Union Arena</button>
-      <button class="cat-btn" data-game="universus" onclick="applyFilters()">&#127759; UniVersus</button>
-      <button class="cat-btn" data-game="vanguard" onclick="applyFilters()">&#9876; Vanguard</button>
-      <button class="cat-btn" data-game="warhammer" onclick="applyFilters()">&#9876; Warhammer</button>
-      <button class="cat-btn" data-game="weissschwarz" onclick="applyFilters()">&#127929; Weiss Schwarz</button>
-      <button class="cat-btn" data-game="wixoss" onclick="applyFilters()">&#9825; WIXOSS</button>
-      <button class="cat-btn" data-game="wow" onclick="applyFilters()">&#9876; WoW TCG</button>
+      <button class="cat-btn active" data-game="all" onclick="applyFilters(event)">All Games</button>
+      <button class="cat-btn" data-game="mtg" onclick="applyFilters(event)">⚔️ MTG</button>
+      <button class="cat-btn" data-game="pokemon" onclick="applyFilters(event)">⚡ Pokémon</button>
+      <button class="cat-btn" data-game="lorcana" onclick="applyFilters(event)">🏰 Lorcana</button>
+      <button class="cat-btn" data-game="onepiece" onclick="applyFilters(event)">☠️ One Piece</button>
+      <button class="cat-btn" data-game="yugioh" onclick="applyFilters(event)">👁️ Yu-Gi-Oh</button>
+      <button class="cat-btn" data-game="riftbound" onclick="applyFilters(event)">🎮 Riftbound</button>
+      <button class="cat-btn" data-game="dnd" onclick="applyFilters(event)">🎲 D&amp;D</button>
+      <button class="cat-btn" data-game="starwars" onclick="applyFilters(event)">&#9733; Star Wars</button>
+      <button class="cat-btn" data-game="dragonball" onclick="applyFilters(event)">&#9889; Dragon Ball</button>
+      <button class="cat-btn" data-game="digimon" onclick="applyFilters(event)">&#128262; Digimon</button>
+      <button class="cat-btn" data-game="alphaclash" onclick="applyFilters(event)">&#9876; Alpha Clash</button>
+      <button class="cat-btn" data-game="bakugan" onclick="applyFilters(event)">&#127968; Bakugan</button>
+      <button class="cat-btn" data-game="battlespiritssaga" onclick="applyFilters(event)">&#9654; Battle Spirits</button>
+      <button class="cat-btn" data-game="buddyfight" onclick="applyFilters(event)">&#128081; Buddyfight</button>
+      <button class="cat-btn" data-game="finalfantasy" onclick="applyFilters(event)">&#9670; Final Fantasy</button>
+      <button class="cat-btn" data-game="forceofwill" onclick="applyFilters(event)">&#9763; Force of Will</button>
+      <button class="cat-btn" data-game="gateruler" onclick="applyFilters(event)">&#9960; Gate Ruler</button>
+      <button class="cat-btn" data-game="godzilla" onclick="applyFilters(event)">&#128009; Godzilla</button>
+      <button class="cat-btn" data-game="grandarchive" onclick="applyFilters(event)">&#128218; Grand Archive</button>
+      <button class="cat-btn" data-game="gundam" onclick="applyFilters(event)">&#129302; Gundam</button>
+      <button class="cat-btn" data-game="hololive" onclick="applyFilters(event)">&#127908; Hololive</button>
+      <button class="cat-btn" data-game="metazoo" onclick="applyFilters(event)">&#128123; MetaZoo</button>
+      <button class="cat-btn" data-game="shadowverse" onclick="applyFilters(event)">&#128736; Shadowverse</button>
+      <button class="cat-btn" data-game="sorcery" onclick="applyFilters(event)">&#10024; Sorcery</button>
+      <button class="cat-btn" data-game="unionarena" onclick="applyFilters(event)">&#128293; Union Arena</button>
+      <button class="cat-btn" data-game="universus" onclick="applyFilters(event)">&#127759; UniVersus</button>
+      <button class="cat-btn" data-game="vanguard" onclick="applyFilters(event)">&#9876; Vanguard</button>
+      <button class="cat-btn" data-game="warhammer" onclick="applyFilters(event)">&#9876; Warhammer</button>
+      <button class="cat-btn" data-game="weissschwarz" onclick="applyFilters(event)">&#127929; Weiss Schwarz</button>
+      <button class="cat-btn" data-game="wixoss" onclick="applyFilters(event)">&#9825; WIXOSS</button>
+      <button class="cat-btn" data-game="wow" onclick="applyFilters(event)">&#9876; WoW TCG</button>
     </div>
   </div>
 
@@ -305,20 +305,20 @@ function gameMatches(cardGame, activeGame) {
   return cardGame.toLowerCase() === activeGame.toLowerCase();
 }
 
-function applyFilters() {
+function applyFilters(e) {
   // Read active category
   const activeCat = document.querySelector('#catFilter .cat-btn.active')?.dataset.filter || 'all';
   const activeGame = document.querySelector('#gameFilter .cat-btn.active')?.dataset.game || 'all';
 
   // Update clicked button active state
   document.querySelectorAll('#catFilter .cat-btn').forEach(b => {
-    if (event && b === event.target) {
+    if (e && b === e.target) {
       document.querySelectorAll('#catFilter .cat-btn').forEach(x => x.classList.remove('active'));
       b.classList.add('active');
     }
   });
   document.querySelectorAll('#gameFilter .cat-btn').forEach(b => {
-    if (event && b === event.target) {
+    if (e && b === e.target) {
       document.querySelectorAll('#gameFilter .cat-btn').forEach(x => x.classList.remove('active'));
       b.classList.add('active');
     }
