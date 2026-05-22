@@ -9,9 +9,9 @@
 // 2. Update DISPLAY_NAME (umbrella name shown in the carousel title)
 // 3. Update SEARCH_TERM (used in the eBay store search link)
 
-const SET_QUERY = '(set:sos or set:soa or set:soc)';
-const DISPLAY_NAME = 'Strixhaven';
-const SEARCH_TERM = 'strixhaven';
+const SET_QUERY = '(set:dsk or set:dsc)';
+const DISPLAY_NAME = 'Duskmourn';
+const SEARCH_TERM = 'duskmourn';
 const FALLBACK_FX = 1.55; // Used if Frankfurter call fails
 const TOP_N = 12;
 

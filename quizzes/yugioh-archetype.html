@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Yu-Gi-Oh Archetype Suits You? | Cards on Cards on Cards</title>
+<meta name="description" content="Find your perfect Yu-Gi-Oh archetype in 5 questions. Blue-Eyes, Dark Magician, Branded, Sky Striker and more. Built for Australian duelists.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/quizzes/yugioh-archetype">
+<link rel="icon" type="image/png" href="/c3logo.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<meta property="og:title" content="Which Yu-Gi-Oh Archetype Suits You? | C3">
+<meta property="og:description" content="5 questions to find your perfect Yu-Gi-Oh playstyle. Aggro, control, combo, trap-heavy and more. Results include card prices on C3.">
+<meta property="og:url" content="https://cardsoncardsoncards.com.au/quizzes/yugioh-archetype">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--accent:#A855F7;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+.nav-logo img{height:28px;width:28px;border-radius:5px;object-fit:cover;flex-shrink:0}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
+.nav-link--active{color:var(--accent);border-color:rgba(168,85,247,.4);background:rgba(168,85,247,.06)}
+.wrap{max-width:700px;margin:0 auto;padding:0 24px 80px}
+.hero{padding:52px 0 36px;text-align:center}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+h1{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.2}
+h1 span{color:var(--accent)}
+.hero-sub{font-size:14px;color:var(--text2);max-width:520px;margin:0 auto}
+.quiz-meta-row{display:flex;gap:16px;justify-content:center;margin-top:14px;font-size:12px;color:var(--text2)}
+.quiz-container{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.quiz-progress{height:3px;background:var(--border)}
+.quiz-progress-bar{height:100%;background:var(--accent);transition:width .4s ease;width:0%}
+.quiz-step{padding:32px;display:none}
+.quiz-step.active{display:block}
+.step-num{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.step-q{font-family:'Cinzel',serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:24px;line-height:1.35}
+.options{display:grid;gap:10px}
+.option{padding:14px 18px;border-radius:9px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:12px;text-align:left}
+.option:hover{border-color:var(--accent);background:rgba(168,85,247,.06)}
+.option.selected{border-color:var(--accent);background:rgba(168,85,247,.12);color:var(--accent)}
+.option-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;margin-top:1px}
+.option-text{font-size:14px;font-weight:500;line-height:1.4}
+.option-sub{font-size:12px;color:var(--text2);margin-top:3px}
+.option.selected .option-sub{color:rgba(168,85,247,.7)}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;border-top:1px solid var(--border)}
+.btn{padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#9333EA;transform:translateY(-1px)}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--silver)}
+.btn-secondary:hover{border-color:var(--silver);color:var(--white)}
+.btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+#result{display:none;padding:32px}
+.result-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.result-game{font-family:'Cinzel',serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.result-why{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.65}
+.result-starter-box{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);line-height:1.6}
+.result-starter-box strong{color:var(--white);display:block;margin-bottom:4px}
+.result-actions{display:flex;flex-direction:column;gap:10px}
+.result-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s}
+.result-cta:hover{opacity:.85;text-decoration:none;transform:translateX(2px)}
+.result-share{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.share-label{font-size:12px;color:var(--text2);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.share-btns{display:flex;gap:8px;flex-wrap:wrap}
+.share-btn{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--silver);transition:all .2s;font-family:'DM Sans',sans-serif}
+.share-btn:hover{border-color:var(--silver);color:var(--white)}
+.retake{margin-top:16px;font-size:13px;color:var(--text2);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0;text-decoration:underline;text-underline-offset:3px}
+.retake:hover{color:var(--white)}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:48px}
+footer a{color:var(--text2);margin:0 8px}
+footer a:hover{color:var(--white)}
+@media(max-width:520px){.quiz-step{padding:24px 20px}.quiz-nav{padding:16px 20px}#result{padding:24px 20px}.step-q{font-size:17px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards/yugioh" class="nav-link" style="color:#A855F7;border-color:rgba(168,85,247,.35)">Yu-Gi-Oh Hub</a>
+      <a href="/blog/yugioh-tcg-beginners-guide-australia" class="nav-link">YGO Guide</a>
+      <a href="/tools" class="nav-link">Tools</a>
+      <a href="/play" class="nav-link">Play</a>
+      <a href="/quizzes" class="nav-link nav-link--active">Quizzes</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">Shop eBay &#8599;</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">Yu-Gi-Oh · Archetype Identity · Australia</div>
+    <h1>Which Yu-Gi-Oh <span>Archetype</span> Suits You?</h1>
+    <p class="hero-sub">5 questions to match your playstyle to the right deck. Results include card prices and eBay buy links.</p>
+    <div class="quiz-meta-row"><span>&#10003; 5 questions</span><span>&#10003; 8 results</span><span>&#10003; Free</span></div>
+  </div>
+  <div class="quiz-container">
+    <div class="quiz-progress"><div class="quiz-progress-bar" id="progress-bar"></div></div>
+
+    <div class="quiz-step active" data-step="1">
+      <div class="step-num">Question 1 of 5</div>
+      <div class="step-q">In a duel, how do you prefer to play?</div>
+      <div class="options">
+        <div class="option" data-q="1" data-v="aggro" onclick="selectOption(this)"><span class="option-icon">&#9889;</span><div><div class="option-text">Swarm the field as fast as possible</div><div class="option-sub">I want my opponent overwhelmed by turn 2</div></div></div>
+        <div class="option" data-q="1" data-v="control" onclick="selectOption(this)"><span class="option-icon">&#127748;</span><div><div class="option-text">Control the game slowly and grind them down</div><div class="option-sub">Patience is a weapon</div></div></div>
+        <div class="option" data-q="1" data-v="combo" onclick="selectOption(this)"><span class="option-icon">&#9822;</span><div><div class="option-text">Build an unstoppable combo sequence</div><div class="option-sub">I want to set up a board state nothing can break</div></div></div>
+        <div class="option" data-q="1" data-v="trap" onclick="selectOption(this)"><span class="option-icon">&#128274;</span><div><div class="option-text">Set traps and let my opponent walk into them</div><div class="option-sub">Reactive play is my style</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-step" data-step="2">
+      <div class="step-num">Question 2 of 5</div>
+      <div class="step-q">Your deck building philosophy is...</div>
+      <div class="options">
+        <div class="option" data-q="2" data-v="consistent" onclick="selectOption(this)"><span class="option-icon">&#128200;</span><div><div class="option-text">Consistency above all else</div><div class="option-sub">I want the same opening hand every game</div></div></div>
+        <div class="option" data-q="2" data-v="highrisk" onclick="selectOption(this)"><span class="option-icon">&#127922;</span><div><div class="option-text">High risk, high reward</div><div class="option-sub">Boom or bust, I am fine either way</div></div></div>
+        <div class="option" data-q="2" data-v="surprise" onclick="selectOption(this)"><span class="option-icon">&#127881;</span><div><div class="option-text">Surprise the opponent</div><div class="option-sub">They should never know what is coming</div></div></div>
+        <div class="option" data-q="2" data-v="budget" onclick="selectOption(this)"><span class="option-icon">&#128184;</span><div><div class="option-text">Best possible deck for my budget</div><div class="option-sub">I am not spending a fortune on cardboard</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-step" data-step="3">
+      <div class="step-num">Question 3 of 5</div>
+      <div class="step-q">Favourite monster type?</div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="dragon" onclick="selectOption(this)"><span class="option-icon">&#127992;</span><div><div class="option-text">Dragons</div><div class="option-sub">The most iconic monsters in the game</div></div></div>
+        <div class="option" data-q="3" data-v="spellcaster" onclick="selectOption(this)"><span class="option-icon">&#9889;</span><div><div class="option-text">Spellcasters</div><div class="option-sub">Magic users with style and power</div></div></div>
+        <div class="option" data-q="3" data-v="machine" onclick="selectOption(this)"><span class="option-icon">&#129302;</span><div><div class="option-text">Machines</div><div class="option-sub">Precision-engineered destruction</div></div></div>
+        <div class="option" data-q="3" data-v="any" onclick="selectOption(this)"><span class="option-icon">&#127775;</span><div><div class="option-text">Does not matter, just make them powerful</div><div class="option-sub">Type is irrelevant, results are everything</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-step" data-step="4">
+      <div class="step-num">Question 4 of 5</div>
+      <div class="step-q">Competitive or casual?</div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="competitive" onclick="selectOption(this)"><span class="option-icon">&#127942;</span><div><div class="option-text">Full competitive, I want to top regionals</div><div class="option-sub">I will play whatever wins</div></div></div>
+        <div class="option" data-q="4" data-v="serious" onclick="selectOption(this)"><span class="option-icon">&#127775;</span><div><div class="option-text">Semi-serious, I play locals regularly</div><div class="option-sub">Competitive enough to care, not enough to grind</div></div></div>
+        <div class="option" data-q="4" data-v="casual" onclick="selectOption(this)"><span class="option-icon">&#128515;</span><div><div class="option-text">Casual kitchen table only</div><div class="option-sub">Win or lose, I am here for fun</div></div></div>
+        <div class="option" data-q="4" data-v="nostalgia" onclick="selectOption(this)"><span class="option-icon">&#128149;</span><div><div class="option-text">Nostalgia, I grew up with this game</div><div class="option-sub">I want to play the decks I loved as a kid</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-step" data-step="5">
+      <div class="step-num">Question 5 of 5</div>
+      <div class="step-q">How do you handle losing a game?</div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="adapt" onclick="selectOption(this)"><span class="option-icon">&#128200;</span><div><div class="option-text">Study what went wrong and adapt my strategy</div><div class="option-sub">Every loss is data</div></div></div>
+        <div class="option" data-q="5" data-v="variance" onclick="selectOption(this)"><span class="option-icon">&#127922;</span><div><div class="option-text">Blame variance and move on</div><div class="option-sub">If I brick, that is the game, not me</div></div></div>
+        <div class="option" data-q="5" data-v="accept" onclick="selectOption(this)"><span class="option-icon">&#128995;</span><div><div class="option-text">Accept it and enjoy the next game</div><div class="option-sub">It is just a card game</div></div></div>
+        <div class="option" data-q="5" data-v="revenge" onclick="selectOption(this)"><span class="option-icon">&#128293;</span><div><div class="option-text">Use it as fuel for the next game</div><div class="option-sub">I remember every loss and use them</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="btn btn-secondary" id="btn-back" onclick="goBack()" disabled>Back</button>
+      <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>Next</button>
+    </div>
+    <div id="result"><div id="result-inner"></div></div>
+  </div>
+
+  <div style="margin-top:32px;padding:20px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);text-align:center">
+    <div style="font-size:12px;color:var(--text2);margin-bottom:10px">More quizzes</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <a href="/quizzes/which-tcg-extended" style="font-size:12px;padding:6px 14px;border-radius:6px;border:1px solid var(--border);color:var(--silver)">Which TCG Should I Play?</a>
+      <a href="/quizzes/investor-collector" style="font-size:12px;padding:6px 14px;border-radius:6px;border:1px solid var(--border);color:var(--silver)">Investor or Collector?</a>
+      <a href="/quizzes" style="font-size:12px;padding:6px 14px;border-radius:6px;border:1px solid rgba(168,85,247,.3);color:#A855F7">All Quizzes</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div><a href="/">Home</a><a href="/quizzes">All Quizzes</a><a href="/cards/yugioh">Yu-Gi-Oh Hub</a><a href="/blog/yugioh-tcg-beginners-guide-australia">YGO Beginners Guide</a><a href="/legal.html">Affiliate Disclosure</a></div>
+  <div style="margin-top:10px;opacity:.5">This site contains affiliate links. We may earn a commission when you click and buy, at no extra cost to you.</div>
+  <div style="margin-top:6px;opacity:.35">&copy; 2026 Cards on Cards on Cards</div>
+</footer>
+
+<script>
+const TOTAL=5;let current=1;const answers={};
+const RESULTS={
+  blueeyes:{name:'Blue-Eyes White Dragon',badge:'Classic Power',colour:'#60A5FA',why:'You want raw power and iconic presence. Blue-Eyes is the most recognisable monster in Yu-Gi-Oh history for a reason. The archetype rewards players who want to summon massive beaters and overwhelm opponents with sheer force. The nostalgia factor is real and the competitive builds are genuinely strong.',starter:'Blue-Eyes structure decks are available for around AU$20-25. Pick up two or three copies to get the key cards, then upgrade with singles from our Yu-Gi-Oh hub.',shopLink:'/cards/yugioh',ebayQuery:'Yu-Gi-Oh Blue Eyes structure deck Australia'},
+  darkmagician:{name:'Dark Magician',badge:'Spellcaster Royalty',colour:'#A855F7',why:'Dark Magician suits players who love nostalgia, spellcasters, and a playstyle that blends offense with spell and trap support. The modern support cards have made Dark Magician genuinely competitive at the casual and semi-serious level. It is the quintessential classic deck.',starter:'The Dark Magician structure deck runs around AU$20-25. Pair it with modern support cards like Dark Magical Circle from singles.',shopLink:'/cards/yugioh',ebayQuery:'Yu-Gi-Oh Dark Magician structure deck Australia'},
+  branded:{name:'Branded Despia',badge:'Modern Combo',colour:'#F97316',why:'Branded Despia is one of the most consistent and powerful modern archetypes in Yu-Gi-Oh. It suits players who want to build complex boards, access powerful boss monsters through fusion summoning, and execute clean combo lines. The deck rewards practice and punishes opponents who do not know the matchup.',starter:'Branded is a singles-heavy deck. Start by buying the key pieces individually from our Yu-Gi-Oh hub rather than buying packs. Budget builds are viable at locals.',shopLink:'/cards/yugioh',ebayQuery:'Yu-Gi-Oh Branded Despia cards singles'},
+  skystriker:{name:'Sky Striker',badge:'Precision Control',colour:'#38BDF8',why:'Sky Striker is a pure control deck with elegant spell-based play patterns and a single main deck monster. It suits players who want to grind opponents down methodically, never overcommit resources, and win through attrition. One of the cleanest playstyles in the game.',starter:'Sky Striker is relatively budget-friendly by competitive standards. Buy singles from our Yu-Gi-Oh hub. The core cards are accessible and the deck rewards smart play over expensive card choices.',shopLink:'/cards/yugioh',ebayQuery:'Yu-Gi-Oh Sky Striker singles Australia'},
+  labrynth:{name:'Labrynth',badge:'Trap Master',colour:'#EC4899',why:'Labrynth is the definitive trap-heavy control deck in modern Yu-Gi-Oh. It suits patient players who love setting traps, manipulating the opponent\'s actions, and winning through reactive plays. Lady Labrynth of the Silver Castle is one of the most satisfying boss monsters to summon in the game.',starter:'Labrynth is moderately budget-friendly. The core cards are singles. Pick up Lady Labrynth and the key trap package from our Yu-Gi-Oh hub.',shopLink:'/cards/yugioh',ebayQuery:'Yu-Gi-Oh Labrynth singles Australia'},
+  spright:{name:'Spright',badge:'Level 2 Aggro',colour:'#4ADE80',why:'Spright is a fast, aggressive deck built around level/rank/link 2 monsters. It suits players who want explosive openings, multiple negations, and a consistent game plan that goes wide and fast. One of the most resilient aggressive strategies in the current meta.',starter:'Spright requires some investment in specific monsters. Buy the key pieces as singles from our Yu-Gi-Oh hub. Structure decks alone will not build this deck.',shopLink:'/cards/yugioh',ebayQuery:'Yu-Gi-Oh Spright singles Australia'},
+  tearlaments:{name:'Tearalaments',badge:'Graveyard Engine',colour:'#818CF8',why:'Tearalaments is a complex, graveyard-focused strategy that mills cards to trigger powerful effects. It suits experienced players who want depth, interaction, and a deck that rewards intimate knowledge of your own card effects. Note that several key cards are limited, so check the current ban list before building.',starter:'This is an advanced and somewhat expensive deck. Research the current ban list status of key cards before investing. Our Yu-Gi-Oh hub has current singles prices.',shopLink:'/cards/yugioh',ebayQuery:'Yu-Gi-Oh Tearalaments singles Australia'},
+  dragonlink:{name:'Dragon Link',badge:'Dragon Combo Engine',colour:'#EF4444',why:'Dragon Link is a combo-heavy dragon strategy that generates enormous advantage through link summoning chains. It suits players who want to master a consistent opening sequence and build boards that are difficult to break. The dragon typing means strong searchers and solid recovery.',starter:'Dragon Link is a complex combo deck. Learn the combo lines from community guides before buying cards. Purchase key pieces as singles from our Yu-Gi-Oh hub.',shopLink:'/cards/yugioh',ebayQuery:'Yu-Gi-Oh Dragon Link singles Australia'}
+};
+
+function score(){
+  const s={blueeyes:0,darkmagician:0,branded:0,skystriker:0,labrynth:0,spright:0,tearlaments:0,dragonlink:0};
+  const a=answers;
+  if(a[1]==='aggro'){s.spright+=3;s.dragonlink+=2;s.blueeyes+=2;}
+  if(a[1]==='control'){s.skystriker+=4;s.labrynth+=3;}
+  if(a[1]==='combo'){s.branded+=3;s.dragonlink+=3;s.tearlaments+=2;}
+  if(a[1]==='trap'){s.labrynth+=4;s.skystriker+=2;}
+  if(a[2]==='consistent'){s.skystriker+=2;s.spright+=2;s.branded+=2;}
+  if(a[2]==='highrisk'){s.tearlaments+=3;s.dragonlink+=2;}
+  if(a[2]==='surprise'){s.labrynth+=3;s.tearlaments+=2;}
+  if(a[2]==='budget'){s.blueeyes+=3;s.darkmagician+=3;s.skystriker+=1;}
+  if(a[3]==='dragon'){s.blueeyes+=4;s.dragonlink+=3;}
+  if(a[3]==='spellcaster'){s.darkmagician+=4;}
+  if(a[3]==='machine'){s.skystriker+=2;s.spright+=2;}
+  if(a[3]==='any'){s.branded+=2;s.tearlaments+=2;s.labrynth+=1;}
+  if(a[4]==='competitive'){s.branded+=3;s.skystriker+=2;s.spright+=2;s.tearlaments+=2;}
+  if(a[4]==='serious'){s.branded+=2;s.labrynth+=2;s.dragonlink+=2;}
+  if(a[4]==='casual'){s.blueeyes+=3;s.darkmagician+=3;}
+  if(a[4]==='nostalgia'){s.blueeyes+=4;s.darkmagician+=4;}
+  if(a[5]==='adapt'){s.branded+=2;s.skystriker+=2;s.tearlaments+=2;}
+  if(a[5]==='variance'){s.dragonlink+=2;s.tearlaments+=2;}
+  if(a[5]==='accept'){s.blueeyes+=2;s.darkmagician+=2;s.labrynth+=1;}
+  if(a[5]==='revenge'){s.skystriker+=2;s.spright+=2;s.branded+=2;}
+  return Object.entries(s).sort((a,b)=>b[1]-a[1])[0][0];
+}
+
+function selectOption(el){const q=el.dataset.q;document.querySelectorAll(`[data-q="${q}"]`).forEach(o=>o.classList.remove('selected'));el.classList.add('selected');answers[parseInt(q)]=el.dataset.v;document.getElementById('btn-next').disabled=false;}
+function updateProgress(){const pct=((current-1)/TOTAL)*100;document.getElementById('progress-bar').style.width=pct+'%';document.getElementById('btn-back').disabled=current===1;const n=document.getElementById('btn-next');n.disabled=!answers[current];n.textContent=current===TOTAL?'See My Result':'Next';}
+function goNext(){if(!answers[current])return;if(current===TOTAL){showResult();return;}document.querySelector(`[data-step="${current}"]`).classList.remove('active');current++;document.querySelector(`[data-step="${current}"]`).classList.add('active');updateProgress();}
+function goBack(){if(current===1)return;document.querySelector(`[data-step="${current}"]`).classList.remove('active');current--;document.querySelector(`[data-step="${current}"]`).classList.add('active');updateProgress();}
+
+function showResult(){
+  const k=score();const r=RESULTS[k];
+  document.querySelectorAll('.quiz-step').forEach(s=>s.style.display='none');
+  document.getElementById('quiz-nav').style.display='none';
+  document.getElementById('progress-bar').style.width='100%';
+  if(window.history&&window.history.replaceState)window.history.replaceState(null,'',window.location.pathname+'?result='+k);
+  const ebayURL=`https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(r.ebayQuery)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
+  document.getElementById('result-inner').innerHTML=`
+    <span class="result-badge" style="background:${r.colour}22;border:1px solid ${r.colour}55;color:${r.colour}">${r.badge}</span>
+    <div class="result-game" style="color:${r.colour}">${r.name}</div>
+    <div class="result-why">${r.why}</div>
+    <div class="result-starter-box"><strong>Where to start in Australia</strong>${r.starter}</div>
+    <div class="result-actions">
+      <a href="${r.shopLink}" class="result-cta" style="background:${r.colour}22;border:1px solid ${r.colour}55;color:${r.colour}">&#127183; Browse Yu-Gi-Oh Cards on C3 &rarr;</a>
+      <a href="${ebayURL}" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">&#128219; Shop on eBay AU &rarr;</a>
+      <a href="/blog/yugioh-tcg-beginners-guide-australia" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">&#128214; Read the Yu-Gi-Oh Beginners Guide &rarr;</a>
+    </div>
+    <div class="result-share">
+      <div class="share-label">Share your result</div>
+      <div class="share-btns">
+        <button class="share-btn" onclick="shareTwitter('${r.name}')">Twitter / X</button>
+        <button class="share-btn" onclick="shareReddit('${r.name}')">Reddit</button>
+        <button class="share-btn" id="copy-btn" onclick="copyResult()">Copy Link</button>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px">Also try</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a href="/quizzes/which-tcg-extended" style="font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);color:var(--silver)">Which TCG Should I Play?</a>
+        <a href="/quizzes/investor-collector" style="font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);color:var(--silver)">Investor or Collector?</a>
+        <a href="/quizzes" style="font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid rgba(168,85,247,.3);color:#A855F7">All Quizzes</a>
+      </div>
+    </div>
+    <button class="retake" onclick="retakeQuiz()">Take the quiz again</button>`;
+  document.getElementById('result').style.display='block';
+}
+function shareTwitter(g){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('I got '+g+' on the C3 Yu-Gi-Oh Archetype Quiz! cardsoncardsoncards.com.au/quizzes/yugioh-archetype'),'_blank');}
+function shareReddit(g){window.open('https://www.reddit.com/submit?title='+encodeURIComponent('Got '+g+' on the C3 YGO Archetype Quiz')+'&url='+encodeURIComponent('https://cardsoncardsoncards.com.au/quizzes/yugioh-archetype'),'_blank');}
+function copyResult(){navigator.clipboard.writeText(window.location.href).then(()=>{const b=document.getElementById('copy-btn');if(b){b.textContent='Copied!';setTimeout(()=>b.textContent='Copy Link',2000);}});}
+function retakeQuiz(){Object.keys(answers).forEach(k=>delete answers[k]);current=1;if(window.history&&window.history.replaceState)window.history.replaceState(null,'',window.location.pathname);document.getElementById('result').style.display='none';document.querySelectorAll('.quiz-step').forEach((s,i)=>{s.style.display='';s.classList.toggle('active',i===0);});document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));document.getElementById('quiz-nav').style.display='';updateProgress();}
+updateProgress();
+</script>
+</body>
+</html>

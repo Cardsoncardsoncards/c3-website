@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Digimon Would Be Your Partner? | Cards on Cards on Cards</title>
+<meta name="description" content="Agumon, Gabumon, Biyomon or someone else? 5 questions to find your Digimon partner. Results include card links and buy links for Australian players.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/quizzes/digimon-partner">
+<link rel="icon" type="image/png" href="/c3logo.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<meta property="og:title" content="Which Digimon Would Be Your Partner? | C3">
+<meta property="og:description" content="Find your Digimon partner in 5 questions. Agumon, Gabumon, Biyomon and more. Card prices and eBay links for Australian players.">
+<meta property="og:url" content="https://cardsoncardsoncards.com.au/quizzes/digimon-partner">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--accent:#34D399;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+.nav-logo img{height:28px;width:28px;border-radius:5px;object-fit:cover;flex-shrink:0}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04);text-decoration:none}
+.nav-link--active{color:var(--accent);border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.06)}
+.wrap{max-width:700px;margin:0 auto;padding:0 24px 80px}
+.hero{padding:52px 0 36px;text-align:center}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+h1{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.2}
+h1 span{color:var(--accent)}
+.hero-sub{font-size:14px;color:var(--text2);max-width:520px;margin:0 auto}
+.quiz-meta-row{display:flex;gap:16px;justify-content:center;margin-top:14px;font-size:12px;color:var(--text2)}
+.quiz-container{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.quiz-progress{height:3px;background:var(--border)}
+.quiz-progress-bar{height:100%;background:var(--accent);transition:width .4s ease;width:0%}
+.quiz-step{padding:32px;display:none}
+.quiz-step.active{display:block}
+.step-num{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.step-q{font-family:'Cinzel',serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:24px;line-height:1.35}
+.options{display:grid;gap:10px}
+.option{padding:14px 18px;border-radius:9px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:12px;text-align:left}
+.option:hover{border-color:var(--accent);background:rgba(52,211,153,.06)}
+.option.selected{border-color:var(--accent);background:rgba(52,211,153,.12);color:var(--accent)}
+.option-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;margin-top:1px}
+.option-text{font-size:14px;font-weight:500;line-height:1.4}
+.option-sub{font-size:12px;color:var(--text2);margin-top:3px}
+.option.selected .option-sub{color:rgba(52,211,153,.7)}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;border-top:1px solid var(--border)}
+.btn{padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-primary{background:var(--accent);color:#0A0C14}
+.btn-primary:hover{background:#10B981;transform:translateY(-1px)}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--silver)}
+.btn-secondary:hover{border-color:var(--silver);color:var(--white)}
+.btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+#result{display:none;padding:32px}
+.result-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.result-game{font-family:'Cinzel',serif;font-size:28px;font-weight:700;margin-bottom:8px}
+.result-why{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.65}
+.result-starter-box{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);line-height:1.6}
+.result-starter-box strong{color:var(--white);display:block;margin-bottom:4px}
+.result-actions{display:flex;flex-direction:column;gap:10px}
+.result-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s}
+.result-cta:hover{opacity:.85;text-decoration:none;transform:translateX(2px)}
+.result-share{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.share-label{font-size:12px;color:var(--text2);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.share-btns{display:flex;gap:8px;flex-wrap:wrap}
+.share-btn{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--silver);transition:all .2s;font-family:'DM Sans',sans-serif}
+.share-btn:hover{border-color:var(--silver);color:var(--white)}
+.retake{margin-top:16px;font-size:13px;color:var(--text2);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0;text-decoration:underline;text-underline-offset:3px}
+.retake:hover{color:var(--white)}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:48px}
+footer a{color:var(--text2);margin:0 8px}
+footer a:hover{color:var(--white)}
+@media(max-width:520px){.quiz-step{padding:24px 20px}.quiz-nav{padding:16px 20px}#result{padding:24px 20px}.step-q{font-size:17px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards/digimon" class="nav-link" style="color:#34D399;border-color:rgba(52,211,153,.35)">Digimon Hub</a>
+      <a href="/blog/digimon-card-game-australia-beginners-guide" class="nav-link">Digimon Guide</a>
+      <a href="/tools" class="nav-link">Tools</a>
+      <a href="/play" class="nav-link">Play</a>
+      <a href="/quizzes" class="nav-link nav-link--active">Quizzes</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">Shop eBay &#8599;</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">Digimon Card Game · Partner Quiz · Australia</div>
+    <h1>Which Digimon Would Be <span>Your Partner</span>?</h1>
+    <p class="hero-sub">5 questions to find your Digital World partner. Results include card links and eBay buy links.</p>
+    <div class="quiz-meta-row"><span>&#10003; 5 questions</span><span>&#10003; 8 results</span><span>&#10003; Free</span></div>
+  </div>
+  <div class="quiz-container">
+    <div class="quiz-progress"><div class="quiz-progress-bar" id="progress-bar"></div></div>
+
+    <div class="quiz-step active" data-step="1">
+      <div class="step-num">Question 1 of 5</div>
+      <div class="step-q">How do you recharge after a tough day?</div>
+      <div class="options">
+        <div class="option" data-q="1" data-v="alone" onclick="selectOption(this)"><span class="option-icon">&#128307;</span><div><div class="option-text">Alone, somewhere quiet</div><div class="option-sub">I need space and silence to reset</div></div></div>
+        <div class="option" data-q="1" data-v="friends" onclick="selectOption(this)"><span class="option-icon">&#128101;</span><div><div class="option-text">With a small group of close people</div><div class="option-sub">The right company makes everything better</div></div></div>
+        <div class="option" data-q="1" data-v="physical" onclick="selectOption(this)"><span class="option-icon">&#127939;</span><div><div class="option-text">Physical activity, working it out of my system</div><div class="option-sub">Movement clears my head</div></div></div>
+        <div class="option" data-q="1" data-v="creative" onclick="selectOption(this)"><span class="option-icon">&#127912;</span><div><div class="option-text">Creative projects or making things</div><div class="option-sub">Building or creating something brings me back</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-step" data-step="2">
+      <div class="step-num">Question 2 of 5</div>
+      <div class="step-q">In a crisis, what do you do first?</div>
+      <div class="options">
+        <div class="option" data-q="2" data-v="act" onclick="selectOption(this)"><span class="option-icon">&#128293;</span><div><div class="option-text">Act immediately, figure out the details later</div><div class="option-sub">Hesitation costs more than mistakes</div></div></div>
+        <div class="option" data-q="2" data-v="think" onclick="selectOption(this)"><span class="option-icon">&#129504;</span><div><div class="option-text">Stop and think before doing anything</div><div class="option-sub">A bad decision under pressure makes things worse</div></div></div>
+        <div class="option" data-q="2" data-v="support" onclick="selectOption(this)"><span class="option-icon">&#128138;</span><div><div class="option-text">Support the people around me first</div><div class="option-sub">If my team is steady, everything else follows</div></div></div>
+        <div class="option" data-q="2" data-v="observe" onclick="selectOption(this)"><span class="option-icon">&#128064;</span><div><div class="option-text">Observe quietly and wait for clarity</div><div class="option-sub">Understanding the situation fully before acting</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-step" data-step="3">
+      <div class="step-num">Question 3 of 5</div>
+      <div class="step-q">Your greatest strength is...</div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="courage" onclick="selectOption(this)"><span class="option-icon">&#128293;</span><div><div class="option-text">Courage</div><div class="option-sub">I face things others run from</div></div></div>
+        <div class="option" data-q="3" data-v="loyalty" onclick="selectOption(this)"><span class="option-icon">&#128153;</span><div><div class="option-text">Loyalty</div><div class="option-sub">I never abandon the people who matter to me</div></div></div>
+        <div class="option" data-q="3" data-v="intelligence" onclick="selectOption(this)"><span class="option-icon">&#128161;</span><div><div class="option-text">Intelligence</div><div class="option-sub">I find solutions others cannot see</div></div></div>
+        <div class="option" data-q="3" data-v="compassion" onclick="selectOption(this)"><span class="option-icon">&#129351;</span><div><div class="option-text">Compassion</div><div class="option-sub">I understand what others are going through</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-step" data-step="4">
+      <div class="step-num">Question 4 of 5</div>
+      <div class="step-q">Which environment feels most like home to you?</div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="wild" onclick="selectOption(this)"><span class="option-icon">&#127956;</span><div><div class="option-text">Mountains, forests, open wilderness</div><div class="option-sub">Space and nature, away from the noise</div></div></div>
+        <div class="option" data-q="4" data-v="ocean" onclick="selectOption(this)"><span class="option-icon">&#127754;</span><div><div class="option-text">Oceans or wide open spaces</div><div class="option-sub">Somewhere the horizon seems endless</div></div></div>
+        <div class="option" data-q="4" data-v="urban" onclick="selectOption(this)"><span class="option-icon">&#127979;</span><div><div class="option-text">Cities, libraries, or indoor spaces</div><div class="option-sub">Where people and ideas collect</div></div></div>
+        <div class="option" data-q="4" data-v="anywhere" onclick="selectOption(this)"><span class="option-icon">&#127758;</span><div><div class="option-text">Anywhere with the right people around me</div><div class="option-sub">The place matters less than who is there</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-step" data-step="5">
+      <div class="step-num">Question 5 of 5</div>
+      <div class="step-q">What matters most to you?</div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="victory" onclick="selectOption(this)"><span class="option-icon">&#127942;</span><div><div class="option-text">Victory and proving what I can do</div><div class="option-sub">Winning confirms I am on the right path</div></div></div>
+        <div class="option" data-q="5" data-v="friendship" onclick="selectOption(this)"><span class="option-icon">&#129309;</span><div><div class="option-text">Friendship and bonds that last</div><div class="option-sub">The connections I build matter more than results</div></div></div>
+        <div class="option" data-q="5" data-v="knowledge" onclick="selectOption(this)"><span class="option-icon">&#128218;</span><div><div class="option-text">Knowledge and understanding</div><div class="option-sub">I want to understand how everything works</div></div></div>
+        <div class="option" data-q="5" data-v="peace" onclick="selectOption(this)"><span class="option-icon">&#127774;</span><div><div class="option-text">Peace and harmony</div><div class="option-sub">I want the world around me to be calm and good</div></div></div>
+      </div>
+    </div>
+
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="btn btn-secondary" id="btn-back" onclick="goBack()" disabled>Back</button>
+      <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>Next</button>
+    </div>
+    <div id="result"><div id="result-inner"></div></div>
+  </div>
+
+  <div style="margin-top:32px;padding:20px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);text-align:center">
+    <div style="font-size:12px;color:var(--text2);margin-bottom:10px">More quizzes</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <a href="/quizzes/which-tcg-extended" style="font-size:12px;padding:6px 14px;border-radius:6px;border:1px solid var(--border);color:var(--silver)">Which TCG Should I Play?</a>
+      <a href="/quizzes/onepiece-character" style="font-size:12px;padding:6px 14px;border-radius:6px;border:1px solid var(--border);color:var(--silver)">One Piece Character Quiz</a>
+      <a href="/quizzes" style="font-size:12px;padding:6px 14px;border-radius:6px;border:1px solid rgba(52,211,153,.3);color:#34D399">All Quizzes</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div><a href="/">Home</a><a href="/quizzes">All Quizzes</a><a href="/cards/digimon">Digimon Hub</a><a href="/blog/digimon-card-game-australia-beginners-guide">Digimon Guide</a><a href="/legal.html">Affiliate Disclosure</a></div>
+  <div style="margin-top:10px;opacity:.5">This site contains affiliate links. We may earn a commission when you click and buy, at no extra cost to you.</div>
+  <div style="margin-top:6px;opacity:.35">&copy; 2026 Cards on Cards on Cards</div>
+</footer>
+
+<script>
+const TOTAL=5;let current=1;const answers={};
+const RESULTS={
+  agumon:{name:'Agumon',badge:'Courage and Fire',colour:'#F97316',why:'Agumon partners with those who act first and think second, who face danger head-on and inspire everyone around them through sheer fearless energy. If you charge into problems and somehow make it work, Agumon is your partner. In the Digimon TCG, red-type aggressive builds are your home.',starter:'Look for red-type starter decks or Greymon-line builds in current Digimon TCG sets. Starter decks run around AU$15-25 and are fully playable.',shopLink:'/cards/digimon',ebayQuery:'Digimon card game Agumon red starter deck Australia'},
+  gabumon:{name:'Gabumon',badge:'Loyalty and Ice',colour:'#60A5FA',why:'Gabumon chooses partners who are steadfast, loyal, and deeply devoted to the people they care about. You may not be the loudest in the room but the people around you know exactly where you stand. Blue-type control builds in the Digimon TCG match your measured, reliable playstyle.',starter:'Blue-type Gabumon builds are available across multiple Digimon TCG sets. Look for starter decks around AU$15-25.',shopLink:'/cards/digimon',ebayQuery:'Digimon card game Gabumon blue deck Australia'},
+  biyomon:{name:'Biyomon',badge:'Friendship and Flight',colour:'#F472B6',why:'Biyomon partners with empathetic, socially driven people who put relationships above personal glory. You read what others need and provide it. In the Digimon TCG, hybrid builds that support the team and enable combos match your style.',starter:'Biyomon and the Birdramon line appear across multiple sets. Look for pink or multi-colour builds with strong support effects.',shopLink:'/cards/digimon',ebayQuery:'Digimon card game Biyomon cards Australia'},
+  tentomon:{name:'Tentomon',badge:'Knowledge and Logic',colour:'#FFCC00',why:'Tentomon chooses thinkers, researchers, and people who solve problems through understanding rather than force. You are the most analytically minded of any Digidestined and your partner reflects it. Yellow or green knowledge-based builds suit your playstyle.',starter:'Tentomon and the Kabuterimon line appear in several Digimon sets. Look for yellow builds with card draw and information advantage effects.',shopLink:'/cards/digimon',ebayQuery:'Digimon card game Tentomon yellow deck Australia'},
+  palmon:{name:'Palmon',badge:'Growth and Nature',colour:'#34D399',why:'Palmon partners with creative, growth-oriented people who transform challenges into opportunities. You are adaptable, resourceful, and underestimated far too often. Green evolution builds in the Digimon TCG that grow steadily match your patient, compounding approach.',starter:'Palmon and the Togemon line appear across multiple sets. Green evolution-focused builds reward strategic card management.',shopLink:'/cards/digimon',ebayQuery:'Digimon card game Palmon green deck Australia'},
+  gomamon:{name:'Gomamon',badge:'Freedom and Sea',colour:'#38BDF8',why:'Gomamon partners with free-spirited, ocean-hearted people who go where the current takes them and make the best of wherever they end up. You adapt to any situation and thrive in uncertainty. Flexible multi-colour builds suit you.',starter:'Gomamon and the Ikkakumon line appear across several sets. Look for blue or water-themed builds with flexible energy management.',shopLink:'/cards/digimon',ebayQuery:'Digimon card game Gomamon blue water deck Australia'},
+  patamon:{name:'Patamon',badge:'Hope and Heart',colour:'#A78BFA',why:'Patamon partners with gentle, compassionate people who see the best in every situation and carry hope even when others cannot. The MagnaAngemon line digivolves into some of the most powerful cards in the game, rewarding patience and faith.',starter:'Patamon and the Angemon line appear across multiple sets. Look for yellow or white builds that scale powerfully through digivolution.',shopLink:'/cards/digimon',ebayQuery:'Digimon card game Patamon Angemon deck Australia'},
+  gatomon:{name:'Gatomon',badge:'Light and Redemption',colour:'#E8C86A',why:'Gatomon chooses people who have been through difficulty and come out stronger for it. You understand that the path matters as much as the destination. The Angewomon line is one of the most iconic in the game and rewards players who manage resources carefully.',starter:'Gatomon and the Angewomon line appear across multiple Digimon sets. Yellow and white builds with Gatomon as core are well-supported.',shopLink:'/cards/digimon',ebayQuery:'Digimon card game Gatomon Angewomon deck Australia'}
+};
+
+function score(){
+  const s={agumon:0,gabumon:0,biyomon:0,tentomon:0,palmon:0,gomamon:0,patamon:0,gatomon:0};
+  const a=answers;
+  if(a[1]==='alone'){s.gatomon+=3;s.tentomon+=2;}
+  if(a[1]==='friends'){s.gabumon+=3;s.biyomon+=3;s.patamon+=2;}
+  if(a[1]==='physical'){s.agumon+=4;s.gomamon+=3;}
+  if(a[1]==='creative'){s.palmon+=4;s.tentomon+=2;}
+  if(a[2]==='act'){s.agumon+=4;s.gomamon+=2;}
+  if(a[2]==='think'){s.tentomon+=4;s.gatomon+=2;}
+  if(a[2]==='support'){s.biyomon+=4;s.patamon+=3;s.gabumon+=2;}
+  if(a[2]==='observe'){s.gatomon+=3;s.tentomon+=3;}
+  if(a[3]==='courage'){s.agumon+=4;s.gomamon+=2;}
+  if(a[3]==='loyalty'){s.gabumon+=4;s.biyomon+=2;s.patamon+=2;}
+  if(a[3]==='intelligence'){s.tentomon+=4;s.palmon+=2;}
+  if(a[3]==='compassion'){s.patamon+=4;s.biyomon+=3;s.gatomon+=2;}
+  if(a[4]==='wild'){s.agumon+=3;s.palmon+=3;}
+  if(a[4]==='ocean'){s.gomamon+=4;s.biyomon+=2;}
+  if(a[4]==='urban'){s.tentomon+=4;s.gatomon+=2;}
+  if(a[4]==='anywhere'){s.gabumon+=3;s.patamon+=3;s.biyomon+=2;}
+  if(a[5]==='victory'){s.agumon+=3;s.gabumon+=2;}
+  if(a[5]==='friendship'){s.biyomon+=3;s.patamon+=3;s.gabumon+=3;}
+  if(a[5]==='knowledge'){s.tentomon+=4;s.palmon+=2;}
+  if(a[5]==='peace'){s.patamon+=3;s.gatomon+=3;s.palmon+=2;}
+  return Object.entries(s).sort((a,b)=>b[1]-a[1])[0][0];
+}
+
+function selectOption(el){const q=el.dataset.q;document.querySelectorAll(`[data-q="${q}"]`).forEach(o=>o.classList.remove('selected'));el.classList.add('selected');answers[parseInt(q)]=el.dataset.v;document.getElementById('btn-next').disabled=false;}
+function updateProgress(){const pct=((current-1)/TOTAL)*100;document.getElementById('progress-bar').style.width=pct+'%';document.getElementById('btn-back').disabled=current===1;const n=document.getElementById('btn-next');n.disabled=!answers[current];n.textContent=current===TOTAL?'See My Result':'Next';}
+function goNext(){if(!answers[current])return;if(current===TOTAL){showResult();return;}document.querySelector(`[data-step="${current}"]`).classList.remove('active');current++;document.querySelector(`[data-step="${current}"]`).classList.add('active');updateProgress();}
+function goBack(){if(current===1)return;document.querySelector(`[data-step="${current}"]`).classList.remove('active');current--;document.querySelector(`[data-step="${current}"]`).classList.add('active');updateProgress();}
+
+function showResult(){
+  const k=score();const r=RESULTS[k];
+  document.querySelectorAll('.quiz-step').forEach(s=>s.style.display='none');
+  document.getElementById('quiz-nav').style.display='none';
+  document.getElementById('progress-bar').style.width='100%';
+  if(window.history&&window.history.replaceState)window.history.replaceState(null,'',window.location.pathname+'?result='+k);
+  const ebayURL=`https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(r.ebayQuery)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
+  document.getElementById('result-inner').innerHTML=`
+    <span class="result-badge" style="background:${r.colour}22;border:1px solid ${r.colour}55;color:${r.colour}">${r.badge}</span>
+    <div class="result-game" style="color:${r.colour}">${r.name}</div>
+    <div class="result-why">${r.why}</div>
+    <div class="result-starter-box"><strong>Find this partner in the Digimon TCG</strong>${r.starter}</div>
+    <div class="result-actions">
+      <a href="${r.shopLink}" class="result-cta" style="background:${r.colour}22;border:1px solid ${r.colour}55;color:${r.colour}">&#127183; Browse Digimon Cards on C3 &rarr;</a>
+      <a href="${ebayURL}" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">&#128219; Shop on eBay AU &rarr;</a>
+      <a href="https://www.amazon.com.au/s?k=digimon+card+game+starter+deck&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.3);color:#FB923C">&#128722; Find on Amazon AU &rarr;</a>
+      <a href="/blog/digimon-card-game-australia-beginners-guide" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">&#128214; Read the Digimon Beginners Guide &rarr;</a>
+    </div>
+    <div class="result-share">
+      <div class="share-label">Share your result</div>
+      <div class="share-btns">
+        <button class="share-btn" onclick="shareTwitter('${r.name}')">Twitter / X</button>
+        <button class="share-btn" onclick="shareReddit('${r.name}')">Reddit</button>
+        <button class="share-btn" onclick="shareWhatsApp('${r.name}')">WhatsApp</button>
+        <button class="share-btn" id="copy-btn" onclick="copyResult()">Copy Link</button>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px">Also try</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a href="/quizzes/which-tcg-extended" style="font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);color:var(--silver)">Which TCG Should I Play?</a>
+        <a href="/quizzes/onepiece-character" style="font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);color:var(--silver)">One Piece Character Quiz</a>
+        <a href="/quizzes" style="font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid rgba(52,211,153,.3);color:#34D399">All Quizzes</a>
+      </div>
+    </div>
+    <button class="retake" onclick="retakeQuiz()">Take the quiz again</button>`;
+  document.getElementById('result').style.display='block';
+}
+function shareTwitter(g){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('My Digimon partner is '+g+'! Find yours: cardsoncardsoncards.com.au/quizzes/digimon-partner'),'_blank');}
+function shareReddit(g){window.open('https://www.reddit.com/submit?title='+encodeURIComponent('My Digimon partner is '+g+' -- C3 quiz')+'&url='+encodeURIComponent('https://cardsoncardsoncards.com.au/quizzes/digimon-partner'),'_blank');}
+function shareWhatsApp(g){window.open('https://wa.me/?text='+encodeURIComponent('My Digimon partner is '+g+'! Find yours: https://cardsoncardsoncards.com.au/quizzes/digimon-partner'),'_blank');}
+function copyResult(){navigator.clipboard.writeText(window.location.href).then(()=>{const b=document.getElementById('copy-btn');if(b){b.textContent='Copied!';setTimeout(()=>b.textContent='Copy Link',2000);}});}
+function retakeQuiz(){Object.keys(answers).forEach(k=>delete answers[k]);current=1;if(window.history&&window.history.replaceState)window.history.replaceState(null,'',window.location.pathname);document.getElementById('result').style.display='none';document.querySelectorAll('.quiz-step').forEach((s,i)=>{s.style.display='';s.classList.toggle('active',i===0);});document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));document.getElementById('quiz-nav').style.display='';updateProgress();}
+updateProgress();
+</script>
+</body>
+</html>
