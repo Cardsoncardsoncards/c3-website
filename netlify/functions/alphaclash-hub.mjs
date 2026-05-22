@@ -416,7 +416,7 @@ async function searchCard() {
   .bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none;transition:border-color .2s}
   .bug-form select:focus,.bug-form textarea:focus{border-color:rgba(201,168,76,.5)}
   .bug-form textarea{resize:vertical;min-height:80px;max-height:160px}
-  .bug-form select option{background:#111420;color:#F0F2FF}
+  .bug-form select option{background:#e8eaf0;color:#111420}.bug-form select{background:#e8eaf0;color:#111420}
   .bug-hidden{display:none}
   .bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}
   .bug-submit:hover{opacity:.85}
