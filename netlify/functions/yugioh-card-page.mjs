@@ -54,7 +54,8 @@ async function supabaseGet(path) {
 }
 
 async function getEbayToken() {
-  const creds = Buffer.from(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`).toString('base64');
+  if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
+  const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
   const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
     method: 'POST',
     headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },

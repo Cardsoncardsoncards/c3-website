@@ -242,6 +242,7 @@ export default async (req) => {
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3" style="height:24px;border-radius:4px"> C3</a>
+    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
     <div class="nav-links">
       <a href="/" class="nav-link">Home</a>
       <a href="/cards" class="nav-link">Card Vault</a>

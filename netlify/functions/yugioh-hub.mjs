@@ -245,6 +245,7 @@ ${tickerHTML}
   <a href="/compare" class="quick-link" style="background:rgba(200,163,50,.08);border-color:rgba(200,163,50,.3);color:var(--accent)">&#9878; Compare Cards &#8594;</a>
   <a href="/blog/yugioh-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128214; Best YGO Boxes &#8594;</a>
   <a href="/blog/yugioh-tcg-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128218; Beginners Guide &#8594;</a>
+  <a href="/quizzes/yugioh-archetype" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127919; YGO Archetype Quiz &#8594;</a>
 </div>
 ${topCards.length ? `
 <section class="carousel-section fade-up fade-up-2">

@@ -473,6 +473,8 @@ export default async (req) => {
     <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator</a>
     <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Compare Cards</a>
     <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128276; Set Price Alerts</a>
+    <a href="/quizzes/mtg-archetype" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127919; MTG Archetype Quiz &#8594;</a>
+    <a href="/quizzes/mtg-colour" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127914; MTG Colour Identity Quiz &#8594;</a>
   </div>
 
   <!-- Format Ban Lists Strip -->
@@ -686,7 +688,7 @@ function filterSets(query) {
 }
 
 function fetchRandomCard() {
-  var btn = document.getElementById('random-card-btn');
+  let btn = document.getElementById('random-card-btn');
   if (btn) btn.textContent = 'Loading...';
   fetch('/api/card-search?q=a&limit=1&game=mtg')
     .then(function(r) { return r.json(); })

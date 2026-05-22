@@ -48,7 +48,8 @@ async function supabaseGet(path) {
 }
 
 async function getEbayToken() {
-  const creds = Buffer.from(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`).toString('base64');
+  if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
+  const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
   const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
     method: 'POST',
     headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -300,11 +301,11 @@ export default async (req) => {
     }
     const card = cards[0];
 
-    // Parallel: related cards, eBay token, price snapshots for sparkline (last 14 days)
+    // Parallel: related cards, eBay token, price snapshots for sparkline (last 90 days)
     const [_psr0, _psr1, _psr2] = await Promise.allSettled([
       supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=number.asc&select=*`).catch(() => []),
       (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null),
-      supabaseGet(`pokemon_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&order=snapshot_date.asc&limit=14&select=snapshot_date,price_aud,market_price`).catch(() => [])
+      supabaseGet(`pokemon_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => [])
     ]);
   const relatedCards = _psr0.status === 'fulfilled' ? _psr0.value : [];
   const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];

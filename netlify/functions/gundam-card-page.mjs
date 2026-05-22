@@ -310,6 +310,11 @@ export default async (req) => {
     ${set ? `<div style="margin-top:14px;text-align:center"><a href="${setPageUrl}" style="font-size:13px;color:var(--accent);font-weight:600">View all cards in this set &#8594;</a></div>` : ''}
   </div>` : ''}
 
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px">
+    <div style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:10px">Sealed ${esc(set?.name||card.set_name||'Gundam Card Game')} Product</div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:14px">Looking for sealed booster boxes, cases or starter decks${card.set_name ? ' from '+esc(card.set_name) : ''}? Browse live listings on eBay Australia.</p>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((card.set_name||'Gundam Card Game')+' booster box gundam card game')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener sponsored" class="btn btn-primary" style="display:inline-block">&#128230; Shop Sealed Gundam on eBay &#8599;</a>
+  </div>
   <div style="background:rgba(var(--accent-rgb),.04);border:1px solid rgba(var(--accent-rgb),.15);border-radius:var(--radius);padding:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px">
     <div>
       <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Track Your Gundam Card Game Collection</div>
@@ -356,7 +361,7 @@ document.querySelectorAll('a[href*="ebay"]').forEach(a => a.addEventListener('cl
     </form>
   </div>
 </div>
-<script>(function(){var urlInput=document.getElementById('bugPageUrl');if(urlInput)urlInput.value=window.location.href;var form=document.getElementById('bugReportForm');if(!form)return;form.addEventListener('submit',function(e){e.preventDefault();var btn=document.getElementById('bugSubmit');btn.disabled=true;btn.textContent='Sending...';var data=new FormData(form);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';form.querySelector('select').style.display='none';form.querySelector('textarea').style.display='none';btn.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){btn.disabled=false;btn.textContent='Submit Report';});});})();</script>
+<script>(function(){const urlInput=document.getElementById('bugPageUrl');if(urlInput)urlInput.value=window.location.href;const form=document.getElementById('bugReportForm');if(!form)return;form.addEventListener('submit',function(e){e.preventDefault();let btn=document.getElementById('bugSubmit');btn.disabled=true;btn.textContent='Sending...';const data=new FormData(form);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';form.querySelector('select').style.display='none';form.querySelector('textarea').style.display='none';btn.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){btn.disabled=false;btn.textContent='Submit Report';});});})();</script>
 </body>
 </html>`;
 

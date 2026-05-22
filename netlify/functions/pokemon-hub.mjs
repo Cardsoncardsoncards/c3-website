@@ -345,6 +345,7 @@ ${tickerHTML}
   <a href="/blog/best-pokemon-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128230; Best Booster Boxes &#8594;</a>
   <a href="/blog/pokemon-tcg-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128214; Beginners Guide &#8594;</a>
   <a href="/blog/are-pokemon-booster-boxes-investment-australia/" class="quick-link" style="background:rgba(${ACCENT_RGB},.08);border-color:rgba(${ACCENT_RGB},.3);color:var(--accent)">&#128200; Are Pokemon Cards an Investment? &#8594;</a>
+  <a href="/quizzes/pokemon-era" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127919; Pokemon Era Quiz &#8594;</a>
 </div>
 
 ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">

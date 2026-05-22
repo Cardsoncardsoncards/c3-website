@@ -252,6 +252,12 @@ export default async (req) => {
   </div>
 
   ${ebayListings.length ? `<h2 class="section-head">Buy ${card.name} on eBay Australia</h2><div class="ebay-grid">${ebayItemsHTML}</div>` : ''}
+
+  <h2 class="section-head">Sealed ${esc(card.set_name || 'Star Wars Unlimited')} Product</h2>
+  <div style="background:#111420;border:1px solid #252840;border-radius:12px;padding:20px;margin-bottom:24px">
+    <p style="color:#A0A8C0;font-size:14px;margin-bottom:14px;line-height:1.6">Looking for sealed booster boxes, cases or starter decks${card.set_name ? ' from '+esc(card.set_name) : ''}? Browse live listings on eBay Australia.</p>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((card.set_name||'Star Wars Unlimited')+' booster box star wars unlimited')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener sponsored" style="display:inline-block;background:#FFE81F;color:#000;padding:11px 22px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none">&#128230; Shop Sealed Star Wars Unlimited on eBay &#8599;</a>
+  </div>
 </div>
 
 <footer>

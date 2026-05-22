@@ -462,16 +462,16 @@ function filterDigimonByRarity(rarity) {
 </div>
 <script>
 (function(){
-  var urlInput = document.getElementById('bugPageUrl');
+  const urlInput = document.getElementById('bugPageUrl');
   if(urlInput) urlInput.value = window.location.href;
-  var form = document.getElementById('bugReportForm');
+  const form = document.getElementById('bugReportForm');
   if(!form) return;
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    var btn = document.getElementById('bugSubmit');
+    let btn = document.getElementById('bugSubmit');
     btn.disabled = true;
     btn.textContent = 'Sending...';
-    var data = new FormData(form);
+    const data = new FormData(form);
     fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
       body: new URLSearchParams(data).toString()})
       .then(function(){
