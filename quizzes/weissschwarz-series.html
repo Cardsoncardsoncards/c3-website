@@ -12,7 +12,7 @@
 <meta property="og:title" content="Which Weiss Schwarz Series Should You Play? | C3">
 <meta property="og:description" content="Find your perfect Weiss Schwarz series in 5 questions. SAO, Re:ZERO, Hololive, AoT and more. Card prices and buy links for Australian players.">
 <meta property="og:url" content="https://cardsoncardsoncards.com.au/quizzes/weissschwarz-series">
-<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -79,9 +79,36 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:v
 footer a{color:var(--text2);margin:0 8px}
 footer a:hover{color:var(--white)}
 @media(max-width:520px){.quiz-step{padding:24px 20px}.quiz-nav{padding:16px 20px}#result{padding:24px 20px}.step-q{font-size:17px}}
+.share-popup{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.share-popup.open{display:flex}
+.share-popup-inner{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:380px;width:90%;text-align:center}
+.share-popup h3{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px}
+.share-popup p{font-size:13px;color:var(--text2);margin-bottom:24px}
+.share-popup-result{font-family:'Cinzel',serif;font-size:24px;font-weight:900;margin-bottom:8px}
+.share-popup-buttons{display:flex;flex-direction:column;gap:10px}
+.share-popup-close{position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text2);font-size:20px;cursor:pointer;line-height:1}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.result-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.result-stat{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text2);flex:1;min-width:120px}
+.result-stat strong{display:block;font-size:15px;color:var(--white);font-family:'Cinzel',serif;margin-bottom:2px}
 </style>
 </head>
 <body>
+<div class="share-popup" id="share-popup" onclick="if(event.target===this)closeSharePopup()">
+  <div class="share-popup-inner" style="position:relative">
+    <button class="share-popup-close" onclick="closeSharePopup()">✕</button>
+    <div id="popup-result-name" class="share-popup-result"></div>
+    <h3>Share Your Result</h3>
+    <p id="popup-result-text"></p>
+    <div class="share-popup-buttons">
+      <button class="share-btn" style="background:#1DA1F2;color:#fff;width:100%;justify-content:center" onclick="doShareTwitter()">𝕏 Share on X / Twitter</button>
+      <button class="share-btn" style="background:#4267B2;color:#fff;width:100%;justify-content:center" onclick="doShareFacebook()">📘 Share on Facebook</button>
+      <button class="share-btn" style="background:#25D366;color:#fff;width:100%;justify-content:center" onclick="doShareWhatsApp()">💬 Share on WhatsApp</button>
+      <button class="share-btn" style="background:#E1306C;color:#fff;width:100%;justify-content:center" onclick="doShareInstagram()">📷 Copy for Instagram</button>
+      <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white);width:100%;justify-content:center" onclick="doCopyLink()">🔗 Copy Link</button>
+    </div>
+  </div>
+</div>
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
@@ -228,8 +255,9 @@ function updateProgress(){const pct=((current-1)/TOTAL)*100;document.getElementB
 function goNext(){if(!answers[current])return;if(current===TOTAL){showResult();return;}document.querySelector(`[data-step="${current}"]`).classList.remove('active');current++;document.querySelector(`[data-step="${current}"]`).classList.add('active');updateProgress();}
 function goBack(){if(current===1)return;document.querySelector(`[data-step="${current}"]`).classList.remove('active');current--;document.querySelector(`[data-step="${current}"]`).classList.add('active');updateProgress();}
 
-function showResult(){
+async function showResult(){
   const k=score();const r=RESULTS[k];
+  const stats=await loadStats(k);const myCount=stats.count||0;const mostCommon=stats.most_common;
   document.querySelectorAll('.quiz-step').forEach(s=>s.style.display='none');
   document.getElementById('quiz-nav').style.display='none';
   document.getElementById('progress-bar').style.width='100%';
@@ -240,6 +268,7 @@ function showResult(){
     <div class="result-game" style="color:${r.colour}">${r.name}</div>
     <div class="result-why">${r.why}</div>
     <div class="result-starter-box"><strong>Getting started in Australia</strong>${r.starter}</div>
+    <div class="result-stats"><div class="result-stat"><strong>${myCount.toLocaleString()}</strong>people got this result</div>${mostCommon&&mostCommon!==k&&RESULTS[mostCommon]?'<div class="result-stat"><strong>'+RESULTS[mostCommon].name+'</strong>most common result</div>':''}</div>
     <div class="result-actions">
       <a href="${r.shopLink}" class="result-cta" style="background:${r.colour}22;border:1px solid ${r.colour}55;color:${r.colour}">&#127183; Browse Weiss Schwarz Cards on C3 &rarr;</a>
       <a href="${ebayURL}" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">&#128219; Shop on eBay AU &rarr;</a>
@@ -248,10 +277,10 @@ function showResult(){
     <div class="result-share">
       <div class="share-label">Share your result</div>
       <div class="share-btns">
-        <button class="share-btn" onclick="shareTwitter('${r.name}')">Twitter / X</button>
-        <button class="share-btn" onclick="shareReddit('${r.name}')">Reddit</button>
-        <button class="share-btn" onclick="shareWhatsApp('${r.name}')">WhatsApp</button>
-        <button class="share-btn" id="copy-btn" onclick="copyResult()">Copy Link</button>
+        <button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="openSharePopup()">𝕏 Share</button>
+        <button class="share-btn" style="background:#4267B2;color:#fff" onclick="doShareFacebook()">📘 Facebook</button>
+        <button class="share-btn" style="background:#25D366;color:#fff" onclick="doShareWhatsApp()">💬 WhatsApp</button>
+        <button class="share-btn" onclick="openSharePopup()">↗ All platforms</button>
       </div>
     </div>
     <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
@@ -264,11 +293,20 @@ function showResult(){
     </div>
     <button class="retake" onclick="retakeQuiz()">Take the quiz again</button>`;
   document.getElementById('result').style.display='block';
+  _shareResultName=r.name;_shareUrl=window.location.href;
 }
-function shareTwitter(g){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('My Weiss Schwarz series is '+g+'! Find yours: cardsoncardsoncards.com.au/quizzes/weissschwarz-series'),'_blank');}
-function shareReddit(g){window.open('https://www.reddit.com/submit?title='+encodeURIComponent('Got '+g+' on the C3 Weiss Schwarz Series Quiz')+'&url='+encodeURIComponent('https://cardsoncardsoncards.com.au/quizzes/weissschwarz-series'),'_blank');}
-function shareWhatsApp(g){window.open('https://wa.me/?text='+encodeURIComponent('My Weiss Schwarz series is '+g+'! https://cardsoncardsoncards.com.au/quizzes/weissschwarz-series'),'_blank');}
-function copyResult(){navigator.clipboard.writeText(window.location.href).then(()=>{const b=document.getElementById('copy-btn');if(b){b.textContent='Copied!';setTimeout(()=>b.textContent='Copy Link',2000);}});}
+let _shareResultName='';
+let _shareUrl='';
+function openSharePopup(){if(!_shareUrl)_shareUrl=window.location.href;document.getElementById('popup-result-name').textContent=_shareResultName;document.getElementById('popup-result-text').textContent='I got "'+_shareResultName+'" on the C3 TCG Quiz! What do you get?';document.getElementById('share-popup').classList.add('open');document.body.style.overflow='hidden';}
+function closeSharePopup(){document.getElementById('share-popup').classList.remove('open');document.body.style.overflow='';}
+function doShareTwitter(){const text='I got "'+_shareResultName+'" on the C3 TCG Quiz! What do you get? ';window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text+_shareUrl),'_blank');}
+function doShareFacebook(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(_shareUrl),'_blank');}
+function doShareWhatsApp(){const text='I got "'+_shareResultName+'" on the C3 TCG Quiz! '+_shareUrl;window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');}
+function doShareInstagram(){const text='🃏 I got "'+_shareResultName+'" on the C3 TCG Quiz!\n\nFind yours at: '+_shareUrl;navigator.clipboard.writeText(text).then(()=>showToast('Copied for Instagram!'));closeSharePopup();}
+function doCopyLink(){navigator.clipboard.writeText(_shareUrl).then(()=>{showToast('Link copied!');closeSharePopup();});}
+function showToast(msg){const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#0A0C14;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:99999;animation:toastIn .2s ease';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);}
+async function loadStats(resultKey){try{const res=await fetch('/.netlify/functions/card-api?action=quiz-result',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quiz_slug:'weissschwarz-series',result_slug:resultKey})});if(!res.ok)return{count:0,most_common:null};return await res.json();}catch(e){return{count:0,most_common:null};}}
+
 function retakeQuiz(){Object.keys(answers).forEach(k=>delete answers[k]);current=1;if(window.history&&window.history.replaceState)window.history.replaceState(null,'',window.location.pathname);document.getElementById('result').style.display='none';document.querySelectorAll('.quiz-step').forEach((s,i)=>{s.style.display='';s.classList.toggle('active',i===0);});document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));document.getElementById('quiz-nav').style.display='';updateProgress();}
 updateProgress();
 </script>
