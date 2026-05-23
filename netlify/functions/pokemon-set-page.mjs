@@ -81,6 +81,7 @@ const getRarityColour = (r) => {
   return '#9ca3af';
 };
 
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
@@ -158,8 +159,8 @@ export default async (req) => {
     const rc = getRarityColour(c.rarity);
     return `<a href="/cards/pokemon/${c.slug}" style="flex:0 0 150px;background:#0e1118;border:1px solid rgba(255,204,0,.2);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s;display:block" onmouseover="this.style.borderColor='#FFCC00';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,204,0,.2)';this.style.transform='none'">
       <div style="position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:${rc}"></div>
-      <div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">${c.name}</div>
-      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${c.name}</div>`}
+      <div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">${esc(c.name)}</div>
+      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${esc(c.name)}</div>`}
       <div style="font-family:'Cinzel',serif;font-size:14px;color:#FFCC00;font-weight:700;margin-top:3px">~AU$${aud.toFixed(0)}</div>
     </a>`;
   }).join('');
@@ -170,8 +171,8 @@ export default async (req) => {
     const rc = getRarityColour(c.rarity);
     return `<a href="/cards/pokemon/${c.slug}" class="card-item" data-price="${aud.toFixed(2)}">
       <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${rc}"></div>
-      <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${c.name}</div>
-      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${c.name}</div>`}
+      <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${esc(c.name)}</div>
+      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${esc(c.name)}</div>`}
       <div style="font-size:11px;color:#FFCC00;font-weight:700;margin-top:2px">${priceDisplay}</div>
     </a>`;
   }).join('');

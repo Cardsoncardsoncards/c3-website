@@ -70,7 +70,7 @@ export default async (req) => {
     const name = s.name || '';
     const ch = name.trim()[0] ? name.trim()[0].toUpperCase() : '';
     const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
-    return `<a href="/cards/dragonball/sets/${encodeURIComponent(s.abbreviation||s.slug||s.id)}" class="set-tile" data-name="${name.toLowerCase().replace(/"/g,'&quot;')}" data-letter="${letterKey}">
+    return `<a href="/cards/dragonball/sets/${encodeURIComponent(s.slug||s.id)}" class="set-tile" data-name="${name.toLowerCase().replace(/"/g,'&quot;')}" data-letter="${letterKey}">
       <span class="set-tile-name">${name}</span>
       <span class="set-tile-meta">${s.release_date ? s.release_date.slice(0,4) : ''}${s.card_count ? ' &middot; '+s.card_count : ''}</span>
     </a>`;

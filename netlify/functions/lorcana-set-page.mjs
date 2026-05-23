@@ -132,7 +132,7 @@ export default async (req) => {
 
   let set = sets && sets[0];
   try {
-    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=60&select=slug,name,image_url,market_price,price_aud,rarity,ink`) : [];
+    cards = set ? await supabaseGet(`lorcana_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=60&select=slug,name,image_url,market_price,price_aud,rarity`) : [];
   } catch (e) {
     console.error('[lorcana-set-page] cards fetch error:', e.message);
     cards = [];
