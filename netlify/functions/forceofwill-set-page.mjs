@@ -75,8 +75,8 @@ export default async (req) => {
   const top6HTML = top6.map(c => {
     const aud = toAud(c);
     return `<a href="/cards/forceofwill/${c.slug}" style="flex:0 0 140px;background:#111420;border:1px solid rgba(var(--accent-rgb),.3);border-radius:10px;padding:10px;text-align:center;text-decoration:none;display:block;transition:all .2s" onmouseover="this.style.borderColor='#0EA5E9';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#242840';this.style.transform='none'">
-      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
       <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${esc(c.name)}</div>
+      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
       ${c.rarity ? `<div style="font-size:10px;color:#0EA5E9">${esc(c.rarity)}</div>` : ''}
       ${aud > 0 ? `<div style="font-size:12px;color:#C9A84C;font-weight:700">AU$${aud.toFixed(2)}</div>` : ''}
     </a>`;
@@ -85,8 +85,8 @@ export default async (req) => {
   const allCardsHTML = cards.map(c => {
     const aud = toAud(c);
     return `<a href="/cards/forceofwill/${c.slug}" style="background:#111420;border:1px solid #242840;border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#0EA5E9'" onmouseout="this.style.borderColor='#242840'">
-      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : ''}
       <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${esc(c.name)}</div>
+      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : ''}
       ${c.rarity ? `<div style="font-size:9px;color:#9ba3c4">${esc(c.rarity)}</div>` : ''}
       ${aud > 0 ? `<div style="font-size:11px;color:#0EA5E9;font-weight:700">AU$${aud.toFixed(0)}</div>` : ''}
     </a>`;
@@ -104,8 +104,8 @@ export default async (req) => {
       const price = p.price_aud > 0 ? `AU$${parseFloat(p.price_aud).toFixed(2)}` : `~AU$${(p.market_price*1.58).toFixed(2)}`;
       const low = p.low_price ? `Low: ~AU$${(p.low_price*1.58).toFixed(2)}` : '';
       return `<a href="/cards/forceofwill/${p.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-        ${p.image_url ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" style="width:100%;max-height:120px;object-fit:contain;border-radius:6px" loading="lazy">` : ''}
         <div style="font-size:12px;font-weight:700;color:var(--text);line-height:1.3">${esc(p.name)}</div>
+        ${p.image_url ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" style="width:100%;max-height:120px;object-fit:contain;border-radius:6px" loading="lazy">` : ''}
         <div style="font-size:15px;font-weight:900;color:var(--accent);font-family:'Cinzel',serif">${price}</div>
         ${low ? `<div style="font-size:11px;color:var(--text2)">${low}</div>` : ''}
         <div style="font-size:11px;color:#4ADE80;font-weight:600;margin-top:auto">View details &#8594;</div>
