@@ -370,4 +370,4 @@ applyFilters();
     return new Response('<html><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh"><div style="text-align:center"><h1 style="color:#c8a332">Temporarily Unavailable</h1><p>Please try again in a moment.</p><a href="/cards/yugioh" style="color:#c8a332">Browse Yu-Gi-Oh Cards</a></div></body></html>', { status: 503, headers: {'Content-Type':'text/html'} });
   }
 };
-export const config = { path: '/cards/yugioh/sets/:setCode+' };
+export const config = { path: '/cards/yugioh/sets/:setCode+', priority: 1 };

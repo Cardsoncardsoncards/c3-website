@@ -215,7 +215,7 @@ export default async (req) => {
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"></a>
-    <div style="flex:1;min-width:0;max-width:400px;display:flex"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="flex:1;max-width:300px;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
+    <div style="flex:1;min-width:0;max-width:400px;display:flex"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter')navSearch(this.value)" style="flex:1;max-width:300px;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="navSearch(document.getElementById('nav-q').value)" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
     <div class="nav-links">
       <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
       <a href="/cards/yugioh" class="nav-link nav-link--ygo">Yu-Gi-Oh</a>
@@ -287,6 +287,7 @@ ${topCards.length ? `
 </footer>
 <script>
 let activeAZ = 'All';
+function navSearch(q){var v=(q||'').trim();if(v)window.location='/search?q='+encodeURIComponent(v);}
 function filterAZ(letter, btn) {
   activeAZ = letter;
   document.querySelectorAll('.az-btn').forEach(b => b.classList.remove('az-btn--active'));

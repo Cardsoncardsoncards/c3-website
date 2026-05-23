@@ -433,4 +433,4 @@ applyFilters();
   return new Response(html, { status: 200, headers });
 };
 
-export const config = { path: '/cards/pokemon/sets/:slug+' };
+export const config = { path: '/cards/pokemon/sets/:slug+', priority: 1 };

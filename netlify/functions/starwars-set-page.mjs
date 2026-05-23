@@ -313,4 +313,4 @@ if(typeof gtag!=='undefined'){
   }
 };
 
-export const config = { path: '/cards/starwars/sets/:slug+' };
+export const config = { path: '/cards/starwars/sets/:slug+', priority: 1 };

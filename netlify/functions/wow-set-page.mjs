@@ -260,4 +260,4 @@ export default async (req) => {
   return new Response(html, { status: 200, headers });
 };
 
-export const config = { path: '/cards/wow/sets/:slug+' };
+export const config = { path: '/cards/wow/sets/:slug+', priority: 1 };

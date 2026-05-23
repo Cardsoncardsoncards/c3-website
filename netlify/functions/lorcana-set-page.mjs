@@ -415,4 +415,4 @@ applyFilters();
 </html>`;
   return new Response(html, { status: 200, headers });
 };
-export const config = { path: '/cards/lorcana/sets/:setCode+' };
+export const config = { path: '/cards/lorcana/sets/:setCode+', priority: 1 };

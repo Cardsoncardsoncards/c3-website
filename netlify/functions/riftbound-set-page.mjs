@@ -425,4 +425,4 @@ document.addEventListener('DOMContentLoaded', applyFilters);
   }
 };
 
-export const config = { path: '/cards/riftbound/sets/:slug+' };
+export const config = { path: '/cards/riftbound/sets/:slug+', priority: 1 };
