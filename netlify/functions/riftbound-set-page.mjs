@@ -320,7 +320,7 @@ export default async (req) => {
           <option value="price-asc">Price: Low to High</option>
           <option value="gainers">Biggest Gainers &#9650;</option>
           <option value="losers">Biggest Losers &#9660;</option>
-          <option value="name-asc">Name: A to Z</option>
+          <option value="name-asc" selected>Name: A to Z</option>
           <option value="name-desc">Name: Z to A</option>
           <option value="number">Card Number</option>
           <option value="rarity">By Rarity</option>
@@ -356,7 +356,7 @@ function setRarity(r, btn) {
 }
 
 function applyFilters() {
-  const sort   = document.getElementById('sort-sel')?.value || 'price-desc';
+  const sort   = document.getElementById('sort-sel')?.value || 'name-asc';
   const search = (document.getElementById('card-search')?.value || '').toLowerCase().trim();
   const grid   = document.getElementById('cards-grid');
   if (!grid) return;

@@ -1,11 +1,12 @@
 // netlify/functions/pokemon-set-page.mjs
-// Serves /cards/pokemon/sets/:setSlug
+// Serves /cards/pokemon/sets/:slug+
 
-const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
-const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
-const EBAY_CLIENT_ID = Netlify.env.get('EBAY_CLIENT_ID');
+const SUPABASE_URL       = Netlify.env.get('SUPABASE_URL');
+const SUPABASE_ANON_KEY  = Netlify.env.get('SUPABASE_ANON_KEY');
+const EBAY_CLIENT_ID     = Netlify.env.get('EBAY_CLIENT_ID');
 const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
-const EPN_CAMPID = '5339146789';
+const EPN_CAMPID         = '5339146789';
+const AMAZON_TAG         = 'blasdigital-22';
 
 async function supabaseGet(path) {
   const controller = new AbortController();
@@ -25,15 +26,11 @@ async function getEbayToken() {
   if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
   try {
     const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
-    const tokenController = new AbortController();
-    const tokenTimeout = setTimeout(() => tokenController.abort(), 4000);
     const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
       method: 'POST',
-      signal: tokenController.signal,
       headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
       body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
     });
-    clearTimeout(tokenTimeout);
     if (!res.ok) return null;
     const d = await res.json();
     return d.access_token || null;
@@ -43,395 +40,249 @@ async function getEbayToken() {
 async function getEbayListings(q, token) {
   if (!token) return [];
   try {
-    const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${encodeURIComponent(q)}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=-price&limit=10`;
-    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU' } });
+    const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${encodeURIComponent(q)}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=-price&limit=8`;
+    const res = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU', 'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${EPN_CAMPID}` }
+    });
     if (!res.ok) return [];
     const d = await res.json();
     return d.itemSummaries || [];
   } catch { return []; }
 }
 
-const NAV = `<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100">
-  <div style="display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap">
-    <a href="/" style="display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0">
-      <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0">
-      <span>Cards on Cards on Cards</span>
-    </a>
-    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
-    <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
-      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Card Vault</a>
-      <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
-      <a href="/market" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ADE80;white-space:nowrap">Market</a>
-      <a href="/tools" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(251,146,60,.35);color:#FB923C;white-space:nowrap">Tools</a>
-      <a href="/play" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(244,114,182,.35);color:#F472B6;white-space:nowrap">Play</a>
-      <a href="/blog" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(126,203,161,.35);color:#7ECBA1;white-space:nowrap">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(96,165,250,.35);color:#60A5FA;background:rgba(96,165,250,.05);white-space:nowrap">Shop eBay &#8599;</a>
-    </div>
-  </div>
-</nav>`;
-
-const getRarityColour = (r) => {
-  if (!r) return '#9ca3af';
-  const rl = r.toLowerCase();
-  if (rl.includes('rainbow') || rl.includes('gold')) return '#f5a623';
-  if (rl.includes('secret') || rl.includes('hyper')) return '#f5a623';
-  if (rl.includes('ultra') || rl.includes('ex') || rl.includes('vmax') || rl.includes('vstar')) return '#f5a623';
-  if (rl.includes('holo') || rl.includes('rare')) return '#a855f7';
-  if (rl.includes('uncommon')) return '#4ade80';
-  return '#9ca3af';
-};
-
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+function graceful404(setSlug) {
+  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Set Not Found | Pokemon | Cards on Cards on Cards</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/c3logo.png"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}.wrap{max-width:420px}.icon{font-size:48px;margin-bottom:16px}h1{color:#FBBF24;font-size:22px;margin-bottom:10px}p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}.btn{display:inline-block;background:#FBBF24;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}.btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}</style></head><body><div class="wrap"><div class="icon">&#127183;</div><h1>Set Not Found</h1><p>We could not find the Pokemon set "${esc(setSlug)}". It may not be in our database yet.</p><a href="/cards/pokemon" class="btn">Browse All Pokemon Cards</a><a href="/" class="btn btn-sec">Back to Home</a></div></body></html>`;
+}
+
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800' };
   const url = new URL(req.url);
   const setSlug = url.pathname.replace(/^\/cards\/pokemon\/sets\//, '').replace(/\/$/, '');
-  if (!setSlug) return new Response(`<!DOCTYPE html>
+  if (!setSlug) return new Response(graceful404(''), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+
+  try {
+    const [sets, ebayToken] = await Promise.allSettled([
+      supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=id,name,slug,release_date,card_count`),
+      getEbayToken()
+    ]);
+
+    const setsVal = sets.status === 'fulfilled' ? sets.value : [];
+    const ebayTokenVal = ebayToken.status === 'fulfilled' ? ebayToken.value : null;
+
+    if (!setsVal || !setsVal[0]) return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+
+    const set = setsVal[0];
+
+    const [cardsRes, ebayRes] = await Promise.allSettled([
+      supabaseGet(`pokemon_cards?set_id=eq.${set.id}&order=name.asc&limit=400&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,price_change_7d,price_change_30d`),
+      getEbayListings(`${set.name} pokemon card`, ebayTokenVal)
+    ]);
+
+    const cards = cardsRes.status === 'fulfilled' ? (cardsRes.value || []) : [];
+    const ebayListings = ebayRes.status === 'fulfilled' ? (ebayRes.value || []) : [];
+
+    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+    const pricedCards = cards.filter(c => toAud(c) > 0);
+    const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
+    const moversEligible = cards.filter(c => c.price_change_7d != null && parseFloat(c.price_aud||0) > 0.50);
+    const gainers = [...moversEligible].filter(c => parseFloat(c.price_change_7d) > 0).sort((a,b) => parseFloat(b.price_change_7d)-parseFloat(a.price_change_7d)).slice(0,3);
+    const losers  = [...moversEligible].filter(c => parseFloat(c.price_change_7d) < 0).sort((a,b) => parseFloat(a.price_change_7d)-parseFloat(b.price_change_7d)).slice(0,3);
+    const showMovers = moversEligible.length >= 5;
+    const rarities = [...new Set(cards.map(c => c.rarity).filter(r => r && r !== 'None'))].sort();
+    const priced = pricedCards.length;
+
+    const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const amazonURL  = `https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' pokemon')}&tag=${AMAZON_TAG}`;
+
+    const top5HTML = top5.length ? top5.map(c => {
+      const aud = toAud(c);
+      return `<a href="/cards/pokemon/${esc(c.slug)}" style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:12px;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:6px;transition:border-color .2s" onmouseover="this.style.borderColor='#FBBF24'" onmouseout="this.style.borderColor='#1e2235'">
+        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:80px;height:112px;object-fit:contain;border-radius:5px" loading="lazy">
+        <div style="font-size:11px;color:#F0F2FF;text-align:center;font-weight:600;line-height:1.3">${esc(c.name)}</div>
+        <div style="font-size:13px;color:#FBBF24;font-weight:700">AU$${aud.toFixed(2)}</div>
+      </a>`;
+    }).join('') : '<p style="color:#8892b0;font-size:14px">No priced cards yet.</p>';
+
+    const allCardsHTML = cards.map(c => {
+      const aud = toAud(c);
+      const rar = esc((c.rarity||'').toLowerCase().replace(/ /g,'-'));
+      return `<a class="card-item" href="/cards/pokemon/${esc(c.slug)}" data-name="${esc(c.name.toLowerCase())}" data-price="${aud.toFixed(2)}" data-rarity="${rar}" data-change7d="${c.price_change_7d||0}" data-number="${c.number||0}" style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:12px;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:6px;transition:border-color .2s" onmouseover="this.style.borderColor='#FBBF24'" onmouseout="this.style.borderColor='#1e2235'">
+        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:80px;height:112px;object-fit:contain;border-radius:5px" loading="lazy">
+        <div style="font-size:11px;color:#F0F2FF;text-align:center;font-weight:600;line-height:1.3">${esc(c.name)}</div>
+        ${aud > 0 ? `<div style="font-size:12px;color:#FBBF24;font-weight:700">AU$${aud.toFixed(2)}</div>` : '<div style="font-size:11px;color:#8892b0">No price</div>'}
+      </a>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Set Not Found | Pokemon | Cards on Cards on Cards</title>
-  <meta name="robots" content="noindex">
+  <title>${esc(set.name)} | Pokemon Set | Cards on Cards on Cards</title>
+  <meta name="description" content="Browse all ${esc(set.name)} Pokemon cards with AUD prices. ${priced} cards priced on Cards on Cards on Cards.">
+  <link rel="canonical" href="https://www.cardsoncardsoncards.com.au/cards/pokemon/sets/${esc(set.slug)}">
+  <meta property="og:title" content="${esc(set.name)} | Pokemon | C3">
+  <meta property="og:description" content="${priced} cards priced in AUD for ${esc(set.name)}.">
+  <meta property="og:url" content="https://www.cardsoncardsoncards.com.au/cards/pokemon/sets/${esc(set.slug)}">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}.wrap{max-width:420px}.icon{font-size:48px;margin-bottom:16px}h1{font-family:'Cinzel',serif;color:#EF4444;font-size:22px;margin-bottom:10px}p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}.btn{display:inline-block;background:#EF4444;color:#fff;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}.btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}</style>
-</head>
-<body><div class="wrap"><div class="icon">🃏</div><h1>Set Not Found</h1><p>This Pokemon set page isn't available yet. Browse all Pokemon cards or return home.</p><a href="/cards/pokemon" class="btn">Browse All Pokemon Cards</a><a href="/" class="btn btn-sec">← Home</a></div></body>
-</html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
-
-  const sets = await supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`);
-
-  if (!sets || !sets[0]) return new Response(`<!DOCTYPE html>
-<html lang="en-AU">
-<head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Set Not Found | Pokemon | Cards on Cards on Cards</title>
-  <meta name="robots" content="noindex">
-  <link rel="icon" type="image/png" href="/c3logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}
-    .wrap{max-width:420px}
-    .icon{font-size:48px;margin-bottom:16px}
-    h1{font-family:'Cinzel',serif;color:#EF4444;font-size:22px;margin-bottom:10px}
-    p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}
-    .btn{display:inline-block;background:#EF4444;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}
-    .btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;line-height:1.6}
+    .nav-bar{background:#080A12;border-bottom:1px solid #1e2235;padding:0 20px;display:flex;align-items:center;gap:16px;height:52px;position:sticky;top:0;z-index:100}
+    .nav-logo{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#C9A84C;text-decoration:none;flex-shrink:0}
+    .nav-links{display:flex;gap:4px;flex-shrink:0}
+    .nav-links a{color:#8892b0;font-size:12px;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;transition:color .2s}
+    .nav-links a:hover{color:#F0F2FF}
+    .nav-search{flex:1;min-width:0;max-width:400px;display:flex}
+    .nav-search input{flex:1;max-width:300px;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none}
+    .nav-search button{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0}
+    .ebay-btn{display:inline-block;background:#C9A84C;color:#000;padding:10px 20px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px}
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+    .filt-btn{background:rgba(255,255,255,.06);border:1px solid #1e2235;color:#8892b0;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+    .filt-btn.active,.filt-btn:hover{background:#FBBF24;border-color:#FBBF24;color:#000;font-weight:700}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+    @media(max-width:600px){.nav-links{display:none}.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
   </style>
 </head>
 <body>
+<nav class="nav-bar">
+  <a href="/" class="nav-logo">C3</a>
+  <div class="nav-links">
+    <a href="/vault">CARD VAULT</a><a href="/compare">COMPARE</a><a href="/market">MARKET</a><a href="/tools">TOOLS</a><a href="/play">PLAY</a><a href="/blog">BLOG</a>
+  </div>
+  <div class="nav-search">
+    <input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
+    <button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
+  </div>
+</nav>
+
 <div class="wrap">
-  <div class="icon">🃏</div>
-  <h1>Set Not Found</h1>
-  <p>This Pokemon set page isn't available yet. Browse all Pokemon cards or return home.</p>
-  <a href="/cards/pokemon" class="btn">Browse All Pokemon Cards</a>
-  <a href="/" class="btn btn-sec">← Home</a>
-</div>
-</body>
-</html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
-  const set = sets[0];
+  <div style="font-size:12px;color:#8892b0;margin-bottom:12px"><a href="/" style="color:#8892b0;text-decoration:none">Home</a> &rsaquo; <a href="/cards/pokemon" style="color:#8892b0;text-decoration:none">Pokemon</a> &rsaquo; ${esc(set.name)}</div>
 
-  const [cardsRes, ebayTokenRes] = await Promise.allSettled([
-    supabaseGet(`pokemon_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=60&select=slug,name,image_url,market_price,price_aud,rarity,number`),
-    getEbayToken()
-  ]);
-  const cards = cardsRes.status === 'fulfilled' && Array.isArray(cardsRes.value) ? cardsRes.value : [];
-  const ebayToken = ebayTokenRes.status === 'fulfilled' ? ebayTokenRes.value : null;
-
-  const ebayListings = await getEbayListings(`${set.name} pokemon card`, ebayToken);
-  const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' pokemon booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-
-  const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * 1.58 : 0;
-  const pricedCards = cards.filter(c => toAud(c) > 0);
-  const top5 = pricedCards.slice(0, 5);
-  const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();
-  const types = []; // category and rarity columns have no data in pokemon_cards
-
-  const topTwo = pricedCards.slice(0, 2);
-  const contextText = topTwo.length >= 2
-    ? `${set.name} contains ${cards.length} cards. The most valuable are <strong>${topTwo[0].name}</strong> at ~AU$${toAud(topTwo[0]).toFixed(0)} and <strong>${topTwo[1].name}</strong> at ~AU$${toAud(topTwo[1]).toFixed(0)}. Prices are converted from USD daily.`
-    : `${set.name} contains ${cards.length} cards. Prices are converted from USD to AUD daily.`;
-
-  const top5HTML = top5.map(c => {
-    const aud = toAud(c);
-    const rc = getRarityColour(c.rarity);
-    return `<a href="/cards/pokemon/${c.slug}" style="flex:0 0 150px;background:#0e1118;border:1px solid rgba(255,204,0,.2);border-radius:10px;padding:10px;text-align:center;text-decoration:none;position:relative;transition:all .2s;display:block" onmouseover="this.style.borderColor='#FFCC00';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,204,0,.2)';this.style.transform='none'">
-      <div style="position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:${rc}"></div>
-      <div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">${esc(c.name)}</div>
-      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:6px;display:block" loading="lazy">` : `<div style="height:120px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${esc(c.name)}</div>`}
-      <div style="font-family:'Cinzel',serif;font-size:14px;color:#FFCC00;font-weight:700;margin-top:3px">~AU$${aud.toFixed(0)}</div>
-    </a>`;
-  }).join('');
-
-  const cardGrid = cards.map(c => {
-    const aud = toAud(c);
-    const priceDisplay = aud >= 0.50 ? `~AU$${aud.toFixed(0)}` : `<span style="color:rgba(160,168,192,.35);font-size:9px">no price</span>`;
-    const rc = getRarityColour(c.rarity);
-    return `<a href="/cards/pokemon/${c.slug}" class="card-item" data-price="${aud.toFixed(2)}">
-      <div style="position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:${rc}"></div>
-      <div style="font-size:10px;margin-top:4px;color:#F0F2FF;line-height:1.2">${esc(c.name)}</div>
-      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:5px;display:block;margin-top:2px" loading="lazy">` : `<div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#7a8099">${esc(c.name)}</div>`}
-      <div style="font-size:11px;color:#FFCC00;font-weight:700;margin-top:2px">${priceDisplay}</div>
-    </a>`;
-  }).join('');
-
-  const ebayCarouselHTML = ebayListings.length ? `
-    <div style="margin-top:40px;padding:28px;background:rgba(255,204,0,.04);border:1px solid rgba(255,204,0,.12);border-radius:14px">
-      <p style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#FFCC00;margin-bottom:6px">Live eBay AU Listings</p>
-      <h2 style="font-family:'Cinzel',serif;font-size:18px;color:#F0F2FF;margin-bottom:16px">${set.name} on eBay Australia</h2>
-      <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory">
-        ${ebayListings.map(item => {
-          const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
-          const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-          return `<a href="${epnUrl}" target="_blank" rel="noopener sponsored" style="flex:0 0 160px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;scroll-snap-align:start;transition:all .22s" onmouseover="this.style.borderColor='rgba(255,204,0,.4)'" onmouseout="this.style.borderColor='#252840'">
-            ${item.image?.imageUrl ? `<img src="${item.image.imageUrl}" alt="${(item.title||'').slice(0,40)}" style="width:100%;height:120px;object-fit:contain;background:#0d0f1a;padding:8px" loading="lazy">` : `<div style="height:120px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:24px">🃏</div>`}
-            <div style="padding:9px 11px;flex:1;display:flex;flex-direction:column;gap:4px">
-              <div style="font-size:11px;color:#F0F2FF;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1">${item.title||''}</div>
-              <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#FFCC00;margin-top:4px">${price}</div>
-              <div style="font-size:10px;color:rgba(160,168,192,.5)">View on eBay ↗</div>
-            </div>
-          </a>`;
-        }).join('')}
-      </div>
-      <div style="text-align:right;margin-top:8px">
-        <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="font-size:12px;color:#FFCC00;text-decoration:none;opacity:.7">View all ${set.name} listings on eBay ↗</a>
-      </div>
-    </div>` : `
-    <div style="margin-top:32px;text-align:center;padding:20px;background:#0e1118;border:1px solid #1e2235;border-radius:12px">
-      <p style="font-size:14px;color:#7a8099;margin-bottom:12px">Find ${set.name} cards on eBay Australia</p>
-      <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(255,204,0,.12);border:1px solid rgba(255,204,0,.3);color:#FFCC00;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Shop ${set.name} on eBay AU ↗</a>
-    </div>`;
-
-  const rarityFilterHTML = '' && rarities.length ? `
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-      <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7a8099;min-width:90px">Rarity</span>
-      <button class="filt-btn active" data-rarity-filter="all" onclick="setFilter('rarity','all',this)">All</button>
-      ${rarities.map(r => { const rs = r.toLowerCase().replace(/[^a-z0-9 ]/g,''); return `<button class="filt-btn" data-rarity-filter="${rs}" onclick="setFilter('rarity','${rs}',this)">${r}</button>`; }).join('')}
-    </div>` : '';
-
-  const typeFilterHTML = '' && types.length > 1 ? `
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-      <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7a8099;min-width:90px">Type</span>
-      <button class="filt-btn active" data-type-filter="all" onclick="setFilter('type','all',this)">All</button>
-      ${types.map(t => `<button class="filt-btn" data-type-filter="${t.toLowerCase()}" onclick="setFilter('type','${t.toLowerCase()}',this)">${t}</button>`).join('')}
-    </div>` : '';
-
-  const releaseDate = set.release_date ? new Date(set.release_date).toLocaleDateString('en-AU', {day:'numeric',month:'long',year:'numeric'}) : null;
-
-  const schemaLD = JSON.stringify({
-    "@context":"https://schema.org","@type":"CollectionPage",
-    "name":`${set.name} Pokemon Card Prices Australia`,
-    "description":`Browse all ${cards.length} ${set.name} Pokemon cards with AUD prices and eBay AU buy links.`,
-    "url":`https://cardsoncardsoncards.com.au/cards/pokemon/sets/${setSlug}`
-  });
-
-  const faqSchema = JSON.stringify({
-    "@context":"https://schema.org","@type":"FAQPage",
-    "mainEntity":[
-      {"@type":"Question","name":`How many cards are in ${set.name}?`,"acceptedAnswer":{"@type":"Answer","text":`${set.name} contains ${cards.length} cards in the C3 database.`}},
-      {"@type":"Question","name":`What is the most valuable ${set.name} Pokemon card?`,"acceptedAnswer":{"@type":"Answer","text":pricedCards.length ? `The most valuable ${set.name} card is ${pricedCards[0].name} at approximately AU$${toAud(pricedCards[0]).toFixed(2)}.` : `Check eBay AU for current ${set.name} card prices.`}},
-      {"@type":"Question","name":`Where can I buy ${set.name} cards in Australia?`,"acceptedAnswer":{"@type":"Answer","text":`You can buy ${set.name} Pokemon cards on eBay AU with Australian shipping, or find sealed product on Amazon AU.`}}
-    ]
-  });
-
-  const html = `<!DOCTYPE html>
-<html lang="en-AU">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${set.name} Card Prices Australia | Pokemon TCG | Cards on Cards on Cards</title>
-<meta name="description" content="Browse all ${cards.length} ${set.name} Pokemon cards with live AUD pricing and eBay AU buy links. Filter by rarity and type. Updated daily.">
-<link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/pokemon/sets/${setSlug}">
-<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
-<link rel="icon" href="/favicon.ico">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">${schemaLD}</script>
-<script type="application/ld+json">${faqSchema}</script>
-<style>
-:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--border:#1e2235;--text:#F0F2FF;--text2:#7a8099;--accent:#FFCC00}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px 80px}
-.card-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color .2s;position:relative;text-decoration:none}
-.card-item:hover{border-color:var(--accent)}
-.card-item.hidden{display:none}
-.filt-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif}
-.filt-btn:hover{border-color:var(--accent);color:var(--accent)}
-.filt-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(255,204,0,.1)}
-</style>
-</head>
-<body>
-${NAV}
-<div class="wrap" style="padding-top:32px">
-
-  <div style="font-size:12px;color:var(--text2);margin-bottom:16px">
-    <a href="/" style="color:var(--text2)">Home</a> ›
-    <a href="/cards" style="color:var(--text2)">Card Vault</a> ›
-    <a href="/cards/pokemon" style="color:var(--text2)">Pokemon TCG</a> ›
-    <span style="color:var(--accent)">${set.name}</span>
+  <div style="margin-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.08em;color:#FBBF24;text-transform:uppercase">Pokemon &middot; Set</div>
+  <h1 style="font-family:'Cinzel',serif;font-size:clamp(20px,4vw,32px);font-weight:700;color:#F0F2FF;margin-bottom:8px">${esc(set.name)}</h1>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:20px;font-size:13px;color:#8892b0">
+    ${set.release_date ? `<span>Released: ${set.release_date}</span>` : ''}
+    ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
+    ${priced > 0 ? `<span>${priced} priced in AUD</span>` : ''}
   </div>
 
-  ${set.logo_uri ? `<img src="${set.logo_uri}" alt="${set.name}" style="height:60px;object-fit:contain;margin-bottom:12px;display:block">` : ''}
-  <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.name} <span style="color:var(--accent)">Card Prices</span></h1>
-  <p style="color:var(--text2);margin-bottom:20px;font-size:14px">${cards.length} cards${releaseDate ? ` · Released ${releaseDate}` : ''} · AUD prices updated daily</p>
-
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
-    <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="background:rgba(255,204,0,.12);border:1px solid rgba(255,204,0,.3);color:#FFCC00;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay AU ↗</a>
-    <a href="${ebayBoxURL}" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60A5FA;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📦 Buy Booster Box ↗</a>
-    <a href="/blog/best-pokemon-booster-boxes-australia/" style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:9px 16px;border-radius:8px;font-size:13px;text-decoration:none">📖 Is it Worth Opening?</a>
-    <a href="/ev-calculator.html" style="background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);color:#FB923C;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📊 EV Calculator</a>
-  </div>
-  <div style="background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:20px 24px;margin-bottom:28px;position:relative;overflow:hidden">
-    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5),transparent)"></div>
-    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:10px">&#128230; Sealed Product</div>
-    <div style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#F0F2FF;margin-bottom:8px">Singles vs Sealed: Know Before You Buy</div>
-    <p style="font-size:13px;color:#7a8099;line-height:1.6;margin-bottom:14px">Buying singles is cheaper if you want specific cards. Sealed boxes are for the opening experience and the chance at chase pulls. Run the EV before you open any box.</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <a href="${ebayBoxURL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C;font-size:12px;font-weight:700;text-decoration:none">Find Sealed on eBay AU &#8599;</a>
-      <a href="/ev-calculator.html" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);color:#FB923C;font-size:12px;font-weight:700;text-decoration:none">Run the EV Calculator &#8594;</a>
-      <a href="/compare" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);color:#A78BFA;font-size:12px;font-weight:700;text-decoration:none">Compare Card Prices &#8594;</a>
-    </div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px">
+    <a href="${ebaySetURL}" class="ebay-btn" target="_blank" rel="noopener">Buy Cards on eBay AU &rarr;</a>
+    <a href="${ebayBoxURL}" style="display:inline-block;border:1px solid #C9A84C;color:#C9A84C;padding:10px 20px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px" target="_blank" rel="noopener">Find Booster Box &rarr;</a>
+    <a href="${amazonURL}" style="display:inline-block;border:1px solid #8892b0;color:#8892b0;padding:10px 20px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px" target="_blank" rel="noopener">Search Amazon AU &rarr;</a>
   </div>
 
-  <div style="background:rgba(255,204,0,.04);border:1px solid rgba(255,204,0,.15);border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:var(--text2);line-height:1.6">${contextText}</div>
+  ${top5.length ? `<div style="margin-bottom:32px">
+    <h2 style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:#F0F2FF;margin-bottom:14px;text-transform:uppercase;letter-spacing:.05em">Most Valuable Cards</h2>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">${top5HTML}</div>
+  </div>` : ''}
 
-  ${top5.length ? `
-  <div style="margin-bottom:32px">
-    <p style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:14px">Top Cards by Value</p>
-    <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory">
-      ${top5HTML}
+  ${showMovers && (gainers.length || losers.length) ? `<div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:16px;margin-bottom:28px">
+    <h2 style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#F0F2FF;margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em">7-Day Price Movers</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>${gainers.map(c => `<div style="font-size:12px;color:#4ADE80;padding:4px 0">&uarr; ${esc(c.name)} <span style="color:#F0F2FF">AU$${toAud(c).toFixed(2)}</span></div>`).join('')}</div>
+      <div>${losers.map(c => `<div style="font-size:12px;color:#F87171;padding:4px 0">&darr; ${esc(c.name)} <span style="color:#F0F2FF">AU$${toAud(c).toFixed(2)}</span></div>`).join('')}</div>
     </div>
   </div>` : ''}
 
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px">
-    ${rarityFilterHTML}
-    ${typeFilterHTML}
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7a8099;min-width:90px">Sort</span>
-      <select id="sort-sel" onchange="applyFilters()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer">
-        <option value="price-desc">Price: High to Low</option>
-        <option value="price-asc">Price: Low to High</option>
-        <option value="name-asc">Name: A to Z</option>
-        <option value="number-asc">Card Number</option>
-      </select>
-      <select id="price-sel" onchange="applyFilters()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer">
-        <option value="0">Any Price</option>
-        <option value="1">AU$1+</option>
-        <option value="5">AU$5+</option>
-        <option value="20">AU$20+</option>
-        <option value="50">AU$50+</option>
-      </select>
-      <span id="filter-count" style="font-size:12px;color:var(--text2);margin-left:8px"></span>
-      <button onclick="clearFilters()" style="background:none;border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:auto">Reset</button>
+  <div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px">
+      <h2 style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:#F0F2FF;text-transform:uppercase;letter-spacing:.05em">Singles (${cards.length})</h2>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <input id="card-search" type="text" placeholder="Filter cards..." oninput="applyFilters()" style="background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none;width:160px">
+        <select id="sort-sel" onchange="applyFilters()" style="background:#e8eaf0;border:1px solid #1e2235;border-radius:7px;padding:6px 10px;font-size:12px;color:#111420;font-family:'DM Sans',sans-serif;cursor:pointer">
+          <option value="name-asc" selected>Name: A to Z</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="gainers">Biggest Gainers &#9650;</option>
+          <option value="losers">Biggest Losers &#9660;</option>
+          <option value="name-desc">Name: Z to A</option>
+          <option value="number">Card Number</option>
+          <option value="rarity">By Rarity</option>
+        </select>
+        <span id="filter-count" style="font-size:12px;color:#8892b0;white-space:nowrap"></span>
+      </div>
     </div>
+    ${rarities.length > 1 ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <button class="filt-btn active" data-rarity="all" onclick="setRarity('all',this)">All Rarities</button>
+      ${rarities.map(r => `<button class="filt-btn" data-rarity="${esc(r.toLowerCase().replace(/ /g,'-'))}" onclick="setRarity('${esc(r.toLowerCase().replace(/ /g,'-'))}',this)">${esc(r)}</button>`).join('')}
+    </div>` : ''}
+    <div class="cards-grid" id="cards-grid">${allCardsHTML}</div>
   </div>
 
-  <div id="card-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:36px">${cardGrid}</div>
-
-  ${ebayCarouselHTML}
-
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:36px">
-    <h2 style="font-family:'Cinzel',serif;font-size:16px;margin-bottom:8px">Frequently Asked Questions</h2>
-    <details style="margin-top:12px;border-bottom:1px solid var(--border);padding-bottom:12px">
-      <summary style="cursor:pointer;font-size:14px;font-weight:600;color:var(--text)">How many cards are in ${set.name}?</summary>
-      <p style="font-size:13px;color:var(--text2);margin-top:8px">${set.name} contains ${cards.length} cards in the C3 database.</p>
-    </details>
-    <details style="margin-top:12px;border-bottom:1px solid var(--border);padding-bottom:12px">
-      <summary style="cursor:pointer;font-size:14px;font-weight:600;color:var(--text)">What is the most valuable ${set.name} card?</summary>
-      <p style="font-size:13px;color:var(--text2);margin-top:8px">${pricedCards.length ? `The most valuable ${set.name} card is <strong style="color:var(--text)">${pricedCards[0].name}</strong> at approximately AU$${toAud(pricedCards[0]).toFixed(2)}.` : `Check eBay AU for current prices.`}</p>
-    </details>
-    <details style="margin-top:12px;padding-bottom:4px">
-      <summary style="cursor:pointer;font-size:14px;font-weight:600;color:var(--text)">Where can I buy ${set.name} cards in Australia?</summary>
-      <p style="font-size:13px;color:var(--text2);margin-top:8px">You can buy ${set.name} Pokemon cards on <a href="${ebaySearchURL}" target="_blank" rel="noopener">eBay AU</a> with Australian shipping, or find sealed product on Amazon AU.</p>
-    </details>
+  <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0;margin-top:28px">
+    <strong style="color:#F0F2FF">About this set:</strong> Pokemon card prices shown in AUD, converted from USD market data. Prices update daily via tcgapi.dev. Always check eBay AU for live Australian market pricing.
+    <div style="margin-top:10px"><a href="/cards/pokemon" style="color:#FBBF24">Back to all Pokemon cards</a></div>
   </div>
-
 </div>
 
-<footer style="border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px">
-  <p><a href="/" style="color:var(--text2);margin:0 8px">Home</a><a href="/cards" style="color:var(--text2);margin:0 8px">Card Vault</a><a href="/cards/pokemon" style="color:var(--text2);margin:0 8px">Pokemon TCG</a><a href="/blog" style="color:var(--text2);margin:0 8px">Blog</a><a href="/tracker.html" style="color:var(--text2);margin:0 8px">Tracker</a></p>
-  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px">Pokemon card data via TCGdex. Prices in AUD are estimates based on USD conversion. Not financial advice. Affiliate links may earn a small commission.</p>
-</footer>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
 <script>
-let activeRarity='all',activeType='all',minPrice=0,sortMode='price-desc';
-
-function setFilter(dim,val,btn){
-  document.querySelectorAll('[data-'+dim+'-filter]').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  if(dim==='rarity') activeRarity=val;
-  if(dim==='type') activeType=val;
+let activeRarity = 'all';
+function setRarity(r, btn) {
+  activeRarity = r;
+  document.querySelectorAll('.filt-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
   applyFilters();
 }
-
-function applyFilters(){
-  sortMode=document.getElementById('sort-sel').value;
-  minPrice=parseFloat(document.getElementById('price-sel').value)||0;
-  const grid=document.getElementById('card-grid');
-  const items=[...grid.querySelectorAll('.card-item')];
-  let visible=0;
-  items.forEach(el=>{
-    const r=el.dataset.rarity||'';
-    const t=el.dataset.type||'';
-    const p=parseFloat(el.dataset.price)||0;
-    const rMatch=activeRarity==='all'||r===activeRarity;
-    const tMatch=activeType==='all'||t===activeType;
-    const pMatch=p>=minPrice;
-    const show=rMatch&&tMatch&&pMatch;
-    el.classList.toggle('hidden',!show);
-    if(show) visible++;
+function applyFilters() {
+  const sort   = document.getElementById('sort-sel')?.value || 'name-asc';
+  const search = (document.getElementById('card-search')?.value || '').toLowerCase().trim();
+  const grid   = document.getElementById('cards-grid');
+  if (!grid) return;
+  const items = [...grid.querySelectorAll('.card-item')];
+  let visible = 0;
+  items.forEach(el => {
+    const show = (activeRarity === 'all' || el.dataset.rarity === activeRarity) && (!search || el.dataset.name.includes(search));
+    el.style.display = show ? '' : 'none';
+    if (show) visible++;
   });
-  document.getElementById('filter-count').textContent=visible+' cards';
-  const vis=items.filter(el=>!el.classList.contains('hidden'));
-  vis.sort((a,b)=>{
-    if(sortMode==='price-desc') return (parseFloat(b.dataset.price)||0)-(parseFloat(a.dataset.price)||0);
-    if(sortMode==='price-asc') return (parseFloat(a.dataset.price)||0)-(parseFloat(b.dataset.price)||0);
-    if(sortMode==='name-asc') return (a.querySelector('div:nth-child(2)')?.textContent||'').localeCompare(b.querySelector('div:nth-child(2)')?.textContent||'');
+  const fc = document.getElementById('filter-count');
+  if (fc) fc.textContent = visible + ' cards';
+  const rarityOrder = ['common','uncommon','rare','super rare','double rare','ultra rare','secret rare','special rare','expansion rare','legendary','epic','showcase','enchanted','promo'];
+  const vis = items.filter(el => el.style.display !== 'none');
+  vis.sort((a, b) => {
+    const pa = parseFloat(a.dataset.price) || 0;
+    const pb = parseFloat(b.dataset.price) || 0;
+    const ga = parseFloat(a.dataset.change7d || '-9999');
+    const gb = parseFloat(b.dataset.change7d || '-9999');
+    const na = a.dataset.name || '';
+    const nb = b.dataset.name || '';
+    const numa = isNaN(parseInt(a.dataset.number)) ? 9999 : parseInt(a.dataset.number);
+    const numb = isNaN(parseInt(b.dataset.number)) ? 9999 : parseInt(b.dataset.number);
+    const ra  = rarityOrder.indexOf(a.dataset.rarity);
+    const rb2 = rarityOrder.indexOf(b.dataset.rarity);
+    if (sort === 'price-desc') return pb - pa;
+    if (sort === 'price-asc')  return pa - pb;
+    if (sort === 'gainers')    return gb - ga;
+    if (sort === 'losers')     return ga - gb;
+    if (sort === 'name-asc')   return na.localeCompare(nb);
+    if (sort === 'name-desc')  return nb.localeCompare(na);
+    if (sort === 'number')     return numa - numb;
+    if (sort === 'rarity')     return (ra < 0 ? 99 : ra) - (rb2 < 0 ? 99 : rb2);
     return 0;
   });
-  vis.forEach(el=>grid.appendChild(el));
+  vis.forEach(el => grid.appendChild(el));
 }
-
-function clearFilters(){
-  activeRarity='all';activeType='all';minPrice=0;
-  document.querySelectorAll('.filt-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('[data-rarity-filter="all"],[data-type-filter="all"]').forEach(b=>b.classList.add('active'));
-  document.getElementById('sort-sel').value='price-desc';
-  document.getElementById('price-sel').value='0';
-  applyFilters();
+document.addEventListener('DOMContentLoaded', applyFilters);
+if(typeof gtag!=='undefined'){
+  document.querySelectorAll('a[href*="ebay"]').forEach(a=>a.addEventListener('click',()=>gtag('event','ebay_click',{game:'pokemon',set:'${esc(set.name)}'})));
 }
-
-applyFilters();
 </script>
-<!-- REPORT BUG WIDGET -->
-<style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-box h3{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px}.bug-box p{font-size:12px;color:#9ba3c4;margin-bottom:18px}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer;line-height:1;padding:4px}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none;transition:border-color .2s}.bug-form select:focus,.bug-form textarea:focus{border-color:rgba(201,168,76,.5)}.bug-form textarea{resize:vertical;min-height:80px;max-height:160px}.bug-form select option{background:#e8eaf0;color:#111420}.bug-form select{background:#e8eaf0;color:#111420}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}.bug-submit:hover{opacity:.85}.bug-submit:disabled{opacity:.5;cursor:not-allowed}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px;font-weight:600}</style>
-<div class="bug-float"><a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a></div>
-<div class="bug-modal" id="bugModal" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="bug-box">
-    <button class="bug-close" onclick="document.getElementById('bugModal').classList.remove('open')">&#x2715;</button>
-    <h3>&#x1F41B; Report a Bug</h3><p>Spotted something wrong? Takes 20 seconds.</p>
-    <form class="bug-form" id="bugReportForm" name="bug-report" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="bug-report"><input class="bug-hidden" name="bot-field">
-      <input type="hidden" name="page_url" id="bugPageUrl">
-      <select name="issue_type" required><option value="" disabled selected>What type of issue?</option><option value="wrong_price">Wrong price</option><option value="missing_card">Missing card or set</option><option value="broken_link">Broken link</option><option value="other">Other</option></select>
-      <textarea name="description" placeholder="Describe the issue briefly" maxlength="200" required></textarea>
-      <div class="bug-thanks" id="bugThanks"><p>&#x2713; Thanks, we will look into it.</p></div>
-      <button type="submit" class="bug-submit" id="bugSubmit">Submit Report</button>
-    </form>
-  </div>
-</div>
-<script>(function(){var urlInput=document.getElementById('bugPageUrl');if(urlInput)urlInput.value=window.location.href;var form=document.getElementById('bugReportForm');if(!form)return;form.addEventListener('submit',function(e){e.preventDefault();var btn=document.getElementById('bugSubmit');btn.disabled=true;btn.textContent='Sending...';var data=new FormData(form);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';form.querySelector('select').style.display='none';form.querySelector('textarea').style.display='none';btn.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){btn.disabled=false;btn.textContent='Submit Report';});});})()</script>
 </body>
 </html>`;
 
-  return new Response(html, { status: 200, headers });
+    return new Response(html, { status: 200, headers });
+  } catch (err) {
+    console.error('[pokemon-set-page] Error:', err.message);
+    return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+  }
 };
 
 export const config = { path: '/cards/pokemon/sets/:slug+', priority: 1 };
