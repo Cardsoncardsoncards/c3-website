@@ -287,3 +287,4 @@ if(typeof gtag!=='undefined'){
 };
 
 export const config = { path: '/cards/dragonball/sets/:slug+', priority: 1 };
+// force-redeploy-20260524
