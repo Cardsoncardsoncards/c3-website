@@ -73,7 +73,7 @@ export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace(/^\/cards\/starwars\//, '').replace(/\/$/, '');
   const AUD_RATE = await getExchangeRate();
-  if (!slug || slug.startsWith('sets/')) return new Response('Not found', { status: 404, headers });
+  if (!slug) return new Response('Not found', { status: 404, headers });
 
   const [_psr0, _psr1] = await Promise.allSettled([
     supabaseGet(`starwars_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`),
