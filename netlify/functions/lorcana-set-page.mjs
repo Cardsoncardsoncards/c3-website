@@ -1,5 +1,5 @@
 // netlify/functions/lorcana-set-page.mjs
-// C3 set-page v3.1 -- push-i force-upload
+// C3 set-page v3.2 -- deploy-20260524-113226
 // Serves /cards/lorcana/sets/:slug+
 
 const SUPABASE_URL       = Netlify.env.get('SUPABASE_URL');
