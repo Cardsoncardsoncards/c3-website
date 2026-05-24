@@ -68,7 +68,7 @@ export default async (req) => {
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((c.name||'one piece card')+' one piece tcg')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<a href="/cards/onepiece/${esc(c.slug)}" class="carousel-card">
       <div class="carousel-img-wrap">
-        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#9763;</div>'">
+        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#9763;</div>'">
       </div>
       <div class="carousel-name">${esc(c.name)}</div>
       ${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}
@@ -167,7 +167,7 @@ export default async (req) => {
     .release-ticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
     .release-ticker::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
     .ticker-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);white-space:nowrap;padding:0 14px 0 18px;flex-shrink:0;z-index:3}
-    .ticker-track{display:flex;animation:tickerScroll 40s linear infinite}
+    .ticker-track{display:flex;animation:tickerScroll 50s linear infinite}
     .ticker-track:hover{animation-play-state:paused}
     @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:11.5px;color:var(--silver);white-space:nowrap}
@@ -192,7 +192,7 @@ export default async (req) => {
     .carousel-track-wrap::before,.carousel-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
     .carousel-track-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
     .carousel-track-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
-    .carousel-track{display:flex;gap:12px;padding:4px 24px 12px;animation:scrollLeft 40s linear infinite}
+    .carousel-track{display:flex;gap:12px;padding:4px 24px 12px;animation:scrollLeft 50s linear infinite}
     .carousel-track:hover{animation-play-state:paused}
     @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .carousel-card{flex-shrink:0;width:155px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .25s;display:block}

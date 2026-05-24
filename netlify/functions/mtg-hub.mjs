@@ -41,10 +41,10 @@ const ROTATING_SETS = ['Wilds of Eldraine','Lost Caverns of Ixalan','Murders at 
 const ROTATION_DATE = 'Bloomburrow block rotates ~Sep 2026';
 
 const UPCOMING = [
-  { name: 'Marvel Super Heroes', date: '2026-06-01' },
-  { name: 'The Hobbit',          date: '2026-08-01' },
-  { name: 'Reality Fracture',    date: '2026-10-01' },
-  { name: 'Star Trek',           date: '2026-11-01' },
+  { name: 'Marvel Super Heroes', date: '2026-06-01', type: 'Set Release' },
+  { name: 'The Hobbit',          date: '2026-08-01', type: 'Set Release' },
+  { name: 'Reality Fracture',    date: '2026-10-01', type: 'Set Release' },
+  { name: 'Star Trek',           date: '2026-11-01', type: 'Set Release' },
 ];
 
 const FORMATS = [
@@ -180,7 +180,11 @@ export default async (req) => {
 
   // Ticker -- filter past events
   const upcoming = UPCOMING.filter(e => new Date(e.date+'T00:00:00') >= today);
-  const tickerItems = [...upcoming, ...upcoming].map(r => `<span class="ticker-item"><strong>${esc(r.name)}</strong></span>`).join('');
+  const tickerItems = [...upcoming, ...upcoming].map(r => {
+    const days = Math.round((new Date(r.date+'T00:00:00') - today) / 86400000);
+    const label = days === 0 ? 'TODAY' : days === 1 ? 'TOMORROW' : 'IN ' + days + ' DAYS';
+    return `<span class="ticker-item"><span class="ticker-badge">${label}</span><strong>${esc(r.name)}</strong> &middot; ${esc(r.type)}</span>`;
+  }).join('');
 
   // Format ban list pills
   const formatPills = FORMATS.map(f =>
@@ -254,11 +258,12 @@ export default async (req) => {
     .ticker-fade-l{position:absolute;left:0;top:0;bottom:0;width:60px;background:linear-gradient(to right,#0f1117,transparent);z-index:2;pointer-events:none}
     .ticker-fade-r{position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(to left,#0f1117,transparent);z-index:2;pointer-events:none}
     .ticker-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);white-space:nowrap;padding:0 16px 0 20px;flex-shrink:0;z-index:3}
-    .ticker-track{display:flex;animation:tickerScroll 40s linear infinite;flex-shrink:0}
+    .ticker-track{display:flex;animation:tickerScroll 50s linear infinite;flex-shrink:0}
     .ticker-track:hover{animation-play-state:paused}
     @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;font-size:12px;color:var(--text2);white-space:nowrap}
     .ticker-item strong{color:var(--text)}
+    .ticker-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:rgba(152,152,255,.15);color:var(--accent);letter-spacing:.06em}
     /* HERO */
     .hero{padding:52px 24px 36px;text-align:center;position:relative;z-index:1}
     .hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
@@ -286,7 +291,7 @@ export default async (req) => {
     .carousel-track-wrap::before,.carousel-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
     .carousel-track-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
     .carousel-track-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
-    .carousel-track{display:flex;gap:12px;padding:4px 24px 12px;animation:scrollLeft 40s linear infinite}
+    .carousel-track{display:flex;gap:12px;padding:4px 24px 12px;animation:scrollLeft 50s linear infinite}
     .carousel-track:hover{animation-play-state:paused}
     @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .carousel-card{flex-shrink:0;width:155px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .25s;display:block}
@@ -301,7 +306,7 @@ export default async (req) => {
     .carousel-buy-btn{font-size:10px;font-weight:700;color:#000;background:var(--gold);padding:3px 8px;border-radius:4px;letter-spacing:.04em;display:inline-block;text-decoration:none}
     /* CMD CAROUSEL */
     .cmd-track{display:flex;gap:10px;padding:4px 24px 12px;transition:none}
-    .cmd-track.loaded{animation:scrollLeft 40s linear infinite}
+    .cmd-track.loaded{animation:scrollLeft 50s linear infinite}
     .cmd-track:hover{animation-play-state:paused}
     .cmd-card{flex-shrink:0;width:140px;display:block;text-decoration:none;border-radius:8px;overflow:hidden;background:var(--bg2);border:1px solid var(--border);transition:all .25s}
     .cmd-card:hover{border-color:#9898FF;transform:translateY(-3px);box-shadow:0 6px 18px rgba(152,152,255,.15);text-decoration:none}
@@ -441,24 +446,30 @@ ${upcoming.length ? `<div class="release-ticker">
 </section>
 
 <!-- Most Valuable MTG Cards Carousel -->
-${topCardsData.length ? `<section class="carousel-section fade-up fade-up-3">
+<section class="carousel-section fade-up fade-up-3">
   <div class="carousel-label">Most Valuable</div>
   <div class="carousel-title">Top MTG Cards by Price (AUD)</div>
   <div class="carousel-track-wrap">
-    <div class="carousel-track">${carouselItems}${carouselItems}</div>
+    <div id="mtg-top-cards-track" class="carousel-track" style="animation:none">
+      <div style="min-width:155px;height:220px;background:rgba(152,152,255,.08);border-radius:10px;animation:shimmer 1.5s infinite;flex-shrink:0"></div>
+      <div style="min-width:155px;height:220px;background:rgba(152,152,255,.08);border-radius:10px;animation:shimmer 1.5s .1s infinite;flex-shrink:0"></div>
+      <div style="min-width:155px;height:220px;background:rgba(152,152,255,.08);border-radius:10px;animation:shimmer 1.5s .2s infinite;flex-shrink:0"></div>
+      <div style="min-width:155px;height:220px;background:rgba(152,152,255,.08);border-radius:10px;animation:shimmer 1.5s .3s infinite;flex-shrink:0"></div>
+      <div style="min-width:155px;height:220px;background:rgba(152,152,255,.08);border-radius:10px;animation:shimmer 1.5s .4s infinite;flex-shrink:0"></div>
+    </div>
   </div>
-  <p class="price-source">Prices sourced from Scryfall via TCGPlayer (USD), converted to AUD. Updated daily.</p>
-</section>` : ''}
+  <p class="price-source" id="mtg-carousel-source" style="display:none">Prices sourced from Scryfall via TCGPlayer (USD), converted to AUD. Updated daily.</p>
+</section>
 
 <div class="wrap">
 
   <!-- Browse Sets (moved below carousels) -->
   <div class="set-browser fade-up fade-up-3" style="margin-bottom:32px">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px">
-      <h2 style="font-size:22px;font-family:'Cinzel',serif;font-weight:700;color:var(--text)">${totalSets}+ MTG Sets</h2>
-      <span style="font-size:12px;color:var(--text2)">Click any set to view cards and prices</span>
+    <div style="text-align:center;margin-bottom:16px">
+      <h2 style="font-size:28px;font-family:'Cinzel',serif;font-weight:900;color:var(--text);margin-bottom:6px">Browse Every MTG Set</h2>
+      <p style="font-size:13px;color:var(--text2)">${totalSets}+ expansions, core sets, and masters sets. Filter by letter or search by name.</p>
     </div>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Browse every MTG expansion, core set, and masters set. Use the A-Z filter or search by name.</p>
     <div style="display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap">
       <span style="font-size:11px;color:var(--text2)"><span class="era-dot" style="background:#4ADE80"></span>2020 and newer</span>
       <span style="font-size:11px;color:var(--text2)"><span class="era-dot" style="background:#60A5FA"></span>2010 to 2019</span>
@@ -473,21 +484,15 @@ ${topCardsData.length ? `<section class="carousel-section fade-up fade-up-3">
   </div>
 
   <!-- Weekly Market Pulse -->
-  ${hasMovers ? `<div style="margin-bottom:32px">
+  <div id="mtg-pulse-wrap" style="margin-bottom:32px;display:none">
     <h2 style="font-size:20px;margin-bottom:4px">&#128200; Weekly Market Pulse</h2>
     <p style="color:var(--text2);font-size:13px;margin-bottom:4px">Biggest price movers across all MTG cards in the last 7 days.</p>
     <p style="font-size:11px;color:var(--text2);opacity:.65;margin-bottom:16px">Prices sourced from Scryfall via TCGPlayer (USD), converted to AUD.</p>
     <div class="movers-grid">
-      <div>
-        <div class="movers-col-title"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div>
-        <div class="movers-cards">${gainerHTML || '<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>'}</div>
-      </div>
-      <div>
-        <div class="movers-col-title"><span style="color:#f87171">&#8595;</span> Biggest Losers</div>
-        <div class="movers-cards">${loserHTML || '<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>'}</div>
-      </div>
+      <div><div class="movers-col-title"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div><div id="mtg-gainers"></div></div>
+      <div><div class="movers-col-title"><span style="color:#f87171">&#8595;</span> Biggest Losers</div><div id="mtg-losers"></div></div>
     </div>
-  </div>` : ''}
+  </div>
 
   <!-- Best Sets to Open -->
   <div style="margin-bottom:32px">
@@ -573,6 +578,73 @@ function applyFilters(letter, search) {
   });
 }
 </script>
+
+
+<script>
+(function() {
+  var SURL = '${SUPABASE_URL}';
+  var SKEY = '${SUPABASE_ANON_KEY}';
+  var EPN  = '5339146789';
+
+  function sGet(path, cb) {
+    fetch(SURL + '/rest/v1/' + path, {
+      headers: { 'apikey': SKEY, 'Authorization': 'Bearer ' + SKEY }
+    }).then(function(r) { return r.ok ? r.json() : []; }).then(cb).catch(function() { cb([]); });
+  }
+
+  function esc(s) {
+    return (s == null ? '' : String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function loadTopCards() {
+    var track = document.getElementById('mtg-top-cards-track');
+    var src   = document.getElementById('mtg-carousel-source');
+    if (!track) return;
+    sGet('mtg_cards?order=price_usd.desc&limit=24&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10&image_uri_small=not.is.null', function(cards) {
+      if (!cards || !cards.length) { track.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px">Price data loading. Check back shortly.</div>'; return; }
+      var html = '';
+      for (var i=0;i<cards.length;i++) {
+        var c = cards[i];
+        var price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? (c.price_usd * 1.58) : 0);
+        var priceStr = price > 0 ? 'AU$' + price.toFixed(0) : '';
+        var ebay = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(c.name + ' mtg card') + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + EPN + '&toolid=10001&mkevt=1';
+        var img = c.image_uri_small ? '<img src="' + esc(c.image_uri_small) + '" alt="' + esc(c.name) + '" loading="eager" onerror="this.parentElement.innerHTML=\'<div class=card-placeholder>&#9775;</div>\'">' : '<div class="card-placeholder">&#9775;</div>';
+        html += '<a href="/cards/mtg/' + esc(c.slug) + '" class="carousel-card"><div class="carousel-img-wrap">' + img + '</div><div class="carousel-name">' + esc(c.name) + '</div><div class="carousel-price">' + priceStr + '</div><div class="carousel-buy-row"><a href="' + ebay + '" target="_blank" rel="noopener" class="carousel-buy-btn" onclick="event.stopPropagation()">Buy eBay &#8599;</a></div></a>';
+      }
+      track.innerHTML = html + html;
+      track.style.animation = 'scrollLeft 50s linear infinite';
+      if (src) src.style.display = '';
+    });
+  }
+
+  function loadPulse() {
+    var wrap = document.getElementById('mtg-pulse-wrap');
+    var gEl  = document.getElementById('mtg-gainers');
+    var lEl  = document.getElementById('mtg-losers');
+    if (!wrap || !gEl || !lEl) return;
+    function mCard(c, up) {
+      var arrow = up ? '&#8593;' : '&#8595;';
+      var col   = up ? '#4ADE80' : '#f87171';
+      var pct   = Math.abs(parseFloat(c.price_change_7d||0)).toFixed(1);
+      var price = c.price_aud ? 'AU$' + parseFloat(c.price_aud).toFixed(0) : '';
+      var img   = c.image_uri_small ? '<img src="' + esc(c.image_uri_small) + '" alt="' + esc(c.name) + '" loading="lazy" style="width:40px;height:56px;object-fit:cover;border-radius:4px;flex-shrink:0">' : '<div style="width:40px;height:56px;background:var(--bg3);border-radius:4px;flex-shrink:0"></div>';
+      return '<a href="/cards/mtg/' + esc(c.slug) + '" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none;margin-bottom:6px" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'"><div style="width:40px;height:56px;background:var(--bg3);border-radius:4px;flex-shrink:0">' + img + '</div><div style="min-width:0;flex:1"><div style="font-size:11.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(c.name) + '</div><div style="font-size:10px;color:var(--text2)">' + esc(c.set_name||'') + '</div><div style="font-size:11px;color:var(--accent);font-weight:700">' + price + '</div></div><div style="font-size:12px;font-weight:700;color:' + col + ';flex-shrink:0">' + arrow + pct + '%</div></a>';
+    }
+    sGet('mtg_cards?order=price_change_7d.desc&price_change_7d=gt.5&price_aud=gt.5&price_change_7d=lt.5000&image_uri_small=not.is.null&limit=5&select=slug,name,image_uri_small,price_aud,price_change_7d,set_name', function(gainers) {
+      sGet('mtg_cards?order=price_change_7d.asc&price_change_7d=lt.-5&price_aud=gt.5&image_uri_small=not.is.null&limit=5&select=slug,name,image_uri_small,price_aud,price_change_7d,set_name', function(losers) {
+        if (!gainers.length && !losers.length) return;
+        gEl.innerHTML = gainers.map(function(c){return mCard(c,true);}).join('') || '<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>';
+        lEl.innerHTML = losers.map(function(c){return mCard(c,false);}).join('') || '<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>';
+        wrap.style.display = '';
+      });
+    });
+  }
+
+  loadTopCards();
+  loadPulse();
+})();
+</script>
+
 
 <script>
 (function() {

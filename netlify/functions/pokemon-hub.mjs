@@ -200,7 +200,7 @@ export default async (req) => {
     .release-ticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
     .release-ticker::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
     .ticker-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);white-space:nowrap;padding:0 14px 0 18px;flex-shrink:0;z-index:3}
-    .ticker-track{display:flex;animation:tickerScroll 40s linear infinite}
+    .ticker-track{display:flex;animation:tickerScroll 50s linear infinite}
     .ticker-track:hover{animation-play-state:paused}
     @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 24px;font-size:11.5px;color:var(--silver);white-space:nowrap}
@@ -226,7 +226,7 @@ export default async (req) => {
     .carousel-track-wrap::before,.carousel-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
     .carousel-track-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
     .carousel-track-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
-    .carousel-track{display:flex;gap:12px;padding:4px 24px 12px;animation:scrollLeft 40s linear infinite}
+    .carousel-track{display:flex;gap:12px;padding:4px 24px 12px;animation:scrollLeft 50s linear infinite}
     .carousel-track:hover{animation-play-state:paused}
     @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
     .carousel-card{flex-shrink:0;width:155px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .25s;display:block}
@@ -270,6 +270,7 @@ export default async (req) => {
     .guide-title{font-weight:700;margin-bottom:4px;color:var(--accent)}
     .guide-desc{font-size:13px;color:var(--text2)}
     @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes shimmer{0%,100%{opacity:1}50%{opacity:.45}}
     .fade-up{animation:fadeUp .5s ease both}.fade-up-1{animation-delay:.08s}.fade-up-2{animation-delay:.16s}.fade-up-3{animation-delay:.24s}
     footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
     footer a{color:var(--text2);margin:0 7px;text-decoration:none}footer a:hover{color:var(--text)}
@@ -342,33 +343,33 @@ ${upcomingEvents.length ? `<div class="release-ticker">
 </div>
 
 <!-- Most Valuable Pokemon Cards Carousel -->
-${carouselHTML ? `<section class="carousel-section fade-up fade-up-2">
+<section class="carousel-section fade-up fade-up-2">
   <div class="carousel-label">Most Valuable</div>
   <div class="carousel-title">Top Pokemon Cards by Price (AUD)</div>
   <div class="carousel-track-wrap">
-    <div class="carousel-track">${carouselHTML}${carouselHTML}</div>
+    <div id="pokemon-top-cards-track" class="carousel-track" style="animation:none">
+      <div style="min-width:155px;height:220px;background:rgba(255,204,0,.06);border-radius:10px;animation:shimmer 1.5s infinite;flex-shrink:0"></div>
+      <div style="min-width:155px;height:220px;background:rgba(255,204,0,.06);border-radius:10px;animation:shimmer 1.5s .1s infinite;flex-shrink:0"></div>
+      <div style="min-width:155px;height:220px;background:rgba(255,204,0,.06);border-radius:10px;animation:shimmer 1.5s .2s infinite;flex-shrink:0"></div>
+      <div style="min-width:155px;height:220px;background:rgba(255,204,0,.06);border-radius:10px;animation:shimmer 1.5s .3s infinite;flex-shrink:0"></div>
+      <div style="min-width:155px;height:220px;background:rgba(255,204,0,.06);border-radius:10px;animation:shimmer 1.5s .4s infinite;flex-shrink:0"></div>
+    </div>
   </div>
-  <p class="carousel-source">Prices sourced from TCGPlayer (USD), converted to AUD. Updated daily.</p>
-</section>` : ''}
+  <p class="carousel-source" id="pokemon-carousel-source" style="display:none">Prices sourced from TCGPlayer (USD), converted to AUD. Updated daily.</p>
+</section>
 
 <div class="wrap">
 
   <!-- Weekly Market Pulse -->
-  ${hasMovers ? `<div style="margin-bottom:32px">
+  <div id="pokemon-pulse-wrap" style="margin-bottom:32px;display:none">
     <h2 style="font-size:20px;margin-bottom:4px">&#128200; Weekly Market Pulse</h2>
     <p style="color:var(--text2);font-size:13px;margin-bottom:4px">Biggest price movers across all Pokemon cards in the last 7 days.</p>
     <p style="font-size:11px;color:var(--text2);opacity:.65;margin-bottom:16px">Prices sourced from TCGPlayer (USD), converted to AUD.</p>
     <div class="movers-grid">
-      <div>
-        <div class="movers-col-title"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div>
-        <div class="movers-cards">${gainerHTML||'<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>'}</div>
-      </div>
-      <div>
-        <div class="movers-col-title"><span style="color:#f87171">&#8595;</span> Biggest Losers</div>
-        <div class="movers-cards">${loserHTML||'<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>'}</div>
-      </div>
+      <div><div class="movers-col-title"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div><div id="pokemon-gainers"></div></div>
+      <div><div class="movers-col-title"><span style="color:#f87171">&#8595;</span> Biggest Losers</div><div id="pokemon-losers"></div></div>
     </div>
-  </div>` : ''}
+  </div>
 
   <!-- Browse Sets -->
   <div class="section fade-up fade-up-3" style="margin-bottom:32px">
@@ -385,7 +386,6 @@ ${carouselHTML ? `<section class="carousel-section fade-up fade-up-2">
       </div>
     </div>
     <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px">
-      ${ERAS.map(e=>`<span style="font-size:11px;color:var(--text2)"><span class="era-dot" style="background:${e.color}"></span>${e.label}</span>`).join('')}
     </div>
 
     <!-- A-Z filter -->
@@ -496,6 +496,65 @@ function applyFilters(q) {
     el.style.display  = (nameMatch && letterMatch && eraMatch) ? '' : 'none';
   });
 }
+</script>
+
+<script>
+(function() {
+  var SURL = '${SUPABASE_URL}';
+  var SKEY = '${SUPABASE_ANON_KEY}';
+  var EPN  = '5339146789';
+  function sGet(path, cb) {
+    fetch(SURL + '/rest/v1/' + path, { headers: { 'apikey': SKEY, 'Authorization': 'Bearer ' + SKEY } })
+      .then(function(r) { return r.ok ? r.json() : []; }).then(cb).catch(function() { cb([]); });
+  }
+  function esc(s) { return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function loadTopCards() {
+    var track = document.getElementById('pokemon-top-cards-track');
+    var src   = document.getElementById('pokemon-carousel-source');
+    if (!track) return;
+    sGet('pokemon_cards?order=price_aud.desc&price_aud=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,price_aud,rarity,set_name', function(cards) {
+      if (!cards || !cards.length) { track.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px">Price data loading. Check back shortly.</div>'; return; }
+      var html = '';
+      for (var i=0;i<cards.length;i++) {
+        var c = cards[i];
+        var price = c.price_aud ? 'AU$' + parseFloat(c.price_aud).toFixed(0) : '';
+        var ebay = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent((c.name||'pokemon card') + ' pokemon') + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + EPN + '&toolid=10001&mkevt=1';
+        var img = c.image_url ? '<img src="' + esc(c.image_url) + '" alt="' + esc(c.name) + '" loading="eager" onerror="this.parentElement.innerHTML=\'<div class=card-placeholder>&#128248;</div>\'">' : '<div class="card-placeholder">&#128248;</div>';
+        html += '<a href="/cards/pokemon/' + esc(c.slug) + '" class="carousel-card"><div class="carousel-img-wrap">' + img + '</div><div class="carousel-name">' + esc(c.name) + '</div>' + (c.rarity ? '<div class="carousel-rarity">' + esc(c.rarity) + '</div>' : '') + '<div class="carousel-price">' + price + '</div><div class="carousel-buy-row"><a href="' + ebay + '" target="_blank" rel="noopener" class="carousel-buy-btn" onclick="event.stopPropagation()">Buy eBay &#8599;</a></div></a>';
+      }
+      track.innerHTML = html + html;
+      track.style.animation = 'scrollLeft 50s linear infinite';
+      if (src) src.style.display = '';
+    });
+  }
+
+  function loadPulse() {
+    var wrap = document.getElementById('pokemon-pulse-wrap');
+    var gEl  = document.getElementById('pokemon-gainers');
+    var lEl  = document.getElementById('pokemon-losers');
+    if (!wrap || !gEl || !lEl) return;
+    function mCard(c, up) {
+      var arrow = up ? '&#8593;' : '&#8595;';
+      var col   = up ? '#4ADE80' : '#f87171';
+      var pct   = Math.abs(parseFloat(c.price_change_7d||0)).toFixed(1);
+      var price = c.price_aud ? 'AU$' + parseFloat(c.price_aud).toFixed(0) : '';
+      var img   = c.image_url ? '<img src="' + esc(c.image_url) + '" alt="' + esc(c.name) + '" loading="lazy" style="width:40px;height:56px;object-fit:cover;border-radius:4px;flex-shrink:0">' : '<div style="width:40px;height:56px;background:var(--bg3);border-radius:4px;flex-shrink:0"></div>';
+      return '<a href="/cards/pokemon/' + esc(c.slug) + '" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none;margin-bottom:6px" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'"><div>' + img + '</div><div style="min-width:0;flex:1"><div style="font-size:11.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(c.name) + '</div><div style="font-size:10px;color:var(--text2)">' + esc(c.set_name||'') + '</div><div style="font-size:11px;color:var(--accent);font-weight:700">' + price + '</div></div><div style="font-size:12px;font-weight:700;color:' + col + ';flex-shrink:0">' + arrow + pct + '%</div></a>';
+    }
+    sGet('pokemon_cards?order=price_change_7d.desc&price_change_7d=gt.5&price_aud=gt.5&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,price_aud,price_change_7d,set_name', function(gainers) {
+      sGet('pokemon_cards?order=price_change_7d.asc&price_change_7d=lt.-5&price_aud=gt.5&image_url=not.is.null&limit=5&select=slug,name,image_url,price_aud,price_change_7d,set_name', function(losers) {
+        if (!gainers.length && !losers.length) return;
+        gEl.innerHTML = gainers.map(function(c){return mCard(c,true);}).join('') || '<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>';
+        lEl.innerHTML = losers.map(function(c){return mCard(c,false);}).join('') || '<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>';
+        wrap.style.display = '';
+      });
+    });
+  }
+
+  loadTopCards();
+  loadPulse();
+})();
 </script>
 
 <!-- REPORT BUG WIDGET -->
