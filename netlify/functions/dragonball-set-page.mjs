@@ -1,4 +1,5 @@
 // netlify/functions/dragonball-set-page.mjs
+// C3 set-page v3.1 -- push-i force-upload
 // Serves /cards/dragonball/sets/:slug+
 
 const SUPABASE_URL       = Netlify.env.get('SUPABASE_URL');
