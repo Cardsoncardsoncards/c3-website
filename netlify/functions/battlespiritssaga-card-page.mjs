@@ -1,22 +1,13 @@
 // netlify/functions/battlespiritssaga-card-page.mjs
 // Serves /cards/battlespiritssaga/:slug
-// Battle Spirits Saga individual card pages with AUD pricing and affiliate links
-// Built: 20 May 2026
+// If slug starts with sets/, renders the set page inline (routing fix)
 
-const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
-const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
-const EPN_CAMPID        = '5339146789';
-const AMAZON_TAG        = 'blasdigital-22';
-const ACCENT            = '#FB923C';
-const ACCENT_RGB        = '251,146,60';
-const GAME_LABEL        = 'Battle Spirits Saga';
-const GAME_KEY          = 'battlespiritssaga';
-
-function esc(str) {
-  return (str == null ? '' : String(str))
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
+const SUPABASE_URL       = Netlify.env.get('SUPABASE_URL');
+const SUPABASE_ANON_KEY  = Netlify.env.get('SUPABASE_ANON_KEY');
+const EBAY_CLIENT_ID     = Netlify.env.get('EBAY_CLIENT_ID');
+const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
+const EPN_CAMPID         = '5339146789';
+const AMAZON_TAG         = 'blasdigital-22';
 
 async function supabaseGet(path) {
   const controller = new AbortController();
@@ -33,36 +24,190 @@ async function supabaseGet(path) {
   } catch (e) { clearTimeout(timer); return []; }
 }
 
-function parseCustomAttrs(raw) {
-  if (!raw) return null;
+async function getEbayToken() {
+  if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
   try {
-    const obj = typeof raw === 'string' ? JSON.parse(raw) : raw;
-    if (typeof obj !== 'object' || Array.isArray(obj)) return null;
-    const entries = Object.entries(obj).filter(([k, v]) => v != null && v !== '' && v !== false);
-    return entries.length ? entries : null;
+    const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
+    const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
+      method: 'POST',
+      headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
+    });
+    if (!res.ok) return null;
+    const d = await res.json();
+    return d.access_token || null;
   } catch { return null; }
 }
 
-function graceful404(slug) {
-  const cardName = slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(cardName+' battle spirits saga card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  return `<!DOCTYPE html>
+async function getEbayListings(cardName, token) {
+  if (!token) return [];
+  try {
+    const q = encodeURIComponent(`${cardName} battle spirits saga card`);
+    const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${q}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=price&limit=6`;
+    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}`, 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU', 'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${EPN_CAMPID}` } });
+    if (!res.ok) return [];
+    const d = await res.json();
+    return (d.itemSummaries || []).map(item => ({ ...item, itemId: item.itemId?.includes('|') ? item.itemId.split('|')[1] : item.itemId }));
+  } catch { return []; }
+}
+
+const NAV = `<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100">
+  <div style="display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap">
+    <a href="/" style="display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0">
+      <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
+    <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
+      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Card Vault</a>
+      <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
+      <a href="/market" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ADE80;white-space:nowrap">Market</a>
+      <a href="/tools" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(251,146,60,.35);color:#FB923C;white-space:nowrap">Tools</a>
+      <a href="/play" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(244,114,182,.35);color:#F472B6;white-space:nowrap">Play</a>
+      <a href="/blog" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(126,203,161,.35);color:#7ECBA1;white-space:nowrap">Blog</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(96,165,250,.35);color:#60A5FA;background:rgba(96,165,250,.05);white-space:nowrap">Shop eBay &#8599;</a>
+    </div>
+  </div>
+</nav>`;
+
+function notFoundPage(slug) {
+  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Card Not Found | Cards on Cards on Cards</title><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif">${NAV}<div style="padding:80px 24px;text-align:center"><h1 style="font-family:'Cinzel',serif;color:#C9A84C;margin-bottom:16px">Card Not Found</h1><p style="color:#A0A8C0;margin-bottom:24px">The card "${slug}" doesn't exist or hasn't synced yet.</p><a href="/cards/battlespiritssaga" style="display:inline-block;padding:10px 24px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:#E8C97A;border-radius:8px;text-decoration:none">Browse Battle Spirits Saga Cards</a></div></body></html>`;
+}
+
+function setNotFoundPage(setSlug) {
+  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Set Not Found | Battle Spirits Saga | Cards on Cards on Cards</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/c3logo.png"><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif">${NAV}<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;padding:24px;text-align:center"><div><div style="font-size:48px;margin-bottom:16px">🃏</div><h1 style="font-family:'Cinzel',serif;color:#F57F17;font-size:22px;margin-bottom:10px">Set Not Found</h1><p style="color:#8892b0;font-size:14px;margin-bottom:24px">We couldn't find the Battle Spirits Saga set "${setSlug}".</p><a href="/cards/battlespiritssaga" style="display:inline-block;background:#F57F17;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px">Browse All Battle Spirits</a><a href="/" style="display:inline-block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px">← Home</a></div></div></body></html>`;
+}
+
+async function handleSetPage(setSlug, htmlHeaders) {
+  const accent = '#F57F17';
+  const [_psr0, _psr1] = await Promise.allSettled([
+    supabaseGet(`battlespiritssaga_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`),
+    getEbayToken()
+  ]);
+  const sets = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
+
+  if (!sets || !sets[0]) return new Response(setNotFoundPage(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+  const set = sets[0];
+
+  const [_psr2, _psr3] = await Promise.allSettled([
+    supabaseGet(`battlespiritssaga_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=400&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`),
+    ebayToken ? getEbayListings(set.name + ' battle spirits saga', ebayToken).catch(() => []) : []
+  ]);
+  const cards = _psr2.status === 'fulfilled' ? _psr2.value : [];
+  const ebayListings = _psr3.status === 'fulfilled' ? _psr3.value : [];
+
+  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+  const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
+  const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
+  const sealedCards = (cards || []).filter(c => !isSingles(c));
+  const top5 = pricedCards.slice(0, 5);
+
+  const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' battle spirits saga')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const metaDesc = `Browse ${cards?.length || 0} Battle Spirits Saga cards from ${set.name}. View card prices in AUD and buy on eBay AU. Updated daily.`;
+
+  const top5HTML = top5.map(c => {
+    const aud = toAud(c);
+    return `<a href="/cards/battlespiritssaga/${c.slug}" style="flex:0 0 140px;background:#0e1118;border:1px solid rgba(16,185,129,.35);border-radius:10px;padding:10px;text-align:center;text-decoration:none;display:block">
+      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
+      <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${c.name}</div>
+      ${c.rarity ? `<div style="font-size:10px;color:${accent};margin-bottom:3px">${c.rarity}</div>` : ''}
+      ${aud > 0 ? `<div style="font-size:12px;color:#C9A84C;font-weight:700">AU$${aud.toFixed(2)}</div>` : ''}
+    </a>`;
+  }).join('');
+
+  const allCardsHTML = (cards && cards.length) ? cards.filter(isSingles).map(c => {
+    const aud = toAud(c);
+    return `<a href="/cards/battlespiritssaga/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block">
+      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
+      <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
+      ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
+    </a>`;
+  }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing -- check back after tonight's update.</div>`;
+
+  const html = `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${esc(cardName)} | Battle Spirits Saga | Cards on Cards on Cards</title>
-  <meta name="robots" content="noindex">
+  <title>${set.name} | Battle Spirits Saga Set | Cards on Cards on Cards</title>
+  <meta name="description" content="${metaDesc}">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/battlespiritssaga/sets/${setSlug}">
+  <meta property="og:title" content="${set.name} | Battle Spirits Saga | C3">
+  <meta property="og:description" content="${metaDesc}">
+  <meta property="og:site_name" content="Cards on Cards on Cards">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
   <link rel="icon" type="image/png" href="/c3logo.png">
-  <style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}.wrap{max-width:440px}h1{color:#FB923C;font-size:24px;margin-bottom:12px;font-family:'Cinzel',serif}p{color:#8892b0;font-size:14px;margin-bottom:24px;line-height:1.6}.btn{display:inline-block;background:#FB923C;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px}.btn-sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}</style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh}
+    a{color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 20px 60px}
+    .hero{padding:36px 0 24px;border-bottom:1px solid #1e2235;margin-bottom:28px}
+    .hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${accent};margin-bottom:8px}
+    .hero-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:#F0F2FF;margin-bottom:8px}
+    .hero-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#8892b0;align-items:center}
+    .meta-badge{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.35);color:${accent};padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700}
+    .section-title{font-family:'Cinzel',serif;font-size:16px;color:#F0F2FF;margin-bottom:14px}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+    .cta-btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none}
+    .cta-primary{background:${accent};color:#000}
+    .cta-secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+    .cards-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;margin-bottom:28px}
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:28px}
+    .section{margin-bottom:32px}
+    @media(max-width:600px){.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
+  </style>
 </head>
-<body><div class="wrap">
-  <h1>${esc(cardName)}</h1>
-  <p>We could not find that Battle Spirits Saga card. It may not be in our database yet.</p>
-  <a href="${ebayUrl}" target="_blank" rel="noopener" class="btn">Search eBay AU &#8599;</a>
-  <a href="/cards/battlespiritssaga" class="btn btn-sec">Browse Battle Spirits Saga</a>
-</div></body></html>`;
+<body>
+${NAV}
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">Battle Spirits Saga · Set</div>
+    <h1 class="hero-title">${set.name}</h1>
+    <div class="hero-meta">
+      <span class="meta-badge">Battle Spirits Saga</span>
+      ${set.release_date ? `<span>Released: ${set.release_date.slice(0,10)}</span>` : ''}
+      ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
+      ${pricedCards.length ? `<span>${pricedCards.length} priced in AUD</span>` : ''}
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' battle spirits saga booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>
+    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' Battle Spirits Saga')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
+  </div>
+
+  ${top5.length ? `<div class="section"><div class="section-title">Most Valuable Cards</div><div class="cards-scroll">${top5HTML}</div></div>` : ''}
+
+  <div class="section">
+    <div class="section-title">${pricedCards.length ? `Singles (${pricedCards.length})` : 'Cards'}</div>
+    <div class="cards-grid">${allCardsHTML}</div>
+  </div>
+
+  <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0">
+    <strong style="color:#F0F2FF">About this set:</strong> Battle Spirits Saga card prices shown in AUD, converted from USD market data. Prices update daily via tcgapi.dev.
+    <div style="margin-top:10px"><a href="/cards/battlespiritssaga" style="color:${accent}">← Back to all Battle Spirits Saga cards</a></div>
+  </div>
+</div>
+<footer style="border-top:1px solid #1e2235;padding:24px;text-align:center;color:#8892b0;font-size:12px;margin-top:20px">
+  <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/cards/battlespiritssaga" style="color:#8892b0;margin:0 8px">Battle Spirits Saga</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker.html" style="color:#8892b0;margin:0 8px">Tracker</a></p>
+  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+</footer>
+</body></html>`;
+
+  return new Response(html, { status: 200, headers: htmlHeaders });
 }
 
+
+function esc(str) {
+  return (str == null ? '' : String(str))
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
 
 async function getExchangeRate() {
   try {
@@ -76,352 +221,224 @@ async function getExchangeRate() {
   } catch { return 1.58; }
 }
 export default async (req) => {
-  const url     = new URL(req.url);
-  const slug    = url.pathname.replace(/^\/cards\/battlespiritssaga\//, '').replace(/\/$/, '');
+  const url = new URL(req.url);
+  const slug = url.pathname.replace('/cards/battlespiritssaga/', '').replace(/^\/|\/$/g, '');
   const AUD_RATE = await getExchangeRate();
+  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
 
-  const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=1800, s-maxage=3600'
-  };
+  if (!slug) return new Response(notFoundPage(''), { status: 404, headers });
 
-  if (!slug || slug === '') {
-    return Response.redirect('https://cardsoncardsoncards.com.au/cards/battlespiritssaga', 302);
+  if (slug.startsWith('sets/')) {
+    const setSlug = slug.replace(/^sets\//, '').replace(/\/$/, '');
+    return handleSetPage(setSlug, headers);
   }
 
-  // Parallel: fetch card + set info
-  const [cardResult] = await Promise.allSettled([
-    supabaseGet(`battlespiritssaga_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`)
-  ]);
+  try {
+    const cards = await supabaseGet(`battlespiritssaga_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`);
+    if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
+    const card = cards[0];
 
-  const cardArr = cardResult.status === 'fulfilled' ? cardResult.value : [];
-  const card    = cardArr[0];
+    const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.58 : null);
+    const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${card.slug}`);
+    const shareText = encodeURIComponent(`${card.name} Battle Spirits Saga Card Game -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
+    const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' battle spirits saga card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
-  if (!card) {
-    return new Response(graceful404(slug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
-  }
+    const [_psr0, _psr1] = await Promise.allSettled([
+      supabaseGet(`battlespiritssaga_cards?set_id=eq.${card.set_id}&slug=neq.${encodeURIComponent(slug)}&market_price=gt.0&image_url=not.is.null&limit=12&order=market_price.desc&select=*`).catch(() => []),
+      (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null)
+    ]);
+  const relatedCards = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
 
-  // Parallel supporting data
-  const [relatedResult, sealedResult, setResult, prevNextResult] = await Promise.allSettled([
-    // Singles only (no sealed products)
-    card.set_id
-      ? supabaseGet(`battlespiritssaga_cards?set_id=eq.${card.set_id}&slug=neq.${encodeURIComponent(slug)}&order=market_price.desc.nullslast&limit=12&select=slug,name,image_url,market_price,price_aud,rarity&$battlespiritssaga_filter`)
-      : Promise.resolve([]),
-    // Sealed products for this set
-    card.set_id
-      ? supabaseGet(`battlespiritssaga_cards?set_id=eq.${card.set_id}&select=slug,name,image_url,market_price,price_aud,low_price&order=market_price.desc.nullslast&limit=6`)
-      : Promise.resolve([]),
-    // Set info
-    card.set_id
-      ? supabaseGet(`battlespiritssaga_sets?id=eq.${card.set_id}&limit=1&select=id,name,slug,release_date`)
-      : Promise.resolve([]),
-    // Prev/next by card number
-    card.set_id
-      ? supabaseGet(`battlespiritssaga_cards?set_id=eq.${card.set_id}&select=slug,name,number&order=number.asc&limit=500`)
-      : Promise.resolve([])
-  ]);
+    const ebayListings = ebayToken ? await getEbayListings(card.name, ebayToken).catch(() => []) : [];
 
-  const relatedCardsRaw = relatedResult.status === 'fulfilled' ? relatedResult.value : [];
-  const sealedRaw       = sealedResult.status  === 'fulfilled' ? sealedResult.value  : [];
-  const setArr          = setResult.status      === 'fulfilled' ? setResult.value     : [];
-  const allSetCards     = prevNextResult.status === 'fulfilled' ? prevNextResult.value : [];
-  const set             = setArr[0] || null;
+    const breadcrumb = { "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://cardsoncardsoncards.com.au"},
+      {"@type":"ListItem","position":2,"name":"Battle Spirits Saga Cards","item":"https://cardsoncardsoncards.com.au/cards/battlespiritssaga"},
+      {"@type":"ListItem","position":3,"name":card.name,"item":`https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${card.slug}`}
+    ]};
 
-  // Split singles vs sealed products
-  const SEALED_KEYS = ['booster box', 'booster pack', ' case', 'bundle', 'display', 'sealed product', 'starter deck', 'starter set', 'trial deck', 'trial set', 'deck set', 'box set', 'collection box', 'premium set', 'gift set', 'booster display'];
-  const relatedCards = relatedCardsRaw.filter(c => {
-    const n = (c.name||'').toLowerCase();
-    return !SEALED_KEYS.some(k => n.includes(k));
-  });
-  const sealedCards = sealedRaw.filter(c => {
-    const n = (c.name||'').toLowerCase();
-    return SEALED_KEYS.some(k => n.includes(k)) && c.market_price > 0;
-  });
+    const productSchema = priceAud ? { "@context":"https://schema.org","@type":"Product","name":card.name,"image":card.image_url||'',
+      "offers":{"@type":"Offer","priceCurrency":"AUD","price":priceAud.toFixed(2),"availability":"https://schema.org/InStock","url":`https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${card.slug}`}
+    } : null;
 
-  // Prev/next by number
-  const cardIdx  = allSetCards.findIndex(c => c.slug === slug);
-  const prevCard = cardIdx > 0 ? allSetCards[cardIdx - 1] : null;
-  const nextCard = cardIdx >= 0 && cardIdx < allSetCards.length - 1 ? allSetCards[cardIdx + 1] : null;
+    const relatedHTML = relatedCards.length ? `
+    <div style="max-width:1100px;margin:0 auto 32px;padding:0 24px">
+      <h2 style="font-size:18px;margin-bottom:16px;font-family:'Cinzel',serif">More from ${card.set_name || 'this Set'}</h2>
+      <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none">
+        ${relatedCards.map(c => {
+          const rAud = parseFloat(c.price_aud) || (c.market_price ? c.market_price * 1.58 : 0);
+          return `<a href="/cards/battlespiritssaga/${c.slug}" style="flex:0 0 130px;background:#161929;border:1px solid #252840;border-radius:8px;padding:8px;text-decoration:none">
+            ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:5px">` : ''}
+            <div style="font-size:10px;color:#F0F2FF;margin-top:5px;line-height:1.3">${c.name}</div>
+            ${rAud >= 0.50 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">~AU$${rAud.toFixed(0)}</div>` : ''}
+          </a>`;
+        }).join('')}
+      </div>
+    </div>` : '';
 
-  const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * 1.58 : null;
+    const ebayHTML = `
+    <div style="max-width:1100px;margin:0 auto 32px;padding:0 24px">
+      <h2 style="font-size:18px;margin-bottom:16px;font-family:'Cinzel',serif">Buy on eBay AU</h2>
+      ${ebayListings.length ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px">
+        ${ebayListings.slice(0,6).map(item => {
+          const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
+          const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+          return `<a href="${epnUrl}" target="_blank" rel="noopener" style="display:block;background:#161929;border:1px solid #252840;border-radius:8px;padding:12px;text-decoration:none">
+            <div style="font-size:13px;color:#F0F2FF;margin-bottom:6px;line-height:1.3">${(item.title||card.name).slice(0,60)}...</div>
+            <div style="font-size:16px;font-weight:700;color:#C9A84C">${price}</div>
+          </a>`;
+        }).join('')}
+      </div>` : ''}
+      <a href="${ebaySearchUrl}" target="_blank" rel="noopener" style="display:inline-block;padding:10px 20px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#C9A84C;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">See all ${card.name} listings on eBay AU →</a>
+    </div>`;
 
-  // Social share
-  const pageUrl   = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${slug}`);
-  const shareText = encodeURIComponent(`${card.name} -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
-  const shareBar  = `<button onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${slug}').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Discord',1500)})" style="padding:6px 12px;background:#5865F2;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">Discord</button>
-    <a href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener" style="padding:6px 12px;background:#FF4500;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">Reddit</a>
-    <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener" style="padding:6px 12px;background:#000;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">&#120143; Twitter</a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank" rel="noopener" style="padding:6px 12px;background:#1877F2;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">Facebook</a>
-    <a href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener" style="padding:6px 12px;background:#25D366;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">WhatsApp</a>
-    <button onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${slug}').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})" style="padding:6px 12px;background:#111420;border:1px solid #242840;color:#e8eaf0;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">Copy Link</button>`;  const priceDisplay = priceAud ? `AU$${priceAud.toFixed(2)}` : 'Price TBC';
-  const customAttrs  = parseCustomAttrs(card.custom_attributes);
-
-  const ebayCardUrl  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((card.name||slug.replace(/-/g,' '))+' battle spirits saga card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  const amazonUrl    = `https://www.amazon.com.au/s?k=${encodeURIComponent((card.name||'')+' battle spirits saga card')}&tag=${AMAZON_TAG}`;
-  const setPageUrl   = set?.slug ? `/cards/battlespiritssaga/sets/${esc(set.slug)}` : `/cards/battlespiritssaga`;
-
-  const relatedHTML = relatedCards.length ? relatedCards.map(c => {
-    const p = c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? (c.market_price*1.58) : 0;
-    return `<a href="/cards/battlespiritssaga/${c.slug}" style="background:#111420;border:1px solid #242840;border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#FB923C'" onmouseout="this.style.borderColor='#242840'">
-      ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:5px;max-height:110px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:80px;background:#0d0f1a;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#9ba3c4;margin-bottom:4px">&#127183;</div>`}
-      <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${esc(c.name)}</div>
-      ${c.rarity ? `<div style="font-size:9px;color:#9ba3c4">${esc(c.rarity)}</div>` : ''}
-      ${p > 0 ? `<div style="font-size:11px;color:#FB923C;font-weight:700">AU$${p.toFixed(0)}</div>` : ''}
-    </a>`;
-  }).join('') : '';
-
-  const attrsHTML = customAttrs ? `
-  <div style="background:#111420;border:1px solid #242840;border-radius:12px;padding:20px;margin-bottom:20px">
-    <h2 style="font-size:15px;font-weight:700;color:#e8eaf0;margin-bottom:12px">Card Details</h2>
-    <dl style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px">
-      ${customAttrs.map(([k,v]) => `<dt style="color:#9ba3c4;white-space:nowrap">${esc(String(k).replace(/_/g,' '))}</dt><dd style="color:#e8eaf0">${esc(String(v))}</dd>`).join('')}
-    </dl>
-  </div>` : '';
-
-  const html = `<!DOCTYPE html>
+    const html = `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${esc(card.name)} Price Australia | ${esc(card.set_name||'Battle Spirits Saga')} | Cards on Cards on Cards</title>
-  <meta name="description" content="${esc(card.name)} from ${esc(card.set_name||'Battle Spirits Saga')}. ${priceDisplay} AUD. Buy on eBay AU. Australia's Battle Spirits Saga price guide.">
-  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${esc(slug)}">
+  <title>${card.name} Price Australia | Battle Spirits Saga | Cards on Cards on Cards</title>
+  <meta name="description" content="${card.name} Battle Spirits Saga card${priceAud ? ` -- ~AU$${priceAud.toFixed(2)}` : ''}. ${card.rarity ? `${card.rarity}. ` : ''}View price and buy on eBay AU.">
+  <meta property="og:site_name" content="Cards on Cards on Cards">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${card.slug}">
   <link rel="icon" type="image/png" href="/c3logo.png">
-  <meta property="og:title" content="${esc(card.name)} | Battle Spirits Saga | Cards on Cards on Cards">
-  <meta property="og:description" content="${esc(card.name)} - ${priceDisplay} AUD. Buy on eBay AU.">
-  <meta property="og:image" content="${card.image_url ? esc(card.image_url) : 'https://cardsoncardsoncards.com.au/c3-og-banner.png'}">
-  <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${esc(slug)}">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cardsoncardsoncards.com.au"},{"@type":"ListItem","position":2,"name":"Battle Spirits Saga","item":"https://cardsoncardsoncards.com.au/cards/battlespiritssaga"},{"@type":"ListItem","position":3,"name":"${(card.name||'').replace(/"/g,'&quot;')}","item":"https://cardsoncardsoncards.com.au/cards/battlespiritssaga/${esc(slug)}"}]}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  ${card.image_url ? `<meta property="og:image" content="${card.image_url}">` : ''}
+  <meta property="og:title" content="${card.name} | Battle Spirits Saga Price AU">
+  <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+  ${productSchema ? `<script type="application/ld+json">${JSON.stringify(productSchema)}</script>` : ''}
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--accent:#FB923C;--accent-rgb:251,146,60;--gold:#C9A84C;--text:#e8eaf0;--text2:#9ba3c4;--border:#242840;--radius:12px}
+    :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--accent:#C9A84C;--text:#F0F2FF;--text2:#A0A8C0;--border:#252840;--radius:12px}
     *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh}
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(var(--accent-rgb),.05),transparent 60%)}
-    a{color:inherit;text-decoration:none}
-    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
-    .nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}
-    .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
-    .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}
-    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-width:0}
-    .nav-links::-webkit-scrollbar{display:none}
-    .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
-    .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
-    .nav-link--active{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
-    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA}
-    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
-    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover{background:rgba(251,146,60,.1);border-color:#FB923C}
-    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6}
-    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1}
-    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA}
-    .nav-search-wrap{flex:1;min-width:0;max-width:500px;position:relative;display:flex;align-items:center;gap:0}
-    .nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none;transition:border-color .2s}
-    .nav-search-input:focus{border-color:rgba(201,168,76,.45);background:rgba(255,255,255,.09)}
-    .nav-search-input::placeholder{color:#9ba3c4}
-    .nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;transition:background .2s;flex-shrink:0}
-    .nav-search-btn:hover{background:rgba(201,168,76,.3)}
-    .nav-link{font-size:11px;padding:5px 9px;border-radius:6px;border:1px solid var(--border);color:#A0A8C0;text-decoration:none;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;white-space:nowrap}
-    .nav-link:hover{color:var(--text);border-color:#A0A8C0;background:rgba(255,255,255,.04)}
-    .nav-link--home{color:#A0C4FF;border-color:rgba(160,196,255,.3)}.nav-link--home:hover{background:rgba(160,196,255,.06)}
-    .nav-link--vault{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--vault:hover{background:rgba(201,168,76,.06)}
-    .nav-link--game{color:var(--accent);border-color:rgba(var(--accent-rgb),.4);background:rgba(var(--accent-rgb),.07)}
-    .nav-link--ebay{color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.05)}.nav-link--ebay:hover{background:rgba(74,222,128,.1)}
-    .wrap{max-width:1100px;margin:0 auto;padding:24px;position:relative;z-index:1}
-    .card-layout{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start;margin-bottom:32px}
-    @media(max-width:720px){.card-layout{grid-template-columns:1fr}}
-    .card-image-col{position:sticky;top:20px}
-    .card-image-col img{width:100%;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,.7);display:block}
-    .card-image-placeholder{width:100%;aspect-ratio:2.5/3.5;background:var(--bg2);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:64px}
-    .card-info h1{font-family:'Cinzel',serif;font-size:clamp(20px,3vw,30px);font-weight:900;color:var(--text);margin-bottom:6px;line-height:1.1}
-    .card-meta{font-size:13px;color:var(--text2);margin-bottom:14px}
-    .card-meta a{color:var(--accent)}
-    .badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-    .badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.04em}
-    .badge-rarity-mythic,.badge-rarity-mythicrare{background:#7a3a00;color:#ffcc88}
-    .badge-rarity-rare{background:#4a3a00;color:#ffd700}
-    .badge-rarity-uncommon,.badge-rarity-superrare,.badge-rarity-ultra{background:#1a2a3a;color:#aaccee}
-    .badge-rarity-common{background:#222;color:#aaa}
-    .badge-rarity-secret,.badge-rarity-secretrare{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.3)}
-    .badge-rarity{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
-    .price-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);padding:20px;margin-bottom:16px}
-    .price-main{font-size:38px;font-weight:900;color:var(--accent);font-family:'Cinzel',serif}
-    .price-sub{font-size:13px;color:var(--text2);margin-top:4px}
-    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    .btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;transition:all .2s;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
-    .btn:hover{opacity:.85}
-    .btn-primary{background:var(--accent);color:#000}
-    .btn-ebay{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ADE80}
-    .btn-ghost{background:var(--bg3);border:1px solid var(--border);color:var(--text2)}
-    .section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
-    .section-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px}
-    .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
-    .breadcrumb{font-size:12px;color:var(--text2);margin-bottom:16px}
-    .breadcrumb a{color:var(--text2)}
-    .breadcrumb a:hover{color:var(--text)}
-    footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
-    footer a{color:var(--text2);margin:0 7px}footer a:hover{color:var(--text)}
-    @media(max-width:600px){.wrap{padding:16px}.card-image-col{position:static}}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
+    .card-hero{max-width:1100px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:300px 1fr;gap:40px;align-items:start}
+    @media(max-width:680px){.card-hero{grid-template-columns:1fr;padding:24px 16px}}
+    .card-img-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;aspect-ratio:2/3;display:flex;align-items:center;justify-content:center}
+    .card-img-wrap img{width:100%;height:100%;object-fit:contain;padding:12px}
+    .card-details h1{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:8px;line-height:1.1}
+    .price-tag{font-family:'Cinzel',serif;font-size:28px;font-weight:900;color:var(--accent);margin:16px 0}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+    .meta-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px}
+    .meta-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-bottom:4px}
+    .meta-value{font-size:14px;color:var(--text);font-weight:600}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+    .cta-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none}
+    .cta-primary{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:#E8C97A}
+    .cta-secondary{background:var(--bg2);border:1px solid var(--border);color:var(--text2)}
   </style>
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo" title="Cards on Cards on Cards"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
-    <div class="nav-search-wrap">
-      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" >
-      <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
-    </div>
-    <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
-      <a href="/cards/battlespiritssaga" class="nav-link" style="color:#FB923C;border-color:#FB923C80;background:#FB923C14">Battle Spirits</a>
-      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
-    </div>
+${NAV}
+<div class="card-hero">
+  <div class="card-img-wrap">
+    ${card.image_url ? `<img src="${card.image_url}" alt="${card.name}" loading="eager">` : `<div style="color:var(--text2);font-family:'Cinzel',serif;font-size:18px;padding:24px;text-align:center">${card.name}</div>`}
   </div>
-</nav>
-
-<div class="wrap">
-  <div class="breadcrumb">
-    <a href="/">Home</a> &rsaquo;
-    <a href="/cards">Card Vault</a> &rsaquo;
-    <a href="/cards/battlespiritssaga">Battle Spirits Saga</a> &rsaquo;
-    ${set ? `<a href="${setPageUrl}">${esc(set.name)}</a> &rsaquo;` : ''}
-    <span style="color:var(--text)">${esc(card.name)}</span>
-  </div>
-
-  <div class="card-layout">
-    <div class="card-image-col">
-      ${card.image_url
-        ? `<img src="${esc(card.image_url)}" alt="${esc(card.name)}" loading="eager">`
-        : `<div class="card-image-placeholder">&#127183;</div>`}
+  <div class="card-details">
+    <div style="font-size:12px;color:var(--text2);margin-bottom:8px">
+      <a href="/cards/battlespiritssaga" style="color:var(--text2);text-decoration:none">Battle Spirits Saga</a>
+      ${card.set_name ? ` → <a href="/cards/battlespiritssaga/sets/${encodeURIComponent(card.set_id||'')}" style="color:var(--text2);text-decoration:none">${card.set_name}</a>` : ''}
     </div>
-
-    <div class="card-info">
-      <h1>${esc(card.name)}</h1>
-      <p class="card-meta">
-        ${set ? `<a href="${setPageUrl}">${esc(set.name)}</a>` : esc(card.set_name||'')}
-        ${card.number ? ` &middot; #${esc(card.number)}` : ''}
-        ${card.card_type ? ` &middot; ${esc(card.card_type)}` : ''}
-      </p>
-
-      ${card.rarity ? `<div class="badges"><span class="badge badge-rarity badge-rarity-${esc(card.rarity.toLowerCase().replace(/\s+/g,''))}">${esc(card.rarity)}</span></div>` : ''}
-
-      <div class="price-block">
-        <div class="price-main">${priceDisplay}</div>
-        <div class="price-sub">Estimated AUD &middot; Based on TCGPlayer market price &middot; Updated daily</div>
-        <!-- AUD/USD toggle + expanded price breakdown -->
-        ${AUD_RATE ? `<div style="font-size:11px;color:#9ba3c4;font-family:sans-serif;margin-top:4px">Rate: 1 USD = AU$${AUD_RATE.toFixed(4)} (live)</div>` : ''}
-        ${card.market_price > 0 ? `
-        <div style="margin-top:12px;background:#111420;border:1px solid #242840;border-radius:10px;padding:14px;font-family:sans-serif">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#9ba3c4;margin-bottom:10px">Price Breakdown</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
-            <div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Market Price</div><div style="font-weight:700;color:var(--accent)">AU$${(card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price * (AUD_RATE||1.58)).toFixed(2)}</div><div style="color:#9ba3c4;font-size:10px">US$${parseFloat(card.market_price).toFixed(2)}</div></div>
-            ${card.low_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Low Price</div><div style="font-weight:700;color:#4ADE80">AU$${(card.low_price * (AUD_RATE||1.58)).toFixed(2)}</div><div style="color:#9ba3c4;font-size:10px">US$${parseFloat(card.low_price).toFixed(2)}</div></div>` : ''}
-            ${card.median_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Median</div><div style="font-weight:700;color:#e8eaf0">AU$${(card.median_price * (AUD_RATE||1.58)).toFixed(2)}</div></div>` : ''}
-            ${card.buylist_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Buylist (Sell)</div><div style="font-weight:700;color:#F472B6">US$${parseFloat(card.buylist_price).toFixed(2)}</div></div>` : ''}
-          </div>
-          ${card.price_change_7d ? `<div style="margin-top:8px;font-size:11px;color:${parseFloat(card.price_change_7d) >= 0 ? '#4ADE80' : '#F87171'};font-weight:600">${parseFloat(card.price_change_7d) >= 0 ? '▲' : '▼'} ${Math.abs(parseFloat(card.price_change_7d)).toFixed(1)}% this week</div>` : ''}
-          ${card.price_change_30d ? `<div style="font-size:11px;color:${parseFloat(card.price_change_30d) >= 0 ? '#4ADE80' : '#F87171'};font-weight:600">${parseFloat(card.price_change_30d) >= 0 ? '▲' : '▼'} ${Math.abs(parseFloat(card.price_change_30d)).toFixed(1)}% this month</div>` : ''}
-          ${card.total_listings > 0 ? `<div style="margin-top:6px;font-size:11px;color:#9ba3c4">${card.total_listings} listings on TCGPlayer</div>` : ''}
-        </div>` : ''}
-        <div class="cta-row">
-          <a href="${ebayCardUrl}" target="_blank" rel="noopener" class="btn btn-primary">&#128722; Buy on eBay AU &#8599;</a>
-          <a href="${amazonUrl}" target="_blank" rel="noopener" class="btn btn-ebay">Amazon AU &#8599;</a>
-          <a href="/compare?cards=battlespiritssaga:${esc(slug)}" class="btn btn-ghost">&#9878; Compare</a>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Where to Buy ${esc(card.name)} in Australia</div>
-        <p style="font-size:13px;color:var(--text2);line-height:1.6">${esc(card.name)} is a Battle Spirits Saga card from ${esc(card.set_name||'this set')}${card.rarity ? `, classified as ${esc(card.rarity)}` : ''}. The estimated price is ${priceDisplay} AUD, converted from US market data and updated daily. Buy directly on eBay AU for the best local pricing and fast shipping.</p>
-      </div>
+    <h1>${card.name}</h1>
+    ${card.rarity ? `<div style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#E8C97A;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;margin-bottom:8px;text-transform:uppercase">${card.rarity}</div>` : ''}
+    <div class="price-tag">${priceAud ? `~AU$${priceAud.toFixed(2)}` : 'Price not available'}</div>
+    <div class="meta-grid">
+      ${card.number ? `<div class="meta-item"><div class="meta-label">Card Number</div><div class="meta-value">${card.number}</div></div>` : ''}
+      ${card.set_name ? `<div class="meta-item"><div class="meta-label">Set</div><div class="meta-value">${card.set_name}</div></div>` : ''}
+      ${card.rarity ? `<div class="meta-item"><div class="meta-label">Rarity</div><div class="meta-value">${card.rarity}</div></div>` : ''}
+      <div class="meta-item"><div class="meta-label">Price (AUD)</div><div class="meta-value" style="color:var(--accent)">${priceAud ? `AU$${priceAud.toFixed(2)}` : 'N/A'}</div></div>
     </div>
-  </div>
-
-  ${attrsHTML}
-
-  
-  <!-- SEALED PRODUCTS CAROUSEL -->
-  ${sealedCards.length ? `<div style="margin-bottom:24px">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;padding:0 0 0 4px">Sealed Product</div>
-    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none">
-      ${sealedCards.map(p => {
-        const sp = p.price_aud > 0 ? parseFloat(p.price_aud) : p.market_price > 0 ? (p.market_price * (AUD_RATE||1.58)) : 0;
-        const sl = p.low_price > 0 ? (p.low_price * (AUD_RATE||1.58)) : 0;
-        return `<a href="/cards/battlespiritssaga/${p.slug}" style="flex-shrink:0;width:150px;background:#111420;border:1px solid #242840;border-radius:8px;padding:10px;text-decoration:none;display:block">
-          ${p.image_url ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" style="width:100%;max-height:100px;object-fit:contain;border-radius:4px;margin-bottom:6px" loading="lazy">` : ''}
-          <div style="font-size:11px;color:#e8eaf0;font-weight:600;line-height:1.3;margin-bottom:4px">${esc(p.name)}</div>
-          ${sp > 0 ? `<div style="font-size:13px;font-weight:900;color:var(--accent)">AU$${sp.toFixed(2)}</div>` : ''}
-          ${sl > 0 ? `<div style="font-size:10px;color:#9ba3c4">Low: AU$${sl.toFixed(2)}</div>` : ''}
-        </a>`;
-      }).join('')}
+    <div class="cta-row">
+      <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary">🛒 Buy on eBay AU →</a>
+      <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
     </div>
-  </div>` : ''}
-  ${relatedCards.length ? `<div class="section">
-    <div class="section-title">More Cards from ${esc(set?.name||card.set_name||'This Set')}</div>
-    <div class="related-grid">${relatedHTML}</div>
-    ${set ? `<div style="margin-top:14px;text-align:center"><a href="${setPageUrl}" style="font-size:13px;color:var(--accent);font-weight:600">View all cards in this set &#8594;</a></div>` : ''}
-  </div>` : ''}
-
-  <div style="background:rgba(var(--accent-rgb),.04);border:1px solid rgba(var(--accent-rgb),.15);border-radius:var(--radius);padding:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px">
-    <div>
-      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Track Your Battle Spirits Saga Collection</div>
-      <div style="font-size:13px;color:var(--text2)">Free Google Sheets tracker -- know what you own and what it is worth.</div>
+    <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. Updated daily. eBay links may earn affiliate commission.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px">
+      <span style="font-size:11px;color:rgba(160,168,192,.6);font-weight:700;letter-spacing:.1em;text-transform:uppercase">Share</span>
+      <button style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #3d4270;background:#2d3254;color:#e8eaf0;font-family:'DM Sans',sans-serif" data-action="copy-link">📋 Copy Link</button>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#ff450018;color:#ff4500;border:1px solid #ff450055" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener">Reddit</a>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#00000055;color:#e8eaf0;border:1px solid #444" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
+      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#25d36618;color:#25d366;border:1px solid #25d36655" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener">WhatsApp</a>
+      <button style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;background:#5865f218;color:#5865f2;border:1px solid #5865f255;font-family:'DM Sans',sans-serif" data-action="copy-discord">Discord</button>
     </div>
-    <a href="/tracker.html" class="btn btn-primary">Get Free Tracker &#8594;</a>
   </div>
 </div>
 
+${relatedHTML}
+${ebayHTML}
 
-  <!-- SOCIAL SHARE -->
-  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 20px;background:rgba(201,168,76,.04);border-top:1px solid rgba(201,168,76,.1);font-family:sans-serif">
-    <span style="font-size:11px;color:#9ba3c4;text-transform:uppercase;letter-spacing:.08em">Share</span>
-    ${shareBar}
-  </div>
-<footer>
-  <div style="margin-bottom:8px">
-    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/battlespiritssaga">Battle Spirits Saga</a>
-    ${set ? `<a href="${setPageUrl}">${esc(set.name)}</a>` : ''}
-    <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a>
-  </div>
-  <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made via affiliate links at no extra cost to you. Prices are estimates based on US market data converted to AUD at approximately 1.58.</p>
+<footer style="border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px">
+  <p><a href="/" style="color:var(--text2);margin:0 8px">Home</a><a href="/cards/battlespiritssaga" style="color:var(--text2);margin:0 8px">Battle Spirits Saga</a><a href="/blog" style="color:var(--text2);margin:0 8px">Blog</a><a href="/tracker.html" style="color:var(--text2);margin:0 8px">Tracker</a></p>
+  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
 </footer>
-<script>
-document.querySelectorAll('a[href*="ebay"]').forEach(a => a.addEventListener('click', () => {
-  if (typeof gtag !== 'undefined') gtag('event','ebay_card_click',{card_name:'${(card.name||'').replace(/'/g,"\\'")}',game:'battlespiritssaga'});
-}));
-</script>
 
+<div id="c3-compare-tray" style="position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1a1d2e;border-top:1px solid #2d3254;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)">
+  <div id="c3-tray-cards" style="display:flex;gap:8px;flex:1;align-items:center;overflow-x:auto"></div>
+  <span id="c3-tray-count" style="color:#9ba3c4;white-space:nowrap;font-size:12px"></span>
+  <button onclick="goToCompare()" style="background:#7c6af5;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap">⚖️ Compare Now</button>
+  <button onclick="saveCompareTray([]);renderCompareTray();" style="background:none;border:1px solid #2d3254;color:#9ba3c4;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;white-space:nowrap">Clear</button>
+</div>
+<script>
+const COMPARE_KEY='c3_compare_tray';
+function getCompareTray(){try{return JSON.parse(localStorage.getItem(COMPARE_KEY)||'[]');}catch{return[];}}
+function saveCompareTray(t){localStorage.setItem(COMPARE_KEY,JSON.stringify(t));}
+function renderCompareTray(){
+  const tray=getCompareTray();const el=document.getElementById('c3-compare-tray');const cardsEl=document.getElementById('c3-tray-cards');const countEl=document.getElementById('c3-tray-count');
+  if(!el||!cardsEl)return;
+  if(!tray.length){el.style.transform='translateY(100%)';return;}
+  el.style.transform='translateY(0)';countEl.textContent=tray.length+' of 5';
+  cardsEl.innerHTML=tray.map(c=>'<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">'+(c.img?'<img src="'+c.img+'" style="width:28px;border-radius:3px">':'')+'<span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+c.name+'</span><button onclick="removeFromCompare(\''+c.slug+'\')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px">×</button></div>').join('');
+}
+function addToCompare(slug,name,img,price,game){
+  let tray=getCompareTray();
+  if(tray.some(c=>c.slug===slug)){removeFromCompare(slug);return;}
+  if(tray.length>=5){alert('Maximum 5 cards. Remove one first.');return;}
+  tray.push({slug,name,img,price,game:'battlespiritssaga'});saveCompareTray(tray);renderCompareTray();
+}
+function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray();}
+function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>(c.game||'battlespiritssaga')+':'+c.slug).join(',');}
+renderCompareTray();
+document.addEventListener('click',function(e){
+  if(e.target.closest('[data-action="copy-discord"]')){
+    const btn=e.target.closest('[data-action="copy-discord"]');
+    navigator.clipboard.writeText(location.href).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>{btn.textContent='Discord';},1500);});
+  }
+  if(e.target.closest('[data-action="copy-link"]')){
+    const btn=e.target.closest('[data-action="copy-link"]');
+    navigator.clipboard.writeText(location.href).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>{btn.textContent='📋 Copy Link';},1500);});
+  }
+});
+</script>
 <!-- REPORT BUG WIDGET -->
-<style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-box h3{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px}.bug-box p{font-size:12px;color:#9ba3c4;margin-bottom:18px}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer;line-height:1;padding:4px}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none;transition:border-color .2s}.bug-form select:focus,.bug-form textarea:focus{border-color:rgba(201,168,76,.5)}.bug-form textarea{resize:vertical;min-height:80px;max-height:160px}.bug-form select option{background:#e8eaf0;color:#111420}.bug-form select{background:#e8eaf0;color:#111420}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}.bug-submit:hover{opacity:.85}.bug-submit:disabled{opacity:.5;cursor:not-allowed}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px;font-weight:600}</style>
+<style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none}.bug-form select option{background:#e8eaf0;color:#111420}.bug-form select{background:#e8eaf0;color:#111420}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px}</style>
 <div class="bug-float"><a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a></div>
 <div class="bug-modal" id="bugModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="bug-box">
     <button class="bug-close" onclick="document.getElementById('bugModal').classList.remove('open')">&#x2715;</button>
-    <h3>&#x1F41B; Report a Bug</h3><p>Spotted something wrong? Takes 20 seconds.</p>
+    <h3 style="font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px">&#x1F41B; Report a Bug</h3>
+    <p style="font-size:12px;color:#9ba3c4;margin-bottom:18px">Spotted something wrong? Takes 20 seconds.</p>
     <form class="bug-form" id="bugReportForm" name="bug-report" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="bug-report"><input class="bug-hidden" name="bot-field">
       <input type="hidden" name="page_url" id="bugPageUrl">
       <select name="issue_type" required><option value="" disabled selected>What type of issue?</option><option value="wrong_price">Wrong price</option><option value="missing_card">Missing card or set</option><option value="broken_link">Broken link</option><option value="other">Other</option></select>
-      <textarea name="description" placeholder="Describe the issue briefly (e.g. Charizard ex showing wrong price)" maxlength="200" required></textarea>
+      <textarea name="description" placeholder="Describe the issue briefly" maxlength="200" required></textarea>
       <div class="bug-thanks" id="bugThanks"><p>&#x2713; Thanks, we will look into it.</p></div>
       <button type="submit" class="bug-submit" id="bugSubmit">Submit Report</button>
     </form>
   </div>
 </div>
-<script>(function(){const urlInput=document.getElementById('bugPageUrl');if(urlInput)urlInput.value=window.location.href;const form=document.getElementById('bugReportForm');if(!form)return;form.addEventListener('submit',function(e){e.preventDefault();let btn=document.getElementById('bugSubmit');btn.disabled=true;btn.textContent='Sending...';const data=new FormData(form);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';form.querySelector('select').style.display='none';form.querySelector('textarea').style.display='none';btn.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){btn.disabled=false;btn.textContent='Submit Report';});});})();</script>
+<script>(function(){const u=document.getElementById('bugPageUrl');if(u)u.value=window.location.href;const f=document.getElementById('bugReportForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();const b=document.getElementById('bugSubmit');b.disabled=true;b.textContent='Sending...';const d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';f.querySelector('select').style.display='none';f.querySelector('textarea').style.display='none';b.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){b.disabled=false;b.textContent='Submit Report';});});})();</script>
 </body>
 </html>`;
 
-  return new Response(html, { status: 200, headers });
+    return new Response(html, { status: 200, headers });
+  } catch (err) {
+    console.error('[battlespiritssaga-card-page]', err.message);
+    return new Response(notFoundPage(slug), { status: 404, headers });
+  }
 };
 
 export const config = { path: '/cards/battlespiritssaga/:slug+' };
