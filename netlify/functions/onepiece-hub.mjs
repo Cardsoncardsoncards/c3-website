@@ -68,7 +68,7 @@ export default async (req) => {
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((c.name||'one piece card')+' one piece tcg')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<a href="/cards/onepiece/${esc(c.slug)}" class="carousel-card">
       <div class="carousel-img-wrap">
-        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#9763;</div>'">
+        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">
       </div>
       <div class="carousel-name">${esc(c.name)}</div>
       ${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}
@@ -297,7 +297,7 @@ ${carouselHTML ? `<section class="carousel-section fade-up fade-up-2">
   <div class="carousel-label">Most Valuable</div>
   <div class="carousel-title">Top One Piece Cards by Price (AUD)</div>
   <div class="carousel-track-wrap">
-    <div class="carousel-track">${carouselHTML}${carouselHTML}</div>
+    <div class="carousel-track">${carouselHTML}${carouselHTML.replace(/src="(https:[^"]+)"/g, 'src="$1?t=2"')}</div>
   </div>
   <p class="carousel-source">Prices sourced from TCGPlayer (USD), converted to AUD. Updated daily.</p>
 </section>` : ''}

@@ -93,7 +93,7 @@ export default async (req) => {
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((c.name||'pokemon card')+' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<a href="/cards/pokemon/${esc(c.slug)}" class="carousel-card">
       <div class="carousel-img-wrap">
-        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#128248;</div>'">
+        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="lazy" onerror="this.onerror=null;this.style.opacity=0.3">
       </div>
       <div class="carousel-name">${esc(c.name)}</div>
       ${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}
@@ -270,7 +270,6 @@ export default async (req) => {
     .guide-title{font-weight:700;margin-bottom:4px;color:var(--accent)}
     .guide-desc{font-size:13px;color:var(--text2)}
     @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes shimmer{0%,100%{opacity:1}50%{opacity:.45}}
     .fade-up{animation:fadeUp .5s ease both}.fade-up-1{animation-delay:.08s}.fade-up-2{animation-delay:.16s}.fade-up-3{animation-delay:.24s}
     footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
     footer a{color:var(--text2);margin:0 7px;text-decoration:none}footer a:hover{color:var(--text)}
@@ -520,7 +519,7 @@ function applyFilters(q) {
         var c = cards[i];
         var price = c.price_aud ? 'AU$' + parseFloat(c.price_aud).toFixed(0) : '';
         var ebay = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent((c.name||'pokemon card') + ' pokemon') + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + EPN + '&toolid=10001&mkevt=1';
-        var img = c.image_url ? '<img src="' + esc(c.image_url) + '" alt="' + esc(c.name) + '" loading="eager" onerror="this.parentElement.innerHTML=\'<div class=card-placeholder>&#128248;</div>\'">' : '<div class="card-placeholder">&#128248;</div>';
+        var img = c.image_url ? '<img src="' + esc(c.image_url) + '" alt="' + esc(c.name) + '" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">' : '<div class="card-placeholder">&#128248;</div>';
         html += '<a href="/cards/pokemon/' + esc(c.slug) + '" class="carousel-card"><div class="carousel-img-wrap">' + img + '</div><div class="carousel-name">' + esc(c.name) + '</div>' + (c.rarity ? '<div class="carousel-rarity">' + esc(c.rarity) + '</div>' : '') + '<div class="carousel-price">' + price + '</div><div class="carousel-buy-row"><a href="' + ebay + '" target="_blank" rel="noopener" class="carousel-buy-btn" onclick="event.stopPropagation()">Buy eBay &#8599;</a></div></a>';
       }
       track.innerHTML = html + html;

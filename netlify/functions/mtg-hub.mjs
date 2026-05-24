@@ -168,7 +168,7 @@ export default async (req) => {
   const carouselItems = topCardsData.map(c => {
     const price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * 1.58 : 0);
     const priceStr = price > 0 ? 'AU$' + price.toFixed(0) : '';
-    const img = c.image_uri_small ? `<img src="${esc(c.image_uri_small)}" alt="${esc(c.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#9775;</div>'">` : `<div class="card-placeholder">&#9775;</div>`;
+    const img = c.image_uri_small ? `<img src="${esc(c.image_uri_small)}" alt="${esc(c.name)}" loading="lazy" onerror="this.onerror=null;this.style.opacity=0.3">` : `<div class="card-placeholder">&#9775;</div>`;
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name+' mtg card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<a href="/cards/mtg/${esc(c.slug)}" class="carousel-card">
       <div class="carousel-img-wrap">${img}</div>
@@ -608,7 +608,7 @@ function applyFilters(letter, search) {
         var price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? (c.price_usd * 1.58) : 0);
         var priceStr = price > 0 ? 'AU$' + price.toFixed(0) : '';
         var ebay = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(c.name + ' mtg card') + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=' + EPN + '&toolid=10001&mkevt=1';
-        var img = c.image_uri_small ? '<img src="' + esc(c.image_uri_small) + '" alt="' + esc(c.name) + '" loading="eager" onerror="this.parentElement.innerHTML=\'<div class=card-placeholder>&#9775;</div>\'">' : '<div class="card-placeholder">&#9775;</div>';
+        var img = c.image_uri_small ? '<img src="' + esc(c.image_uri_small) + '" alt="' + esc(c.name) + '" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">' : '<div class="card-placeholder">&#9775;</div>';
         html += '<a href="/cards/mtg/' + esc(c.slug) + '" class="carousel-card"><div class="carousel-img-wrap">' + img + '</div><div class="carousel-name">' + esc(c.name) + '</div><div class="carousel-price">' + priceStr + '</div><div class="carousel-buy-row"><a href="' + ebay + '" target="_blank" rel="noopener" class="carousel-buy-btn" onclick="event.stopPropagation()">Buy eBay &#8599;</a></div></a>';
       }
       track.innerHTML = html + html;
