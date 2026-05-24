@@ -168,7 +168,7 @@ ${NAV}
     <div class="hero-eyebrow">Disney Lorcana · Set</div>
     <h1 class="hero-title">${set.name}</h1>
     <div class="hero-meta">
-      <span class="meta-badge">One Piece</span>
+      <span class="meta-badge">Disney Lorcana</span>
       ${set.release_date ? `<span>Released: ${set.release_date.slice(0,10)}</span>` : ''}
       ${set.card_count ? `<span>${set.card_count} cards</span>` : ''}
       ${pricedCards.length ? `<span>${pricedCards.length} priced in AUD</span>` : ''}
@@ -194,7 +194,7 @@ ${NAV}
   </div>
 </div>
 <footer style="border-top:1px solid #1e2235;padding:24px;text-align:center;color:#8892b0;font-size:12px;margin-top:20px">
-  <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/cards/lorcana" style="color:#8892b0;margin:0 8px">One Piece</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker.html" style="color:#8892b0;margin:0 8px">Tracker</a></p>
+  <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/cards/lorcana" style="color:#8892b0;margin:0 8px">Disney Lorcana</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker.html" style="color:#8892b0;margin:0 8px">Tracker</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
 </footer>
 </body></html>`;
@@ -339,7 +339,7 @@ ${NAV}
   </div>
   <div class="card-details">
     <div style="font-size:12px;color:var(--text2);margin-bottom:8px">
-      <a href="/cards/lorcana" style="color:var(--text2);text-decoration:none">One Piece</a>
+      <a href="/cards/lorcana" style="color:var(--text2);text-decoration:none">Disney Lorcana</a>
       ${card.set_name ? ` → <a href="/cards/lorcana/sets/${encodeURIComponent(card.set_id||'')}" style="color:var(--text2);text-decoration:none">${card.set_name}</a>` : ''}
     </div>
     <h1>${card.name}</h1>
@@ -371,7 +371,7 @@ ${relatedHTML}
 ${ebayHTML}
 
 <footer style="border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px">
-  <p><a href="/" style="color:var(--text2);margin:0 8px">Home</a><a href="/cards/lorcana" style="color:var(--text2);margin:0 8px">One Piece</a><a href="/blog" style="color:var(--text2);margin:0 8px">Blog</a><a href="/tracker.html" style="color:var(--text2);margin:0 8px">Tracker</a></p>
+  <p><a href="/" style="color:var(--text2);margin:0 8px">Home</a><a href="/cards/lorcana" style="color:var(--text2);margin:0 8px">Disney Lorcana</a><a href="/blog" style="color:var(--text2);margin:0 8px">Blog</a><a href="/tracker.html" style="color:var(--text2);margin:0 8px">Tracker</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
 </footer>
 
