@@ -70,27 +70,15 @@ function esc(str) {
 export default async (req) => {
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','starter deck'];
 
-  const sevenDaysAgo = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
-  const twoDaysAgo   = new Date(Date.now() - 2 * 864e5).toISOString().slice(0, 10);
-
-  // Fetch all data in parallel - single batch, no sequential calls
-  const [sets, topCards, snapNow, snapOld, latestSnap] = await Promise.allSettled([
+  // Fetch core data -- snapshot queries removed (moved to client-side to avoid timeout)
+  const [sets, topCards] = await Promise.allSettled([
     supabaseGet('mtg_sets?order=release_date.desc&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,set_type,release_date'),
     supabaseGet('mtg_cards?select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=24&price_usd=gte.10&image_uri_small=not.is.null'),
-    supabaseGet('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=500&snapshot_date=gte.' + twoDaysAgo),
-    supabaseGet('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=500&snapshot_date=gte.' + sevenDaysAgo + '&snapshot_date=lte.' + sevenDaysAgo),
-    supabaseGet('mtg_price_snapshots?select=snapshot_date&order=snapshot_date.desc&limit=1'),
   ]);
 
-  const setsData      = sets.status      === 'fulfilled' ? sets.value      : [];
-  const topCardsData  = topCards.status  === 'fulfilled' ? topCards.value  : [];
-  const snapNowData   = snapNow.status   === 'fulfilled' ? snapNow.value   : [];
-  const snapOldData   = snapOld.status   === 'fulfilled' ? snapOld.value   : [];
-  const latestSnapData= latestSnap.status=== 'fulfilled' ? latestSnap.value: [];
-
-  // Last sync date for trust signal
-  const lastSynced = latestSnapData.length ? latestSnapData[0].snapshot_date : null;
-  const syncLabel = lastSynced ? `Prices last updated: ${lastSynced}` : 'Prices updated daily';
+  const setsData     = sets.status     === 'fulfilled' ? sets.value     : [];
+  const topCardsData = topCards.status === 'fulfilled' ? topCards.value : [];
+  const syncLabel = 'Prices updated daily';
 
   // Filter to main set types only
   const filteredSets = setsData.filter(s => SHOW_TYPES.has(s.set_type));
@@ -135,56 +123,9 @@ export default async (req) => {
       + '</div>';
   }).join('');
 
-  // Price movers from top-500 snapshot data
-  const nowMap = {};
-  snapNowData.forEach(r => { if (r.price_aud) nowMap[r.scryfall_id] = parseFloat(r.price_aud); });
-  const oldMap = {};
-  snapOldData.forEach(r => { if (r.price_aud) oldMap[r.scryfall_id] = parseFloat(r.price_aud); });
-
-  const movers = [];
-  Object.entries(nowMap).forEach(([sid, nowPrice]) => {
-    const oldPrice = oldMap[sid];
-    if (!oldPrice || oldPrice < 5 || nowPrice < 5) return;
-    const pct = ((nowPrice - oldPrice) / oldPrice) * 100;
-    if (Math.abs(pct) > 5) movers.push({ sid, nowPrice, oldPrice, pct });
-  });
-  movers.sort((a, b) => Math.abs(b.pct) - Math.abs(a.pct));
-
-  const gainers = movers.filter(m => m.pct > 0).slice(0, 5);
-  const losers  = movers.filter(m => m.pct < 0).slice(0, 5);
-
-  // Fetch card details for movers
-  let moverDetails = {};
-  const moverSids = [...gainers, ...losers].map(m => m.sid);
-  if (moverSids.length > 0) {
-    const ctrl = new AbortController();
-    const tmr = setTimeout(() => ctrl.abort(), 6000);
-    try {
-      const moverUrl = SUPABASE_URL + '/rest/v1/mtg_cards?select=scryfall_id,name,slug,image_uri_small,set_name&limit=20&scryfall_id=in.(' + moverSids.map(s => '"' + s + '"').join(',') + ')';
-      const mRes = await fetch(moverUrl, { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }, signal: ctrl.signal });
-      clearTimeout(tmr);
-      if (mRes.ok) { const mData = await mRes.json(); if (Array.isArray(mData)) mData.forEach(c => { moverDetails[c.scryfall_id] = c; }); }
-    } catch { clearTimeout(tmr); }
-  }
-
-  function moverCardHTML(m, isGainer) {
-    const card = moverDetails[m.sid];
-    if (!card) return '';
-    const pctStr = (isGainer ? '+' : '') + m.pct.toFixed(1) + '%';
-    const pctColor = isGainer ? '#4ADE80' : '#f87171';
-    const imgEl = card.image_uri_small ? '<img src="' + card.image_uri_small + '" alt="' + card.name.replace(/"/g,'&quot;') + '" loading="lazy">' : '<div class="mover-no-img">?</div>';
-    return '<a href="/cards/mtg/' + card.slug + '" class="mover-card">'
-      + '<div class="mover-img">' + imgEl + '</div>'
-      + '<div class="mover-info">'
-      + '<div class="mover-name">' + card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
-      + '<div class="mover-set">' + (card.set_name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
-      + '<div class="mover-prices"><span style="font-size:11px;color:var(--text2)">AU$' + m.oldPrice.toFixed(0) + '</span><span style="font-size:13px;font-weight:700;color:var(--text)"> AU$' + m.nowPrice.toFixed(0) + '</span><span style="font-size:12px;font-weight:700;color:' + pctColor + '"> ' + pctStr + '</span></div>'
-      + '</div></a>';
-  }
-
-  const gainerHTML = gainers.map(m => moverCardHTML(m, true)).filter(Boolean).join('');
-  const loserHTML  = losers.map(m => moverCardHTML(m, false)).filter(Boolean).join('');
-  const hasMovers  = gainerHTML || loserHTML;
+  const gainerHTML = '';
+  const loserHTML  = '';
+  const hasMovers  = false;
 
   // Release ticker (doubled for seamless loop)
   function daysUntil(isoDate) { return Math.ceil((new Date(isoDate) - new Date()) / 864e5); }
@@ -462,21 +403,21 @@ export default async (req) => {
 
 <div class="wrap">
 
-  ${hasMovers ? `<!-- Weekly Market Pulse -->
-  <div style="margin-bottom:32px">
+  <!-- Weekly Market Pulse (client-side, loads after page) -->
+  <div id="mtg-pulse" style="margin-bottom:32px;display:none">
     <h2 style="font-size:20px;margin-bottom:4px">&#128200; Weekly Market Pulse</h2>
     <p style="color:var(--text2);font-size:13px;margin-bottom:16px">Biggest price movers among top-value MTG cards in the last 7 days. Based on highest-priced cards tracked.</p>
     <div class="movers-grid">
       <div class="movers-col">
         <div class="movers-col-title"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div>
-        ${gainerHTML || '<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>'}
+        <div id="mtg-gainers"></div>
       </div>
       <div class="movers-col">
         <div class="movers-col-title"><span style="color:#f87171">&#8595;</span> Biggest Losers</div>
-        ${loserHTML || '<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>'}
+        <div id="mtg-losers"></div>
       </div>
     </div>
-  </div>` : ''}
+  </div>
 
   <!-- Most Valuable MTG Cards Carousel -->
   <div style="margin-bottom:32px">
@@ -675,6 +616,67 @@ function filterSets(query) {
       .catch(function() { track.innerHTML = '<p style="color:#A0A8C0;font-size:12px;padding:12px">Could not load commanders.</p>'; });
   }
   loadCommanders();
+})();
+</script>
+
+
+<script>
+(function() {
+  var SURL = '${SUPABASE_URL}';
+  var SKEY = '${SUPABASE_ANON_KEY}';
+  var today = new Date();
+  var t2 = new Date(today - 2*864e5).toISOString().slice(0,10);
+  var t7 = new Date(today - 7*864e5).toISOString().slice(0,10);
+
+  function sq(path) {
+    return fetch(SURL + '/rest/v1/' + path, {
+      headers: { 'apikey': SKEY, 'Authorization': 'Bearer ' + SKEY }
+    }).then(function(r) { return r.ok ? r.json() : []; }).catch(function() { return []; });
+  }
+
+  Promise.all([
+    sq('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=300&snapshot_date=gte.' + t2),
+    sq('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=300&snapshot_date=gte.' + t7 + '&snapshot_date=lte.' + t7)
+  ]).then(function(results) {
+    var nowMap = {}, oldMap = {};
+    (results[0]||[]).forEach(function(r) { if (r.price_aud) nowMap[r.scryfall_id] = parseFloat(r.price_aud); });
+    (results[1]||[]).forEach(function(r) { if (r.price_aud) oldMap[r.scryfall_id] = parseFloat(r.price_aud); });
+    var movers = [];
+    Object.keys(nowMap).forEach(function(sid) {
+      var n = nowMap[sid], o = oldMap[sid];
+      if (!o || o < 5 || n < 5) return;
+      var pct = ((n - o) / o) * 100;
+      if (Math.abs(pct) > 5) movers.push({ sid: sid, n: n, o: o, pct: pct });
+    });
+    movers.sort(function(a,b) { return Math.abs(b.pct) - Math.abs(a.pct); });
+    var gainers = movers.filter(function(m) { return m.pct > 0; }).slice(0,5);
+    var losers  = movers.filter(function(m) { return m.pct < 0; }).slice(0,5);
+    if (!gainers.length && !losers.length) return;
+    var moverSids = gainers.concat(losers).map(function(m) { return '"' + m.sid + '"'; });
+    sq('mtg_cards?select=scryfall_id,name,slug,image_uri_small,set_name&limit=20&scryfall_id=in.(' + moverSids.join(',') + ')').then(function(cards) {
+      var cardMap = {};
+      (cards||[]).forEach(function(c) { cardMap[c.scryfall_id] = c; });
+      function moverHTML(m, up) {
+        var card = cardMap[m.sid]; if (!card) return '';
+        var col = up ? '#4ADE80' : '#f87171';
+        var pctStr = (up?'+':'') + m.pct.toFixed(1) + '%';
+        return '<a href="/cards/mtg/' + card.slug + '" class="mover-card">'
+          + '<div class="mover-img">' + (card.image_uri_small ? '<img src="' + card.image_uri_small + '" alt="" loading="lazy">' : '<div class="mover-no-img">?</div>') + '</div>'
+          + '<div class="mover-info"><div class="mover-name">' + card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
+          + '<div class="mover-set">' + (card.set_name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
+          + '<div class="mover-prices"><span style="font-size:11px;color:var(--text2)">AU$' + m.o.toFixed(0) + '</span>'
+          + '<span style="font-size:13px;font-weight:700;color:var(--text)"> AU$' + m.n.toFixed(0) + '</span>'
+          + '<span style="font-size:12px;font-weight:700;color:' + col + '"> ' + pctStr + '</span></div>'
+          + '</div></a>';
+      }
+      var gHTML = gainers.map(function(m){return moverHTML(m,true);}).filter(Boolean).join('');
+      var lHTML = losers.map(function(m){return moverHTML(m,false);}).filter(Boolean).join('');
+      if (!gHTML && !lHTML) return;
+      document.getElementById('mtg-gainers').innerHTML = gHTML || '<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>';
+      document.getElementById('mtg-losers').innerHTML  = lHTML || '<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>';
+      document.getElementById('mtg-pulse').style.display = '';
+    });
+  });
 })();
 </script>
 

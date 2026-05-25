@@ -248,14 +248,18 @@ export default async (req) => {
     'Cache-Control': 'public, max-age=1800, s-maxage=3600'
   };
 
-  const [setsResult, topCardsResult, countResult] = await Promise.allSettled([
+  const [setsResult, topCardsResult, countResult, gainersResult, losersResult] = await Promise.allSettled([
     supabaseGet('pokemon_sets?order=release_date.desc&limit=300&select=id,name,slug,release_date,card_count'),
     supabaseGet('pokemon_cards?order=price_aud.desc&price_aud=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
-    supabaseGet('pokemon_cards?select=id&limit=1&order=updated_at.desc')
+    supabaseGet('pokemon_cards?select=id&limit=1&order=updated_at.desc'),
+    supabaseGet('pokemon_cards?order=price_change_7d.desc&price_change_7d=gt.5&price_aud=gt.2&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,price_aud,price_change_7d,set_name'),
+    supabaseGet('pokemon_cards?order=price_change_7d.asc&price_change_7d=lt.-5&price_aud=gt.2&image_url=not.is.null&limit=5&select=slug,name,image_url,price_aud,price_change_7d,set_name')
   ]);
 
   const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
   const topCardsRaw = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
+  const gainers  = gainersResult.status  === 'fulfilled' ? gainersResult.value  : [];
+  const losers   = losersResult.status   === 'fulfilled' ? losersResult.value   : [];
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','sealed product',
     'starter deck','starter set','trial deck','trial set','deck set',
     'box set','collection box','premium set','gift set','booster display'];
@@ -280,18 +284,60 @@ export default async (req) => {
       ? `AU$${parseFloat(c.price_aud).toFixed(0)}`
       : c.market_price ? `~AU$${(c.market_price * 1.58).toFixed(0)}` : '';
     const ebaySearch = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name + ' pokemon card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-    return `<a href="/cards/pokemon/${c.slug}" class="carousel-card">
-      <div class="carousel-img-wrap">
-        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="lazy" onerror="this.style.opacity=0.3">
-      </div>
-      <div class="carousel-name">${esc(c.name)}</div>
-      ${c.rarity ? `<div class="carousel-rarity">${esc(c.rarity)}</div>` : ''}
-      <div class="carousel-price">${price}</div>
+    return `<div class="carousel-card">
+      <a href="/cards/pokemon/${c.slug}" style="display:block;text-decoration:none">
+        <div class="carousel-img-wrap">
+          <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">
+        </div>
+        <div class="carousel-name">${esc(c.name)}</div>
+        ${c.rarity ? `<div class="carousel-rarity">${esc(c.rarity)}</div>` : ''}
+        <div class="carousel-price">${price}</div>
+      </a>
       <div class="carousel-buy-row">
-        <a href="${ebaySearch}" target="_blank" rel="noopener" class="carousel-buy-btn" onclick="event.stopPropagation()">Buy eBay &#8599;</a>
+        <a href="${ebaySearch}" target="_blank" rel="noopener" class="carousel-buy-btn">Buy eBay &#8599;</a>
       </div>
-    </a>`;
+    </div>`;
   }).join('');
+
+  // Second copy for infinite loop -- unique image params to avoid browser dedup
+  const carouselHTML2 = topCards.map(c => {
+    const price = c.price_aud
+      ? `AU$${parseFloat(c.price_aud).toFixed(0)}`
+      : c.market_price ? `~AU$${(c.market_price * 1.58).toFixed(0)}` : '';
+    const ebaySearch = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name + ' pokemon card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    return `<div class="carousel-card">
+      <a href="/cards/pokemon/${c.slug}" style="display:block;text-decoration:none">
+        <div class="carousel-img-wrap">
+          <img src="${esc(c.image_url)}#c2" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">
+        </div>
+        <div class="carousel-name">${esc(c.name)}</div>
+        ${c.rarity ? `<div class="carousel-rarity">${esc(c.rarity)}</div>` : ''}
+        <div class="carousel-price">${price}</div>
+      </a>
+      <div class="carousel-buy-row">
+        <a href="${ebaySearch}" target="_blank" rel="noopener" class="carousel-buy-btn">Buy eBay &#8599;</a>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Market pulse
+  function moverCard(c, isGainer) {
+    const arrow = isGainer ? '&#8593;' : '&#8595;';
+    const col   = isGainer ? '#4ADE80' : '#f87171';
+    const pct   = Math.abs(parseFloat(c.price_change_7d||0)).toFixed(1);
+    const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : '';
+    return '<a href="/cards/pokemon/' + esc(c.slug) + '" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none;transition:border-color .2s">'
+      + (c.image_url ? '<img src="' + esc(c.image_url) + '" alt="" loading="lazy" style="width:40px;height:56px;object-fit:cover;border-radius:4px;flex-shrink:0">' : '<div style="width:40px;height:56px;background:var(--bg3);border-radius:4px;flex-shrink:0"></div>')
+      + '<div style="min-width:0;flex:1">'
+      + '<div style="font-size:11.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(c.name) + '</div>'
+      + '<div style="font-size:10px;color:var(--text2)">' + esc(c.set_name||'') + '</div>'
+      + '<div style="font-size:11px;color:var(--accent);font-weight:700">' + price + '</div>'
+      + '</div><div style="font-size:12px;font-weight:700;color:' + col + ';flex-shrink:0">' + arrow + pct + '%</div>'
+      + '</a>';
+  }
+  const gainerHTML = gainers.map(c => moverCard(c, true)).join('');
+  const loserHTML  = losers.map(c => moverCard(c, false)).join('');
+  const hasMovers  = gainers.length > 0 || losers.length > 0;
 
   // Set list -- links by s.id (pokemon-set-page resolves by id)
   const setListHTML = sets.length
@@ -374,13 +420,30 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
   <div class="carousel-label">Most Valuable</div>
   <div class="carousel-title">Top Pokemon Cards by Price (AUD)</div>
   <div class="carousel-track-wrap">
-    <div class="carousel-track">${carouselHTML}${carouselHTML}</div>
+    <div class="carousel-track">${carouselHTML}${carouselHTML2}</div>
   </div>
 </section>
   <p style="text-align:center;color:var(--text2);font-size:11px;margin-top:-12px;margin-bottom:16px">Prices sourced from TCGPlayer (USD), converted to AUD. Updated daily.</p>
 ` : ''}
 
 <div class="wrap">
+  ${hasMovers ? `<!-- Weekly Market Pulse -->
+  <div style="margin-bottom:28px">
+    <h2 style="font-size:20px;margin-bottom:4px">&#128200; Weekly Market Pulse</h2>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:16px">Biggest price movers across all Pokemon cards in the last 7 days.</p>
+    <p style="color:var(--text2);font-size:11px;margin-bottom:16px">Prices sourced from TCGPlayer (USD), converted to AUD.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div>
+        <div style="display:flex;flex-direction:column;gap:8px">${gainerHTML || '<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>'}</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px"><span style="color:#f87171">&#8595;</span> Biggest Losers</div>
+        <div style="display:flex;flex-direction:column;gap:8px">${loserHTML || '<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>'}</div>
+      </div>
+    </div>
+  </div>` : ''}
+
   <div class="section fade-up fade-up-3">
     <div class="section-header">
       <div class="section-title">Browse ${sets.length || '218'}+ Sets</div>
@@ -462,7 +525,7 @@ function filterSets(q) {
 }
 
 function showSetList() {
-  document.getElementById('set-list').style.display = '';
+  document.getElementById('set-list').style.display = 'grid';
   const p = document.getElementById('set-prompt');
   if (p) p.style.display = 'none';
 }
@@ -474,7 +537,7 @@ function applyFilters(q) {
     const nameMatch = !lower || el.dataset.name.includes(lower);
     const letterMatch = !activeAZ || el.dataset.letter === activeAZ;
     const eraMatch = !activeEra || el.dataset.era === activeEra;
-    el.style.display = (nameMatch && letterMatch) ? '' : 'none';
+    el.style.display = (nameMatch && letterMatch && eraMatch) ? '' : 'none';
   });
 }
 
