@@ -74,21 +74,19 @@ export default async (req) => {
   const twoDaysAgo   = new Date(Date.now() - 2 * 864e5).toISOString().slice(0, 10);
 
   // Fetch all data in parallel - single batch, no sequential calls
-  const [sets, topCards, snapNow, snapOld, latestSnap, randomCards] = await Promise.allSettled([
+  const [sets, topCards, snapNow, snapOld, latestSnap] = await Promise.allSettled([
     supabaseGet('mtg_sets?order=release_date.desc&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,set_type,release_date'),
-    supabaseGet(`mtg_cards?order=price_usd.desc&limit=24&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10&image_uri_small=not.is.null`),
-    supabaseGet(`mtg_price_snapshots?select=scryfall_id,price_aud&snapshot_date=gte.${twoDaysAgo}&order=price_aud.desc&limit=3000`),
-    supabaseGet(`mtg_price_snapshots?select=scryfall_id,price_aud&snapshot_date=gte.${sevenDaysAgo}&snapshot_date=lte.${sevenDaysAgo}&order=snapshot_date.asc&limit=3000`),
-    supabaseGet(`mtg_price_snapshots?select=snapshot_date&order=snapshot_date.desc&limit=1`),
-    supabaseGet(`mtg_cards?select=slug,name,image_uri_small&image_uri_small=not.is.null&limit=1&offset=${Math.floor(Math.random()*90000)}`)
+    supabaseGet('mtg_cards?select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=24&price_usd=gte.10&image_uri_small=not.is.null'),
+    supabaseGet('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=500&snapshot_date=gte.' + twoDaysAgo),
+    supabaseGet('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=500&snapshot_date=gte.' + sevenDaysAgo + '&snapshot_date=lte.' + sevenDaysAgo),
+    supabaseGet('mtg_price_snapshots?select=snapshot_date&order=snapshot_date.desc&limit=1'),
   ]);
 
-  const setsData      = sets.status === 'fulfilled'      ? sets.value      : [];
-  const topCardsData  = topCards.status === 'fulfilled'   ? topCards.value  : [];
-  const snapNowData   = snapNow.status === 'fulfilled'    ? snapNow.value   : [];
-  const snapOldData   = snapOld.status === 'fulfilled'    ? snapOld.value   : [];
-  const latestSnapData= latestSnap.status === 'fulfilled' ? latestSnap.value: [];
-  const randomCard    = randomCards.status === 'fulfilled' && randomCards.value.length ? randomCards.value[0] : null;
+  const setsData      = sets.status      === 'fulfilled' ? sets.value      : [];
+  const topCardsData  = topCards.status  === 'fulfilled' ? topCards.value  : [];
+  const snapNowData   = snapNow.status   === 'fulfilled' ? snapNow.value   : [];
+  const snapOldData   = snapOld.status   === 'fulfilled' ? snapOld.value   : [];
+  const latestSnapData= latestSnap.status=== 'fulfilled' ? latestSnap.value: [];
 
   // Last sync date for trust signal
   const lastSynced = latestSnapData.length ? latestSnapData[0].snapshot_date : null;
@@ -121,59 +119,23 @@ export default async (req) => {
     </a>`;
   }).join('');
 
-  // Top cards grid with 7-day sparkline arrows
-  // Single batched sparkline query for top card scryfall_ids
-  let sparkMap = {};
-  if (topCardsData.length > 0) {
-    const controller2 = new AbortController();
-    const timer2 = setTimeout(() => controller2.abort(), 6000);
-    try {
-      const slugList = topCardsData.map(c => '"' + c.slug.replace(/"/g,'') + '"').join(',');
-      const sparkUrl = new URL(`${SUPABASE_URL}/rest/v1/mtg_cards`);
-      sparkUrl.searchParams.set('select', 'slug,scryfall_id');
-      const sparkFetchUrl = sparkUrl.toString() + '&slug=in.(' + slugList + ')';
-      const sRes = await fetch(sparkFetchUrl, {
-        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
-        signal: controller2.signal
-      });
-      clearTimeout(timer2);
-      if (sRes.ok) {
-        const sData = await sRes.json();
-        if (Array.isArray(sData)) {
-          // Build slug->sid map then cross-ref snapshots
-          const slugToSid = {};
-          sData.forEach(r => { if (r.scryfall_id) slugToSid[r.slug] = r.scryfall_id; });
-          const nowMap2 = {};
-          snapNowData.forEach(r => { if (r.price_aud) nowMap2[r.scryfall_id] = parseFloat(r.price_aud); });
-          const oldMap2 = {};
-          snapOldData.forEach(r => { if (r.price_aud) oldMap2[r.scryfall_id] = parseFloat(r.price_aud); });
-          topCardsData.forEach(c => {
-            const sid = slugToSid[c.slug];
-            if (!sid) return;
-            const now = nowMap2[sid], old = oldMap2[sid];
-            if (now && old && old > 0) {
-              sparkMap[c.slug] = ((now - old) / old) * 100;
-            }
-          });
-        }
-      }
-    } catch { clearTimeout(timer2); }
-  }
-
   const topCardHTML = topCardsData.map(function(c) {
     const price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * 1.58 : 0);
     const priceStr = price > 0 ? 'AU$' + price.toFixed(0) : '';
     const safeName = c.name.replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    const ebaySearch = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(c.name + ' mtg card') + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1';
-    return '<a href="/cards/mtg/' + c.slug + '" class="top-card" style="flex-shrink:0;width:155px;display:block;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .25s">'
+    const ebayQ = encodeURIComponent(c.name + ' mtg card');
+    const ebayHref = 'https://www.ebay.com.au/sch/i.html?_nkw=' + ebayQ + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1';
+    return '<div class="top-card" style="flex-shrink:0;width:155px;display:inline-block;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:10px;text-align:center;transition:all .25s;vertical-align:top">'
+      + '<a href="/cards/mtg/' + c.slug + '" style="display:block;text-decoration:none">'
       + (c.image_uri_small ? '<div style="height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:7px;overflow:hidden"><img src="' + c.image_uri_small + '" alt="' + safeName + '" loading="eager" style="max-height:130px;max-width:100%;object-fit:contain;border-radius:4px"></div>' : '<div style="height:130px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:24px">&#127922;</div>')
       + '<div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + safeName + '</div>'
       + '<div style="font-size:12px;color:var(--accent);font-weight:bold;margin-bottom:5px">' + priceStr + '</div>'
-      + '<a href="' + ebaySearch + '" target="_blank" rel="noopener" style="display:inline-block;font-size:10px;background:rgba(201,168,76,.15);color:var(--accent);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:3px 8px;text-decoration:none" onclick="event.stopPropagation()">Buy eBay &#8599;</a>'
-      + '</a>';
+      + '</a>'
+      + '<a href="' + ebayHref + '" target="_blank" rel="noopener" style="display:inline-block;font-size:10px;background:rgba(201,168,76,.15);color:var(--accent);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:3px 8px;text-decoration:none">Buy eBay &#8599;</a>'
+      + '</div>';
   }).join('');
 
-  // Price movers
+  // Price movers from top-500 snapshot data
   const nowMap = {};
   snapNowData.forEach(r => { if (r.price_aud) nowMap[r.scryfall_id] = parseFloat(r.price_aud); });
   const oldMap = {};
@@ -182,7 +144,7 @@ export default async (req) => {
   const movers = [];
   Object.entries(nowMap).forEach(([sid, nowPrice]) => {
     const oldPrice = oldMap[sid];
-    if (!oldPrice || oldPrice < 2 || nowPrice < 2) return;
+    if (!oldPrice || oldPrice < 5 || nowPrice < 5) return;
     const pct = ((nowPrice - oldPrice) / oldPrice) * 100;
     if (Math.abs(pct) > 5) movers.push({ sid, nowPrice, oldPrice, pct });
   });
@@ -191,26 +153,18 @@ export default async (req) => {
   const gainers = movers.filter(m => m.pct > 0).slice(0, 5);
   const losers  = movers.filter(m => m.pct < 0).slice(0, 5);
 
+  // Fetch card details for movers
   let moverDetails = {};
   const moverSids = [...gainers, ...losers].map(m => m.sid);
   if (moverSids.length > 0) {
-    const url = new URL(`${SUPABASE_URL}/rest/v1/mtg_cards`);
-    url.searchParams.set('select', 'scryfall_id,name,slug,image_uri_small,set_name');
-    url.searchParams.set('limit', '20');
-    const moverFetchUrl = url.toString() + '&scryfall_id=in.(' + moverSids.map(s => '"' + s + '"').join(',') + ')';
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 6000);
+    const ctrl = new AbortController();
+    const tmr = setTimeout(() => ctrl.abort(), 6000);
     try {
-      const res = await fetch(moverFetchUrl, {
-        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
-        signal: controller.signal
-      });
-      clearTimeout(timer);
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data)) data.forEach(c => { moverDetails[c.scryfall_id] = c; });
-      }
-    } catch { clearTimeout(timer); }
+      const moverUrl = SUPABASE_URL + '/rest/v1/mtg_cards?select=scryfall_id,name,slug,image_uri_small,set_name&limit=20&scryfall_id=in.(' + moverSids.map(s => '"' + s + '"').join(',') + ')';
+      const mRes = await fetch(moverUrl, { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }, signal: ctrl.signal });
+      clearTimeout(tmr);
+      if (mRes.ok) { const mData = await mRes.json(); if (Array.isArray(mData)) mData.forEach(c => { moverDetails[c.scryfall_id] = c; }); }
+    } catch { clearTimeout(tmr); }
   }
 
   function moverCardHTML(m, isGainer) {
@@ -218,32 +172,22 @@ export default async (req) => {
     if (!card) return '';
     const pctStr = (isGainer ? '+' : '') + m.pct.toFixed(1) + '%';
     const pctColor = isGainer ? '#4ADE80' : '#f87171';
-    const imgEl = card.image_uri_small
-      ? `<img src="${card.image_uri_small}" alt="${card.name.replace(/"/g,'&quot;')}" loading="lazy">`
-      : `<div class="mover-no-img">?</div>`;
-    return `<a href="/cards/mtg/${card.slug}" class="mover-card">
-      <div class="mover-img">${imgEl}</div>
-      <div class="mover-info">
-        <div class="mover-name">${card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
-        <div class="mover-set">${(card.set_name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
-        <div class="mover-prices">
-          <span style="font-size:11px;color:var(--text2)">AU$${m.oldPrice.toFixed(0)}</span>
-          <span style="font-size:13px;font-weight:700;color:var(--text)">AU$${m.nowPrice.toFixed(0)}</span>
-          <span style="font-size:12px;font-weight:700;color:${pctColor}">${pctStr}</span>
-        </div>
-      </div>
-    </a>`;
+    const imgEl = card.image_uri_small ? '<img src="' + card.image_uri_small + '" alt="' + card.name.replace(/"/g,'&quot;') + '" loading="lazy">' : '<div class="mover-no-img">?</div>';
+    return '<a href="/cards/mtg/' + card.slug + '" class="mover-card">'
+      + '<div class="mover-img">' + imgEl + '</div>'
+      + '<div class="mover-info">'
+      + '<div class="mover-name">' + card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
+      + '<div class="mover-set">' + (card.set_name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
+      + '<div class="mover-prices"><span style="font-size:11px;color:var(--text2)">AU$' + m.oldPrice.toFixed(0) + '</span><span style="font-size:13px;font-weight:700;color:var(--text)"> AU$' + m.nowPrice.toFixed(0) + '</span><span style="font-size:12px;font-weight:700;color:' + pctColor + '"> ' + pctStr + '</span></div>'
+      + '</div></a>';
   }
 
   const gainerHTML = gainers.map(m => moverCardHTML(m, true)).filter(Boolean).join('');
   const loserHTML  = losers.map(m => moverCardHTML(m, false)).filter(Boolean).join('');
   const hasMovers  = gainerHTML || loserHTML;
 
-  // Release ticker with countdown badges
-  function daysUntil(isoDate) {
-    const diff = new Date(isoDate) - new Date();
-    return Math.ceil(diff / 864e5);
-  }
+  // Release ticker (doubled for seamless loop)
+  function daysUntil(isoDate) { return Math.ceil((new Date(isoDate) - new Date()) / 864e5); }
   const UPCOMING_DATES = [
     { name: 'Marvel Super Heroes', date: '2026-06-13', type: 'Set Release' },
     { name: 'The Hobbit', date: '2026-08-01', type: 'Set Release' },
@@ -252,7 +196,7 @@ export default async (req) => {
   ].filter(e => daysUntil(e.date) >= 0);
   const tickerItems = [...UPCOMING_DATES, ...UPCOMING_DATES].map(r => {
     const d = daysUntil(r.date);
-    const badge = d === 0 ? 'TODAY' : ('IN ' + d + ' DAYS');
+    const badge = d === 0 ? 'TODAY' : 'IN ' + d + ' DAYS';
     return '<span class="ticker-item"><span class="ticker-badge">' + badge + '</span><strong>' + r.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</strong> &middot; ' + r.type + '</span>';
   }).join('');
 
@@ -274,9 +218,7 @@ export default async (req) => {
   ).join('');
 
   // Random card button HTML
-  const randomCardHTML = randomCard
-    ? `<a href="/cards/mtg/${randomCard.slug}" class="quick-link" id="random-card-btn" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127922; Random Card</a>`
-    : `<button class="quick-link" id="random-card-btn" onclick="fetchRandomCard()" style="background:var(--bg2);border-color:var(--border);color:var(--text);cursor:pointer;font-family:inherit">&#127922; Random Card</button>`;
+  
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
@@ -343,7 +285,7 @@ export default async (req) => {
     .ticker-fade-l{position:absolute;left:0;top:0;bottom:0;width:60px;background:linear-gradient(to right,#0f1117,transparent);z-index:2;pointer-events:none}
     .ticker-fade-r{position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(to left,#0f1117,transparent);z-index:2;pointer-events:none}
     .ticker-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap;padding:0 16px 0 20px;flex-shrink:0;z-index:3}
-    .ticker-track{display:flex;animation:ticker-scroll 50s linear infinite;flex-shrink:0}
+    .ticker-track{display:flex;animation:ticker-scroll 36s linear infinite;flex-shrink:0}
     .ticker-track:hover{animation-play-state:paused}
     .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;font-size:12px;color:var(--text2);white-space:nowrap}
     .ticker-item strong{color:var(--text)}
@@ -484,8 +426,7 @@ export default async (req) => {
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
     <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop MTG on eBay &#8599;</a>
     <a href="/cards/mtg/random-commander" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127922; Random Commander</a>
-    ${randomCardHTML}
-    <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator</a>
+      <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator</a>
     <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Compare Cards</a>
     <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128276; Set Price Alerts</a>
     <a href="/quizzes/mtg-archetype" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127919; MTG Archetype Quiz &#8594;</a>
@@ -524,7 +465,7 @@ export default async (req) => {
   ${hasMovers ? `<!-- Weekly Market Pulse -->
   <div style="margin-bottom:32px">
     <h2 style="font-size:20px;margin-bottom:4px">&#128200; Weekly Market Pulse</h2>
-    <p style="color:var(--text2);font-size:13px;margin-bottom:16px">Biggest price movers across all MTG cards in the last 7 days.</p>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:16px">Biggest price movers among top-value MTG cards in the last 7 days. Based on highest-priced cards tracked.</p>
     <div class="movers-grid">
       <div class="movers-col">
         <div class="movers-col-title"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div>
@@ -699,22 +640,6 @@ function filterSets(query) {
     document.getElementById('set-prompt').textContent = 'No sets found for "' + query + '"';
     document.getElementById('set-list').style.display = 'none';
   }
-}
-
-function fetchRandomCard() {
-  let btn = document.getElementById('random-card-btn');
-  if (btn) btn.textContent = 'Loading...';
-  fetch('/api/card-search?q=a&limit=1&game=mtg')
-    .then(function(r) { return r.json(); })
-    .catch(function() { return []; })
-    .then(function(data) {
-      var cards = Array.isArray(data) ? data : [];
-      if (cards.length && cards[0].url) {
-        window.location = cards[0].url;
-      } else {
-        window.location = '/cards/mtg';
-      }
-    });
 }
 </script>
 
