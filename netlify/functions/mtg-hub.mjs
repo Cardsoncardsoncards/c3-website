@@ -320,6 +320,7 @@ export default async (req) => {
     /* MOBILE */
     @media(max-width:768px){
       .nav-search-wrap{max-width:200px}
+      .nav-search-btn{display:none}
       .nav-links{display:none}
       .wrap{padding:0 12px}
       .movers-grid{grid-template-columns:1fr}
@@ -664,7 +665,7 @@ function filterSets(query) {
       var n = nowMap[sid], o = oldMap[sid];
       if (!o || o < 5 || n < 5) return;
       var pct = ((n - o) / o) * 100;
-      if (Math.abs(pct) > 5) movers.push({ sid: sid, n: n, o: o, pct: pct });
+      if (Math.abs(pct) > 2) movers.push({ sid: sid, n: n, o: o, pct: pct });
     });
     movers.sort(function(a,b) { return Math.abs(b.pct) - Math.abs(a.pct); });
     var gainers = movers.filter(function(m) { return m.pct > 0; }).slice(0,5);

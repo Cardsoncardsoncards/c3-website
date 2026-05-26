@@ -209,6 +209,9 @@ function sharedCSS(accent, accentRgb) {
     footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
     footer a{color:var(--text2);margin:0 7px;text-decoration:none}footer a:hover{color:var(--text)}
     /* MOBILE */
+    @media(max-width:768px){
+      .nav-search-btn{display:none}
+    }
     @media(max-width:600px){
       .nav-links{gap:2px}.nav-link{font-size:10px;padding:4px 7px}
       .hero{padding:36px 16px 24px}
@@ -530,7 +533,7 @@ function filterEra(era, btn) {
 }
 
 function filterAZ(letter, btn) {
-  activeAZ = letter;
+  activeAZ = (letter === 'All') ? null : letter;
   document.querySelectorAll('.az-btn:not(.era-btn)').forEach(b => b.classList.remove('az-btn--active'));
   if (btn) btn.classList.add('az-btn--active');
   showSetList();
