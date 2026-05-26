@@ -505,8 +505,6 @@ function filterEra(era, btn) {
   activeEra = activeEra === era ? null : era;
   document.querySelectorAll('.era-btn').forEach(b => b.style.fontWeight = '600');
   if (btn && activeEra) btn.style.fontWeight = '900';
-  activeAZ = null;
-  document.querySelectorAll('.az-btn:not(.era-btn)').forEach(b => b.classList.remove('az-btn--active'));
   showSetList();
   applyFilters();
 }
