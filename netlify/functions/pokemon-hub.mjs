@@ -257,7 +257,20 @@ export default async (req) => {
   ]);
 
   const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
-  const topCardsRaw = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
+  let topCardsRaw = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
+
+  if (topCardsRaw.length === 0) {
+    try {
+      const fbCtrl = new AbortController();
+      const fbTimer = setTimeout(() => fbCtrl.abort(), 5000);
+      const fbRes = await fetch(SUPABASE_URL + '/rest/v1/pokemon_cards?select=slug,name,image_url,price_aud,market_price,rarity,set_name,updated_at&order=price_aud.desc&price_aud=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24', {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+        signal: fbCtrl.signal
+      });
+      clearTimeout(fbTimer);
+      if (fbRes.ok) { const fbData = await fbRes.json(); if (Array.isArray(fbData) && fbData.length) topCardsRaw.splice(0, 0, ...fbData); }
+    } catch {}
+  }
   const gainers  = gainersResult.status  === 'fulfilled' ? gainersResult.value  : [];
   const losers   = losersResult.status   === 'fulfilled' ? losersResult.value   : [];
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','sealed product',
