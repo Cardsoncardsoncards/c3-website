@@ -209,9 +209,6 @@ function sharedCSS(accent, accentRgb) {
     footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
     footer a{color:var(--text2);margin:0 7px;text-decoration:none}footer a:hover{color:var(--text)}
     /* MOBILE */
-    @media(max-width:768px){
-      .nav-search-btn{display:none}
-    }
     @media(max-width:600px){
       .nav-links{gap:2px}.nav-link{font-size:10px;padding:4px 7px}
       .hero{padding:36px 16px 24px}
@@ -260,25 +257,7 @@ export default async (req) => {
   ]);
 
   const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
-  let topCardsRaw = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
-
-  // Fallback: if the batched fetch returned no top cards, retry once directly (5s timeout)
-  if (topCardsRaw.length === 0) {
-    const fbController = new AbortController();
-    const fbTimer = setTimeout(() => fbController.abort(), 5000);
-    try {
-      const fbRes = await fetch(SUPABASE_URL + '/rest/v1/pokemon_cards?select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at&order=price_aud.desc&price_aud=gt.0&image_url=not.is.null&limit=24', {
-        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
-        signal: fbController.signal
-      });
-      clearTimeout(fbTimer);
-      if (fbRes.ok) {
-        const fbData = await fbRes.json();
-        if (Array.isArray(fbData) && fbData.length) topCardsRaw = fbData;
-      }
-    } catch { clearTimeout(fbTimer); }
-  }
-
+  const topCardsRaw = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
   const gainers  = gainersResult.status  === 'fulfilled' ? gainersResult.value  : [];
   const losers   = losersResult.status   === 'fulfilled' ? losersResult.value   : [];
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','sealed product',
@@ -533,7 +512,7 @@ function filterEra(era, btn) {
 }
 
 function filterAZ(letter, btn) {
-  activeAZ = (letter === 'All') ? null : letter;
+  activeAZ = letter;
   document.querySelectorAll('.az-btn:not(.era-btn)').forEach(b => b.classList.remove('az-btn--active'));
   if (btn) btn.classList.add('az-btn--active');
   showSetList();

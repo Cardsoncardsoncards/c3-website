@@ -77,25 +77,7 @@ export default async (req) => {
   ]);
 
   const setsData     = sets.status     === 'fulfilled' ? sets.value     : [];
-  let topCardsData = topCards.status === 'fulfilled' ? topCards.value : [];
-
-  // Fallback: if the batched fetch returned no top cards, retry once directly (5s timeout)
-  if (topCardsData.length === 0) {
-    const fbController = new AbortController();
-    const fbTimer = setTimeout(() => fbController.abort(), 5000);
-    try {
-      const fbRes = await fetch(SUPABASE_URL + '/rest/v1/mtg_cards?select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=24&price_usd=gte.10', {
-        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
-        signal: fbController.signal
-      });
-      clearTimeout(fbTimer);
-      if (fbRes.ok) {
-        const fbData = await fbRes.json();
-        if (Array.isArray(fbData) && fbData.length) topCardsData = fbData;
-      }
-    } catch { clearTimeout(fbTimer); }
-  }
-
+  const topCardsData = topCards.status === 'fulfilled' ? topCards.value : [];
   const syncLabel = 'Prices updated daily';
 
   // Filter to main set types only
@@ -320,7 +302,6 @@ export default async (req) => {
     /* MOBILE */
     @media(max-width:768px){
       .nav-search-wrap{max-width:200px}
-      .nav-search-btn{display:none}
       .nav-links{display:none}
       .wrap{padding:0 12px}
       .movers-grid{grid-template-columns:1fr}
@@ -665,7 +646,7 @@ function filterSets(query) {
       var n = nowMap[sid], o = oldMap[sid];
       if (!o || o < 5 || n < 5) return;
       var pct = ((n - o) / o) * 100;
-      if (Math.abs(pct) > 2) movers.push({ sid: sid, n: n, o: o, pct: pct });
+      if (Math.abs(pct) > 5) movers.push({ sid: sid, n: n, o: o, pct: pct });
     });
     movers.sort(function(a,b) { return Math.abs(b.pct) - Math.abs(a.pct); });
     var gainers = movers.filter(function(m) { return m.pct > 0; }).slice(0,5);
