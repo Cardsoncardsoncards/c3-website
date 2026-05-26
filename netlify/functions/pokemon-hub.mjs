@@ -512,7 +512,7 @@ function filterEra(era, btn) {
 }
 
 function filterAZ(letter, btn) {
-  activeAZ = letter;
+  activeAZ = (letter === 'All') ? null : letter;
   document.querySelectorAll('.az-btn:not(.era-btn)').forEach(b => b.classList.remove('az-btn--active'));
   if (btn) btn.classList.add('az-btn--active');
   showSetList();
