@@ -257,7 +257,25 @@ export default async (req) => {
   ]);
 
   const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
-  const topCardsRaw = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
+  let topCardsRaw = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
+
+  // Fallback: if the batched fetch returned no top cards, retry once directly (5s timeout)
+  if (topCardsRaw.length === 0) {
+    const fbController = new AbortController();
+    const fbTimer = setTimeout(() => fbController.abort(), 5000);
+    try {
+      const fbRes = await fetch(SUPABASE_URL + '/rest/v1/pokemon_cards?select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at&order=price_aud.desc&price_aud=gt.0&image_url=not.is.null&limit=24', {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+        signal: fbController.signal
+      });
+      clearTimeout(fbTimer);
+      if (fbRes.ok) {
+        const fbData = await fbRes.json();
+        if (Array.isArray(fbData) && fbData.length) topCardsRaw = fbData;
+      }
+    } catch { clearTimeout(fbTimer); }
+  }
+
   const gainers  = gainersResult.status  === 'fulfilled' ? gainersResult.value  : [];
   const losers   = losersResult.status   === 'fulfilled' ? losersResult.value   : [];
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','sealed product',

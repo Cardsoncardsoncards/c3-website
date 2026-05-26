@@ -77,7 +77,25 @@ export default async (req) => {
   ]);
 
   const setsData     = sets.status     === 'fulfilled' ? sets.value     : [];
-  const topCardsData = topCards.status === 'fulfilled' ? topCards.value : [];
+  let topCardsData = topCards.status === 'fulfilled' ? topCards.value : [];
+
+  // Fallback: if the batched fetch returned no top cards, retry once directly (5s timeout)
+  if (topCardsData.length === 0) {
+    const fbController = new AbortController();
+    const fbTimer = setTimeout(() => fbController.abort(), 5000);
+    try {
+      const fbRes = await fetch(SUPABASE_URL + '/rest/v1/mtg_cards?select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=24&price_usd=gte.10', {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY },
+        signal: fbController.signal
+      });
+      clearTimeout(fbTimer);
+      if (fbRes.ok) {
+        const fbData = await fbRes.json();
+        if (Array.isArray(fbData) && fbData.length) topCardsData = fbData;
+      }
+    } catch { clearTimeout(fbTimer); }
+  }
+
   const syncLabel = 'Prices updated daily';
 
   // Filter to main set types only
