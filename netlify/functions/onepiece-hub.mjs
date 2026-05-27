@@ -249,8 +249,8 @@ export default async (req) => {
   <div class="nav-inner">
     <a href="/" class="nav-logo" title="Cards on Cards on Cards"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
     <div class="nav-search-wrap">
-      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
-      <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
+      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){let v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
+      <button class="nav-search-btn" onclick="let v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
     </div>
     <div class="nav-links">
       <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
