@@ -177,9 +177,9 @@ export default async (req) => {
 
   const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
     supabaseGet('yugioh_sets?order=release_date.desc&limit=700&select=id,name,slug,release_date,card_count'),
-    supabaseGet('yugioh_cards?order=price_aud.desc&price_aud=gt.1&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
-    supabaseGet('yugioh_cards?order=price_change_7d.desc&price_change_7d=gt.3&price_aud=gt.1&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,price_aud,price_change_7d,set_name'),
-    supabaseGet('yugioh_cards?order=price_change_7d.asc&price_change_7d=lt.-3&price_aud=gt.1&image_url=not.is.null&limit=5&select=slug,name,image_url,price_aud,price_change_7d,set_name')
+    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
+    supabaseGet('yugioh_cards?order=price_change_7d.desc&price_change_7d=gt.3&market_price=gt.0&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name'),
+    supabaseGet('yugioh_cards?order=price_change_7d.asc&price_change_7d=lt.-3&market_price=gt.0&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name')
   ]);
 
   const sets    = setsRes.status    === 'fulfilled' ? setsRes.value    : [];
@@ -207,7 +207,7 @@ export default async (req) => {
     const col   = isGainer ? '#4ADE80' : '#f87171';
     const arrow = isGainer ? '&#8593;' : '&#8595;';
     const pct   = Math.abs(parseFloat(c.price_change_7d||0)).toFixed(1);
-    const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : '';
+    const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price*1.58).toFixed(0) : '';
     return `<a href="/cards/yugioh/${esc(c.slug)}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none">${c.image_url?`<img src="${esc(c.image_url)}" alt="" loading="lazy" style="width:40px;height:56px;object-fit:cover;border-radius:4px;flex-shrink:0">`:'<div style="width:40px;height:56px;background:var(--bg3);border-radius:4px;flex-shrink:0"></div>'}<div style="min-width:0;flex:1"><div style="font-size:11.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(c.name)}</div><div style="font-size:10px;color:var(--text2)">${esc(c.set_name||'')}</div><div style="font-size:11px;color:var(--accent);font-weight:700">${price}</div></div><div style="font-size:12px;font-weight:700;color:${col};flex-shrink:0">${arrow}${pct}%</div></a>`;
   }
   const gainerHTML = gainers.map(c => moverCard(c, true)).join('');
