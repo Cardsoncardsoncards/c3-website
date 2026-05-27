@@ -137,6 +137,8 @@ export default async (req) => {
       + '</div>';
   }).join('');
 
+  const topCardHTML2 = topCardHTML.replace(/src="([^"]+)"/g, 'src="$1#c2"');
+
   const gainerHTML = '';
   const loserHTML  = '';
   const hasMovers  = false;
@@ -438,7 +440,7 @@ export default async (req) => {
     <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:6px">Most Valuable</div>
     <h2 style="font-size:20px;margin-bottom:4px">Top MTG Cards by Price (AUD)</h2>
     <p style="color:var(--text2);font-size:12px;margin-bottom:12px">Prices sourced from Scryfall via TCGPlayer (USD), converted to AUD. Updated daily.</p>
-    <div class="top-carousel-wrap"><div class="top-carousel-track">${topCardHTML}${topCardHTML}</div></div>
+    <div class="top-carousel-wrap"><div class="top-carousel-track">${topCardHTML}${topCardHTML2}</div></div>
   </div>
 
   <!-- Best Sets to Open -->
@@ -641,6 +643,8 @@ function filterSets(query) {
   var today = new Date();
   var t2 = new Date(today - 2*864e5).toISOString().slice(0,10);
   var t7 = new Date(today - 7*864e5).toISOString().slice(0,10);
+  var t6 = new Date(today - 6*864e5).toISOString().slice(0,10);
+  var t8 = new Date(today - 8*864e5).toISOString().slice(0,10);
 
   function sq(path) {
     return fetch(SURL + '/rest/v1/' + path, {
@@ -650,7 +654,7 @@ function filterSets(query) {
 
   Promise.all([
     sq('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=300&snapshot_date=gte.' + t2),
-    sq('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=300&snapshot_date=gte.' + t7 + '&snapshot_date=lte.' + t7)
+    sq('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=300&snapshot_date=gte.' + t8 + '&snapshot_date=lte.' + t6)
   ]).then(function(results) {
     var nowMap = {}, oldMap = {};
     (results[0]||[]).forEach(function(r) { if (r.price_aud) nowMap[r.scryfall_id] = parseFloat(r.price_aud); });

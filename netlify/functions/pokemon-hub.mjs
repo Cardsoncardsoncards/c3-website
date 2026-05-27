@@ -411,6 +411,7 @@ ${tickerHTML}
   <a href="https://www.ebay.com.au/sch/i.html?_nkw=pokemon+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#b89800,${ACCENT});color:#000">&#128722; Shop Pokemon on eBay &#8599;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
   <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
+  <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#9781; Compare Cards</a>
   <a href="/blog/best-pokemon-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128230; Best Booster Boxes &#8594;</a>
   <a href="/blog/pokemon-tcg-beginners-guide-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128214; Beginners Guide &#8594;</a>
   <a href="/blog/are-pokemon-booster-boxes-investment-australia/" class="quick-link" style="background:rgba(${ACCENT_RGB},.08);border-color:rgba(${ACCENT_RGB},.3);color:var(--accent)">&#128200; Are Pokemon Cards an Investment? &#8594;</a>
