@@ -71,9 +71,11 @@ export default async (req) => {
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','starter deck'];
 
   // Fetch core data -- snapshot queries removed (moved to client-side to avoid timeout)
-  const [sets, topCards] = await Promise.allSettled([
+  const [sets, topCards, gainersResult, losersResult] = await Promise.allSettled([
     supabaseGet('mtg_sets?order=release_date.desc&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,set_type,release_date'),
     supabaseGet('mtg_cards?select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=24&price_usd=gte.10&image_uri_small=not.is.null'),
+    supabaseGet('mtg_cards?select=slug,name,image_uri_small,set_name,price_aud,price_change_7d&order=price_change_7d.desc&price_change_7d=gt.5&price_aud=gt.2&image_uri_small=not.is.null&limit=5'),
+    supabaseGet('mtg_cards?select=slug,name,image_uri_small,set_name,price_aud,price_change_7d&order=price_change_7d.asc&price_change_7d=lt.-5&price_aud=gt.2&image_uri_small=not.is.null&limit=5'),
   ]);
 
   const setsData     = sets.status     === 'fulfilled' ? sets.value     : [];
@@ -91,6 +93,26 @@ export default async (req) => {
       if (fb.ok) { const d = await fb.json(); if (Array.isArray(d) && d.length) topCardsData.splice(0, 0, ...d); }
     } catch {}
   }
+
+  const gainers = gainersResult.status === 'fulfilled' ? gainersResult.value : [];
+  const losers  = losersResult.status  === 'fulfilled' ? losersResult.value  : [];
+  function moverCard(c, isGainer) {
+    const arrow = isGainer ? '&#8593;' : '&#8595;';
+    const col   = isGainer ? '#4ADE80' : '#f87171';
+    const pct   = Math.abs(parseFloat(c.price_change_7d||0)).toFixed(1);
+    const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : '';
+    return '<a href="/cards/mtg/' + esc(c.slug) + '" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none;margin-bottom:8px">'
+      + (c.image_uri_small ? '<img src="' + c.image_uri_small.replace(/"/g,"") + '" alt="" loading="lazy" style="width:40px;height:56px;object-fit:cover;border-radius:4px;flex-shrink:0">' : '<div style="width:40px;height:56px;background:var(--bg3);border-radius:4px;flex-shrink:0"></div>')
+      + '<div style="min-width:0;flex:1">'
+      + '<div style="font-size:11.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(c.name) + '</div>'
+      + '<div style="font-size:10px;color:var(--text2)">' + esc(c.set_name||"") + '</div>'
+      + '<div style="font-size:11px;color:var(--accent);font-weight:700">' + price + '</div>'
+      + '</div><div style="font-size:12px;font-weight:700;color:' + col + ';flex-shrink:0">' + arrow + pct + '%</div>'
+      + '</a>';
+  }
+  const gainerHTML = gainers.map(c => moverCard(c, true)).join('');
+  const loserHTML  = losers.map(c => moverCard(c, false)).join('');
+  const hasMovers  = gainers.length > 0 || losers.length > 0;
 
   const syncLabel = 'Prices updated daily';
 
@@ -138,10 +160,6 @@ export default async (req) => {
   }).join('');
 
   const topCardHTML2 = topCardHTML.replace(/src="([^"]+)"/g, 'src="$1#c2"');
-
-  const gainerHTML = '';
-  const loserHTML  = '';
-  const hasMovers  = false;
 
   // Release ticker (doubled for seamless loop)
   function daysUntil(isoDate) { return Math.ceil((new Date(isoDate) - new Date()) / 864e5); }
@@ -419,21 +437,20 @@ export default async (req) => {
 
 <div class="wrap">
 
-  <!-- Weekly Market Pulse (client-side, loads after page) -->
-  <div id="mtg-pulse" style="margin-bottom:32px;display:none">
-    <h2 style="font-size:20px;margin-bottom:4px">&#128200; Weekly Market Pulse</h2>
-    <p style="color:var(--text2);font-size:13px;margin-bottom:16px">Biggest price movers among top-value MTG cards in the last 7 days. Based on highest-priced cards tracked.</p>
-    <div class="movers-grid">
-      <div class="movers-col">
-        <div class="movers-col-title"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div>
-        <div id="mtg-gainers"></div>
-      </div>
-      <div class="movers-col">
-        <div class="movers-col-title"><span style="color:#f87171">&#8595;</span> Biggest Losers</div>
-        <div id="mtg-losers"></div>
-      </div>
-    </div>
-  </div>
+  ${hasMovers ? '<div style="margin-bottom:32px">'
+    + '<h2 style="font-size:20px;margin-bottom:4px">&#128200; Weekly Market Pulse</h2>'
+    + '<p style="color:var(--text2);font-size:13px;margin-bottom:4px">Biggest price movers across all MTG cards in the last 7 days.</p>'
+    + '<p style="color:var(--text2);font-size:11px;margin-bottom:16px">Prices sourced from Scryfall via TCGPlayer (USD), converted to AUD.</p>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">'
+    + '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px">'
+    + '<div style="font-size:13px;font-weight:700;margin-bottom:12px"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div>'
+    + (gainerHTML || '<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>')
+    + '</div>'
+    + '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px">'
+    + '<div style="font-size:13px;font-weight:700;margin-bottom:12px"><span style="color:#f87171">&#8595;</span> Biggest Losers</div>'
+    + (loserHTML || '<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>')
+    + '</div></div></div>'
+    : ''}
 
   <!-- Most Valuable MTG Cards Carousel -->
   <div style="margin-bottom:32px">
@@ -635,68 +652,6 @@ function filterSets(query) {
 })();
 </script>
 
-
-<script>
-(function() {
-  var SURL = '${SUPABASE_URL}';
-  var SKEY = '${SUPABASE_ANON_KEY}';
-  var today = new Date();
-  var t2 = new Date(today - 2*864e5).toISOString().slice(0,10);
-  var t7 = new Date(today - 7*864e5).toISOString().slice(0,10);
-  var t6 = new Date(today - 6*864e5).toISOString().slice(0,10);
-  var t8 = new Date(today - 8*864e5).toISOString().slice(0,10);
-
-  function sq(path) {
-    return fetch(SURL + '/rest/v1/' + path, {
-      headers: { 'apikey': SKEY, 'Authorization': 'Bearer ' + SKEY }
-    }).then(function(r) { return r.ok ? r.json() : []; }).catch(function() { return []; });
-  }
-
-  Promise.all([
-    sq('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=300&snapshot_date=gte.' + t2),
-    sq('mtg_price_snapshots?select=scryfall_id,price_aud&order=price_aud.desc&limit=300&snapshot_date=gte.' + t8 + '&snapshot_date=lte.' + t6)
-  ]).then(function(results) {
-    var nowMap = {}, oldMap = {};
-    (results[0]||[]).forEach(function(r) { if (r.price_aud) nowMap[r.scryfall_id] = parseFloat(r.price_aud); });
-    (results[1]||[]).forEach(function(r) { if (r.price_aud) oldMap[r.scryfall_id] = parseFloat(r.price_aud); });
-    var movers = [];
-    Object.keys(nowMap).forEach(function(sid) {
-      var n = nowMap[sid], o = oldMap[sid];
-      if (!o || o < 5 || n < 5) return;
-      var pct = ((n - o) / o) * 100;
-      if (Math.abs(pct) > 5) movers.push({ sid: sid, n: n, o: o, pct: pct });
-    });
-    movers.sort(function(a,b) { return Math.abs(b.pct) - Math.abs(a.pct); });
-    var gainers = movers.filter(function(m) { return m.pct > 0; }).slice(0,5);
-    var losers  = movers.filter(function(m) { return m.pct < 0; }).slice(0,5);
-    if (!gainers.length && !losers.length) return;
-    var moverSids = gainers.concat(losers).map(function(m) { return '"' + m.sid + '"'; });
-    sq('mtg_cards?select=scryfall_id,name,slug,image_uri_small,set_name&limit=20&scryfall_id=in.(' + moverSids.join(',') + ')').then(function(cards) {
-      var cardMap = {};
-      (cards||[]).forEach(function(c) { cardMap[c.scryfall_id] = c; });
-      function moverHTML(m, up) {
-        var card = cardMap[m.sid]; if (!card) return '';
-        var col = up ? '#4ADE80' : '#f87171';
-        var pctStr = (up?'+':'') + m.pct.toFixed(1) + '%';
-        return '<a href="/cards/mtg/' + card.slug + '" class="mover-card">'
-          + '<div class="mover-img">' + (card.image_uri_small ? '<img src="' + card.image_uri_small + '" alt="" loading="lazy">' : '<div class="mover-no-img">?</div>') + '</div>'
-          + '<div class="mover-info"><div class="mover-name">' + card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
-          + '<div class="mover-set">' + (card.set_name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
-          + '<div class="mover-prices"><span style="font-size:11px;color:var(--text2)">AU$' + m.o.toFixed(0) + '</span>'
-          + '<span style="font-size:13px;font-weight:700;color:var(--text)"> AU$' + m.n.toFixed(0) + '</span>'
-          + '<span style="font-size:12px;font-weight:700;color:' + col + '"> ' + pctStr + '</span></div>'
-          + '</div></a>';
-      }
-      var gHTML = gainers.map(function(m){return moverHTML(m,true);}).filter(Boolean).join('');
-      var lHTML = losers.map(function(m){return moverHTML(m,false);}).filter(Boolean).join('');
-      if (!gHTML && !lHTML) return;
-      document.getElementById('mtg-gainers').innerHTML = gHTML || '<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>';
-      document.getElementById('mtg-losers').innerHTML  = lHTML || '<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>';
-      document.getElementById('mtg-pulse').style.display = '';
-    });
-  });
-})();
-</script>
 
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
