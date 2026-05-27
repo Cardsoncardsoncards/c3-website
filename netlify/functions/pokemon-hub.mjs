@@ -459,9 +459,9 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
   </div>` : ''}
 
   <div class="section fade-up fade-up-3">
-    <div class="section-header">
-      <div class="section-title">Browse ${sets.length || '218'}+ Sets</div>
-      <div class="section-hint">Click any set to view cards and prices</div>
+    <div style="text-align:center;margin-bottom:16px">
+      <h2 style="font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px">Browse Every Pokemon Set</h2>
+      <p style="font-size:13px;color:var(--text2)">${sets.length || '218'}+ sets across every era. Pick an era or letter below to explore.</p>
     </div>
     <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Sets are colour coded by era to help you find the right generation quickly. Click an era to filter.</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
