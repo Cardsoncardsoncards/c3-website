@@ -70,10 +70,14 @@ function esc(str) {
 export default async (req) => {
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','starter deck'];
 
-  // Fetch core data -- snapshot queries removed (moved to client-side to avoid timeout)
-  const [sets, topCards, gainersResult, losersResult] = await Promise.allSettled([
+  // Fetch core data -- sets and top cards first, market pulse separately to avoid timeout
+  const [sets, topCards] = await Promise.allSettled([
     supabaseGet('mtg_sets?order=release_date.desc&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,set_type,release_date'),
     supabaseGet('mtg_cards?select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=24&price_usd=gte.10&image_uri_small=not.is.null'),
+  ]);
+
+  // Market pulse fetched separately so it never blocks the carousel
+  const [gainersResult, losersResult] = await Promise.allSettled([
     supabaseGet('mtg_cards?select=slug,name,image_uri_small,set_name,price_aud,price_change_7d&order=price_change_7d.desc&price_change_7d=gt.5&price_aud=gt.2&image_uri_small=not.is.null&limit=5'),
     supabaseGet('mtg_cards?select=slug,name,image_uri_small,set_name,price_aud,price_change_7d&order=price_change_7d.asc&price_change_7d=lt.-5&price_aud=gt.2&image_uri_small=not.is.null&limit=5'),
   ]);
