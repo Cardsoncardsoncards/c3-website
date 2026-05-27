@@ -1,13 +1,33 @@
 // netlify/functions/sitemap-dragonball.mjs
-// Generates XML sitemap for One Piece card pages at /cards/dragonball/[slug]
+// Generates XML sitemap for dragonball card pages at /cards/dragonball/[slug]
 // Registered in sitemap-index.xml as /api/sitemap-dragonball
-// Returns valid empty sitemap until dragonball_cards table is created and synced
+// Fixed: AbortController on all fetches, correct price column (market_price)
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 const PRICE_THRESHOLD   = 1.0;
 const PAGE_SIZE         = 1000;
+
+async function supabaseFetch(url, extraHeaders = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        ...extraHeaders
+      }
+    });
+    clearTimeout(timer);
+    return res;
+  } catch (e) {
+    clearTimeout(timer);
+    throw e;
+  }
+}
 
 async function fetchSlugs(offset = 0) {
   const url = `${SUPABASE_URL}/rest/v1/dragonball_cards`
@@ -18,13 +38,7 @@ async function fetchSlugs(offset = 0) {
     + `&limit=${PAGE_SIZE}`
     + `&offset=${offset}`;
   try {
-    const res = await fetch(url, {
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Prefer': 'return=representation'
-      }
-    });
+    const res = await supabaseFetch(url, { 'Prefer': 'return=representation' });
     if (!res.ok) return [];
     const data = await res.json();
     return Array.isArray(data) ? data : [];
@@ -38,34 +52,25 @@ export default async (req) => {
     'X-Robots-Tag': 'noindex'
   };
 
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    return new Response(
-      '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Error: missing env vars --></urlset>',
-      { status: 200, headers }
-    );
-  }
+  const empty = (msg) => new Response(
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n<!-- ${msg} -->\n</urlset>`,
+    { status: 200, headers }
+  );
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return empty('Error: missing env vars');
 
   try {
-    const countRes = await fetch(
+    const countRes = await supabaseFetch(
       `${SUPABASE_URL}/rest/v1/dragonball_cards?select=id&market_price=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
-      {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'count=exact'
-        }
-      }
+      { 'Prefer': 'count=exact' }
     );
+    if (!countRes.ok) return empty('dragonball sitemap: count query failed');
+
     const contentRange = countRes.headers.get('content-range');
     const totalCount = (contentRange && contentRange.includes('/'))
       ? parseInt(contentRange.split('/')[1], 10) : 0;
 
-    if (totalCount === 0) {
-      return new Response(
-        `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n<!-- One Piece card pages: pending sync -->\n</urlset>`,
-        { status: 200, headers }
-      );
-    }
+    if (totalCount === 0) return empty('dragonball card pages: pending sync or no priced cards');
 
     const allCards = [];
     for (let offset = 0; offset < totalCount; offset += PAGE_SIZE) {
@@ -87,7 +92,7 @@ export default async (req) => {
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- One Piece card pages: ${allCards.length} cards with price >= USD$${PRICE_THRESHOLD} -->
+  <!-- dragonball card pages: ${allCards.length} cards with price >= USD$${PRICE_THRESHOLD} -->
   <!-- Generated: ${new Date().toISOString()} -->
 ${urls}
 </urlset>`;
