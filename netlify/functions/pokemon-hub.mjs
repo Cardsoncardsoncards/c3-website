@@ -552,33 +552,6 @@ function applyFilters(q) {
     el.style.display = (nameMatch && letterMatch && eraMatch) ? '' : 'none';
   });
 }
-
-async function searchCard() {
-  const q = document.getElementById('card-search').value.trim();
-  if (!q) return;
-  const results = document.getElementById('search-results');
-  results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">Searching...</div>';
-  try {
-    const res = await fetch('/api/compare-search?q=' + encodeURIComponent(q) + '&game=pokemon&limit=24');
-    if (!res.ok) throw new Error('Search failed');
-    const data = await res.json();
-    const cards = data.results || data.cards || (Array.isArray(data) ? data : []);
-    if (!cards.length) { results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">No cards found. Try a different name.</div>'; return; }
-    results.innerHTML = cards.map(c => {
-      const img = c.image_url || c.image_uri || '';
-      const price = c.price_aud ? 'AU$' + parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$' + (c.market_price * 1.58).toFixed(0) : '';
-      const safeName = (c.name || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-      return '<a href="/cards/pokemon/' + c.slug + '" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">'
-        + (img ? '<img src="' + img.replace(/"/g,'') + '" alt="' + safeName + '" style="width:100%;border-radius:6px;max-height:130px;object-fit:contain" loading="lazy">' : '')
-        + '<div style="font-size:11px;color:var(--text);margin-top:4px;line-height:1.3">' + safeName + '</div>'
-        + (c.rarity ? '<div style="font-size:10px;color:var(--text2)">' + (c.rarity||'').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>' : '')
-        + '<div style="font-size:12px;color:var(--accent);font-weight:700">' + price + '</div>'
-        + '</a>';
-    }).join('');
-  } catch (e) {
-    results.innerHTML = '<div style="color:#f88;font-size:13px">Search error. Please try again.</div>';
-  }
-}
 </script>
 
 <!-- REPORT BUG WIDGET -->
