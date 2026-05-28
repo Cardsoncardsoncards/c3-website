@@ -60,8 +60,8 @@ function buildTickerHTML(events) {
     const label = days === 0 ? 'TODAY' : days === 1 ? 'TOMORROW' : `IN ${days} DAYS`;
     return `<span class="ticker-item"><span class="ticker-badge">${label}</span><strong>${esc(e.name)}</strong> &middot; ${esc(e.type)}</span>`;
   });
-  const doubled = [...items, ...items].join('');
-  return `<div class="release-ticker"><span class="ticker-label">${EMOJI} ${GAME_LABEL}</span><div class="ticker-track">${doubled}</div></div>`;
+  const fill = [...items,...items,...items,...items,...items,...items].join('');
+  return `<div class="release-ticker"><span class="ticker-label">${EMOJI} ${GAME_LABEL}</span><div class="ticker-track">${fill}</div></div>`;
 }
 
 function isNew(d) {
@@ -177,7 +177,7 @@ export default async (req) => {
 
   const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
     supabaseGet('yugioh_sets?order=release_date.desc&limit=700&select=id,name,slug,release_date,card_count'),
-    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
+    supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
     supabaseGet('yugioh_cards?order=price_change_7d.desc&price_change_7d=gt.3&market_price=gt.0&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name'),
     supabaseGet('yugioh_cards?order=price_change_7d.asc&price_change_7d=lt.-3&market_price=gt.0&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name')
   ]);

@@ -57,8 +57,8 @@ function buildTickerHTML(events) {
     const label = days === 0 ? 'TODAY' : days === 1 ? 'TOMORROW' : `IN ${days} DAYS`;
     return `<span class="ticker-item"><span class="ticker-badge">${label}</span><strong>${esc(e.name)}</strong> &middot; ${esc(e.type)}</span>`;
   });
-  const doubled = [...items, ...items].join('');
-  return `<div class="release-ticker"><span class="ticker-label">${EMOJI} ${GAME_LABEL}</span><div class="ticker-track">${doubled}</div></div>`;
+  const fill = [...items,...items,...items,...items,...items,...items].join('');
+  return `<div class="release-ticker"><span class="ticker-label">${EMOJI} ${GAME_LABEL}</span><div class="ticker-track">${fill}</div></div>`;
 }
 
 function isNew(d) {
@@ -225,7 +225,7 @@ export default async (req) => {
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Dragon Ball Card Prices Australia | AUD Prices Updated Daily | C3</title>
-  <meta name="description" content="Browse ${sets.length||'60'}+ Dragon Ball Super TCG sets. Live AUD card prices, eBay AU buy links. Australia's most complete Dragon Ball price guide, updated daily.">
+  <meta name="description" content="Browse ${sets.length||'60'}+ Dragon Ball Super TCG sets. Live AUD card prices, eBay AU buy links. Australia's most complete Lorcana price guide, updated daily.">
   <link rel="canonical" href="${CANONICAL}">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="Dragon Ball Card Prices Australia | Cards on Cards on Cards">
@@ -280,7 +280,7 @@ ${tickerHTML}
 
 ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
   <div class="carousel-label">Most Valuable</div>
-  <div class="carousel-title">Top Dragon Ball Cards by Price (AUD)</div>
+  <div class="carousel-title">Top Lorcana Cards by Price (AUD)</div>
   <div class="carousel-track-wrap"><div class="carousel-track">${carouselHTML}${carouselHTML2}</div></div>
 </section>
 <p style="text-align:center;color:var(--text2);font-size:11px;margin-top:-12px;margin-bottom:16px">Prices sourced from TCGPlayer (USD), converted to AUD. Updated daily.</p>` : ''}
@@ -318,7 +318,7 @@ ${hasMovers ? `<div style="margin-bottom:28px">
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
       <a href="/blog/best-dragon-ball-super-booster-boxes-australia/" class="guide-card"><div class="guide-title">Best Dragon Ball Super Booster Boxes in Australia</div><div class="guide-desc">Which Dragon Ball Super boxes are worth opening and where to buy in Australia.</div></a>
       <a href="/blog/is-dragon-ball-super-worth-it-australia/" class="guide-card"><div class="guide-title">Is Dragon Ball Super Worth It?</div><div class="guide-desc">An honest look at Dragon Ball Super collecting from an Australian perspective.</div></a>
-      <a href="/ev-calculator.html" class="guide-card"><div class="guide-title">Booster Box EV Calculator</div><div class="guide-desc">Is your Dragon Ball box worth opening? Calculate expected value before you crack it.</div></a>
+      <a href="/ev-calculator.html" class="guide-card"><div class="guide-title">Booster Box EV Calculator</div><div class="guide-desc">Is your Lorcana box worth opening? Calculate expected value before you crack it.</div></a>
       <a href="/quizzes/which-tcg-extended" class="guide-card"><div class="guide-title">&#127919; Which TCG Should I Play?</div><div class="guide-desc">Not sure which TCG is right for you? Take the quiz in 2 minutes.</div></a>
     </div>
   </div>

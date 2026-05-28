@@ -60,8 +60,8 @@ function buildTickerHTML(events) {
     const label = days === 0 ? 'TODAY' : days === 1 ? 'TOMORROW' : `IN ${days} DAYS`;
     return `<span class="ticker-item"><span class="ticker-badge">${label}</span><strong>${esc(e.name)}</strong> &middot; ${esc(e.type)}</span>`;
   });
-  const doubled = [...items, ...items].join('');
-  return `<div class="release-ticker"><span class="ticker-label">${EMOJI} ${GAME_LABEL}</span><div class="ticker-track">${doubled}</div></div>`;
+  const fill = [...items,...items,...items,...items,...items,...items].join('');
+  return `<div class="release-ticker"><span class="ticker-label">${EMOJI} ${GAME_LABEL}</span><div class="ticker-track">${fill}</div></div>`;
 }
 
 function isNew(d) {
