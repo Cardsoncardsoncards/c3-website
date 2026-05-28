@@ -8,6 +8,7 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 const PRICE_THRESHOLD   = 1.0;
 const PAGE_SIZE         = 1000;
+const MAX_CARDS         = 10000;
 
 async function supabaseFetch(url, extraHeaders = {}) {
   const controller = new AbortController();
@@ -73,7 +74,7 @@ export default async (req) => {
     if (totalCount === 0) return empty('onepiece card pages: pending sync or no priced cards');
 
     const allCards = [];
-    for (let offset = 0; offset < totalCount; offset += PAGE_SIZE) {
+    for (let offset = 0; offset < Math.min(totalCount, MAX_CARDS); offset += PAGE_SIZE) {
       const batch = await fetchSlugs(offset);
       allCards.push(...batch);
       if (batch.length < PAGE_SIZE) break;
