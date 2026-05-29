@@ -198,7 +198,7 @@ export default async (req) => {
   function carouselCard(c, suffix) {
     const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.58).toFixed(0)}` : '';
     const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name+' yugioh card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-    return `<div class="carousel-card"><a href="/cards/yugioh/${esc(c.slug)}" style="display:block;text-decoration:none"><div class="carousel-img-wrap"><img src="${esc(c.image_url)}${suffix}" alt="${esc(c.name).replace(/"/g,'&quot;')}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3"></div><div class="carousel-name">${esc(c.name)}</div>${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}<div class="carousel-price">${price}</div></a><div class="carousel-buy-row"><a href="${ebay}" target="_blank" rel="noopener" class="carousel-buy-btn">Buy eBay &#8599;</a></div></div>`;
+    return `<div class="carousel-card"><a href="/cards/yugioh/${esc(c.slug)}" style="display:block;text-decoration:none"><div class="carousel-img-wrap"><img src="${esc(c.image_url)}${suffix}" alt="${esc(c.name).replace(/"/g,'&quot;')}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3"></div><div class="carousel-name">${esc(c.name)}</div>${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}<div class="carousel-price">${price}</div></a><div class="carousel-buy-row"><a href="${ebay}" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'yugioh-hub'})" class="carousel-buy-btn">Buy eBay &#8599;</a></div></div>`;
   }
   const carouselHTML  = topCards.map(c => carouselCard(c, '')).join('');
   const carouselHTML2 = topCards.map(c => carouselCard(c, '#c2')).join('');
@@ -252,7 +252,7 @@ export default async (req) => {
     <a href="/tools" class="nav-link" style="color:#22D3EE;border-color:rgba(34,211,238,.3)">Tools</a>
     <a href="/play" class="nav-link" style="color:#F472B6;border-color:rgba(244,114,182,.3)">Play</a>
     <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'yugioh-hub'})" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
   </div>
 </div></nav>
 
@@ -272,7 +272,7 @@ ${tickerHTML}
 </div>
 
 <div class="quick-links fade-up fade-up-1">
-  <a href="https://www.ebay.com.au/sch/i.html?_nkw=yugioh+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#4c1d95,${ACCENT});color:#fff">&#128722; Shop Yu-Gi-Oh on eBay &#8599;</a>
+  <a href="https://www.ebay.com.au/sch/i.html?_nkw=yugioh+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'yugioh-hub'})" class="quick-link" style="background:linear-gradient(135deg,#4c1d95,${ACCENT});color:#fff">&#128722; Shop Yu-Gi-Oh on eBay &#8599;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
   <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
   <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#9781; Compare Cards</a>

@@ -1,6 +1,6 @@
 # PROJECT.md -- C3 Build Plan
 # Cards on Cards on Cards (cardsoncardsoncards.com.au)
-# Last updated: 21 May 2026
+# Last updated: 29 May 2026
 #
 # HOW TO USE THIS FILE:
 # - Read this file at session start to identify the next incomplete item
@@ -9,6 +9,36 @@
 # - Commit this file as part of every session push so progress is tracked
 # - Update "Last updated" date when marking items complete
 # - If unsure whether something is done, check the repo -- do not assume
+
+---
+
+## CHANGELOG
+
+## Push: 29 May 2026
+- Homepage: meta title updated to "Australia's TCG Intelligence Platform"
+- Homepage: meta description rewritten with AU keyword targeting
+- Homepage: hero headline changed to "Make smarter TCG decisions"
+- Homepage: accent bar added below hero headline
+- Homepage: hero subheading rewritten with intelligence and AU positioning
+- Homepage: hero search bar added (connects to /cards search)
+- Homepage: eBay store CTA and collection tracker CTA added to hero fold (replaces old Card Vault + EV Calculator CTAs)
+- Homepage: social proof line added (25,000+ singles, same-day dispatch Sydney)
+- Homepage: stats block updated (350,000+ cards, 31 TCGs, daily AU prices) -- went from 4 items to 3
+- Homepage: Our Approach affiliate apology deleted, replaced with mission statement + Amazon Associates + EPN disclosure
+- Homepage: section labels added (LATEST PRICES above carousel, START HERE above destination grid). FROM THE BLOG skipped -- no blog section on homepage
+- Homepage: nav Card Vault renamed to Card Prices
+- Homepage: commander carousel given 100vw breakout, hover lift CSS, keyboard-accessible pause button
+- Homepage: mobile carousel edge fade fixed to 20px
+- Homepage: email capture section added, connected to MailerLite group 182892277158381312
+- Homepage: footer mission line added as first child of footer
+- Homepage: GA4 eBay click tracking added to nav and footer eBay links (hero CTA already wired)
+- All 8 hubs (pokemon, lorcana, yugioh, onepiece, dragonball, starwars, riftbound, mtg): GA4 eBay click tracking added to all eBay links (nav, carousel buy, quick-link)
+- All 8 hubs: Shop eBay button confirmed above the set browser grid (already in correct position)
+- Homepage tool descriptions (1l): skipped -- homepage has a single Tools destination card, not 4 individual tool cards
+- Tools page: headline updated to "TCG Intelligence Tools" with inline styling
+- Tools page: eyebrow removed, hero paragraph rewritten ("Data-driven tools built for the Australian TCG market...")
+- Tools page: all 4 tool card descriptions rewritten to short one-liners
+- New: netlify/functions/email-subscribe.mjs (MailerLite API subscriber function, 8s AbortController per CLAUDE.md, path /api/email-subscribe)
 
 ---
 

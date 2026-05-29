@@ -235,7 +235,7 @@ function navHTML(epnCampid, activeGame) {
       <a href="/tools" class="nav-link nav-link--tools">Tools</a>
       <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'pokemon-hub'})" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>`;
@@ -307,7 +307,7 @@ export default async (req) => {
         <div class="carousel-price">${price}</div>
       </a>
       <div class="carousel-buy-row">
-        <a href="${ebaySearch}" target="_blank" rel="noopener" class="carousel-buy-btn">Buy eBay &#8599;</a>
+        <a href="${ebaySearch}" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'pokemon-hub'})" class="carousel-buy-btn">Buy eBay &#8599;</a>
       </div>
     </div>`;
   }).join('');
@@ -328,7 +328,7 @@ export default async (req) => {
         <div class="carousel-price">${price}</div>
       </a>
       <div class="carousel-buy-row">
-        <a href="${ebaySearch}" target="_blank" rel="noopener" class="carousel-buy-btn">Buy eBay &#8599;</a>
+        <a href="${ebaySearch}" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'pokemon-hub'})" class="carousel-buy-btn">Buy eBay &#8599;</a>
       </div>
     </div>`;
   }).join('');
@@ -408,7 +408,7 @@ ${tickerHTML}
 </div>
 
 <div class="quick-links fade-up fade-up-1">
-  <a href="https://www.ebay.com.au/sch/i.html?_nkw=pokemon+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#b89800,${ACCENT});color:#000">&#128722; Shop Pokemon on eBay &#8599;</a>
+  <a href="https://www.ebay.com.au/sch/i.html?_nkw=pokemon+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'pokemon-hub'})" class="quick-link" style="background:linear-gradient(135deg,#b89800,${ACCENT});color:#000">&#128722; Shop Pokemon on eBay &#8599;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
   <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
   <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#9781; Compare Cards</a>

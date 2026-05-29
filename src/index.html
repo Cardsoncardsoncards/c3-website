@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cards on Cards on Cards | Australian TCG Price Guide and Card Vault</title>
-<meta name="description" content="Australia's TCG price guide. 200,000+ cards across MTG, Pokemon, Lorcana, Yu-Gi-Oh and more with live AUD pricing and eBay AU buy links, updated daily.">
-<meta property="og:title" content="Cards on Cards on Cards | Australian TCG Hub">
+<title>Australia's TCG Intelligence Platform | Cards on Cards on Cards</title>
+<meta name="description" content="Check TCG card prices in AUD. MTG, Pokemon, Lorcana, Yu-Gi-Oh and 27 more games. Updated daily. Free for Australian players.">
+<meta property="og:title" content="Australia's TCG Intelligence Platform | Cards on Cards on Cards">
 <meta property="og:url" content="https://cardsoncardsoncards.com.au">
 <meta property="og:type" content="website">
 <meta property="og:description" content="Australia's TCG price guide. 200,000+ cards across MTG, Pokemon, Lorcana, Yu-Gi-Oh and more with live AUD pricing and eBay AU buy links.">
@@ -314,6 +314,8 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .nav-link--generators{color:#22D3EE;border-color:rgba(34,211,238,.35)}.nav-link--generators:hover{background:rgba(34,211,238,.06);border-color:#22D3EE}
 .nav-link--quiz{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--quiz:hover{background:rgba(244,114,182,.06);border-color:#F472B6;color:#F9A8D4}
 .nav-link--dnd{color:#A78BFA;border-color:rgba(139,92,246,.35)}.nav-link--dnd:hover{background:rgba(139,92,246,.06);border-color:#A78BFA}
+.carousel-card:hover,[class*="card-item"]:hover{transform:translateY(-4px);transition:transform 0.2s ease}
+@media(max-width:600px){[class*="carousel"]:before,[class*="carousel"]:after{width:20px!important}[class*="track"]{gap:8px!important}}
 </style>
 </head>
 <body>
@@ -325,13 +327,13 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     </a>
     <div style="flex:1;min-width:0;max-width:400px;display:flex;margin:0 8px"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="flex:1;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
     <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
       <a href="/market" class="nav-link nav-link--market">Market</a>
       <a href="/tools" class="nav-link nav-link--tools">Tools</a>
       <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'homepage'})" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>
@@ -370,19 +372,26 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 
   <div class="hero" style="padding:56px 0 36px;text-align:center">
     <p class="hero-eyebrow">Cards on Cards on Cards</p>
-    <h1 class="hero-h1" style="font-size:clamp(28px,5vw,60px)">The Australian<br><span style="color:var(--gold)">TCG Card Vault</span></h1>
-    <p class="hero-sub">250,000+ cards across 27 TCGs including MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Dragon Ball and more. Live AUD pricing, eBay AU buy links, updated daily.</p>
-    <div class="hero-cta-row">
-      <a href="/cards" class="btn btn-gold">Open the Card Vault &#8594;</a>
-      <a href="/ev-calculator.html" class="btn btn-ghost">EV Calculator</a>
+    <h1 class="hero-h1" style="font-size:clamp(28px,5vw,60px)">Make smarter TCG decisions</h1>
+    <div style="width:48px;height:3px;background:linear-gradient(90deg,#C8A332,rgba(200,163,50,0.3));border-radius:2px;margin:12px auto 16px"></div>
+    <p class="hero-sub">Live AU pricing, market signals, EV analysis, and card intelligence across 350,000+ cards. Built for Australian collectors, players, and sellers.</p>
+    <div style="margin:24px auto 0;max-width:520px">
+      <form action="/cards" method="get" style="display:flex;gap:0;border-radius:10px;overflow:hidden;border:1.5px solid rgba(200,163,50,0.4);background:rgba(255,255,255,0.04)">
+        <input type="text" name="q" placeholder="Search 350,000+ cards in AUD..." autocomplete="off" style="flex:1;background:transparent;border:none;padding:14px 18px;font-size:14px;color:#F0F2FF;outline:none;font-family:'DM Sans',sans-serif">
+        <button type="submit" style="background:rgba(200,163,50,0.15);border:none;border-left:1.5px solid rgba(200,163,50,0.3);padding:14px 20px;cursor:pointer;color:#C8A332;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif">Search</button>
+      </form>
     </div>
+    <div style="margin:16px auto 0;max-width:520px;display:flex;gap:10px;flex-wrap:wrap">
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'homepage-hero'})" style="display:inline-flex;align-items:center;gap:8px;background:rgba(200,163,50,0.12);border:1.5px solid rgba(200,163,50,0.35);color:#C8A332;padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;text-decoration:none;font-family:'DM Sans',sans-serif">Shop 25,000+ singles on eBay AU</a>
+      <a href="/tracker" style="display:inline-flex;align-items:center;gap:8px;background:rgba(96,165,250,0.08);border:1.5px solid rgba(96,165,250,0.25);color:#60A5FA;padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;text-decoration:none;font-family:'DM Sans',sans-serif">What is my collection worth?</a>
+    </div>
+    <p style="margin:10px auto 0;max-width:520px;font-size:12px;color:#5a6080;text-align:left;padding:0 4px">Over 25,000 TCG singles in our eBay AU store. Same-day dispatch from Sydney.</p>
   </div>
 
   <div class="trust-bar">
-    <div class="trust-item"><span>&#127183;</span><span><strong>250,000+</strong> cards tracked in AUD</span></div>
-    <div class="trust-item"><span>&#128214;</span><span><strong>262+</strong> blog posts and guides</span></div>
-    <div class="trust-item"><span>&#11088;</span><span><strong>25,000+</strong> eBay listings</span></div>
-    <div class="trust-item"><span>&#128260;</span><span>Prices updated <strong>daily</strong></span></div>
+    <div class="trust-item"><span>&#127183;</span><span><strong>350,000+</strong> cards tracked daily</span></div>
+    <div class="trust-item"><span>&#127919;</span><span><strong>31</strong> TCGs</span></div>
+    <div class="trust-item"><span>&#128260;</span><span><strong>Daily</strong> AU prices updated</span></div>
   </div>
 
   <!-- Card Vault Hub Navigation -->
@@ -398,8 +407,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <a href="/calendar" class="hub-link hub-link--calendar">&#128197; Release Calendar</a>
   </div>
 
+  <div style="text-align:center;margin:0 0 16px"><span style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#4a5068">LATEST PRICES</span></div>
   <!-- Commander Spotlight Carousel -->
-  <div class="carousel-section" id="commander-carousel">
+  <div class="carousel-section" id="commander-carousel" style="width:100vw;margin-left:calc(-50vw + 50%);position:relative;overflow:hidden">
+    <button id="cpause" aria-label="Pause carousel" tabindex="0" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#7a8099;padding:5px 9px;cursor:pointer;font-size:11px;z-index:10;opacity:0;transition:opacity 0.2s" onfocus="this.style.opacity='1'" onblur="this.style.opacity='0'">Pause</button>
     <p class="carousel-eyebrow">MTG Commander Spotlight</p>
     <p class="carousel-heading">Your Next Commander Awaits</p>
     <div class="carousel-track" id="carousel-track-inner">
@@ -445,6 +456,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="carousel-viewport"><div id="wilds-carousel" class="carousel-scroll carousel-scroll--right"></div></div>
   </div>
 
+  <div style="text-align:center;margin:0 0 16px"><span style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#4a5068">START HERE</span></div>
   <div style="margin-bottom:48px">
     <div style="margin-bottom:20px">
       <p style="font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Explore C3</p>
@@ -497,21 +509,35 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     </div>
   </div>
 
-  <div class="mission">
-    <p class="section-eyebrow" style="margin-bottom:12px">Our Approach</p>
-    <p class="mission-text">We help TCG players across Australia find the cards and products they are looking for, on eBay, Amazon, and beyond. When you buy through our links, a small commission comes back to C3 at no extra cost to you. That is how we keep the prices updated, the data live, and the tools free.</p>
-  </div>
+  <section style="padding:40px 24px;max-width:760px;margin:0 auto;text-align:center">
+    <p style="font-size:15px;color:#7a8099;line-height:1.8;margin:0">C3 exists because Australian TCG players deserve AU prices, not converted USD guesses. Every price here is local, updated daily, and built for the way Australians buy and sell cards.</p>
+    <p style="font-size:12px;color:#4a5068;margin:12px 0 0">C3 participates in the Amazon Associates Program and eBay Partner Network. Purchases made through links on this site may earn a small commission at no extra cost to you.</p>
+  </section>
 
 </div>
 
+<section style="padding:48px 24px;background:linear-gradient(135deg,rgba(200,163,50,0.06),rgba(200,163,50,0.02));border-top:1px solid rgba(200,163,50,0.12);border-bottom:1px solid rgba(200,163,50,0.12);text-align:center">
+  <div style="max-width:480px;margin:0 auto">
+    <p style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#C8A332;margin:0 0 10px">FREE WEEKLY REPORT</p>
+    <h2 style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#F0F2FF;margin:0 0 10px">Get the AU TCG price report</h2>
+    <p style="font-size:14px;color:#7a8099;margin:0 0 24px;line-height:1.6">Weekly AU price movements, biggest movers, and what to watch. Free. No spam.</p>
+    <form id="ecf" style="display:flex;gap:0;border-radius:10px;overflow:hidden;border:1.5px solid rgba(200,163,50,0.35);max-width:420px;margin:0 auto">
+      <input type="email" id="eci" placeholder="Your email address" required style="flex:1;background:rgba(255,255,255,0.04);border:none;padding:14px 18px;font-size:14px;color:#F0F2FF;outline:none;font-family:'DM Sans',sans-serif">
+      <button type="submit" style="background:rgba(200,163,50,0.15);border:none;border-left:1.5px solid rgba(200,163,50,0.3);padding:14px 20px;cursor:pointer;color:#C8A332;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif">Join free</button>
+    </form>
+    <p id="ecm" style="font-size:12px;color:#7a8099;margin:10px 0 0;min-height:18px"></p>
+  </div>
+</section>
+
 <footer>
+  <p style="font-size:12px;color:#4a5068;text-align:center;margin:0 0 16px;padding:0 24px">C3 is Australia's TCG intelligence platform. Every price in AUD. Every signal built for the local market.</p>
   <div class="footer-inner">
     <div class="footer-logo">Cards on Cards on Cards</div>
     <div class="footer-links">
       <a href="/shop.html" class="footer-link">Shop</a>
       <a href="/blog" class="footer-link">Blog</a>
       <a href="/tracker.html" class="footer-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'homepage'})" class="footer-link">eBay</a>
       <a href="/cards" class="footer-link" style="color:#C9A84C">Card Vault</a>
       <a href="/compare" class="footer-link" style="color:#A78BFA">Compare</a>
       <a href="/market" class="footer-link" style="color:#4ADE80">Market</a>
@@ -602,6 +628,10 @@ async function loadSetCarousel(game, setId, containerId, colour) {
 
 loadSetCarousel('riftbound', 500006,  'unleashed-carousel', '#818CF8');
 loadSetCarousel('lorcana',   4500014, 'wilds-carousel',     '#38BDF8');
+
+var cpause=document.getElementById('cpause');if(cpause){cpause.addEventListener('click',function(){var paused=this.dataset.p==='1';document.querySelectorAll('[class*="track"]').forEach(function(t){t.style.animationPlayState=paused?'running':'paused'});this.dataset.p=paused?'0':'1';this.textContent=paused?'Pause':'Play';});}
+
+(function(){var f=document.getElementById('ecf');if(!f)return;f.addEventListener('submit',async function(e){e.preventDefault();var em=document.getElementById('eci').value.trim();var msg=document.getElementById('ecm');if(!em){msg.textContent='Please enter your email.';return;}msg.textContent='Joining...';try{var r=await fetch('/.netlify/functions/email-subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em})});var d=await r.json();if(r.ok){msg.style.color='#22c55e';msg.textContent='You are in. Welcome to C3.';}else{msg.style.color='#ef4444';msg.textContent=d.error||'Something went wrong.';}}catch(err){msg.style.color='#ef4444';msg.textContent='Something went wrong.';}});})();
 </script>
 <!-- REPORT BUG WIDGET -->
 <style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px}</style>

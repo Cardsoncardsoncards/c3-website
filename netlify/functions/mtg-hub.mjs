@@ -159,7 +159,7 @@ export default async (req) => {
       + '<div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + safeName + '</div>'
       + '<div style="font-size:12px;color:var(--accent);font-weight:bold;margin-bottom:5px">' + priceStr + '</div>'
       + '</a>'
-      + '<a href="' + ebayHref + '" target="_blank" rel="noopener" style="display:inline-block;font-size:10px;background:rgba(201,168,76,.15);color:var(--accent);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:3px 8px;text-decoration:none">Buy eBay &#8599;</a>'
+      + '<a href="' + ebayHref + '" target="_blank" rel="noopener" onclick="gtag(\'event\',\'ebay_click\',{\'event_category\':\'affiliate\',\'event_label\':\'mtg-hub\'})" style="display:inline-block;font-size:10px;background:rgba(201,168,76,.15);color:var(--accent);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:3px 8px;text-decoration:none">Buy eBay &#8599;</a>'
       + '</div>';
   }).join('');
 
@@ -364,7 +364,7 @@ export default async (req) => {
       <a href="/tools" class="nav-link nav-link--tools">Tools</a>
       <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'mtg-hub'})" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>
@@ -403,7 +403,7 @@ export default async (req) => {
 
   <!-- Quick Access -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
-    <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop MTG on eBay &#8599;</a>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'mtg-hub'})" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop MTG on eBay &#8599;</a>
     <a href="/cards/mtg/random-commander" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127922; Random Commander</a>
       <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator</a>
     <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Compare Cards</a>
