@@ -334,6 +334,11 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
   .hm-price{font-size:22px;font-weight:700}
   .hm-cta{margin-top:6px}
   .section-h{font-family:'Cinzel',serif;font-size:18px;font-weight:700;margin:30px 0 6px;display:flex;align-items:center;gap:9px}
+  .movers-head{margin:30px 0 12px}
+  .movers-toggle{display:inline-flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden}
+  .mt{background:transparent;border:none;color:var(--silver);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;padding:9px 18px;cursor:pointer;transition:all .2s}
+  .mt.active#t-up{background:rgba(34,197,94,.14);color:var(--green)}
+  .mt.active#t-down{background:rgba(239,68,68,.14);color:var(--red)}
   .section-h.up{color:var(--green)}.section-h.down{color:var(--red)}.section-h.signals{color:var(--gold)}
   .section-sub{font-size:13px;color:var(--muted);margin-bottom:12px}
   .rows{display:flex;flex-direction:column}
@@ -421,10 +426,17 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
     <p>${callBody} <a href="/pricing" onclick="gtag('event','market_upsell_click',{event_label:'call'})">See the Seller report &#8594;</a></p>
   </div>
 
-  <div class="section-h up">&#9650; Biggest movers up</div>
-  <div class="section-sub">Rising hardest over the last seven days, in AUD.</div>
+  <div class="movers-head">
+    <div class="movers-toggle" role="group" aria-label="Mover direction">
+      <button id="t-up" class="mt active" onclick="showDir('up')">&#9650; Rising</button>
+      <button id="t-down" class="mt" onclick="showDir('down')">&#9660; Falling</button>
+    </div>
+    <div class="section-sub" id="movers-sub">Rising hardest over the last seven days, in AUD.</div>
+  </div>
   <div class="rows" id="sec-up">${upHTML}</div>
-  <div class="empty" id="empty-up" style="display:none">No movers for this game right now.</div>
+  <div class="empty" id="empty-up" style="display:none">No risers for this game right now.</div>
+  <div class="rows" id="sec-down" style="display:none">${downHTML}</div>
+  <div class="empty" id="empty-down" style="display:none">No fallers for this game right now.</div>
 
   <div class="capture" id="capture">
     <h3>Get the weekly Top 5 Movers, free</h3>
@@ -435,11 +447,6 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
     </form>
     <div class="msg" id="cap-msg"></div>
   </div>
-
-  <div class="section-h down">&#9660; Sliding this week</div>
-  <div class="section-sub">Falling hardest over the last seven days. Clear stock before it drops further.</div>
-  <div class="rows" id="sec-down">${downHTML}</div>
-  <div class="empty" id="empty-down" style="display:none">No drops for this game right now.</div>
 
   <div class="section-h signals">Buy and sell signals</div>
   <div class="section-sub">A taste of the signals. The full buy list and sell-side timing live in the Seller report.</div>
@@ -460,27 +467,35 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
 </footer>
 
 <script>
-  function filterGame(g){
+  var curDir='up', curGame='all';
+  function applyView(){
+    var up=document.getElementById('sec-up'), down=document.getElementById('sec-down');
+    up.style.display=curDir==='up'?'':'none';
+    down.style.display=curDir==='down'?'':'none';
+    document.getElementById('t-up').classList.toggle('active',curDir==='up');
+    document.getElementById('t-down').classList.toggle('active',curDir==='down');
+    document.getElementById('movers-sub').textContent=curDir==='up'
+      ?'Rising hardest over the last seven days, in AUD.'
+      :'Falling hardest over the last seven days. Clear stock before it drops further.';
     var tabs=document.querySelectorAll('.game-tab');
-    for(var i=0;i<tabs.length;i++){tabs[i].classList.toggle('active',tabs[i].getAttribute('data-game')===g);}
+    for(var i=0;i<tabs.length;i++){tabs[i].classList.toggle('active',tabs[i].getAttribute('data-game')===curGame);}
     var rows=document.querySelectorAll('.row');
     for(var j=0;j<rows.length;j++){
-      var show=(g==='all'||rows[j].getAttribute('data-game')===g);
+      var show=(curGame==='all'||rows[j].getAttribute('data-game')===curGame);
       rows[j].style.display=show?'':'none';
     }
     var hm=document.querySelector('.hero-mover');
-    if(hm){hm.style.display=(g==='all'||hm.getAttribute('data-game')===g)?'':'none';}
-    checkEmpty('sec-up','empty-up');
-    checkEmpty('sec-down','empty-down');
-    gtag('event','market_filter',{event_label:g});
+    if(hm){hm.style.display=(curGame==='all'||hm.getAttribute('data-game')===curGame)?'':'none';}
+    document.getElementById('empty-up').style.display='none';
+    document.getElementById('empty-down').style.display='none';
+    var activeSec=curDir==='up'?up:down;
+    var activeEmpty=curDir==='up'?'empty-up':'empty-down';
+    var srows=activeSec.querySelectorAll('.row'),vis=0;
+    for(var k=0;k<srows.length;k++){if(srows[k].style.display!=='none')vis++;}
+    document.getElementById(activeEmpty).style.display=vis===0?'':'none';
   }
-  function checkEmpty(secId,emptyId){
-    var sec=document.getElementById(secId),emp=document.getElementById(emptyId);
-    if(!sec||!emp)return;
-    var rows=sec.querySelectorAll('.row'),vis=0;
-    for(var i=0;i<rows.length;i++){if(rows[i].style.display!=='none')vis++;}
-    emp.style.display=vis===0?'':'none';
-  }
+  function showDir(d){curDir=d;applyView();gtag('event','market_dir_toggle',{event_label:d});}
+  function filterGame(g){curGame=g;applyView();gtag('event','market_filter',{event_label:g});}
   (function(){
     var f=document.getElementById('cap-form');if(!f)return;
     f.addEventListener('submit',async function(e){
@@ -521,10 +536,14 @@ export default async (req) => {
   ]);
   const val = i => results[i].status === 'fulfilled' ? results[i].value : [];
 
+  // Only show genuine movers. A 0% row is not a mover; drop it.
+  // This also filters out non-MTG feed rows that arrive with no change data.
   const gainers = [val(0), val(4), val(6), val(8), val(10), val(12), val(14), val(16)]
-    .flat().sort((a, b) => Math.abs(b.change7d) - Math.abs(a.change7d));
+    .flat().filter(c => parseFloat(c.change7d) >= 0.1)
+    .sort((a, b) => Math.abs(b.change7d) - Math.abs(a.change7d));
   const losers = [val(1), val(5), val(7), val(9), val(11), val(13), val(15), val(17)]
-    .flat().sort((a, b) => a.change7d - b.change7d);
+    .flat().filter(c => parseFloat(c.change7d) <= -0.1)
+    .sort((a, b) => a.change7d - b.change7d);
   const buySignals = val(2);
   const sellSignals = val(3);
 
