@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing | Cards on Cards on Cards</title>
+<meta name="description" content="C3 pricing plans for Australian TCG players, collectors and sellers. Free card prices and tools, plus paid intelligence tiers with weekly AU market reports.">
+<link rel="icon" href="/c3logo.png">
+<meta property="og:title" content="Pricing | Cards on Cards on Cards">
+<meta property="og:description" content="Free TCG card prices and tools for Australian players, plus paid intelligence tiers with weekly AU market reports.">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/pricing">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WR68HPE92S');
+</script>
+<style>
+  :root{
+    --bg:#080b12;--bg2:#0f1420;--panel:#0f1420;--bg3:#161d2e;
+    --gold:#C9A84C;--gold-soft:rgba(201,168,76,.12);--gold-line:rgba(201,168,76,.35);
+    --white:#F0F2FF;--silver:#A0A8C0;--muted:#8892b0;--muted2:rgba(160,168,192,.6);
+    --blue:#60A5FA;--green:#22c55e;--border:#1e2235;--radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+
+  /* NAV (matches site) */
+  nav{background:rgba(8,11,18,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
+  .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+  .nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+  .nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
+  .nav-link:hover{color:var(--white)}
+  .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+  .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
+  .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}
+  .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}
+  .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}
+  .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+  .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}
+  .nav-link--pricing{color:#080b12;background:var(--gold);border-color:var(--gold);font-weight:700}
+
+  /* GAME MARQUEE (full bleed) */
+  .marquee{width:100vw;margin-left:calc(-50vw + 50%);position:relative;padding:18px 0;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(201,168,76,.04),transparent);overflow:hidden}
+  .marquee::before,.marquee::after{content:"";position:absolute;top:0;bottom:0;width:90px;z-index:2;pointer-events:none}
+  .marquee::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+  .marquee::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+  .mq-row{display:flex;gap:10px;width:max-content;white-space:nowrap}
+  .mq-row.a{animation:mqscroll 60s linear infinite}
+  .mq-row.b{animation:mqscroll 75s linear infinite reverse;margin-top:10px}
+  .marquee:hover .mq-row{animation-play-state:paused}
+  .mq-pill{display:inline-flex;align-items:center;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:20px;padding:7px 15px;letter-spacing:.02em}
+  @keyframes mqscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .mq-caption{text-align:center;font-size:11px;color:var(--muted);margin-top:14px;letter-spacing:.05em}
+  .mq-caption a{color:var(--gold)}
+
+  /* HERO */
+  .hero{text-align:center;padding:54px 0 24px}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .hero h1{font-family:'Cinzel',serif;font-size:38px;font-weight:700;line-height:1.15;margin-bottom:14px}
+  .hero p{font-size:16px;color:var(--silver);max-width:640px;margin:0 auto}
+  .accent{width:48px;height:3px;background:linear-gradient(90deg,var(--gold),rgba(201,168,76,.3));border-radius:2px;margin:16px auto 0}
+  .toggle{display:inline-flex;align-items:center;border:1.5px solid var(--gold-line);border-radius:10px;overflow:hidden;margin:28px auto 8px}
+  .toggle button{background:transparent;border:none;color:var(--silver);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:11px 22px;cursor:pointer}
+  .toggle button.active{background:var(--gold-soft);color:var(--gold)}
+  .savehint{font-size:12px;color:var(--muted2);margin-top:8px}
+
+  /* CARDS */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:32px 0 8px;align-items:stretch}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:26px 22px;display:flex;flex-direction:column;transition:transform .2s ease,border-color .2s ease}
+  .card:hover{transform:translateY(-6px);border-color:var(--gold-line)}
+  .card.featured{border:1.5px solid var(--gold-line);background:linear-gradient(180deg,var(--gold-soft),rgba(201,168,76,.02))}
+  .badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:20px;padding:4px 12px;margin-bottom:14px;align-self:flex-start}
+  .tier-name{font-family:'Cinzel',serif;font-size:19px;font-weight:700;margin-bottom:4px}
+  .tier-for{font-size:12.5px;color:var(--muted2);min-height:34px;margin-bottom:14px}
+  .price{display:flex;align-items:baseline;gap:4px;margin-bottom:2px}
+  .price .num{font-family:'Cinzel',serif;font-size:30px;font-weight:700}
+  .price .per{font-size:13px;color:var(--silver)}
+  .billed{font-size:12px;color:var(--muted2);min-height:18px;margin-bottom:18px}
+  .feat{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:22px;flex:1}
+  .feat li{font-size:13px;color:var(--white);display:flex;gap:9px;align-items:flex-start}
+  .feat li::before{content:"";flex-shrink:0;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-top:7px}
+  .feat li.carry{color:var(--silver)}
+  .feat li.carry::before{background:var(--silver);opacity:.5}
+  .feat li.add{color:#86EFAC}
+  .feat li.add::before{background:#22c55e}
+  .badge-free{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#22c55e;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.35);border-radius:20px;padding:4px 12px;margin-bottom:14px;align-self:flex-start}
+  .free-note{font-size:11px;color:#86EFAC;text-align:center;margin-top:10px}
+  .cta{display:block;text-align:center;padding:12px 16px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:1.5px solid var(--gold-line);background:transparent;color:var(--gold);font-family:'DM Sans',sans-serif;width:100%;transition:all .2s}
+  .cta:hover{background:var(--gold-soft)}
+  .cta.primary{background:var(--gold-soft)}
+  .cta.blue{border-color:rgba(96,165,250,.3);color:var(--blue);background:rgba(96,165,250,.06)}
+  .status{font-size:11px;color:var(--muted2);text-align:center;margin-top:10px;min-height:14px}
+
+  .join{margin:48px auto 0;max-width:560px;background:linear-gradient(135deg,var(--gold-soft),rgba(201,168,76,.02));border:1px solid var(--gold-line);border-radius:var(--radius);padding:34px 26px;text-align:center}
+  .join h2{font-family:'Cinzel',serif;font-size:22px;margin-bottom:8px}
+  .join p{font-size:14px;color:var(--silver);margin-bottom:20px}
+  .join form{display:flex;border:1.5px solid var(--gold-line);border-radius:10px;overflow:hidden;max-width:420px;margin:0 auto}
+  .join input{flex:1;background:rgba(255,255,255,.04);border:none;padding:13px 16px;color:var(--white);font-size:14px;outline:none;font-family:'DM Sans',sans-serif}
+  .join button{background:var(--gold-soft);border:none;border-left:1.5px solid var(--gold-line);color:var(--gold);padding:13px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .join .msg{font-size:12px;color:var(--silver);margin-top:10px;min-height:16px}
+
+  .faq{max-width:760px;margin:64px auto 0}
+  .faq h2{font-family:'Cinzel',serif;font-size:24px;text-align:center;margin-bottom:26px}
+  .faq .q{border-top:1px solid var(--border);padding:18px 0}
+  .faq .q h3{font-size:15px;font-weight:600;margin-bottom:6px}
+  .faq .q p{font-size:14px;color:var(--silver)}
+
+  footer{border-top:1px solid var(--border);margin-top:72px;padding:32px 0;text-align:center}
+  footer .mission{font-size:13px;color:var(--muted2);margin-bottom:12px}
+  footer .disc{font-size:11px;color:var(--muted2);max-width:680px;margin:0 auto}
+
+  @media(max-width:920px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}.hero h1{font-size:30px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3">Cards on Cards on Cards</a>
+    <div class="nav-links">
+      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/pricing" class="nav-link nav-link--pricing">Pricing</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+    </div>
+  </div>
+</nav>
+
+<!-- FULL-WIDTH GAME MARQUEE -->
+<div class="marquee" aria-label="Games covered by C3">
+  <div class="mq-row a"><span class="mq-pill" style="background:#C9A84C1f;color:#C9A84C;border-color:#C9A84C55">Magic: The Gathering</span><span class="mq-pill" style="background:#FFCC001f;color:#FFCC00;border-color:#FFCC0055">Pokemon</span><span class="mq-pill" style="background:#A855F71f;color:#A855F7;border-color:#A855F755">Yu-Gi-Oh</span><span class="mq-pill" style="background:#38BDF81f;color:#38BDF8;border-color:#38BDF855">Disney Lorcana</span><span class="mq-pill" style="background:#F973161f;color:#F97316;border-color:#F9731655">One Piece</span><span class="mq-pill" style="background:#EF44441f;color:#EF4444;border-color:#EF444455">Dragon Ball Super</span><span class="mq-pill" style="background:#3B82F61f;color:#3B82F6;border-color:#3B82F655">Star Wars Unlimited</span><span class="mq-pill" style="background:#818CF81f;color:#818CF8;border-color:#818CF855">Riftbound</span><span class="mq-pill" style="background:#06B6D41f;color:#06B6D4;border-color:#06B6D455">Digimon</span><span class="mq-pill" style="background:#8B5CF61f;color:#8B5CF6;border-color:#8B5CF655">Final Fantasy TCG</span><span class="mq-pill" style="background:#10B9811f;color:#10B981;border-color:#10B98155">Grand Archive</span><span class="mq-pill" style="background:#D977061f;color:#D97706;border-color:#D9770655">Sorcery</span><span class="mq-pill" style="background:#6366F11f;color:#6366F1;border-color:#6366F155">Gundam</span><span class="mq-pill" style="background:#F472B61f;color:#F472B6;border-color:#F472B655">Hololive</span><span class="mq-pill" style="background:#14B8A61f;color:#14B8A6;border-color:#14B8A655">Battle Spirits Saga</span><span class="mq-pill" style="background:#C9A84C1f;color:#C9A84C;border-color:#C9A84C55">Magic: The Gathering</span><span class="mq-pill" style="background:#FFCC001f;color:#FFCC00;border-color:#FFCC0055">Pokemon</span><span class="mq-pill" style="background:#A855F71f;color:#A855F7;border-color:#A855F755">Yu-Gi-Oh</span><span class="mq-pill" style="background:#38BDF81f;color:#38BDF8;border-color:#38BDF855">Disney Lorcana</span><span class="mq-pill" style="background:#F973161f;color:#F97316;border-color:#F9731655">One Piece</span><span class="mq-pill" style="background:#EF44441f;color:#EF4444;border-color:#EF444455">Dragon Ball Super</span><span class="mq-pill" style="background:#3B82F61f;color:#3B82F6;border-color:#3B82F655">Star Wars Unlimited</span><span class="mq-pill" style="background:#818CF81f;color:#818CF8;border-color:#818CF855">Riftbound</span><span class="mq-pill" style="background:#06B6D41f;color:#06B6D4;border-color:#06B6D455">Digimon</span><span class="mq-pill" style="background:#8B5CF61f;color:#8B5CF6;border-color:#8B5CF655">Final Fantasy TCG</span><span class="mq-pill" style="background:#10B9811f;color:#10B981;border-color:#10B98155">Grand Archive</span><span class="mq-pill" style="background:#D977061f;color:#D97706;border-color:#D9770655">Sorcery</span><span class="mq-pill" style="background:#6366F11f;color:#6366F1;border-color:#6366F155">Gundam</span><span class="mq-pill" style="background:#F472B61f;color:#F472B6;border-color:#F472B655">Hololive</span><span class="mq-pill" style="background:#14B8A61f;color:#14B8A6;border-color:#14B8A655">Battle Spirits Saga</span></div>
+  <div class="mq-row b"><span class="mq-pill" style="background:#2563EB1f;color:#2563EB;border-color:#2563EB55">Cardfight Vanguard</span><span class="mq-pill" style="background:#7C3AED1f;color:#7C3AED;border-color:#7C3AED55">Shadowverse Evolve</span><span class="mq-pill" style="background:#E11D481f;color:#E11D48;border-color:#E11D4855">Union Arena</span><span class="mq-pill" style="background:#94A3B81f;color:#94A3B8;border-color:#94A3B855">Weiss Schwarz</span><span class="mq-pill" style="background:#F59E0B1f;color:#F59E0B;border-color:#F59E0B55">Alpha Clash</span><span class="mq-pill" style="background:#EA580C1f;color:#EA580C;border-color:#EA580C55">Bakugan</span><span class="mq-pill" style="background:#0EA5E91f;color:#0EA5E9;border-color:#0EA5E955">Buddyfight</span><span class="mq-pill" style="background:#9333EA1f;color:#9333EA;border-color:#9333EA55">Force of Will</span><span class="mq-pill" style="background:#0891B21f;color:#0891B2;border-color:#0891B255">Gate Ruler</span><span class="mq-pill" style="background:#84CC161f;color:#84CC16;border-color:#84CC1655">Godzilla</span><span class="mq-pill" style="background:#22C55E1f;color:#22C55E;border-color:#22C55E55">MetaZoo</span><span class="mq-pill" style="background:#DB27771f;color:#DB2777;border-color:#DB277755">Universus</span><span class="mq-pill" style="background:#F43F5E1f;color:#F43F5E;border-color:#F43F5E55">Wixoss</span><span class="mq-pill" style="background:#B453091f;color:#B45309;border-color:#B4530955">World of Warcraft</span><span class="mq-pill" style="background:#DC26261f;color:#DC2626;border-color:#DC262655">Warhammer</span><span class="mq-pill" style="background:#2563EB1f;color:#2563EB;border-color:#2563EB55">Cardfight Vanguard</span><span class="mq-pill" style="background:#7C3AED1f;color:#7C3AED;border-color:#7C3AED55">Shadowverse Evolve</span><span class="mq-pill" style="background:#E11D481f;color:#E11D48;border-color:#E11D4855">Union Arena</span><span class="mq-pill" style="background:#94A3B81f;color:#94A3B8;border-color:#94A3B855">Weiss Schwarz</span><span class="mq-pill" style="background:#F59E0B1f;color:#F59E0B;border-color:#F59E0B55">Alpha Clash</span><span class="mq-pill" style="background:#EA580C1f;color:#EA580C;border-color:#EA580C55">Bakugan</span><span class="mq-pill" style="background:#0EA5E91f;color:#0EA5E9;border-color:#0EA5E955">Buddyfight</span><span class="mq-pill" style="background:#9333EA1f;color:#9333EA;border-color:#9333EA55">Force of Will</span><span class="mq-pill" style="background:#0891B21f;color:#0891B2;border-color:#0891B255">Gate Ruler</span><span class="mq-pill" style="background:#84CC161f;color:#84CC16;border-color:#84CC1655">Godzilla</span><span class="mq-pill" style="background:#22C55E1f;color:#22C55E;border-color:#22C55E55">MetaZoo</span><span class="mq-pill" style="background:#DB27771f;color:#DB2777;border-color:#DB277755">Universus</span><span class="mq-pill" style="background:#F43F5E1f;color:#F43F5E;border-color:#F43F5E55">Wixoss</span><span class="mq-pill" style="background:#B453091f;color:#B45309;border-color:#B4530955">World of Warcraft</span><span class="mq-pill" style="background:#DC26261f;color:#DC2626;border-color:#DC262655">Warhammer</span></div>
+  <div class="mq-caption">Live AUD prices across 31 games and counting. <a href="/cards">Browse all card prices &rarr;</a></div>
+</div>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Pricing</div>
+    <h1>Plans for how you use TCG data</h1>
+    <p>Free card prices and tools for every Australian player. Paid intelligence tiers for collectors and sellers who want the edge, priced in AUD, built for the local market.</p>
+    <div class="accent"></div>
+    <div>
+      <div class="toggle" role="group" aria-label="Billing period">
+        <button id="btn-monthly" class="active" aria-pressed="true">Monthly</button>
+        <button id="btn-annual" aria-pressed="false">Annual</button>
+      </div>
+      <div class="savehint">Annual plans include two months free.</div>
+    </div>
+  </section>
+
+  <section class="grid" aria-label="Pricing tiers">
+    <div class="card">
+      <span class="badge-free">Free forever</span>
+      <div class="tier-name">Player</div>
+      <div class="tier-for">A genuinely useful free plan. No trial clock, no card, yours for good.</div>
+      <div class="price"><span class="num">Free</span></div>
+      <div class="billed">More than most paid tools charge for.</div>
+      <ul class="feat">
+        <li>Live AUD prices across 31 games</li>
+        <li>All card hubs and set pages</li>
+        <li>EV calculator and 2-card compare</li>
+        <li>Basic collection tracker</li>
+        <li>Every quiz and generator</li>
+        <li>Weekly Top 5 Movers email</li>
+      </ul>
+      <a class="cta" href="/tools" onclick="gtag('event','pricing_cta',{event_label:'free_explore'})">Explore free</a>
+      <div class="free-note">Free forever, no catch</div>
+    </div>
+
+    <div class="card">
+      <div class="tier-name">Collector</div>
+      <div class="tier-for">For serious collectors and players tracking value over time.</div>
+      <div class="price"><span class="num" data-monthly="12.95" data-annual="10.79">$12.95</span><span class="per">/month</span></div>
+      <div class="billed" data-billed-annual="Billed A$129.50 yearly">Billed monthly</div>
+      <ul class="feat">
+        <li class="carry">Everything in Player</li>
+        <li class="add">Full Card Compare, up to 4 cards</li>
+        <li class="add">Portfolio mode</li>
+        <li class="add">Collection value tracked over time</li>
+        <li class="add">Watchlist price alerts</li>
+        <li class="add">Full weekly movers report, ad-free</li>
+      </ul>
+      <a class="cta" onclick="joinWaitlist('collector')">Join the waitlist</a>
+      <div class="status">Coming soon</div>
+    </div>
+
+    <div class="card featured">
+      <span class="badge">Most popular</span>
+      <div class="tier-name">Seller</div>
+      <div class="tier-for">For active sellers and flippers pricing stock with confidence.</div>
+      <div class="price"><span class="num" data-monthly="34.95" data-annual="29.13">$34.95</span><span class="per">/month</span></div>
+      <div class="billed" data-billed-annual="Billed A$349.50 yearly">Billed monthly</div>
+      <ul class="feat">
+        <li class="carry">Everything in Collector</li>
+        <li class="add">Full repricing movers across your games</li>
+        <li class="add">Priority price alerts</li>
+        <li class="add">Weekly Seller Intelligence report</li>
+        <li class="add">Sell-side timing signals</li>
+      </ul>
+      <a class="cta primary" href="https://buy.stripe.com/6oUfZg6iO16u81ycDBaIM00" onclick="gtag('event','pricing_cta',{event_label:'seller_subscribe'})">Subscribe</a>
+      <div class="status">Weekly report included</div>
+    </div>
+
+    <div class="card">
+      <div class="tier-name">Store</div>
+      <div class="tier-for">For card shops and power sellers running at scale.</div>
+      <div class="price"><span class="num" data-monthly="89.00" data-annual="74.17">$89</span><span class="per">/month</span></div>
+      <div class="billed" data-billed-annual="Billed A$890 yearly">Billed monthly</div>
+      <ul class="feat">
+        <li class="carry">Everything in Seller</li>
+        <li class="add">All 31 games, not just your selection</li>
+        <li class="add">Bulk export and data feed</li>
+        <li class="add">Priority support</li>
+      </ul>
+      <a class="cta blue" onclick="joinWaitlist('store')">Register interest</a>
+      <div class="status">Coming soon</div>
+    </div>
+  </section>
+
+  <section class="join" id="join">
+    <h2>Be first when new plans launch</h2>
+    <p>Join the list for AU price movers, plus early access and founding-member pricing on Collector and Store.</p>
+    <form id="join-form">
+      <input type="email" id="join-email" placeholder="Your email address" required aria-label="Email address">
+      <button type="submit">Join free</button>
+    </form>
+    <div class="msg" id="join-msg"></div>
+  </section>
+
+  <section class="faq">
+    <h2>Common questions</h2>
+    <div class="q"><h3>Is the free plan really free?</h3><p>Yes. Card prices, the tools, the quizzes and the weekly Top 5 Movers email cost nothing and need no card. The paid tiers add depth for people who buy and sell often.</p></div>
+    <div class="q"><h3>Why pay when other price sites are free?</h3><p>Free tools mostly show converted USD prices. C3 is built around Australian pricing and AU seller signals across 31 games, including ones nobody else tracks locally. You are paying for AU accuracy and time saved, not raw lookups.</p></div>
+    <div class="q"><h3>What is in the Seller report?</h3><p>A weekly email of the biggest AU price movers across your games, what is rising and falling, and where to focus when listing. It is delivered to your inbox, with nothing to log into.</p></div>
+    <div class="q"><h3>Can I cancel anytime?</h3><p>Yes. Paid plans are managed through a self-service portal where you can cancel or update your card whenever you like. Cancel and you simply stop at the end of the period.</p></div>
+    <div class="q"><h3>What does annual billing save?</h3><p>Annual plans are charged for ten months instead of twelve, so two months are free compared to paying monthly.</p></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="mission">Cards on Cards on Cards is Australia's TCG intelligence platform. Every price in AUD. Every signal built for the local market.</div>
+    <div class="disc">C3 participates in the Amazon Associates Program and the eBay Partner Network. Purchases made through links on this site may earn a small commission at no extra cost to you.</div>
+  </div>
+</footer>
+
+<script>
+  var btnM=document.getElementById('btn-monthly'),btnA=document.getElementById('btn-annual');
+  function setPeriod(annual){
+    document.querySelectorAll('.price .num').forEach(function(n){
+      var m=n.getAttribute('data-monthly'),a=n.getAttribute('data-annual');
+      if(!m)return; n.textContent='$'+(annual?a:m);
+    });
+    document.querySelectorAll('.billed').forEach(function(b){
+      var t=b.getAttribute('data-billed-annual'); if(!t)return;
+      b.textContent=annual?t:'Billed monthly';
+    });
+    btnM.classList.toggle('active',!annual);btnA.classList.toggle('active',annual);
+    btnM.setAttribute('aria-pressed',String(!annual));btnA.setAttribute('aria-pressed',String(annual));
+  }
+  btnM.addEventListener('click',function(){setPeriod(false);});
+  btnA.addEventListener('click',function(){setPeriod(true);});
+  setPeriod(false);
+
+  function joinWaitlist(tier){
+    gtag('event','pricing_cta',{event_label:'waitlist_'+tier});
+    var el=document.getElementById('join'); el.scrollIntoView({behavior:'smooth'});
+    setTimeout(function(){document.getElementById('join-email').focus();},400);
+  }
+
+  (function(){
+    var f=document.getElementById('join-form'); if(!f)return;
+    f.addEventListener('submit',async function(e){
+      e.preventDefault();
+      var em=document.getElementById('join-email').value.trim();
+      var msg=document.getElementById('join-msg');
+      if(!em){msg.textContent='Please enter your email.';return;}
+      msg.style.color='#A0A8C0';msg.textContent='Joining...';
+      try{
+        var r=await fetch('/.netlify/functions/email-subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em})});
+        var d=await r.json();
+        if(r.ok){msg.style.color='#22c55e';msg.textContent='You are in. Welcome to C3.';gtag('event','pricing_join_success');}
+        else{msg.style.color='#ef4444';msg.textContent=d.error||'Something went wrong.';}
+      }catch(err){msg.style.color='#ef4444';msg.textContent='Something went wrong.';}
+    });
+  })();
+</script>
+</body>
+</html>
