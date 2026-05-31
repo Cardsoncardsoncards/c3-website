@@ -43,6 +43,7 @@ module.exports = function(eleventyConfig) {
   // New hub pages
   eleventyConfig.addPassthroughCopy({"src/tools.html": "tools.html"});
   eleventyConfig.addPassthroughCopy({"src/play.html": "play.html"});
+  eleventyConfig.addPassthroughCopy({"src/pricing.html": "pricing.html"});
 
   // Only blog posts (tagged "post") use the permalink rule
   eleventyConfig.addGlobalData("eleventyComputed", {
