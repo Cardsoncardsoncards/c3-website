@@ -1024,7 +1024,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
       <input type="text" id="main-search" class="search-input" placeholder="${hasCards ? 'Add another card...' : 'Search any card from any TCG...'}" autocomplete="off" aria-label="Search for a card to compare" ${hasCards && cards.length >= 5 ? 'disabled placeholder="Maximum 5 cards reached"' : ''}>
       <div id="search-results" class="search-results" style="display:none" role="listbox" aria-label="Search results"></div>
     </div>
-    ${hasCards ? `<a href="/compare" class="nav-link" style="white-space:nowrap;font-size:12px">Reset ×</a>` : ''}
+    ${hasCards ? `<a href="/compare?cards=" class="nav-link" style="white-space:nowrap;font-size:12px">Reset ×</a>` : ''}
   </div>
   <div class="game-chips" id="game-chips">${gameChips}</div>
 </div>
@@ -1072,7 +1072,6 @@ ${cards.length >= 2 ? `
           return `<div class="radar-legend-item"><div class="radar-swatch" style="background:${colors[i] || '#888'}"></div><span>${c.name}</span></div>`;
         }).join('')}
       </div>
-      <div style="font-size:10px;color:var(--text3);margin-top:14px;line-height:1.6">Scores computed from price, community ranking,<br>format legality, 7-day trend, rarity and versatility.<br>Higher = stronger in that dimension.</div>
     </div>
   </div>
 </div>
@@ -1213,8 +1212,8 @@ function handleSearch(val) {
   clearTimeout(searchTimeout);
   var el = document.getElementById('search-results');
   if (!val || val.length < 2) { if (el) el.style.display = 'none'; return; }
+  if (el) { el.innerHTML = '<div style="padding:12px 16px;font-size:13px;color:var(--text2)">Searching across 32 games...</div>'; el.style.display = ''; }
   searchTimeout = setTimeout(function() {
-    if (el) { el.innerHTML = '<div style="padding:12px 16px;font-size:13px;color:var(--text2)">Searching across 32 games...</div>'; el.style.display = ''; }
     var game = activeGameFilter ? '&game=' + activeGameFilter : '';
     fetch('/api/compare-search?q=' + encodeURIComponent(val) + '&limit=10' + game)
       .then(function(r) { return r.json(); })
@@ -1472,11 +1471,14 @@ function parseToken(token) {
 }
 
 export default async (req) => {
-  const url        = new URL(req.url);
-  const cardsParam = url.searchParams.get('cards') || '';
-  const rawTokens  = cardsParam ? cardsParam.split(',').map(s => s.trim()).filter(Boolean).slice(0, 5) : [];
+  const url           = new URL(req.url);
+  const hasCardsParam = url.searchParams.has('cards');
+  const cardsParam    = url.searchParams.get('cards') || '';
+  const rawTokens     = cardsParam ? cardsParam.split(',').map(s => s.trim()).filter(Boolean).slice(0, 5) : [];
 
-  if (!rawTokens.length) {
+  // Only redirect to default comparison when the cards param is absent entirely.
+  // An empty `?cards=` means the user cleared all slots and should see the empty state.
+  if (!hasCardsParam) {
     return new Response(null, {
       status: 302,
       headers: { 'Location': '/compare?cards=mtg:generous-gift,mtg:sol-ring' }

@@ -87,6 +87,17 @@
   to = "/blog/what-is-mtg/"
   status = 301
 
+# ── Pretty URLs for static pages referenced in footers/navs ──
+[[redirects]]
+  from = "/tracker"
+  to = "/tracker.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+
 # ── Scheduled function: daily sales history sync at 3am AEST (17:00 UTC) ──
 [functions."sync-sales-history"]
   schedule = "0 17 * * *"
