@@ -825,6 +825,10 @@ function renderPage({ cards, allTokens, usdToAud }) {
     .version-set{color:var(--text2);flex:1;text-align:left}
     .version-price{color:var(--accent);font-weight:700;white-space:nowrap}
     .version-select{color:var(--purple);font-size:9px;white-space:nowrap}
+    .version-swap{font-size:10px;color:var(--text2);font-weight:600;white-space:nowrap;cursor:pointer;padding:2px 6px;border-radius:3px;border:1px solid var(--border);background:transparent;margin-right:4px}
+    .version-compare{font-size:10px;color:var(--purple);font-weight:600;white-space:nowrap;cursor:pointer;padding:2px 6px;border-radius:3px;border:1px solid rgba(124,106,245,.35);background:rgba(124,106,245,.08)}
+    .version-swap:hover{background:var(--bg3);color:var(--text)}
+    .version-compare:hover{background:rgba(124,106,245,.18)}
 
     /* STAT STRIPS */
     .stat-strips{max-width:1300px;margin:20px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -1299,7 +1303,8 @@ function loadVersions(game, name, slotIdx) {
         return '<div class="version-item" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '" tabindex="0">' +
           '<span class="version-set">' + (v.setName || '—') + (v.collectorNumber ? ' #' + v.collectorNumber : '') + '</span>' +
           '<span class="version-price">' + (v.priceDisplay || 'N/A') + '</span>' +
-          '<span class="version-select">Select →</span>' +
+          '<button class="version-swap" data-action="swap" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '">Swap</button>' +
+          '<button class="version-compare" data-action="compare" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '">+ Compare</button>' +
           '</div>';
       }).join('');
     })
@@ -1311,6 +1316,32 @@ function switchVersion(game, newSlug, slotIdx) {
   var newTokens = CURRENT_TOKENS.map(function(t, i) { return i === slotIdx ? newToken : t; });
   gtag('event', 'compare_version_switched', { game: game, position: slotIdx });
   window.location.href = '/compare?cards=' + newTokens.join(',');
+}
+
+function addVersionToSlot(game, newSlug, fromSlotIdx) {
+  var newToken = game + ':' + newSlug;
+  if (CURRENT_TOKENS.indexOf(newToken) !== -1) { return; }
+  var maxSlots = 5;
+  var emptyIdx = -1;
+  for (var i = fromSlotIdx + 1; i < maxSlots; i++) {
+    if (!CURRENT_TOKENS[i]) { emptyIdx = i; break; }
+  }
+  if (emptyIdx === -1) {
+    for (var j = 0; j < fromSlotIdx; j++) {
+      if (!CURRENT_TOKENS[j]) { emptyIdx = j; break; }
+    }
+  }
+  if (emptyIdx === -1) {
+    var newTokens = CURRENT_TOKENS.map(function(t, i) { return i === fromSlotIdx ? newToken : t; });
+    window.location.href = '/compare?cards=' + newTokens.join(',');
+    return;
+  }
+  var tokensToUse = CURRENT_TOKENS.slice();
+  while (tokensToUse.length <= emptyIdx) { tokensToUse.push(''); }
+  tokensToUse[emptyIdx] = newToken;
+  var filtered = tokensToUse.filter(function(t) { return t && t.length > 0; });
+  gtag('event', 'compare_version_added', { game: game, position: emptyIdx });
+  window.location.href = '/compare?cards=' + filtered.join(',');
 }
 
 function copyShareUrl() {
@@ -1391,8 +1422,10 @@ document.addEventListener('click', function(e) {
   if (e.target.closest('[data-action="focus-search"]')) { focusSearch(); return; }
   var resultItem = e.target.closest('.result-item[data-game]');
   if (resultItem && !resultItem.dataset.disabled) { addCard(resultItem.dataset.game, resultItem.dataset.slug); return; }
-  var versionItem = e.target.closest('.version-item[data-game]');
-  if (versionItem) { switchVersion(versionItem.dataset.game, versionItem.dataset.slug, parseInt(versionItem.dataset.slot, 10)); return; }
+  var swapBtn = e.target.closest('.version-swap[data-action="swap"]');
+  if (swapBtn) { switchVersion(swapBtn.dataset.game, swapBtn.dataset.slug, parseInt(swapBtn.dataset.slot, 10)); return; }
+  var compareBtn = e.target.closest('.version-compare[data-action="compare"]');
+  if (compareBtn) { addVersionToSlot(compareBtn.dataset.game, compareBtn.dataset.slug, parseInt(compareBtn.dataset.slot, 10)); return; }
   var vBtn = e.target.closest('.slot-versions-btn');
   if (vBtn) { loadVersions(vBtn.dataset.game, vBtn.dataset.name, parseInt(vBtn.dataset.slot, 10)); return; }
   // Buy/sell view toggle
