@@ -1,25 +1,26 @@
 // netlify/functions/generate-weekly-report.mjs
 // C3 Weekly Seller Report generator.
-// Pulls live movers + buy/sell signals, fills the email HTML, and creates a
-// DRAFT campaign in MailerLite to the paid group for review before send.
+// Pulls live movers + buy/sell signals, fills the email HTML, and sends the
+// report via Resend.
 //
-// Draft, not auto-send, by design: the first sends go to paying customers, so a
-// human reviews and clicks send. Flip DELIVERY to scheduled later (one change).
+// Test phase: sends a single copy to FROM_EMAIL so a human can eyeball it. Next
+// step is to fetch the paid MailerLite group subscribers and send to each one
+// (PAID_GROUP_ID and ML_BASE are kept below for that change).
 //
 // Trigger (manual, weekly): GET/POST /api/generate-weekly-report with header
 //   x-sync-secret: <SYNC_SECRET>
-// Returns JSON: { ok, campaignId, editUrl, counts }
+// Returns JSON: { ok, message, counts }
 //
 // Env vars required (Netlify):
 //   SUPABASE_URL, SUPABASE_ANON_KEY, TCGAPI_KEY  (already set, used by /market)
-//   MAILERLITE_API_KEY                            (new: add this)
+//   RESEND_API_KEY                                (delivery)
 // Optional:
 //   REPORT_CALL_TITLE, REPORT_CALL_BODY  (override the editorial C3 Call this week)
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const TCGAPI_KEY        = Netlify.env.get('TCGAPI_KEY');
-const ML_API_KEY        = Netlify.env.get('MAILERLITE_API_KEY');
+const RESEND_API_KEY    = Netlify.env.get('RESEND_API_KEY');
 const SYNC_SECRET       = Netlify.env.get('SYNC_SECRET');
 
 const EPN_CAMPID   = '5339146789';
@@ -226,18 +227,6 @@ function plainText(dateStr){
   return `C3 Weekly Seller Report, ${dateStr}.\n\nYour email client cannot display HTML. View the full market at https://cardsoncardsoncards.com.au/market\n\nThe C3 Team.\nManage subscription: {$unsubscribe}`;
 }
 
-// ---------- MailerLite ----------
-async function mlPost(path,body){
-  const res=await timedFetch(`${ML_BASE}${path}`,{
-    method:'POST',
-    headers:{'Content-Type':'application/json',Accept:'application/json',Authorization:`Bearer ${ML_API_KEY}`},
-    body:JSON.stringify(body),
-  });
-  const text=await res.text();
-  let json={}; try{json=JSON.parse(text);}catch{}
-  return {ok:res.ok,status:res.status,json,text};
-}
-
 // ---------- handler ----------
 export default async (req)=>{
   // Auth
@@ -245,8 +234,8 @@ export default async (req)=>{
   if(!SYNC_SECRET||secret!==SYNC_SECRET){
     return new Response(JSON.stringify({ok:false,error:'unauthorised'}),{status:401,headers:{'Content-Type':'application/json'}});
   }
-  if(!ML_API_KEY){
-    return new Response(JSON.stringify({ok:false,error:'MAILERLITE_API_KEY not set'}),{status:500,headers:{'Content-Type':'application/json'}});
+  if(!RESEND_API_KEY){
+    return new Response(JSON.stringify({ok:false,error:'RESEND_API_KEY not set'}),{status:500,headers:{'Content-Type':'application/json'}});
   }
 
   // Pull data
@@ -273,30 +262,30 @@ export default async (req)=>{
   const htmlEmail=buildEmail({dateStr,callTitle,callBody,up,down,buy,sell});
   const text=plainText(dateStr);
 
-  // Create draft campaign to the paid group
-  const created=await mlPost('/campaigns',{
-    name:`C3 Weekly Seller Report ${dateStr}`,
-    type:'regular',
-    groups:[PAID_GROUP_ID],
-    emails:[{
+  // Send via Resend (test: to FROM_EMAIL only; switch to paid-group subscribers once confirmed)
+  const sent=await timedFetch('https://api.resend.com/emails',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      Authorization:`Bearer ${RESEND_API_KEY}`,
+    },
+    body:JSON.stringify({
+      from:`${FROM_NAME} <${FROM_EMAIL}>`,
+      to:[FROM_EMAIL],
       subject:callTitle,
-      from_name:FROM_NAME,
-      from:FROM_EMAIL,
-      content:htmlEmail,
-      plain_text:text,
-    }],
+      html:htmlEmail,
+      text:text,
+    }),
   });
 
-  if(!created.ok){
-    return new Response(JSON.stringify({ok:false,stage:'create',status:created.status,detail:created.json||created.text}),{status:502,headers:{'Content-Type':'application/json'}});
+  if(!sent.ok){
+    const detail=await sent.text();
+    return new Response(JSON.stringify({ok:false,stage:'send',status:sent.status,detail}),{status:502,headers:{'Content-Type':'application/json'}});
   }
-  const campaignId=created.json?.data?.id||null;
 
   return new Response(JSON.stringify({
     ok:true,
-    campaignId,
-    message:'Draft created in MailerLite. Review it, then send from the dashboard.',
-    editUrl:campaignId?`https://dashboard.mailerlite.com/campaigns/${campaignId}/edit`:null,
+    message:'Weekly report sent via Resend.',
     counts:{up:up.length,down:down.length,buy:buy.length,sell:sell.length},
   }),{status:200,headers:{'Content-Type':'application/json'}});
 };
