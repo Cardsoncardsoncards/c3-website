@@ -3,20 +3,16 @@ game: mtg
 title: "How to Play MTG Sealed Deck Format at Home"
 description: "MTG Sealed is one of the most fun casual formats and doesn't require any existing collection. This guide shows how to run a Sealed Deck night at."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - mtg
-  - sealed
-  - formats
-  - game-night
+category: buying-guides
+tags: post
 emoji: "📦"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+MTG Sealed Deck is one of the most equitable formats in the game. Everyone opens 6 booster packs, builds a 40-card deck from those 84 cards plus basic lands, and plays with what they have. No existing collection. No pre-built decks. Random sealed pools that every player builds from scratch. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 MTG Sealed Deck is one of the most equitable formats in the game. Everyone opens 6 booster packs, builds a 40-card deck from those 84 cards plus basic lands, and plays with what they have. No existing collection. No pre-built decks. Random sealed pools that every player builds from scratch.
 
@@ -75,7 +71,7 @@ These shared experiences make Sealed night conversations that continue for weeks
 
 **For beginners specifically**: Sealed is more forgiving than Draft (no pick pressure) and more equitable than bring-your-own-deck (no collection advantage). It's one of the best entry points for new MTG players who want to experience more than just Starter Kit decks.
 
-Check what booster packs are currently available in Australia at the [C3 shop](/shop.html#mtg).
+Check what booster packs are currently available in Australia at the [C3 shop](/shop).
 
 
 ## Deckbuilding Rules for Sealed
@@ -102,7 +98,7 @@ In Sealed Deck, you open 6 booster packs and build a 40-card minimum deck using 
 
 You need 6 booster packs per player. Play Booster boxes (36 packs) cover 6 players. Draft Booster boxes (36 packs) also work. Set Booster boxes contain 30 packs and work for 5 players.
 
-Current MTG booster boxes in Australia are available at local game stores and on Amazon AU. The [C3 shop](/shop.html#mtg) lists confirmed current Amazon AU options with Australian shipping.
+Current MTG booster boxes in Australia are available at local game stores and on Amazon AU. The [C3 shop](/shop) lists confirmed current Amazon AU options with Australian shipping.
 
 Use the [C3 EV Calculator](/ev-calculator) to check whether the current box price makes sense for your event before purchasing.
 
@@ -114,7 +110,17 @@ After a Sealed event, players keep their pools. This is part of the appeal: ever
 
 Draft requires all players to pass packs simultaneously, which needs synchronised attention and more rules knowledge. Sealed gives players 30 minutes to build at their own pace with no time pressure during deckbuilding. For groups with mixed experience levels, Sealed is significantly more accessible.
 
-Check the [C3 Release Calendar](/calendar) for upcoming Sealed events at local game stores in Australia if you want a facilitated experience before running your own.
+Check the [C3 Release Calendar](/market) for upcoming Sealed events at local game stores in Australia if you want a facilitated experience before running your own.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "Why MTG Cards Cost More in Australia Than the US"
-description: "Australian MTG prices are consistently higher than US prices. This guide explains exactly why the gap exists — and practical ways to reduce what you."
+description: "Australian MTG prices are consistently higher than US prices. This guide explains exactly why the gap exists, and practical ways to reduce what you."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - pricing
-  - australia
-  - buying-tips
+tags: post
 emoji: "🇦🇺"
-affiliate_disclaimer: false
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&campid=5339146789"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+If you've ever compared Australian MTG prices to US prices, you've noticed the gap. A card selling for US$10 on TCGplayer often sells for AU$20 to AU$25 on eBay AU. That's not just the exchange rate: even after converting, Australian prices run 15% to 30% higher than US equivalents in many cases. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 If you've ever compared Australian MTG prices to US prices, you've noticed the gap. A card selling for US$10 on TCGplayer often sells for AU$20 to AU$25 on eBay AU. That's not just the exchange rate: even after converting, Australian prices run 15% to 30% higher than US equivalents in many cases.
 
@@ -56,7 +52,7 @@ New sets release in Australia at the same time as the US (since 2022 Wizards sta
 
 **Shop eBay AU aggressively.** eBay AU is the most competitive Australian TCG marketplace. Sellers undercut each other and Buy It Now prices reflect market reality. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles, and you can search [all eBay AU listings here](https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&campid=5339146789).
 
-**Use the C3 Card Vault to track prices.** The [C3 MTG Card Vault](/cards/mtg) shows live AUD prices on over 96,000 cards sourced from eBay AU data. Check here before buying to confirm you're paying a fair Australian market rate.
+**Use the C3 Card Vault to track prices.** The [C3 MTG card hub](/cards/mtg) shows live AUD prices on over 96,000 cards sourced from eBay AU data. Check here before buying to confirm you're paying a fair Australian market rate.
 
 **Check international sellers on eBay.** Some international sellers ship to Australia at reasonable postage rates. For high-value singles (AU$40+), international sourcing can save money even with postage costs.
 
@@ -72,9 +68,16 @@ The practical response is to buy locally where possible, use price tracking to t
 
 Check live AUD prices at the [C3 Card Vault](/cards/mtg) before any significant MTG purchase.
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -85,4 +88,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

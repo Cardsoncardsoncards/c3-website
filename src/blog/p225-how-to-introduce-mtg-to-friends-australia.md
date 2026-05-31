@@ -3,20 +3,16 @@ game: mtg
 title: "How to Introduce MTG to Friends Who Have Never Played"
 description: "Getting your friends into Magic: The Gathering is the best thing you can do for your Commander pod. This guide covers exactly how to introduce."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - mtg
-  - beginners
-  - commander
-  - game-night
+category: buying-guides
+tags: post
 emoji: "👥"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+The hardest part of growing your Commander pod isn't finding people. it's getting them through the first game. Most people who try MTG for the first time and don't enjoy it had a bad introduction: too many rules at once, decks too complex, someone correcting them every turn. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 The hardest part of growing your Commander pod isn't finding people. it's getting them through the first game. Most people who try MTG for the first time and don't enjoy it had a bad introduction: too many rules at once, decks too complex, someone correcting them every turn.
 
@@ -78,11 +74,10 @@ If they enjoy the Starter Kit experience and you want to introduce Commander:
 
 ## Where to Get Teaching Materials
 
-The [C3 shop](/shop.html#mtg) stocks MTG Starter Kits and Commander precons. The [What Is Commander format guide](/blog/what-is-mtg-commander-format-australia/) is written for complete beginners and shareable with new players. The [how to play MTG rules guide](/blog/how-to-play-mtg-rules-australia/) covers the full rules once someone is ready for them.
+The [C3 shop](/shop) stocks MTG Starter Kits and Commander precons. The [What Is Commander format guide](/blog/what-is-mtg-commander-format-australia) is written for complete beginners and shareable with new players. The [how to play MTG rules guide](/blog/how-to-play-mtg-rules-australia) covers the full rules once someone is ready for them.
 
 ---
 
-*See also: [Commander Pod Night Guide Australia](/blog/commander-pod-night-guide-australia/) and [Budget Commander Decks Under AU$100](/blog/budget-commander-deck-under-100-australia/).*
 
 
 ## What to Actually Say When You Introduce MTG
@@ -127,7 +122,17 @@ If they enjoyed it, offer to play again immediately. Enthusiasm drops quickly if
 
 If they want to build their own deck, start with the [C3 Random Commander Generator](/cards/mtg/random-commander) to pick a Commander they find interesting, then use the [C3 Card Compare tool](/compare) to check prices on the singles they'll need.
 
-If they want to know more about the game in general, our [MTG beginner guide](/blog/what-is-magic-the-gathering-australia/) covers everything without overwhelming context.
+If they want to know more about the game in general, our [MTG beginner guide](/blog/what-is-magic-the-gathering-australia) covers everything without overwhelming context.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -138,4 +143,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

@@ -3,18 +3,10 @@ game: lorcana
 title: "What Is Disney Lorcana? The Complete Beginner's Guide for Australians"
 description: "Never heard of Disney Lorcana or not sure if it's worth starting? This plain-English guide covers how the game works, what to buy first in."
 date: 2026-04-07
-category: "beginner-guides"
-tags:
-  - post
-  - lorcana
-  - beginners
-  - game-overview
-  - buying-guides
+category: buying-guides
+tags: post
 emoji: "🏰"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#lorcana"
-featured: false
 layout: post
 ---
 
@@ -22,10 +14,9 @@ Disney Lorcana launched in 2023 and quickly became one of the fastest-growing tr
 
 If you've seen the cards in a game store or had a family member go all-in on Lorcana, this guide explains what the game actually is, how it works, and what an Australian beginner should buy first.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Disney Lorcana is a two-player trading card game featuring Disney characters across all eras and franchises. Players build 60-card decks using Inkable cards, play characters to gain Lore, and race to reach 20 Lore before their opponent. It's easier to learn than Magic: The Gathering, has strong collector appeal beyond just players, and is well supported in Australia. A Starter Deck or the Illumineer's Trove gift set are the best entry points.</p>
-</div>
+## Quick Answer
+
+Disney Lorcana is a two-player trading card game featuring Disney characters across all eras and franchises. Players build 60-card decks using Inkable cards, play characters to gain Lore, and race to reach 20 Lore before their opponent. It's easier to learn than Magic: The Gathering, has strong collector appeal beyond just players, and is well supported in Australia. A Starter Deck or the Illumineer's Trove gift set are the best entry points.
 
 ## How Disney Lorcana Works
 
@@ -109,28 +100,21 @@ This broader audience is both a strength (larger total market) and something to 
 
 Lorcana is well distributed in Australia. Amazon AU stocks a strong range across current and recent sets. Local game stores carry Lorcana alongside other TCGs. Major retailers including JB Hi-Fi and Big W have stocked Lorcana at various points.
 
-Pricing on Amazon AU follows the same pattern as other imported TCGs. higher than US retail due to exchange rates, import costs, and GST. Booster Displays typically run AU$130–170. Illumineer's Troves run AU$70–100. Starter Decks run AU$20–35.
+Pricing on Amazon AU follows the same pattern as other imported TCGs. higher than US retail due to exchange rates, import costs, and GST. Booster Displays typically run AU$130, 170. Illumineer's Troves run AU$70, 100. Starter Decks run AU$20, 35.
 
 
-Think you know this game? Test it at the [C3 TCG Quiz](/quiz). Questions cover cards, rules, set knowledge, and format history.
+Think you know this game? Test it at the [C3 TCG Quiz](/play). Questions cover cards, rules, set knowledge, and format history.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Is Disney Lorcana Worth Starting in 2026? An Australian Take](/blog/is-disney-lorcana-worth-starting-2026-australia/)
-- [Best Lorcana Booster Boxes to Buy in Australia](/blog/best-lorcana-booster-boxes-australia/)
-- [Lorcana vs Pokemon TCG: Which Is Better for Beginners in Australia?](/blog/lorcana-vs-pokemon-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [Is Disney Lorcana Worth Starting in 2026? An Australian Take](/blog/is-disney-lorcana-worth-starting-2026-australia)
+- [Best Lorcana Booster Boxes to Buy in Australia](/blog/best-lorcana-booster-boxes-australia)
+- [Lorcana vs Pokemon TCG: Which Is Better for Beginners in Australia?](/blog/lorcana-vs-pokemon-australia)
 
-**Browse current Disney Lorcana products on Amazon AU.**
-Booster Displays, Illumineer's Troves, and Starter Decks. all confirmed in stock.
-
-[Shop Lorcana on Amazon AU →](/shop.html#lorcana)
-
-</div>
 
 ## Frequently Asked Questions
 

@@ -1,22 +1,18 @@
 ---
 game: one-piece
 title: "One Piece TCG Deck Building Guide for Australian Beginners"
-description: "Building your first One Piece Card Game deck in Australia — how to choose a Leader, how DON!! affects your build, what to buy first."
+description: "Building your first One Piece Card Game deck in Australia, how to choose a Leader, how DON!! affects your build, what to buy first."
 date: 2026-05-05
-category: "buying-guides"
-tags:
-  - post
-  - one-piece
-  - deck-building
-  - beginners
-  - australia
+category: buying-guides
+tags: post
 emoji: "🏴‍☠️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#one-piece"
-featured: false
 layout: post
----
+---## Quick Answer
+
+One Piece Card Game deck building starts with one decision: which Leader card. Your Leader defines your deck's colour identity (which cards you can include), your win condition, and your playstyle. See current prices at [/cards/one-piece](/cards/one-piece).
+
+
 
 One Piece Card Game deck building starts with one decision: which Leader card. Your Leader defines your deck's colour identity (which cards you can include), your win condition, and your playstyle.
 
@@ -33,7 +29,7 @@ Each deck uses exactly one Leader card. Leaders have:
 
 Your Leader choice is the most important deckbuilding decision. The easiest starting approach is to buy a Starter Deck. pre-built decks with 50 cards and one Leader included. This gives you a functional deck to learn with before you start customising.
 
-**Current Australian Starter Decks**: check the [C3 shop](/shop.html#one-piece) for available options.
+**Current Australian Starter Decks**: check the [C3 shop](/shop-piece) for available options.
 
 ## Step 2: Understand the Colour System
 
@@ -92,23 +88,21 @@ The tension is permanent attachment (stays all game, making that card stronger) 
 
 **Expand**: if you enjoy the game after your first month, consider a booster box from your current set to expand your card pool.
 
-See [Best One Piece TCG Booster Boxes in Australia](/blog/best-one-piece-tcg-booster-boxes-australia/) for box recommendations.
+See [Best One Piece TCG Booster Boxes in Australia](/blog/best-one-piece-tcg-booster-boxes-australia) for box recommendations.
 
-Track your One Piece collection with the [free C3 tracker](/tracker.html).
+Track your One Piece collection with the [free C3 tracker](/tracker).
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+## The C3 Take
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/one-piece](/cards/one-piece) to make price-informed decisions every time.
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+## What to Read Next
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+- Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
+- Browse card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -119,4 +113,4 @@ The minimum entry cost depends on the game. Most TCGs have starter or preconstru
 Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
 
 ### Where can I find other One Piece players in Australia?
-Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/market) for upcoming events near you.

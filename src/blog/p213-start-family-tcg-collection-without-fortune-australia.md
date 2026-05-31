@@ -1,22 +1,18 @@
 ---
-game: tcg
+game: general
 title: "How to Start a Family TCG Collection in Australia"
-description: "A family TCG collection can become a shared hobby for years — or an expensive impulse that takes over. This guide shows Australian families how to."
+description: "A family TCG collection can become a shared hobby for years, or an expensive impulse that takes over. This guide shows Australian families how to."
 date: 2026-05-05
-category: "buying-guides"
-tags:
-  - post
-  - general-tcg
-  - families
-  - budget
-  - collecting
+category: buying-guides
+tags: post
 emoji: "👨‍👩‍👧‍👦"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
----
+---## Quick Answer
+
+A shared family TCG collection is one of the most sustainable ways to engage with the hobby. Everyone contributes, everyone plays with the same cards, and the cost is distributed across the household rather than concentrated on one person's budget. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 A shared family TCG collection is one of the most sustainable ways to engage with the hobby. Everyone contributes, everyone plays with the same cards, and the cost is distributed across the household rather than concentrated on one person's budget.
 
@@ -70,7 +66,7 @@ Buy storage before you need it. Three months of booster packs produces hundreds 
 
 For valuable cards: a 9-pocket binder (approximately AU$10 to AU$20) for display and protection of the best pulls.
 
-See our [TCG card storage guide](/blog/tcg-card-storage-solutions-australia/) for more options.
+See our [TCG card storage guide](/blog/tcg-card-storage-solutions-australia) for more options.
 
 ## The Game Night Structure
 
@@ -80,23 +76,21 @@ Rotate who chooses the format: one month is Pokemon, next month is a Commander d
 
 ## Tracking the Family Collection
 
-The [free C3 collection tracker](/tracker.html) covers all major TCGs and is shareable via Google Sheets. One family member maintains the tracker, logging every significant card added to the collection. This serves two purposes: it shows the real value of the collection, and it prevents duplicate purchases.
+The [free C3 collection tracker](/tracker) covers all major TCGs and is shareable via Google Sheets. One family member maintains the tracker, logging every significant card added to the collection. This serves two purposes: it shows the real value of the collection, and it prevents duplicate purchases.
 
-Browse current starter products at the [C3 shop](/shop.html).
+Browse current starter products at the [C3 shop](/shop).
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+## The C3 Take
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+## What to Read Next
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -107,4 +101,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

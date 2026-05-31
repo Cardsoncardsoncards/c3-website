@@ -3,28 +3,18 @@ game: star-wars-unlimited
 title: "Star Wars Unlimited Booster Boxes in Australia"
 description: "Looking at Star Wars: Unlimited booster boxes in Australia? This guide covers current sets, realistic pull rates, where to buy."
 date: 2026-04-16
-category: "buying-guides"
-tags:
-  - post
-  - star-wars-unlimited
-  - booster-boxes
-  - buying-guides
-  - collectors
-  - players
+category: buying-guides
+tags: post
 emoji: "📦"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#starwars"
-featured: false
 layout: post
 ---
 
 Star Wars: Unlimited booster boxes follow a consistent structure across sets, making them easier to evaluate than the more fragmented product lines of some other TCGs. Understanding the box format, what you can realistically pull, and how the secondary market prices cards will help you decide whether sealed product is the right choice for your situation.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Star Wars: Unlimited booster boxes contain 24 packs of 16 cards each. Each box has a guaranteed Showcase card (the game's highest rarity) and multiple Rare and Legendary cards. Retail in Australia is typically AU$100–$140. For building a specific deck, buying singles is more cost-efficient. Boxes make the most sense for collectors, players who want the opening experience, or sets with strong overall card value across multiple rarities.</p>
-</div>
+## Quick Answer
+
+Star Wars: Unlimited booster boxes contain 24 packs of 16 cards each. Each box has a guaranteed Showcase card (the game's highest rarity) and multiple Rare and Legendary cards. Retail in Australia is typically AU$100, $140. For building a specific deck, buying singles is more cost-efficient. Boxes make the most sense for collectors, players who want the opening experience, or sets with strong overall card value across multiple rarities.
 
 ## Star Wars: Unlimited Booster Box Structure
 
@@ -37,11 +27,11 @@ A standard Star Wars: Unlimited Booster Box contains:
 The rarity breakdown per box is approximately:
 
 - 1 Showcase card (highest rarity, alternate art or treatment)
-- Multiple Legendary cards (typically 6–8 per box depending on the set)
+- Multiple Legendary cards (typically 6, 8 per box depending on the set)
 - A higher proportion of Rare and Uncommon cards than many other TCGs
 - Commons filling the remainder
 
-Star Wars: Unlimited uses a higher base card count per pack (16 vs the 9–10 typical in other TCGs), which means boxes contain more cards overall. This affects the per-card cost calculation when comparing to other games.
+Star Wars: Unlimited uses a higher base card count per pack (16 vs the 9, 10 typical in other TCGs), which means boxes contain more cards overall. This affects the per-card cost calculation when comparing to other games.
 
 ## Star Wars: Unlimited Rarity System
 
@@ -63,7 +53,7 @@ One notable design choice in Star Wars: Unlimited is that the game's most powerf
 
 Booster box EV in Star Wars: Unlimited varies by set and by how the secondary market prices each set's cards. The general pattern:
 
-- Showcase cards are the primary value driver in each box: a Showcase that's also a popular character can be worth AU$40–$100+
+- Showcase cards are the primary value driver in each box: a Showcase that's also a popular character can be worth AU$40, $100+
 - Legendary cards vary widely in value depending on competitive relevance
 - The strong Common and Uncommon card quality means more of the box has functional value even if it's not high monetary value
 
@@ -77,7 +67,7 @@ As with all TCGs, boxes with strong EV sell out quickly: the secondary market pr
 
 **Local game stores:** Best for current releases and for stores running organised play. Many LGS with an active SWU community pre-order allocations for popular sets.
 
-**Online TCG retailers:** Broader range of sets including older releases. Shipping typically AU$5–$15 for a box.
+**Online TCG retailers:** Broader range of sets including older releases. Shipping typically AU$5, $15 for a box.
 
 **eBay AU:** Useful for older sets no longer stocked in retail. Check sold prices to confirm you're not overpaying.
 
@@ -102,35 +92,35 @@ One point worth noting: Star Wars: Unlimited Showcase cards have shown stronger 
 
 **Related guides:**
 
-- [Star Wars: Unlimited Beginners Guide for Australian Players](/blog/star-wars-unlimited-beginners-guide-australia/)
-- [Best TCG Booster Boxes in Australia](/blog/best-tcg-booster-boxes-australia/)
-- [Which TCG Should You Start in Australia?](/blog/which-tcg-to-start-australia/)
-
-</div>
-
-<div class="cta-block">
-
-**Browse Star Wars: Unlimited singles and sealed product at the C3 eBay store.**
-
-[Shop Star Wars: Unlimited at C3](/shop.html#starwars)
+- [Star Wars: Unlimited Beginners Guide for Australian Players](/blog/star-wars-unlimited-beginners-guide-australia)
+- [Best TCG Booster Boxes in Australia](/blog/best-tcg-booster-boxes-australia)
+- [Which TCG Should You Start in Australia?](/blog/which-tcg-to-start-australia)
 
 </div>
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/star-wars-unlimited](/cards/star-wars-unlimited) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
+- Browse card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
 **How much does a Star Wars: Unlimited booster box cost in Australia?**
-Current set booster boxes retail for AU$100–$140 in Australia. Pricing varies between retailers and by set. Two-Player Starter Sets are separate products retailing for AU$20–$30.
+Current set booster boxes retail for AU$100, $140 in Australia. Pricing varies between retailers and by set. Two-Player Starter Sets are separate products retailing for AU$20, $30.
 
 **How many packs are in a Star Wars: Unlimited booster box?**
 24 packs per booster box, with 16 cards per pack, totalling 384 cards per box.
 
 **How many Legendaries are in a Star Wars: Unlimited booster box?**
-Typically 6–8 Legendary cards per box, though this varies by set. Check official set information for the specific product you're considering.
+Typically 6, 8 Legendary cards per box, though this varies by set. Check official set information for the specific product you're considering.
 
 **Are Star Wars: Unlimited booster boxes worth opening?**
 It depends on the set's current EV. Check eBay AU sold listings for the set's top cards and compare the expected pull value to the retail box price. Some sets return close to retail in card value; others fall well below.

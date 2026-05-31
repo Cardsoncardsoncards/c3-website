@@ -4,19 +4,15 @@ title: "How to Price MTG Singles for eBay Australia: A Seller's Complete Guide"
 description: "Pricing MTG cards correctly on eBay AU is the difference between cards that sell and cards that sit. This guide covers how to find the right price."
 date: 2026-05-05
 category: "selling-guides"
-tags:
-  - post
-  - mtg
-  - selling
-  - ebay
-  - pricing
+tags: post
 emoji: "🏷️"
-affiliate_disclaimer: false
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+The most common mistake new MTG sellers on eBay AU make is pricing from wishful thinking rather than current market data. A card that sold for AU$40 three months ago may be selling for AU$25 today. A card you bought for AU$10 may now sell for AU$35. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 The most common mistake new MTG sellers on eBay AU make is pricing from wishful thinking rather than current market data. A card that sold for AU$40 three months ago may be selling for AU$25 today. A card you bought for AU$10 may now sell for AU$35.
 
@@ -51,7 +47,7 @@ Always match printing in your sold listing comparison.
 
 ## Step 4: Check the C3 Card Vault for AUD Benchmarks
 
-The [C3 MTG Card Vault](/cards/mtg) tracks live AUD pricing for MTG cards using eBay AU sold data. Search your card and see the current price without needing to manually filter eBay.
+The [C3 MTG card hub](/cards/mtg) tracks live AUD pricing for MTG cards using eBay AU sold data. Search your card and see the current price without needing to manually filter eBay.
 
 Use this as a starting point, then check the eBay sold filter for the most recent 2 to 4 weeks of transactions to confirm the price is current.
 
@@ -108,11 +104,18 @@ For a AU$20 card: after fees and postage, you'll typically net AU$13 to AU$16. K
 
 ---
 
-*Track your listings and sales with the [free C3 collection tracker](/tracker.html). Check live AUD card prices at the [C3 MTG Card Vault](/cards/mtg).*
+*Track your listings and sales with the [free C3 collection tracker](/tracker). Check live AUD card prices at the [C3 MTG card hub](/cards/mtg).*
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -120,7 +123,7 @@ For a AU$20 card: after fees and postage, you'll typically net AU$13 to AU$16. K
 eBay returns more money per card but takes more time and has fees of roughly 13-15% all-in. Buylists pay less (typically 30-50% of market value in cash) but are instant. Use eBay for individual valuable cards. Use buylists for bulk lots where eBay effort is not worthwhile.
 
 ### What fees does eBay charge for selling TCG cards in Australia?
-eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia/).
+eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia).
 
 ### How do I know what my TCG cards are worth in Australia?
 Check eBay AU completed listings (filter to sold listings) for the most accurate local pricing. The [C3 Card Vault](/cards) also shows live pricing from eBay AU sold data across multiple TCGs.

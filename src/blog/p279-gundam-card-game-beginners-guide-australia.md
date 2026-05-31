@@ -73,4 +73,4 @@ The honest gap is community size. If you need a large local scene right now, One
 
 - Browse Gundam cards at [/cards/gundam](/cards/gundam)
 - Find which TCG fits your style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming Gundam releases at [/calendar](/calendar)
+- Check upcoming Gundam releases at [/calendar](/market)

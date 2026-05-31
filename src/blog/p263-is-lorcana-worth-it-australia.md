@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Is Lorcana Worth It in Australia? (2026 Honest Review)"
 description: "Disney Lorcana is growing fast in Australia. Here's an honest breakdown of costs, card value, and who the game actually suits before you spend a dollar."

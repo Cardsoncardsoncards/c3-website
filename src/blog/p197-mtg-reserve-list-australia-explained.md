@@ -4,19 +4,15 @@ title: "MTG Reserve List in Australia Explained"
 description: "The MTG Reserved List guarantees certain cards will never be reprinted. This guide explains what the list is, why it exists."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - reserved-list
-  - pricing
-  - collecting
+tags: post
 emoji: "📜"
-affiliate_disclaimer: false
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=reserved+list+mtg+singles&campid=5339146789"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+The MTG Reserved List is a commitment made by Wizards of the Coast in 1996 to never reprint certain Magic: The Gathering cards. For collectors and investors, it's one of the most consequential policies in the TCG industry. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 The MTG Reserved List is a commitment made by Wizards of the Coast in 1996 to never reprint certain Magic: The Gathering cards. For collectors and investors, it's one of the most consequential policies in the TCG industry.
 
@@ -62,7 +58,7 @@ For practical purposes: original printings of Reserved List cards maintain their
 
 ## Checking Reserved List Card Prices in Australia
 
-The [C3 MTG Card Vault](/cards/mtg) tracks live AUD prices for Reserved List cards on eBay AU. Use it to check current market values for any specific card.
+The [C3 MTG card hub](/cards/mtg) tracks live AUD prices for Reserved List cards on eBay AU. Use it to check current market values for any specific card.
 
 For older Reserved List cards, always check the specific printing. Alpha, Beta, Unlimited, and Revised versions of the same card have meaningfully different values.
 
@@ -72,7 +68,17 @@ If you're playing Legacy or Commander and need a Dual Land or other Reserved Lis
 
 If you're speculating purely for price appreciation: Reserved List cards have historically appreciated, but past performance is not predictive. Market liquidity is lower than typical cards. buying and selling takes longer because the buyer pool is smaller.
 
-Track any Reserved List cards in your collection with the [free C3 tracker](/tracker.html) to monitor value over time.
+Track any Reserved List cards in your collection with the [free C3 tracker](/tracker) to monitor value over time.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -83,4 +89,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

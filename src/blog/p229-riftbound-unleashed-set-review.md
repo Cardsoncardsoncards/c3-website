@@ -5,10 +5,14 @@ description: "Riftbound Unleashed launched May 8 with 220+ cards, the new Ultima
 date: 2026-05-07
 category: buying-guides
 emoji: "🃏"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Riftbound Set 3, Unleashed, is the biggest release in the game's short history. More cards, a new rarity tier, three new mechanics, and four new Champions arriving just before the first Australian Regional Qualifier. If you are deciding whether to buy a box, chase specific singles, or sit this one out, here is the breakdown. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
 
 Riftbound Set 3, Unleashed, is the biggest release in the game's short history. More cards, a new rarity tier, three new mechanics, and four new Champions arriving just before the first Australian Regional Qualifier. If you are deciding whether to buy a box, chase specific singles, or sit this one out, here is the breakdown.
 
@@ -56,23 +60,18 @@ Our recommendation with our four boxes: open two after RQ Sydney when the single
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games.
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+## The C3 Take
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+## What to Read Next
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -83,4 +82,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

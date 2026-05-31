@@ -4,19 +4,15 @@ title: "Buylist vs eBay Australia: Which Gets You More Money for MTG"
 description: "When selling MTG cards in Australia, you have two main options: sell to a buylist or sell on eBay. This guide compares both options across real."
 date: 2026-05-05
 category: "selling-guides"
-tags:
-  - post
-  - mtg
-  - selling
-  - buylist
-  - ebay
+tags: post
 emoji: "⚖️"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+When you have MTG cards to sell in Australia, two options dominate: sell to a local game store or online buylist, or list on eBay. Both have advantages. The right choice depends on your circumstances. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 When you have MTG cards to sell in Australia, two options dominate: sell to a local game store or online buylist, or list on eBay. Both have advantages. The right choice depends on your circumstances.
 
@@ -101,15 +97,21 @@ The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkri
 
 For cards under AU$5, bulk lots are more efficient.
 
-Track your cards and their values with the [free C3 collection tracker](/tracker.html) before deciding which selling route to take.
+Track your cards and their values with the [free C3 collection tracker](/tracker) before deciding which selling route to take.
 
 ---
 
-*See also: [The Real Cost of Selling Cards on eBay Australia](/blog/real-cost-selling-cards-ebay-australia/) and [Where to Sell MTG Cards for the Best Price in Australia](/blog/where-to-sell-mtg-best-price-australia/).*
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -117,7 +119,7 @@ Track your cards and their values with the [free C3 collection tracker](/tracker
 eBay returns more money per card but takes more time and has fees of roughly 13-15% all-in. Buylists pay less (typically 30-50% of market value in cash) but are instant. Use eBay for individual valuable cards. Use buylists for bulk lots where eBay effort is not worthwhile.
 
 ### What fees does eBay charge for selling TCG cards in Australia?
-eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia/).
+eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia).
 
 ### How do I know what my TCG cards are worth in Australia?
 Check eBay AU completed listings (filter to sold listings) for the most accurate local pricing. The [C3 Card Vault](/cards) also shows live pricing from eBay AU sold data across multiple TCGs.

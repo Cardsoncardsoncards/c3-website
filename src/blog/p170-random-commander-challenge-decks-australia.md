@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "Random Commander Challenge: 4 Builds, One Roll"
-description: "We used the C3 Random Commander Generator to roll 4 random Commanders — then actually built decks around them. Here's what we rolled, what it cost."
+description: "We used the C3 Random Commander Generator to roll 4 random Commanders, then actually built decks around them. Here's what we rolled, what it cost."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - mtg
-  - commander
-  - random-commander
-  - deck-building
+category: buying-guides
+tags: post
 emoji: "🎲"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=mtg+commander+singles&campid=5339146789"
-featured: false
 layout: post
----
+---## Quick Answer
+
+We built the [C3 Random Commander Generator](/cards/mtg/random-commander), and then decided to actually use it ourselves. The rules: roll 4 Commanders, no rerolls, build a playable deck around whatever we got. AU$100 budget per deck.
+
+
 
 We built the [C3 Random Commander Generator](/cards/mtg/random-commander), and then decided to actually use it ourselves. The rules: roll 4 Commanders, no rerolls, build a playable deck around whatever we got. AU$100 budget per deck.
 
@@ -84,11 +80,21 @@ Kwain lost the most consistently but created the funniest political tension. Tob
 
 The [C3 Random Commander Generator](/cards/mtg/random-commander) lets you filter by colour identity, mana value, and count. Run it with your playgroup and see what you roll.
 
-Check the current AUD price of any card you roll at the [C3 MTG Card Vault](/cards/mtg). every card page shows live eBay AU pricing.
+Check the current AUD price of any card you roll at the [C3 MTG card hub](/cards/mtg). every card page shows live eBay AU pricing.
 
 ---
 
 *What's the best Commander you've ever rolled randomly? The most unexpected? Drop a reply on our socials.*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

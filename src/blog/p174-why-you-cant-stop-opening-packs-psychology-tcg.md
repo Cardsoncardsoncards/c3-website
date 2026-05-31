@@ -1,22 +1,18 @@
 ---
-game: tcg
+game: general
 title: "Why You Can't Stop Opening Packs: The Psychology of the TCG Pull"
-description: "There's a reason opening booster packs is so compelling. Variable reward, loss aversion, sunk cost thinking — this guide explains the psychology."
+description: "There's a reason opening booster packs is so compelling. Variable reward, loss aversion, sunk cost thinking, this guide explains the psychology."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - general-tcg
-  - psychology
-  - collecting
-  - booster-boxes
+category: buying-guides
+tags: post
 emoji: "🧠"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+If you've ever torn open a Pokemon booster pack with your heart rate slightly elevated, you already know something is happening there that goes beyond just looking at cardboard. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 If you've ever torn open a Pokemon booster pack with your heart rate slightly elevated, you already know something is happening there that goes beyond just looking at cardboard.
 
@@ -56,13 +52,13 @@ Limited print sets amplify this by adding a deadline. If a set goes out of print
 
 Knowing the psychology doesn't make the experience less enjoyable. It does make it easier to make decisions you won't regret.
 
-**Before buying sealed product, calculate the expected value.** The [C3 EV Calculator](/ev-calculator.html) lets you see the average expected return on specific MTG sets. Knowing that opening a box has an expected value of 70% of its cost lets you make an informed decision about whether the entertainment value of the opening is worth the gap.
+**Before buying sealed product, calculate the expected value.** The [C3 EV Calculator](/tools) lets you see the average expected return on specific MTG sets. Knowing that opening a box has an expected value of 70% of its cost lets you make an informed decision about whether the entertainment value of the opening is worth the gap.
 
 **Set a session limit before you start.** Decide before you open the first pack how many packs you're opening. The decision in the middle of a session. surrounded by open wrappers and hoping for a better pull. is the worst time to make it.
 
-**Track what you have.** The [free C3 collection tracker](/tracker.html) lets you log every card you pull and see its current value. This turns the experience from feeling compulsive to feeling analytical: you know exactly what you have, what it's worth, and what you still need.
+**Track what you have.** The [free C3 collection tracker](/tracker) lets you log every card you pull and see its current value. This turns the experience from feeling compulsive to feeling analytical: you know exactly what you have, what it's worth, and what you still need.
 
-**Singles are almost always more efficient.** If you want a specific card, buying the single on eBay is nearly always cheaper than opening packs hoping to hit it. The [C3 MTG Card Vault](/cards/mtg) shows eBay AU pricing on every card. Compare the single price to the expected value calculation before opening.
+**Singles are almost always more efficient.** If you want a specific card, buying the single on eBay is nearly always cheaper than opening packs hoping to hit it. The [C3 MTG card hub](/cards/mtg) shows eBay AU pricing on every card. Compare the single price to the expected value calculation before opening.
 
 ## It's Still Worth It
 
@@ -74,11 +70,18 @@ The psychology is designed into the product. Knowing it's there is the first ste
 
 ---
 
-*Check expected value on MTG sets before opening with the [C3 EV Calculator](/ev-calculator.html). Track what you pull with the [free collection tracker](/tracker.html).*
+*Check expected value on MTG sets before opening with the [C3 EV Calculator](/tools). Track what you pull with the [free collection tracker](/tracker).*
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -89,4 +92,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

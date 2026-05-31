@@ -1,32 +1,22 @@
 ---
-game: tcg
+game: general
 title: "C3 TCG Quiz: Test Your Knowledge Across 8 Card Games"
 description: "The C3 TCG Quiz covers MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Riftbound, Dragon Ball Super, and Star Wars Unlimited. Rules, history, cards, and formats. How well do you know your game?"
 date: 2026-05-16
-category: "tools-and-trackers"
-tags:
-  - post
-  - tools-and-trackers
-  - quiz
-  - mtg
-  - pokemon
-  - lorcana
+category: buying-guides
+tags: post
 emoji: "🧠"
-affiliate_disclaimer: false
-cta_type: "quiz"
-cta_link: "/quiz"
-featured: false
+affiliate_disclaimer: true
 layout: post
 ---
 
-The [C3 TCG Quiz](/quiz) tests your knowledge across the eight trading card games covered on this site. It is free, takes about five minutes, and gives you an immediate score with breakdowns by category.
+The [C3 TCG Quiz](/play) tests your knowledge across the eight trading card games covered on this site. It is free, takes about five minutes, and gives you an immediate score with breakdowns by category.
 
 This post covers what the quiz tests, how it works, and which specific quizzes are available for each game.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Go to <a href="/quiz">cardsoncardsoncards.com.au/quiz</a> to take the quiz. No account needed. Questions cover card rules, set history, format knowledge, and card identification. Scores are tracked so you can improve over repeat attempts.</p>
-</div>
+## Quick Answer
+
+Go to <a href="/quiz">cardsoncardsoncards.com.au/quiz</a> to take the quiz. No account needed. Questions cover card rules, set history, format knowledge, and card identification. Scores are tracked so you can improve over repeat attempts.
 
 ## What the C3 TCG Quiz Covers
 
@@ -36,7 +26,7 @@ The quiz is structured across eight games with questions at multiple difficulty 
 
 The MTG quiz covers the broadest range of topics because MTG has the deepest history of any TCG. Question categories:
 
-**Rules and mechanics**: Layers, priority, the stack, triggered vs activated vs static abilities, how replacement effects interact. These are the questions that trip up casual players who have been playing for years but never read the comprehensive rules.
+**Rules and mechanics**: Layers, priority, the stack, triggered vs activated vs static abilities, how replacement effects interact. These are the questions that trip up casual players who have been playing for years but never read the complete rules.
 
 **Format knowledge**: What is legal in Standard vs Pioneer vs Modern vs Legacy? Which cards are on the Commander ban list? What is the difference between Commander and cEDH?
 
@@ -44,7 +34,7 @@ The MTG quiz covers the broadest range of topics because MTG has the deepest his
 
 **Card identification**: Name the card from the artwork or effect description. Recognise alternate art treatments and older card frames.
 
-[Take the MTG Quiz →](/quiz)
+[Take the MTG Quiz →](/play)
 
 ### Pokemon TCG Quiz
 
@@ -56,7 +46,7 @@ The Pokemon quiz focuses on three areas that separate casual collectors from com
 
 **Card values**: What makes a Special Illustration Rare different from a regular Illustration Rare? Which sets are considered the highest-value pulls in the current format?
 
-[Take the Pokemon Quiz →](/quiz)
+[Take the Pokemon Quiz →](/play)
 
 ### Disney Lorcana Quiz
 
@@ -68,7 +58,7 @@ Lorcana's quiz is particularly useful for players who joined recently and want t
 
 **Set knowledge**: Which Lorcana sets introduced which mechanics? What is an Epic rarity card and how does it differ from a Legendary?
 
-[Take the Lorcana Quiz →](/quiz)
+[Take the Lorcana Quiz →](/play)
 
 ### One Piece TCG Quiz
 
@@ -80,7 +70,7 @@ The One Piece quiz tests both game mechanics and IP knowledge. One Piece TCG has
 
 **Characters and arcs**: Which One Piece arc does each major Leader card come from? Which cards are Manga Rares and why are they valuable?
 
-[Take the One Piece Quiz →](/quiz)
+[Take the One Piece Quiz →](/play)
 
 ### Yu-Gi-Oh Quiz
 
@@ -94,7 +84,7 @@ Yu-Gi-Oh's quiz is the most demanding in terms of rules complexity. The game has
 
 **Banlist knowledge**: What does Forbidden mean versus Limited versus Semi-Limited? Which cards have been hit on recent banlists?
 
-[Take the Yu-Gi-Oh Quiz →](/quiz)
+[Take the Yu-Gi-Oh Quiz →](/play)
 
 ### Riftbound Quiz
 
@@ -106,7 +96,7 @@ The Riftbound quiz tests knowledge of the newest major TCG on the site. Because 
 
 **Champions and their play styles**: What is LeBlanc's primary game plan? What makes Jinx different from Ahri as a Champion? Which Champions were introduced in Unleashed?
 
-[Take the Riftbound Quiz →](/quiz)
+[Take the Riftbound Quiz →](/play)
 
 ### Dragon Ball Super Card Game Quiz
 
@@ -116,7 +106,7 @@ The Riftbound quiz tests knowledge of the newest major TCG on the site. Because 
 
 **Extra Cards**: How many Extra Cards can a deck include? When can Extra Cards be played?
 
-[Take the Dragon Ball Super Quiz →](/quiz)
+[Take the Dragon Ball Super Quiz →](/play)
 
 ### Star Wars Unlimited Quiz
 
@@ -126,7 +116,7 @@ The Riftbound quiz tests knowledge of the newest major TCG on the site. Because 
 
 **The two arenas**: What is the Ground Arena and the Space Arena? When can units attack the opponent's Base directly?
 
-[Take the Star Wars Unlimited Quiz →](/quiz)
+[Take the Star Wars Unlimited Quiz →](/play)
 
 ## How Scores Work
 
@@ -144,25 +134,23 @@ It also works as a study tool. If you are preparing for your first tournament, t
 
 If you beat 80% or above, share your result. The quiz results page has a share button. Let people know which game you scored highest on: and challenge them to beat it.
 
-[Take the C3 TCG Quiz →](/quiz)
+[Take the C3 TCG Quiz →](/play)
 
-<div class="tool-callout">
-<p>After the quiz, check your game's card prices at the <a href="/cards">C3 Card Vault</a> or compare two cards at the <a href="/compare">C3 Card Compare tool</a>.</p>
-</div>
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Use the C3 Card Compare Tool](/blog/how-to-use-c3-card-compare-tool/)
-- [How to Use the C3 Market Page](/blog/how-to-use-c3-market-page/)
-- [C3 Release Calendar 2026 for Australia](/blog/tcg-release-calendar-2026-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [How to Use the C3 Card Compare Tool](/blog/how-to-use-c3-card-compare-tool)
+- [How to Use the C3 Market Page](/blog/how-to-use-c3-market-page)
+- [C3 Release Calendar 2026 for Australia](/blog/tcg-release-calendar-2026-australia)
 
 ## Frequently Asked Questions
 
 ### Is the C3 TCG Quiz free?
-Yes. No account or login required. Go to [/quiz](/quiz) and start.
+Yes. No account or login required. Go to [/play](/play) and start.
 
 ### How many questions are in the quiz?
 Each game section has multiple questions covering rules, set history, format knowledge, and card identification. The total length varies by difficulty setting.

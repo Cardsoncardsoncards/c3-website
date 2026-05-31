@@ -4,19 +4,15 @@ title: "How Much Are Old Pokemon Cards Worth in Australia?"
 description: "Found a collection of old Pokemon cards? This honest guide explains which ones are actually valuable, how to check current Australian prices."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - pokemon
-  - collection
-  - pricing
-  - australia
+tags: post
 emoji: "💰"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Old Pokemon cards are in the news regularly because of specific high-profile auctions. The honest reality: most old Pokemon cards are worth very little. Some are worth significant money. Knowing which is which requires checking the right things. See current prices at [/cards/pokemon](/cards/pokemon).
+
+
 
 Old Pokemon cards are in the news regularly because of specific high-profile auctions. The honest reality: most old Pokemon cards are worth very little. Some are worth significant money. Knowing which is which requires checking the right things.
 
@@ -80,15 +76,21 @@ Grading makes sense for cards worth AU$100+ in Near Mint condition. The grading 
 
 Sleeve it immediately (don't clean it). Then check eBay AU sold prices for accurate current valuation. For anything potentially worth AU$100+, consider having it independently verified at a reputable card shop before selling.
 
-Track what you find with the [free C3 collection tracker](/tracker.html): log each card, its estimated condition, and its current value so you have a clear record.
+Track what you find with the [free C3 collection tracker](/tracker): log each card, its estimated condition, and its current value so you have a clear record.
 
 ---
 
-*See also: [How to Sell Pokemon Cards in Australia](/blog/how-to-sell-pokemon-cards-australia/).*
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -99,4 +101,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

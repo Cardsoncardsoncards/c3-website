@@ -1,22 +1,18 @@
 ---
-game: tcg
+game: general
 title: "TCG Flipping in Australia: Is It Worth Trying in 2026?"
 description: "Can you make money flipping TCG cards in Australia? An honest look at the real margins, time costs, and risks of buying and reselling MTG, Pokemon."
 date: 2026-05-05
 category: "selling-guides"
-tags:
-  - post
-  - general-tcg
-  - selling
-  - investing
-  - australia
+tags: post
 emoji: "📊"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+TCG flipping. buying cards at one price and selling at a higher price. is a real income source for some Australian collectors. Whether it's worth doing depends entirely on your available time, risk tolerance, and whether you enjoy the process enough that the work doesn't feel like work. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 TCG flipping. buying cards at one price and selling at a higher price. is a real income source for some Australian collectors. Whether it's worth doing depends entirely on your available time, risk tolerance, and whether you enjoy the process enough that the work doesn't feel like work.
 
@@ -98,15 +94,21 @@ It is not a viable side income strategy at small scale without specialisation. A
 
 For Australian players who want to make money from their card interest: selling your own collection efficiently (using eBay and C3 pricing tools) typically returns more per hour than buying-to-flip at small scale.
 
-Track all your card values and transactions with the [free C3 collection tracker](/tracker.html).
+Track all your card values and transactions with the [free C3 collection tracker](/tracker).
 
 ---
 
-*See also: [The Real Cost of Selling Cards on eBay Australia](/blog/real-cost-selling-cards-ebay-australia/)*
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -117,4 +119,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

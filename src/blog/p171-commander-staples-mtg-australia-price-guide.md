@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "MTG Commander Staples: Australia Price Guide"
-description: "The core cards that belong in almost every Commander deck — Sol Ring, Arcane Signet, Swords to Plowshares and more — with current AUD pricing for."
+description: "The core cards that belong in almost every Commander deck, Sol Ring, Arcane Signet, Swords to Plowshares and more, with current AUD pricing for."
 date: 2026-05-05
-category: "buying-guides"
-tags:
-  - post
-  - mtg
-  - commander
-  - staples
-  - price-guide
+category: buying-guides
+tags: post
 emoji: "⭐"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=commander+staples+mtg&campid=5339146789"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Every Commander deck is different, but some cards are good enough to include in almost every build regardless of theme or strategy. These are called staples: the baseline of Commander deckbuilding. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Every Commander deck is different, but some cards are good enough to include in almost every build regardless of theme or strategy. These are called staples: the baseline of Commander deckbuilding.
 
@@ -124,17 +120,23 @@ Green's only flexible removal spell. Destroys any permanent, gives opponent a 3/
 
 ## Current Prices in Australia
 
-Check live AUD prices on every card mentioned above at the [C3 MTG Card Vault](/cards/mtg). Prices change as sets reprint cards. some of the above may have recent reprints at lower prices.
+Check live AUD prices on every card mentioned above at the [C3 MTG card hub](/cards/mtg). Prices change as sets reprint cards. some of the above may have recent reprints at lower prices.
 
 For singles in Australia, the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks many Commander staples with direct eBay AU pricing.
 
 ---
 
-*See also: [Budget Commander Decks Under AU$100](/blog/budget-commander-deck-under-100-australia/) and the [C3 Random Commander Generator](/cards/mtg/random-commander).*
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

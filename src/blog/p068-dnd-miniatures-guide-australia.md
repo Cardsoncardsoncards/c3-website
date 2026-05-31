@@ -3,28 +3,18 @@ game: dnd
 title: "D&D Miniatures in Australia: What to Know Before You Buy"
 description: "D&D miniatures add a visual dimension to your game but navigating the options is confusing. This guide covers plastic vs resin vs metal minis,."
 date: 2026-04-09
-category: "buying-guides"
-tags:
-  - post
-  - dnd
-  - miniatures
-  - buying-guides
-  - tabletop-rpg
-  - accessories
+category: buying-guides
+tags: post
 emoji: "🧙"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
 Miniatures are one of the most optional parts of D&D that nevertheless make combat significantly clearer for many groups. They're also one of the more confusing product categories, with multiple formats, scales, and price points that aren't always obvious from a product listing. This guide covers what the options actually mean and what makes sense depending on how you play.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>D&D miniatures are optional visual aids for tracking combat positions on a grid. Pre-painted plastic sets (like WizKids Icons of the Realms) are ready to use out of the box. Unpainted sets (like WizKids Nolzur's Marvellous) are cheaper and meant for painting. Budget multi-packs of generic fantasy figures give the most pieces for the least money. You do not need miniatures to play D&D. many groups play "theatre of the mind" without any visual aids at all.</p>
-</div>
+## Quick Answer
+
+D&D miniatures are optional visual aids for tracking combat positions on a grid. Pre-painted plastic sets (like WizKids Icons of the Realms) are ready to use out of the box. Unpainted sets (like WizKids Nolzur's Marvellous) are cheaper and meant for painting. Budget multi-packs of generic fantasy figures give the most pieces for the least money. You do not need miniatures to play D&D. many groups play "theatre of the mind" without any visual aids at all.
 
 ## Do You Actually Need Miniatures?
 
@@ -70,7 +60,7 @@ The C3 D&D shop links to a range of miniature options currently available on Ama
 
 **Premium singles:** Individual large or boss-tier creatures. Froghemoth, Tree Blight, Demon Lords. Used for climactic encounters.
 
-Browse current availability in the [C3 D&D shop](/shop.html#dnd).
+Browse current availability in the [C3 D&D shop](/shop).
 
 ## Acrylic Standees as an Alternative
 
@@ -86,25 +76,18 @@ For DMs who want visual tracking of combat positions without the cost of a full 
 
 **For player character miniatures:** Most players prefer a single miniature representing their character specifically. WizKids produces a large range of character types and races. Custom 3D-printed options also exist through local printing services for players who want an exact match.
 
-**On storing miniatures:** A soft zipper case or divided storage box prevents miniatures from rubbing against each other and chipping paint. The [C3 D&D shop](/shop.html#dnd) includes storage bag options suitable for miniature transport.
+**On storing miniatures:** A soft zipper case or divided storage box prevents miniatures from rubbing against each other and chipping paint. The [C3 D&D shop](/shop) includes storage bag options suitable for miniature transport.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia/)
-- [D&D Battle Mats in Australia: A Practical Buying Guide](/blog/dnd-battle-mats-australia/)
-- [D&D Storage and Bags in Australia: Organising Your Gear](/blog/dnd-storage-bags-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia)
+- [D&D Battle Mats in Australia: A Practical Buying Guide](/blog/dnd-battle-mats-australia)
+- [D&D Storage and Bags in Australia: Organising Your Gear](/blog/dnd-storage-bags-australia)
 
-**Browse D&D miniatures, starter packs and accessories on Amazon AU.**
-All products confirmed available with Australian shipping.
-
-[Browse the D&D Shop →](/shop.html#dnd)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -121,7 +104,7 @@ Icons of the Realms are pre-painted, ready to use. Nolzur's Marvellous are unpai
 Yes. WizKids Icons of the Realms booster packs contain a random assortment of figures from a set. If you want specific figures without randomisation, look for single-figure releases or box sets with known contents.
 
 **Where can I buy D&D miniatures in Australia?**
-Amazon AU stocks a range of WizKids and third-party miniature sets with Australian shipping. The [C3 D&D shop](/shop.html#dnd) links to confirmed current stock across multiple price points. Local game stores in Australian cities also carry WizKids ranges.
+Amazon AU stocks a range of WizKids and third-party miniature sets with Australian shipping. The [C3 D&D shop](/shop) links to confirmed current stock across multiple price points. Local game stores in Australian cities also carry WizKids ranges.
 
 **Can I use coins or tokens instead of miniatures?**
 Yes. Many groups use coins, cardboard tokens, or anything that fits a grid square to track positions. This costs nothing and works fine. Miniatures are a quality-of-life upgrade, not a requirement.

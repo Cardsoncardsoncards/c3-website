@@ -1,22 +1,18 @@
 ---
 game: mtg
-title: "I Spent AU$50 Starting MTG — Here's Exactly What I Got and What I'd Do Differently"
+title: "I Spent AU$50 Starting MTG, Here's Exactly What I Got and What I'd Do Differently"
 description: "A real account of starting Magic: The Gathering from scratch with a AU$50 budget in Australia. What we bought, whether it worked, and what we'd."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - beginners
-  - budget
-  - buying-guide
+tags: post
 emoji: "💸"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+AU$50 is not a lot of money for a TCG. But it is enough to actually start playing MTG. if you spend it correctly. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 AU$50 is not a lot of money for a TCG. But it is enough to actually start playing MTG. if you spend it correctly.
 
@@ -82,13 +78,23 @@ But two people can have a genuinely fun hour of MTG with AU$33 in cards and AU$1
 
 ## Checking Prices Before You Buy
 
-Before buying any singles, check live AUD prices at the [C3 MTG Card Vault](/cards/mtg). The search shows current eBay AU pricing. so you know exactly what each card costs in Australia before committing.
+Before buying any singles, check live AUD prices at the [C3 MTG card hub](/cards/mtg). The search shows current eBay AU pricing. so you know exactly what each card costs in Australia before committing.
 
-The [free C3 collection tracker](/tracker.html) lets you log what you own and track your collection value as it grows.
+The [free C3 collection tracker](/tracker) lets you log what you own and track your collection value as it grows.
 
 ---
 
-*Browse MTG starter products at the [C3 shop](/shop.html#mtg).*
+*Browse MTG starter products at the [C3 shop](/shop).*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -99,4 +105,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

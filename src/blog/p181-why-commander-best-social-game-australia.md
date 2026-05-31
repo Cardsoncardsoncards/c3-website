@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "Why Commander Is the Best Social Game Most Australians Haven't Tried"
-description: "Commander isn't just a card game — it's one of the most socially engaging multiplayer experiences available. Here's why the format has taken over."
+description: "Commander isn't just a card game, it's one of the most socially engaging multiplayer experiences available. Here's why the format has taken over."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - mtg
-  - commander
-  - social
-  - game-night
+category: buying-guides
+tags: post
 emoji: "🤝"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Walk into any game store in Australia on a Friday night and you'll find tables of four people deep in conversation over cards. They're making deals. They're arguing about whether an alliance holds. They're laughing about something that happened three turns ago. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Walk into any game store in Australia on a Friday night and you'll find tables of four people deep in conversation over cards. They're making deals. They're arguing about whether an alliance holds. They're laughing about something that happened three turns ago.
 
@@ -66,9 +62,9 @@ Many Australian game stores run weekly Commander nights. These are open to anyon
 
 ## How to Get Started
 
-**Read our [What Is Commander guide](/blog/what-is-mtg-commander-format-australia/)** for the full rules overview.
+**Read our [What Is Commander guide](/blog/what-is-mtg-commander-format-australia)** for the full rules overview.
 
-**Check what precon decks are available** at the [C3 shop](/shop.html#mtg).
+**Check what precon decks are available** at the [C3 shop](/shop).
 
 **Try the [Random Commander Generator](/cards/mtg/random-commander)** if you want to build rather than buy a precon. roll a random Commander and see what inspires you.
 
@@ -76,7 +72,16 @@ If you're not ready to commit, find out if your local game store runs Commander 
 
 ---
 
-*See also: [What It Actually Feels Like to Play Your First Commander Game](/blog/what-it-feels-like-to-play-first-commander-game/).*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

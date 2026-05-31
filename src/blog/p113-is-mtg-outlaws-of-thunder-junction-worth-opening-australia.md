@@ -3,18 +3,10 @@ game: mtg
 title: "Is MTG Outlaws of Thunder Junction Worth Opening in Australia?"
 description: "Is the MTG Outlaws of Thunder Junction booster box worth opening in Australia? Full AUD expected value breakdown including the Breaking News bonus."
 date: 2026-04-20
-category: "buying-guides"
-tags:
-  - post
-  - mtg
-  - booster-boxes
-  - buying-guides
-  - ev-calculator
+category: buying-guides
+tags: post
 emoji: "🤠"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
 ---
 
@@ -22,10 +14,9 @@ MTG Outlaws of Thunder Junction brought a Wild West theme to Magic: The Gatherin
 
 That bonus sheet is the primary driver of OTJ's above-average EV and the main reason Australian players should run the calculator before writing this set off as a standard release.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>MTG Outlaws of Thunder Junction has above-average EV for a 2024 standard set due to the Breaking News bonus sheet , 30 powerful reprints that can appear in any pack. Cards like Collected Company, Rite of Flame, and Thoughtseize in special treatments significantly lift the EV floor. At AU$180 for a 36-pack Play Booster box, OTJ compares favourably to other 2024 standard releases. Use the C3 EV Calculator for a current AUD verdict.</p>
-</div>
+## Quick Answer
+
+MTG Outlaws of Thunder Junction has above-average EV for a 2024 standard set due to the Breaking News bonus sheet , 30 powerful reprints that can appear in any pack. Cards like Collected Company, Rite of Flame, and Thoughtseize in special treatments significantly lift the EV floor. At AU$180 for a 36-pack Play Booster box, OTJ compares favourably to other 2024 standard releases. Use the C3 EV Calculator for a current AUD verdict.
 
 ## What Is Outlaws of Thunder Junction and Why Does It Matter for Australian Players?
 
@@ -76,12 +67,19 @@ If the EV Calculator returns a Worth Opening or Borderline verdict and you decid
 </div>
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
 Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -105,13 +103,13 @@ The free C3 Collection Tracker is also available for logging your full collectio
 
 <div style="margin:24px 0;display:flex;gap:12px;flex-wrap:wrap;">
 <a href="/ev-calculator/mtg-outlaws-of-thunder-junction.html" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);color:#C9A84C;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Track My Outlaws of Thunder Junction Pulls →</a>
-<a href="/tracker.html" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:#A0A8C0;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Free Collection Tracker →</a>
+<a href="/tracker" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:#A0A8C0;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Free Collection Tracker →</a>
 </div>
 
 ## Related Guides
 
 - [MTG Outlaws of Thunder Junction EV Calculator. Run the Numbers in AUD](/ev-calculator/mtg-outlaws-of-thunder-junction.html)
 - [MTG Wilds of Eldraine EV Calculator. Compare the Bonus Sheets](/ev-calculator/mtg-wilds-of-eldraine.html)
-- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
-- [MTG Singles vs Booster Boxes: Which Is Better Value in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)
-- [Full MTG EV Calculator Hub. All Sets](/ev-calculator.html)
+- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
+- [MTG Singles vs Booster Boxes: Which Is Better Value in Australia?](/blog/mtg-singles-vs-booster-boxes-australia)
+- [Full MTG EV Calculator Hub. All Sets](/tools)

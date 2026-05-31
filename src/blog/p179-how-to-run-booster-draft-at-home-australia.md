@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "How to Run a Booster Draft at Home in Australia: Complete Guide"
-description: "Booster Draft is one of the best ways to play MTG with 4 to 8 friends without needing pre-built decks. This guide covers the full format — how."
+description: "Booster Draft is one of the best ways to play MTG with 4 to 8 friends without needing pre-built decks. This guide covers the full format, how."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - mtg
-  - draft
-  - formats
-  - game-night
+category: buying-guides
+tags: post
 emoji: "🎯"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Booster Draft is one of the best ways to play MTG with a group. Everyone starts from scratch, building their deck from the same pool of cards opened on the night. No existing collection required. No tuned decks. Just the cards you draft. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Booster Draft is one of the best ways to play MTG with a group. Everyone starts from scratch, building their deck from the same pool of cards opened on the night. No existing collection required. No tuned decks. Just the cards you draft.
 
@@ -86,7 +82,7 @@ Depending on your group and time, options are:
 
 Check what boosters are currently available in Australia. Sets released in the last 6 months are typically available at game stores. Older sets may require online purchasing.
 
-Check the [C3 shop](/shop.html#mtg) for currently available booster boxes in Australia.
+Check the [C3 shop](/shop) for currently available booster boxes in Australia.
 
 ## Tips for a Great Home Draft Night
 
@@ -98,11 +94,8 @@ Check the [C3 shop](/shop.html#mtg) for currently available booster boxes in Aus
 
 **Start with a modern set.** Some older formats have very complex card interactions. Recent sets are designed with draft complexity appropriate for moderate experience levels.
 
-Check current MTG booster box prices in Australia at the [C3 shop](/shop.html#mtg) or browse singles at the [C3 MTG Card Vault](/cards/mtg).
+Check current MTG booster box prices in Australia at the [C3 shop](/shop) or browse singles at the [C3 MTG card hub](/cards/mtg).
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
 ## The Draft Mechanics in Detail
@@ -149,9 +142,19 @@ Home drafts don't need formal prizes, but having some reward for good performanc
 
 ## Current MTG Booster Boxes for Draft in Australia
 
-Play Booster boxes (36 packs, 6 players) and Draft Booster boxes (36 packs, 6 players) both work for home draft. Check the [C3 shop](/shop.html#mtg) for confirmed current Australian availability.
+Play Booster boxes (36 packs, 6 players) and Draft Booster boxes (36 packs, 6 players) both work for home draft. Check the [C3 shop](/shop) for confirmed current Australian availability.
 
 Use the [C3 EV Calculator](/ev-calculator) to check whether the current box price is reasonable for a draft event before purchasing.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -162,4 +165,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

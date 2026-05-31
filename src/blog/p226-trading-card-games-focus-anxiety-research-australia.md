@@ -1,22 +1,18 @@
 ---
-game: tcg
+game: general
 title: "How Trading Card Games Help with Focus and Anxiety"
-description: "TCG players often report that playing card games helps them focus and manage anxiety. This guide looks at what the research says — and what it."
+description: "TCG players often report that playing card games helps them focus and manage anxiety. This guide looks at what the research says, and what it."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - general-tcg
-  - mental-health
-  - focus
-  - community
+category: buying-guides
+tags: post
 emoji: "🧘"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Ask someone why they play TCG and you'll often hear variations of the same thing: "it gives me something to focus on," "it turns my brain off from everything else," "the community keeps me grounded." These aren't throwaway comments. They describe something real about what the games do. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Ask someone why they play TCG and you'll often hear variations of the same thing: "it gives me something to focus on," "it turns my brain off from everything else," "the community keeps me grounded." These aren't throwaway comments. They describe something real about what the games do.
 
@@ -66,9 +62,19 @@ Like any engaging hobby, TCGs can be done in ways that are healthy and in ways t
 
 At the healthy point: a structured hobby with social connection, progressive challenge, and a community. That's a significant contributor to quality of life for many people.
 
-If you want to get started with the social side, see our guide on [finding TCG groups and local game stores in Australia](/blog/how-to-find-tcg-group-game-store-australia/).
+If you want to get started with the social side, see our guide on [finding TCG groups and local game stores in Australia](/blog/how-to-find-tcg-group-game-store-australia).
 
-For tracking the collecting side, the [free C3 collection tracker](/tracker.html) is there when you need it.
+For tracking the collecting side, the [free C3 collection tracker](/tracker) is there when you need it.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -79,4 +85,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

@@ -1,14 +1,18 @@
 ---
-game: tcg
+game: general
 title: "How to Prepare for Your First TCG Tournament in Australia"
 description: "First TCG tournament coming up? Here's exactly how to prepare, what to bring, what to expect on the day, and how to avoid the mistakes most new."
 date: 2026-05-07
-category: beginner-guides
+category: buying-guides
 emoji: "🎯"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Walking into your first competitive TCG tournament is a different experience from kitchen table play. The rules are stricter, the games are faster, and the atmosphere is unlike anything you get at a local store. Here is exactly how to prepare, what to bring, and what to expect across any TCG, MTG, Pokemon, Riftbound, One Piece, Yu-Gi-Oh, or Lorcana. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Walking into your first competitive TCG tournament is a different experience from kitchen table play. The rules are stricter, the games are faster, and the atmosphere is unlike anything you get at a local store. Here is exactly how to prepare, what to bring, and what to expect across any TCG, MTG, Pokemon, Riftbound, One Piece, Yu-Gi-Oh, or Lorcana.
 
@@ -99,11 +103,21 @@ Win or lose, write down what you noticed. Which matchups felt favourable and whi
 
 The players who improve fastest are the ones who treat every tournament as data, not just a result.
 
-Track your competitive performance and collection with our [Free TCG Tracker](/tracker.html), it works across every game.
+Track your competitive performance and collection with our [Free TCG Tracker](/tracker), it works across every game.
 
 ---
 
 Specific tournament rules vary by game and event organiser. Always verify rules with the official event page before attending.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -114,4 +128,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

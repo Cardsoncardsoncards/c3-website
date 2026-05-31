@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Gate Ruler TCG: Beginner's Guide for Australian Players"
 description: "Gate Ruler launched with ambition in 2021 but the publisher has faced serious difficulties. Here's the full situation before you spend any money on this game."

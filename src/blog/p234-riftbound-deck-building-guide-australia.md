@@ -3,12 +3,16 @@ game: riftbound
 title: "How to Build Your First Riftbound Deck in Australia"
 description: "Build your first Riftbound deck the right way. Step-by-step guide covering Legend choice, card ratios, rune balance, and how to do it on a budget in AUD."
 date: 2026-05-08
-category: beginner-guides
+category: buying-guides
 emoji: "🔨"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Building your first Riftbound deck is the moment the game clicks. You stop following instructions and start making decisions that are yours. Here is how to do it properly, from choosing your Legend to buying the singles you need in Australia. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
 
 Building your first Riftbound deck is the moment the game clicks. You stop following instructions and start making decisions that are yours. Here is how to do it properly, from choosing your Legend to buying the singles you need in Australia.
 
@@ -66,7 +70,7 @@ Find local Summoner Skirmish events at Australian game stores to test against re
 
 ---
 
-Track your Riftbound deck and pulls with our [Free TCG Tracker](/tracker.html).
+Track your Riftbound deck and pulls with our [Free TCG Tracker](/tracker).
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games.
 
@@ -89,7 +93,7 @@ A standard Riftbound constructed deck is exactly 50 cards plus your Champion car
 
 ## Equipment Selection
 
-Equipment persists on your Champion throughout the game and upgrades with each rank advance. Equipment choices are some of the highest-leverage decisions in deckbuilding:
+Equipment persists on your Champion throughout the game and upgrades with each rank advance. Equipment choices are some of the highest-use decisions in deckbuilding:
 
 **Offensive equipment** (higher attack stats, damage abilities) suits Champions that win through fast combat pressure.
 
@@ -105,7 +109,17 @@ The Australian Riftbound community runs consistent weekly events at local game s
 
 The Riftbound Discord community has an Australian-specific channel where players share deck lists and provide feedback. After RQ Sydney 2026, the community has become more structured around competitive analysis.
 
-See the [C3 Riftbound meta tier list](/blog/riftbound-meta-tier-list-may-2026/) for the current competitive hierarchy in Australia.
+See the [C3 Riftbound meta tier list](/blog/riftbound-meta-tier-list-may-2026) for the current competitive hierarchy in Australia.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -116,4 +130,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

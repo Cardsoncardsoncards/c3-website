@@ -4,27 +4,17 @@ title: "How to Start Playing D&D in Australia: What You Actually Need"
 description: "Thinking about starting Dungeons and Dragons in Australia? This guide covers what you actually need to begin, what's optional, and where to find."
 date: 2026-04-09
 category: "how-to-play"
-tags:
-  - post
-  - dnd
-  - beginners
-  - game-guides
-  - tabletop-rpg
-  - australia
+tags: post
 emoji: "🎲"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
 Dungeons and Dragons has more Australian players now than at any point in its history. The 2024 rules refresh brought new core books, a cleaner entry point for beginners, and a broader mainstream awareness of the game. If you've been curious and don't know where to start, this guide covers exactly what you need to actually sit down and play.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>To start playing D&D in Australia you need three things: a way to learn the rules (a starter set, the free basic rules, or the 2024 Player's Handbook), a set of polyhedral dice, and at least two other people to play with. Everything else: battle mats, miniatures, DM screens, printed resources. is optional and can be added as you go. You do not need to buy everything at once.</p>
-</div>
+## Quick Answer
+
+To start playing D&D in Australia you need three things: a way to learn the rules (a starter set, the free basic rules, or the 2024 Player's Handbook), a set of polyhedral dice, and at least two other people to play with. Everything else: battle mats, miniatures, DM screens, printed resources. is optional and can be added as you go. You do not need to buy everything at once.
 
 ## The Minimum Required to Play
 
@@ -64,7 +54,7 @@ If you're committing to playing D&D beyond a starter set, the 2024 revised core 
 
 **Monster Manual (2024)** gives the DM access to a full range of creature stat blocks to use in encounters. Useful once you're building your own adventures rather than using a pre-written one.
 
-These books are available on Amazon AU with local shipping. Check the [C3 D&D shop](/shop.html#dnd) for current availability and pricing.
+These books are available on Amazon AU with local shipping. Check the [C3 D&D shop](/shop) for current availability and pricing.
 
 ## What You Can Add as You Go
 
@@ -105,25 +95,18 @@ The simplest path from zero to playing:
 5. Play the starter adventure through to completion over two to four sessions.
 6. After finishing, decide together whether to continue with a full campaign, a different starter set, or get into the full Player's Handbook.
 
-The 2024 core books, dice options, battle mats, miniatures, and accessories are all available through the [C3 D&D shop](/shop.html#dnd), curated from confirmed Amazon AU stock with Australian shipping.
+The 2024 core books, dice options, battle mats, miniatures, and accessories are all available through the [C3 D&D shop](/shop), curated from confirmed Amazon AU stock with Australian shipping.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [D&D Starter Sets in Australia: Which One Suits You](/blog/dnd-starter-sets-australia/)
-- [D&D Core Books: A Guide for New and Returning Players in Australia](/blog/dnd-core-books-guide-australia/)
-- [D&D Dice: A Buyer's Guide for Australian Players](/blog/dnd-dice-buyers-guide-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [D&D Starter Sets in Australia: Which One Suits You](/blog/dnd-starter-sets-australia)
+- [D&D Core Books: A Guide for New and Returning Players in Australia](/blog/dnd-core-books-guide-australia)
+- [D&D Dice: A Buyer's Guide for Australian Players](/blog/dnd-dice-buyers-guide-australia)
 
-**Browse D&D starter sets, core books, dice and accessories on Amazon AU.**
-All products confirmed available with Australian shipping.
-
-[Browse the D&D Shop →](/shop.html#dnd)
-
-</div>
 
 ## Frequently Asked Questions
 

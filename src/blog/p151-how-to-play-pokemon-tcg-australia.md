@@ -3,20 +3,16 @@ game: pokemon
 title: "How to Play Pokemon TCG: Step-by-Step Rules Guide for"
 description: "New to Pokemon TCG? This guide covers the complete rules in plain English including how turns work, how to win, and what everything on the card."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - pokemon
-  - beginners
-  - how-to-play
-  - rules
+category: buying-guides
+tags: post
 emoji: "⚡"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#pokemon"
-featured: false
 layout: post
----
+---## Quick Answer
+
+The Pokemon Trading Card Game is simpler than it looks. Once you understand the structure, a full game takes 15 to 30 minutes and most of the rules feel intuitive. See current prices at [/cards/pokemon](/cards/pokemon).
+
+
 
 The Pokemon Trading Card Game is simpler than it looks. Once you understand the structure, a full game takes 15 to 30 minutes and most of the rules feel intuitive.
 
@@ -97,13 +93,13 @@ You can retreat your Active Pokemon by paying its retreat cost in energy (discar
 
 **Battle Decks** (single ready-to-play deck): AU$25 to AU$35.
 
-**Elite Trainer Box**: includes booster packs, sleeves, energy cards, and accessories. Good for your second purchase once you know you enjoy the game. See our [Elite Trainer Box review](/blog/pokemon-elite-trainer-box-worth-it-australia/) for more detail.
+**Elite Trainer Box**: includes booster packs, sleeves, energy cards, and accessories. Good for your second purchase once you know you enjoy the game. See our [Elite Trainer Box review](/blog/pokemon-elite-trainer-box-worth-it-australia) for more detail.
 
-For tracking what your Pokemon cards are worth, use the [free C3 collection tracker](/tracker.html).
+For tracking what your Pokemon cards are worth, use the [free C3 collection tracker](/tracker).
 
 ---
 
-*See our [guide to the best Pokemon booster boxes in Australia](/blog/best-pokemon-booster-boxes-australia/) for more buying advice.*
+*See our [guide to the best Pokemon booster boxes in Australia](/blog/best-pokemon-booster-boxes-australia) for more buying advice.*
 
 
 ## Energy Cards: The Fuel System
@@ -136,9 +132,19 @@ Six Prize Cards face-down at game start. Each knockout of an opponent's Pokemon 
 
 ## What to Buy First in Australia
 
-Battle Decks (AU$20-35 each) are the easiest start. The [C3 Shop](/shop.html#pokemon) lists confirmed current Amazon AU availability. Two Battle Decks from the same set give a balanced two-player experience immediately.
+Battle Decks (AU$20-35 each) are the easiest start. The [C3 Shop](/shop) lists confirmed current Amazon AU availability. Two Battle Decks from the same set give a balanced two-player experience immediately.
 
-Check the [C3 Release Calendar](/calendar) for upcoming Pokemon events and set releases.
+Check the [C3 Release Calendar](/market) for upcoming Pokemon events and set releases.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

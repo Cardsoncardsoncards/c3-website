@@ -1,0 +1,119 @@
+<!-- ============================================================
+     C3 WEEKLY SELLER REPORT - email template
+     Robust, email-client-safe: 600px, table-based, inline styles.
+     Replace {{TOKENS}} each week (or have the scheduled function fill them).
+     Tokens: {{DATE}} {{CALL_TITLE}} {{CALL_BODY}} {{ROWS_UP}} {{ROWS_DOWN}}
+             {{ROWS_GRAB}} {{ROWS_LIST}} {{UNSUB_URL}}
+     A single card row template is in the comment block at the bottom.
+     Brand: bg #080b12 / panel #0f1420, gold #C9A84C, green #22c55e, red #ef4444.
+     Note: dark email by design. Tested pattern uses table bgcolor + inline styles
+     for Outlook/Gmail/Apple Mail. Keep total width 600px.
+     ============================================================ -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">This week in the AU TCG market: the movers, the buy signals, and where to list. {{CALL_TITLE}}</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080b12" style="background:#080b12;margin:0;padding:0;">
+<tr><td align="center" style="padding:24px 12px;">
+
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
+
+  <!-- HEADER -->
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border:1px solid #1e2638;border-radius:10px 10px 0 0;padding:22px 26px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td style="font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:bold;color:#C9A84C;letter-spacing:1px;text-transform:uppercase;">Cards on Cards on Cards</td>
+      <td align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#8892b0;">{{DATE}}</td>
+    </tr></table>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;margin-top:4px;">Weekly Seller Report &middot; Australian TCG market</div>
+  </td></tr>
+
+  <!-- THE C3 CALL -->
+  <tr><td bgcolor="#11162400" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:24px 26px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;">The C3 Call of the Week</div>
+    <div style="font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:bold;color:#e8eaf0;margin:8px 0 8px;line-height:1.3;">{{CALL_TITLE}}</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#b8c0d8;line-height:1.65;">{{CALL_BODY}}</div>
+  </td></tr>
+
+  <!-- MOVERS UP -->
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#22c55e;border-top:1px solid #1e2638;padding-top:18px;">&#9650;&nbsp; Biggest movers up this week</div>
+  </td></tr>
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 10px;">
+    {{ROWS_UP}}
+  </td></tr>
+
+  <!-- MOVERS DOWN -->
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#ef4444;border-top:1px solid #1e2638;padding-top:18px;">&#9660;&nbsp; Sliding this week, clear stock before it drops</div>
+  </td></tr>
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 10px;">
+    {{ROWS_DOWN}}
+  </td></tr>
+
+  <!-- GRAB THESE (buy signals) -->
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#C9A84C;border-top:1px solid #1e2638;padding-top:18px;">Grab these, well below their 52 week high</div>
+  </td></tr>
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 10px;">
+    {{ROWS_GRAB}}
+  </td></tr>
+
+  <!-- LIST THESE NOW (sell signals) -->
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#f97316;border-top:1px solid #1e2638;padding-top:18px;">List these now, near their 52 week high</div>
+  </td></tr>
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 18px;">
+    {{ROWS_LIST}}
+  </td></tr>
+
+  <!-- CTA -->
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:4px 26px 26px;" align="center">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td bgcolor="#C9A84C" style="border-radius:8px;">
+        <a href="https://cardsoncardsoncards.com.au/market" style="display:inline-block;padding:13px 28px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;color:#080b12;text-decoration:none;">See the full live market &rarr;</a>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <!-- FOOTER -->
+  <tr><td bgcolor="#0b0e16" style="background:#0b0e16;border:1px solid #1e2638;border-top:none;border-radius:0 0 10px 10px;padding:22px 26px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.6;">Know a seller who would use this? Forward it on. They can join free at <a href="https://cardsoncardsoncards.com.au/pricing" style="color:#C9A84C;text-decoration:none;">cardsoncardsoncards.com.au</a>.</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;line-height:1.6;margin-top:14px;">Prices are indicative AUD market estimates and move constantly. Always check the live price before you buy or sell. C3 participates in the eBay Partner Network and may earn a small commission on purchases made through links, at no extra cost to you.</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;margin-top:12px;">The C3 Team &middot; <a href="{{UNSUB_URL}}" style="color:#8892b0;text-decoration:underline;">Manage subscription</a></div>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
+
+<!-- ============================================================
+     CARD ROW TEMPLATE (repeat per card inside each {{ROWS_*}} block)
+     Swap the badge per section:
+       up    -> color #22c55e, text "&#9650; 12.4% 7d"
+       down  -> color #ef4444, text "&#9660; 8.1% 7d"
+       grab  -> color #C9A84C, text "32% off high"
+       list  -> color #f97316, text "Near 95% of high"
+     ============================================================
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:10px 0;border-bottom:1px solid #161d2e;padding-bottom:10px;"><tr>
+  <td style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#e8eaf0;line-height:1.4;">
+    <a href="https://cardsoncardsoncards.com.au/cards/mtg/CARD-SLUG" style="color:#e8eaf0;text-decoration:none;font-weight:bold;">Sheoldred, the Apocalypse</a>
+    <div style="font-size:11px;color:#8892b0;margin-top:2px;">MTG &middot; Dominaria United &middot; Mythic</div>
+  </td>
+  <td align="right" valign="top" style="font-family:Arial,Helvetica,sans-serif;white-space:nowrap;">
+    <div style="font-size:14px;font-weight:bold;color:#e8eaf0;">A$148.00</div>
+    <div style="font-size:11px;font-weight:bold;color:#22c55e;">&#9650; 12.4% 7d</div>
+    <a href="EBAY-URL-WITH-campid=5339146789" style="font-size:11px;color:#C9A84C;text-decoration:none;">eBay AU &rarr;</a>
+  </td>
+</tr></table>
+     ============================================================ -->
+
+<!-- ============================================================
+     FREE VERSION: use only the header, the C3 Call, ONE movers-up
+     block with the top 5 movers, then this teaser instead of the
+     other sections:
+
+<tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:18px 26px;">
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#b8c0d8;line-height:1.6;background:#11162a;border:1px solid #2a3350;border-radius:8px;padding:16px;">
+    <strong style="color:#C9A84C;">This is the free edition.</strong> The full Seller report adds the buy signals, the sell-side timing, and the complete movers list across your games.
+    <a href="https://cardsoncardsoncards.com.au/pricing" style="color:#C9A84C;">See the Seller plan &rarr;</a>
+  </div>
+</td></tr>
+     ============================================================ -->

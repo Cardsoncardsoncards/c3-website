@@ -3,32 +3,22 @@ game: mtg
 title: "How to Build Your First MTG Deck: Step-by-Step for Beginners"
 description: "Building your first Magic: The Gathering deck doesn't have to be complicated. This step-by-step guide walks Australian beginners through deck."
 date: 2026-04-07
-category: "beginner-guides"
-tags:
-  - post
-  - mtg
-  - beginners
-  - deck-building
-  - commander
-  - players
+category: buying-guides
+tags: post
 emoji: "🃏"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1"
-featured: false
 layout: post
 ---
 
-Building your first Magic deck is one of those things that looks complicated from the outside but becomes straightforward once someone breaks it down without assuming you already know the terminology.
+Building your first Magic deck is one of those things that looks complicated from the outside but becomes clear once someone breaks it down without assuming you already know the terminology.
 
 Most beginner deck building guides are written by experienced players and skip the parts that experienced players consider obvious. This guide doesn't do that. It starts from zero and walks through every step of building your first playable deck.
 
 The focus here is Commander: the format where you build a 100-card deck around a legendary creature. Commander is the most popular format in Australia and the most forgiving for new players learning to build decks.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>To build a Commander deck: pick a legendary creature as your commander, choose the colours it determines, include approximately 37–38 lands, 10 ramp cards, 10 card draw cards, 10 removal cards, and fill the remaining 30+ slots with cards that support your commander's strategy. Keep all 100 cards to a single copy each (except basic lands). Start with a preconstructed deck and modify rather than building from scratch if this is your first deck.</p>
-</div>
+## Quick Answer
+
+To build a Commander deck: pick a legendary creature as your commander, choose the colours it determines, include approximately 37, 38 lands, 10 ramp cards, 10 card draw cards, 10 removal cards, and fill the remaining 30+ slots with cards that support your commander's strategy. Keep all 100 cards to a single copy each (except basic lands). Start with a preconstructed deck and modify rather than building from scratch if this is your first deck.
 
 ## Before You Build: Should You Start With a Precon?
 
@@ -36,7 +26,7 @@ If this is genuinely your first Magic deck, the honest recommendation is to star
 
 Here's why: building a functional Commander deck from scratch requires understanding what your commander does, what synergises with it, what the right mana ratio is, and how to balance different card types. Without playing experience, these decisions are guesswork.
 
-A Commander precon gives you a complete, functional 100-card deck immediately. Play it for 10–20 games. You'll develop a feel for what the deck needs, what's working, and what you'd change. That experience makes your first deck building decisions dramatically better than building cold.
+A Commander precon gives you a complete, functional 100-card deck immediately. Play it for 10, 20 games. You'll develop a feel for what the deck needs, what's working, and what you'd change. That experience makes your first deck building decisions dramatically better than building cold.
 
 That said, many players learn by doing. including building a deck. This guide covers both paths: modifying a precon, and building from scratch.
 
@@ -60,7 +50,7 @@ Your commander is the heart of the deck. Every other card decision flows from it
 
 For a first deck, look for a commander that:
 
-**Has a clear, readable ability.** If you need to read the card three times to understand what it does, it's probably not the right starting point. Look for commanders with straightforward abilities , "whenever you cast a spell, draw a card" or "creatures you control get +1/+1" are easy to build around.
+**Has a clear, readable ability.** If you need to read the card three times to understand what it does, it's probably not the right starting point. Look for commanders with clear abilities , "whenever you cast a spell, draw a card" or "creatures you control get +1/+1" are easy to build around.
 
 **Tells you what cards to include.** The best commanders for beginners effectively write part of your deck list for you. A commander that cares about dragons tells you to include dragons. A commander that cares about lifegain tells you to include lifegain cards.
 
@@ -82,8 +72,8 @@ Search for cards that:
 
 A functional Commander deck follows a rough structure. This is not a rigid rule. experienced players deviate based on strategy. but it's a reliable starting framework for beginners:
 
-**Lands: 37–38**
-The backbone of your deck. Most beginner Commander decks run 37–38 lands. More lands means more consistent ability to play your spells on time. Starting with 37 is safe.
+**Lands: 37, 38**
+The backbone of your deck. Most beginner Commander decks run 37, 38 lands. More lands means more consistent ability to play your spells on time. Starting with 37 is safe.
 
 **Ramp: 10**
 Ramp cards help you generate extra mana faster than normal, letting you cast your spells earlier and your commander more than once. Sol Ring is the most iconic Commander ramp card (it's colourless, so it goes in any deck). Signets (two-mana artifacts that produce mana of your colours) are another staple.
@@ -94,7 +84,7 @@ Cards that let you draw more cards keep your hand full and your options open. Ru
 **Removal: 10**
 Answers for threats. Creature removal, artifact removal, enchantment removal. You need ways to deal with things your opponents put on the table that threaten you or block your strategy.
 
-**Theme and Win Conditions: 42–43**
+**Theme and Win Conditions: 42, 43**
 The cards that actually execute your strategy and win you the game. These are the most fun to choose because they define what your deck does.
 
 ## Step 4: Fill Your Ramp Slots
@@ -131,11 +121,11 @@ You need ways to deal with threats across the table. Aim for 10 removal pieces c
 
 **Creature removal:** Cards that destroy, exile, or bounce enemy creatures.
 
-**Artifact/Enchantment removal:** Cards that answer non-creature permanents. Every Commander deck should have at least 2–3 answers for artifacts and enchantments.
+**Artifact/Enchantment removal:** Cards that answer non-creature permanents. Every Commander deck should have at least 2, 3 answers for artifacts and enchantments.
 
 **Universal removal:** Cards that answer multiple permanent types. Generous Gift (white), Beast Within (green), and Chaos Warp (red) are popular choices.
 
-**Board wipes:** Mass removal that clears the entire table when things get out of control. Every Commander deck benefits from 1–2 board wipes.
+**Board wipes:** Mass removal that clears the entire table when things get out of control. Every Commander deck benefits from 1, 2 board wipes.
 
 ## Step 7: Build Your Mana Base
 
@@ -151,7 +141,7 @@ For a two-colour Commander deck, roughly 35 basic lands plus Command Tower plus 
 
 ## Step 8: Fill Your Theme Slots
 
-The remaining 42–43 slots are your strategy cards. These should:
+The remaining 42, 43 slots are your strategy cards. These should:
 
 - Directly support what your commander does
 - Help you execute your win condition
@@ -163,14 +153,14 @@ This is where Scryfall searches become essential. Search for the key mechanic or
 
 If you started with a Commander precon, modification is simpler than building from scratch:
 
-1. Play the deck as-is for 10–20 games
+1. Play the deck as-is for 10, 20 games
 2. Note which cards never seem to do anything useful
 3. Note which effects you wished you had more of
 4. Replace the weak cards one at a time with better options
 
 Buying singles for specific upgrades is significantly cheaper than opening packs hoping to pull what you need. Our eBay store has singles across all major MTG sets with Australian shipping.
 
-A AU$30–50 upgrade budget applied to a Commander precon is usually enough to make a noticeable difference to how consistently the deck executes its strategy.
+A AU$30, 50 upgrade budget applied to a Commander precon is usually enough to make a noticeable difference to how consistently the deck executes its strategy.
 
 ## Testing and Iterating
 
@@ -186,34 +176,27 @@ No Commander deck is perfect on first construction. Play it, see what happens, a
 
 Deck building is an iterative process. Every Commander player's decks evolve over time.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [What Is Magic: The Gathering? A Beginner's Guide for Australians](/blog/what-is-magic-the-gathering-australia/)
-- [MTG Commander Decks: Best Options for Australian Players](/blog/mtg-commander-decks-australia/)
-- [Is Buying MTG Singles Smarter Than Booster Boxes in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [What Is Magic: The Gathering? A Beginner's Guide for Australians](/blog/what-is-magic-the-gathering-australia)
+- [MTG Commander Decks: Best Options for Australian Players](/blog/mtg-commander-decks-australia)
+- [Is Buying MTG Singles Smarter Than Booster Boxes in Australia?](/blog/mtg-singles-vs-booster-boxes-australia)
 
-**Looking for specific singles to build or upgrade your Commander deck?**
-Browse our eBay store for MTG singles with Australian shipping.
-
-[Shop MTG Singles on eBay →](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1)
-
-</div>
 
 ## Frequently Asked Questions
 
 **How many lands should a Commander deck have?**
-37–38 is the standard recommendation for most Commander decks. Decks with lots of ramp can run 35–36. Decks with high mana curves may want 38–40. Start at 37 and adjust based on how the deck plays.
+37, 38 is the standard recommendation for most Commander decks. Decks with lots of ramp can run 35, 36. Decks with high mana curves may want 38, 40. Start at 37 and adjust based on how the deck plays.
 
 **Can I put any card in a Commander deck?**
 No. Every card must be within your commander's colour identity. Colourless cards (artifacts with no colour symbols in their rules text, colourless spells) can go in any deck. Some cards are also banned in Commander. check the official Commander banned list at mtgcommander.net.
 
 **How much does it cost to build a Commander deck from scratch in Australia?**
-A functional Commander deck built from singles can be put together for AU$80–200 depending on card choices. Avoiding format staples (which command premium prices) and focusing on synergy over raw power keeps costs lower. Budget Commander deckbuilding is a well-established approach with a large online community.
+A functional Commander deck built from singles can be put together for AU$80, 200 depending on card choices. Avoiding format staples (which command premium prices) and focusing on synergy over raw power keeps costs lower. Budget Commander deckbuilding is a well-established approach with a large online community.
 
 **Where do I find card suggestions for my commander?**
 EDHREC (edhrec.com) is the definitive resource for Commander deckbuilding. Enter your commander and it shows you the most commonly played cards with that commander, organises them by role (ramp, draw, removal etc), and provides budget alternatives.
@@ -222,4 +205,4 @@ EDHREC (edhrec.com) is the definitive resource for Commander deckbuilding. Enter
 Yes, but it doesn't need to be a combo win. In casual Commander, winning by attacking with large creatures or overwhelming opponents with card advantage is completely legitimate. Focus on having a clear direction rather than a specific infinite combo.
 
 **How do I know if my deck is too powerful or not powerful enough for my playgroup?**
-Talk to your playgroup. Commander has an informal power level scale (1–10 or bracket systems) and most experienced players can assess a deck list. Being transparent about what your deck does prevents frustrating mismatches.
+Talk to your playgroup. Commander has an informal power level scale (1, 10 or bracket systems) and most experienced players can assess a deck list. Being transparent about what your deck does prevents frustrating mismatches.

@@ -1,22 +1,18 @@
 ---
 game: star-wars-unlimited
 title: "Star Wars Unlimited Deck Building"
-description: "Building your first Star Wars Unlimited deck in Australia — Leader choice, Base selection, arena management, and what to buy."
+description: "Building your first Star Wars Unlimited deck in Australia, Leader choice, Base selection, arena management, and what to buy."
 date: 2026-05-05
-category: "buying-guides"
-tags:
-  - post
-  - star-wars-unlimited
-  - deck-building
-  - beginners
-  - australia
+category: buying-guides
+tags: post
 emoji: "⭐"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Star Wars Unlimited deck building has two decisions that don't exist in other TCGs: choosing your Leader card (which is not in the main deck) and choosing your Base card (your headquarters). These define your deck's identity before you put a single unit in your 50-card main deck. See current prices at [/cards/star-wars-unlimited](/cards/star-wars-unlimited).
+
+
 
 Star Wars Unlimited deck building has two decisions that don't exist in other TCGs: choosing your Leader card (which is not in the main deck) and choosing your Base card (your headquarters). These define your deck's identity before you put a single unit in your 50-card main deck.
 
@@ -77,34 +73,30 @@ Most Leaders deploy when you've established board presence and need a powerful u
 
 **Specific Leader Singles**: if you know which Leader you want to build around, buying that Leader card as a single (AU$3 to AU$30 depending on popularity) and building around it from boosters and singles is often more efficient than multiple starter boxes.
 
-Track your Star Wars Unlimited collection with the [free C3 tracker](/tracker.html).
+Track your Star Wars Unlimited collection with the [free C3 tracker](/tracker).
 
 ---
 
-*See also: [Star Wars Unlimited Booster Boxes Australia](/blog/star-wars-unlimited-booster-boxes-australia/).*
 
-
-## Getting Started in Australia
-
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
-
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
-
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
-
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
 
 
 ## Your First Steps in Australia
 
 The Australian TCG community is welcoming to new players at all levels. Whether you are starting a new game or returning to one you played before, the best first step is finding a local game store and asking when they run beginner events.
 
-All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/calendar) tracks upcoming events so you can find one near you.
+All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/market) tracks upcoming events so you can find one near you.
 
-For pricing on specific cards before you buy, the [C3 Card Compare tool](/compare) shows current AUD pricing from eBay AU sold data. For tracking your collection as it grows, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs on this site.
+For pricing on specific cards before you buy, the [C3 Card Compare tool](/compare) shows current AUD pricing from eBay AU sold data. For tracking your collection as it grows, the [free C3 Collection Tracker](/tracker) works across all 8 TCGs on this site.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/star-wars-unlimited](/cards/star-wars-unlimited) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
+- Browse card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -115,4 +107,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

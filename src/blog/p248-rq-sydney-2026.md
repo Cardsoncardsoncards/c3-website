@@ -5,11 +5,14 @@ description: "A deep dive into the ANZ Super Series Cycle 11 Regional Championsh
 date: 2026-03-16
 category: "competitive-play"
 emoji: "🏆"
-tags: [mtg, standard, regional-championship, sydney, anz-super-series, competitive, meta-analysis]
+tags: post
 layout: post
 affiliate_disclaimer: true
-featured: false
----
+---## Quick Answer
+
+The ANZ Super Series Cycle 11 Regional Championship wrapped up in Sydney on 13 March 2026 with 208 players competing for Pro Tour qualification, World Championship slots, and a share of US$15,000 in prize money. If you were not there and you play Standard, here is everything you need to know, including what it means for card prices in Australia. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 The ANZ Super Series Cycle 11 Regional Championship wrapped up in Sydney on 13 March 2026 with 208 players competing for Pro Tour qualification, World Championship slots, and a share of US$15,000 in prize money. If you were not there and you play Standard, here is everything you need to know, including what it means for card prices in Australia.
 
@@ -145,11 +148,21 @@ For the rest of the ANZ player base, the next Regional Championship cycle will s
 
 If you are building toward a future RCQ, the data from Sydney is clear: in a Standard field that skews green, your sideboard needs answers to Mightform Harmonizer and Sapling Nursery. If you are on green, your sideboard needs to handle Izzet graveyard strategies and mirror-match threats.
 
-For card singles from any of the archetypes featured at Sydney, check the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards) where Standard staples are listed daily.
+For card singles from any of the archetypes featured at Sydney, check the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) where Standard staples are listed daily.
 
 ---
 
 *Full decklists: [MTGTop8](https://mtgtop8.com/event?e=81884&f=ST) | [Melee.gg](https://melee.gg/Tournament/View/341156) | [ANZ Super Series](https://anzmtg.com.au)*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

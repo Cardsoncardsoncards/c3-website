@@ -30,24 +30,6 @@ One of Sorcery's most distinctive elements is the Site card system. Sites are la
 
 This creates a layer of strategic interaction at the board level that most TCGs lack. You are not just managing your hand and your field. You are managing a three-dimensional board state where position, Sites, and the air zone above all matter simultaneously.
 
-## Getting Started in Australia
-
-Sorcery does not have mainstream retail distribution in Australia. Product comes through specialty hobby importers, the publisher's own online store, and eBay AU.
-
-Sorcery sells complete preconstructed decks called Trial decks as entry points. These give new players a functional ready-to-play experience.
-
-**What it costs:**
-
-| Item | Approximate Cost (AUD) |
-|---|---|
-| Trial Deck | $35 to $55 |
-| Booster pack | $8 to $14 |
-| Booster box | $180 to $280 |
-| Competitive singles | $10 to $100+ |
-
-Sorcery is the most expensive game on this list to start at full retail. The premium pricing reflects the premium card quality. Booster boxes are significantly more expensive than equivalent Bandai or Konami products.
-
-[Search Sorcery Contested Realm on eBay AU](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dsorcery%2Bcontested%2Brealm%2Btcg)
 
 ## The Australian Community
 

@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Alpha Clash TCG: Beginner's Guide for Australian Players"
 description: "Alpha Clash is an American indie TCG with real design merit and almost no Australian presence. Here's what you're getting into before you spend a dollar."
@@ -21,24 +22,6 @@ The core mechanic that makes Alpha Clash stand out is the dual-use card system. 
 
 The four factions are Heroes, Villains, Unaligned, and Renegades. Heroes play a reactive, tempo-focused game, building up resources and responding to the opponent's aggression. Villains lean into high-risk, high-reward plays, particularly around burst damage that can end a game from nowhere. Unaligned characters sit outside the faction war and can technically support any strategy, which makes them the most flexible for deck builders. Renegades are the straight aggro faction, focused on getting damage through fast and ending the game before the opponent can stabilise. If you are starting out, Heroes or Renegades give you the cleanest read on what your strategy is supposed to be each turn.
 
-## Getting Started in Australia
-
-The main challenge is that Alpha Clash does not have an Australian distributor. Product comes to Australia through importers and eBay sellers bringing stock from the US. That means slightly elevated prices and inconsistent availability, but it does not mean impossible to find.
-
-Clash Decks are your starting point. These are 60-card pre-built decks designed for new players, each built around a specific character and faction identity. Two Clash Decks give you and another player everything you need to start immediately, and the gap between the two decks is narrow enough that games are close while you learn.
-
-**What it costs in Australia:**
-
-| Item | Approximate Cost (AUD) |
-|---|---|
-| Clash Deck | $20 to $35 |
-| Booster pack | $6 to $10 |
-| Booster box (24 packs) | $130 to $180 |
-| Competitive singles | $5 to $30 |
-
-These prices reflect import costs. Buying direct from the Alpha Clash website is an option, but factor in AU$15 to AU$30 for international postage.
-
-[Search Alpha Clash on eBay AU](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dalpha%2Bclash%2Btcg)
 
 ## The Community Reality
 

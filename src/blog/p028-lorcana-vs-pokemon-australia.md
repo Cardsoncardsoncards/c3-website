@@ -3,19 +3,10 @@ game: lorcana
 title: "Lorcana vs Pokemon in Australia: Which Should You Start With?"
 description: "Pokemon has the bigger community. Lorcana has no rotation and stronger Disney collector appeal. Here is the honest breakdown to help you decide which."
 date: 2026-04-07
-category: "buying-guides"
-tags:
-  - post
-  - lorcana
-  - pokemon
-  - comparison
-  - beginners
-  - general-tcg
+category: buying-guides
+tags: post
 emoji: "⚖️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
 ---
 
@@ -23,16 +14,15 @@ Disney Lorcana and the Pokemon TCG are both excellent card games with strong Aus
 
 This guide gives both a fair assessment. The right choice depends on what you want from the game, not on which one is objectively better.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Pokemon TCG has a larger established community, more competitive depth, and broader retail availability in Australia. Lorcana has stronger appeal for Disney fans, no format rotation, and a slightly simpler game system for newcomers. Both are well-supported, genuinely playable card games. The clearest deciding factor is whether the Disney IP appeals to you: if it does, Lorcana offers something uniquely appealing. If it doesn't, Pokemon is the safer bet for community and long-term support.</p>
-</div>
+## Quick Answer
+
+Pokemon TCG has a larger established community, more competitive depth, and broader retail availability in Australia. Lorcana has stronger appeal for Disney fans, no format rotation, and a slightly simpler game system for newcomers. Both are well-supported, genuinely playable card games. The clearest deciding factor is whether the Disney IP appeals to you: if it does, Lorcana offers something uniquely appealing. If it doesn't, Pokemon is the safer bet for community and long-term support.
 
 ## The Case for Pokemon TCG Over Lorcana
 
 ### Larger, More Established Australian Community
 
-Pokemon has been in Australia since the late 1990s. The community is massive, multigenerational, and present in every major city and most regional centres. Finding Pokemon games, events, and trading partners is straightforward almost anywhere in the country.
+Pokemon has been in Australia since the late 1990s. The community is massive, multigenerational, and present in every major city and most regional centres. Finding Pokemon games, events, and trading partners is clear almost anywhere in the country.
 
 Lorcana's community is active and growing, but it's three years old versus Pokemon's 28 years. In metro areas, both have game store support. In regional Australia, Pokemon's community is significantly deeper.
 
@@ -94,9 +84,9 @@ Lorcana's collector market benefits from dual demand. competitive players and Di
 
 **Retail availability:** Pokemon wins. Far wider distribution across Australian retail.
 
-**Cost to start playing:** Roughly equivalent. Both have Starter Decks in the AU$25–35 range.
+**Cost to start playing:** Roughly equivalent. Both have Starter Decks in the AU$25, 35 range.
 
-**Cost to compete:** Pokemon Standard decks and Lorcana competitive decks are broadly comparable in price. roughly AU$80–200 for a competitive constructed deck built from singles.
+**Cost to compete:** Pokemon Standard decks and Lorcana competitive decks are broadly comparable in price. roughly AU$80, 200 for a competitive constructed deck built from singles.
 
 **Long-term publisher confidence:** Pokemon wins based purely on track record. 28 years versus 3 years.
 
@@ -112,34 +102,19 @@ Start with Lorcana if: you're a Disney fan and the IP genuinely appeals to you, 
 
 Many Australian players play both. Lorcana for casual family play and Disney collecting; Pokemon for competitive events and trading with a larger community. The games are complementary rather than competing for exactly the same niche.
 
-The practical starting advice: if you're genuinely uncertain, buy one Starter Deck from each game and play them with a friend. At AU$25–35 each, you can try both before committing to either at a higher level.
+The practical starting advice: if you're genuinely uncertain, buy one Starter Deck from each game and play them with a friend. At AU$25, 35 each, you can try both before committing to either at a higher level.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [What Is Disney Lorcana? The Complete Beginner's Guide for Australians](/blog/what-is-disney-lorcana-australia/)
-- [Pokemon TCG for Beginners: How to Start Playing in Australia](/blog/pokemon-tcg-beginners-guide-australia/)
-- [Which TCG Should You Start With in Australia? Honest Comparison](/blog/which-tcg-to-start-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [What Is Disney Lorcana? The Complete Beginner's Guide for Australians](/blog/what-is-disney-lorcana-australia)
+- [Pokemon TCG for Beginners: How to Start Playing in Australia](/blog/pokemon-tcg-beginners-guide-australia)
+- [Which TCG Should You Start With in Australia? Honest Comparison](/blog/which-tcg-to-start-australia)
 
-**Free: Download the C3 TCG Collection Tracker**
-Track your Lorcana and Pokemon collections in one place. Free to download, and there is a 10% off coupon waiting for you.
 
-[Get the Free Tracker →](/tracker.html)
-
-</div>
-
-<div class="cta-block">
-
-**Browse both Lorcana and Pokemon products on Amazon AU.**
-All products confirmed in stock. Click through for current pricing.
-
-[Browse the TCG Shop →](/shop.html)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -150,10 +125,10 @@ Pokemon is more popular by total player numbers and community size, reflecting i
 This is subjective, but Lorcana's art direction has been widely praised for its consistency and quality. The full-bleed Enchanted and Fabled rarity cards in particular feature exceptional artwork. Pokemon's art quality varies by artist and card type but also has standout pieces. Neither is objectively superior. it's a personal preference.
 
 **Can children play both Lorcana and Pokemon?**
-Yes. Both games are suitable for children from around age 6–8 with guidance. The Disney branding may make Lorcana more immediately engaging for younger children. Pokemon has more structured youth competitive programmes.
+Yes. Both games are suitable for children from around age 6, 8 with guidance. The Disney branding may make Lorcana more immediately engaging for younger children. Pokemon has more structured youth competitive programmes.
 
 **Is Lorcana more expensive than Pokemon in Australia?**
-Broadly comparable. Booster Displays from both games retail in the AU$130–175 range. Competitive decks cost roughly similar amounts. Illumineer's Troves are similar in price to Pokemon ETBs.
+Broadly comparable. Booster Displays from both games retail in the AU$130, 175 range. Competitive decks cost roughly similar amounts. Illumineer's Troves are similar in price to Pokemon ETBs.
 
 **Will Lorcana still be around in five years?**
 This can't be predicted with certainty for any TCG. Lorcana has shown commercial success and Ravensburger has continued to support it with regular set releases. The Eternal format reduces the risk of your cards becoming obsolete. But no publisher commitment can be guaranteed indefinitely.

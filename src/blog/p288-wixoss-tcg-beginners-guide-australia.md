@@ -36,29 +36,6 @@ WIXOSS uses a Life Cloth system for its damage mechanic rather than a traditiona
 
 This creates the same tension as the Dragon Ball Super Card Game's Life mechanic: being attacked is not purely negative because it gives you cards, but running out of Life Cloth means losing the game. Managing the balance between Life Cloth depletion and card advantage is a skill that develops with experience.
 
-## Getting Started in Australia
-
-WIXOSS does not have formal English retail distribution in Australia. Product reaches Australian players through:
-
-- Japanese-edition cards sourced from importers or directly from Japan through services like Amazon Japan
-- The English edition through eBay AU from US or international sellers
-- Community Facebook groups and Discord servers where players trade and sell locally
-
-English-edition starter decks are the correct entry point for new players and contain everything needed to play two-player games immediately.
-
-**What it costs:**
-
-| Item | Approximate Cost (AUD) |
-|---|---|
-| Starter Deck (English) | $25 to $40 |
-| Booster pack | $5 to $9 |
-| Booster box (20 packs) | $100 to $160 |
-| LRIG singles | $10 to $80 |
-| Competitive signi singles | $5 to $40 |
-
-Japanese edition product is often cheaper to source but requires community translation resources to play competitively.
-
-[Search WIXOSS on eBay AU](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dwixoss%2Bcard%2Bgame%2Benglish)
 
 ## The Australian Community
 

@@ -3,28 +3,18 @@ game: dnd
 title: "D&D Board Games in Australia: Options for Every Table"
 description: "D&D board games bring dungeon-crawling to the table without needing a DM. This guide covers every official D&D board game available in Australia."
 date: 2026-04-09
-category: "buying-guides"
-tags:
-  - post
-  - dnd
-  - board-games
-  - buying-guides
-  - tabletop-rpg
-  - australia
+category: buying-guides
+tags: post
 emoji: "🏰"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
 D&D board games sit between the full tabletop RPG experience and standard board games. They use D&D monsters, settings, and dice mechanics but don't require a Dungeon Master, pre-written campaigns, or the full rulebook investment. For groups interested in D&D that aren't ready to commit to the full RPG, or for groups that want a D&D-flavoured experience in a shorter session, these are worth knowing about.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The D&D Adventure System games (Castle Ravenloft, Wrath of Ashardalon, Legend of Drizzt, Ghosts of Saltmarsh) are cooperative dungeon-crawl board games playable without a DM in 60 to 90 minutes. They use tiles, miniatures, and dice, and are compatible with each other. Dungeon Mayhem is a faster, simpler card game for 2 to 4 players. The Yawning Portal is a more recent standalone option. All are available on Amazon AU.</p>
-</div>
+## Quick Answer
+
+The D&D Adventure System games (Castle Ravenloft, Wrath of Ashardalon, Legend of Drizzt, Ghosts of Saltmarsh) are cooperative dungeon-crawl board games playable without a DM in 60 to 90 minutes. They use tiles, miniatures, and dice, and are compatible with each other. Dungeon Mayhem is a faster, simpler card game for 2 to 4 players. The Yawning Portal is a more recent standalone option. All are available on Amazon AU.
 
 ## The D&D Adventure System Games
 
@@ -78,25 +68,18 @@ D&D board games give the dungeon-crawl tactical combat experience without the pr
 
 For groups considering the full RPG, playing through an Adventure System game first gives familiarity with D&D monsters, dice mechanics, and the general tactical feel of combat. but the RPG involves substantially more depth, creativity, and player agency.
 
-All board games mentioned are available through the [C3 D&D shop](/shop.html#dnd).
+All board games mentioned are available through the [C3 D&D shop](/shop).
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia/)
-- [D&D Starter Sets in Australia: Which One Suits You](/blog/dnd-starter-sets-australia/)
-- [D&D Adventure Books Worth Reading: A Guide for Australian DMs](/blog/dnd-adventure-books-guide-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia)
+- [D&D Starter Sets in Australia: Which One Suits You](/blog/dnd-starter-sets-australia)
+- [D&D Adventure Books Worth Reading: A Guide for Australian DMs](/blog/dnd-adventure-books-guide-australia)
 
-**Browse D&D board games on Amazon AU.**
-Adventure System games, Dungeon Mayhem and more. all confirmed available with Australian shipping.
-
-[Browse the D&D Shop →](/shop.html#dnd)
-
-</div>
 
 ## Frequently Asked Questions
 

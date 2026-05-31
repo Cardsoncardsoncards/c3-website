@@ -1,22 +1,18 @@
 ---
-game: tcg
+game: general
 title: "Best TCG Games for Two Players Australia: Date Night Edition"
-description: "Not every card game is fun with just two people. This guide covers which TCGs actually work well in a two-player format — and which are better with a."
+description: "Not every card game is fun with just two people. This guide covers which TCGs actually work well in a two-player format, and which are better with a."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - general-tcg
-  - two-player
-  - game-night
-  - beginners
+category: buying-guides
+tags: post
 emoji: "💑"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Not all card games scale equally to two players. Some TCGs were designed for two-player combat and feel tight and decisive. Others feel emptier without a full table. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Not all card games scale equally to two players. Some TCGs were designed for two-player combat and feel tight and decisive. Others feel emptier without a full table.
 
@@ -80,12 +76,22 @@ Yu-Gi-Oh is a two-player game by design. The rules support two players cleanly.
 
 For a first-time couple experience: **Pokemon TCG Starter Kit or Lorcana Starter Deck** depending on whether Pokemon or Disney resonates more. Both cost approximately AU$20 to AU$25, play in 20 to 30 minutes per game, and are genuinely enjoyable at the casual two-player level.
 
-Browse starter options at the [C3 shop](/shop.html).
+Browse starter options at the [C3 shop](/shop).
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
 ### Where is the best place to buy TCG products in Australia?
-Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop.html) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
+Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
 
 ### How do I know if a TCG product is good value in Australia?
 Compare the box price against the expected value of cards inside using the [C3 EV Calculator](/ev-calculator) for MTG sets. For other games, check secondary market prices for the top cards and multiply by pull rates to estimate expected return.

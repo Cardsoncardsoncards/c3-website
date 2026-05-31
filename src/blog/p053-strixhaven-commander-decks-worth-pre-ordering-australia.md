@@ -4,27 +4,17 @@ title: "Strixhaven Commander Decks: Worth Buying in Australia?"
 description: "Five Commander precon decks release with Secrets of Strixhaven on 24 April 2026. This guide breaks down each deck, the reprint value."
 date: 2026-04-08
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - pre-orders
-  - value-and-worth
-  - players
-  - buying-guides
+tags: post
 emoji: "🎓"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
 ---
 
 Five Commander precon decks release alongside Secrets of Strixhaven on 24 April 2026. That is unusually generous. Most recent MTG sets ship with two Commander decks. Getting five at once means there is almost certainly a deck suited to your colour preferences, playstyle, and Commander experience level. This guide breaks down each deck clearly, what the reprint value looks like, who each deck suits, and whether any of them are worth pre-ordering in Australia right now.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>All five Secrets of Strixhaven Commander decks are worth the money based on reprint value alone. The Prismari Artistry deck stands out with the highest confirmed reprint value. Silverquill Influence is the most mechanically interesting and unusual. Witherbloom Pestilence suits players who enjoy sacrifice strategies. Lorehold Spirit suits Spirit typal and graveyard players. Quandrix Unlimited suits players who want big creatures and X-spells. Pre-ordering the deck that matches your colour and playstyle preference is the right call before release.</p>
-</div>
+## Quick Answer
+
+All five Secrets of Strixhaven Commander decks are worth the money based on reprint value alone. The Prismari Artistry deck stands out with the highest confirmed reprint value. Silverquill Influence is the most mechanically interesting and unusual. Witherbloom Pestilence suits players who enjoy sacrifice strategies. Lorehold Spirit suits Spirit typal and graveyard players. Quandrix Unlimited suits players who want big creatures and X-spells. Pre-ordering the deck that matches your colour and playstyle preference is the right call before release.
 
 ## Why Five Commander Decks Matters
 
@@ -154,7 +144,7 @@ If you are genuinely torn, here is a tiebreaker ranked by what each deck does be
 
 The Silverquill Influence and Witherbloom Pestilence Commander Decks are confirmed pre-order live on Amazon AU now. Check the MTG shop section for all five decks as they are listed.
 
-[Pre-order Strixhaven Commander Decks on Amazon AU](/shop.html#mtg)
+[Pre-order Strixhaven Commander Decks on Amazon AU](/shop)
 
 ## Should You Pre-Order or Wait?
 
@@ -164,19 +154,8 @@ For popular Commander decks from high-hype sets, pre-ordering is the safer appro
 
 If you want one of these decks to play at your next Commander night, pre-ordering now at retail price is the sensible approach.
 
-<div class="cta-block">
-
-**Pre-order MTG Secrets of Strixhaven Commander Decks on Amazon AU now.**
-Silverquill Influence and Witherbloom Pestilence confirmed. More decks listing weekly. Releases 24 April 2026.
-
-[Browse Strixhaven Commander Decks on Amazon AU](/shop.html#mtg)
-
-</div>
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 ## Frequently Asked Questions
 
@@ -196,16 +175,17 @@ No. Cards unique to Commander decks (marked with a C stamp) are not Standard leg
 Prismari Artistry. Faerie Mastermind, Goldspan Dragon, Brazen Borrower, and Dig Through Time are all directly upgradeable or useful in many other Commander decks, which means the reprints have value even if you choose to rebuild the deck around a different commander.
 
 
-Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/market). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
 
 Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [MTG Secrets of Strixhaven: Everything to Know Before It Drops in Australia](/blog/mtg-secrets-of-strixhaven-australia/)
-- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
-- [MTG Secrets of Strixhaven: Best Cards and Chase Cards](/blog/mtg-secrets-of-strixhaven-best-cards-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [MTG Secrets of Strixhaven: Everything to Know Before It Drops in Australia](/blog/mtg-secrets-of-strixhaven-australia)
+- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
+- [MTG Secrets of Strixhaven: Best Cards and Chase Cards](/blog/mtg-secrets-of-strixhaven-best-cards-australia)

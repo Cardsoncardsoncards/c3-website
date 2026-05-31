@@ -3,15 +3,18 @@ game: riftbound
 title: "I Opened 4 Boxes of Riftbound Unleashed: Here Is Exactly What I Got"
 description: "Real numbers from four booster boxes of Riftbound Unleashed. Every foil, every alternate art, every insert card counted. No fluff, no estimates."
 date: 2026-05-16
-category: "general-tcg"
+category: buying-guides
 emoji: "📦"
-tags: [riftbound, box-opening, pull-rates, unleashed, australia, honest-review, personal]
+tags: post
 layout: post
 affiliate_disclaimer: true
-featured: false
----
+---## Quick Answer
 
-We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards). Before listing anything, we tracked the data.
+We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Before listing anything, we tracked the data. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
+
+We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Before listing anything, we tracked the data.
 
 This post is the raw result. Not estimates, not averages from other people's box openings. Our four boxes, counted card by card.
 
@@ -110,11 +113,21 @@ Four boxes of Riftbound Unleashed gave us exactly what the stated pack structure
 
 The 160-card gap from expected to listed is entirely art cards and inserts. We counted them out. They exist but they are not singles-worthy.
 
-If you are considering opening Riftbound for the singles market: four boxes gives you comprehensive coverage of the base set with strong foil counts. The ROI depends entirely on what the Riftbound market does in Australia over the next six to twelve months.
+If you are considering opening Riftbound for the singles market: four boxes gives you complete coverage of the base set with strong foil counts. The ROI depends entirely on what the Riftbound market does in Australia over the next six to twelve months.
 
-All 1,184 singles from our opening are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards). If you want to compare Riftbound singles prices against each other, use the [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare).
+All 1,184 singles from our opening are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). If you want to compare Riftbound singles prices against each other, use the [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare).
 
 For the broader question of whether Riftbound is worth getting into as a game, read our [Riftbound Unleashed set review](https://cardsoncardsoncards.com.au/blog/p249-riftbound-unleashed-australia).
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

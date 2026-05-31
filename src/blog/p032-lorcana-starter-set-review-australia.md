@@ -4,29 +4,19 @@ title: "Lorcana Starter Set Review: Worth Buying in Australia?"
 description: "Are Disney Lorcana Starter Decks worth buying in Australia? This honest review covers what's inside, how they play, who they suit, and whether."
 date: 2026-04-07
 category: "market-and-prices"
-tags:
-  - post
-  - lorcana
-  - starter-decks
-  - value
-  - beginners
-  - buying-guides
+tags: post
 emoji: "🎮"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#lorcana"
-featured: false
 layout: post
 ---
 
-Lorcana Starter Decks are the lowest-cost entry point into Disney Lorcana. ready-to-play 60-card decks that come with everything you need to sit down and start playing. At AU$25–35 each, they're accessible. But are they actually worth it, and are they the right first purchase for different types of buyers?
+Lorcana Starter Decks are the lowest-cost entry point into Disney Lorcana. ready-to-play 60-card decks that come with everything you need to sit down and start playing. At AU$25, 35 each, they're accessible. But are they actually worth it, and are they the right first purchase for different types of buyers?
 
 This review gives an honest answer across three buyer types: new players who want to try the game, experienced players looking at newer starter products, and gift buyers who want something for a Disney fan.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Lorcana Starter Decks are worth buying for new players and as gifts. They provide a complete, immediately playable experience at a reasonable price point. They are not competitive at game store event level but are not intended to be. For experienced players, Starter Decks from newer sets can provide a budget way to look at a new ink colour combination or acquire specific staple cards included in the set.</p>
-</div>
+## Quick Answer
+
+Lorcana Starter Decks are worth buying for new players and as gifts. They provide a complete, immediately playable experience at a reasonable price point. They are not competitive at game store event level but are not intended to be. For experienced players, Starter Decks from newer sets can provide a budget way to look at a new ink colour combination or acquire specific staple cards included in the set.
 
 ## What's Inside a Lorcana Starter Deck
 
@@ -38,7 +28,7 @@ Every Lorcana Starter Deck contains:
 
 **Basic accessories**. typically damage markers or a similar item to track game state, though this varies by specific product.
 
-**No sleeves.** Starter Decks don't include card sleeves. If you want to protect the cards during regular play. which is recommended. you'll need to purchase sleeves separately. A pack of 65 Dragon Shield Matte sleeves costs approximately AU$12–15 and covers a 60-card deck with spares.
+**No sleeves.** Starter Decks don't include card sleeves. If you want to protect the cards during regular play. which is recommended. you'll need to purchase sleeves separately. A pack of 65 Dragon Shield Matte sleeves costs approximately AU$12, 15 and covers a 60-card deck with spares.
 
 ## How Starter Decks Play
 
@@ -54,11 +44,11 @@ Newer Starter Decks from recent sets follow the same design philosophy: each dem
 
 ## Starter Decks vs Buying Singles: Value Comparison
 
-For a new player, a Starter Deck is excellent value. You get a complete playable deck for AU$25–35.
+For a new player, a Starter Deck is excellent value. You get a complete playable deck for AU$25, 35.
 
 For a player who knows exactly which cards they want to build around, buying singles is often cheaper for the specific cards they need. However, a Starter Deck provides a functional base that can be gradually upgraded, which is often more practical than building entirely from singles as your first Lorcana experience.
 
-The upgrade path from a Starter Deck is straightforward: identify the 5–10 weakest cards in the deck after playing it 10–15 times, and replace them with better options purchased as singles. A AU$30–50 upgrade budget applied to a Starter Deck produces a notably stronger and more personalised deck.
+The upgrade path from a Starter Deck is clear: identify the 5, 10 weakest cards in the deck after playing it 10, 15 times, and replace them with better options purchased as singles. A AU$30, 50 upgrade budget applied to a Starter Deck produces a notably stronger and more personalised deck.
 
 ## As a Gift: Who Is a Lorcana Starter Deck Right For?
 
@@ -76,7 +66,7 @@ Lorcana releases Starter Decks alongside major set launches. Current options con
 
 The original The First Chapter Starter Decks (Amber/Amethyst and Emerald/Ruby) remain available and are the most widely reviewed and discussed starter options for newcomers. They're fully legal in the Eternal constructed format.
 
-[View current Lorcana Starter Decks on Amazon AU →](/shop.html#lorcana)
+[View current Lorcana Starter Decks on Amazon AU →](/shop)
 
 ## The Honest Assessment
 
@@ -86,28 +76,18 @@ The counter-argument worth noting: if you're buying a Starter Deck purely for th
 
 Buy a Starter Deck to play, to give as a gift, or to learn the game. For those purposes, they represent genuine value at their price point.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [What Is Disney Lorcana? The Complete Beginner's Guide for Australians](/blog/what-is-disney-lorcana-australia/)
-- [How to Build Your First Lorcana Deck in Australia](/blog/how-to-build-lorcana-deck-australia/)
-- [Best Lorcana Booster Boxes to Buy in Australia](/blog/best-lorcana-booster-boxes-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
-
-**Browse current Disney Lorcana products on Amazon AU.**
-Starter Decks, Illumineer's Troves, and Booster Displays in stock.
-
-[Shop Lorcana on Amazon AU →](/shop.html#lorcana)
-
-</div>
+- [What Is Disney Lorcana? The Complete Beginner's Guide for Australians](/blog/what-is-disney-lorcana-australia)
+- [How to Build Your First Lorcana Deck in Australia](/blog/how-to-build-lorcana-deck-australia)
+- [Best Lorcana Booster Boxes to Buy in Australia](/blog/best-lorcana-booster-boxes-australia)
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
 
 ## Frequently Asked Questions
 
@@ -118,7 +98,7 @@ No. Starter Decks are designed for casual learning play and are not competitive 
 No: each player needs their own 60-card deck. You need two Starter Decks (one per player) for a two-player game. Buy two different decks from the same release for a balanced introductory experience.
 
 **Do Lorcana Starter Decks come with sleeves?**
-No. Sleeves need to be purchased separately. A pack of 65 Dragon Shield Matte sleeves (AU$12–15) is the recommended complement to any Starter Deck purchase.
+No. Sleeves need to be purchased separately. A pack of 65 Dragon Shield Matte sleeves (AU$12, 15) is the recommended complement to any Starter Deck purchase.
 
 **Are the original Starter Decks still worth buying or should I get newer ones?**
 Both are valid. Original Starter Decks (The First Chapter) are still fully legal and provide a clear introduction to the game's core mechanics. Newer Starter Decks feature more recently designed cards and current-era mechanics. Either works for new players.
@@ -127,4 +107,4 @@ Both are valid. Original Starter Decks (The First Chapter) are still fully legal
 A Starter Deck is a pre-built 60-card deck for playing the game. An Illumineer's Trove is a collector-oriented booster box product containing multiple booster packs plus premium accessories. They serve entirely different purposes. Starter Decks for playing, Illumineer's Troves for collecting and pack opening.
 
 **Can I upgrade a Starter Deck into a competitive deck?**
-Yes, with significant modification. A competitive Lorcana deck shares the same ink colour pairing as a Starter Deck but most of the specific card choices will be different. The Starter Deck provides a base and some useful staple cards, but expect to replace 30–40 of the 60 cards to reach competitive level.
+Yes, with significant modification. A competitive Lorcana deck shares the same ink colour pairing as a Starter Deck but most of the specific card choices will be different. The Starter Deck provides a base and some useful staple cards, but expect to replace 30, 40 of the 60 cards to reach competitive level.

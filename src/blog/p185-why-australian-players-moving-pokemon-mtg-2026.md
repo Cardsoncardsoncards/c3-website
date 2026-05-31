@@ -3,20 +3,16 @@ game: pokemon
 title: "Why Australian TCG Players Are Moving from Pokemon to MTG in 2026"
 description: "A noticeable number of Australian Pokemon TCG players are switching to Magic: The Gathering. Here's what's driving the shift, what they find when."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - mtg
-  - pokemon
-  - comparison
-  - australia
+category: buying-guides
+tags: post
 emoji: "🔄"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+There's a pattern that's become more visible in Australian local game store communities over the past two years: longtime Pokemon TCG players picking up MTG for the first time. Not replacing Pokemon. most still play both. but expanding into MTG with genuine investment. See current prices at [/cards/pokemon](/cards/pokemon).
+
+
 
 There's a pattern that's become more visible in Australian local game store communities over the past two years: longtime Pokemon TCG players picking up MTG for the first time. Not replacing Pokemon. most still play both. but expanding into MTG with genuine investment.
 
@@ -76,11 +72,20 @@ The answer is no if you:
 
 For a first experience, four players each buying a precon Commander deck from the same set gives you four distinct decks Built to play against each other. Total cost: AU$240 to AU$320 for four people, or AU$60 to AU$80 each.
 
-Browse available Commander precons at the [C3 shop](/shop.html#mtg). Check MTG card prices at the [C3 Card Vault](/cards/mtg).
+Browse available Commander precons at the [C3 shop](/shop). Check MTG card prices at the [C3 Card Vault](/cards/mtg).
 
 ---
 
-*See also: [Pokemon TCG vs MTG Australia: Which Should You Play?](/blog/pokemon-tcg-vs-mtg-australia/)*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -91,4 +96,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

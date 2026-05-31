@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Godzilla TCG: Beginner's Guide for Australian Players"
 description: "The Godzilla TCG brings the entire Toho kaiju universe into card form. Here's what the game actually is, where to find it in Australia, and who it's really for."

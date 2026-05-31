@@ -1,23 +1,18 @@
 ---
-game: tcg
+game: general
 title: "Upcoming TCG Releases in Australia: April to June 2026"
 description: "Every major trading card game release coming to Australia between April and June 2026. MTG, Pokemon, Lorcana, One Piece, Riftbound."
 date: 2026-04-08
-category: "general-tcg"
-tags:
-  - post
-  - general-tcg
-  - pre-orders
-  - buying-guides
-  - collectors
-  - players
+category: buying-guides
+tags: post
 emoji: "🗓️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
----
+---## Quick Answer
+
+> **Updated May 2026:** This product has now released. Language below has been updated from pre-order to reflect current availability. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 > **Updated May 2026:** This product has now released. Language below has been updated from pre-order to reflect current availability.
 
@@ -37,7 +32,7 @@ The tenth booster set for the One Piece Card Game, focused on the Punk Hazard an
 
 **Key chase cards:** Trafalgar Law Manga Rare, Sanji SP, Doflamingo Alternate Art, Rosinante Alternate Art.
 
-[Buy One Piece OP-10 on Amazon AU](/shop.html#onepiece)
+[Buy One Piece OP-10 on Amazon AU](/shop)
 
 ---
 
@@ -51,7 +46,7 @@ The main Magic: The Gathering set for spring 2026. Returns to Strixhaven Univers
 
 **Key chase cards:** Emeritus of Ideation (serialised, 500 globally), Ral Zarek borderless planeswalker, five borderless Elder Dragons, Force of Will Mystical Archive reprint, Japanese Mystical Archive variants.
 
-[Pre-order MTG Secrets of Strixhaven on Amazon AU](/shop.html#mtg)
+[Pre-order MTG Secrets of Strixhaven on Amazon AU](/shop)
 
 ---
 
@@ -63,7 +58,7 @@ The third set for Riftbound, the competitive TCG from Riot Games. Unleashed is d
 
 **Products on Amazon AU:** Check the Riftbound section of the shop for current availability.
 
-[Browse Riftbound products](/shop.html#riftbound)
+[Browse Riftbound products](/shop)
 
 ---
 
@@ -77,7 +72,7 @@ One of the biggest TCG releases of 2026. The twelfth Lorcana set and the first t
 
 **Key characters:** Woody, Buzz Lightyear, Elastigirl, Jack-Jack, Merida (Brave). Also features an Ariel Curious Traveler as part of the new Traveler cycle.
 
-[Browse current Lorcana products on Amazon AU](/shop.html#lorcana)
+[Browse current Lorcana products on Amazon AU](/shop)
 
 ---
 
@@ -87,7 +82,7 @@ The second Mega Evolution era set. 124 cards built around Mega Zygarde ex and Lu
 
 **Products on Amazon AU:** Booster Display and Elite Trainer Box. In stock now.
 
-[Buy Pokemon Perfect Order on Amazon AU](/shop.html#pokemon)
+[Buy Pokemon Perfect Order on Amazon AU](/shop)
 
 ---
 
@@ -101,7 +96,7 @@ The largest Magic release of 2026 by IP profile. A Universes Beyond crossover se
 
 **Key products to watch:** Play Booster Box, Collector Booster Box, Jumpstart Display, Bundle, individual Commander Decks beyond Doom Prevails.
 
-[Pre-order MTG Marvel Super Heroes on Amazon AU](/shop.html#mtg)
+[Pre-order MTG Marvel Super Heroes on Amazon AU](/shop)
 
 ---
 
@@ -111,7 +106,7 @@ A new One Piece starter deck releasing in mid-June. Starter decks are an entry p
 
 **Amazon AU status:** Check the One Piece section of the shop as it is listed.
 
-[Browse One Piece products](/shop.html#onepiece)
+[Browse One Piece products](/shop)
 
 ---
 
@@ -143,14 +138,6 @@ A new One Piece starter deck releasing in mid-June. Starter decks are an entry p
 
 **If you are new to TCGs:** The MTG Secrets of Strixhaven Commander Decks are excellent starting points. One of five decks will match your colour preference and each is immediately playable out of the box.
 
-<div class="cta-block">
-
-**Browse all current TCG products confirmed on Amazon AU.**
-MTG, Pokemon, One Piece, Lorcana, Riftbound. New and pre-order products all in one place.
-
-[Browse the Full C3 Shop](/shop.html)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -170,14 +157,15 @@ Yes. The English release launched 3 April 2026 and is available on Amazon AU now
 Local game stores are taking pre-orders for the 8 May prerelease. Amazon AU does not have it listed yet. Check the C3 shop page for the most current status.
 
 
-Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/market). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Best TCG Pre-Orders Right Now in Australia: April 2026](/blog/best-tcg-pre-orders-australia-april-2026/)
-- [MTG Secrets of Strixhaven: Full Guide for Australia](/blog/mtg-secrets-of-strixhaven-australia/)
-- [Disney Lorcana Wilds Unknown: Australia Release Guide](/blog/disney-lorcana-wilds-unknown-australia/)
-- [Best TCG Booster Boxes to Buy in Australia Right Now](/blog/best-tcg-booster-boxes-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [Best TCG Pre-Orders Right Now in Australia: April 2026](/blog/best-tcg-pre-orders-australia-april-2026)
+- [MTG Secrets of Strixhaven: Full Guide for Australia](/blog/mtg-secrets-of-strixhaven-australia)
+- [Disney Lorcana Wilds Unknown: Australia Release Guide](/blog/disney-lorcana-wilds-unknown-australia)
+- [Best TCG Booster Boxes to Buy in Australia Right Now](/blog/best-tcg-booster-boxes-australia)

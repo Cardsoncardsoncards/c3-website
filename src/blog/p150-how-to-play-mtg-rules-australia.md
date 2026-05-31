@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "How to Play MTG: Beginner Rules Guide for Australia"
-description: "New to MTG? This plain-English guide covers every rule you need to play your first game — from how turns work to combat, spells, and winning."
+description: "New to MTG? This plain-English guide covers every rule you need to play your first game, from how turns work to combat, spells, and winning."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - mtg
-  - beginners
-  - how-to-play
-  - rules
+category: buying-guides
+tags: post
 emoji: "📖"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Magic: The Gathering has been running since 1993 and has more rules text than most board games combined. That sounds intimidating. It isn't, once someone explains it properly. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Magic: The Gathering has been running since 1993 and has more rules text than most board games combined. That sounds intimidating. It isn't, once someone explains it properly.
 
@@ -26,7 +22,7 @@ This guide covers everything you need to play your first real game. No jargon, n
 
 Two players. Two decks. That's it. Each deck has 60 cards and you both start with 20 life points. The goal is to reduce your opponent's life total to zero before they do the same to you.
 
-A preconstructed deck: a ready-to-play 60-card deck sold in a box. is the easiest way to start. They cost around AU$15 to AU$30 and work straight out of the packaging. See the [C3 shop](/shop.html#mtg) for available decks in Australia.
+A preconstructed deck: a ready-to-play 60-card deck sold in a box. is the easiest way to start. They cost around AU$15 to AU$30 and work straight out of the packaging. See the [C3 shop](/shop) for available decks in Australia.
 
 ## The Five Card Types
 
@@ -92,11 +88,11 @@ Other win conditions exist but are rare in beginner decks. You also lose if you 
 
 For a first experience, grab two of the same Starter Kit. it comes with two ready-to-play decks and a guide. They're available at EB Games, Games Workshop, local game stores, and online retailers. Prices in Australia typically run AU$18 to AU$25.
 
-If you want to build from scratch, see our [guide to the best MTG booster boxes in Australia](/blog/best-mtg-booster-boxes-australia/) and our [singles vs booster boxes comparison](/blog/mtg-singles-vs-booster-boxes-australia/).
+If you want to build from scratch, see our [guide to the best MTG booster boxes in Australia](/blog/best-mtg-booster-boxes-australia) and our [singles vs booster boxes comparison](/blog/mtg-singles-vs-booster-boxes-australia).
 
 ## Tracking Your Collection
 
-Once you have cards, you'll want to know what they're worth. The [C3 MTG Card Vault](/cards/mtg) tracks live AUD prices on over 96,000 cards. The [free collection tracker](/tracker.html) lets you log what you have and track the value over time.
+Once you have cards, you'll want to know what they're worth. The [C3 MTG card hub](/cards/mtg) tracks live AUD prices on over 96,000 cards. The [free collection tracker](/tracker) lets you log what you have and track the value over time.
 
 ## The Best Next Step
 
@@ -104,21 +100,19 @@ Play your first game with two prebuilt decks and don't worry about optimal plays
 
 ---
 
-*Prices sourced from Australian retailers. Check the [C3 shop](/shop.html#mtg) for current available stock.*
+*Prices sourced from Australian retailers. Check the [C3 shop](/shop) for current available stock.*
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+## The C3 Take
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+## What to Read Next
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -129,4 +123,4 @@ The minimum entry cost depends on the game. Most TCGs have starter or preconstru
 Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
 
 ### Where can I find other Mtg players in Australia?
-Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/market) for upcoming events near you.

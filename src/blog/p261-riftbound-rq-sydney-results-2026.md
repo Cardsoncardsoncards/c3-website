@@ -4,26 +4,17 @@ title: "Riftbound RQ Sydney 2026: Results, Top 8, and Card Price Impact"
 description: "The first Riftbound APAC Regional Qualifier ran May 15-17 in Sydney. Here are the results, the decks that placed, and what it means for Unleashed card prices in Australia."
 date: 2026-05-17
 category: "competitive-play"
-tags:
-  - post
-  - riftbound
-  - competitive-play
-  - rq-sydney
-  - apac
+tags: post
 emoji: "🏆"
-affiliate_disclaimer: false
-cta_type: "compare"
-cta_link: "/compare"
-featured: true
+affiliate_disclaimer: true
 layout: post
 ---
 
 RQ Sydney ran from 15-17 May 2026 at Sydney Showground: the first official Riftbound Regional Qualifier in the Asia Pacific region. This was not a local game store event. Top 32 players shared a USD$25,000 prize pool. Top 64 finishers earned invitations to the Regional Championship. This is where the Australian Riftbound scene became real.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>RQ Sydney 2026 ran May 15-17 at Sydney Showground. LeBlanc and Ahri led the competitive meta going in. Results confirmed high-level Riftbound is a skill-intensive game where experienced players consistently outperform the field. Check post-event Unleashed prices at the <a href="/cards/riftbound">C3 Riftbound Card Vault</a>.</p>
-</div>
+## Quick Answer
+
+RQ Sydney 2026 ran May 15-17 at Sydney Showground. LeBlanc and Ahri led the competitive meta going in. Results confirmed high-level Riftbound is a skill-intensive game where experienced players consistently outperform the field. Check post-event Unleashed prices at the <a href="/cards/riftbound">C3 Riftbound Card Vault</a>.
 
 ## What RQ Sydney Was
 
@@ -61,9 +52,6 @@ Regional Qualifier results move Riftbound card prices. The pattern from Set 1 an
 
 Use the [C3 Riftbound Card Vault](/cards/riftbound) for current AUD pricing on Unleashed singles. The [C3 Market page](/market) shows 7-day movement so you can see which Riftbound cards are moving post-event.
 
-<div class="tool-callout">
-<p>Compare Riftbound Unleashed card prices before buying post-event singles at the <a href="/compare">C3 Card Compare tool</a>. Shows current AUD prices and 14-day trend.</p>
-</div>
 
 ## The Broader Significance for Australian Riftbound
 
@@ -77,23 +65,24 @@ RQ Sydney matters beyond prize money and qualification. It established several t
 
 ## Next Events for Australian Riftbound Players
 
-**RQ Singapore**: September 4-6, 2026. Badge sales open July 8 at 11am AEST. For Australian players who placed in top 64 at Sydney, this is the next step. For players who didn't qualify, Singapore is another opportunity. See our [RQ Singapore guide](/blog/riftbound-rq-singapore-australia-guide/) for what you need to know.
+**RQ Singapore**: September 4-6, 2026. Badge sales open July 8 at 11am AEST. For Australian players who placed in top 64 at Sydney, this is the next step. For players who didn't qualify, Singapore is another opportunity. See our [RQ Singapore guide](/blog/riftbound-rq-singapore-australia-guide) for what you need to know.
 
 **Riftbound Melbourne 2026**: October 10-12, 2026. A convention-style event with competitive play, demos, and the exclusive Ahri, Alluring promo card. Not an RQ but a significant Australian event.
 
 **Vendetta (Set 4)**: July 31, 2026. The next card pool expansion drops six weeks after RQ Sydney. Any meta development coming out of Sydney will interact with Vendetta cards. Start tracking previews as they release.
 
-Check the [C3 Release Calendar](/calendar) for confirmed dates as they are announced.
+Check the [C3 Release Calendar](/market) for confirmed dates as they are announced.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Riftbound RQ Sydney 2026: Event Guide](/blog/riftbound-rq-sydney-2026-guide/)
-- [Riftbound RQ Singapore 2026: Australian Player Guide](/blog/riftbound-rq-singapore-australia-guide/)
-- [Riftbound Unleashed: Australia Buying Guide](/blog/riftbound-unleashed-pre-order-guide-australia/)
-- [Riftbound Meta Tier List May 2026](/blog/riftbound-meta-tier-list-may-2026/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [Riftbound RQ Sydney 2026: Event Guide](/blog/riftbound-rq-sydney-2026-guide)
+- [Riftbound RQ Singapore 2026: Australian Player Guide](/blog/riftbound-rq-singapore-australia-guide)
+- [Riftbound Unleashed: Australia Buying Guide](/blog/riftbound-unleashed-pre-order-guide-australia)
+- [Riftbound Meta Tier List May 2026](/blog/riftbound-meta-tier-list-may-2026)
 
 ## Frequently Asked Questions
 

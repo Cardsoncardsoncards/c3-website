@@ -3,17 +3,20 @@ game: riftbound
 title: "Riftbound Unleashed: What Australians Need to Know Before Buying"
 description: "The League of Legends TCG has landed in Australia. Here is what the set looks like, what a booster box actually costs, what you get in each pack, and whether it is worth getting into right now."
 date: 2026-05-16
-category: "set-reviews"
+category: value-and-worth
 emoji: "🎮"
-tags: [riftbound, set-review, australia, booster-box, unleashed, league-of-legends, tcg-buying-guide]
+tags: post
 layout: post
 affiliate_disclaimer: true
-featured: false
----
+---## Quick Answer
+
+Riftbound is the trading card game based on League of Legends, published by Riot Games and released in Australia in 2026. The first set is called Unleashed and it covers a card pool of 219 base cards plus a set of alternate art, overnumbered, and signed variants that sit above the main set number. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
 
 Riftbound is the trading card game based on League of Legends, published by Riot Games and released in Australia in 2026. The first set is called Unleashed and it covers a card pool of 219 base cards plus a set of alternate art, overnumbered, and signed variants that sit above the main set number.
 
-We have stocked Riftbound Unleashed at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards) and opened four booster boxes to build our inventory. This is a real-world look at what you actually get, not a preview.
+We have stocked Riftbound Unleashed at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) and opened four booster boxes to build our inventory. This is a real-world look at what you actually get, not a preview.
 
 ---
 
@@ -27,7 +30,7 @@ We have stocked Riftbound Unleashed at [Cards on Cards on Cards](https://www.eba
 
 **Total cards per box:** 336
 
-**Where to buy in Australia:** Local game stores and online. Cards from our stock are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards).
+**Where to buy in Australia:** Local game stores and online. Cards from our stock are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
 
 ---
 
@@ -70,7 +73,7 @@ If you play League of Legends you will recognise this roster immediately. If you
 
 ## Australian Availability
 
-Riftbound is stocked at local game stores across Australia. If you want singles rather than sealed product, the fastest way to build a collection from a specific champion is to buy singles directly. We have over 1,180 individual Riftbound Unleashed cards listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards), sorted by card number and finish.
+Riftbound is stocked at local game stores across Australia. If you want singles rather than sealed product, the fastest way to build a collection from a specific champion is to buy singles directly. We have over 1,180 individual Riftbound Unleashed cards listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1), sorted by card number and finish.
 
 For a full card-level breakdown of what we pulled from four booster boxes, including foil rates and alternate art counts, read our [box opening post](https://cardsoncardsoncards.com.au/blog/p251-riftbound-unleashed-box-opening).
 
@@ -93,9 +96,19 @@ For current AU pricing on Riftbound singles, use the [C3 Card Vault](https://car
 
 ## Where to Buy Riftbound Unleashed in Australia
 
-Riftbound Unleashed booster boxes and starter kits are available at local game stores across Australian capital cities and online. Amazon AU stock has been inconsistent for Riftbound products. Check the [C3 shop](/shop.html) for confirmed current Australian availability with direct links.
+Riftbound Unleashed booster boxes and starter kits are available at local game stores across Australian capital cities and online. Amazon AU stock has been inconsistent for Riftbound products. Check the [C3 shop](/shop) for confirmed current Australian availability with direct links.
 
 For current AUD pricing on specific Unleashed singles, the [C3 Riftbound Card Vault](/cards/riftbound) tracks prices from eBay AU sold data. Use the [C3 Card Compare tool](/compare) if you want to check an Unleashed card against one from an earlier set.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -103,7 +116,7 @@ For current AUD pricing on specific Unleashed singles, the [C3 Riftbound Card Va
 It depends on your goals. If you play competitive Riftbound, Unleashed cards are mandatory for the current meta. If you are a collector, the Unleashed alternate arts and overnumbered cards are worth tracking. If you are new to Riftbound, Starter Kits remain the recommended starting point.
 
 ### How does Unleashed change the Riftbound competitive meta?
-The three new mechanics (XP acceleration, Hunt triggers, Ambush) shifted the optimal play patterns for most Champions. LeBlanc gained the most from the new cards. Check the [C3 Riftbound meta tier list](/blog/riftbound-meta-tier-list-may-2026/) for the current competitive picture.
+The three new mechanics (XP acceleration, Hunt triggers, Ambush) shifted the optimal play patterns for most Champions. LeBlanc gained the most from the new cards. Check the [C3 Riftbound meta tier list](/blog/riftbound-meta-tier-list-may-2026) for the current competitive picture.
 
 ### Where can I buy Riftbound Unleashed in Australia?
-Local game stores in major Australian cities stock Unleashed. Check the [C3 shop](/shop.html) for current Amazon AU availability and direct links.
+Local game stores in major Australian cities stock Unleashed. Check the [C3 shop](/shop) for current Amazon AU availability and direct links.

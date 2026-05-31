@@ -3,28 +3,18 @@ game: lorcana
 title: "Disney Lorcana Wilds Unknown: Australia Release Guide and What"
 description: "Disney Lorcana Wilds Unknown releases 15 May 2026 and introduces Pixar characters for the first time. Here is everything Australian collectors and."
 date: 2026-04-08
-category: "buying-guides"
-tags:
-  - post
-  - lorcana
-  - pre-orders
-  - buying-guides
-  - collectors
-  - players
+category: buying-guides
+tags: post
 emoji: "🌿"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#lorcana"
-featured: false
 layout: post
 ---
 
 Disney Lorcana Wilds Unknown is the twelfth set for the game and it releases in Australia on 15 May 2026, with local game store prerelease events running from 8 May. This is one of the most anticipated Lorcana sets since the original 2023 launch. It is the first set to include Pixar characters, which fundamentally changes the collector and player appeal of the game. This guide covers everything Australian buyers need to know before it drops.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Wilds Unknown releases in AU game stores 8 May 2026 (prerelease) and mass retail 15 May 2026. It features 204 cards including the debut of Toy Story and The Incredibles characters, a new Traveler card mechanic, and the first-ever two-player starter set for Lorcana. As of early April, Amazon AU does not yet have the booster display listed. Check the C3 shop page weekly for updates. Local game stores have pre-orders open now for prerelease packs.</p>
-</div>
+## Quick Answer
+
+Wilds Unknown releases in AU game stores 8 May 2026 (prerelease) and mass retail 15 May 2026. It features 204 cards including the debut of Toy Story and The Incredibles characters, a new Traveler card mechanic, and the first-ever two-player starter set for Lorcana. As of early April, Amazon AU does not yet have the booster display listed. Check the C3 shop page weekly for updates. Local game stores have pre-orders open now for prerelease packs.
 
 ## Why Wilds Unknown Is a Big Deal
 
@@ -67,7 +57,7 @@ Check the C3 Lorcana shop section weekly from late April onwards. Once an ASIN i
 
 In the meantime, local game stores and dedicated AU retailers have pre-orders open now for prerelease products. For the booster display and mass retail products, bookmark this page and the shop page for updates.
 
-[Browse current Lorcana products on Amazon AU](/shop.html#lorcana)
+[Browse current Lorcana products on Amazon AU](/shop)
 
 ## New Mechanics in Wilds Unknown
 
@@ -111,14 +101,6 @@ Enchanted rarity versions of the most popular Pixar characters (Woody, Buzz, Ela
 
 Wilds Unknown is the beginning of the Pixar chapter for Lorcana, not the end. Ravensburger has confirmed Pixar's presence continues across all remaining 2026 sets. Monsters, Inc: arrives in Q3 (Attack of the Vine), and Coco appears in Q4. If you are building a collection focused on Pixar characters across Lorcana, now is the time to establish your position.
 
-<div class="cta-block">
-
-**Wilds Unknown releases 15 May 2026. Check the C3 Lorcana shop for Amazon AU availability as it is listed.**
-Current Lorcana products are available on Amazon AU now.
-
-[Browse Lorcana on Amazon AU](/shop.html#lorcana)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -137,11 +119,12 @@ Yes. It replaces the old single-player starter decks and is a better product. Tw
 **What are prerelease packs and where can I get them?**
 Prerelease packs are a new Lorcana product launching with Wilds Unknown. They contain 6 booster packs, a Traveler promo card, and accessories. Available at local game stores from 8 May, the prerelease date. MSRP approximately AU$55 to AU$65.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [First Pixar Characters in Lorcana: What Wilds Unknown Means for Collectors](/blog/first-pixar-characters-lorcana-wilds-unknown-collectors/)
-- [Is Disney Lorcana Worth Starting in 2026?](/blog/is-disney-lorcana-worth-starting-2026-australia/)
-- [Best TCG Pre-Orders Right Now in Australia: April 2026](/blog/best-tcg-pre-orders-australia-april-2026/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [First Pixar Characters in Lorcana: What Wilds Unknown Means for Collectors](/blog/first-pixar-characters-lorcana-wilds-unknown-collectors)
+- [Is Disney Lorcana Worth Starting in 2026?](/blog/is-disney-lorcana-worth-starting-2026-australia)
+- [Best TCG Pre-Orders Right Now in Australia: April 2026](/blog/best-tcg-pre-orders-australia-april-2026)

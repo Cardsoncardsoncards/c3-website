@@ -3,28 +3,18 @@ game: dnd
 title: "D&D Dice: A Buyer's Guide for Australian Players"
 description: "D&D dice quality varies enormously. This guide covers what to look for in polyhedral dice sets, which brands hold up in Australian conditions, and."
 date: 2026-04-09
-category: "buying-guides"
-tags:
-  - post
-  - dnd
-  - dice
-  - buying-guides
-  - tabletop-rpg
-  - accessories
+category: buying-guides
+tags: post
 emoji: "🎲"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
 Dice are one of the few D&D purchases every player eventually makes their own. The game uses seven dice types, they come in dozens of materials and styles, and the range available through Amazon AU has expanded significantly. This guide covers what you actually need, what the material options mean in practice, and what storage products make sense if your collection grows.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Every D&D player needs a standard seven-piece polyhedral dice set: d4, d6, d8, d10, d10 (percentile), d12, and d20. Plastic sets from AU$10 to AU$20 play identically to premium metal or resin sets at AU$40 to AU$80. Buy what suits your budget and aesthetic preference. Dice trays are a practical addition once you own multiple sets. Weighted balance matters more for d20s than any other die. metal dice roll more consistently on hard surfaces.</p>
-</div>
+## Quick Answer
+
+Every D&D player needs a standard seven-piece polyhedral dice set: d4, d6, d8, d10, d10 (percentile), d12, and d20. Plastic sets from AU$10 to AU$20 play identically to premium metal or resin sets at AU$40 to AU$80. Buy what suits your budget and aesthetic preference. Dice trays are a practical addition once you own multiple sets. Weighted balance matters more for d20s than any other die. metal dice roll more consistently on hard surfaces.
 
 ## The Seven Dice You Need
 
@@ -38,7 +28,7 @@ A standard polyhedral set contains:
 
 **d10** (ten-sided): Damage for heavy crossbows, hand crossbows, and some class features. Also used as a percentile die.
 
-**d10 percentile** (also d10, usually numbered 00–90): Paired with the standard d10 for percentile rolls, generating numbers from 1 to 100. Used infrequently in 5e.
+**d10 percentile** (also d10, usually numbered 00, 90): Paired with the standard d10 for percentile rolls, generating numbers from 1 to 100. Used infrequently in 5e.
 
 **d12** (twelve-sided): The barbarian's signature damage die. Also used by great axes and some class features. Most players use it rarely until they play a Barbarian.
 
@@ -64,7 +54,7 @@ Standard plastic polyhedral sets (42-piece sets giving multiples of each type), 
 
 A 42-piece set (six of most dice types plus additional d6s) is the practical choice for most players. Having multiple d6s and d8s saves time when rolling damage for multi-attack or spellcasting characters.
 
-[Browse D&D dice on the C3 shop →](/shop.html#dnd)
+[Browse D&D dice on the C3 shop →](/shop)
 
 ## Dice Trays and Storage
 
@@ -80,7 +70,7 @@ Once you own more than one set of dice, storage and containment become relevant.
 
 **Mimic-style dice boxes:** Novelty storage shaped like a D&D mimic (a monster that disguises itself as a treasure chest). Functionally a dice box. Popular as gifts for D&D players.
 
-All of these are currently available through the [C3 D&D shop](/shop.html#dnd).
+All of these are currently available through the [C3 D&D shop](/shop).
 
 ## Practical Buying Advice
 
@@ -92,28 +82,18 @@ All of these are currently available through the [C3 D&D shop](/shop.html#dnd).
 
 **On quantity:** Most classes need at most two or three of any single die type for damage rolls. A 42-piece set covers this. Players running builds that require rolling large numbers of dice (some Wizard spells, Bardic Inspiration at higher levels) occasionally benefit from having extra d8s and d10s handy.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia/)
-- [D&D Starter Sets in Australia: Which One Suits You](/blog/dnd-starter-sets-australia/)
-- [D&D Storage and Bags in Australia: Organising Your Gear](/blog/dnd-storage-bags-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
-
-**Browse D&D dice, trays, towers and storage on Amazon AU.**
-All products confirmed available with Australian shipping.
-
-[Browse the D&D Shop →](/shop.html#dnd)
-
-</div>
+- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia)
+- [D&D Starter Sets in Australia: Which One Suits You](/blog/dnd-starter-sets-australia)
+- [D&D Storage and Bags in Australia: Organising Your Gear](/blog/dnd-storage-bags-australia)
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
 
 ## Frequently Asked Questions
 
@@ -130,7 +110,7 @@ The d20 is the twenty-sided die used for almost every roll in D&D, including att
 Metal dice are heavier, roll differently, and are more aesthetically impressive than plastic sets. They are not meaningfully more balanced or fair than good-quality plastic dice. Whether they're "worth it" is a personal preference question, not a mechanical one.
 
 **Where can I buy D&D dice in Australia?**
-Amazon AU stocks many polyhedral dice sets with Australian shipping. Local game stores in Australian capital cities also carry dice. The [C3 D&D shop](/shop.html#dnd) links to confirmed Amazon AU stock across multiple price points and styles.
+Amazon AU stocks many polyhedral dice sets with Australian shipping. Local game stores in Australian capital cities also carry dice. The [C3 D&D shop](/shop) links to confirmed Amazon AU stock across multiple price points and styles.
 
 **Can I use dice-rolling apps instead of physical dice?**
 Yes. Roll20 and D&D Beyond both include built-in digital dice rollers. For in-person play, physical dice are the standard. For online play, digital rollers are common and widely accepted.

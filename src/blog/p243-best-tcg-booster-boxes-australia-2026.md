@@ -5,10 +5,14 @@ description: "Which booster boxes are actually worth opening in Australia in 202
 date: 2026-05-09
 category: market-and-prices
 emoji: "📦"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Not all booster boxes are created equal. Some deliver consistent value. Some are gambling on a single chase card. And some are clear money-losers if you open them expecting profit. Here is the honest breakdown across the major TCGs available in Australia right now. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Not all booster boxes are created equal. Some deliver consistent value. Some are gambling on a single chase card. And some are clear money-losers if you open them expecting profit. Here is the honest breakdown across the major TCGs available in Australia right now.
 
@@ -72,20 +76,27 @@ Sets with Enchanted cards in strong characters (Stitch, Moana, Mickey Mouse) con
 | One Piece OP-15 | AU$110-130 | Open for competitive singles |
 | Lorcana | AU$110-130 | Only open sets with strong Enchanted cards |
 
-Use our [EV Calculator](/ev-calculator.html) to compare expected value across MTG sets before buying.
+Use our [EV Calculator](/tools) to compare expected value across MTG sets before buying.
 
 ---
 
 Not affiliated with any card game publisher. All prices are approximate Australian retail prices as of May 2026.
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
 ### Where is the best place to buy TCG products in Australia?
-Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop.html) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
+Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
 
 ### How do I know if a TCG product is good value in Australia?
 Compare the box price against the expected value of cards inside using the [C3 EV Calculator](/ev-calculator) for MTG sets. For other games, check secondary market prices for the top cards and multiply by pull rates to estimate expected return.

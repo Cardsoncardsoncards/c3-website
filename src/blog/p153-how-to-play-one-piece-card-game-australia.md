@@ -1,22 +1,18 @@
 ---
 game: one-piece
 title: "How to Play the One Piece Card Game"
-description: "The One Piece Card Game explained from scratch — Leader cards, Don!!, attacking, and how to win. A plain-English beginner's rules guide for."
+description: "The One Piece Card Game explained from scratch, Leader cards, Don!!, attacking, and how to win. A plain-English beginner's rules guide for."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - one-piece
-  - beginners
-  - how-to-play
-  - rules
+category: buying-guides
+tags: post
 emoji: "🏴‍☠️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#one-piece"
-featured: false
 layout: post
----
+---## Quick Answer
+
+The One Piece Card Game launched in 2022 and grew faster than almost any TCG in recent memory. It has a distinctive mechanic. DON!! tokens. that makes it feel different from other card games once you understand how it works. See current prices at [/cards/one-piece](/cards/one-piece).
+
+
 
 The One Piece Card Game launched in 2022 and grew faster than almost any TCG in recent memory. It has a distinctive mechanic. DON!! tokens. that makes it feel different from other card games once you understand how it works.
 
@@ -78,9 +74,9 @@ Every character has a **Power** value (how strong its attacks are) and most have
 
 **Booster Packs**: AU$8 to AU$10. Each pack has 12 cards.
 
-For our buying guide see [Best One Piece TCG Booster Boxes in Australia](/blog/best-one-piece-tcg-booster-boxes-australia/).
+For our buying guide see [Best One Piece TCG Booster Boxes in Australia](/blog/best-one-piece-tcg-booster-boxes-australia).
 
-Track your One Piece card collection with the [free C3 tracker](/tracker.html).
+Track your One Piece card collection with the [free C3 tracker](/tracker).
 
 
 ## The Counter Mechanic in Detail
@@ -121,7 +117,17 @@ Check the [C3 Card Compare tool](/compare) for current AUD pricing on One Piece 
 
 Local game stores in all major Australian cities run One Piece TCG events. Bandai runs Premier Tournament series with Australian Regional Championships and prize support.
 
-The Australian One Piece community is active on Discord and Facebook. [C3 Release Calendar](/calendar) tracks upcoming events and set releases.
+The Australian One Piece community is active on Discord and Facebook. [C3 Release Calendar](/market) tracks upcoming events and set releases.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/one-piece](/cards/one-piece) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
+- Browse card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

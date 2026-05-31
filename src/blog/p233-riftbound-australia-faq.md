@@ -3,12 +3,16 @@ game: riftbound
 title: "Riftbound Australia FAQ: 15 Questions Every New Player Is Asking"
 description: "Is Riftbound available in Australia? Where do you buy it? How much does it cost? How do you play? Every Riftbound Australia question answered in one place."
 date: 2026-05-08
-category: beginner-guides
+category: buying-guides
 emoji: "❓"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Since Riftbound launched and RQ Sydney was announced, we have been fielding the same questions from Australian players. Here are the 15 most common ones, answered directly. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
 
 Since Riftbound launched and RQ Sydney was announced, we have been fielding the same questions from Australian players. Here are the 15 most common ones, answered directly.
 
@@ -74,7 +78,7 @@ Start now. The Unleashed meta is fresh, the player base is small enough that new
 
 ---
 
-Track your Riftbound cards with our [Free TCG Tracker](/tracker.html).
+Track your Riftbound cards with our [Free TCG Tracker](/tracker).
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games.
 
@@ -111,6 +115,16 @@ Riftbound is significantly smaller in player base than both Pokemon and MTG in A
 
 Check current Riftbound card prices at the [C3 Card Vault](/cards/riftbound) and use the [C3 Card Compare tool](/compare) for Australian pricing comparisons.
 
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
+
 ## Frequently Asked Questions
 
 ### Where can I check current TCG card prices in Australia?
@@ -120,4 +134,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

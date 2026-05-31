@@ -4,18 +4,9 @@ title: "Best D&D Campaigns for Beginners in Australia: Where to Start"
 description: "New to D&D and not sure which campaign to run or play first? This guide covers the best official campaigns for beginner Dungeon Masters and players."
 date: 2026-04-16
 category: "how-to-play"
-tags:
-  - post
-  - dnd
-  - beginners
-  - game-guides
-  - tabletop-rpg
-  - australia
+tags: post
 emoji: "🗺️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
@@ -23,10 +14,9 @@ One of the most common questions new D&D players and DMs ask is which campaign t
 
 This guide covers the best official campaign options available in Australia for beginners, with clear explanations of what makes each one suitable or not for new groups.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The Lost Mine of Phandelver (included in the D&D Starter Set) is the best starting campaign for most new groups in Australia. It's short enough to complete, well-written, and designed for new DMs and players. Phandelver and Below: The Shattered Obelisk expands this into a full campaign. For groups wanting a pre-made full campaign, The Wild Beyond the Witchlight is the most beginner-friendly full-length adventure. Curse of Strahd and Tomb of Annihilation are not recommended as first campaigns.</p>
-</div>
+## Quick Answer
+
+The Lost Mine of Phandelver (included in the D&D Starter Set) is the best starting campaign for most new groups in Australia. It's short enough to complete, well-written, and designed for new DMs and players. Phandelver and Below: The Shattered Obelisk expands this into a full campaign. For groups wanting a pre-made full campaign, The Wild Beyond the Witchlight is the most beginner-friendly full-length adventure. Curse of Strahd and Tomb of Annihilation are not recommended as first campaigns.
 
 ## Why Campaign Choice Matters for Beginners
 
@@ -34,15 +24,15 @@ D&D campaigns vary enormously in length, complexity, assumed DM experience, play
 
 Beginners tend to do best with campaigns that are:
 
-- Short enough to feel completable (not an open-ended 2–3 year commitment from session one)
+- Short enough to feel completable (not an open-ended 2, 3 year commitment from session one)
 - Structured with clear hooks that drive the story forward without requiring the DM to improvise heavily
 - Forgiving of new DM mistakes in encounter design
 - Set in an accessible tone (avoid starting with horror, player-versus-player, or politically complex intrigue)
 
 ## Lost Mine of Phandelver: The Standard Starting Point
 
-**Format:** Included in the D&D Starter Set (AU$35–$45)
-**Length:** 15–25 sessions
+**Format:** Included in the D&D Starter Set (AU$35, $45)
+**Length:** 15, 25 sessions
 **Suitable for:** Complete beginners, both players and DMs
 
 Lost Mine of Phandelver has been the recommended starting adventure for D&D 5th edition since 2014 and for good reason. It covers the core dungeon exploration, wilderness travel, and social encounter pillars of the game in a balanced way, provides clear objectives that pull the party forward, and is short enough that a new group can actually finish it.
@@ -51,7 +41,7 @@ The adventure starts with a classic wagon-robbery encounter that immediately get
 
 **For DMs:** Phandelver is one of the most DM-friendly campaigns Wizards has published. The structure is clear, encounters are well-explained, and the adventure handles enough of the creative work that a first-time DM can run it with confidence.
 
-**The Starter Set also includes:** A basic rulebook covering levels 1–5, five pre-made character sheets, and polyhedral dice. For a new group buying nothing else, it's a complete package.
+**The Starter Set also includes:** A basic rulebook covering levels 1, 5, five pre-made character sheets, and polyhedral dice. For a new group buying nothing else, it's a complete package.
 
 <div class="affiliate-card">
 
@@ -64,8 +54,8 @@ Includes the adventure, rulebook, dice, and pre-made characters.
 
 ## Phandelver and Below: The Shattered Obelisk. Extending the Beginning
 
-**Format:** Standalone hardcover (AU$65–$75)
-**Length:** 30–50+ sessions
+**Format:** Standalone hardcover (AU$65, $75)
+**Length:** 30, 50+ sessions
 **Suitable for:** Groups who enjoyed Lost Mine of Phandelver and want to continue the story
 
 Phandelver and Below is a direct sequel and expansion of Lost Mine of Phandelver published in 2023. It begins where Phandelver ends and takes the party through a full campaign into darker, more complex territory. The first half of the book is an expanded version of the original Phandelver adventure, which means groups can use this book from the start without needing the Starter Set first.
@@ -74,8 +64,8 @@ If your group finishes Phandelver and wants to keep playing together, this is th
 
 ## The Wild Beyond the Witchlight: Best Full-Length Beginner Campaign
 
-**Format:** Standalone hardcover (AU$65–$75)
-**Length:** 40–70 sessions
+**Format:** Standalone hardcover (AU$65, $75)
+**Length:** 40, 70 sessions
 **Suitable for:** Groups that want a full campaign with a beginner-friendly tone and structure
 
 The Wild Beyond the Witchlight is the most beginner-accessible full-length campaign that Wizards of the Coast has published. Its distinguishing feature is that the entire adventure can be completed without a single combat encounter. though combat is possible, the campaign emphasises social interaction, exploration, and clever problem-solving as equally valid solutions to every challenge.
@@ -88,8 +78,8 @@ The carnival setting (the Witchlight Carnival) and fairy-tale tone make it memor
 
 ## Dragon of Icespire Peak: The Alternate Starter Campaign
 
-**Format:** Included in the D&D Essentials Kit (AU$30–$40)
-**Length:** 15–25 sessions
+**Format:** Included in the D&D Essentials Kit (AU$30, $40)
+**Length:** 15, 25 sessions
 **Suitable for:** Complete beginners, alternative to Phandelver
 
 Dragon of Icespire Peak is the adventure included in the Essentials Kit and is approximately equivalent in difficulty and structure to Lost Mine of Phandelver. It uses a quest board format rather than Phandelver's linear structure, which some DMs find easier to manage (players choose which quests to pursue rather than following a fixed path).
@@ -116,19 +106,22 @@ Several free one-shot adventures are available through D&D Beyond and community 
 
 **Related guides:**
 
-- [How to Start Playing D&D in Australia](/blog/how-to-start-playing-dnd-australia/)
-- [D&D Starter Sets in Australia: Which One to Buy](/blog/dnd-starter-sets-australia/)
-- [D&D Adventure Books Guide for Australia](/blog/dnd-adventure-books-guide-australia/)
+- [How to Start Playing D&D in Australia](/blog/how-to-start-playing-dnd-australia)
+- [D&D Starter Sets in Australia: Which One to Buy](/blog/dnd-starter-sets-australia)
+- [D&D Adventure Books Guide for Australia](/blog/dnd-adventure-books-guide-australia)
 
 </div>
 
-<div class="cta-block">
 
-**Browse D&D Starter Sets, hardcover campaigns, and dice at the C3 eBay store.**
+## The C3 Take
 
-[Shop D&D Products at C3](/shop.html#dnd)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
+- Browse card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -139,7 +132,7 @@ Lost Mine of Phandelver (included in the D&D Starter Set) is the standard recomm
 No. The D&D Starter Set or Essentials Kit includes a complete adventure along with a simplified rulebook, making it a self-contained starting package. You don't need to buy the full PHB, DMG, and a separate campaign to start playing.
 
 **How long does it take to finish Lost Mine of Phandelver?**
-At a typical session pace of 3–4 hours, most groups complete Phandelver in 15–25 sessions. At a weekly cadence, this is 4–6 months of play.
+At a typical session pace of 3, 4 hours, most groups complete Phandelver in 15, 25 sessions. At a weekly cadence, this is 4, 6 months of play.
 
 **Is Curse of Strahd good for beginners?**
 No. It's an excellent campaign for experienced players, but the horror tone, morally complex NPCs, and death-heavy mechanics are better suited to groups where at least the DM has run multiple previous campaigns.

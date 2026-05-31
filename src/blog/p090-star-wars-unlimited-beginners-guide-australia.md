@@ -1,29 +1,20 @@
 ---
 game: star-wars-unlimited
-title: "Star Wars: Unlimited Card Game — A Beginners Guide for"
+title: "Star Wars: Unlimited Card Game, A Beginners Guide for"
 description: "Thinking about starting Star Wars: Unlimited in Australia? This guide covers how the game works, what it costs to get into, where to buy, and."
 date: 2026-04-16
-category: "beginner-guides"
-tags:
-  - post
-  - star-wars-unlimited
-  - beginners
-  - players
-  - buying-guides
+category: buying-guides
+tags: post
 emoji: "⭐"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#starwars"
-featured: false
 layout: post
 ---
 
 Star Wars: Unlimited launched in March 2024 and quickly established itself as one of the most confidently designed TCGs to release in years. It has a strong license, clean mechanics, and an Australian community that grew quickly in its first year. If you've been on the fence about trying it, this guide gives you everything you need to make an informed decision.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Star Wars: Unlimited is a two-player TCG published by Fantasy Flight Games with clean, modern mechanics and a strong license. Starter Decks retail for AU$20–$30 and are a complete entry point for new players. The game has an active organised play scene in Australia and is well-supported with regular set releases. It's one of the more accessible and well-designed TCGs currently available for players at any level.</p>
-</div>
+## Quick Answer
+
+Star Wars: Unlimited is a two-player TCG published by Fantasy Flight Games with clean, modern mechanics and a strong license. Starter Decks retail for AU$20, $30 and are a complete entry point for new players. The game has an active organised play scene in Australia and is well-supported with regular set releases. It's one of the more accessible and well-designed TCGs currently available for players at any level.
 
 ## How Star Wars: Unlimited Works
 
@@ -43,13 +34,13 @@ The alternating action system makes Star Wars: Unlimited feel fast and interacti
 
 ## What Does It Cost to Get Started?
 
-Star Wars: Unlimited Starter Decks (called Two-Player Starter Sets) retail for AU$20–$30 and contain everything two players need to play immediately: two complete pre-built decks, tokens, damage counters, and a rulebook. This is the most accessible entry point of any currently supported TCG.
+Star Wars: Unlimited Starter Decks (called Two-Player Starter Sets) retail for AU$20, $30 and contain everything two players need to play immediately: two complete pre-built decks, tokens, damage counters, and a rulebook. This is the most accessible entry point of any currently supported TCG.
 
 **Cost progression:**
 
-- Two-Player Starter Set: AU$20–$30. complete out of the box for two players
-- Upgraded casual deck (targeted singles): AU$60–$120
-- Competitive meta deck: AU$150–$350+
+- Two-Player Starter Set: AU$20, $30. complete out of the box for two players
+- Upgraded casual deck (targeted singles): AU$60, $120
+- Competitive meta deck: AU$150, $350+
 
 Star Wars: Unlimited sits in a mid-range cost tier for competitive play. Lower than MTG and Yu-Gi-Oh at the top level, comparable to One Piece TCG, higher than Pokemon casual play.
 
@@ -94,33 +85,24 @@ The game is actively supported with regular set releases and Asmodee's organisat
 
 **Related guides:**
 
-- [Which TCG Should You Start in Australia?](/blog/which-tcg-to-start-australia/)
-- [Best TCG Booster Boxes in Australia](/blog/best-tcg-booster-boxes-australia/)
-- [Best TCG Card Sleeves in Australia](/blog/best-tcg-card-sleeves-australia/)
-
-</div>
-
-<div class="cta-block">
-
-**Browse Star Wars: Unlimited singles and sealed product at the C3 eBay store.**
-
-[Shop Star Wars: Unlimited at C3](/shop.html#starwars)
+- [Which TCG Should You Start in Australia?](/blog/which-tcg-to-start-australia)
+- [Best TCG Booster Boxes in Australia](/blog/best-tcg-booster-boxes-australia)
+- [Best TCG Card Sleeves in Australia](/blog/best-tcg-card-sleeves-australia)
 
 </div>
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+## The C3 Take
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/star-wars-unlimited](/cards/star-wars-unlimited) to make price-informed decisions every time.
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
+- Browse card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

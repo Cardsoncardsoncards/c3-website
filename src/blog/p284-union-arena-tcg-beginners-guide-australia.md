@@ -67,4 +67,4 @@ The limitation is the same as any franchise-dependent game: if none of the curre
 
 - Browse Union Arena cards at [/cards/unionarena](/cards/unionarena)
 - Find which TCG suits your style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming Union Arena releases at [/calendar](/calendar)
+- Check upcoming Union Arena releases at [/calendar](/market)

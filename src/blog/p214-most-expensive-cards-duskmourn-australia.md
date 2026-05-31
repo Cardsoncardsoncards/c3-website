@@ -4,25 +4,16 @@ title: "Most Expensive Cards in Duskmourn Australia"
 description: "The highest-value Magic: The Gathering cards from Duskmourn: House of Horror with current AUD pricing. Commander staples, chase rares."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - duskmourn
-  - price-guide
-  - valuable-cards
+tags: post
 emoji: "🏚️"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=duskmourn+mtg+cards+australia&campid=5339146789"
-featured: false
 layout: post
 ---
 Duskmourn: House of Horror released in September 2024 as Magic's horror-themed set. The gothic survival horror aesthetic drove collector interest, and several cards from the set found sustained Commander and competitive homes. Here is what is worth money in Australia and why.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The most valuable Duskmourn cards in Australia are its format-defining mythics and Commander staples. Manifest Dread, Overlord of the Hauntwoods, and the Eerie enchantment payoffs top the value table. Check current AUD prices at the <a href="/cards/mtg">C3 MTG Card Vault</a>.</p>
-</div>
+## Quick Answer
+
+The most valuable Duskmourn cards in Australia are its format-defining mythics and Commander staples. Manifest Dread, Overlord of the Hauntwoods, and the Eerie enchantment payoffs top the value table. Check current AUD prices at the <a href="/cards/mtg">C3 MTG card hub</a>.
 
 ## The Most Valuable Cards in Duskmourn
 
@@ -62,15 +53,12 @@ Duskmourn's Eerie mechanic triggered off enchantments entering the battlefield u
 
 Duskmourn introduced "Room" cards. Double-faced cards representing horror movie rooms. The showcase Room treatments with the special horror-framed artwork command collector premiums above their gameplay value. Several Room showcase versions sell for significantly more than the standard versions.
 
-Check [C3 MTG Card Vault](/cards/mtg) for current pricing on showcase Room versions versus standard versions.
+Check [C3 MTG card hub](/cards/mtg) for current pricing on showcase Room versions versus standard versions.
 
 ## How to Check Current Prices in Australia
 
-The [C3 MTG Card Vault](/cards/mtg) shows current eBay AU sold prices for every Duskmourn card. For comparison shopping before buying singles, use the [C3 Card Compare tool](/compare).
+The [C3 MTG card hub](/cards/mtg) shows current eBay AU sold prices for every Duskmourn card. For comparison shopping before buying singles, use the [C3 Card Compare tool](/compare).
 
-<div class="tool-callout">
-<p>Compare current AU prices on Duskmourn cards at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices plus 14-day trend.</p>
-</div>
 
 ## Is It Worth Buying Duskmourn Singles in Australia?
 
@@ -80,32 +68,21 @@ For sealed product EV on Duskmourn, use the [C3 EV Calculator](/ev-calculator).
 
 Singles from Duskmourn are available in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=duskmourn-blog&toolid=10001&mkevt=1).
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Is MTG Duskmourn Worth Opening in Australia?](/blog/is-mtg-duskmourn-worth-opening-australia/)
-- [MTG Commander Staples: Australia Price Guide](/blog/commander-staples-mtg-australia-price-guide/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [Is MTG Duskmourn Worth Opening in Australia?](/blog/is-mtg-duskmourn-worth-opening-australia)
+- [MTG Commander Staples: Australia Price Guide](/blog/commander-staples-mtg-australia-price-guide)
 
 
-## Getting Started in Australia
-
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
-
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
-
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
-
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
 
 ## Frequently Asked Questions
 
 ### What is the most expensive card in Duskmourn in Australia?
-The top-value cards shift with format demand. Overlord of the Hauntwoods and showcase Room treatments tend to lead. Check the [C3 MTG Card Vault](/cards/mtg) for current AUD sold prices.
+The top-value cards shift with format demand. Overlord of the Hauntwoods and showcase Room treatments tend to lead. Check the [C3 MTG card hub](/cards/mtg) for current AUD sold prices.
 
 ### Are Duskmourn cards good for Commander?
 Yes. The set was designed with Commander in mind. Eerie enchantment synergies, token generation, and the Manifest Dread mechanic all have Commander applications across multiple archetypes.

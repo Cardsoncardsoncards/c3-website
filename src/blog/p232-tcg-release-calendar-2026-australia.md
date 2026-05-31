@@ -1,14 +1,18 @@
 ---
-game: tcg
+game: general
 title: "TCG Release Calendar 2026 for Australia"
 description: "The complete 2026 TCG release and tournament calendar for Australian players. MTG, Pokemon, Riftbound, Lorcana, One Piece, and more, all dates in AEST."
 date: 2026-05-07
 category: general-tcg
 emoji: "📅"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Keeping track of TCG releases across multiple games is a full-time job. We have done it for you. Below is the most complete Australian TCG release calendar for 2026, covering set releases, Regional Qualifiers, and major events across every game we cover. Bookmark this page and we will update it when new dates are confirmed. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Keeping track of TCG releases across multiple games is a full-time job. We have done it for you. Below is the most complete Australian TCG release calendar for 2026, covering set releases, Regional Qualifiers, and major events across every game we cover. Bookmark this page and we will update it when new dates are confirmed.
 
@@ -109,7 +113,7 @@ Australian Yu-Gi-Oh events run through local game stores and regional tournament
 
 This calendar is updated when new dates are confirmed.
 
-Newsletter: subscribe at [/tracker.html](/tracker.html) and we will send release alerts as they are announced.
+Newsletter: subscribe at [/tracker](/tracker) and we will send release alerts as they are announced.
 
 Blog: every set release we cover gets a dedicated review and buying guide.
 
@@ -118,6 +122,16 @@ Card Vault: our price database at [/cards](/cards) covers all games we track, up
 ---
 
 Dates sourced from official publisher announcements. Australian retail dates may vary. Not affiliated with Riot Games, Wizards of the Coast, The Pokemon Company, Ravensburger, Bandai, Konami, or Fantasy Flight Games.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -128,4 +142,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

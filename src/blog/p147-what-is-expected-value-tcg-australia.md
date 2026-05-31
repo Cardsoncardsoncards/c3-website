@@ -1,31 +1,22 @@
 ---
-game: tcg
+game: general
 title: "What Is Expected Value in TCG? A Beginner's Guide for Australian Players"
 description: "What is expected value in TCG and why does it matter for Australian players? This plain-English guide explains EV, how it is calculated."
 date: 2026-04-20
-category: "buying-guides"
-tags:
-  - post
-  - mtg
-  - buying-guides
-  - ev-calculator
-  - beginners
+category: buying-guides
+tags: post
 emoji: "🧮"
-affiliate_disclaimer: false
-cta_type: "tools"
-cta_link: "/ev-calculator.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
 ---
 
 If you have spent any time in MTG or Pokemon communities online you have seen the phrase "box EV" thrown around. Players calculate it before buying sealed product, post their results after opening, and use it to argue whether a set is worth buying. But for players new to this concept, EV can seem like an intimidating piece of jargon.
 
-It is not. Expected value is a straightforward calculation that takes about thirty seconds to understand. This guide explains what it means, why it matters for Australian players specifically, and how to use the C3 EV Calculator to get a current AUD verdict on any MTG booster box before you buy.
+It is not. Expected value is a clear calculation that takes about thirty seconds to understand. This guide explains what it means, why it matters for Australian players specifically, and how to use the C3 EV Calculator to get a current AUD verdict on any MTG booster box before you buy.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Expected value (EV) in TCG is the average total value of cards you would expect to open from a booster box, calculated in dollars. If a box costs AU$180 and the EV is AU$150, you are paying AU$30 above EV for the experience of opening. If EV is AU$200 and the box costs AU$180, the numbers are in your favour. EV is an average. individual results vary significantly. but it tells you whether you are paying a reasonable premium for the opening experience or a very large one.</p>
-</div>
+## Quick Answer
+
+Expected value (EV) in TCG is the average total value of cards you would expect to open from a booster box, calculated in dollars. If a box costs AU$180 and the EV is AU$150, you are paying AU$30 above EV for the experience of opening. If EV is AU$200 and the box costs AU$180, the numbers are in your favour. EV is an average. individual results vary significantly. but it tells you whether you are paying a reasonable premium for the opening experience or a very large one.
 
 ## The Simple Version
 
@@ -78,7 +69,7 @@ The verdict thresholds are set at 90 percent EV coverage (Worth Opening), 70-90 
 <div style="margin:28px 0;padding:20px 24px;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.25);border-left:3px solid #C9A84C;border-radius:8px;">
 <p style="font-size:14px;color:rgba(240,242,255,.85);margin-bottom:12px;font-weight:600;">Run the MTG EV Calculator. Australia</p>
 <p style="font-size:13px;color:rgba(240,242,255,.65);margin-bottom:14px;">43 MTG sets covered. Enter your purchase price for a current AUD verdict.</p>
-<a href="/ev-calculator.html" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#7A621E,#C9A84C);color:#0A0C14;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Go to the EV Calculator Hub →</a>
+<a href="/tools" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#7A621E,#C9A84C);color:#0A0C14;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Go to the EV Calculator Hub →</a>
 </div>
 
 ## The Verdict System Explained
@@ -116,12 +107,19 @@ EV is a tool, not a rule. There are valid reasons to open packs even when EV say
 EV is most useful when you are trying to make a rational financial decision about whether opening or buying singles gives better value for your money. It is not a judgement on players who open for other reasons.
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
 Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -142,7 +140,7 @@ Not exactly. EV represents the total market value of cards you statistically exp
 
 ## Related Guides
 
-- [MTG EV Calculator Hub. All 43 Sets](/ev-calculator.html)
-- [Should I Open My MTG Booster Box or Sell It Sealed?](/blog/should-i-open-mtg-booster-box-or-sell-it-sealed-australia/)
-- [MTG Singles vs Booster Boxes: Which Is Better Value in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)
-- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
+- [MTG EV Calculator Hub. All 43 Sets](/tools)
+- [Should I Open My MTG Booster Box or Sell It Sealed?](/blog/should-i-open-mtg-booster-box-or-sell-it-sealed-australia)
+- [MTG Singles vs Booster Boxes: Which Is Better Value in Australia?](/blog/mtg-singles-vs-booster-boxes-australia)
+- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)

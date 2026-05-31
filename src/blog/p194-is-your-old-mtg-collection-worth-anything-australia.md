@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "Is Your Old MTG Collection Worth Anything? How to Find Out in"
-description: "Found an old MTG collection? This guide shows exactly how to check whether your cards have value — which ones to look at first."
+description: "Found an old MTG collection? This guide shows exactly how to check whether your cards have value, which ones to look at first."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - collection
-  - pricing
-  - australia
+tags: post
 emoji: "🔍"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+You've found a box of old Magic cards in the garage, or inherited a collection, or rediscovered cards from your teenage years. The question every collector asks: is any of this worth anything? See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 You've found a box of old Magic cards in the garage, or inherited a collection, or rediscovered cards from your teenage years. The question every collector asks: is any of this worth anything?
 
@@ -49,9 +45,9 @@ In most old collections, 80% to 90% of the total value is in 5% to 10% of the ca
 
 ## How to Check Australian Prices
 
-**Option 1: C3 MTG Card Vault**
+**Option 1: C3 MTG card hub**
 
-The [C3 MTG Card Vault](/cards/mtg) tracks live AUD prices from eBay AU sold data. Search any card by name and see the current Australian market price. This is the fastest way to check Australian prices without manual eBay searching.
+The [C3 MTG card hub](/cards/mtg) tracks live AUD prices from eBay AU sold data. Search any card by name and see the current Australian market price. This is the fastest way to check Australian prices without manual eBay searching.
 
 **Option 2: eBay AU Sold Listings**
 
@@ -84,15 +80,22 @@ Most old collections have played cards, not NM cards. Adjust your expectations a
 
 ## Tracking What You Find
 
-The [free C3 collection tracker](/tracker.html) lets you log every card you identify, its condition, and its current value. For collections of 50+ cards, tracking as you go prevents you from losing count of what you have and what it's worth.
+The [free C3 collection tracker](/tracker) lets you log every card you identify, its condition, and its current value. For collections of 50+ cards, tracking as you go prevents you from losing count of what you have and what it's worth.
 
 ---
 
-*Check any MTG card price instantly at the [C3 MTG Card Vault](/cards/mtg).*
+*Check any MTG card price instantly at the [C3 MTG card hub](/cards/mtg).*
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -103,4 +106,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

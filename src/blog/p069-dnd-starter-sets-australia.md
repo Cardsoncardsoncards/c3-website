@@ -3,28 +3,18 @@ game: dnd
 title: "D&D Starter Sets in Australia: Which One Suits You"
 description: "Choosing between D&D starter sets in Australia comes down to which adventure appeals most and whether you need full rules or a condensed version."
 date: 2026-04-09
-category: "buying-guides"
-tags:
-  - post
-  - dnd
-  - starter-sets
-  - buying-guides
-  - tabletop-rpg
-  - beginners
+category: buying-guides
+tags: post
 emoji: "📦"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
 Starter sets are the fastest entry point into D&D. everything you need for a first session in one box, at a lower price point than buying the full core books. Multiple versions are currently available on Amazon AU and the differences between them aren't always clear from product listings. This guide covers what each set actually contains and who each one suits.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Dragons of Stormwreck Isle is the current and most accessible D&D starter set, designed for players with no prior experience. Heroes of the Borderlands is the alternative with a different adventure setting. The Rules Expansion Gift Set is a step up for groups that have finished a starter set and want the full rulebook range. All are available on Amazon AU with local shipping.</p>
-</div>
+## Quick Answer
+
+Dragons of Stormwreck Isle is the current and most accessible D&D starter set, designed for players with no prior experience. Heroes of the Borderlands is the alternative with a different adventure setting. The Rules Expansion Gift Set is a step up for groups that have finished a starter set and want the full rulebook range. All are available on Amazon AU with local shipping.
 
 ## What a Starter Set Gives You
 
@@ -81,30 +71,23 @@ If someone in your group already plays D&D, or if you're reasonably confident yo
 
 The argument for a starter set is the pre-written adventure and the lower price of entry for groups who aren't sure yet. The argument against is that the simplified rules require a separate purchase anyway once you want to continue.
 
-Both the starter sets and the 2024 core books are available through the [C3 D&D shop](/shop.html#dnd).
+Both the starter sets and the 2024 core books are available through the [C3 D&D shop](/shop).
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia/)
-- [D&D Core Books: A Guide for New and Returning Players in Australia](/blog/dnd-core-books-guide-australia/)
-- [D&D Dice: A Buyer's Guide for Australian Players](/blog/dnd-dice-buyers-guide-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia)
+- [D&D Core Books: A Guide for New and Returning Players in Australia](/blog/dnd-core-books-guide-australia)
+- [D&D Dice: A Buyer's Guide for Australian Players](/blog/dnd-dice-buyers-guide-australia)
 
-**Browse D&D starter sets and core books on Amazon AU.**
-All products confirmed available with Australian shipping.
-
-[Browse the D&D Shop →](/shop.html#dnd)
-
-</div>
 
 ## Frequently Asked Questions
 
 **Which D&D starter set should I buy in Australia?**
-Dragons of Stormwreck Isle is the current release and the most straightforward starting point for groups with no D&D experience. Heroes of the Borderlands is a solid alternative if the setting appeals more.
+Dragons of Stormwreck Isle is the current release and the most clear starting point for groups with no D&D experience. Heroes of the Borderlands is a solid alternative if the setting appeals more.
 
 **Do starter sets include everything you need to play?**
 Yes, for the included adventure. A starter set includes a simplified rulebook, a pre-written adventure, pre-made characters, and dice. You don't need to buy anything else to play the starter adventure. To continue beyond the starter set you will eventually need the full Player's Handbook.

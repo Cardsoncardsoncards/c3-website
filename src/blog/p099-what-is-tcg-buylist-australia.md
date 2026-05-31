@@ -1,37 +1,27 @@
 ---
-game: tcg
+game: general
 title: "What Is a TCG Buylist and How Does It Work in Australia?"
 description: "A TCG buylist is a store's public list of cards it wants to buy, with set prices for cash or store credit. Here is exactly how the process works in."
 date: 2026-04-18
 category: "selling-guides"
-tags:
-  - post
-  - selling
-  - buylist
-  - mtg
-  - pokemon
-  - general-tcg
+tags: post
 emoji: "💰"
-affiliate_disclaimer: false
-cta_type: "buylist"
-cta_link: "/contact.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
 
 redirect_to: "/blog/what-is-a-tcg-buylist-australia/"
 ---
-> **Note:** This content has been consolidated. For the most complete and up-to-date version, see the [updated guide](/blog/what-is-a-tcg-buylist-australia/).
+> **Note:** This content has been consolidated. For the most complete and up-to-date version, see the [updated guide](/blog/what-is-a-tcg-buylist-australia).
 
 
 
-If you have played trading card games for any length of time, you have almost certainly accumulated cards you no longer need. A TCG buylist is the most straightforward way to turn those cards into cash or store credit without the effort of listing them individually on eBay.
+If you have played trading card games for any length of time, you have almost certainly accumulated cards you no longer need. A TCG buylist is the most clear way to turn those cards into cash or store credit without the effort of listing them individually on eBay.
 
 This guide explains exactly what a buylist is, how the process works in Australia, and what you need to know before submitting your first one.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>A TCG buylist is a public list published by a card store showing which cards it wants to buy and what it will pay for each one. In Australia, major stores including Good Games, TCG Singles, Gameology, and Ronin Games all run active buylists. You submit a list of cards you want to sell, the store checks their current buylist prices, and pays you either in cash or store credit. with store credit almost always paying 20 to 30 percent more than the cash rate.</p>
-</div>
+## Quick Answer
+
+A TCG buylist is a public list published by a card store showing which cards it wants to buy and what it will pay for each one. In Australia, major stores including Good Games, TCG Singles, Gameology, and Ronin Games all run active buylists. You submit a list of cards you want to sell, the store checks their current buylist prices, and pays you either in cash or store credit. with store credit almost always paying 20 to 30 percent more than the cash rate.
 
 ## What Is a TCG Buylist?
 
@@ -86,39 +76,21 @@ Buylist prices vary significantly between stores for the same card. One store mi
 Without checking multiple stores, you have no way of knowing whether the offer you have received is competitive. This is the problem that a buylist aggregator solves. pulling prices from multiple Australian stores into one view so sellers can see the best available offer for each card without visiting every store individually.
 
 
-Think you know this game? Test it at the [C3 TCG Quiz](/quiz). Questions cover cards, rules, set knowledge, and format history.
+Think you know this game? Test it at the [C3 TCG Quiz](/play). Questions cover cards, rules, set knowledge, and format history.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Best TCG Buylist Prices in Australia: Which Stores Pay the Most?](/blog/best-tcg-buylist-prices-australia/)
-- [How to Compare Buylist Offers in Australia and Get the Best Price](/blog/how-to-compare-buylist-offers-australia/)
-- [Where to Sell MTG Cards for the Best Price in Australia](/blog/where-to-sell-mtg-cards-best-price-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
-
-**Free: Download the C3 TCG Collection Tracker**
-Catalogue your cards before you submit a buylist. Knowing exactly what you have makes the process faster and keeps you do not miss valuable cards in your collection.
-
-[Get the Free Tracker →](/tracker.html)
-
-</div>
-
-<div class="cta-block">
-
-**C3 Buylist Aggregator. Coming Soon**
-We are building a tool that compares buylist prices across Australian stores in one place. Join the early access list to be the first to use it when it launches.
-
-[Join the Buylist Early Access List →](/contact.html)
-
-</div>
+- [Best TCG Buylist Prices in Australia: Which Stores Pay the Most?](/blog/best-tcg-buylist-prices-australia)
+- [How to Compare Buylist Offers in Australia and Get the Best Price](/blog/how-to-compare-buylist-offers-australia)
+- [Where to Sell MTG Cards for the Best Price in Australia](/blog/where-to-sell-mtg-cards-best-price-australia)
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+
 
 ## Frequently Asked Questions
 

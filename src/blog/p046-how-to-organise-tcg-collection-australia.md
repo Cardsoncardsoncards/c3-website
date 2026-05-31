@@ -1,21 +1,12 @@
 ---
-game: tcg
+game: general
 title: "How to Organise Your TCG Collection in Australia: Tools and Tips"
 description: "A disorganised TCG collection costs you money and time. This practical guide covers the best systems for sorting, storing."
 date: 2026-04-07
-category: "tools-and-trackers"
-tags:
-  - post
-  - general-tcg
-  - storage
-  - tracking
-  - tools-and-trackers
-  - collectors
+category: buying-guides
+tags: post
 emoji: "📋"
 affiliate_disclaimer: true
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
 layout: post
 ---
 
@@ -23,10 +14,9 @@ A disorganised TCG collection has real costs. You buy cards you already own. You
 
  getting organised isn't complicated. it just requires a clear system applied consistently. This guide covers the practical approaches that actually work for Australian TCG collectors, from small focused collections to large multi-game libraries.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The most effective TCG organisation system combines three elements: a digital tracker (spreadsheet or app) that records what you own, physical binders with side-loading 9-pocket pages for display and set completion, and cardboard storage boxes for bulk cards you don't need to access regularly. Start with your most valuable cards and work outward. don't try to organise everything at once.</p>
-</div>
+## Quick Answer
+
+The most effective TCG organisation system combines three elements: a digital tracker (spreadsheet or app) that records what you own, physical binders with side-loading 9-pocket pages for display and set completion, and cardboard storage boxes for bulk cards you don't need to access regularly. Start with your most valuable cards and work outward. don't try to organise everything at once.
 
 ## Why Organisation Matters More Than Most Players Think
 
@@ -50,7 +40,7 @@ A digital tracker is the master record of your collection: what you own, where i
 
 Without this layer, the physical organisation in layers 2 and 3 is just organised storage without visibility. With it, you can answer "do I have this card?" in seconds without going through binders.
 
-**What to track:** Card name, set, condition, quantity, approximate value, and physical location (which binder or box). See our [free TCG Collection Tracker](/tracker.html) for a ready-to-use Google Sheets solution.
+**What to track:** Card name, set, condition, quantity, approximate value, and physical location (which binder or box). See our [free TCG Collection Tracker](/tracker) for a ready-to-use Google Sheets solution.
 
 **Maintenance discipline:** Add new cards when you acquire them, before they go into storage. Remove sold cards the day you sell them. Update values monthly for high-value cards.
 
@@ -70,7 +60,7 @@ Binders with side-loading 9-pocket pages handle two categories of cards:
 
 Everything that doesn't belong in a binder goes into cardboard storage boxes. Commons, uncommons, lower-value rares from sets you're not actively tracking. these are the cards that make up the bulk of most collections by card count.
 
-**BCW and Ultra Pro storage boxes** in 500–1000 card counts are the practical standard. Cheap, stackable, and functional. Label each box by game and set , "Pokemon SV Scarlet and Violet Base" is more useful than "Box 3."
+**BCW and Ultra Pro storage boxes** in 500, 1000 card counts are the practical standard. Cheap, stackable, and functional. Label each box by game and set , "Pokemon SV Scarlet and Violet Base" is more useful than "Box 3."
 
 **Dividers** inside each box let you sort by set, colour, or type within a box. Tabbed dividers are available cheaply and prevent cards from collapsing forward.
 
@@ -118,7 +108,7 @@ Practical bulk approaches:
 
 **Don't individual-sleeve bulk cards**. the cost of sleeves exceeds the card value. Unsleeved in a box is fine for bulk commons.
 
-**Purge periodically.** Every 6–12 months, assess your bulk storage. Cards that have been in the same box for a year without being used can probably be donated, traded away, or sold as a bulk lot. Accumulating cards you'll never use is not organising. it's hoarding.
+**Purge periodically.** Every 6, 12 months, assess your bulk storage. Cards that have been in the same box for a year without being used can probably be donated, traded away, or sold as a bulk lot. Accumulating cards you'll never use is not organising. it's hoarding.
 
 ## The Australian Storage Context
 
@@ -130,23 +120,16 @@ In high-humidity areas (QLD, NT, coastal NSW), silica gel in storage boxes is no
 
 Keep collections away from direct sunlight. UV exposure bleaches card ink and is irreversible.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Free TCG Collection Tracker Spreadsheet: Track Every Card You Own](/blog/free-tcg-collection-tracker-spreadsheet-australia/)
-- [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia/)
-- [The Best Card Binders for TCG Collections in Australia](/blog/best-card-binders-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [Free TCG Collection Tracker Spreadsheet: Track Every Card You Own](/blog/free-tcg-collection-tracker-spreadsheet-australia)
+- [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia)
+- [The Best Card Binders for TCG Collections in Australia](/blog/best-card-binders-australia)
 
-**Track your collection with our free TCG spreadsheet.**
-Works across MTG, Pokemon, One Piece, Lorcana and more. Instant Google Sheets access.
-
-[Get the Free Tracker →](/tracker.html)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -166,4 +149,4 @@ Basic organisation (labelled boxes by game and set) is worth it. Detailed catalo
 A well-designed initial organisation needs only ongoing maintenance, not periodic complete reorganisation. Add cards to the right place when you acquire them. Update the tracker. Purge unused bulk periodically. If you're doing a full reorganisation more than once a year, the initial system probably needs redesigning rather than redoing.
 
 **What do I do with cards I don't want any more?**
-Valuable singles: sell on eBay AU. Mid-range cards: Facebook groups or bulk lots on eBay. Bulk commons: sell as bulk lots (AU$3–5 per 100), donate to local game stores for teaching collections, or give to newer players in your community.
+Valuable singles: sell on eBay AU. Mid-range cards: Facebook groups or bulk lots on eBay. Bulk commons: sell as bulk lots (AU$3, 5 per 100), donate to local game stores for teaching collections, or give to newer players in your community.

@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "Should You Sell Your MTG Collection Now or Wait?"
-description: "Timing matters when selling MTG cards in Australia. This guide gives a framework for deciding whether to sell now or hold — based on the cards you have."
+description: "Timing matters when selling MTG cards in Australia. This guide gives a framework for deciding whether to sell now or hold, based on the cards you have."
 date: 2026-05-05
 category: "selling-guides"
-tags:
-  - post
-  - mtg
-  - selling
-  - timing
-  - australia
+tags: post
 emoji: "🤔"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+"Should I sell my MTG cards now or wait?" is one of the most common questions in card collecting. and it rarely has one right answer. The correct answer depends on which cards you have, what the current market looks like, why you're considering selling, and what you'd do with the money. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 "Should I sell my MTG cards now or wait?" is one of the most common questions in card collecting. and it rarely has one right answer. The correct answer depends on which cards you have, what the current market looks like, why you're considering selling, and what you'd do with the money.
 
@@ -64,19 +60,25 @@ Run each significant card (AU$10+) through this four-question check:
 
 ## How to Check Current Australian Prices Before Deciding
 
-Check live AUD prices at the [C3 MTG Card Vault](/cards/mtg) before making any selling decision. The price you have in your head from when you acquired the card may be significantly different from the current market.
+Check live AUD prices at the [C3 MTG card hub](/cards/mtg) before making any selling decision. The price you have in your head from when you acquired the card may be significantly different from the current market.
 
 eBay AU sold listings (filter: Sold Items) give you the most current Australian prices with actual transaction data.
 
-Log your full collection value in the [free C3 tracker](/tracker.html) so you have a clear baseline. you can't make good selling decisions without knowing what everything is currently worth.
+Log your full collection value in the [free C3 tracker](/tracker) so you have a clear baseline. you can't make good selling decisions without knowing what everything is currently worth.
 
 ---
 
-*See also: [Best Time to Sell MTG Cards in Australia](/blog/best-time-sell-mtg-cards-australia/) and [How to Price MTG Singles for eBay Australia](/blog/how-to-price-mtg-singles-ebay-australia/).*
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -84,7 +86,7 @@ Log your full collection value in the [free C3 tracker](/tracker.html) so you ha
 eBay returns more money per card but takes more time and has fees of roughly 13-15% all-in. Buylists pay less (typically 30-50% of market value in cash) but are instant. Use eBay for individual valuable cards. Use buylists for bulk lots where eBay effort is not worthwhile.
 
 ### What fees does eBay charge for selling TCG cards in Australia?
-eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia/).
+eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia).
 
 ### How do I know what my TCG cards are worth in Australia?
 Check eBay AU completed listings (filter to sold listings) for the most accurate local pricing. The [C3 Card Vault](/cards) also shows live pricing from eBay AU sold data across multiple TCGs.

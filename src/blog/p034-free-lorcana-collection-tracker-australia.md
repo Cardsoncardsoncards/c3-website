@@ -3,29 +3,20 @@ game: lorcana
 title: "Free Lorcana Collection Tracker: Keep Track of Your Disney Cards"
 description: "Organise and value your Disney Lorcana collection with a free tracker spreadsheet. Log every card, track values, manage set completion."
 date: 2026-04-07
-category: "tools-and-trackers"
-tags:
-  - post
-  - lorcana
-  - tracking
-  - tools-and-trackers
-  - collectors
+category: buying-guides
+tags: post
 emoji: "📊"
 affiliate_disclaimer: true
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
 layout: post
 ---
 
 A Lorcana collection without a tracker is a collection you don't fully know. You pull from booster packs, acquire cards through trades, buy singles, and within a few months you're not sure what you have, what it's worth, or what you still need to complete a set.
 
-A collection tracker solves this. For Lorcana specifically. where Enchanted and Fabled rarity cards can be worth AU$50–300+ and set completion is a common goal. knowing exactly what you own and its approximate value is genuinely useful beyond just organisation.
+A collection tracker solves this. For Lorcana specifically. where Enchanted and Fabled rarity cards can be worth AU$50, 300+ and set completion is a common goal. knowing exactly what you own and its approximate value is genuinely useful beyond just organisation.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Our free TCG Collection Tracker is a Google Sheets spreadsheet that works for Lorcana and any other card game. It covers inventory with auto profit/loss, wishlist management, and up to 200 card entries in the free version. Get instant access via our tracker page. save a copy to your Google Drive and start logging immediately.</p>
-</div>
+## Quick Answer
+
+Our free TCG Collection Tracker is a Google Sheets spreadsheet that works for Lorcana and any other card game. It covers inventory with auto profit/loss, wishlist management, and up to 200 card entries in the free version. Get instant access via our tracker page. save a copy to your Google Drive and start logging immediately.
 
 ## Why Lorcana Collectors Specifically Benefit From Tracking
 
@@ -73,7 +64,7 @@ As covered in detail in our Lorcana buying guides, the most accurate source for 
 
 For a collection tracker, approximate monthly updates for high-value cards (Enchanted, Fabled, and competitive staples) and quarterly updates for everything else keeps the tracker useful without becoming a full-time job.
 
-**The value tracking payoff:** A Lorcana collection with regular value tracking takes 15–30 minutes per month to maintain. In exchange, you know when any card in your collection has had a significant price movement. useful both for identifying selling opportunities and for knowing your collection's current approximate worth.
+**The value tracking payoff:** A Lorcana collection with regular value tracking takes 15, 30 minutes per month to maintain. In exchange, you know when any card in your collection has had a significant price movement. useful both for identifying selling opportunities and for knowing your collection's current approximate worth.
 
 ## The C3 Free Lorcana Tracker
 
@@ -89,23 +80,16 @@ For collectors with larger Lorcana collections spanning multiple sets, the premi
 
 Get the free tracker via our tracker page: instant access, no waiting.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Are Lorcana Cards a Good Investment in Australia?](/blog/are-lorcana-cards-investment-australia/)
-- [Where to Buy Lorcana Cards in Australia: Online vs Local Game Stores](/blog/where-to-buy-lorcana-cards-australia/)
-- [Free Pokemon Collection Tracker: Organise and Value Your Cards](/blog/free-pokemon-collection-tracker-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [Are Lorcana Cards a Good Investment in Australia?](/blog/are-lorcana-cards-investment-australia)
+- [Where to Buy Lorcana Cards in Australia: Online vs Local Game Stores](/blog/where-to-buy-lorcana-cards-australia)
+- [Free Pokemon Collection Tracker: Organise and Value Your Cards](/blog/free-pokemon-collection-tracker-australia)
 
-**Get the free TCG Collection Tracker.**
-Works for Lorcana, Pokemon, MTG and any other card game. Instant Google Sheets access.
-
-[Get the Free Tracker →](/tracker.html)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -119,7 +103,7 @@ The official Lorcana website (disneylorcana.com) lists card galleries for each s
 Check eBay AU sold listings for the specific Enchanted card. filter to completed sales to see actual transaction prices. Prices vary significantly between different Enchanted cards depending on the featured character and competitive playability.
 
 **Can I use the tracker to plan trades?**
-Yes. The wishlist function lets you log cards you're looking for, and your inventory shows cards you have duplicates of. This makes trade planning straightforward. you know what you have to offer and exactly what you need in return.
+Yes. The wishlist function lets you log cards you're looking for, and your inventory shows cards you have duplicates of. This makes trade planning clear. you know what you have to offer and exactly what you need in return.
 
 **How often should I update card values?**
 Monthly for Enchanted and Fabled rarity cards and competitive staples. Quarterly for everything else. Update immediately when you hear about a specific card spiking or crashing in value.

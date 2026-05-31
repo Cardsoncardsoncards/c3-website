@@ -3,28 +3,18 @@ game: mtg
 title: "MTG Secrets of Strixhaven: Australia Buying Guide"
 description: "Secrets of Strixhaven releases 24 April 2026. This guide covers every product, the key cards to know, what is available to pre-order on Amazon AU."
 date: 2026-04-08
-category: "buying-guides"
-tags:
-  - post
-  - mtg
-  - pre-orders
-  - buying-guides
-  - collectors
-  - players
+category: buying-guides
+tags: post
 emoji: "🎓"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
 ---
 
 Secrets of Strixhaven is the next Magic: The Gathering set and it releases worldwide on 24 April 2026, with prerelease events at local game stores running from 17 to 23 April. Pre-orders are live on Amazon AU right now across multiple product types. If you are trying to decide whether to pre-order, what to buy, or just want to understand what this set is about before it drops, this guide covers everything.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Secrets of Strixhaven is a return to the MTG-native plane of Arcavios and its magical university setting. It releases 24 April 2026 with five Commander precon decks, a returning Mystical Archive bonus sheet, and a serialised headliner card. Pre-orders are live on Amazon AU for the Play Booster Display, Codex Bundle, and Commander Decks. This is one of the most anticipated MTG sets of 2026 because it is a proper Magic setting rather than a Universes Beyond crossover.</p>
-</div>
+## Quick Answer
+
+Secrets of Strixhaven is a return to the MTG-native plane of Arcavios and its magical university setting. It releases 24 April 2026 with five Commander precon decks, a returning Mystical Archive bonus sheet, and a serialised headliner card. Pre-orders are live on Amazon AU for the Play Booster Display, Codex Bundle, and Commander Decks. This is one of the most anticipated MTG sets of 2026 because it is a proper Magic setting rather than a Universes Beyond crossover.
 
 ## What Is Secrets of Strixhaven?
 
@@ -41,12 +31,12 @@ All products below are confirmed available for pre-order on Amazon AU with your 
 **Play Booster Display (30 Packs)**
 The main sealed product for drafting and play. Each pack contains 14 cards including at least one Mystical Archive card. This is the box to buy if you want to draft the set with friends or are chasing a broad range of cards from the main set.
 
-[Pre-order the Secrets of Strixhaven Play Booster Display on Amazon AU](/shop.html#mtg)
+[Pre-order the Secrets of Strixhaven Play Booster Display on Amazon AU](/shop)
 
 **Codex Bundle**
 Releases 15 May 2026, approximately three weeks after the main set. Contains 2 of 6 traditional foil Codex Bundle promo cards alongside booster packs. A strong value option for players who want a bundle rather than a full display.
 
-[Pre-order the Secrets of Strixhaven Codex Bundle on Amazon AU](/shop.html#mtg)
+[Pre-order the Secrets of Strixhaven Codex Bundle on Amazon AU](/shop)
 
 **Commander Decks**
 Five Commander precon decks release alongside the main set on 24 April 2026, one for each college. The confirmed decks are:
@@ -56,7 +46,7 @@ Five Commander precon decks release alongside the main set on 24 April 2026, one
 
 Additional Commander decks covering Lorehold, Prismari, and Quandrix are confirmed but check the shop page for current Amazon AU availability on each.
 
-[Browse Secrets of Strixhaven Commander Decks on Amazon AU](/shop.html#mtg)
+[Browse Secrets of Strixhaven Commander Decks on Amazon AU](/shop)
 
 ## The Five Colleges
 
@@ -121,14 +111,6 @@ All MTG products are imported and priced in AUD reflecting exchange rates, impor
 
 Pre-ordering locks in the current price. For a set with this level of community interest, pre-ordering the Play Booster Display or Commander Decks you want is a reasonable approach to guarantee access before any supply constraints develop around launch.
 
-<div class="cta-block">
-
-**Secrets of Strixhaven pre-orders are live on Amazon AU now.**
-Play Booster Display, Codex Bundle, and Commander Decks all available. Releases 24 April 2026.
-
-[Browse Secrets of Strixhaven on Amazon AU](/shop.html#mtg)
-
-</div>
 
 ## Key Dates
 
@@ -154,11 +136,12 @@ The Commander-only cards (marked with a C stamp) are legal in Commander, Legacy,
 **Where can I play prerelease in Australia?**
 Prerelease runs 17 to 23 April at local game stores. Use the Wizards of the Coast store locator at locator.wizards.com to find an event near you.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
-- [MTG Secrets of Strixhaven: Best Chase Cards (AU)](/blog/mtg-secrets-of-strixhaven-best-cards-australia/)
-- [Are MTG Booster Boxes Worth Buying in Australia?](/blog/are-mtg-booster-boxes-worth-it-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
+- [MTG Secrets of Strixhaven: Best Chase Cards (AU)](/blog/mtg-secrets-of-strixhaven-best-cards-australia)
+- [Are MTG Booster Boxes Worth Buying in Australia?](/blog/are-mtg-booster-boxes-worth-it-australia)

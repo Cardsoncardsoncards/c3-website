@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "How to Run a Commander Pod Night in Australia"
-description: "Running a regular Commander night takes more than shuffling decks. This guide covers everything — seating, power level communication, house rules."
+description: "Running a regular Commander night takes more than shuffling decks. This guide covers everything, seating, power level communication, house rules."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - mtg
-  - commander
-  - game-night
-  - social
+category: buying-guides
+tags: post
 emoji: "🎮"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+A Commander pod is four players, four decks, one table. The logistics are simple. The social architecture underneath is not. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 A Commander pod is four players, four decks, one table. The logistics are simple. The social architecture underneath is not.
 
@@ -100,7 +96,17 @@ This debrief is where the game becomes something people remember. Don't rush peo
 
 A regular Commander pod that meets every 2 to 4 weeks becomes genuinely better over time as players learn each other's decks and develop history. Aim for a consistent 4-person group if possible rather than a rotating cast.
 
-Find Commander precons for everyone to start with at the [C3 shop](/shop.html#mtg). Use the [Random Commander Generator](/cards/mtg/random-commander) if your group wants a random deck challenge night.
+Find Commander precons for everyone to start with at the [C3 shop](/shop). Use the [Random Commander Generator](/cards/mtg/random-commander) if your group wants a random deck challenge night.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

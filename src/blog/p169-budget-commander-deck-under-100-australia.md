@@ -3,20 +3,16 @@ game: mtg
 title: "Budget Commander Decks Under AU$100"
 description: "You don't need to spend AU$500 to play Commander. This guide shows exactly how to build a functional, fun Commander deck for under AU$100 in."
 date: 2026-05-05
-category: "buying-guides"
-tags:
-  - post
-  - mtg
-  - commander
-  - budget
-  - deck-building
+category: buying-guides
+tags: post
 emoji: "💰"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=commander+singles+mtg&campid=5339146789"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Commander decks get expensive fast. Powerful staples, dual lands, and premium commanders add up quickly. But a budget Commander deck doesn't have to be underpowered. it just has to be smart. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Commander decks get expensive fast. Powerful staples, dual lands, and premium commanders add up quickly. But a budget Commander deck doesn't have to be underpowered. it just has to be smart.
 
@@ -112,7 +108,7 @@ For Wilhelt: cheap Zombies plus sacrifice outlets plus recursion. Gravecrawler (
 
 The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles with flat AU$ pricing. For bulk commons and uncommons, local game stores often sell singles for AU$0.50 to AU$2.
 
-Use the [C3 MTG Card Vault](/cards/mtg) to check live AUD prices before you buy. see exactly what each card costs in Australia without currency conversion.
+Use the [C3 MTG card hub](/cards/mtg) to check live AUD prices before you buy. see exactly what each card costs in Australia without currency conversion.
 
 ## Upgrading Over Time
 
@@ -123,11 +119,21 @@ A budget deck is a starting point. Upgrade one category at a time as budget allo
 3. Tutor effects (if in black: Demonic Tutor, Vampiric Tutor)
 4. Win conditions specific to your strategy
 
-Use the [free C3 collection tracker](/tracker.html) to log what you have and track upgrade costs over time.
+Use the [free C3 collection tracker](/tracker) to log what you have and track upgrade costs over time.
 
 ---
 
-*Track live AUD prices on every card at [C3 MTG Card Vault](/cards/mtg). Use the [Random Commander Generator](/cards/mtg/random-commander) to find your next build.*
+*Track live AUD prices on every card at [C3 MTG card hub](/cards/mtg). Use the [Random Commander Generator](/cards/mtg/random-commander) to find your next build.*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

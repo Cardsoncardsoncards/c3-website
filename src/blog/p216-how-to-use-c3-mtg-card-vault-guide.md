@@ -1,24 +1,20 @@
 ---
 game: mtg
-title: "How to Use the C3 MTG Card Vault: Full Feature Guide"
-description: "The C3 MTG Card Vault has 96,000+ Magic: The Gathering cards with live AUD pricing. This guide covers every feature — search, set browsing, card pages."
+title: "How to Use the C3 MTG card hub: Full Feature Guide"
+description: "The C3 MTG card hub has 96,000+ Magic: The Gathering cards with live AUD pricing. This guide covers every feature, search, set browsing, card pages."
 date: 2026-05-05
-category: "tools-and-trackers"
-tags:
-  - post
-  - mtg
-  - tools
-  - card-vault
-  - australia
+category: buying-guides
+tags: post
 emoji: "🗄️"
-affiliate_disclaimer: false
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
 
-The [C3 MTG Card Vault](https://cardsoncardsoncards.com.au/cards/mtg) is Australia's MTG price tool built on live eBay AU data. It covers 96,000+ Magic: The Gathering cards across all sets with Australian dollar pricing.
+The [C3 MTG card hub](https://cardsoncardsoncards.com.au/cards/mtg) is Australia's MTG price tool built on live eBay AU data. It covers 96,000+ Magic: The Gathering cards across all sets with Australian dollar pricing.
+
+
+
+The [C3 MTG card hub](https://cardsoncardsoncards.com.au/cards/mtg) is Australia's MTG price tool built on live eBay AU data. It covers 96,000+ Magic: The Gathering cards across all sets with Australian dollar pricing.
 
 This guide explains every feature and how to get the most out of it.
 
@@ -92,7 +88,7 @@ The [Random Commander Generator](/cards/mtg/random-commander) generates 1 to 4 r
 
 Per-slot reroll lets you replace one commander while keeping others. Share button generates a shareable URL with your filter settings.
 
-See the [full Random Commander guide](/blog/how-to-use-c3-random-commander-generator/) for detailed usage tips.
+See the [full Random Commander guide](/blog/how-to-use-c3-random-commander-generator) for detailed usage tips.
 
 ## How Prices Are Calculated
 
@@ -110,21 +106,19 @@ Every card page and search result includes a direct eBay AU buy link (with C3's 
 
 ---
 
-*Start exploring at [C3 MTG Card Vault](/cards/mtg). Try the [Random Commander Generator](/cards/mtg/random-commander).*
+*Start exploring at [C3 MTG card hub](/cards/mtg). Try the [Random Commander Generator](/cards/mtg/random-commander).*
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+## The C3 Take
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+## What to Read Next
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -135,4 +129,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

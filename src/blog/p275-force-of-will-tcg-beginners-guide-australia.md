@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Force of Will TCG: Beginner's Guide for Australian Players"
 description: "Force of Will is a Japanese fantasy TCG with genuine strategic depth. Here's an honest look at what it offers Australian players and where the gaps are in 2026."

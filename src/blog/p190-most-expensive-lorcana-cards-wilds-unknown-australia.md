@@ -4,25 +4,16 @@ title: "Most Expensive Lorcana Cards in Wilds Unknown Australia"
 description: "The highest-value Disney Lorcana cards from the Wilds Unknown set with current AUD pricing. Chase Enchanted cards, alternate arts."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - lorcana
-  - wilds-of-the-unknown
-  - price-guide
-  - valuable-cards
+tags: post
 emoji: "✨"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=lorcana+wilds+unknown+cards+australia&campid=5339146789"
-featured: false
 layout: post
 ---
 Disney Lorcana Wilds Unknown is the twelfth Lorcana set, released in May 2026. It introduced Pixar characters to Lorcana for the first time, including characters from The Incredibles, Toy Story, Brave, and Atlantis. The set produced some of the most valuable Lorcana cards since the original First Chapter.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The most expensive Wilds Unknown cards are its Enchanted versions, particularly The Incredibles characters. Mrs Incredible and Touch the Sky from Brave reached around AU$300 at launch. Frozone and Jack-Jack Enchanteds are also among the top pulls. Check current AU prices at the <a href="/cards/lorcana">C3 Lorcana Card Vault</a>.</p>
-</div>
+## Quick Answer
+
+The most expensive Wilds Unknown cards are its Enchanted versions, particularly The Incredibles characters. Mrs Incredible and Touch the Sky from Brave reached around AU$300 at launch. Frozone and Jack-Jack Enchanteds are also among the top pulls. Check current AU prices at the <a href="/cards/lorcana">C3 Lorcana Card Vault</a>.
 
 ## Understanding Lorcana Wilds Unknown Rarities
 
@@ -92,18 +83,16 @@ The Pixar debut was the key driver. The Incredibles in particular has a dedicate
 
 Singles from Wilds Unknown including Enchanted cards and Epic variants are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=wilds-unknown-blog&toolid=10001&mkevt=1) with Australian shipping.
 
-<div class="tool-callout">
-<p>Compare Wilds Unknown Enchanted prices at the <a href="/compare">C3 Card Compare tool</a>. See current AUD buy and sell prices side by side.</p>
-</div>
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Lorcana Wilds Unknown: Full Australia Set Guide](/blog/disney-lorcana-wilds-unknown-australia/)
-- [I Opened 4 Boxes of Lorcana Wilds Unknown](/blog/p252-lorcana-wilds-unknown-box-opening/)
-- [Are Lorcana Cards Worth Investing In Australia?](/blog/are-lorcana-cards-investment-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [Lorcana Wilds Unknown: Full Australia Set Guide](/blog/disney-lorcana-wilds-unknown-australia)
+- [I Opened 4 Boxes of Lorcana Wilds Unknown](/blog/p252-lorcana-wilds-unknown-box-opening)
+- [Are Lorcana Cards Worth Investing In Australia?](/blog/are-lorcana-cards-investment-australia)
 
 ## Frequently Asked Questions
 
@@ -114,4 +103,4 @@ Mrs Incredible, Determined Rescuer (Enchanted, card 239) and Touch the Sky from 
 At AU$100-350+ each, Enchanted cards are the premium tier. If you collect Enchanteds of specific characters, buying singles is more reliable than opening packs hoping to pull a specific one. Epic cards at one per ten packs are easier to target via singles.
 
 ### How many Epic cards are in Wilds Unknown?
-Wilds Unknown has multiple Epic cards numbered above 204. We pulled nine from four booster boxes (approximately one per ten packs). See our [full box opening breakdown](/blog/p252-lorcana-wilds-unknown-box-opening/).
+Wilds Unknown has multiple Epic cards numbered above 204. We pulled nine from four booster boxes (approximately one per ten packs). See our [full box opening breakdown](/blog/p252-lorcana-wilds-unknown-box-opening).

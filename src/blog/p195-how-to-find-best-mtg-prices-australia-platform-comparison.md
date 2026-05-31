@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "How to Find the Best MTG Card Prices in Australia"
-description: "Where to check MTG card prices in Australia — eBay AU, TCGplayer, Card Kingdom, MTGGoldfish, and the C3 Card Vault — compared for accuracy, ease."
+description: "Where to check MTG card prices in Australia, eBay AU, TCGplayer, Card Kingdom, MTGGoldfish, and the C3 Card Vault, compared for accuracy, ease."
 date: 2026-05-05
-category: "tools-and-trackers"
-tags:
-  - post
-  - mtg
-  - pricing
-  - tools
-  - australia
+category: buying-guides
+tags: post
 emoji: "🔎"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+MTG card prices in Australia are not well-served by most popular price tools. which are built for the US market. This guide compares the main platforms Australian players use to check MTG prices and recommends when to use each. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 MTG card prices in Australia are not well-served by most popular price tools. which are built for the US market. This guide compares the main platforms Australian players use to check MTG prices and recommends when to use each.
 
@@ -38,7 +34,7 @@ Why: freight, import costs, GST, and lower market competition all push Australia
 
 **Price accuracy for Australia**: excellent.
 
-### C3 MTG Card Vault
+### C3 MTG card hub
 
 **Best for**: quick AUD price lookup without eBay filtering.
 
@@ -88,7 +84,7 @@ Why: freight, import costs, GST, and lower market competition all push Australia
 
 For any Australian MTG price check:
 
-1. Search the card at [C3 MTG Card Vault](/cards/mtg) for a quick AUD estimate
+1. Search the card at [C3 MTG card hub](/cards/mtg) for a quick AUD estimate
 2. Confirm against eBay AU Sold Items if the card is worth AU$20+
 3. Check the specific printing (set and treatment) on eBay AU sold for precise data
 
@@ -96,34 +92,29 @@ This takes less than 3 minutes per card and gives you the most accurate Australi
 
 ## Track Your Collection in AUD
 
-The [free C3 collection tracker](/tracker.html) lets you log your MTG cards and track their value over time in AUD. No currency conversion needed.
+The [free C3 collection tracker](/tracker) lets you log your MTG cards and track their value over time in AUD. No currency conversion needed.
 
 ---
 
-*Browse live AUD prices at [C3 MTG Card Vault](/cards/mtg).*
-
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+*Browse live AUD prices at [C3 MTG card hub](/cards/mtg).*
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+## The C3 Take
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
 ### Where is the best place to buy TCG products in Australia?
-Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop.html) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
+Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
 
 ### How do I know if a TCG product is good value in Australia?
 Compare the box price against the expected value of cards inside using the [C3 EV Calculator](/ev-calculator) for MTG sets. For other games, check secondary market prices for the top cards and multiply by pull rates to estimate expected return.

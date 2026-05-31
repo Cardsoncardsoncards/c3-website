@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "How to Spot a MTG Card About to Spike in Price Australia"
-description: "MTG card prices can double or triple overnight when a new deck, combo, or reprint announcement hits. This guide explains the signals to watch — and."
+description: "MTG card prices can double or triple overnight when a new deck, combo, or reprint announcement hits. This guide explains the signals to watch, and."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - pricing
-  - finance
-  - australia
+tags: post
 emoji: "📈"
-affiliate_disclaimer: false
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&campid=5339146789"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+MTG card prices spike when demand suddenly outpaces supply. Understanding why spikes happen lets you identify cards before they move, act early, and avoid being the last buyer at the peak. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 MTG card prices spike when demand suddenly outpaces supply. Understanding why spikes happen lets you identify cards before they move, act early, and avoid being the last buyer at the peak.
 
@@ -83,13 +79,20 @@ If you hold cards speculatively:
 - Reserve List cards have lower reprint risk (by definition, no reprint)
 - Know that Australian market liquidity is lower than the US. exiting positions takes longer
 
-Track your speculative holdings separately in the [free C3 collection tracker](/tracker.html) with their purchase price and current value clearly recorded.
+Track your speculative holdings separately in the [free C3 collection tracker](/tracker) with their purchase price and current value clearly recorded.
 
-Check live AUD prices on any MTG card at the [C3 MTG Card Vault](/cards/mtg).
+Check live AUD prices on any MTG card at the [C3 MTG card hub](/cards/mtg).
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -100,4 +103,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

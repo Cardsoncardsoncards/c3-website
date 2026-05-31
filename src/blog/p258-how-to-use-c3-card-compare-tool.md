@@ -1,20 +1,12 @@
 ---
-game: tcg
+game: general
 title: "How to Use the C3 Card Compare Tool"
 description: "The C3 Card Compare tool shows live AUD buy and sell prices for cards across 8 TCGs side by side. Here is how to use it and what each data point means."
 date: 2026-05-16
-category: "tools-and-trackers"
-tags:
-  - post
-  - tools-and-trackers
-  - mtg
-  - pokemon
-  - compare
+category: buying-guides
+tags: post
 emoji: "⚖️"
-affiliate_disclaimer: false
-cta_type: "compare"
-cta_link: "/compare"
-featured: true
+affiliate_disclaimer: true
 layout: post
 ---
 
@@ -22,10 +14,9 @@ The [C3 Card Compare tool](/compare) lets you put two cards side by side and see
 
 This guide explains what each number means and how to use the tool to make better buying and selling decisions.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Go to <a href="/compare">/compare</a>, search for any card by name, add a second card, and compare. The tool shows current eBay AU sold prices, a 14-day trend line, and Card Kingdom buylist data for MTG. Use it before buying any single card worth more than AU$10.</p>
-</div>
+## Quick Answer
+
+Go to <a href="/compare">/compare</a>, search for any card by name, add a second card, and compare. The tool shows current eBay AU sold prices, a 14-day trend line, and Card Kingdom buylist data for MTG. Use it before buying any single card worth more than AU$10.
 
 ## What the C3 Card Compare Tool Shows
 
@@ -33,7 +24,7 @@ This guide explains what each number means and how to use the tool to make bette
 
 The price shown is derived from eBay AU recently sold listings for that card in near mint condition. This is the actual Australian market price: what Australian sellers have received for that card in the last two weeks, not a conversion from a US database.
 
-Australian prices differ from US prices for several reasons: import costs, the AUD/USD exchange rate, and local supply and demand. The C3 Card Vault and Compare tool use Australian sold data rather than US-based estimates. See our [AU vs US pricing explainer](/blog/au-vs-us-pokemon-card-prices-australia/) for why the gap exists.
+Australian prices differ from US prices for several reasons: import costs, the AUD/USD exchange rate, and local supply and demand. The C3 Card Vault and Compare tool use Australian sold data rather than US-based estimates. See our [AU vs US pricing explainer](/blog/au-vs-us-pokemon-card-prices-australia) for why the gap exists.
 
 ### 14-Day Price Trend
 
@@ -90,7 +81,7 @@ The Compare tool covers:
 
 ## The Compare Tool vs Just Checking eBay
 
-Checking eBay directly for a single card is straightforward. The Compare tool adds value when:
+Checking eBay directly for a single card is clear. The Compare tool adds value when:
 
 - **Comparing two cards**: eBay requires opening two tabs and manually comparing; the Compare tool shows both simultaneously
 - **Tracking a trend**: eBay shows current listings but not historical sold data as clearly; the Compare tool's trend line shows direction at a glance
@@ -108,14 +99,15 @@ The Compare tool works alongside the other C3 tools:
 
 **[C3 Card Vault](/cards)**: The full searchable card database. Find a card in the Vault, then send it to Compare for a side-by-side analysis.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Use the C3 MTG Card Vault](/blog/how-to-use-c3-mtg-card-vault-guide/)
-- [How to Use the C3 Market Page](/blog/how-to-use-c3-market-page/)
-- [How to Find the Best MTG Card Prices in Australia](/blog/how-to-find-best-mtg-prices-australia-platform-comparison/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [How to Use the C3 MTG card hub](/blog/how-to-use-c3-mtg-card-vault-guide)
+- [How to Use the C3 Market Page](/blog/how-to-use-c3-market-page)
+- [How to Find the Best MTG Card Prices in Australia](/blog/how-to-find-best-mtg-prices-australia-platform-comparison)
 
 ## Frequently Asked Questions
 

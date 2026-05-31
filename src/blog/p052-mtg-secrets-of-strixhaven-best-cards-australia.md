@@ -4,27 +4,17 @@ title: "MTG Secrets of Strixhaven: Best Cards to Chase"
 description: "Secrets of Strixhaven releases 24 April 2026. Here are the cards collectors and players in Australia will be hunting."
 date: 2026-04-08
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - pre-orders
-  - value-and-worth
-  - collectors
-  - players
+tags: post
 emoji: "✨"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
 ---
 
 Secrets of Strixhaven releases 24 April 2026 and the community is already clear on which cards are going to define the set's collector and player value. With a serialised headliner tied to one of Magic's original Power Nine spells, a returning Mystical Archive bonus sheet with Force of Will, and five sets of borderless Elder Dragons and planeswalkers, this set has more discrete chase layers than most recent releases. Here is a breakdown of what everyone in Australia will be chasing and why.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The top chase cards in Secrets of Strixhaven are the serialised Emeritus of Ideation (only 500 exist), the borderless planeswalkers Ral Zarek and Professor Dellian Fel, the five borderless Elder Dragons, Force of Will from the Mystical Archive, and the Japanese Mystical Archive variants. For Commander players the most exciting cards are the face commanders from the five precon decks, particularly Quintorius, History Chaser and Dina, Essence Brewer.</p>
-</div>
+## Quick Answer
+
+The top chase cards in Secrets of Strixhaven are the serialised Emeritus of Ideation (only 500 exist), the borderless planeswalkers Ral Zarek and Professor Dellian Fel, the five borderless Elder Dragons, Force of Will from the Mystical Archive, and the Japanese Mystical Archive variants. For Commander players the most exciting cards are the face commanders from the five precon decks, particularly Quintorius, History Chaser and Dina, Essence Brewer.
 
 ## The Serialised Headliner: Emeritus of Ideation
 
@@ -114,14 +104,6 @@ Collector Boosters add the serialised Emeritus of Ideation slot, Japanese Mystic
 
 As always, the expected monetary value of opening sealed product is typically below the box purchase price. Buying boxes to crack is a hobby activity rather than a value strategy. If you need specific cards, buying singles once prices stabilise after release will almost always be more efficient than pulling for them.
 
-<div class="cta-block">
-
-**Pre-order Secrets of Strixhaven on Amazon AU now. Releases 24 April 2026.**
-Play Booster Display, Commander Decks, and Codex Bundle all available.
-
-[Browse Secrets of Strixhaven on Amazon AU](/shop.html#mtg)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -140,11 +122,12 @@ From prerelease events (17 April) onwards you will begin to see individual cards
 **Is Force of Will in the Mystical Archive playable in Standard?**
 No. Mystical Archive cards are legal in Legacy, Vintage, and Commander but not in Standard. They are bonus sheet cards only.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [MTG Secrets of Strixhaven: Full Pre-Order Guide Australia](/blog/mtg-secrets-of-strixhaven-australia/)
-- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
-- [Are MTG Booster Boxes Worth Buying in Australia?](/blog/are-mtg-booster-boxes-worth-it-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [MTG Secrets of Strixhaven: Full Pre-Order Guide Australia](/blog/mtg-secrets-of-strixhaven-australia)
+- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
+- [Are MTG Booster Boxes Worth Buying in Australia?](/blog/are-mtg-booster-boxes-worth-it-australia)

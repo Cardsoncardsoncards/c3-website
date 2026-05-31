@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Which Dragon Ball Super TCG Warrior Are You? | C3 Quizzes Australia</title>
+  <meta name="description" content="Goku, Vegeta, Frieza or Gohan? 5 questions to find your Dragon Ball Super Card Game warrior identity. Built for Australian players.">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/quizzes/dragonball-warrior">
+  <link rel="icon" type="image/png" href="/c3logo.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+:root{--bg:#080a0f;--bg2:#0e1118;--bg3:#141720;--gold:#C9A84C;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
+.nav-link:hover{color:var(--white);border-color:var(--silver);text-decoration:none}
+.nav-link--active{color:#F472B6;border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.06)}
+.wrap{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.quiz-hero{padding:56px 0 32px;text-align:center}
+.quiz-eyebrow{font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.quiz-hero h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,40px);font-weight:900;color:var(--white);line-height:1.1;margin-bottom:12px}
+.quiz-hero p{font-size:15px;color:var(--text2);max-width:540px;margin:0 auto 20px}
+.quiz-meta{display:flex;justify-content:center;gap:20px;font-size:12px;color:var(--text2);margin-bottom:8px}
+.quiz-container{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:40px}
+.quiz-progress-wrap{height:3px;background:var(--border)}
+.quiz-progress-bar{height:100%;background:var(--gold);transition:width .4s ease;width:0%}
+.quiz-step{padding:32px;display:none}
+.quiz-step.active{display:block}
+.step-num{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.step-q{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:24px;line-height:1.3}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg3);border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;user-select:none}
+.option:hover{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.option.selected{border-color:var(--gold);background:rgba(201,168,76,.12)}
+.option-icon{font-size:22px;flex-shrink:0;width:32px;text-align:center}
+.option-text{font-size:14px;font-weight:600;color:var(--white)}
+.option-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;border-top:1px solid var(--border)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;font-family:'DM Sans',sans-serif}
+.btn-primary{background:linear-gradient(135deg,#9A7B28,#C9A84C);color:#0A0C14}
+.btn-primary:hover{opacity:.9}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--silver)}
+.btn-secondary:hover{border-color:var(--silver);color:var(--white)}
+.btn:disabled{opacity:.4;cursor:default}
+.step-counter{font-size:12px;color:var(--text2)}
+#result{display:none;padding:32px}
+.result-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;background:#FB923C22;color:#FB923C;border:1px solid #FB923C55}
+.result-name{font-family:'Cinzel',serif;font-size:28px;font-weight:700;margin-bottom:8px;color:#FB923C}
+.result-why{font-size:14px;color:var(--text2);margin-bottom:8px;line-height:1.6}
+.result-flavour{font-size:13px;color:var(--text2);font-style:italic;margin-bottom:24px;padding:12px 16px;border-left:2px solid var(--gold);background:rgba(201,168,76,.05);border-radius:0 8px 8px 0}
+.result-stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.result-stat{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text2);flex:1;min-width:120px}
+.result-stat strong{display:block;font-size:15px;color:var(--white);font-family:'Cinzel',serif;margin-bottom:2px}
+.result-actions{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.result-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s}
+.result-cta:hover{opacity:.85;text-decoration:none}
+.result-share{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.share-title{font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600}
+.share-btns{display:flex;gap:8px;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:opacity .2s}
+.share-btn:hover{opacity:.85}
+.suggest-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--border)}
+.suggest-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:16px}
+.suggest-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.suggest-grid{grid-template-columns:1fr}}
+.suggest-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;transition:border-color .2s;display:block}
+.suggest-card:hover{border-color:var(--gold);text-decoration:none}
+.suggest-game{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.suggest-name{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px}
+.suggest-desc{font-size:11px;color:var(--text2)}
+.share-popup{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.share-popup.open{display:flex}
+.share-popup-inner{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:380px;width:90%;text-align:center;position:relative}
+.share-popup h3{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px}
+.share-popup p{font-size:13px;color:var(--text2);margin-bottom:24px}
+.share-popup-result{font-family:'Cinzel',serif;font-size:24px;font-weight:900;margin-bottom:8px}
+.share-popup-buttons{display:flex;flex-direction:column;gap:10px}
+.share-popup-close{position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text2);font-size:20px;cursor:pointer;line-height:1}
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;font-size:12px;color:var(--text2)}
+footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  </style>
+</head>
+<body>
+<div class="share-popup" id="share-popup" onclick="if(event.target===this)closeSharePopup()">
+  <div class="share-popup-inner">
+    <button class="share-popup-close" onclick="closeSharePopup()">✕</button>
+    <div id="popup-result-name" class="share-popup-result"></div>
+    <h3>Share Your Result</h3>
+    <p id="popup-result-text"></p>
+    <div class="share-popup-buttons">
+      <button class="share-btn" style="background:#1DA1F2;color:#fff;width:100%;justify-content:center" onclick="doShareTwitter()">𝕏 Share on X / Twitter</button>
+      <button class="share-btn" style="background:#4267B2;color:#fff;width:100%;justify-content:center" onclick="doShareFacebook()">📘 Share on Facebook</button>
+      <button class="share-btn" style="background:#25D366;color:#fff;width:100%;justify-content:center" onclick="doShareWhatsApp()">💬 Share on WhatsApp</button>
+      <button class="share-btn" style="background:#E1306C;color:#fff;width:100%;justify-content:center" onclick="doShareInstagram()">📷 Copy for Instagram</button>
+      <button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white);width:100%;justify-content:center" onclick="doCopyLink()">🔗 Copy Link</button>
+    </div>
+  </div>
+</div>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span></a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/cards" class="nav-link">Card Prices</a>
+      <a href="/shop" class="nav-link">Shop</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/play" class="nav-link nav-link--active">Quizzes</a>
+      <a href="/tools" class="nav-link">EV Calc</a>
+      <a href="/tracker" class="nav-link">Tracker</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link" style="color:#60A5FA;border-color:rgba(96,165,250,.35)">eBay &#8599;</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="quiz-hero">
+    <div class="quiz-eyebrow">Dragon Ball Super · Warrior Identity</div>
+    <h1>Which Dragon Ball Super Warrior Are You?</h1>
+    <p>5 questions to reveal which Dragon Ball warrior matches your TCG playstyle. Goku, Vegeta, Frieza or Gohan?</p>
+    <div class="quiz-meta"><span>⏱ 2 minutes</span><span>❓ 5 questions</span><span>🎯 4 possible results</span></div>
+  </div>
+  <div class="quiz-container">
+    <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="progress-bar"></div></div>
+    <div class="quiz-step active" data-step="1">
+      <div class="step-num">Question 1 of 5</div>
+      <div class="step-q">What is your main goal when building a Dragon Ball Super deck?</div>
+      <div class="options">
+        <div class="option" data-q="1" data-v="goku" onclick="selectOption(this)"><span class="option-icon">🟠</span><div><div class="option-text">Push power levels as high as they go</div><div class="option-sub">Energy accelerate into massive warp attacks</div></div></div>
+        <div class="option" data-q="1" data-v="vegeta" onclick="selectOption(this)"><span class="option-icon">💙</span><div><div class="option-text">Precise power and strategic pressure</div><div class="option-sub">Efficient battles and controlled aggression</div></div></div>
+        <div class="option" data-q="1" data-v="frieza" onclick="selectOption(this)"><span class="option-icon">💜</span><div><div class="option-text">Control the game and punish mistakes</div><div class="option-sub">Counter, remove, and take every advantage</div></div></div>
+        <div class="option" data-q="1" data-v="gohan" onclick="selectOption(this)"><span class="option-icon">🟡</span><div><div class="option-text">Build up over time and unleash latent power</div><div class="option-sub">Slow setup, overwhelming finish</div></div></div>
+      </div>
+    </div>
+    <div class="quiz-step" data-step="2">
+      <div class="step-num">Question 2 of 5</div>
+      <div class="step-q">Your opponent attacks your Leader early. You:</div>
+      <div class="options">
+        <div class="option" data-q="2" data-v="goku" onclick="selectOption(this)"><span class="option-icon">⚡</span><div><div class="option-text">Swing back immediately with everything you have</div><div class="option-sub">Goku always escalates</div></div></div>
+        <div class="option" data-q="2" data-v="vegeta" onclick="selectOption(this)"><span class="option-icon">🎯</span><div><div class="option-text">Defend efficiently and wait for the right counter</div><div class="option-sub">Pride means not overreacting</div></div></div>
+        <div class="option" data-q="2" data-v="frieza" onclick="selectOption(this)"><span class="option-icon">😤</span><div><div class="option-text">Use removal to destroy their attacker before it connects</div><div class="option-sub">Frieza does not take hits he can prevent</div></div></div>
+        <div class="option" data-q="2" data-v="gohan" onclick="selectOption(this)"><span class="option-icon">🛡️</span><div><div class="option-text">Absorb it and continue setting up</div><div class="option-sub">Gohan's power grows with each challenge</div></div></div>
+      </div>
+    </div>
+    <div class="quiz-step" data-step="3">
+      <div class="step-num">Question 3 of 5</div>
+      <div class="step-q">Which Dragon Ball Super card mechanic most appeals to you?</div>
+      <div class="options">
+        <div class="option" data-q="3" data-v="goku" onclick="selectOption(this)"><span class="option-icon">🔥</span><div><div class="option-text">Warp and critical hits on powerful attackers</div><div class="option-sub">Attacks that ignore blockers and scale infinitely</div></div></div>
+        <div class="option" data-q="3" data-v="vegeta" onclick="selectOption(this)"><span class="option-icon">⚔️</span><div><div class="option-text">Dual attack and burst attacks</div><div class="option-sub">Hit twice, punish every opening</div></div></div>
+        <div class="option" data-q="3" data-v="frieza" onclick="selectOption(this)"><span class="option-icon">🌀</span><div><div class="option-text">Skills that remove or suppress opponent cards</div><div class="option-sub">Erasure, K.O., and Bounce effects</div></div></div>
+        <div class="option" data-q="3" data-v="gohan" onclick="selectOption(this)"><span class="option-icon">✨</span><div><div class="option-text">Overpower and evolve effects</div><div class="option-sub">Stack power over multiple turns</div></div></div>
+      </div>
+    </div>
+    <div class="quiz-step" data-step="4">
+      <div class="step-num">Question 4 of 5</div>
+      <div class="step-q">How important is your Leader's Awakening to your win condition?</div>
+      <div class="options">
+        <div class="option" data-q="4" data-v="goku" onclick="selectOption(this)"><span class="option-icon">🌟</span><div><div class="option-text">Everything. My deck is built around getting there fast</div><div class="option-sub">Super Saiyan God is the whole plan</div></div></div>
+        <div class="option" data-q="4" data-v="vegeta" onclick="selectOption(this)"><span class="option-icon">📊</span><div><div class="option-text">Important, but I can win either side if needed</div><div class="option-sub">Flexibility over dependency</div></div></div>
+        <div class="option" data-q="4" data-v="frieza" onclick="selectOption(this)"><span class="option-icon">👁️</span><div><div class="option-text">Not my priority. I control the game on both sides</div><div class="option-sub">Frieza wins at any power level</div></div></div>
+        <div class="option" data-q="4" data-v="gohan" onclick="selectOption(this)"><span class="option-icon">🐉</span><div><div class="option-text">Yes, but the build-up before it matters just as much</div><div class="option-sub">Gohan's full power only shows under pressure</div></div></div>
+      </div>
+    </div>
+    <div class="quiz-step" data-step="5">
+      <div class="step-num">Question 5 of 5</div>
+      <div class="step-q">A friend calls Dragon Ball Super TCG too anime-focused. You:</div>
+      <div class="options">
+        <div class="option" data-q="5" data-v="goku" onclick="selectOption(this)"><span class="option-icon">😄</span><div><div class="option-text">Laugh it off. The thematic energy is part of what makes it great</div><div class="option-sub">The passion shows on every card</div></div></div>
+        <div class="option" data-q="5" data-v="vegeta" onclick="selectOption(this)"><span class="option-icon">😤</span><div><div class="option-text">Tell them the gameplay is genuinely deep and they should play before judging</div><div class="option-sub">Pride in the game's mechanics</div></div></div>
+        <div class="option" data-q="5" data-v="frieza" onclick="selectOption(this)"><span class="option-icon">🤷</span><div><div class="option-text">Do not bother explaining. They would not understand</div><div class="option-sub">Frieza never explains himself</div></div></div>
+        <div class="option" data-q="5" data-v="gohan" onclick="selectOption(this)"><span class="option-icon">📚</span><div><div class="option-text">Explain calmly how the card design mirrors the story arcs</div><div class="option-sub">Understanding takes time</div></div></div>
+      </div>
+    </div>
+    <div id="result"><div id="result-inner"></div>
+      <div class="suggest-section">
+        <div class="suggest-title">You Might Also Like</div>
+        <div class="suggest-grid">
+          <a href="/quizzes/dragonball-character" class="suggest-card">
+            <div class="suggest-game">Dragon Ball</div>
+            <div class="suggest-name">Which Dragon Ball Character Are You?</div>
+            <div class="suggest-desc">Beyond just warriors</div>
+          </a>
+          <a href="/quizzes/which-tcg-extended" class="suggest-card">
+            <div class="suggest-game">All TCGs</div>
+            <div class="suggest-name">Which TCG Should You Play?</div>
+            <div class="suggest-desc">12 results across all budgets and playstyles</div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="btn btn-secondary" id="btn-back" onclick="goBack()" disabled>← Back</button>
+      <span class="step-counter" id="step-counter">1 / 5</span>
+      <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>Next →</button>
+    </div>
+  </div>
+</div>
+<footer>
+  <p><a href="/">Home</a><a href="/cards">Card Prices</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/play">Quizzes</a><a href="/tracker">Tracker</a><a href="/contact">Contact</a></p>
+  <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+</footer>
+<script>
+let _shareResultName='',_shareUrl='';
+function openSharePopup(){if(!_shareUrl)_shareUrl=window.location.href;document.getElementById('popup-result-name').textContent=_shareResultName;document.getElementById('popup-result-text').textContent='I got "'+_shareResultName+'" on the C3 Dragon Ball Quiz! What do you get?';document.getElementById('share-popup').classList.add('open');document.body.style.overflow='hidden';}
+function closeSharePopup(){document.getElementById('share-popup').classList.remove('open');document.body.style.overflow='';}
+function doShareTwitter(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('I got "'+_shareResultName+'" on the @C3TCGAustralia quiz! What do you get? '+_shareUrl),'_blank');}
+function doShareFacebook(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(_shareUrl),'_blank');}
+function doShareWhatsApp(){window.open('https://wa.me/?text='+encodeURIComponent('I got "'+_shareResultName+'" on the C3 TCG Quiz! '+_shareUrl),'_blank');}
+function doShareInstagram(){navigator.clipboard.writeText('🃏 I got "'+_shareResultName+'" on the C3 TCG Quiz!\n\nFind yours at: '+_shareUrl).then(()=>showToast('Copied for Instagram!'));closeSharePopup();}
+function doCopyLink(){navigator.clipboard.writeText(_shareUrl).then(()=>{showToast('Link copied!');closeSharePopup();});}
+function showToast(msg){const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#0A0C14;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:99999;animation:toastIn .2s ease';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);}
+const TOTAL=5;let current=1;const answers={};
+const RESULTS={
+  "goku":{"name":"Goku","tag":"The Pure Warrior","why":"You are Goku. You accelerate into your most powerful cards as fast as possible, swing for big damage, and push power levels until the game ends. Son Goku Leader decks in Fusion World and the original DBSCG run Energy acceleration into critical hits and massive warp attacks. Your games are high-energy, high-damage, and rarely go to time. Decks to explore: Son Goku Saiyan Leader, Super Saiyan God Son Goku builds.","flavour":"I'm always at full power!","cardLink":"/cards/dragonball","ebay":"Dragon Ball Super card game Goku singles australia"},
+  "vegeta":{"name":"Vegeta","tag":"The Elite Warrior","why":"You are Vegeta. Precise, aggressive, and too proud to lose on a technicality. Vegeta decks run dual attack strategies, efficient battle cards, and measured pressure that builds toward an unstoppable mid-game board. You hit harder than anyone at equivalent costs and you know it. Decks to explore: Vegeta Prince of all Saiyans, Super Saiyan Blue Vegeta builds.","flavour":"There is only one warrior worthy of the title Elite.","cardLink":"/cards/dragonball","ebay":"Dragon Ball Super card game Vegeta singles australia"},
+  "frieza":{"name":"Frieza","tag":"The Emperor","why":"You are Frieza. You control the pace of every game through removal, suppression, and calculated cruelty. Frieza decks run cards with K.O. effects, Erasure, and skills that deny opponent resources. You do not rush. You dismantle. Decks to explore: Frieza Emperor of Evil Leader, Revival of F themed builds.","flavour":"How does it feel to fight someone infinitely superior?","cardLink":"/cards/dragonball","ebay":"Dragon Ball Super card game Frieza singles australia"},
+  "gohan":{"name":"Gohan","tag":"The Hidden Potential","why":"You are Gohan. You build slowly, set up deliberately, and then hit the opponent with a burst of power they were not prepared for. Beast Gohan decks in Fusion World build evolve chains that culminate in overwhelming one-turn attacks. Your power comes in stages, and the final stage is the strongest. Decks to explore: Gohan Awakening, Son Gohan Beast in Fusion World.","flavour":"I told you. Don't make me angry.","cardLink":"/cards/dragonball","ebay":"Dragon Ball Super card game Gohan singles australia"}
+};
+function selectOption(el){const q=el.dataset.q,v=el.dataset.v;document.querySelectorAll('.option[data-q="'+q+'"]').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');answers[q]=v;document.getElementById('btn-next').disabled=false;}
+function goNext(){if(!answers[current])return;if(current===TOTAL){showResult();return;}current++;showStep(current);}
+function goBack(){if(current===1)return;current--;showStep(current);}
+function showStep(n){document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active'));var el=document.querySelector('[data-step="'+n+'"]');if(el)el.classList.add('active');document.getElementById('btn-back').disabled=n===1;document.getElementById('btn-next').disabled=!answers[n];document.getElementById('btn-next').textContent=n===TOTAL?'See Result →':'Next →';document.getElementById('step-counter').textContent=n+' / '+TOTAL;document.getElementById('progress-bar').style.width=((n-1)/TOTAL*100)+'%';}
+async function loadStats(resultKey){try{const res=await fetch('/.netlify/functions/card-api?action=quiz-result',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quiz_slug:'dragonball-warrior',result_slug:resultKey})});if(!res.ok)return{count:0,most_common:null};return await res.json();}catch(e){return{count:0,most_common:null};}}
+async function showResult(){
+  const a=answers,s={goku:0,vegeta:0,frieza:0,gohan:0};
+  Object.values(a).forEach(function(v){if(s[v]!==undefined)s[v]+=4;});
+  const resultKey=Object.entries(s).sort(function(a,b){return b[1]-a[1];})[0][0];
+  const r=RESULTS[resultKey]||Object.values(RESULTS)[0];
+  document.getElementById('progress-bar').style.width='100%';
+  const stats=await loadStats(resultKey);
+  const myCount=stats.count||0;const mostCommon=stats.most_common;
+  const ebayUrl='https://www.ebay.com.au/sch/i.html?_nkw='+encodeURIComponent((r.ebay||r.name+' tcg australia'))+'&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1';
+  document.getElementById('result-inner').innerHTML=
+    '<div class="result-badge">'+(r.tag||'Your Result')+'</div>'+
+    '<div class="result-name">'+r.name+'</div>'+
+    '<div class="result-why">'+r.why+'</div>'+
+    '<div class="result-flavour">'+r.flavour+'</div>'+
+    '<div class="result-stats"><div class="result-stat"><strong>'+myCount.toLocaleString()+'</strong>people got this result</div>'+(mostCommon&&mostCommon!==resultKey&&RESULTS[mostCommon]?'<div class="result-stat"><strong>'+RESULTS[mostCommon].name+'</strong>most common result</div>':'')+'</div>'+
+    '<div class="result-actions">'+
+      (r.cardLink?'<a href="'+r.cardLink+'" class="result-cta" style="background:#FB923C22;border:1px solid #FB923C55;color:#FB923C">🃏 Browse Dragon Ball Cards →</a>':'')+
+      '<a href="'+ebayUrl+'" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">🏪 Buy on eBay AU ↗</a>'+
+      '<a href="/blog/dragon-ball-super-card-game-beginners-guide-australia" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 Dragon Ball Beginners Guide →</a>'+
+    '</div>'+
+    '<div class="result-share"><div class="share-title">Share your result</div><div class="share-btns">'+
+      '<button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="openSharePopup()">𝕏 Share</button>'+
+      '<button class="share-btn" style="background:#4267B2;color:#fff" onclick="doShareFacebook()">📘 Facebook</button>'+
+      '<button class="share-btn" style="background:#25D366;color:#fff" onclick="doShareWhatsApp()">💬 WhatsApp</button>'+
+      '<button class="share-btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--white)" onclick="openSharePopup()">↗ All platforms</button>'+
+    '</div></div>';
+  document.querySelectorAll('.quiz-step').forEach(s=>s.style.display='none');
+  document.getElementById('result').style.display='block';
+  document.getElementById('quiz-nav').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+  _shareResultName=r.name;_shareUrl=window.location.href;
+}
+</script>
+</body>
+</html>

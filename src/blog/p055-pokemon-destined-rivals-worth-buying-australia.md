@@ -4,26 +4,17 @@ title: "Pokemon Destined Rivals: Is It Still Worth Buying in Australia"
 description: "Pokemon TCG Destined Rivals released May 2025 with Team Rocket returning for the first time in 25 years. This guide covers whether it is still worth."
 date: 2026-04-08
 category: "market-and-prices"
-tags:
-  - post
-  - pokemon
-  - value-and-worth
-  - buying-guides
-  - collectors
+tags: post
 emoji: "🚀"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#pokemon"
-featured: false
 layout: post
 ---
 
 Pokemon TCG Destined Rivals released in May 2025 and brought Team Rocket back to the TCG for the first time in 25 years. Nearly a year on, the question for Australian collectors and players is whether the set is still worth buying, and if so, what to target. This guide covers current chase card values as of early 2026, box value, and an honest assessment of whether to buy sealed or singles.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Destined Rivals is one of the strongest Pokemon sets released in the Scarlet and Violet era and remains highly collectible in 2026. The Team Rocket's Mewtwo ex SIR is the flagship card at approximately AU$700 to AU$800 raw and continuing to grow. Sealed booster boxes are still available on Amazon AU. For collectors who missed release, buying specific singles is now more efficient than cracking boxes. For casual buyers who want the experience of opening Team Rocket-themed packs, it remains a strong choice.</p>
-</div>
+## Quick Answer
+
+Destined Rivals is one of the strongest Pokemon sets released in the Scarlet and Violet era and remains highly collectible in 2026. The Team Rocket's Mewtwo ex SIR is the flagship card at approximately AU$700 to AU$800 raw and continuing to grow. Sealed booster boxes are still available on Amazon AU. For collectors who missed release, buying specific singles is now more efficient than cracking boxes. For casual buyers who want the experience of opening Team Rocket-themed packs, it remains a strong choice.
 
 ## Why Destined Rivals Still Matters
 
@@ -95,13 +86,13 @@ If you know which cards you want, eBay AU is the most efficient path. Australian
 
 The Cards on Cards on Cards eBay store stocks Pokemon singles including Destined Rivals cards. Buying from an established Australian seller with strong feedback is the safest approach for higher-value cards.
 
-[Shop Destined Rivals singles on eBay AU](/shop.html)
+[Shop Destined Rivals singles on eBay AU](/shop)
 
 ## Where to Buy Sealed in Australia
 
 The Destined Rivals Booster Box is confirmed on Amazon AU. Check the Pokemon section of the shop for current availability and pricing.
 
-[Browse Pokemon Destined Rivals on Amazon AU](/shop.html#pokemon)
+[Browse Pokemon Destined Rivals on Amazon AU](/shop)
 
 ## How Destined Rivals Sits in 2026 Context
 
@@ -115,19 +106,8 @@ Destined Rivals benefited from:
 
 These fundamentals are strong for long-term collector appeal. It is not a guarantee of price appreciation, but Destined Rivals has more of the right ingredients than most recent sets.
 
-<div class="cta-block">
-
-**Pokemon Destined Rivals is available on Amazon AU now.**
-Team Rocket returns. Booster Box confirmed in stock.
-
-[Browse Pokemon Destined Rivals on Amazon AU](/shop.html#pokemon)
-
-</div>
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 ## Frequently Asked Questions
 
@@ -152,11 +132,12 @@ No confirmed information. Ravensburger makes Lorcana decisions, not Pokemon. Tea
 
 Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Best Pokemon Booster Boxes to Buy in Australia Right Now](/blog/best-pokemon-booster-boxes-australia/)
-- [Are Pokemon Booster Boxes a Good Investment in Australia?](/blog/are-pokemon-booster-boxes-investment-australia/)
-- [Pokemon Mega Evolution Perfect Order: Best Cards and Box Value Australia](/blog/pokemon-perfect-order-best-cards-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [Best Pokemon Booster Boxes to Buy in Australia Right Now](/blog/best-pokemon-booster-boxes-australia)
+- [Are Pokemon Booster Boxes a Good Investment in Australia?](/blog/are-pokemon-booster-boxes-investment-australia)
+- [Pokemon Mega Evolution Perfect Order: Best Cards and Box Value Australia](/blog/pokemon-perfect-order-best-cards-australia)

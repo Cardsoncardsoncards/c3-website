@@ -3,13 +3,16 @@ game: riftbound
 title: "Riftbound Unleashed Pull Rates Explained: What to Expect From a Booster Box in Australia"
 description: "The complete pull rate guide for Riftbound Unleashed. Alternate arts, overnumbered cards, signed cards, foil rates. What the official rates say and what we actually got from four boxes."
 date: 2026-05-16
-category: "general-tcg"
+category: buying-guides
 emoji: "🎯"
-tags: [riftbound, pull-rates, booster-box, unleashed, australia, guide, alternate-art, overnumbered]
+tags: post
 layout: post
 affiliate_disclaimer: true
-featured: false
----
+---## Quick Answer
+
+Riftbound Unleashed has a more structured pull rate system than most new TCGs. Riot Games has been explicit about what players should expect from sealed product, which makes it easier to evaluate whether opening boxes makes sense for you. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
 
 Riftbound Unleashed has a more structured pull rate system than most new TCGs. Riot Games has been explicit about what players should expect from sealed product, which makes it easier to evaluate whether opening boxes makes sense for you.
 
@@ -93,6 +96,16 @@ For pricing comparisons on specific Riftbound cards, use the [C3 Card Compare to
 ---
 
 *Pull rate data sourced from [Riftbound.gg](https://riftbound.gg/riftbound-card-rarity-guide-pull-rates/) and the [official Riftbound site](https://riftbound.leagueoflegends.com/en-us/). Our observed data is from four booster boxes opened in May 2026.*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

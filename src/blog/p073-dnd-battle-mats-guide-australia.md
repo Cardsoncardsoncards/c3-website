@@ -3,28 +3,18 @@ game: dnd
 title: "D&D Battle Mats in Australia: A Practical Buying Guide"
 description: "Battle mats bring D&D combat to life with a visual grid. This guide covers vinyl, paper, and wet-erase options available in Australia with honest."
 date: 2026-04-09
-category: "buying-guides"
-tags:
-  - post
-  - dnd
-  - battle-mats
-  - buying-guides
-  - tabletop-rpg
-  - accessories
+category: buying-guides
+tags: post
 emoji: "🗺️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
 A battle mat is a gridded playing surface DMs use to map out encounter areas during combat. Miniatures or tokens sit on the grid, each square representing 5 feet of in-game space. It's one of the more practical accessories for combat-heavy campaigns and one of the more confusing to buy because the product descriptions often don't clearly communicate what matters.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>For most groups a reusable dry-erase or wet-erase vinyl or rubber mat in approximately 23 by 27 inches with a 1-inch grid is the practical choice. It covers a typical encounter space and can be drawn on and wiped clean between sessions. Printed multi-map packs are cheaper per encounter but single-use. Premium rubber mats are heavier and lay flat better than vinyl. Size and grid scale (1-inch squares) are the two specifications that matter most.</p>
-</div>
+## Quick Answer
+
+For most groups a reusable dry-erase or wet-erase vinyl or rubber mat in approximately 23 by 27 inches with a 1-inch grid is the practical choice. It covers a typical encounter space and can be drawn on and wiped clean between sessions. Printed multi-map packs are cheaper per encounter but single-use. Premium rubber mats are heavier and lay flat better than vinyl. Size and grid scale (1-inch squares) are the two specifications that matter most.
 
 ## Why Grid Scale Matters
 
@@ -69,25 +59,18 @@ Battle mats are typically measured in inches. Common sizes available in Australi
 
 A 23 x 27-inch mat covers most encounters. Larger mats are useful but limit which tables you can play on. Consider your usual play space before buying a very large mat.
 
-All battle mats mentioned here are available through the [C3 D&D shop](/shop.html#dnd).
+All battle mats mentioned here are available through the [C3 D&D shop](/shop).
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [D&D Miniatures in Australia: What to Know Before You Buy](/blog/dnd-miniatures-guide-australia/)
-- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia/)
-- [D&D Storage and Bags in Australia: Organising Your Gear](/blog/dnd-storage-bags-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [D&D Miniatures in Australia: What to Know Before You Buy](/blog/dnd-miniatures-guide-australia)
+- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia)
+- [D&D Storage and Bags in Australia: Organising Your Gear](/blog/dnd-storage-bags-australia)
 
-**Browse D&D battle mats and grid mats on Amazon AU.**
-Dry-erase, rubber, and printed map options all confirmed available with Australian shipping.
-
-[Browse the D&D Shop →](/shop.html#dnd)
-
-</div>
 
 ## Frequently Asked Questions
 

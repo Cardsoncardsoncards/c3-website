@@ -1,19 +1,12 @@
 ---
-game: tcg
+game: general
 title: "How to Use the C3 Market Page in Australia"
 description: "The C3 Market page shows 7-day price movement across all 8 TCGs on one screen. Here is what each indicator means and how to use it to time buys and sells."
 date: 2026-05-16
-category: "tools-and-trackers"
-tags:
-  - post
-  - tools-and-trackers
-  - market
-  - prices
+category: buying-guides
+tags: post
 emoji: "📈"
-affiliate_disclaimer: false
-cta_type: "market"
-cta_link: "/market"
-featured: false
+affiliate_disclaimer: true
 layout: post
 ---
 
@@ -21,10 +14,9 @@ The [C3 Market page](/market) aggregates 7-day price movement across all 8 TCGs 
 
 This guide explains what each section shows and how to use it to make better buying and selling decisions.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Go to <a href="/market">/market</a> for a quick scan of which cards are moving across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound. Filter by game to narrow down. Use it before buying expensive singles to check whether the market is moving in a direction that affects your timing.</p>
-</div>
+## Quick Answer
+
+Go to <a href="/market">/market</a> for a quick scan of which cards are moving across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound. Filter by game to narrow down. Use it before buying expensive singles to check whether the market is moving in a direction that affects your timing.
 
 ## What the Market Page Displays
 
@@ -114,14 +106,15 @@ The Monday after a major tournament, check the Market page filtered to the relev
 
 **[C3 EV Calculator](/ev-calculator)**: Use Market data to understand whether sealed product is becoming better or worse value before running an EV calculation.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Use the C3 Card Compare Tool](/blog/how-to-use-c3-card-compare-tool/)
-- [How to Spot an MTG Card About to Spike](/blog/how-to-spot-mtg-card-about-to-spike-australia/)
-- [When Is the Best Time to Sell MTG Cards in Australia?](/blog/best-time-sell-mtg-cards-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [How to Use the C3 Card Compare Tool](/blog/how-to-use-c3-card-compare-tool)
+- [How to Spot an MTG Card About to Spike](/blog/how-to-spot-mtg-card-about-to-spike-australia)
+- [When Is the Best Time to Sell MTG Cards in Australia?](/blog/best-time-sell-mtg-cards-australia)
 
 ## Frequently Asked Questions
 

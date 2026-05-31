@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "What AU$200 Gets You in MTG: Singles vs Booster Boxes vs"
-description: "AU$200 is a meaningful MTG budget. This guide shows exactly what you get from each spending path — singles, booster boxes."
+description: "AU$200 is a meaningful MTG budget. This guide shows exactly what you get from each spending path, singles, booster boxes."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - mtg
-  - budget
-  - buying-guide
-  - value
+tags: post
 emoji: "💰"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+AU$200 is the budget threshold where MTG buying decisions start to matter significantly. Below AU$50, any MTG purchase gets you something playable. Above AU$200, the choice of how to spend directly determines whether you're playing a functional game or sitting on a pile of random cards. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 AU$200 is the budget threshold where MTG buying decisions start to matter significantly. Below AU$50, any MTG purchase gets you something playable. Above AU$200, the choice of how to spend directly determines whether you're playing a functional game or sitting on a pile of random cards.
 
@@ -89,11 +85,20 @@ For most Australian MTG players with AU$200:
 
 This gets you a playable deck immediately with meaningful upgrades, at total cost around AU$200.
 
-Check current precon prices at the [C3 shop](/shop.html#mtg). Check singles prices at the [C3 MTG Card Vault](/cards/mtg).
+Check current precon prices at the [C3 shop](/shop). Check singles prices at the [C3 MTG card hub](/cards/mtg).
 
 ---
 
-*See also: [MTG Singles vs Booster Boxes Australia](/blog/mtg-singles-vs-booster-boxes-australia/) and [Budget Commander Decks Under AU$100](/blog/budget-commander-deck-under-100-australia/).*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -104,4 +109,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

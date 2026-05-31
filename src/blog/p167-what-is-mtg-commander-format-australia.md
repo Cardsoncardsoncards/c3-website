@@ -3,20 +3,16 @@ game: mtg
 title: "What Is MTG Commander Format? Complete Australian Guide"
 description: "Commander is the most played Magic format in Australia. This guide explains how the format works, why it is different from other MTG formats, and."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - mtg
-  - commander
-  - beginners
-  - format-guide
+category: buying-guides
+tags: post
 emoji: "👑"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Commander. also called EDH (Elder Dragon Highlander). is the most popular way to play Magic: The Gathering in Australia. At Friday Night Magic events, local game stores, and kitchen tables across the country, Commander is the format most groups are playing. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Commander. also called EDH (Elder Dragon Highlander). is the most popular way to play Magic: The Gathering in Australia. At Friday Night Magic events, local game stores, and kitchen tables across the country, Commander is the format most groups are playing.
 
@@ -72,7 +68,7 @@ The advantage: zero build time, playable immediately, designed by the people who
 
 Choose a legendary creature you like and build a 100-card deck around it. Budget builds start at approximately AU$50 to AU$80 in singles. Mid-power builds run AU$150 to AU$300. High-power builds can be significantly more depending on card choices.
 
-See our [guide to building your first MTG deck in Australia](/blog/how-to-build-first-mtg-deck-australia/) for more detail.
+See our [guide to building your first MTG deck in Australia](/blog/how-to-build-first-mtg-deck-australia) for more detail.
 
 ## Finding a Commander to Build Around
 
@@ -80,7 +76,7 @@ Not sure which Commander to start with? Use the [C3 Random Commander Generator](
 
 ## Checking Card Prices in Australia
 
-Before you build, check prices. The [C3 MTG Card Vault](/cards/mtg) tracks live AUD prices on over 96,000 MTG cards. Search any card and see current eBay AU pricing so you know exactly what your build will cost.
+Before you build, check prices. The [C3 MTG card hub](/cards/mtg) tracks live AUD prices on over 96,000 MTG cards. Search any card and see current eBay AU pricing so you know exactly what your build will cost.
 
 ## The Commander Community in Australia
 
@@ -90,7 +86,6 @@ Online communities include r/EDH on Reddit and numerous Australian Discord serve
 
 ---
 
-*See also: [Best MTG Commander Decks in Australia](/blog/mtg-commander-decks-australia/) and the [C3 Random Commander Generator](/cards/mtg/random-commander).*
 
 
 ## Why Commander Became the Most Popular Format in Australia
@@ -125,7 +120,17 @@ Australian local game stores have built Commander as a social anchor. Weekly Com
 
 For game store owners, Commander is valuable because players regularly upgrade decks and buy new precons, creating consistent revenue that tournament-only formats don't generate. This alignment of player and store interests has made Commander the primary supported format at most Australian game stores.
 
-The [C3 Release Calendar](/calendar) tracks Commander-relevant set releases and major events in Australia. The [Random Commander Generator](/cards/mtg/random-commander) helps players find their next Commander from 10,000+ legendary creatures.
+The [C3 Release Calendar](/market) tracks Commander-relevant set releases and major events in Australia. The [Random Commander Generator](/cards/mtg/random-commander) helps players find their next Commander from 10,000+ legendary creatures.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Buddyfight TCG: Beginner's Guide for Australian Players"
 description: "Future Card Buddyfight ended its print run in 2020. Here's what it costs on the secondary market and whether it's worth getting into in Australia."

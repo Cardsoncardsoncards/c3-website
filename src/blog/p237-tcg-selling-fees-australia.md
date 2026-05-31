@@ -1,14 +1,18 @@
 ---
-game: tcg
+game: general
 title: "TCG Selling Fees in Australia Compared"
 description: "Selling TCG cards in Australia? Here's a real breakdown of eBay fees, Facebook Marketplace, local store buylists, and how to maximise your return in AUD."
 date: 2026-05-08
 category: selling-guides
 emoji: "💸"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Selling TCG cards in Australia is more complex than it looks. Platform fees, payment processing, packaging costs, and postage all eat into your return before you see a dollar. Here is the honest breakdown of every selling option available to Australian players in 2026. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Selling TCG cards in Australia is more complex than it looks. Platform fees, payment processing, packaging costs, and postage all eat into your return before you see a dollar. Here is the honest breakdown of every selling option available to Australian players in 2026.
 
@@ -65,27 +69,22 @@ Not tax advice. Speak to an accountant. If you are selling TCG cards at a profit
 
 ---
 
-Use our [Free TCG Tracker](/tracker.html) to log what you paid for cards, what you sold them for, and track your actual profit margin.
+Use our [Free TCG Tracker](/tracker) to log what you paid for cards, what you sold them for, and track your actual profit margin.
 
 All fee percentages are approximate and subject to change. Verify current eBay fee rates at help.ebay.com.au.
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+## The C3 Take
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+## What to Read Next
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -93,7 +92,7 @@ If you are tracking your collection, the [free C3 Collection Tracker](/tracker.h
 eBay returns more money per card but takes more time and has fees of roughly 13-15% all-in. Buylists pay less (typically 30-50% of market value in cash) but are instant. Use eBay for individual valuable cards. Use buylists for bulk lots where eBay effort is not worthwhile.
 
 ### What fees does eBay charge for selling TCG cards in Australia?
-eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia/).
+eBay Australia charges approximately 13.5% final value fee on the total sale price including postage. Factor in postage costs and packaging before pricing your cards. See our full [eBay fee breakdown](/blog/real-cost-selling-cards-ebay-australia).
 
 ### How do I know what my TCG cards are worth in Australia?
 Check eBay AU completed listings (filter to sold listings) for the most accurate local pricing. The [C3 Card Vault](/cards) also shows live pricing from eBay AU sold data across multiple TCGs.

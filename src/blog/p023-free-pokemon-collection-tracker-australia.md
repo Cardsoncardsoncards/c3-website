@@ -3,30 +3,20 @@ game: pokemon
 title: "Free Pokemon Collection Tracker: Organise and Value Your Cards"
 description: "Keep track of your Pokemon card collection with a free spreadsheet tracker. Log every card, track values, manage duplicates, and know exactly what."
 date: 2026-04-07
-category: "tools-and-trackers"
-tags:
-  - post
-  - pokemon
-  - tracking
-  - tools-and-trackers
-  - collectors
-  - sellers
+category: buying-guides
+tags: post
 emoji: "📊"
 affiliate_disclaimer: true
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
 layout: post
 ---
 
 A Pokemon collection without a tracker is a collection you don't fully know. You don't know exactly what you own, you don't know what it's worth, you don't know what you have duplicates of, and when someone asks if you have a specific card you're doing a mental search of multiple binders and boxes with uncertain results.
 
-A collection tracker fixes all of this. It's the difference between owning a collection and managing one. This guide covers why tracking matters for Pokemon collectors specifically, how to set one up, and how to get our free tracker that makes the process straightforward.
+A collection tracker fixes all of this. It's the difference between owning a collection and managing one. This guide covers why tracking matters for Pokemon collectors specifically, how to set one up, and how to get our free tracker that makes the process clear.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Our free TCG Collection Tracker is a Google Sheets spreadsheet that works for Pokemon and any other card game. It includes inventory tracking with auto profit/loss calculation, wishlist management, and up to 200 cards in the free version. Get it instantly via our tracker page: no download required, just save a copy to your Google Drive.</p>
-</div>
+## Quick Answer
+
+Our free TCG Collection Tracker is a Google Sheets spreadsheet that works for Pokemon and any other card game. It includes inventory tracking with auto profit/loss calculation, wishlist management, and up to 200 cards in the free version. Get it instantly via our tracker page: no download required, just save a copy to your Google Drive.
 
 ## Why Pokemon Collectors Specifically Need a Tracker
 
@@ -70,7 +60,7 @@ Cataloguing a large collection in one session is overwhelming and usually result
 
 **Session 1: High-value cards.** Pull out any card with special rarity markings. full-art treatments, gold cards, Special Illustration Rares, anything that looks premium. Check each on eBay AU sold listings. Enter these in the tracker first. They represent most of your collection's value while being a fraction of the card count.
 
-**Session 2: Holo rares.** Standard holo rares and reverse holos from recent sets. Quick value check on each: most will be AU$1–5, some will be more.
+**Session 2: Holo rares.** Standard holo rares and reverse holos from recent sets. Quick value check on each: most will be AU$1, 5, some will be more.
 
 **Session 3: Vintage cards.** Any cards from the original Base Set through early 2000s sets. These require more careful condition grading and value checking.
 
@@ -108,23 +98,16 @@ It's works for Pokemon and any other card game: the structure is game-agnostic. 
 
 **Access:** Instant via Google Sheets. Sign up on our tracker page, get the link, and make a copy to your own Google Drive. No app download, no account required beyond a Google account.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Pokemon Card Price Guide Australia: How Much Are Your Cards Worth?](/blog/pokemon-card-price-guide-australia/)
-- [How to Sell Pokemon Cards in Australia: Platforms, Prices and Tips](/blog/how-to-sell-pokemon-cards-australia/)
-- [Free MTG Collection Tracker: How to Catalogue and Value Your Cards](/blog/free-mtg-collection-tracker-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [Pokemon Card Price Guide Australia: How Much Are Your Cards Worth?](/blog/pokemon-card-price-guide-australia)
+- [How to Sell Pokemon Cards in Australia: Platforms, Prices and Tips](/blog/how-to-sell-pokemon-cards-australia)
+- [Free MTG Collection Tracker: How to Catalogue and Value Your Cards](/blog/free-mtg-collection-tracker-australia)
 
-**Get the free TCG Collection Tracker.**
-Works for Pokemon, MTG, and any other card game. Instant Google Sheets access.
-
-[Get the Free Tracker →](/tracker.html)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -141,7 +124,7 @@ Add a "Location" column to your tracker and log which binder or storage box each
 This depends on your collecting style. Set-by-set organisation (one binder per set) suits completionists. Type-based organisation (all Fire types together) suits players building themed decks. Value-based organisation (high-value cards in one binder, bulk elsewhere) suits sellers. There's no universally right answer. organise in the way that makes your collection easiest to use.
 
 **How often should I update card values in my tracker?**
-Monthly for high-value cards (AU$20+), quarterly for mid-range cards (AU$5–20), and as-needed for bulk. The goal is to have a roughly accurate picture of your collection's value, not a real-time price feed.
+Monthly for high-value cards (AU$20+), quarterly for mid-range cards (AU$5, 20), and as-needed for bulk. The goal is to have a roughly accurate picture of your collection's value, not a real-time price feed.
 
 **Can I use the C3 tracker for other TCGs besides Pokemon?**
 Yes. The tracker is works across all major TCGs. MTG, One Piece, Lorcana, Yu-Gi-Oh, Star Wars Unlimited, and others. The card name, set, condition, and value fields are the same regardless of which game the card is from.

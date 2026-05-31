@@ -5,10 +5,14 @@ description: "RQ Singapore runs September 4-6, 2026. Badges go on sale July 8. H
 date: 2026-05-07
 category: buying-guides
 emoji: "🌏"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+RQ Singapore is the second APAC Regional Qualifier of 2026, running September 4-6 in Singapore. For Australian players who want to compete at the highest level of Riftbound outside of Sydney, Singapore is the next step. Here is what you need to know now. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
 
 RQ Singapore is the second APAC Regional Qualifier of 2026, running September 4-6 in Singapore. For Australian players who want to compete at the highest level of Riftbound outside of Sydney, Singapore is the next step. Here is what you need to know now.
 
@@ -85,9 +89,19 @@ For Riftbound singles shopping in Singapore, the local TCG market will have Vend
 
 ---
 
-Subscribe to our newsletter at [/tracker.html](/tracker.html) for RQ Singapore updates as the venue, badge details, and meta previews are confirmed.
+Subscribe to our newsletter at [/tracker](/tracker) for RQ Singapore updates as the venue, badge details, and meta previews are confirmed.
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games. Event details current as of May 2026.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -98,4 +112,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

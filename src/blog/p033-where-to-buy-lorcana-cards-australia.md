@@ -1,20 +1,12 @@
 ---
 game: lorcana
 title: "Where to Buy Lorcana Cards in Australia"
-description: "Where should you buy Disney Lorcana cards in Australia? This guide covers every buying option — Amazon AU, local game stores, eBay."
+description: "Where should you buy Disney Lorcana cards in Australia? This guide covers every buying option, Amazon AU, local game stores, eBay."
 date: 2026-04-07
-category: "buying-guides"
-tags:
-  - post
-  - lorcana
-  - buying-guides
-  - players
-  - collectors
+category: buying-guides
+tags: post
 emoji: "🛒"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1"
-featured: false
 layout: post
 ---
 
@@ -22,10 +14,9 @@ Lorcana is available through more channels in Australia than many players realis
 
 This guide covers every option with honest pros and cons so you can find the best source for what you actually need.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>For sealed product (booster displays, Illumineer's Troves, Starter Decks), Amazon AU and local game stores are the primary options with broadly competitive pricing. For singles (individual cards), eBay Australia is the most liquid Australian marketplace. For older or out-of-print products, eBay and Facebook groups are often the only options. Buy from the channel that best matches what you need. not one channel for everything.</p>
-</div>
+## Quick Answer
+
+For sealed product (booster displays, Illumineer's Troves, Starter Decks), Amazon AU and local game stores are the primary options with broadly competitive pricing. For singles (individual cards), eBay Australia is the most liquid Australian marketplace. For older or out-of-print products, eBay and Facebook groups are often the only options. Buy from the channel that best matches what you need. not one channel for everything.
 
 ## Amazon AU. Best for Sealed Product
 
@@ -37,7 +28,7 @@ Amazon AU is one of the most reliable sources for current and recent Lorcana sea
 
 **Best for:** Current and recent sealed product where price and convenience are the priorities. The confirmed product range on our shop page is verified on Amazon AU so you know what's actually available before clicking through.
 
-[Browse Lorcana sealed product on Amazon AU →](/shop.html#lorcana)
+[Browse Lorcana sealed product on Amazon AU →](/shop)
 
 ## Local Game Stores. Best for Community and Pre-Releases
 
@@ -85,7 +76,7 @@ JB Hi-Fi, Target, and Big W have stocked Lorcana product at various points: typi
 
 ## International Buying: When It Makes Sense
 
-Some Australian buyers purchase Lorcana from US or Japanese sellers for products not available locally or at lower prices. This involves international shipping costs (AU$15–40+ per order), potential customs duties for higher-value packages, and loss of Australian consumer protections.
+Some Australian buyers purchase Lorcana from US or Japanese sellers for products not available locally or at lower prices. This involves international shipping costs (AU$15, 40+ per order), potential customs duties for higher-value packages, and loss of Australian consumer protections.
 
 For most standard sealed product, the international price difference after shipping rarely justifies the extra cost and complexity. International buying makes more sense for: Japanese exclusive Lorcana products not released in English, specific out-of-print products unavailable in Australia, and very large orders where shipping economics improve.
 
@@ -103,28 +94,18 @@ No single channel is best for everything. A practical approach:
 
 **Community and events:** Local game stores, not online channels.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Best Lorcana Booster Boxes to Buy in Australia](/blog/best-lorcana-booster-boxes-australia/)
-- [How to Build Your First Lorcana Deck in Australia](/blog/how-to-build-lorcana-deck-australia/)
-- [How to Buy TCG Cards Safely Online in Australia](/blog/how-to-buy-tcg-cards-safely-online-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
-
-**Browse Lorcana singles from our eBay store.**
-Australian shipping on all listings. Clear photos and accurate descriptions.
-
-[Visit Our eBay Store →](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1)
-
-</div>
+- [Best Lorcana Booster Boxes to Buy in Australia](/blog/best-lorcana-booster-boxes-australia)
+- [How to Build Your First Lorcana Deck in Australia](/blog/how-to-build-lorcana-deck-australia)
+- [How to Buy TCG Cards Safely Online in Australia](/blog/how-to-buy-tcg-cards-safely-online-australia)
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
 
 ## Frequently Asked Questions
 

@@ -1,31 +1,20 @@
 ---
-game: tcg
+game: general
 title: "TCG Collection Trackers: Why a Spreadsheet Beats a Shoebox"
 description: "A practical guide to tracking your TCG collection in Australia. Covers what collection tracking actually solves, what free tools exist."
 date: 2026-04-09
-category: "tools-and-trackers"
-tags:
-  - post
-  - general-tcg
-  - collection-tracking
-  - free-tools
-  - mtg
-  - pokemon
-  - australia
+category: buying-guides
+tags: post
 emoji: "📊"
-affiliate_disclaimer: false
-cta_type: "etsy"
-cta_link: "https://www.etsy.com/shop/blasdigital/?etsrc=sdt&section_id=58030769"
-featured: false
+affiliate_disclaimer: true
 layout: post
 ---
 
 Most TCG collectors reach the same point eventually. The cards are in boxes, binders, or both. Some are sleeved, some aren't. Some are in a deck, some are in storage. A card you need turns out to already be in your collection somewhere. but finding it takes longer than just buying another copy. This is the problem collection tracking solves.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>A TCG collection tracker is a spreadsheet or app that records what cards you own, where they're stored, their condition, and optionally their value. Free options like TCGPlayer collection manager, Moxfield (MTG), and spreadsheet templates handle this. A structured spreadsheet tracker gives you more control and works across games. The C3 free tracker and premium tracker cover MTG, Pokemon, One Piece, Lorcana, and more in a single organised spreadsheet. available on the C3 tracker page and through the BLAS Digital Etsy store.</p>
-</div>
+## Quick Answer
+
+A TCG collection tracker is a spreadsheet or app that records what cards you own, where they're stored, their condition, and optionally their value. Free options like TCGPlayer collection manager, Moxfield (MTG), and spreadsheet templates handle this. A structured spreadsheet tracker gives you more control and works across games. The C3 free tracker and premium tracker cover MTG, Pokemon, One Piece, Lorcana, and more in a single organised spreadsheet. available on the C3 tracker page and through the BLAS Digital Etsy store.
 
 ## What Collection Tracking Actually Solves
 
@@ -103,26 +92,19 @@ One sheet per game if you collect multiple TCGs. A summary sheet pulling totals 
 
 The main advantage of using a pre-built template over building your own is time. A well-structured template takes ten minutes to start using. Building a functional schema from scratch, testing it, and refining it takes hours.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Free MTG Collection Tracker for Australian Players](/blog/free-mtg-collection-tracker-australia/)
-- [Free Pokemon Collection Tracker for Australian Players](/blog/free-pokemon-collection-tracker-australia/)
-- [How to Sell MTG Cards in Australia](/blog/how-to-sell-mtg-cards-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [Free MTG Collection Tracker for Australian Players](/blog/free-mtg-collection-tracker-australia)
+- [Free Pokemon Collection Tracker for Australian Players](/blog/free-pokemon-collection-tracker-australia)
+- [How to Sell MTG Cards in Australia](/blog/how-to-sell-mtg-cards-australia)
 
 
-Track what you own with the [free C3 collection tracker](/tracker.html). Log cards, quantities, and conditions across all TCGs.
+Track what you own with the [free C3 collection tracker](/tracker). Log cards, quantities, and conditions across all TCGs.
 
-<div class="cta-block">
-
-**Browse TCG collection trackers and tools on BLAS Digital.**
-Premium trackers, fee calculators, ROI tools and more. instant Google Sheets download.
-
-[Browse TCG Tools on Etsy →](https://www.etsy.com/shop/blasdigital/?etsrc=sdt&section_id=58030769)
-
-</div>
 
 ## Frequently Asked Questions
 

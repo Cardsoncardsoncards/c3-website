@@ -3,18 +3,10 @@ game: mtg
 title: "What Is Magic: The Gathering? Plain-English Beginner's Guide for Australians"
 description: "MTG is the world's oldest trading card game, still in active print since 1993. Here is what it is, how it works, and exactly what an Australian."
 date: 2026-04-07
-category: "beginner-guides"
-tags:
-  - post
-  - mtg
-  - beginners
-  - game-overview
-  - buying-guides
+category: buying-guides
+tags: post
 emoji: "⚔️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
 ---
 
@@ -22,10 +14,9 @@ Magic: The Gathering has been around since 1993, which makes it the oldest tradi
 
 This guide answers that question plainly and honestly. No jargon, no assumption that you already know what a mana curve is. Just a clear explanation of what the game is, how it works, and what an Australian beginner actually needs to get started.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Magic: The Gathering is a strategic card game where two players build decks and battle using creatures, spells, and abilities. Each player starts at 20 life and wins by reducing their opponent to zero. You don't need to spend a lot to start: a preconstructed Commander deck or Starter Kit gives you everything you need to play your first game.</p>
-</div>
+## Quick Answer
+
+Magic: The Gathering is a strategic card game where two players build decks and battle using creatures, spells, and abilities. Each player starts at 20 life and wins by reducing their opponent to zero. You don't need to spend a lot to start: a preconstructed Commander deck or Starter Kit gives you everything you need to play your first game.
 
 ## What Kind of Game Is Magic: The Gathering?
 
@@ -49,7 +40,7 @@ Magic's entire card system is built around five colours, each representing a dif
 
 **Red** is fast and aggressive. It burns opponents directly, swarms with cheap creatures, and wins early before opponents can set up.
 
-**Green** ramps up mana quickly and plays enormous creatures. It's the straightforward beatdown colour.
+**Green** ramps up mana quickly and plays enormous creatures. It's the clear beatdown colour.
 
 You can build decks using one colour, two, three, or even all five. The colour combinations each have their own identity and community nicknames. blue-white is called Azorius, black-red is Rakdos, and so on. Finding the colour or combination that fits how you want to play is one of the first enjoyable parts of getting into the game.
 
@@ -73,11 +64,11 @@ For most Australian beginners, the practical choice is Commander. It's the most 
 
 Here's where the beginner experience often goes wrong. people try to buy into the game the wrong way and either spend too much or end up with something they can't play.
 
-**The easiest option: a Commander preconstructed deck.** These are 100-card ready-to-play decks sold for around AU$60–90 on Amazon AU. You open the box, sit down with three friends who also have Commander decks, and you play. No deck building required. Every new Magic set releases Commander decks alongside it, so there are dozens of options at any given time.
+**The easiest option: a Commander preconstructed deck.** These are 100-card ready-to-play decks sold for around AU$60, 90 on Amazon AU. You open the box, sit down with three friends who also have Commander decks, and you play. No deck building required. Every new Magic set releases Commander decks alongside it, so there are dozens of options at any given time.
 
-**The budget option: a Starter Kit.** Magic releases Starter Kits built specifically for new players. Each kit includes two 60-card decks: one for each player. and a code for digital play. They're typically AU$20–30 and are designed so two complete beginners can learn the game together.
+**The budget option: a Starter Kit.** Magic releases Starter Kits built specifically for new players. Each kit includes two 60-card decks: one for each player. and a code for digital play. They're typically AU$20, 30 and are designed so two complete beginners can learn the game together.
 
-**If you want to build your own deck:** You'll need a booster box or individual card singles. Booster boxes contain 30–36 packs depending on the type, and prices on Amazon AU range from around AU$120 for a standard Play Booster Box up to AU$350+ for Collector Booster Boxes. Singles. individual cards bought from sellers like our eBay store. are almost always cheaper than trying to pull specific cards from packs.
+**If you want to build your own deck:** You'll need a booster box or individual card singles. Booster boxes contain 30, 36 packs depending on the type, and prices on Amazon AU range from around AU$120 for a standard Play Booster Box up to AU$350+ for Collector Booster Boxes. Singles. individual cards bought from sellers like our eBay store. are almost always cheaper than trying to pull specific cards from packs.
 
 What you don't need to start: sleeves, deck boxes, playmats, tokens, or any accessories. Buy those after you've decided you enjoy the game.
 
@@ -85,9 +76,9 @@ What you don't need to start: sleeves, deck boxes, playmats, tokens, or any acce
 
 This is the honest answer: it depends entirely on how you engage with it.
 
-A Commander precon deck gets you playing for AU$60–90. If you enjoy it and want to upgrade gradually, you might spend AU$20–50 on singles over the following months. That's a very reasonable hobby investment.
+A Commander precon deck gets you playing for AU$60, 90. If you enjoy it and want to upgrade gradually, you might spend AU$20, 50 on singles over the following months. That's a very reasonable hobby investment.
 
-At the other end, competitive Standard players buying full tuned decks can spend AU$400–800 per deck, and those decks rotate out of legality every two years. Collector-focused players who chase foil and alternate-art cards can spend significantly more.
+At the other end, competitive Standard players buying full tuned decks can spend AU$400, 800 per deck, and those decks rotate out of legality every two years. Collector-focused players who chase foil and alternate-art cards can spend significantly more.
 
 The game doesn't require you to spend big. Local Commander pods are generally relaxed about power level and card value. Many Australian players have been running the same Commander decks for years with only minor updates.
 
@@ -107,7 +98,7 @@ Magic is well supported in Australia. Every major set releases simultaneously wo
 
 Amazon AU stocks a strong range of sealed product including booster boxes, Commander decks, and bundles, with both local and international shipping options. Local game stores across Sydney, Melbourne, Brisbane, and other cities run weekly Commander nights, Friday Night Magic events, and prerelease weekends when new sets drop.
 
-Prices in Australia are higher than US retail because of exchange rates and import costs. A booster box that retails for US$100 in the US will typically cost AU$130–180 on Amazon AU. This is worth knowing upfront: it's not a local retailer markup, it's just the exchange rate reality.
+Prices in Australia are higher than US retail because of exchange rates and import costs. A booster box that retails for US$100 in the US will typically cost AU$130, 180 on Amazon AU. This is worth knowing upfront: it's not a local retailer markup, it's just the exchange rate reality.
 
 Singles purchased on eBay Australia from local sellers are often cheaper than buying booster packs and hoping for specific cards, particularly for older sets.
 
@@ -120,34 +111,19 @@ The financial commitment is real but manageable if you go in with a clear budget
 The barrier to your first game is low. A single Commander precon deck, a willing group, and an afternoon is all you need.
 
 
-Think you know this game? Test it at the [C3 TCG Quiz](/quiz). Questions cover cards, rules, set knowledge, and format history.
+Think you know this game? Test it at the [C3 TCG Quiz](/play). Questions cover cards, rules, set knowledge, and format history.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
-- [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia/)
-- [Is Buying MTG Singles Smarter Than Booster Boxes in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
+- [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia)
+- [Is Buying MTG Singles Smarter Than Booster Boxes in Australia?](/blog/mtg-singles-vs-booster-boxes-australia)
 
-**Free: Download the C3 TCG Collection Tracker**
-Track your collection, monitor card values, and organise every set you own. Free to download, and there is a 10% off coupon waiting for you.
 
-[Get the Free Tracker →](/tracker.html)
-
-</div>
-
-<div class="cta-block">
-
-**Ready to pick up your first MTG product?**
-We've confirmed every item below on Amazon AU. Click through for current pricing and stock.
-
-[Browse MTG Products on Amazon AU →](/shop.html#mtg)
-
-</div>
 
 ## Frequently Asked Questions
 
@@ -167,7 +143,7 @@ Some older cards are extremely powerful and are banned in most formats because o
 Your local game store is the best starting point. The MTG Australia subreddit and Facebook groups like MTG Australia Buy/Sell/Trade are also active communities.
 
 **How long does a game of Magic take?**
-A two-player game takes around 20–30 minutes. A four-player Commander game typically runs 90 minutes to two hours.
+A two-player game takes around 20, 30 minutes. A four-player Commander game typically runs 90 minutes to two hours.
 
 **Is Magic suitable for kids?**
-The game is rated for ages 13+, though many younger players enjoy it with guidance. The complexity of certain interactions means most kids do better starting around 10–12 with parental involvement.
+The game is rated for ages 13+, though many younger players enjoy it with guidance. The complexity of certain interactions means most kids do better starting around 10, 12 with parental involvement.

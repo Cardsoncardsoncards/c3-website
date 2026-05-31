@@ -4,17 +4,9 @@ title: "First Pixar Characters in Lorcana"
 description: "Disney Lorcana Wilds Unknown is the first set to feature Pixar characters. Here is what that means for collectors in Australia, which cards to chase."
 date: 2026-04-08
 category: "market-and-prices"
-tags:
-  - post
-  - lorcana
-  - value-and-worth
-  - collectors
-  - pre-orders
+tags: post
 emoji: "🚀"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#lorcana"
-featured: false
 layout: post
 ---
 
@@ -22,10 +14,9 @@ Eleven sets of Disney Lorcana passed before a single Pixar character appeared. T
 
 This is not a hype article. It is a clear-eyed look at what the Pixar addition means, which cards matter most for collectors, and what the honest risks are.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Wilds Unknown's Pixar debut expands Lorcana's collector base beyond TCG players and Disney animation fans to include Toy Story and Incredibles audiences. The Enchanted rarity versions of Woody, Buzz Lightyear, and Elastigirl are the primary collector chase targets. The Two-Player Starter Set with foil Buzz and Elastigirl promos is the best sealed gift product for a Pixar fan who does not play Lorcana. The set is not on Amazon AU yet as of early April, with retail launch on 15 May.</p>
-</div>
+## Quick Answer
+
+Wilds Unknown's Pixar debut expands Lorcana's collector base beyond TCG players and Disney animation fans to include Toy Story and Incredibles audiences. The Enchanted rarity versions of Woody, Buzz Lightyear, and Elastigirl are the primary collector chase targets. The Two-Player Starter Set with foil Buzz and Elastigirl promos is the best sealed gift product for a Pixar fan who does not play Lorcana. The set is not on Amazon AU yet as of early April, with retail launch on 15 May.
 
 ## The Significance of the First Pixar Set
 
@@ -90,7 +81,7 @@ This milestone status matters for long-term collector appeal. The first printing
 
 **Pre-release packs and prerelease events:** Available at local game stores from 8 May. Use the Ravensburger Play Hub store locator.
 
-[Browse current Lorcana products on Amazon AU](/shop.html#lorcana)
+[Browse current Lorcana products on Amazon AU](/shop)
 
 ## Frequently Asked Questions
 
@@ -104,16 +95,17 @@ This has not been officially confirmed as of the writing of this article. Given 
 Iconic is above Enchanted in rarity and visual treatment. Wilds Unknown contains 2 Iconic cards. Previous Iconic cards from the Fabled set have been among the most valuable individual Lorcana cards produced. The Iconic cards in Wilds Unknown have not been revealed yet.
 
 **Is now a good time to buy earlier Lorcana sets?**
-If you want specific characters or chase cards from older sets, eBay AU for singles is the most efficient channel. Older booster displays from popular sets have appreciated somewhat in sealed form but not at a level that makes speculative buying straightforward. Buy what you want to own, not what you hope will increase in value.
+If you want specific characters or chase cards from older sets, eBay AU for singles is the most efficient channel. Older booster displays from popular sets have appreciated somewhat in sealed form but not at a level that makes speculative buying clear. Buy what you want to own, not what you hope will increase in value.
 
 **Can I buy Wilds Unknown at Kmart or Big W in Australia?**
 From 15 May onwards, Wilds Unknown will be at mass retail. Availability varies by store. Amazon AU is typically the most reliable online source for confirmed stock.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Disney Lorcana Wilds Unknown: Australia Release Guide](/blog/disney-lorcana-wilds-unknown-australia/)
-- [Are Lorcana Cards a Good Investment in Australia?](/blog/are-lorcana-cards-investment-australia/)
-- [Is Disney Lorcana Worth Starting in 2026?](/blog/is-disney-lorcana-worth-starting-2026-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [Disney Lorcana Wilds Unknown: Australia Release Guide](/blog/disney-lorcana-wilds-unknown-australia)
+- [Are Lorcana Cards a Good Investment in Australia?](/blog/are-lorcana-cards-investment-australia)
+- [Is Disney Lorcana Worth Starting in 2026?](/blog/is-disney-lorcana-worth-starting-2026-australia)

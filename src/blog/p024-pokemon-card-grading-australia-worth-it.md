@@ -4,18 +4,9 @@ title: "Pokemon TCG Grading in Australia"
 description: "Thinking about getting your Pokemon cards graded in Australia? This honest guide covers the costs, turnaround times, which cards are worth submitting."
 date: 2026-04-07
 category: "market-and-prices"
-tags:
-  - post
-  - pokemon
-  - grading
-  - value
-  - collectors
-  - sellers
+tags: post
 emoji: "🏆"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#pokemon"
-featured: false
 layout: post
 ---
 
@@ -23,10 +14,9 @@ Card grading. submitting Pokemon cards to a grading company to receive an offici
 
 The honest answer is that grading is worth it for a specific subset of cards under specific conditions. For most cards most Australian collectors own, grading costs more than it returns. This guide gives you the real picture so you can make an informed decision.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Card grading is worth considering for Pokemon cards worth AU$100+ in raw (ungraded) Near Mint condition that you believe will grade highly. For cards under AU$50, grading fees typically exceed any value premium the grade adds. Grading from Australia involves international submission costs, extended turnaround times of several months minimum, and no guarantee of the grade you're hoping for. It is not a casual process.</p>
-</div>
+## Quick Answer
+
+Card grading is worth considering for Pokemon cards worth AU$100+ in raw (ungraded) Near Mint condition that you believe will grade highly. For cards under AU$50, grading fees typically exceed any value premium the grade adds. Grading from Australia involves international submission costs, extended turnaround times of several months minimum, and no guarantee of the grade you're hoping for. It is not a casual process.
 
 ## What Card Grading Is and How It Works
 
@@ -34,9 +24,9 @@ Professional card grading involves submitting a card to a grading company, who e
 
 The most recognised grading companies for Pokemon cards are:
 
-**PSA (Professional Sports Authenticator):** The most recognised brand globally. PSA grades on a 1–10 scale with PSA 10 (Gem Mint) being the highest. PSA grades carry the most market recognition and typically command the highest premiums for high-grade submissions.
+**PSA (Professional Sports Authenticator):** The most recognised brand globally. PSA grades on a 1, 10 scale with PSA 10 (Gem Mint) being the highest. PSA grades carry the most market recognition and typically command the highest premiums for high-grade submissions.
 
-**BGS (Beckett Grading Services):** Uses a 1–10 scale with subgrades for centering, corners, edges, and surface. BGS 9.5 (Gem Mint) and BGS 10 (Pristine/Black Label) are the top tiers. Beckett grades are respected but trade in a somewhat smaller market than PSA for Pokemon specifically.
+**BGS (Beckett Grading Services):** Uses a 1, 10 scale with subgrades for centering, corners, edges, and surface. BGS 9.5 (Gem Mint) and BGS 10 (Pristine/Black Label) are the top tiers. Beckett grades are respected but trade in a somewhat smaller market than PSA for Pokemon specifically.
 
 **CGC (Certified Guaranty Company):** Originally a comic book grader that expanded into trading cards. Growing market recognition, competitive pricing, and faster turnaround times than PSA at some service tiers.
 
@@ -46,11 +36,11 @@ All three companies are US-based, which means Australian submitters are shipping
 
 This is where many Australian collectors get surprised. The cost of grading from Australia is not just the grading fee.
 
-**Grading fees:** PSA's economy service starts at approximately USD$25–30 per card (pricing changes periodically. check current rates at psacard.com). BGS and CGC have similar entry-level pricing. Express and faster service tiers cost significantly more per card.
+**Grading fees:** PSA's economy service starts at approximately USD$25, 30 per card (pricing changes periodically. check current rates at psacard.com). BGS and CGC have similar entry-level pricing. Express and faster service tiers cost significantly more per card.
 
-**International shipping to the US:** Sending cards to a US grading company requires secure tracked international postage. For a small submission (10–20 cards), expect AU$50–100 for outbound shipping depending on the service used. Cards must be packaged carefully. any damage in transit before they reach the grader is your problem.
+**International shipping to the US:** Sending cards to a US grading company requires secure tracked international postage. For a small submission (10, 20 cards), expect AU$50, 100 for outbound shipping depending on the service used. Cards must be packaged carefully. any damage in transit before they reach the grader is your problem.
 
-**Return shipping from the US:** Graded slabs are heavier and bulkier than raw cards. Return shipping for a submission of 10–20 slabs typically costs AU$80–150 depending on speed and the number of cards.
+**Return shipping from the US:** Graded slabs are heavier and bulkier than raw cards. Return shipping for a submission of 10, 20 slabs typically costs AU$80, 150 depending on speed and the number of cards.
 
 **Waiting time:** PSA economy service has had turnaround times ranging from a few months to over a year depending on their current backlog. Even faster service tiers take weeks to months. Your cards are unavailable to you during this entire period.
 
@@ -78,7 +68,7 @@ For a Base Set Charizard that you're confident is PSA 9 or 10 condition, grading
 
 ### Current Set Special Illustration Rares in Pristine Condition
 
-Some Special Illustration Rares from current Scarlet and Violet sets are worth enough raw (AU$100–400+) that grading at PSA 9 or 10 would add meaningful premium. However, current cards need to maintain their value through the grading wait period. and value can shift significantly on current set cards as new sets release and demand moves.
+Some Special Illustration Rares from current Scarlet and Violet sets are worth enough raw (AU$100, 400+) that grading at PSA 9 or 10 would add meaningful premium. However, current cards need to maintain their value through the grading wait period. and value can shift significantly on current set cards as new sets release and demand moves.
 
 Current set grading is higher risk than vintage grading because the card value may have changed by the time you get your slab back.
 
@@ -108,30 +98,20 @@ For cards you want to protect and authenticate without the full grading submissi
 Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
 
 
-Think you know this game? Test it at the [C3 TCG Quiz](/quiz). Questions cover cards, rules, set knowledge, and format history.
+Think you know this game? Test it at the [C3 TCG Quiz](/play). Questions cover cards, rules, set knowledge, and format history.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Pokemon Card Price Guide Australia: How Much Are Your Cards Worth?](/blog/pokemon-card-price-guide-australia/)
-- [How to Sell Pokemon Cards in Australia: Platforms, Prices and Tips](/blog/how-to-sell-pokemon-cards-australia/)
-- [How to Spot Fake Pokemon Cards When Buying Online in Australia](/blog/how-to-spot-fake-pokemon-cards-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
-
-**Browse Pokemon singles and sealed product on Amazon AU.**
-Current sets and back catalogue confirmed in stock.
-
-[Shop Pokemon on Amazon AU →](/shop.html#pokemon)
-
-</div>
+- [Pokemon Card Price Guide Australia: How Much Are Your Cards Worth?](/blog/pokemon-card-price-guide-australia)
+- [How to Sell Pokemon Cards in Australia: Platforms, Prices and Tips](/blog/how-to-sell-pokemon-cards-australia)
+- [How to Spot Fake Pokemon Cards When Buying Online in Australia](/blog/how-to-spot-fake-pokemon-cards-australia)
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
+
 
 ## Frequently Asked Questions
 
@@ -145,7 +125,7 @@ For high-value vintage cards in genuine NM or better condition, yes. For most mo
 Yes. PSA accepts international submissions. You create an account at psacard.com, package your cards per their instructions, and ship internationally. The process is documented on their website. Check current submission requirements before packing.
 
 **What is the difference between PSA 9 and PSA 10?**
-PSA 9 (Mint) indicates near-perfect condition with one or two minor flaws. PSA 10 (Gem Mint) indicates essentially perfect condition. The value difference between PSA 9 and PSA 10 is significant for popular cards. PSA 10 examples often trade at 2–5x the PSA 9 price for desirable cards.
+PSA 9 (Mint) indicates near-perfect condition with one or two minor flaws. PSA 10 (Gem Mint) indicates essentially perfect condition. The value difference between PSA 9 and PSA 10 is significant for popular cards. PSA 10 examples often trade at 2, 5x the PSA 9 price for desirable cards.
 
 **Should I get modern Pokemon cards graded?**
 Only if they're worth AU$100+ raw, you're confident about the grade, and you can wait the required time. Modern cards carry the additional risk of value shift during the grading period. The economics are harder to justify for modern cards than for vintage.

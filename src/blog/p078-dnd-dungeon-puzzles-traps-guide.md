@@ -3,28 +3,18 @@ game: dnd
 title: "Dungeon Puzzles and Traps for D&D: A DM's Planning Guide"
 description: "Puzzles and traps can make a dungeon memorable or frustrating depending on how you run them. This guide covers practical approaches for Australian."
 date: 2026-04-09
-category: "tools-and-trackers"
-tags:
-  - post
-  - dnd
-  - dm-resources
-  - game-guides
-  - tabletop-rpg
-  - dungeon-design
+category: buying-guides
+tags: post
 emoji: "🗝️"
-affiliate_disclaimer: false
-cta_type: "etsy"
-cta_link: "https://www.etsy.com/shop/blasdigital/?etsrc=sdt&section_id=57106584"
-featured: false
+affiliate_disclaimer: true
 layout: post
 ---
 
 Dungeons without puzzles and traps are combat corridors. The D&D rulebook gives DMs significant guidance on combat mechanics but comparatively little on how to design and run puzzles effectively. This guide covers what makes dungeon puzzles work at the table, how traps function mechanically, and what prep resources reduce the design burden for DMs who run dungeon-heavy campaigns.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Good dungeon puzzles have clues embedded in the environment, multiple solution paths, and player-facing information rather than character stat-facing information. They should be solvable by the players at the table, not just their character sheets. Traps are most effective when they telegraph their presence, create tension before they trigger, and have consequences beyond damage. Printable trap and puzzle packs on Etsy give DMs ready-to-run content without designing everything from scratch.</p>
-</div>
+## Quick Answer
+
+Good dungeon puzzles have clues embedded in the environment, multiple solution paths, and player-facing information rather than character stat-facing information. They should be solvable by the players at the table, not just their character sheets. Traps are most effective when they telegraph their presence, create tension before they trigger, and have consequences beyond damage. Printable trap and puzzle packs on Etsy give DMs ready-to-run content without designing everything from scratch.
 
 ## What Makes a Dungeon Puzzle Work
 
@@ -92,23 +82,16 @@ A dungeon with only combat encounters is exhausting for the players and the DM. 
 
 Practically: one or two puzzles and one or two traps per dungeon level is enough. The puzzles should feel like they belong. they should reflect the dungeon's history and purpose. A wizard's tower has magical puzzles. A thieves' guild headquarters has mechanical traps. A temple has riddles tied to its deity. Puzzles that feel arbitrary are less satisfying than ones that feel like they were placed intentionally by whoever built the dungeon.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [Free DM Tools for D&D: What's Available and What Actually Helps](/blog/free-dm-tools-dnd-australia/)
-- [Running Better Tavern Scenes in D&D: Ideas and Printable Resources](/blog/dnd-tavern-scenes-resources/)
-- [D&D Adventure Books Worth Reading: A Guide for Australian DMs](/blog/dnd-adventure-books-guide-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [Free DM Tools for D&D: What's Available and What Actually Helps](/blog/free-dm-tools-dnd-australia)
+- [Running Better Tavern Scenes in D&D: Ideas and Printable Resources](/blog/dnd-tavern-scenes-resources)
+- [D&D Adventure Books Worth Reading: A Guide for Australian DMs](/blog/dnd-adventure-books-guide-australia)
 
-**Browse printable D&D dungeon puzzles, traps and riddles on BLAS Digital.**
-Ready-to-run dungeon content, instant digital download.
-
-[Browse Traps and Puzzles on Etsy →](https://www.etsy.com/shop/blasdigital/?etsrc=sdt&section_id=57106584)
-
-</div>
 
 ## Frequently Asked Questions
 

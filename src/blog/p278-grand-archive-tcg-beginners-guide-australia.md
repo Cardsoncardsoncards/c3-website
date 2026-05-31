@@ -28,24 +28,6 @@ At the start of the game your Champion is at level zero with limited abilities. 
 
 This creates a natural game arc that Grand Archive executes well. Early turns are about efficient plays and setting up your board. Mid-game is about managing the opponent while pushing your Champion's level. Late game is about leveraging a fully levelled Champion against a board state you have developed. The system is intuitive once you play a few games and gives each Champion a distinct power curve.
 
-## Getting Started in Australia
-
-Grand Archive does not have formal Australian retail distribution. All product comes through specialty hobby importers or the publisher's own online store, which ships internationally.
-
-The Dawn of Ashes Alter Edition starter set is the recommended entry point. It contains two ready-to-play decks and explains the core rules clearly.
-
-**What it costs:**
-
-| Item | Approximate Cost (AUD) |
-|---|---|
-| Starter set | $30 to $50 |
-| Booster pack | $6 to $10 |
-| Booster box | $120 to $180 |
-| Competitive singles | $5 to $60 |
-
-Import costs from the US add to Australian pricing. The publisher's website and eBay AU from US sellers are the most reliable sources.
-
-[Search Grand Archive on eBay AU](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dgrand%2Barchive%2Btcg%2Benglish)
 
 ## The Australian Community
 

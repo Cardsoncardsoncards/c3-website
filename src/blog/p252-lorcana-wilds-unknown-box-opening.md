@@ -3,15 +3,18 @@ game: lorcana
 title: "I Opened 4 Boxes of Lorcana Wilds Unknown: Pull Rate Breakdown and Honest Verdict"
 description: "Four booster boxes, 96 packs, 1,077 listed singles, 9 Epics. The real numbers from a box opening we did to build our store inventory."
 date: 2026-05-16
-category: "general-tcg"
+category: buying-guides
 emoji: "📦"
-tags: [lorcana, wilds-unknown, box-opening, pull-rates, australia, honest-review, epic-cards, set-12]
+tags: post
 layout: post
 affiliate_disclaimer: true
-featured: false
----
+---## Quick Answer
 
-We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly.
+We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly. See current prices at [/cards/lorcana](/cards/lorcana).
+
+
+
+We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly.
 
 ---
 
@@ -86,9 +89,19 @@ Four boxes of Lorcana Wilds Unknown delivered the full base set in good depth, 9
 
 If you are opening Wilds Unknown for the singles market in Australia: four boxes gives you coverage across the full 204-card base set with strong foil representation. The Epic rate is the wildcard. We got 9, which is above-average luck across 96 packs.
 
-If you are buying singles: everything we pulled is listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards). The nine Epics are listed individually. Use the [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare) to check current AU pricing across Lorcana cards.
+If you are buying singles: everything we pulled is listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). The nine Epics are listed individually. Use the [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare) to check current AU pricing across Lorcana cards.
 
 For our broader view on whether the set is worth opening, read the [Lorcana Wilds Unknown set review](https://cardsoncardsoncards.com.au/blog/p250-lorcana-wilds-unknown-review).
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 
 ## Frequently Asked Questions
 
@@ -99,4 +112,4 @@ Each Lorcana Wilds Unknown booster box contains 24 booster packs.
 From our four-box opening (96 packs): 9 Epic cards (one per 10.7 packs), approximately one Enchanted per 12 packs, and Legendary rarity cards appearing regularly across the box. Foil pull rates matched the stated one foil per pack guarantee.
 
 ### Where can I buy Wilds Unknown boxes in Australia?
-Wilds Unknown is available at local game stores and online. The [C3 shop](/shop.html) links to confirmed Amazon AU availability.
+Wilds Unknown is available at local game stores and online. The [C3 shop](/shop) links to confirmed Amazon AU availability.

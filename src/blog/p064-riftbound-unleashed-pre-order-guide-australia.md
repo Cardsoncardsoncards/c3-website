@@ -3,19 +3,10 @@ game: riftbound
 title: "Riftbound Unleashed: Australia Buying Guide"
 description: "Riftbound Unleashed releases 8 May 2026. This guide covers the new set, every confirmed product, Amazon AU availability."
 date: 2026-04-16
-category: "buying-guides"
-tags:
-  - post
-  - riftbound
-  - buying-guides
-  - pre-orders
-  - players
-  - collectors
+category: buying-guides
+tags: post
 emoji: "🎮"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#riftbound"
-featured: false
 layout: post
 ---
 
@@ -23,10 +14,9 @@ layout: post
 
 Riftbound Unleashed released on 8 May 2026 2026 and is the third set for Riftbound, the competitive TCG from Riot Games, the studio behind League of Legends. If you are already playing Riftbound or are considering getting into it, this guide covers what Unleashed adds to the game, what products are confirmed, where to buy in Australia, and whether this is a good entry point for new players.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Riftbound Unleashed released 8 May 2026. It is the third set and focuses on escalated champion customisation and equipment-based strategies. Amazon AU's Riftbound listing history has been inconsistent by set. Check the C3 Riftbound shop page for current availability. Local game stores are the most reliable day-one source if Amazon AU does not have it listed. New players can start with Riftbound at any set. The Origins starter set remains the recommended entry point before buying into Unleashed.</p>
-</div>
+## Quick Answer
+
+Riftbound Unleashed released 8 May 2026. It is the third set and focuses on escalated champion customisation and equipment-based strategies. Amazon AU's Riftbound listing history has been inconsistent by set. Check the C3 Riftbound shop page for current availability. Local game stores are the most reliable day-one source if Amazon AU does not have it listed. New players can start with Riftbound at any set. The Origins starter set remains the recommended entry point before buying into Unleashed.
 
 ## What Is Riftbound?
 
@@ -54,7 +44,7 @@ Riftbound's product structure has been consistent across Origins and Spiritforge
 
 As of mid-April, confirmed product types and ASINs for Unleashed on Amazon AU are not yet listed. This is typical timing. Check the C3 Riftbound shop page from late April for live links.
 
-[Browse current Riftbound products on Amazon AU](/shop.html#riftbound)
+[Browse current Riftbound products on Amazon AU](/shop)
 
 ## Should You Buy Unleashed?
 
@@ -66,7 +56,7 @@ Yes. Unleashed is a competitive expansion, not a standalone product. If you are 
 
 Start with Origins, not Unleashed. The Origins starter set is the correct entry point for new players. It includes a complete playable deck, teaches the core game mechanics, and gives you a foundation to build from. Unleashed is an expansion and assumes familiarity with the game's base systems.
 
-[Browse Riftbound Origins starter products on Amazon AU](/shop.html#riftbound)
+[Browse Riftbound Origins starter products on Amazon AU](/shop)
 
 Once you have played through the Origins starter set and understand the champion and equipment system, buying into Unleashed makes sense as your first expansion purchase.
 
@@ -80,7 +70,7 @@ Riftbound occupies a specific niche. It is a competitive-first game with limited
 
 ## Where to Buy Riftbound Unleashed in Australia
 
-**Amazon AU:** Riftbound's Amazon AU history has been inconsistent by set. Check from late April for Unleashed listings. [Monitor the C3 Riftbound shop page](/shop.html#riftbound) for confirmed links.
+**Amazon AU:** Riftbound's Amazon AU history has been inconsistent by set. Check from late April for Unleashed listings. [Monitor the C3 Riftbound shop page](/shop) for confirmed links.
 
 **Local game stores:** The most reliable day-one source for Riftbound product in Australia. Stores participating in Riot's organised play program receive product on launch day and often have pre-orders open now. Check with your local store directly.
 
@@ -98,20 +88,27 @@ Riftbound occupies a specific niche. It is a competitive-first game with limited
 
 ## Related Reading
 
-- [What Is Riftbound TCG? Beginner Overview](/blog/what-is-riftbound/)
-- [Best TCG Pre-Orders in Australia: April 2026](/blog/best-tcg-pre-orders-australia-april-2026/)
-- [Upcoming TCG Releases Australia: April to June 2026](/blog/upcoming-tcg-releases-australia-april-june-2026/)
-- [Which TCG Should You Start in Australia?](/blog/which-tcg-to-start-australia/)
+- [What Is Riftbound TCG? Beginner Overview](/blog/what-is-riftbound)
+- [Best TCG Pre-Orders in Australia: April 2026](/blog/best-tcg-pre-orders-australia-april-2026)
+- [Upcoming TCG Releases Australia: April to June 2026](/blog/upcoming-tcg-releases-australia-april-june-2026)
+- [Which TCG Should You Start in Australia?](/blog/which-tcg-to-start-australia)
 
 ---
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
-Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/market). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -133,9 +130,5 @@ Riftbound's Amazon AU listing history has been inconsistent. Some sets and produ
 **What sleeve size do Riftbound cards take?**
 Standard size sleeves, the same as Pokemon and MTG cards (63.5mm x 88mm). Dragon Shield and Ultra Pro standard sleeves both fit correctly.
 
-<div class="cta-block">
-<p>Check the C3 Riftbound shop page for confirmed Unleashed product links on Amazon AU as they become available from late April 2026.</p>
-<a href="/shop.html#riftbound" class="cta-button">Browse Riftbound Products</a>
-</div>
 
 *This post contains affiliate links. We may earn a commission if you purchase through these links, at no extra cost to you.*

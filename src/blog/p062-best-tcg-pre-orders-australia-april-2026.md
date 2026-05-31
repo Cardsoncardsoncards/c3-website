@@ -1,21 +1,12 @@
 ---
-game: tcg
+game: general
 title: "Best TCG Pre-Orders Right Now in Australia: April 2026"
 description: "The best trading card game pre-orders available in Australia right now. April 2026 edition covering MTG, Pokemon, Lorcana, One Piece."
 date: 2026-04-08
-category: "buying-guides"
-tags:
-  - post
-  - general-tcg
-  - pre-orders
-  - buying-guides
-  - collectors
-  - players
+category: buying-guides
+tags: post
 emoji: "📅"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
 ---
 
@@ -25,10 +16,9 @@ This is the April 2026 edition of C3's monthly TCG pre-order roundup for Austral
 
 Updated as of 8 April 2026. All product availability and links are verified against Amazon AU at time of writing.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The highest priority pre-order in Australia right now is MTG Secrets of Strixhaven, releasing 24 April 2026 with pre-orders live on Amazon AU. Lorcana Wilds Unknown (15 May) is the second most anticipated release but is not yet on Amazon AU. MTG Marvel Super Heroes (June 2026) has pre-orders live and is the biggest IP release of the year. Pokemon Perfect Order is already out. One Piece OP-10 is already out. Riftbound Unleashed drops 8 May.</p>
-</div>
+## Quick Answer
+
+The highest priority pre-order in Australia right now is MTG Secrets of Strixhaven, releasing 24 April 2026 with pre-orders live on Amazon AU. Lorcana Wilds Unknown (15 May) is the second most anticipated release but is not yet on Amazon AU. MTG Marvel Super Heroes (June 2026) has pre-orders live and is the biggest IP release of the year. Pokemon Perfect Order is already out. One Piece OP-10 is already out. Riftbound Unleashed drops 8 May.
 
 ---
 
@@ -46,7 +36,7 @@ Play Booster Display: Yes if you have a draft group or want to crack packs. The 
 
 **Prerelease dates:** 17 to 23 April at local game stores.
 
-[Pre-order MTG Secrets of Strixhaven on Amazon AU](/shop.html#mtg)
+[Pre-order MTG Secrets of Strixhaven on Amazon AU](/shop)
 
 ---
 
@@ -61,7 +51,7 @@ Play Booster Display: Yes if you have a draft group or want to crack packs. The 
 **Should you pre-order?**
 Yes, once it is listed on Amazon AU. This is the most anticipated Lorcana release since launch. The first Pixar characters in the game, a brand new two-player starter set format, and confirmed characters including Woody, Buzz Lightyear, Elastigirl, and Jack-Jack all point to strong demand. Buying the booster display is advisable if you collect Lorcana. Prerelease packs (AU$50 to AU$60 each, available at local game stores from 8 May) are also worth attending in person for the launch experience.
 
-[Browse current Lorcana products on Amazon AU while Wilds Unknown is listed](/shop.html#lorcana)
+[Browse current Lorcana products on Amazon AU while Wilds Unknown is listed](/shop)
 
 ---
 
@@ -74,7 +64,7 @@ Yes, once it is listed on Amazon AU. This is the most anticipated Lorcana releas
 **Should you pre-order?**
 If you play Riftbound or are curious about it: yes, treat each new set as an on-ramp. The Unleashed expansion is described as escalating champion customisation and equipment strategies, which are central to competitive Riftbound play. Check local game stores if Amazon AU does not have it listed.
 
-[Browse Riftbound products](/shop.html#riftbound)
+[Browse Riftbound products](/shop)
 
 ---
 
@@ -87,7 +77,7 @@ If you play Riftbound or are curious about it: yes, treat each new set as an on-
 **Should you buy?**
 Yes if you want a fun box to open with better-than-average IR pull rates. The Clefairy IR in particular has gone viral in the community. Standard-legal as of 10 April 2026.
 
-[Buy Pokemon Perfect Order on Amazon AU](/shop.html#pokemon)
+[Buy Pokemon Perfect Order on Amazon AU](/shop)
 
 ---
 
@@ -103,7 +93,7 @@ Yes if you want a fun box to open with better-than-average IR pull rates. The Cl
 Doom Prevails Commander Deck: Yes. It is the premium Commander offering for this set and features Doctor Doom as the face commander, which has obvious appeal to Marvel fans and Commander players simultaneously. Buying now locks in current pricing.
 Play Booster Box: If you are a Marvel fan or want the crossover cards, yes. If you are buying purely for financial speculation, be aware that Universes Beyond sets can go either way on post-release value. High-profile crossovers like this tend to sustain demand better than average, but it is not guaranteed.
 
-[Pre-order MTG Marvel Super Heroes on Amazon AU](/shop.html#mtg)
+[Pre-order MTG Marvel Super Heroes on Amazon AU](/shop)
 
 ---
 
@@ -116,7 +106,7 @@ Play Booster Box: If you are a Marvel fan or want the crossover cards, yes. If y
 **Should you buy?**
 For collectors: the set has exceptional chase card quality at every rarity tier. Manga Rare, SP cards, Secret Rares, Parallel editions. The expected value of a box in English is above retail based on current singles prices. That said, chasing the Manga Rare via box opening is statistically poor value. Buy it as a single if that specific card is the target.
 
-[Buy One Piece OP-10 on Amazon AU](/shop.html#onepiece)
+[Buy One Piece OP-10 on Amazon AU](/shop)
 
 ---
 
@@ -141,19 +131,8 @@ The downside of buying is commitment. If a set releases and community reception 
 
 For pre-orders that make sense right now: MTG Secrets of Strixhaven Play Booster Display and Commander Decks are the strongest options based on community hype, return-to-native-plane status, and the Mystical Archive value layer. MTG Marvel Doom Prevails Commander Deck is a clear pre-order if you have any interest in Marvel.
 
-<div class="cta-block">
-
-**Browse all current TCG pre-orders and new releases on Amazon AU.**
-MTG, Pokemon, One Piece, Lorcana, Riftbound and more. All products verified in stock or pre-order available.
-
-[Browse the Full C3 Shop](/shop.html)
-
-</div>
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 ## Frequently Asked Questions
 
@@ -170,13 +149,14 @@ Yes. The Doom Prevails Collector Commander Deck and other products are currently
 Local game stores have pre-release packs and booster box pre-orders available for the 8 May prerelease events. Use the Ravensburger store locator to find your nearest Lorcana stockist.
 
 
-Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/market). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [MTG Secrets of Strixhaven: Full Guide for Australia](/blog/mtg-secrets-of-strixhaven-australia/)
-- [Disney Lorcana Wilds Unknown: Australia Release Guide](/blog/disney-lorcana-wilds-unknown-australia/)
-- [Upcoming TCG Releases in Australia: April to June 2026](/blog/upcoming-tcg-releases-australia-april-june-2026/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
+
+- [MTG Secrets of Strixhaven: Full Guide for Australia](/blog/mtg-secrets-of-strixhaven-australia)
+- [Disney Lorcana Wilds Unknown: Australia Release Guide](/blog/disney-lorcana-wilds-unknown-australia)
+- [Upcoming TCG Releases in Australia: April to June 2026](/blog/upcoming-tcg-releases-australia-april-june-2026)

@@ -1,22 +1,18 @@
 ---
 game: pokemon
-title: "I Spent AU$50 Starting Pokemon TCG in Australia — Full Honest"
+title: "I Spent AU$50 Starting Pokemon TCG in Australia, Full Honest"
 description: "What AU$50 actually gets you when starting Pokemon TCG in Australia. What we bought, what we could play, and what we'd change. A real breakdown for."
 date: 2026-05-05
 category: "market-and-prices"
-tags:
-  - post
-  - pokemon
-  - beginners
-  - budget
-  - buying-guide
+tags: post
 emoji: "💸"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#pokemon"
-featured: false
 layout: post
----
+---## Quick Answer
+
+AU$50 is a reasonable budget for starting any TCG. The question is whether you spend it well. This is a real breakdown of spending AU$50 on Pokemon TCG in Australia: what we bought, whether it worked, and what we'd do differently. See current prices at [/cards/pokemon](/cards/pokemon).
+
+
 
 AU$50 is a reasonable budget for starting any TCG. The question is whether you spend it well. This is a real breakdown of spending AU$50 on Pokemon TCG in Australia: what we bought, whether it worked, and what we'd do differently.
 
@@ -74,27 +70,24 @@ Two people can play a genuine, enjoyable game of Pokemon TCG for AU$22 in produc
 
 ## Tracking Your Collection
 
-Even at the beginner level, tracking what you own and what it's worth is worthwhile. The [free C3 collection tracker](/tracker.html) supports Pokemon and all major TCGs. Log your pulls from those first packs and watch the value grow as your collection does.
+Even at the beginner level, tracking what you own and what it's worth is worthwhile. The [free C3 collection tracker](/tracker) supports Pokemon and all major TCGs. Log your pulls from those first packs and watch the value grow as your collection does.
 
-See what Pokemon cards are currently selling for in Australia using eBay AU search. or check the [C3 shop](/shop.html#pokemon) for available product.
+See what Pokemon cards are currently selling for in Australia using eBay AU search. or check the [C3 shop](/shop) for available product.
 
 ---
 
-*See also: [Are Pokemon Booster Boxes Worth It in Australia?](/blog/are-pokemon-booster-boxes-investment-australia/)*
 
 
-## Getting Started in Australia
 
-If this guide has answered your questions and you are ready to take the next step, here is a quick summary of the recommended path:
+## The C3 Take
 
-1. Check what products are currently in stock and at what price on Amazon AU via the [C3 shop](/shop.html). Availability and pricing changes regularly.
-2. Use the [C3 Card Compare tool](/compare) to verify the AUD price of specific cards you are targeting before purchasing.
-3. Check the [C3 Release Calendar](/calendar) for upcoming events and set releases in Australia relevant to your chosen game.
-4. Browse the [C3 Market](/market) page for 7-day price trend data to catch the right moment to buy or sell.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
 
-The Australian TCG community is welcoming to new players. Local game stores in all major cities run beginner nights, and the online communities on Facebook and Discord are active and helpful for answering questions as you find your footing.
+## What to Read Next
 
-If you are tracking your collection, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs covered on this site. MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound.
+- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -105,4 +98,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

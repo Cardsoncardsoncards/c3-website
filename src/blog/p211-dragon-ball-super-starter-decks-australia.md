@@ -3,20 +3,16 @@ game: dragon-ball-super
 title: "Dragon Ball Super Card Game: Best Starter Decks for Australian"
 description: "Which Dragon Ball Super Card Game starter decks are worth buying in Australia? This guide covers the current options, what each plays like."
 date: 2026-05-05
-category: "buying-guides"
-tags:
-  - post
-  - dragon-ball-super
-  - starter-decks
-  - buying-guide
-  - australia
+category: buying-guides
+tags: post
 emoji: "🐉"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Dragon Ball Super Card Game (DBSCG) starter decks are pre-built, ready-to-play 50-card decks that include a Leader card. For new players in Australia, a starter deck is the correct first purchase: they're balanced, legal for tournament play, and represent good value. See current prices at [/cards/dragon-ball-super](/cards/dragon-ball-super).
+
+
 
 Dragon Ball Super Card Game (DBSCG) starter decks are pre-built, ready-to-play 50-card decks that include a Leader card. For new players in Australia, a starter deck is the correct first purchase: they're balanced, legal for tournament play, and represent good value.
 
@@ -38,7 +34,7 @@ Starter Decks in DBSCG are significantly more competitive than starters in some 
 
 The primary factor is character preference. DBSCG Starter Decks are themed around iconic Dragon Ball characters, and the deck's playstyle reflects that character:
 
-**Goku-themed decks**: typically aggressive. High-power attacks, consistent offense, straightforward game plans. Good choice for players who want to attack and apply pressure from turn one.
+**Goku-themed decks**: typically aggressive. High-power attacks, consistent offense, clear game plans. Good choice for players who want to attack and apply pressure from turn one.
 
 **Vegeta-themed decks**: often midrange. Balance between offense and support. Strong individual card power.
 
@@ -72,9 +68,9 @@ Starter Decks in DBSCG are a solid competitive foundation. The primary upgrades 
 
 **Targeted singles**: specific high-impact cards from recent booster sets that synergise with your Leader.
 
-See our [Dragon Ball Super booster boxes guide](/blog/dragon-ball-super-booster-boxes-australia/) for expansion options.
+See our [Dragon Ball Super booster boxes guide](/blog/dragon-ball-super-booster-boxes-australia) for expansion options.
 
-Track your DBSCG collection with the [free C3 tracker](/tracker.html).
+Track your DBSCG collection with the [free C3 tracker](/tracker).
 
 
 ## Current Dragon Ball Super Starter Decks in Australia
@@ -83,7 +79,7 @@ Dragon Ball Super Card Game Starter Decks are released alongside major set launc
 
 ### What's Available on Amazon AU
 
-Availability changes as new sets release and older stock sells through. Currently confirmed Dragon Ball Super products in Australia include Starter Decks from recent sets focused on characters from the Dragon Ball Super anime and movies. Check the [C3 shop](/shop.html) for confirmed current Australian availability with Amazon AU links.
+Availability changes as new sets release and older stock sells through. Currently confirmed Dragon Ball Super products in Australia include Starter Decks from recent sets focused on characters from the Dragon Ball Super anime and movies. Check the [C3 shop](/shop) for confirmed current Australian availability with Amazon AU links.
 
 ### Cross Spirits and Zenkai Series Starters
 
@@ -105,7 +101,7 @@ For someone new to Dragon Ball Super Card Game, always start with Starter Decks 
 
 Buy two Starter Decks of different characters to have an immediate two-player experience. Play 15 to 20 games, understand what each deck is trying to do, then identify whether you want to improve a specific deck (buying singles) or branch out into sealed product.
 
-For current AUD prices on Dragon Ball Super booster boxes and sealed product, see our [Dragon Ball Super booster boxes guide](/blog/dragon-ball-super-booster-boxes-australia/).
+For current AUD prices on Dragon Ball Super booster boxes and sealed product, see our [Dragon Ball Super booster boxes guide](/blog/dragon-ball-super-booster-boxes-australia).
 
 ## Dragon Ball Super Community in Australia
 
@@ -113,16 +109,26 @@ Dragon Ball Super Card Game has a dedicated Australian player base concentrated 
 
 The Australian Dragon Ball Super Card Game Facebook group and Discord community are the best places to find local players and events. Tournament results and meta discussion from the Australian competitive scene are active.
 
-Check the [C3 Release Calendar](/calendar) for upcoming Dragon Ball Super events and new releases in Australia.
+Check the [C3 Release Calendar](/market) for upcoming Dragon Ball Super events and new releases in Australia.
 
 ## Checking Current Prices
 
 Use the [C3 Card Compare tool](/compare) for current AUD pricing on Dragon Ball Super singles if you are looking to upgrade a Starter Deck or check the value of specific cards.
 
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dragon-ball-super](/cards/dragon-ball-super) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
+- Browse card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
+
 ## Frequently Asked Questions
 
 ### Where is the best place to buy TCG products in Australia?
-Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop.html) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
+Amazon AU offers competitive pricing with Prime delivery. Local game stores provide community and immediate availability. The [C3 shop](/shop) lists confirmed Amazon AU products across all TCGs. eBay AU is best for singles and out-of-print products.
 
 ### How do I know if a TCG product is good value in Australia?
 Compare the box price against the expected value of cards inside using the [C3 EV Calculator](/ev-calculator) for MTG sets. For other games, check secondary market prices for the top cards and multiply by pull rates to estimate expected return.

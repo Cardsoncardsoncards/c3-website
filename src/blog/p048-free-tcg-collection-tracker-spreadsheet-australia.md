@@ -1,21 +1,12 @@
 ---
-game: tcg
+game: general
 title: "Free TCG Collection Tracker Spreadsheet: Track Every Card You Own"
 description: "Get a free TCG collection tracker spreadsheet that works for Magic, Pokemon, One Piece, Lorcana and every other card game."
 date: 2026-04-07
-category: "tools-and-trackers"
-tags:
-  - post
-  - general-tcg
-  - tracking
-  - tools-and-trackers
-  - collectors
-  - sellers
+category: buying-guides
+tags: post
 emoji: "📊"
 affiliate_disclaimer: true
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
 layout: post
 ---
 
@@ -23,10 +14,9 @@ If you play or collect trading card games, you need a collection tracker. It doe
 
 This page explains what our free TCG Collection Tracker does, how to get it, and how to make the most of it across any card game.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Our free TCG Collection Tracker is a Google Sheets spreadsheet that works for any card game. MTG, Pokemon, One Piece, Lorcana, Yu-Gi-Oh, Star Wars Unlimited, and more. It includes inventory tracking with auto profit/loss calculation, a wishlist tab, and 200 card entries. Get it instantly via our tracker page. sign up, get the link, make a copy to your Google Drive, and start logging.</p>
-</div>
+## Quick Answer
+
+Our free TCG Collection Tracker is a Google Sheets spreadsheet that works for any card game. MTG, Pokemon, One Piece, Lorcana, Yu-Gi-Oh, Star Wars Unlimited, and more. It includes inventory tracking with auto profit/loss calculation, a wishlist tab, and 200 card entries. Get it instantly via our tracker page. sign up, get the link, make a copy to your Google Drive, and start logging.
 
 ## What the Free Tracker Includes
 
@@ -64,7 +54,7 @@ The profit/loss calculation only works if your purchase prices are accurate. If 
 
 ### Update Values Monthly for High-Value Cards
 
-Card values shift. A monthly value update for your highest-value cards (AU$20+) takes 15–20 minutes and keeps your total collection value accurate. For bulk cards, quarterly is sufficient. Update immediately when you hear about a specific card spiking or crashing.
+Card values shift. A monthly value update for your highest-value cards (AU$20+) takes 15, 20 minutes and keeps your total collection value accurate. For bulk cards, quarterly is sufficient. Update immediately when you hear about a specific card spiking or crashing.
 
 ### Use the Wishlist Actively
 
@@ -102,23 +92,16 @@ Apps have the advantage of automation (card scanning, automatic price updates). 
 
 Many serious collectors use both: an app for the game they play most competitively, and a spreadsheet for the broader cross-game picture.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Organise Your TCG Collection in Australia: Tools and Tips](/blog/how-to-organise-tcg-collection-australia/)
-- [Free MTG Collection Tracker: How to Catalogue and Value Your Cards](/blog/free-mtg-collection-tracker-australia/)
-- [Free Pokemon Collection Tracker: Organise and Value Your Cards](/blog/free-pokemon-collection-tracker-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [How to Organise Your TCG Collection in Australia: Tools and Tips](/blog/how-to-organise-tcg-collection-australia)
+- [Free MTG Collection Tracker: How to Catalogue and Value Your Cards](/blog/free-mtg-collection-tracker-australia)
+- [Free Pokemon Collection Tracker: Organise and Value Your Cards](/blog/free-pokemon-collection-tracker-australia)
 
-**Get the free TCG Collection Tracker now.**
-Works for any card game. Instant Google Sheets access. No download required.
-
-[Get the Free Tracker →](/tracker.html)
-
-</div>
 
 ## Frequently Asked Questions
 

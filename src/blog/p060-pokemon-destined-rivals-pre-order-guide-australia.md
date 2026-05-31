@@ -3,19 +3,10 @@ game: pokemon
 title: "Pokemon Destined Rivals Pre-Order Guide for Australia"
 description: "Pokemon TCG Destined Rivals is available now on Amazon AU. This guide covers every product, what to pre-order, current AU pricing."
 date: 2026-04-16
-category: "buying-guides"
-tags:
-  - post
-  - pokemon
-  - buying-guides
-  - pre-orders
-  - collectors
-  - players
+category: buying-guides
+tags: post
 emoji: "🚀"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#pokemon"
-featured: false
 layout: post
 ---
 
@@ -23,10 +14,9 @@ layout: post
 
 Pokemon TCG Destined Rivals brought Team Rocket back to the TCG for the first time in 25 years when it released in May 2025. If you missed the initial release window or are buying in now, this guide covers exactly which products are available on Amazon AU, current pricing, what each product delivers, and how to approach buying Destined Rivals in 2026.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Destined Rivals booster displays and Elite Trainer Boxes are available on Amazon AU now. The booster display (36 packs) is the best value for collectors who want volume. The ETB is the right entry point for players and casual buyers. Single cards are the most efficient path to the Team Rocket's Mewtwo ex SIR. Prices have held well above release MSRP on the secondary market. Buy what matches your goal, not everything at once.</p>
-</div>
+## Quick Answer
+
+Destined Rivals booster displays and Elite Trainer Boxes are available on Amazon AU now. The booster display (36 packs) is the best value for collectors who want volume. The ETB is the right entry point for players and casual buyers. Single cards are the most efficient path to the Team Rocket's Mewtwo ex SIR. Prices have held well above release MSRP on the secondary market. Buy what matches your goal, not everything at once.
 
 ## What Is Destined Rivals?
 
@@ -44,7 +34,7 @@ This is the right product if you want the full volume experience of the set, are
 
 Current Amazon AU pricing sits above the original MSRP due to sustained demand. Compare pricing and stock levels before purchasing.
 
-[Browse Destined Rivals on Amazon AU](/shop.html#pokemon)
+[Browse Destined Rivals on Amazon AU](/shop)
 
 ### Elite Trainer Box
 
@@ -94,25 +84,32 @@ If Team Rocket matters to you as a collector, this set is not going to get cheap
 
 ## Where to Buy Destined Rivals in Australia
 
-- **Amazon AU:** Booster displays, ETBs, and booster packs. Prime delivery available. [Browse the C3 Pokemon shop page](/shop.html#pokemon)
+- **Amazon AU:** Booster displays, ETBs, and booster packs. Prime delivery available. [Browse the C3 Pokemon shop page](/shop)
 - **eBay AU (Cards on Cards on Cards):** Singles, sealed product, and individual packs from an Australian seller with 23,000+ listings and 99.9% positive feedback
 - **Local game stores:** Check your local game store for remaining stock, particularly ETBs and booster packs
 
 ## Related Reading
 
-- [Is Pokemon Destined Rivals Still Worth Buying in Australia?](/blog/pokemon-destined-rivals-worth-buying-australia/)
-- [Best Pokemon Booster Boxes in Australia](/blog/best-pokemon-booster-boxes-australia/)
-- [Free Pokemon Collection Tracker](/blog/free-pokemon-collection-tracker-australia/)
+- [Is Pokemon Destined Rivals Still Worth Buying in Australia?](/blog/pokemon-destined-rivals-worth-buying-australia)
+- [Best Pokemon Booster Boxes in Australia](/blog/best-pokemon-booster-boxes-australia)
+- [Free Pokemon Collection Tracker](/blog/free-pokemon-collection-tracker-australia)
 
 ---
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
-Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/market). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -131,9 +128,5 @@ Top chase card prices have appreciated since release rather than declining, whic
 **Is the Japanese version different from the English version?**
 Yes. Japanese releases have different card numbering, slightly different art on some cards, and separate product formats. Japanese product is not available through Amazon AU and must be imported separately. The English version is the standard for Australian play and collection.
 
-<div class="cta-block">
-<p>Browse all confirmed Destined Rivals products available on Amazon AU through the C3 shop, updated as new stock is confirmed.</p>
-<a href="/shop.html#pokemon" class="cta-button">Browse Pokemon Products</a>
-</div>
 
 *This post contains affiliate links. We may earn a commission if you purchase through these links, at no extra cost to you.*

@@ -3,20 +3,16 @@ game: mtg
 title: "The Moment You Pull a Chase Card in a TCG"
 description: "That specific feeling when you flip to the rare slot and it's actually the one you wanted. An honest exploration of why pulling a chase card hits."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - general-tcg
-  - collecting
-  - psychology
-  - booster-packs
+category: buying-guides
+tags: post
 emoji: "🌟"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+You've opened twenty packs and gotten twenty cards you already have duplicates of. Commons. Bulk rares. The one that was exciting for about four seconds before you looked it up and saw it's worth AU$0.80. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 You've opened twenty packs and gotten twenty cards you already have duplicates of. Commons. Bulk rares. The one that was exciting for about four seconds before you looked it up and saw it's worth AU$0.80.
 
@@ -58,19 +54,29 @@ The letdown is real. This is also expected: mathematically, most packs don't con
 
 Understanding this changes how you frame the opening experience. If the entertainment value of the opening is worth the pack price regardless of the pull, you're fine. If you're opening packs hoping to recoup cost through valuable pulls, you're likely to be disappointed: the expected value of most booster packs is below their purchase price.
 
-Use the [C3 EV Calculator](/ev-calculator.html) to check the expected value of specific sets before opening.
+Use the [C3 EV Calculator](/tools) to check the expected value of specific sets before opening.
 
 ## What to Do When You Pull Something Good
 
-First: check the actual current price before you celebrate or sell. Use the [C3 MTG Card Vault](/cards/mtg) for MTG cards, or search eBay AU sold listings for Pokemon and other TCGs. The price you recall from when you heard about the card may be outdated.
+First: check the actual current price before you celebrate or sell. Use the [C3 MTG card hub](/cards/mtg) for MTG cards, or search eBay AU sold listings for Pokemon and other TCGs. The price you recall from when you heard about the card may be outdated.
 
 Second: sleeve it immediately. The pull only happened once. The physical condition is already depreciating.
 
-Third: add it to your [collection tracker](/tracker.html) with the current value. A tracked collection grows over time in ways a shoebox of cards doesn't.
+Third: add it to your [collection tracker](/tracker) with the current value. A tracked collection grows over time in ways a shoebox of cards doesn't.
 
 ---
 
-*Track every pull, every value, every game. free at [Cards on Cards on Cards](/tracker.html).*
+*Track every pull, every value, every game. free at [Cards on Cards on Cards](/tracker).*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -81,4 +87,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

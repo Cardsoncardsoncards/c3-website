@@ -3,18 +3,10 @@ game: mtg
 title: "Is MTG Warhammer 40K Collector Booster Worth Opening in"
 description: "Is the MTG Warhammer 40K Collector Booster box worth opening in Australia? Space Marines, Necrons, and Surge Foil treatments."
 date: 2026-04-20
-category: "buying-guides"
-tags:
-  - post
-  - mtg
-  - booster-boxes
-  - buying-guides
-  - ev-calculator
+category: buying-guides
+tags: post
 emoji: "💀"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
 ---
 
@@ -22,10 +14,9 @@ MTG Warhammer 40,000 released October 2022 as a Universes Beyond Commander preco
 
 The Collector Booster box targets players who already have the Commander decks and want premium versions of their favourite Warhammer faction leaders and characters in Surge Foil treatment.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The MTG Warhammer 40,000 Collector Booster box is a premium product at AU$320 for 12 packs: a higher per-pack cost than standard booster products. It targets the crossover audience between Warhammer hobbyists and MTG players. The Surge Foil treatment creates iridescent foil versions of iconic Warhammer faction leaders that are the main collector targets. At AU$320 the EV calculation is sensitive to which Surge Foil cards appear. Use the C3 EV Calculator for a current AUD verdict.</p>
-</div>
+## Quick Answer
+
+The MTG Warhammer 40,000 Collector Booster box is a premium product at AU$320 for 12 packs: a higher per-pack cost than standard booster products. It targets the crossover audience between Warhammer hobbyists and MTG players. The Surge Foil treatment creates iridescent foil versions of iconic Warhammer faction leaders that are the main collector targets. At AU$320 the EV calculation is sensitive to which Surge Foil cards appear. Use the C3 EV Calculator for a current AUD verdict.
 
 ## What Is Warhammer 40,000 and Why Does It Matter for Australian Players?
 
@@ -76,12 +67,19 @@ If the EV Calculator returns a Worth Opening or Borderline verdict and you decid
 </div>
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
 Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -105,7 +103,7 @@ The free C3 Collection Tracker is also available for logging your full collectio
 
 <div style="margin:24px 0;display:flex;gap:12px;flex-wrap:wrap;">
 <a href="/ev-calculator/mtg-warhammer-40k.html" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);color:#C9A84C;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Track My Warhammer 40,000 Pulls →</a>
-<a href="/tracker.html" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:#A0A8C0;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Free Collection Tracker →</a>
+<a href="/tracker" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:#A0A8C0;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Free Collection Tracker →</a>
 </div>
 
 ## Related Guides
@@ -113,5 +111,5 @@ The free C3 Collection Tracker is also available for logging your full collectio
 - [MTG Warhammer 40K EV Calculator. Run the Numbers in AUD](/ev-calculator/mtg-warhammer-40k.html)
 - [MTG Assassin's Creed EV Calculator. Compare Universes Beyond](/ev-calculator/mtg-assassins-creed.html)
 - [MTG Lord of the Rings EV Calculator. Compare Universes Beyond](/ev-calculator/mtg-lord-of-the-rings.html)
-- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
-- [Full MTG EV Calculator Hub. All Sets](/ev-calculator.html)
+- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
+- [Full MTG EV Calculator Hub. All Sets](/tools)

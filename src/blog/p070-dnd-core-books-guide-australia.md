@@ -4,27 +4,17 @@ title: "D&D Core Books Guide for Australian Players"
 description: "The 2024 D&D Player's Handbook is the most important purchase for new players. This guide covers every core book, what each adds to your game, and current Australian pricing."
 date: 2026-04-09
 category: "how-to-play"
-tags:
-  - post
-  - dnd
-  - core-books
-  - game-guides
-  - tabletop-rpg
-  - australia
+tags: post
 emoji: "📚"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
 The 2024 D&D core books represent the first major revision to the 5th Edition rules since 2014. If you're new to D&D, these are the books you buy. If you've been playing 5e for years, this guide covers what has actually changed and whether the new editions are worth purchasing. All three core books are currently available on Amazon AU.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The three 2024 D&D core books are the Player's Handbook, the Dungeon Master's Guide, and the Monster Manual. New players need the Player's Handbook first. it covers everything required to create a character and play the game. The Dungeon Master's Guide is for whoever runs the game. The Monster Manual is for DMs building their own encounters. All three are revised and updated from the 2014 versions. They are backwards compatible with older 5e content.</p>
-</div>
+## Quick Answer
+
+The three 2024 D&D core books are the Player's Handbook, the Dungeon Master's Guide, and the Monster Manual. New players need the Player's Handbook first. it covers everything required to create a character and play the game. The Dungeon Master's Guide is for whoever runs the game. The Monster Manual is for DMs building their own encounters. All three are revised and updated from the 2014 versions. They are backwards compatible with older 5e content.
 
 ## The 2024 Player's Handbook
 
@@ -87,31 +77,24 @@ Beyond the three core books, two supplemental rulebooks are widely used in 5e ga
 
 **Xanathar's Guide to Everything:** Similar in scope. additional subclasses, more spells, and expanded rules for thieves' tools, downtime activities, and other systems. Also useful once you have the core books.
 
-Both are available through the [C3 D&D shop](/shop.html#dnd) and are included in the Rules Expansion Gift Set bundle.
+Both are available through the [C3 D&D shop](/shop) and are included in the Rules Expansion Gift Set bundle.
 
 ## Companion Books and Accessories
 
 Several companion books extend the core rules into specific settings and lore areas: Mordenkainen Presents Monsters of the Multiverse (additional creature stat blocks), Bigby Presents Glory of the Giants (giant-focused player options and encounters), Fizban's Treasury of Dragons (dragon-focused content), and Sword Coast Adventurer's Guide (Forgotten Realms setting detail). These are for groups who want depth in specific areas, not essential purchases.
 
-All core books and supplements mentioned here are available through the [C3 D&D shop](/shop.html#dnd) with confirmed Amazon AU availability and local shipping.
+All core books and supplements mentioned here are available through the [C3 D&D shop](/shop) with confirmed Amazon AU availability and local shipping.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia/)
-- [D&D Starter Sets in Australia: Which One Suits You](/blog/dnd-starter-sets-australia/)
-- [D&D Adventure Books Worth Reading: A Guide for Australian DMs](/blog/dnd-adventure-books-guide-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia)
+- [D&D Starter Sets in Australia: Which One Suits You](/blog/dnd-starter-sets-australia)
+- [D&D Adventure Books Worth Reading: A Guide for Australian DMs](/blog/dnd-adventure-books-guide-australia)
 
-**Browse the 2024 D&D core books and supplements on Amazon AU.**
-Player's Handbook, Dungeon Master's Guide, Monster Manual and more. all confirmed in stock.
-
-[Browse the D&D Shop →](/shop.html#dnd)
-
-</div>
 
 ## Frequently Asked Questions
 

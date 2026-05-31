@@ -1,22 +1,18 @@
 ---
 game: lorcana
 title: "How to Play Disney Lorcana: Full Rules Guide for Australian"
-description: "Disney Lorcana explained from scratch. Learn how Ink works, how to quest and challenge, and how to win — a complete beginner's rules guide for."
+description: "Disney Lorcana explained from scratch. Learn how Ink works, how to quest and challenge, and how to win, a complete beginner's rules guide for."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - lorcana
-  - beginners
-  - how-to-play
-  - rules
+category: buying-guides
+tags: post
 emoji: "✨"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#lorcana"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Disney Lorcana uses Disney characters on cards but plays nothing like the Pokemon TCG or MTG. It has its own logic and once you understand it, it's one of the most accessible TCGs for new players. See current prices at [/cards/lorcana](/cards/lorcana).
+
+
 
 Disney Lorcana uses Disney characters on cards but plays nothing like the Pokemon TCG or MTG. It has its own logic and once you understand it, it's one of the most accessible TCGs for new players.
 
@@ -90,9 +86,9 @@ Some sets include Location cards. Characters at a location can quest for the loc
 
 **Booster Packs**: AU$7 to AU$9 each. Each pack has 12 cards including at least one rare or better.
 
-For our full Lorcana buying guide, see [Best Lorcana Booster Boxes in Australia](/blog/best-lorcana-booster-boxes-australia/).
+For our full Lorcana buying guide, see [Best Lorcana Booster Boxes in Australia](/blog/best-lorcana-booster-boxes-australia).
 
-Track your Lorcana collection value with the [free C3 tracker](/tracker.html).
+Track your Lorcana collection value with the [free C3 tracker](/tracker).
 
 ---
 
@@ -125,7 +121,7 @@ Shift lets you play powerful high-cost characters ahead of schedule.
 
 Lorcana decks are 60 cards and must use exactly two Ink colours. Up to 4 copies of each card. The two chosen Ink colours must be ones your chosen characters belong to.
 
-Starter Sets include two pre-built 60-card decks and everything needed to start playing. Available at Target, Big W, EB Games, and local game stores in Australia. The [C3 Shop](/shop.html#lorcana) links to confirmed Amazon AU options.
+Starter Sets include two pre-built 60-card decks and everything needed to start playing. Available at Target, Big W, EB Games, and local game stores in Australia. The [C3 Shop](/shop) links to confirmed Amazon AU options.
 
 For competitive play, buying singles is more efficient than opening booster boxes. The [C3 Card Compare tool](/compare) shows current AUD prices for any Lorcana card you are targeting.
 
@@ -133,7 +129,17 @@ For competitive play, buying singles is more efficient than opening booster boxe
 
 Local game stores across Australian cities run weekly Lorcana nights. Ravensburger runs official Lorcana events including Store Championships with prize support.
 
-Check the [C3 Release Calendar](/calendar) for upcoming Lorcana events and competitive qualifiers in Australia.
+Check the [C3 Release Calendar](/market) for upcoming Lorcana events and competitive qualifiers in Australia.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 
 ## Frequently Asked Questions
 

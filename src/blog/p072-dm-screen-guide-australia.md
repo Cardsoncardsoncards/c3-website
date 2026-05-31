@@ -3,28 +3,18 @@ game: dnd
 title: "DM Screens in Australia: What to Look For"
 description: "A DM screen keeps your notes hidden and puts key rules at eye level. This guide covers the official DM screen options, third-party alternatives,."
 date: 2026-04-09
-category: "buying-guides"
-tags:
-  - post
-  - dnd
-  - dm-tools
-  - buying-guides
-  - tabletop-rpg
-  - dm-resources
+category: buying-guides
+tags: post
 emoji: "🛡️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#dnd"
-featured: false
 layout: post
 ---
 
 A DM screen is a folding panel the Dungeon Master places between themselves and the players. It serves two functions: hiding the DM's dice rolls, maps, and notes from the players, and providing a reference panel on the inside face with commonly needed rules. It's one of the more genuinely useful accessories a DM can own, particularly once you're running a full campaign rather than a starter set adventure.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>A DM screen hides your rolls and notes from players while keeping key rules visible on the inside panel. The official 2024 D&D DM Screen is the standard reference option. Third-party screens offer premium materials, more panels, and customisable options. For most DMs, a four-panel landscape screen with a felt or faux leather interior covering conditions, actions, and skill DCs is all you need.</p>
-</div>
+## Quick Answer
+
+A DM screen hides your rolls and notes from players while keeping key rules visible on the inside panel. The official 2024 D&D DM Screen is the standard reference option. Third-party screens offer premium materials, more panels, and customisable options. For most DMs, a four-panel landscape screen with a felt or faux leather interior covering conditions, actions, and skill DCs is all you need.
 
 ## What a DM Screen Actually Does
 
@@ -58,7 +48,7 @@ Several third-party manufacturers produce DM screens with premium materials and 
 
 The distinction that matters practically: official screens are campaign-agnostic and rules-focused. Third-party screens often prioritise materials quality and durability. For a DM running a weekly campaign over months, the material quality of a faux leather screen is a meaningful upgrade from card stock.
 
-All DM screens listed above are available through the [C3 D&D shop](/shop.html#dnd).
+All DM screens listed above are available through the [C3 D&D shop](/shop).
 
 ## What to Look For
 
@@ -72,23 +62,16 @@ All DM screens listed above are available through the [C3 D&D shop](/shop.html#d
 
 **Customisability:** If you run unconventional campaigns or homebrewed settings, a screen with replaceable interior sleeves lets you adjust the reference material to your specific game.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia/)
-- [Free DM Tools for D&D: What's Available and What Actually Helps](/blog/free-dm-tools-dnd-australia/)
-- [D&D Adventure Books Worth Reading: A Guide for Australian DMs](/blog/dnd-adventure-books-guide-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dnd](/cards/dnd) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [How to Start Playing D&D in Australia: What You Actually Need](/blog/how-to-start-playing-dnd-australia)
+- [Free DM Tools for D&D: What's Available and What Actually Helps](/blog/free-dm-tools-dnd-australia)
+- [D&D Adventure Books Worth Reading: A Guide for Australian DMs](/blog/dnd-adventure-books-guide-australia)
 
-**Browse DM screens and DM tools on Amazon AU.**
-Official and third-party options confirmed available with Australian shipping.
-
-[Browse the D&D Shop →](/shop.html#dnd)
-
-</div>
 
 ## Frequently Asked Questions
 

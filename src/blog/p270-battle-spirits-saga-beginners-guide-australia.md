@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Battle Spirits Saga: Beginner's Guide for Australian Players"
 description: "Battle Spirits Saga is Bandai's revived English TCG with a genuinely unique core mechanic. Here's an honest look at whether it's worth starting in Australia."
@@ -27,24 +28,6 @@ Red attacks early and hard. If you want to end the game before the opponent can 
 
 Most competitive decks run two colours. Three-colour builds exist but are harder to pilot consistently for new players.
 
-## Getting Started in Australia
-
-Bandai distributes Battle Spirits Saga through the same network as One Piece Card Game and Dragon Ball Super. Specialty hobby stores in capital cities carry it. It is not at mainstream retail, but if you have a decent local game store they likely stock it or can order it.
-
-Starter Decks are your first purchase. Each starter is a complete 50-card deck ready to play immediately, built around a colour or character theme. Two starters let both players start right away.
-
-**What it costs:**
-
-| Item | Approximate Cost (AUD) |
-|---|---|
-| Starter Deck | $20 to $30 |
-| Booster pack (10 cards) | $6 to $9 |
-| Booster box (12 packs) | $80 to $120 |
-| Competitive singles | $5 to $50 |
-
-Battle Spirits Saga booster boxes are 12 packs rather than the 24 you get in most TCGs. The per-box cost is meaningfully lower, which reduces the commitment required to try opening product.
-
-[Browse Battle Spirits Saga on Amazon AU](https://www.amazon.com.au/s?k=battle+spirits+saga+english&tag=blasdigital-22)
 
 ## Practical Questions Before You Buy
 
@@ -70,4 +53,4 @@ If you are the type who finds conventional mana systems boring and wants somethi
 
 - Browse Battle Spirits Saga cards at [/cards/battlespiritssaga](/cards/battlespiritssaga)
 - See how it stacks up against every other TCG at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming releases at [/calendar](/calendar)
+- Check upcoming releases at [/calendar](/market)

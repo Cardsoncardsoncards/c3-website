@@ -1,22 +1,18 @@
 ---
-game: tcg
+game: general
 title: "How to Value Your TCG Collection for Home Insurance in Australia"
 description: "A TCG collection worth AU$2,000 or more should be documented for home contents insurance. This guide covers how to value your collection."
 date: 2026-05-05
-category: "tools-and-trackers"
-tags:
-  - post
-  - general-tcg
-  - collection
-  - insurance
-  - australia
+category: buying-guides
+tags: post
 emoji: "🛡️"
-affiliate_disclaimer: false
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+Most Australian home contents insurance policies cover collectibles. but the coverage is often capped unless you specifically declare high-value items. A TCG collection worth AU$5,000 or more is likely uncovered or undercovered unless you've taken specific steps. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Most Australian home contents insurance policies cover collectibles. but the coverage is often capped unless you specifically declare high-value items. A TCG collection worth AU$5,000 or more is likely uncovered or undercovered unless you've taken specific steps.
 
@@ -42,7 +38,7 @@ Insurance requires you to state a replacement value. what it would cost to repla
 
 **Step 1: Use the C3 free collection tracker**
 
-The [free C3 collection tracker](/tracker.html) is designed for exactly this. Log every card, its condition, its current market value. The tracker's profit/loss column shows total current value automatically.
+The [free C3 collection tracker](/tracker) is designed for exactly this. Log every card, its condition, its current market value. The tracker's profit/loss column shows total current value automatically.
 
 Update the tracker before submitting any insurance documentation.
 
@@ -50,9 +46,9 @@ Update the tracker before submitting any insurance documentation.
 
 For cards worth AU$50 or more individually, download or screenshot eBay AU sold listings showing recent sold prices for comparable condition cards. This provides independent third-party verification of your claimed value.
 
-**Step 3: Check C3 MTG Card Vault for MTG cards**
+**Step 3: Check C3 MTG card hub for MTG cards**
 
-The [C3 MTG Card Vault](/cards/mtg) shows current AUD pricing for every MTG card. Use the card pages as documentation for insurer queries about MTG card values.
+The [C3 MTG card hub](/cards/mtg) shows current AUD pricing for every MTG card. Use the card pages as documentation for insurer queries about MTG card values.
 
 ## What Documentation to Prepare
 
@@ -82,15 +78,12 @@ Some specialty insurance providers cover collectibles and trading cards specific
 
 **Today**: photograph your entire collection. Date the photos. Store them in Google Photos or similar cloud storage where the date is recorded.
 
-**This week**: update your [C3 tracker](/tracker.html) with current values for your 20 most valuable cards.
+**This week**: update your [C3 tracker](/tracker) with current values for your 20 most valuable cards.
 
 **This month**: call your insurer and ask specifically about trading card coverage.
 
 This 3-step process takes a few hours and potentially protects thousands of dollars of collection value.
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
 ## Why Insurance Matters for TCG Collections
@@ -103,7 +96,7 @@ The key distinction in insurance is "replacement value" versus "market value". R
 
 Insurance companies and assessors need a documented record of what you own. This typically means:
 
-**A written inventory** listing each card (name, set, condition, quantity) with its estimated market value. The [free C3 Collection Tracker](/tracker.html) generates exactly this format across all major TCGs.
+**A written inventory** listing each card (name, set, condition, quantity) with its estimated market value. The [free C3 Collection Tracker](/tracker) generates exactly this format across all major TCGs.
 
 **Proof of purchase** where available: receipts, PayPal payment records, eBay purchase history. Not required for every card but helps establish provenance for high-value singles.
 
@@ -121,7 +114,7 @@ Contact your insurer directly to confirm how they classify TCG cards and what do
 
 ## Step-by-Step: Valuing Your Collection for Insurance
 
-**Step 1**: Generate a complete inventory using the [C3 Collection Tracker](/tracker.html) or a spreadsheet. Every card: name, set, printing (foil/non-foil, alternate art), condition, quantity.
+**Step 1**: Generate a complete inventory using the [C3 Collection Tracker](/tracker) or a spreadsheet. Every card: name, set, printing (foil/non-foil, alternate art), condition, quantity.
 
 **Step 2**: Assign values from eBay AU completed listings. Filter to "Sold listings" only. Use the lower end of recent sold prices for consistent estimates rather than wishful thinking.
 
@@ -139,6 +132,16 @@ Near Mint cards are worth more than Played cards of the same card. Your insuranc
 
 The [C3 Card Compare tool](/compare) shows current AUD prices across condition tiers for many cards, making it easier to estimate realistic values for played collections.
 
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
+
 ## Frequently Asked Questions
 
 ### Where can I check current TCG card prices in Australia?
@@ -148,4 +151,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

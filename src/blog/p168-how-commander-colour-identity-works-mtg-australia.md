@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "How Commander Colour Identity Works"
-description: "Colour identity in MTG Commander is more than just the card's frame colour. This guide explains the exact rule — including mana symbols in text."
+description: "Colour identity in MTG Commander is more than just the card's frame colour. This guide explains the exact rule, including mana symbols in text."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - mtg
-  - commander
-  - colour-identity
-  - rules
+category: buying-guides
+tags: post
 emoji: "🎨"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=commander+singles+mtg&campid=5339146789"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Colour identity is one of the most commonly misunderstood rules in MTG Commander. It seems simple but has several edge cases that catch players out, even experienced ones. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Colour identity is one of the most commonly misunderstood rules in MTG Commander. It seems simple but has several edge cases that catch players out, even experienced ones.
 
@@ -89,7 +85,7 @@ Your deck cannot include:
 
 Colour identity is what makes each Commander deck genuinely distinct. It forces you to build within constraints that reflect the identity of your Commander character. A blue-white Commander plays differently from a black-red Commander because they have access to fundamentally different tools.
 
-Browse more Commander content at the [C3 MTG Card Vault](/cards/mtg) or try the [Random Commander Generator](/cards/mtg/random-commander) with specific colour filters.
+Browse more Commander content at the [C3 MTG card hub](/cards/mtg) or try the [Random Commander Generator](/cards/mtg/random-commander) with specific colour filters.
 
 
 ## Why Colour Identity Matters More Than Card Colour
@@ -127,9 +123,19 @@ Yes. Command Tower produces mana of any colour in your Commander's colour identi
 
 ## Checking Colour Identity Quickly
 
-Every card's colour identity is listed on Scryfall (free, comprehensive) and in the [C3 MTG Card Vault](/cards/mtg). Search any card and its colour identity is shown alongside legal formats.
+Every card's colour identity is listed on Scryfall (free, complete) and in the [C3 MTG card hub](/cards/mtg). Search any card and its colour identity is shown alongside legal formats.
 
 For deck building, the [C3 Random Commander Generator](/cards/mtg/random-commander) filters Commanders by colour identity combination, which is useful when building within a specific identity constraint.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

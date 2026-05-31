@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Bakugan TCG: Beginner's Guide for Australian Players"
 description: "Bakugan is everywhere in Australian retail in 2026. Here's what the card game actually involves, what it costs, and whether it's worth buying for your family."
@@ -72,4 +73,4 @@ Do not buy it expecting resale value, collectability, or a tournament scene. Non
 
 - Browse Bakugan cards at [/cards/bakugan](/cards/bakugan)
 - Trying to figure out which TCG to commit to? [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming TCG releases at [/calendar](/calendar)
+- Check upcoming TCG releases at [/calendar](/market)

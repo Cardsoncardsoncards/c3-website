@@ -1,14 +1,18 @@
 ---
-game: tcg
+game: general
 title: "How to Store and Protect Your TCG Cards in Australia"
 description: "Australian climate is tough on TCG cards. Here's exactly how to sleeve, store, and protect your MTG, Pokemon, Riftbound, and One Piece cards to."
 date: 2026-05-08
 category: accessories
 emoji: "📦"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
+
+TCG cards are collectibles. A card in Mint condition is worth meaningfully more than the same card in Near Mint. In Australia's variable climate, cards are at real risk of warping, edge wear, and moisture damage if stored poorly. Here is exactly what to do. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 TCG cards are collectibles. A card in Mint condition is worth meaningfully more than the same card in Near Mint. In Australia's variable climate, cards are at real risk of warping, edge wear, and moisture damage if stored poorly. Here is exactly what to do.
 
@@ -72,9 +76,19 @@ For Unleashed Riftbound cards: graded Baron Nashor Ultimate Rares and Signature 
 
 ---
 
-Log your collection value and condition with our [Free TCG Tracker](/tracker.html).
+Log your collection value and condition with our [Free TCG Tracker](/tracker).
 
 No affiliation with Dragon Shield, Ultra Pro, BCW, PSA, BGS, or SGC. Products mentioned are illustrative examples.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
+- Browse TCG card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -85,4 +99,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

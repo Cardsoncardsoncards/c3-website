@@ -3,32 +3,22 @@ game: mtg
 title: "Free MTG Collection Tracker for Australian Players"
 description: "Trying to keep track of your Magic: The Gathering collection? This guide covers how to catalogue your cards, track their value."
 date: 2026-04-07
-category: "tools-and-trackers"
-tags:
-  - post
-  - mtg
-  - tracking
-  - tools-and-trackers
-  - collectors
-  - sellers
+category: buying-guides
+tags: post
 emoji: "📊"
 affiliate_disclaimer: true
-cta_type: "tracker"
-cta_link: "/tracker.html"
-featured: false
 layout: post
 ---
 
 Most MTG players reach a point where their collection grows faster than their ability to remember what they own. You've got binders, deck boxes, storage boxes, a stack on the desk. and when someone asks if you have a specific card, you genuinely don't know without searching through everything.
 
-Cataloguing your collection fixes this. It tells you what you own, what it's worth, what you're missing, and what you have duplicates of that could be traded or sold. It also makes insuring or valuing your collection straightforward if that ever becomes relevant.
+Cataloguing your collection fixes this. It tells you what you own, what it's worth, what you're missing, and what you have duplicates of that could be traded or sold. It also makes insuring or valuing your collection clear if that ever becomes relevant.
 
 This guide covers the practical approach to cataloguing an MTG collection and introduces our free tracker tool that makes the process significantly easier.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>The most practical way to catalogue an MTG collection is a spreadsheet tracking card name, set, condition, quantity, and approximate value. Our free TCG Collection Tracker is a Google Sheets spreadsheet built for this purpose: it covers inventory, profit/loss tracking, and wishlist management. It works for MTG and any other card game. Get it free via the tracker page.</p>
-</div>
+## Quick Answer
+
+The most practical way to catalogue an MTG collection is a spreadsheet tracking card name, set, condition, quantity, and approximate value. Our free TCG Collection Tracker is a Google Sheets spreadsheet built for this purpose: it covers inventory, profit/loss tracking, and wishlist management. It works for MTG and any other card game. Get it free via the tracker page.
 
 ## Why Most Players Don't Track Their Collection (And Why That's a Mistake)
 
@@ -114,9 +104,9 @@ The tracker is available free via our tracker page. Drop your details and you'll
 
 ## From Tracking to Selling
 
-Once your collection is catalogued, identifying what to sell becomes straightforward. You can sort by value to find your most valuable duplicates, identify cards in formats you no longer play, and make informed decisions about what to move versus what to keep.
+Once your collection is catalogued, identifying what to sell becomes clear. You can sort by value to find your most valuable duplicates, identify cards in formats you no longer play, and make informed decisions about what to move versus what to keep.
 
-For selling, see our guide on [How to Sell Your MTG Cards in Australia and Get the Best Price](/blog/how-to-sell-mtg-cards-australia/): it covers eBay, Facebook, and local game store options with honest fee breakdowns.
+For selling, see our guide on [How to Sell Your MTG Cards in Australia and Get the Best Price](/blog/how-to-sell-mtg-cards-australia): it covers eBay, Facebook, and local game store options with honest fee breakdowns.
 
 ## Keeping the Catalogue Current
 
@@ -130,23 +120,16 @@ Monthly: check the total estimated value against your last calculation. Investig
 
 This doesn't require hours. Five minutes after a game store visit to log new acquisitions keeps the tracker useful without becoming a burden.
 
-<div class="related-guides">
+## The C3 Take
 
-**Related guides:**
-- [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia/)
-- [How to Sell Your MTG Cards in Australia and Get the Best Price](/blog/how-to-sell-mtg-cards-australia/)
-- [Is Buying MTG Singles Smarter Than Booster Boxes in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
 
-</div>
+## What to Read Next
 
-<div class="cta-block">
+- [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia)
+- [How to Sell Your MTG Cards in Australia and Get the Best Price](/blog/how-to-sell-mtg-cards-australia)
+- [Is Buying MTG Singles Smarter Than Booster Boxes in Australia?](/blog/mtg-singles-vs-booster-boxes-australia)
 
-**Get the free TCG Collection Tracker.**
-Works for MTG, Pokemon, Lorcana, One Piece and more. Instant Google Sheets access.
-
-[Get the Free Tracker →](/tracker.html)
-
-</div>
 
 ## Frequently Asked Questions
 

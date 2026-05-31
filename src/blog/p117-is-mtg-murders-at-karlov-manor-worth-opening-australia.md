@@ -3,18 +3,10 @@ game: mtg
 title: "Is MTG Murders at Karlov Manor Worth Opening in Australia?"
 description: "Is the MTG Murders at Karlov Manor booster box worth opening in Australia? Murder mystery on Ravnica with Case enchantments and Disguise mechanic."
 date: 2026-04-20
-category: "buying-guides"
-tags:
-  - post
-  - mtg
-  - booster-boxes
-  - buying-guides
-  - ev-calculator
+category: buying-guides
+tags: post
 emoji: "🔍"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#mtg"
-featured: false
 layout: post
 ---
 
@@ -22,10 +14,9 @@ MTG Murders at Karlov Manor released February 2024 and brought a murder mystery 
 
 The set introduced Disguise (a mechanic for hiding face-down creatures) and the Case enchantment cycle: a new card type that functions like an investigation with conditions to solve and rewards for completion.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>At AU$180 for a 36-pack Play Booster box, MTG Murders at Karlov Manor sits in borderline territory for EV. The beloved Ravnica setting and murder mystery theme drove strong initial demand and the Case enchantment cycle has maintained Commander interest. Delney Streetwise Lookout and Niv-Mizzet Guildpact in borderless treatment are the headline chase targets. Use the C3 EV Calculator for a current AUD verdict.</p>
-</div>
+## Quick Answer
+
+At AU$180 for a 36-pack Play Booster box, MTG Murders at Karlov Manor sits in borderline territory for EV. The beloved Ravnica setting and murder mystery theme drove strong initial demand and the Case enchantment cycle has maintained Commander interest. Delney Streetwise Lookout and Niv-Mizzet Guildpact in borderless treatment are the headline chase targets. Use the C3 EV Calculator for a current AUD verdict.
 
 ## What Is Murders at Karlov Manor and Why Does It Matter for Australian Players?
 
@@ -76,12 +67,19 @@ If the EV Calculator returns a Worth Opening or Borderline verdict and you decid
 </div>
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
 Seven-day price movement across all 8 TCGs is tracked at [C3 Market](/market). Check which cards are trending before you buy or sell.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -105,13 +103,13 @@ The free C3 Collection Tracker is also available for logging your full collectio
 
 <div style="margin:24px 0;display:flex;gap:12px;flex-wrap:wrap;">
 <a href="/ev-calculator/mtg-murders-at-karlov-manor.html" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);color:#C9A84C;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Track My Murders at Karlov Manor Pulls →</a>
-<a href="/tracker.html" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:#A0A8C0;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Free Collection Tracker →</a>
+<a href="/tracker" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:#A0A8C0;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Free Collection Tracker →</a>
 </div>
 
 ## Related Guides
 
 - [MTG Murders at Karlov Manor EV Calculator. Run the Numbers in AUD](/ev-calculator/mtg-murders-at-karlov-manor.html)
 - [MTG Duskmourn EV Calculator. Compare the Sets](/ev-calculator/mtg-duskmourn.html)
-- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia/)
-- [MTG Singles vs Booster Boxes: Which Is Better Value in Australia?](/blog/mtg-singles-vs-booster-boxes-australia/)
-- [Full MTG EV Calculator Hub. All Sets](/ev-calculator.html)
+- [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
+- [MTG Singles vs Booster Boxes: Which Is Better Value in Australia?](/blog/mtg-singles-vs-booster-boxes-australia)
+- [Full MTG EV Calculator Hub. All Sets](/tools)

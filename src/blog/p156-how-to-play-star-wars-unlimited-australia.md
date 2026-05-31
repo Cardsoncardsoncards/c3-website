@@ -3,20 +3,16 @@ game: star-wars-unlimited
 title: "How to Play Star Wars Unlimited"
 description: "How to play Star Wars Unlimited explained step by step. Covers Aspects, the Base mechanic, how combat works, and what makes this game different."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - star-wars-unlimited
-  - beginners
-  - how-to-play
-  - rules
+category: buying-guides
+tags: post
 emoji: "⚔️"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Star Wars Unlimited launched in 2024 and quickly built a strong player community in Australia. It uses an alternating-activation system: each player takes one action at a time rather than completing a full turn. which makes it feel more interactive than most TCGs. See current prices at [/cards/star-wars-unlimited](/cards/star-wars-unlimited).
+
+
 
 Star Wars Unlimited launched in 2024 and quickly built a strong player community in Australia. It uses an alternating-activation system: each player takes one action at a time rather than completing a full turn. which makes it feel more interactive than most TCGs.
 
@@ -92,9 +88,9 @@ Leaders start the game deployed at the side of the battlefield, not in an arena.
 
 **Booster Packs**: AU$8 to AU$10 per pack.
 
-See our [Star Wars Unlimited booster boxes guide](/blog/star-wars-unlimited-booster-boxes-australia/) for more.
+See our [Star Wars Unlimited booster boxes guide](/blog/star-wars-unlimited-booster-boxes-australia) for more.
 
-Track your collection with the [free C3 tracker](/tracker.html).
+Track your collection with the [free C3 tracker](/tracker).
 
 
 ## Aspects: The Alignment System
@@ -123,17 +119,27 @@ Two-Player Starter Sets come with two complete decks, Leader Cards, Base Cards, 
 
 The format is 50-card constructed plus one Leader and one Base (both separate from the main deck). Up to 3 copies of any card are allowed. Aspect restrictions apply as described above.
 
-The competitive meta in Star Wars Unlimited has developed quickly. Check our [Star Wars Unlimited deck building guide](/blog/star-wars-unlimited-deck-building-australia/) for current competitive and budget build options.
+The competitive meta in Star Wars Unlimited has developed quickly. Check our [Star Wars Unlimited deck building guide](/blog/star-wars-unlimited-deck-building-australia) for current competitive and budget build options.
 
 ## Star Wars Unlimited Community in Australia
 
 Star Wars Unlimited has a growing organised play scene across Australian capital cities. Asmodee runs Premier events including Planetary Championships with prize support. Local game stores in Sydney, Melbourne, Brisbane, and Perth run weekly Constructed and Draft events.
 
-See the [C3 Release Calendar](/calendar) for upcoming Star Wars Unlimited events near you.
+See the [C3 Release Calendar](/market) for upcoming Star Wars Unlimited events near you.
 
 ## Checking Star Wars Unlimited Card Prices in Australia
 
 Current AUD prices for Star Wars Unlimited singles are tracked at the [C3 Card Vault](/cards/starwars). Use the [C3 Card Compare tool](/compare) to check multiple cards side by side before purchasing.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/star-wars-unlimited](/cards/star-wars-unlimited) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
+- Browse card prices at [/cards/mtg](/cards/mtg)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

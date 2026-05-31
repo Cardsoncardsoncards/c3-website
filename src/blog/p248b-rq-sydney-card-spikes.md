@@ -5,11 +5,14 @@ description: "The post-event price check. Simon Linabury won the ANZ Regional Ch
 date: 2026-03-18
 category: "market-and-prices"
 emoji: "📈"
-tags: [mtg, standard, market, card-prices, mono-green-landfall, izzet-prowess, australia]
+tags: post
 layout: post
 affiliate_disclaimer: true
-featured: false
----
+---## Quick Answer
+
+Regional Championships move card prices. Not always dramatically, not always immediately, but the players who read a result and act in the first 48 hours consistently pay less than the players who wait for a Reddit post to tell them what happened. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Regional Championships move card prices. Not always dramatically, not always immediately, but the players who read a result and act in the first 48 hours consistently pay less than the players who wait for a Reddit post to tell them what happened.
 
@@ -87,9 +90,19 @@ If you are playing in Australian RCQs for the next Modern cycle, Standard card p
 
 The [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare) lets you check current AU pricing on any Standard card. You can compare cards side by side to see which has moved more in the past 14 days, which matters right now when you are deciding whether to buy now or wait.
 
-The [C3 MTG Card Vault](https://cardsoncardsoncards.com.au/cards) has individual card pages for Standard staples with current price data. Singles from Sydney's Top 8 archetypes are listed in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards).
+The [C3 MTG card hub](https://cardsoncardsoncards.com.au/cards) has individual card pages for Standard staples with current price data. Singles from Sydney's Top 8 archetypes are listed in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
 
 *Data sources: [MTGTop8](https://mtgtop8.com/event?e=81884&f=ST), [MTGDecks.net](https://mtgdecks.net/Standard), [Magic.gg](https://www.magic.gg/news/metagame-mentor-the-top-standard-decks-to-expect-at-pro-tour-secrets-of-strixhaven)*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -100,4 +113,4 @@ Cards from Simon Linabury's winning Mono Green Landfall list saw the strongest m
 Typically one to three weeks for competitive demand spikes from a single event. If subsequent events confirm the same cards are dominant, the price stabilises at the new level. If the deck fades from the meta, prices usually correct within a month.
 
 ### Where can I check current AUD prices on Standard cards?
-The [C3 MTG Card Vault](/cards/mtg) shows current eBay AU sold prices. The [C3 Market page](/market) shows 7-day movement. Use the [C3 Card Compare tool](/compare) to check two cards side by side before purchasing.
+The [C3 MTG card hub](/cards/mtg) shows current eBay AU sold prices. The [C3 Market page](/market) shows 7-day movement. Use the [C3 Card Compare tool](/compare) to check two cards side by side before purchasing.

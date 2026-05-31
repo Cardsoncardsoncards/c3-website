@@ -1,22 +1,18 @@
 ---
 game: mtg
 title: "Best Rakdos (Black-Red) Commanders in MTG Australia 2026"
-description: "Top Rakdos commanders in MTG ranked by power and AUD price. Black-red delivers fast, aggressive, and sacrifice-based strategies — here are the best."
+description: "Top Rakdos commanders in MTG ranked by power and AUD price. Black-red delivers fast, aggressive, and sacrifice-based strategies, here are the best."
 date: 2026-05-05
-category: "buying-guides"
-tags:
-  - post
-  - mtg
-  - commander
-  - rakdos
-  - price-guide
+category: buying-guides
+tags: post
 emoji: "🔥"
 affiliate_disclaimer: true
-cta_type: "ebay"
-cta_link: "https://www.ebay.com.au/sch/i.html?_nkw=rakdos+commander+mtg+singles&campid=5339146789"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Rakdos (black-red) Commander is fast, aggressive, and rewards punishing your opponents for doing what they'd normally do. Black provides removal and recursion; red provides speed, wheels, and direct damage. Combined, Rakdos decks often win through attrition and sacrifice synergies. See current prices at [/cards/mtg](/cards/mtg).
+
+
 
 Rakdos (black-red) Commander is fast, aggressive, and rewards punishing your opponents for doing what they'd normally do. Black provides removal and recursion; red provides speed, wheels, and direct damage. Combined, Rakdos decks often win through attrition and sacrifice synergies.
 
@@ -91,7 +87,7 @@ A planeswalker commander that creates Legendary creatures-matter synergies. Her 
 
 ### Kresh the Bloodbraided
 
-Gets +X/+X counters whenever any creature dies, where X is that creature's power. In a multiplayer game where creatures die constantly, Kresh can grow to 20+ power within a few turns. A straightforward voltron-style commander built around combat.
+Gets +X/+X counters whenever any creature dies, where X is that creature's power. In a multiplayer game where creatures die constantly, Kresh can grow to 20+ power within a few turns. A clear voltron-style commander built around combat.
 
 **Current AU price**: approximately AU$2 to AU$5.
 
@@ -111,7 +107,17 @@ No access to green ramp means Rakdos plays at a slower mana development pace tha
 
 ## Checking Prices in Australia
 
-Browse current AUD prices on Rakdos Commander staples at the [C3 MTG Card Vault](/cards/mtg). Use the [C3 Card Compare tool](/compare) to check multiple cards before purchasing.
+Browse current AUD prices on Rakdos Commander staples at the [C3 MTG card hub](/cards/mtg). Use the [C3 Card Compare tool](/compare) to check multiple cards before purchasing.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 

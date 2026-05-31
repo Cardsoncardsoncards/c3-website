@@ -3,13 +3,16 @@ game: lorcana
 title: "Lorcana Wilds Unknown Set Review: Is It Worth Opening in Australia?"
 description: "Wilds Unknown is Lorcana Set 12. We opened four booster boxes and tracked every card. Here is the pull rate data, the standout singles, and an honest answer to whether opening boxes makes financial sense in Australia right now."
 date: 2026-05-16
-category: "set-reviews"
+category: value-and-worth
 emoji: "🏰"
-tags: [lorcana, wilds-unknown, set-review, australia, box-opening, pull-rates, disney, set-12]
+tags: post
 layout: post
 affiliate_disclaimer: true
-featured: false
----
+---## Quick Answer
+
+Wilds Unknown is the twelfth Lorcana set, and it covers an adventure-focused card pool featuring Encanto, Brave, The Incredibles, Rescue Rangers, Atlantis, and Toy Story characters alongside familiar faces from Snow White, Sleeping Beauty, and Robin Hood. See current prices at [/cards/lorcana](/cards/lorcana).
+
+
 
 Wilds Unknown is the twelfth Lorcana set, and it covers an adventure-focused card pool featuring Encanto, Brave, The Incredibles, Rescue Rangers, Atlantis, and Toy Story characters alongside familiar faces from Snow White, Sleeping Beauty, and Robin Hood.
 
@@ -72,7 +75,7 @@ Nine Epics from four boxes is a solid result. The spread across characters is re
 
 **Sid's Toys from Toy Story** are a fun subtheme: Babyhead, Bouncing Ducky, Jingle Joe, Roller Bob, Wind-Up Frog, Hand-in-the-Box, and Pterodactyl Janie Doll all appear as cards. For players who grew up with the original Toy Story this is a nostalgia hit.
 
-**The Brave character spread** includes Merida, Angus, Elinor, Fergus, the three brothers, and supporting characters. The DunBroch family tapestry appears as an item card.
+**The Brave character spread** includes Merida, Angus, Elinor, Fergus, the three brothers, and supporting characters. The DunBroch family mix appears as an item card.
 
 **Chip and Dale's Rescue Rangers** make their Lorcana debut with Chip, Dale, Gadget, Zipper, Fat Cat, and Rat Capone all included.
 
@@ -115,6 +118,16 @@ For pull rate detail from our full four-box opening, see the companion post: [I 
 ---
 
 *Disney Lorcana is published by Ravensburger. All character names and images are trademarks of The Walt Disney Company. Cards on Cards on Cards is an independent Australian TCG retailer and is not affiliated with Ravensburger or The Walt Disney Company.*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 
 ## Frequently Asked Questions
 

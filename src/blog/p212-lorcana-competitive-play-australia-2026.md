@@ -1,22 +1,18 @@
 ---
 game: lorcana
 title: "Lorcana Competitive Play Australia"
-description: "Disney Lorcana has a growing competitive scene in Australia. This guide covers the state of Lorcana tournaments in 2026 — what events exist, what."
+description: "Disney Lorcana has a growing competitive scene in Australia. This guide covers the state of Lorcana tournaments in 2026, what events exist, what."
 date: 2026-05-05
-category: "general-tcg"
-tags:
-  - post
-  - lorcana
-  - competitive
-  - tournaments
-  - australia
+category: buying-guides
+tags: post
 emoji: "🏆"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#lorcana"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Lorcana competitive play in Australia has grown significantly from its 2023 launch. If you've been playing casually and wondering whether to step into the tournament scene, this guide covers what to expect in 2026. See current prices at [/cards/lorcana](/cards/lorcana).
+
+
 
 Lorcana competitive play in Australia has grown significantly from its 2023 launch. If you've been playing casually and wondering whether to step into the tournament scene, this guide covers what to expect in 2026.
 
@@ -60,11 +56,20 @@ One advantage of Lorcana's design: the game is genuinely fun at the casual level
 
 Starting with a Starter Deck (AU$20 to AU$25), upgrading with some targeted singles over a few months, and entering a Store Championship before investing in a full competitive build is a sensible progression path.
 
-Browse current Lorcana product at the [C3 shop](/shop.html#lorcana). Check Lorcana card prices on eBay AU before buying. Track your Lorcana collection with the [free C3 tracker](/tracker.html).
+Browse current Lorcana product at the [C3 shop](/shop). Check Lorcana card prices on eBay AU before buying. Track your Lorcana collection with the [free C3 tracker](/tracker).
 
 ---
 
-*See also: [Is Disney Lorcana Worth Starting in 2026?](/blog/is-disney-lorcana-worth-starting-2026-australia/) and [Best Lorcana Booster Boxes Australia](/blog/best-lorcana-booster-boxes-australia/).*
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 
 ## Frequently Asked Questions
 
@@ -75,4 +80,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

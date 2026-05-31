@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Digimon Card Game: Beginner's Guide for Australian Players"
 description: "Bandai's Digimon Card Game has grown into one of the strongest competitive TCGs in Australia since 2020. Here's how to start and what it actually costs."
@@ -41,25 +42,6 @@ Six colours, each with a distinct strategic identity that Bandai has maintained 
 
 Most competitive decks run two colours. The best colour pairs shift with each set but generally involve one aggro colour and one support colour.
 
-## Getting Started in Australia
-
-Bandai's distribution is strong here. Most specialty hobby stores in capital cities stock current Digimon sets. There has also been some presence in non-specialist retail, with selected Digimon product appearing at Kmart and Target during peak release periods, though this varies.
-
-Starter Decks are the right entry point. Each starter is a 54-card ready-to-play deck built around a specific season of the anime or a character grouping. The Starter Decks released with each new block are designed to be competitive against each other, so two players with different starters from the same block get reasonably balanced games while learning.
-
-**What it costs:**
-
-| Item | Approximate Cost (AUD) |
-|---|---|
-| Starter Deck | $20 to $30 |
-| Booster pack | $5 to $7 |
-| Booster box (24 packs) | $100 to $140 |
-| Meta singles | $15 to $60 |
-| Budget competitive deck | $100 to $250 |
-
-Digimon sits in a mid-range position. It is cheaper than Pokemon at the top end of the market, more expensive than some of the extended games on this list, and generally considered good value for the competitive depth you get.
-
-[Browse Digimon Card Game on Amazon AU](https://www.amazon.com.au/s?k=digimon+card+game+english&tag=blasdigital-22)
 
 ## The Organised Play Scene
 
@@ -77,4 +59,4 @@ New players should resist the temptation to buy whatever deck looks best online 
 
 - Browse Digimon cards at [/cards/digimon](/cards/digimon)
 - Find your Digimon partner with our quiz at [/quizzes/digimon-partner](/quizzes/digimon-partner)
-- Check upcoming Digimon releases at [/calendar](/calendar)
+- Check upcoming Digimon releases at [/calendar](/market)

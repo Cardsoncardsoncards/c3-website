@@ -3,20 +3,16 @@ game: riftbound
 title: "What Is Riftbound Card Game? An Australian Player's First Look"
 description: "Riftbound is one of the newest TCGs to hit the Australian market. This guide covers what Riftbound is, how it plays, where to buy it in Australia."
 date: 2026-05-05
-category: "beginner-guides"
-tags:
-  - post
-  - riftbound
-  - beginners
-  - new-tcg
-  - australia
+category: buying-guides
+tags: post
 emoji: "🌀"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html"
-featured: false
 layout: post
----
+---## Quick Answer
+
+Riftbound entered the Australian TCG market in 2025 and attracted immediate attention from players looking for a new competitive TCG. This guide covers what it is, how it plays, and the honest current state of the game in Australia. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
 
 Riftbound entered the Australian TCG market in 2025 and attracted immediate attention from players looking for a new competitive TCG. This guide covers what it is, how it plays, and the honest current state of the game in Australia.
 
@@ -70,13 +66,12 @@ The strategic depth comes from the interaction between your Champion's abilities
 
 **Riftbound Unleashed booster product**: for players who want to expand their collection after the starter experience.
 
-Check the [C3 shop](/shop.html) for currently available Riftbound product in Australia.
+Check the [C3 shop](/shop) for currently available Riftbound product in Australia.
 
-Track your Riftbound collection with the [free C3 tracker](/tracker.html) which covers all major TCGs.
+Track your Riftbound collection with the [free C3 tracker](/tracker) which covers all major TCGs.
 
 ---
 
-*See also: [Which TCG Should You Start in Australia?](/blog/which-tcg-to-start-australia/)*
 
 
 ## How Riftbound Plays
@@ -105,18 +100,28 @@ RQ Singapore follows in September 2026. The global circuit is growing quickly, w
 
 Riftbound Starter products (Champion Starter Kits) include a prebuilt deck centred on a specific Champion and everything needed to play immediately. Booster packs from Origins, Spiritforged, and the current Unleashed set expand your card options.
 
-The [C3 shop](/shop.html) links to confirmed Riftbound products on Amazon AU. Check the [C3 Riftbound Card Vault](/cards/riftbound) for current AUD pricing on singles.
+The [C3 shop](/shop) links to confirmed Riftbound products on Amazon AU. Check the [C3 Riftbound Card Vault](/cards/riftbound) for current AUD pricing on singles.
 
-For players serious about competitive Riftbound, check the [Riftbound meta tier list](/blog/riftbound-meta-tier-list-may-2026/) for current deck recommendations.
+For players serious about competitive Riftbound, check the [Riftbound meta tier list](/blog/riftbound-meta-tier-list-may-2026) for current deck recommendations.
 
 
 ## Your First Steps in Australia
 
 The Australian TCG community is welcoming to new players at all levels. Whether you are starting a new game or returning to one you played before, the best first step is finding a local game store and asking when they run beginner events.
 
-All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/calendar) tracks upcoming events so you can find one near you.
+All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/market) tracks upcoming events so you can find one near you.
 
-For pricing on specific cards before you buy, the [C3 Card Compare tool](/compare) shows current AUD pricing from eBay AU sold data. For tracking your collection as it grows, the [free C3 Collection Tracker](/tracker.html) works across all 8 TCGs on this site.
+For pricing on specific cards before you buy, the [C3 Card Compare tool](/compare) shows current AUD pricing from eBay AU sold data. For tracking your collection as it grows, the [free C3 Collection Tracker](/tracker) works across all 8 TCGs on this site.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -127,4 +132,4 @@ The minimum entry cost depends on the game. Most TCGs have starter or preconstru
 Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
 
 ### Where can I find other Riftbound players in Australia?
-Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/market) for upcoming events near you.

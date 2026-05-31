@@ -5,12 +5,16 @@ description: "Riftbound's first Australian Regional Qualifier hits Sydney Showgr
 date: 2026-05-06
 category: buying-guides
 emoji: "⚔️"
-tags: ["post"]
-affiliate_disclaimer: false
+tags: post
+affiliate_disclaimer: true
 layout: post
----
+---## Quick Answer
 
-> **Event Update (May 2026):** RQ Sydney ran from 15-17 May 2026 at Sydney Showground. This guide was written before the event. Results and a full breakdown are in our [RQ Sydney results post](/blog/p248-rq-sydney-2026/). The information below covers the event format and what to expect from future Riftbound APAC events.
+> **Event Update (May 2026):** RQ Sydney ran from 15-17 May 2026 at Sydney Showground. This guide was written before the event. Results and a full breakdown are in our [RQ Sydney results post](/blog/p248-rq-sydney-2026). The information below covers the event format and what to expect from future Riftbound APAC events. See current prices at [/cards/riftbound](/cards/riftbound).
+
+
+
+> **Event Update (May 2026):** RQ Sydney ran from 15-17 May 2026 at Sydney Showground. This guide was written before the event. Results and a full breakdown are in our [RQ Sydney results post](/blog/p248-rq-sydney-2026). The information below covers the event format and what to expect from future Riftbound APAC events.
 
 The first Riftbound APAC Regional Qualifier ran at Sydney Showground from May 15-17, 2026, and it is bigger than most people realise. Here is everything about the event, whether you are competing, spectating, or hunting Unleashed product.
 
@@ -75,11 +79,21 @@ Unleashed launched on May 8 and Australian retail stock is already limited at ma
 
 If you are after Unleashed singles, RQ Sydney is the best place in Australia to find active players trading. The Overnumber chase cards appear at roughly one per three boxes. Signature Overnumbers with foil artist signatures are rarer, appearing in approximately one in ten Overnumber slots.
 
-We have four Unleashed boxes on hand and will post a full box opening and card price guide after the event when price data is more stable. Subscribe at [/tracker.html](/tracker.html) to get that post as soon as it goes live.
+We have four Unleashed boxes on hand and will post a full box opening and card price guide after the event when price data is more stable. Subscribe at [/tracker](/tracker) to get that post as soon as it goes live.
 
 ---
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
+- Calculate booster box expected value at [/tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -90,4 +104,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop.html).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

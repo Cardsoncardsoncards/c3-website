@@ -3,19 +3,10 @@ game: lorcana
 title: "Disney Lorcana Wilds Unknown Pre-Order Guide for Australia"
 description: "Disney Lorcana Wilds Unknown releases in Australia on 15 May 2026. This guide covers every confirmed product, pre-order options, Amazon AU availability."
 date: 2026-04-16
-category: "buying-guides"
-tags:
-  - post
-  - lorcana
-  - buying-guides
-  - pre-orders
-  - collectors
-  - players
+category: buying-guides
+tags: post
 emoji: "🌿"
 affiliate_disclaimer: true
-cta_type: "shop"
-cta_link: "/shop.html#lorcana"
-featured: false
 layout: post
 ---
 
@@ -23,10 +14,9 @@ layout: post
 
 Disney Lorcana Wilds Unknown releases in Australia on 15 May 2026, with local game store prerelease events beginning 8 May. This is the twelfth set for the game and the first to introduce Pixar characters. If you are planning to buy Wilds Unknown, this guide covers every confirmed product, where to pre-order in Australia, Amazon AU status, and what each product delivers for different buyer types.
 
-<div class="quick-answer">
-<strong>Quick Answer:</strong>
-<p>Wilds Unknown local game store prerelease is 8 May 2026. Mass retail and Amazon AU release is 15 May 2026. The new Two-Player Starter Set (Elastigirl and Buzz Lightyear) is the headline product for beginners and gift buyers. The booster display is the main sealed product for collectors. Amazon AU does not yet have listings as of mid-April. Check the C3 Lorcana shop page from late April for confirmed ASINs and direct links.</p>
-</div>
+## Quick Answer
+
+Wilds Unknown local game store prerelease is 8 May 2026. Mass retail and Amazon AU release is 15 May 2026. The new Two-Player Starter Set (Elastigirl and Buzz Lightyear) is the headline product for beginners and gift buyers. The booster display is the main sealed product for collectors. Amazon AU does not yet have listings as of mid-April. Check the C3 Lorcana shop page from late April for confirmed ASINs and direct links.
 
 ## What Is Wilds Unknown?
 
@@ -72,7 +62,7 @@ As of mid-April 2026, Wilds Unknown products are not yet listed on Amazon AU. Th
 
 Expected Amazon AU listing window: late April to early May 2026.
 
-[Monitor the C3 Lorcana shop page for live updates](/shop.html#lorcana)
+[Monitor the C3 Lorcana shop page for live updates](/shop)
 
 ## Pre-Order Options Right Now
 
@@ -114,20 +104,27 @@ Ravensburger's confirmation that Pixar continues through 2026 and into 2027 mean
 
 ## Related Reading
 
-- [Disney Lorcana Wilds Unknown: Australia Release Guide and What to Expect](/blog/disney-lorcana-wilds-unknown-australia/)
-- [First Pixar Characters in Lorcana: What Wilds Unknown Means for Collectors](/blog/first-pixar-lorcana-wilds-unknown-collectors/)
-- [Best Lorcana Booster Boxes in Australia](/blog/best-lorcana-booster-boxes-australia/)
-- [Where to Buy Lorcana Cards in Australia](/blog/where-to-buy-lorcana-cards-australia/)
+- [Disney Lorcana Wilds Unknown: Australia Release Guide and What to Expect](/blog/disney-lorcana-wilds-unknown-australia)
+- [First Pixar Characters in Lorcana: What Wilds Unknown Means for Collectors](/blog/first-pixar-lorcana-wilds-unknown-collectors)
+- [Best Lorcana Booster Boxes in Australia](/blog/best-lorcana-booster-boxes-australia)
+- [Where to Buy Lorcana Cards in Australia](/blog/where-to-buy-lorcana-cards-australia)
 
 ---
 
 
-<div class="tool-callout">
-<p>Compare current AU prices on cards from this post side by side at the <a href="/compare">C3 Card Compare tool</a>. Shows buy and sell prices, 14-day trend, and Card Kingdom buylist data for MTG.</p>
-</div>
 
 
-Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/market). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+
+## The C3 Take
+
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+
+## What to Read Next
+
+- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
+- Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 
 ## Frequently Asked Questions
 
@@ -149,9 +146,5 @@ Japanese Lorcana product is sold separately through different distribution chann
 **Is this a good set for new collectors?**
 Yes. The addition of Pixar characters lowers the barrier to entry for fans who are not already Lorcana players. The Two-Player Starter Set and Illumineer's Trove are both excellent starting points.
 
-<div class="cta-block">
-<p>We update the C3 Lorcana shop page as soon as new Wilds Unknown ASINs go live on Amazon AU. Check back from late April for direct links.</p>
-<a href="/shop.html#lorcana" class="cta-button">Browse Lorcana Products</a>
-</div>
 
 *This post contains affiliate links. We may earn a commission if you purchase through these links, at no extra cost to you.*

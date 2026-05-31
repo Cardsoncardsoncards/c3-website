@@ -1,4 +1,5 @@
 ---
+affiliate_disclaimer: true
 layout: post
 title: "Final Fantasy TCG: Beginner's Guide for Australian Players"
 description: "The Final Fantasy TCG covers 35 years of Square Enix games in one card pool. Here's how the game works, what to buy first, and who it's for in Australia."
@@ -41,25 +42,6 @@ Fire deals direct damage and burns opponents out. Ice taps down opposing Forward
 
 Competitive decks run two Elements almost universally. The exception is Light and Dark splash packages that fit into any two-element base. Choosing your Element pair is your first deck-building decision and it shapes everything else.
 
-## Getting Started in Australia
-
-Square Enix distributes FFTCG through specialty hobby stores. It is not at mainstream retail. Hobby stores in major Australian cities carry current and recent sets, and online Australian retailers also stock the game reliably.
-
-Starter Sets are available with most major set releases. Each starter is a pre-built deck focused on specific Elements and characters.
-
-**What it costs:**
-
-| Item | Approximate Cost (AUD) |
-|---|---|
-| Starter Set | $25 to $40 |
-| Booster pack | $5 to $8 |
-| Booster box (36 packs) | $130 to $180 |
-| Meta singles | $10 to $60 |
-| Budget competitive deck | $120 to $300 |
-
-FFTCG booster boxes contain 36 packs rather than the 24 that most TCGs use. Per-pack pricing is competitive, and the larger box means better odds on the rarest cards per box opened.
-
-[Browse Final Fantasy TCG on Amazon AU](https://www.amazon.com.au/s?k=final+fantasy+trading+card+game+english&tag=blasdigital-22)
 
 ## The Australian Community
 
@@ -77,4 +59,4 @@ The Australian community is the gap. The game is better than its local profile s
 
 - Browse Final Fantasy TCG cards at [/cards/finalfantasy](/cards/finalfantasy)
 - Compare it against all other options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check the TCG release calendar at [/calendar](/calendar)
+- Check the TCG release calendar at [/calendar](/market)
