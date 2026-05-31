@@ -271,7 +271,7 @@ export default async (req)=>{
     },
     body:JSON.stringify({
       from:`${FROM_NAME} <${FROM_EMAIL}>`,
-      to:[FROM_EMAIL],
+      to:['ccc.squadhelp@gmail.com'],
       subject:callTitle,
       html:htmlEmail,
       text:text,
