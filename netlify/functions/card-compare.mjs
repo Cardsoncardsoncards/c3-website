@@ -1297,7 +1297,7 @@ function loadVersions(game, name, slotIdx) {
       if (!data || !data.length) { panel.innerHTML = '<div style="padding:6px;color:var(--text2);font-size:10px">No other versions found</div>'; return; }
       panel.innerHTML = data.map(function(v) {
         return '<div class="version-item" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '" tabindex="0">' +
-          '<span class="version-set">' + (v.setName || '—') + '</span>' +
+          '<span class="version-set">' + (v.setName || '—') + (v.collectorNumber ? ' #' + v.collectorNumber : '') + '</span>' +
           '<span class="version-price">' + (v.priceDisplay || 'N/A') + '</span>' +
           '<span class="version-select">Select →</span>' +
           '</div>';

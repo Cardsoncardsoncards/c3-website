@@ -76,6 +76,7 @@ function normaliseCard(card, cfg, usdToAud = 1.58) {
     priceDisplay: priceAud ? 'AU$' + priceAud.toFixed(2) : 'N/A',
     image:        card[imgCol] || null,
     setName:      card[setCol] || null,
+    collectorNumber: card.collector_number || null,
     cardPath:     `/cards/${game}/${card[slugCol]}`
   };
 }
@@ -91,7 +92,8 @@ async function searchGame(cfg, query, limit, usdToAud) {
 async function getPrintings(cfg, name, usdToAud) {
   const { table, nameCol, slugCol, priceCol, imgCol, setCol } = cfg;
   const encoded = encodeURIComponent(name);
-  const path = `${table}?${nameCol}=eq.${encoded}&select=${slugCol},${nameCol},${priceCol},${imgCol},${setCol}&order=${priceCol}.asc.nullslast&limit=40`;
+  const extraCols = cfg.game === 'mtg' ? ',collector_number' : '';
+  const path = `${table}?${nameCol}=eq.${encoded}&select=${slugCol},${nameCol},${priceCol},${imgCol},${setCol}${extraCols}&order=${priceCol}.asc.nullslast&limit=40`;
   const data = await supabaseFetch(path);
   return (data || []).map(c => normaliseCard(c, cfg, usdToAud));
 }
