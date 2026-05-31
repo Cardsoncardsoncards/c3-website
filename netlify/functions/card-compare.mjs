@@ -231,36 +231,22 @@ function buildSparkline(points, w=80, h=24) {
   return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="display:block;overflow:visible"><path d="${d}" fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
 
-// Radar chart — 6 axes: Price Access, EDHREC, Formats, Trend, Versatility, Rarity
+// Radar chart: 3 axes (Price, Trend, Rarity), applies to all games
 function buildRadar(cards) {
   if (!cards || cards.length < 1) return '';
   const W = 200, CX = 100, CY = 100, R = 70;
-  const AXES = ['Price Access','EDHREC','Formats','Trend','Rarity','Versatility'];
+  const AXES = ['Price','Trend','Rarity'];
   const N = AXES.length;
 
   function score(card) {
-    // Price Access: cheaper = more accessible (1-10 scale)
     const pScore = card.priceAud
       ? Math.max(1, Math.min(10, 10 - Math.log10(Math.max(card.priceAud, 1)) * 2.5))
       : 5;
-    // EDHREC: lower rank = higher score
-    const eScore = card.edhrec_rank
-      ? Math.max(1, Math.min(10, 10 - Math.log10(card.edhrec_rank) * 2))
-      : (card.game === 'mtg' ? 3 : 6);
-    // Formats legal in
-    const fmts = card.game === 'mtg'
-      ? Object.values(card.legalities || {}).filter(v => v === 'legal').length
-      : 3;
-    const fScore = Math.min(10, fmts * 1.5 + 1);
-    // Trend
     const tPct = card.sevenDayChange ? parseFloat(card.sevenDayChange.pct) : 0;
     const tScore = Math.min(10, Math.max(1, 5 + tPct * 0.3));
-    // Rarity
     const rarityMap = { common: 3, uncommon: 5, rare: 7, mythic: 9, legendary: 8, secret: 10 };
     const rScore = rarityMap[card.rarity?.toLowerCase()] || 5;
-    // Versatility: has foil + multiple printings + non-MTG games get base
-    const vScore = Math.min(10, (card.priceAudFoil ? 3 : 0) + (card.cheapestPrinting ? 3 : 0) + 4);
-    return [pScore, eScore, fScore, tScore, rScore, vScore];
+    return [pScore, tScore, rScore];
   }
 
   const colors = ['#C9A84C','#7c6af5','#4caf50','#EF4444','#3B82F6'];
@@ -382,7 +368,7 @@ function renderSlots(cards, allTokens, usdToAud) {
     const usd      = card.priceUsd ? fmtUSD(card.priceUsd) : null;
     const token    = `${card.game}:${card.slug}`;
     const removeTokens = allTokens.filter(t => t !== token).join(',');
-    const removeUrl    = removeTokens.length ? `/compare?cards=${removeTokens}` : '/compare';
+    const removeUrl    = removeTokens.length ? `/compare?cards=${removeTokens}` : '/compare?cards=';
     const spark        = buildSparkline(card.sparklinePoints);
 
     // eBay URL with slot-level customid for attribution
@@ -996,7 +982,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
       <span>Cards on Cards on Cards</span>
     </a>
     <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
       <a href="/compare" class="nav-link nav-link--compare active">Compare</a>
       <a href="/market" class="nav-link nav-link--market">Market</a>
       <a href="/tools" class="nav-link nav-link--tools">Tools</a>
@@ -1079,6 +1065,7 @@ ${cards.length >= 2 ? `
     <div class="radar-chart">${radar}</div>
     <div>
       <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px">Card Strength Profile</div>
+      <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.5;margin:6px 0 10px;">Three axes, all games. Price: cheaper cards score higher. Trend: rising prices score higher. Rarity: rarer cards score higher. A larger shape means stronger overall value signal.</p>
       <div class="radar-legend">
         ${cards.map((c, i) => {
           const colors = ['#C9A84C','#7c6af5','#4caf50','#EF4444','#3B82F6'];
@@ -1105,7 +1092,7 @@ ${cards.length >= 2 ? `
 <footer>
   <p>
     <a href="/">Home</a><a href="/compare">Compare</a><a href="/market">Market</a>
-    <a href="/tracker.html">Tracker</a><a href="/blog">Blog</a><a href="/contact.html">Contact</a>
+    <a href="/tracker">Tracker</a><a href="/blog">Blog</a><a href="/contact">Contact</a>
   </p>
   <p style="margin-top:8px">Prices in AUD at live rates. Card data via tcgapi.dev and Scryfall. Not financial advice.</p>
   <p style="margin-top:6px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
@@ -1227,6 +1214,7 @@ function handleSearch(val) {
   var el = document.getElementById('search-results');
   if (!val || val.length < 2) { if (el) el.style.display = 'none'; return; }
   searchTimeout = setTimeout(function() {
+    if (el) { el.innerHTML = '<div style="padding:12px 16px;font-size:13px;color:var(--text2)">Searching across 32 games...</div>'; el.style.display = ''; }
     var game = activeGameFilter ? '&game=' + activeGameFilter : '';
     fetch('/api/compare-search?q=' + encodeURIComponent(val) + '&limit=10' + game)
       .then(function(r) { return r.json(); })
