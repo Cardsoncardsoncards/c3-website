@@ -1,19 +1,20 @@
 // netlify/functions/generate-weekly-report.mjs
 // C3 Weekly Seller Report generator.
-// Pulls live movers + buy/sell signals, fills the email HTML, and sends the
-// report via Resend.
-//
-// Test phase: sends a single copy to FROM_EMAIL so a human can eyeball it. Next
-// step is to fetch the paid MailerLite group subscribers and send to each one
-// (PAID_GROUP_ID and ML_BASE are kept below for that change).
+// Pulls live movers + buy/sell signals, builds the email HTML, fetches all
+// active subscribers from the MailerLite "Paid - C3 Seller Intelligence" group,
+// and sends the report via Resend's batch endpoint (up to 100 per call). Each
+// recipient gets a personalised mailto unsubscribe link plus an RFC 8058
+// List-Unsubscribe header so Gmail and Apple Mail can render a one-click button.
 //
 // Trigger (manual, weekly): GET/POST /api/generate-weekly-report with header
 //   x-sync-secret: <SYNC_SECRET>
-// Returns JSON: { ok, message, counts }
+// Returns JSON: { ok, message, counts: { recipients, sent, failed, up, down, buy, sell } }
 //
 // Env vars required (Netlify):
 //   SUPABASE_URL, SUPABASE_ANON_KEY, TCGAPI_KEY  (already set, used by /market)
 //   RESEND_API_KEY                                (delivery)
+//   MAILERLITE_API_KEY                            (paid subscriber list)
+//   SYNC_SECRET                                   (auth header)
 // Optional:
 //   REPORT_CALL_TITLE, REPORT_CALL_BODY  (override the editorial C3 Call this week)
 
@@ -21,7 +22,10 @@ const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const TCGAPI_KEY        = Netlify.env.get('TCGAPI_KEY');
 const RESEND_API_KEY    = Netlify.env.get('RESEND_API_KEY');
+const MAILERLITE_KEY    = Netlify.env.get('MAILERLITE_API_KEY');
 const SYNC_SECRET       = Netlify.env.get('SYNC_SECRET');
+const SUPPORT_EMAIL     = 'ccc.squadhelp@gmail.com';
+const LIST_UNSUBSCRIBE  = `<mailto:${SUPPORT_EMAIL}?subject=Unsubscribe%20C3%20Weekly%20Report>`;
 
 const EPN_CAMPID   = '5339146789';
 const PAID_GROUP_ID = '188799131758626620'; // Paid - C3 Seller Intelligence (verified live)
@@ -227,6 +231,62 @@ function plainText(dateStr){
   return `C3 Weekly Seller Report, ${dateStr}.\n\nYour email client cannot display HTML. View the full market at https://cardsoncardsoncards.com.au/market\n\nThe C3 Team.\nManage subscription: {$unsubscribe}`;
 }
 
+// Per-recipient mailto unsubscribe link. Until a hosted /unsubscribe endpoint
+// exists, this routes opt-outs to support so they can be processed manually
+// against MailerLite. Paired with the List-Unsubscribe header for one-click.
+function unsubscribeUrl(email){
+  const subject = encodeURIComponent('Unsubscribe from C3 Weekly Report');
+  const body = encodeURIComponent(`Please unsubscribe ${email} from the C3 Weekly Seller Report.`);
+  return `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
+}
+
+// Paginated fetch of active subscribers in the paid Seller Intelligence group.
+// Returns null if the API key is missing, [] if the call fails or the group is
+// empty. Safety cap: 50 pages = 5000 subscribers.
+async function fetchPaidSubscribers(){
+  if(!MAILERLITE_KEY) return null;
+  const out=[]; let cursor=null;
+  for(let i=0;i<50;i++){
+    const params=new URLSearchParams({limit:'100'});
+    if(cursor) params.set('cursor',cursor);
+    const url=`${ML_BASE}/groups/${PAID_GROUP_ID}/subscribers?${params.toString()}`;
+    let res;
+    try{
+      res=await timedFetch(url,{headers:{Authorization:`Bearer ${MAILERLITE_KEY}`,Accept:'application/json'}});
+    }catch{ break; }
+    if(!res.ok) break;
+    let data; try{ data=await res.json(); }catch{ break; }
+    const page=data.data||[];
+    for(const s of page){
+      if(s.email && (s.status==='active'||!s.status)){
+        out.push({id:s.id,email:s.email});
+      }
+    }
+    cursor=(data.meta&&data.meta.next_cursor)||null;
+    if(!cursor||page.length===0) break;
+  }
+  return out;
+}
+
+// Send up to 100 emails in one Resend batch call.
+async function sendBatch(items){
+  return timedFetch('https://api.resend.com/emails/batch',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      Authorization:`Bearer ${RESEND_API_KEY}`,
+    },
+    body:JSON.stringify(items.map(it=>({
+      from:`${FROM_NAME} <${FROM_EMAIL}>`,
+      to:[it.email],
+      subject:it.subject,
+      html:it.html,
+      text:it.text,
+      headers:{'List-Unsubscribe':LIST_UNSUBSCRIBE},
+    }))),
+  });
+}
+
 // ---------- handler ----------
 export default async (req)=>{
   // Auth
@@ -262,32 +322,57 @@ export default async (req)=>{
   const htmlEmail=buildEmail({dateStr,callTitle,callBody,up,down,buy,sell});
   const text=plainText(dateStr);
 
-  // Send via Resend (test: to FROM_EMAIL only; switch to paid-group subscribers once confirmed)
-  const sent=await timedFetch('https://api.resend.com/emails',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      Authorization:`Bearer ${RESEND_API_KEY}`,
-    },
-    body:JSON.stringify({
-      from:`${FROM_NAME} <${FROM_EMAIL}>`,
-      to:['ccc.squadhelp@gmail.com'],
-      subject:callTitle,
-      html:htmlEmail,
-      text:text,
-    }),
-  });
+  // Fetch paid subscribers from MailerLite, then fan out via Resend batch.
+  const subscribers=await fetchPaidSubscribers();
+  if(subscribers===null){
+    return new Response(JSON.stringify({ok:false,error:'MAILERLITE_API_KEY not set'}),{status:500,headers:{'Content-Type':'application/json'}});
+  }
+  const baseCounts={up:up.length,down:down.length,buy:buy.length,sell:sell.length};
+  if(subscribers.length===0){
+    return new Response(JSON.stringify({
+      ok:true,
+      message:'No active paid subscribers found, nothing sent.',
+      counts:{recipients:0,sent:0,failed:0,...baseCounts},
+    }),{status:200,headers:{'Content-Type':'application/json'}});
+  }
 
-  if(!sent.ok){
-    const detail=await sent.text();
-    return new Response(JSON.stringify({ok:false,stage:'send',status:sent.status,detail}),{status:502,headers:{'Content-Type':'application/json'}});
+  let sentCount=0,failedCount=0;
+  const errors=[];
+  for(let i=0;i<subscribers.length;i+=100){
+    const chunk=subscribers.slice(i,i+100);
+    const items=chunk.map(s=>{
+      const url=unsubscribeUrl(s.email);
+      return {
+        email:s.email,
+        subject:callTitle,
+        html:htmlEmail.split('{$unsubscribe}').join(url),
+        text:text.split('{$unsubscribe}').join(url),
+      };
+    });
+    let res;
+    try{ res=await sendBatch(items); }
+    catch(e){
+      failedCount+=chunk.length;
+      errors.push({status:0,detail:String(e&&e.message||e).slice(0,200)});
+      continue;
+    }
+    if(res.ok){
+      sentCount+=chunk.length;
+    }else{
+      failedCount+=chunk.length;
+      let detail=''; try{ detail=await res.text(); }catch{}
+      errors.push({status:res.status,detail:detail.slice(0,200)});
+    }
   }
 
   return new Response(JSON.stringify({
-    ok:true,
-    message:'Weekly report sent via Resend.',
-    counts:{up:up.length,down:down.length,buy:buy.length,sell:sell.length},
-  }),{status:200,headers:{'Content-Type':'application/json'}});
+    ok:failedCount===0,
+    message:failedCount===0
+      ?`Weekly report sent to ${sentCount} paid subscribers.`
+      :`Sent ${sentCount}, failed ${failedCount}.`,
+    counts:{recipients:subscribers.length,sent:sentCount,failed:failedCount,...baseCounts},
+    ...(errors.length?{errors}:{}),
+  }),{status:failedCount===0?200:502,headers:{'Content-Type':'application/json'}});
 };
 
 export const config = { path: '/api/generate-weekly-report' };
