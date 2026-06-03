@@ -183,6 +183,7 @@ export default async (req) => {
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
+    const failedSets = [];
 
     for (const set of allSets) {
       const setCards = [];
@@ -209,6 +210,7 @@ export default async (req) => {
         } catch (e) {
           if (e.message.includes('Rate limit low')) throw e;
           console.error(`[sync-dragonball] Bulk price fetch failed for set ${set.id}:`, e.message);
+          failedSets.push(set.id ?? set.name ?? 'unknown');
         }
       }
 
@@ -300,7 +302,7 @@ export default async (req) => {
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
     console.log(`[sync-dragonball] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
-    return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
+    return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed, failedSets, failedSetCount: failedSets.length }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

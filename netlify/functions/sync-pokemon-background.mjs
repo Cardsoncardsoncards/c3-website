@@ -275,6 +275,7 @@ export default async (req) => {
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
+    const failedSets = [];
     let setCount = 0;
     let skippedCount = 0;
 
@@ -377,6 +378,7 @@ export default async (req) => {
         } catch (e) {
           if (e.message.includes('Rate limit low')) throw e;
           console.error(`[sync-pokemon] Bulk price fetch failed for set ${set.id}:`, e.message);
+          failedSets.push(set.id ?? set.name ?? 'unknown');
         }
       }
 
@@ -474,7 +476,10 @@ export default async (req) => {
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
     console.log(`[sync-pokemon] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
-    return new Response('OK', { status: 200 });
+    return new Response(JSON.stringify({ ok: true, cards: totalCards, snapshots: totalSnaps, elapsed, failedSets, failedSetCount: failedSets.length }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
 
   } catch (err) {
     console.error('[sync-pokemon] FATAL:', err.message);
