@@ -1,31 +1,50 @@
 // netlify/functions/market-insights.mjs
 // C3 Market, free public TCG price movers hub at /market
 // Free: top movers up and down across games. Teased: buy and sell signals (Seller report).
-// Data: tcgapi.dev top-movers + mtg_price_snapshots for MTG (snapshot date join).
+// Data: per-game Supabase cards tables (price_change_7d) + mtg_price_snapshots for MTG.
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
-const TCGAPI_KEY        = Netlify.env.get('TCGAPI_KEY');
 const EPN_CAMPID        = '5339146789';
-const TCGAPI_BASE       = 'https://api.tcgapi.dev/v1';
 const FETCH_TIMEOUT     = 8000;
 
+// Every game maps to its Supabase {key}_cards table. MTG is special (snapshot join).
 const GAME_CONFIG = {
-  mtg:        { label: 'MTG',         color: '#C9A84C', path: '/cards/mtg' },
-  pokemon:    { label: 'Pokemon',     color: '#EF4444', path: '/cards/pokemon' },
-  yugioh:     { label: 'Yu-Gi-Oh',    color: '#8B5CF6', path: '/cards/yugioh' },
-  lorcana:    { label: 'Lorcana',     color: '#3B82F6', path: '/cards/lorcana' },
-  onepiece:   { label: 'One Piece',   color: '#F97316', path: '/cards/onepiece' },
-  dragonball: { label: 'Dragon Ball', color: '#EAB308', path: '/cards/dragonball' },
-  starwars:   { label: 'Star Wars',   color: '#38BDF8', path: '/cards/starwars' },
-  riftbound:  { label: 'Riftbound',   color: '#818CF8', path: '/cards/riftbound' },
+  mtg:               { label: 'MTG',              color: '#C9A84C', path: '/cards/mtg' },
+  pokemon:           { label: 'Pokemon',          color: '#EF4444', path: '/cards/pokemon' },
+  yugioh:            { label: 'Yu-Gi-Oh',         color: '#8B5CF6', path: '/cards/yugioh' },
+  lorcana:           { label: 'Lorcana',          color: '#3B82F6', path: '/cards/lorcana' },
+  onepiece:          { label: 'One Piece',        color: '#F97316', path: '/cards/onepiece' },
+  dragonball:        { label: 'Dragon Ball',      color: '#EAB308', path: '/cards/dragonball' },
+  starwars:          { label: 'Star Wars',        color: '#38BDF8', path: '/cards/starwars' },
+  riftbound:         { label: 'Riftbound',        color: '#818CF8', path: '/cards/riftbound' },
+  digimon:           { label: 'Digimon',          color: '#06B6D4', path: '/cards/digimon' },
+  finalfantasy:      { label: 'Final Fantasy',    color: '#8B5CF6', path: '/cards/finalfantasy' },
+  grandarchive:      { label: 'Grand Archive',    color: '#10B981', path: '/cards/grandarchive' },
+  sorcery:           { label: 'Sorcery',          color: '#D97706', path: '/cards/sorcery' },
+  gundam:            { label: 'Gundam',           color: '#6366F1', path: '/cards/gundam' },
+  hololive:          { label: 'Hololive',         color: '#F472B6', path: '/cards/hololive' },
+  battlespiritssaga: { label: 'Battle Spirits',   color: '#14B8A6', path: '/cards/battlespiritssaga' },
+  vanguard:          { label: 'Cardfight Vanguard', color: '#2563EB', path: '/cards/vanguard' },
+  shadowverse:       { label: 'Shadowverse',      color: '#7C3AED', path: '/cards/shadowverse' },
+  unionarena:        { label: 'Union Arena',      color: '#E11D48', path: '/cards/unionarena' },
+  weissschwarz:      { label: 'Weiss Schwarz',    color: '#94A3B8', path: '/cards/weissschwarz' },
+  alphaclash:        { label: 'Alpha Clash',      color: '#F59E0B', path: '/cards/alphaclash' },
+  bakugan:           { label: 'Bakugan',          color: '#EA580C', path: '/cards/bakugan' },
+  buddyfight:        { label: 'Buddyfight',       color: '#0EA5E9', path: '/cards/buddyfight' },
+  forceofwill:       { label: 'Force of Will',    color: '#9333EA', path: '/cards/forceofwill' },
+  gateruler:         { label: 'Gate Ruler',       color: '#0891B2', path: '/cards/gateruler' },
+  godzilla:          { label: 'Godzilla',         color: '#84CC16', path: '/cards/godzilla' },
+  metazoo:           { label: 'MetaZoo',          color: '#22C55E', path: '/cards/metazoo' },
+  universus:         { label: 'Universus',        color: '#DB2777', path: '/cards/universus' },
+  wixoss:            { label: 'Wixoss',           color: '#F43F5E', path: '/cards/wixoss' },
+  wow:               { label: 'WoW TCG',          color: '#B45309', path: '/cards/wow' },
+  warhammer:         { label: 'Warhammer',        color: '#DC2626', path: '/cards/warhammer' },
+  dbsfusionworld:    { label: 'DBS Fusion World', color: '#F97316', path: '/cards/dbsfusionworld' },
+  dragonballz:       { label: 'Dragon Ball Z',    color: '#EAB308', path: '/cards/dragonballz' },
 };
-
-const TCG_API_GAME_MAP = {
-  pokemon: 'pokemon', yugioh: 'yugioh', lorcana: 'disney-lorcana',
-  onepiece: 'one-piece-card-game', dragonball: 'dragon-ball-super',
-  starwars: 'star-wars-unlimited', riftbound: 'riftbound-league-of-legends-trading-card-game',
-};
+// Non-MTG games to fan out for movers (MTG handled separately via snapshots).
+const FANOUT_GAMES = Object.keys(GAME_CONFIG).filter(g => g !== 'mtg');
 
 // ---------- helpers ----------
 function esc(s) {
@@ -79,53 +98,63 @@ function sparkline(series, up) {
 }
 
 // ---------- data ----------
-async function fetchTopMovers(game, direction = 'gainers', limit = 10) {
-  if (!TCGAPI_KEY) return [];
-  const tcgGame = TCG_API_GAME_MAP[game];
-  if (!tcgGame) return [];
-  try {
-    const url = `${TCGAPI_BASE}/prices/top-movers?game=${tcgGame}&direction=${direction}&period=7d&limit=${limit}`;
-    const res = await timedFetch(url, { headers: { 'X-API-Key': TCGAPI_KEY } });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return (data.data || []).map(card => ({
-      name: card.name || card.card_name || '',
-      setName: card.set_name || card.set || '',
-      priceAud: ((card.market_price || card.price || 0) * 1.58).toFixed(2),
-      change7d: card.price_change_7d || card.change_7d || 0,
-      rarity: card.rarity || '',
-      image: card.image_url || card.image || '',
-      slug: card.slug || '',
+// Non-MTG movers come from each game's own Supabase cards table (price_change_7d/30d).
+const MOVER_CAP = 400; // ignore junk outliers from bad source data
+async function fetchTopMovers(game, direction = 'gainers', limit = 10, period = '7d') {
+  const up = direction === 'gainers';
+  const col = period === '30d' ? 'price_change_30d' : 'price_change_7d';
+  const order = up ? `${col}.desc` : `${col}.asc`;
+  const filter = up ? `${col}=gte.5` : `${col}=lte.-5`;
+  const rows = await supabaseGet(
+    `${game}_cards?price_aud=gt.1&rarity=not.is.null&rarity=neq.None&${filter}&order=${order}&limit=${limit + 15}` +
+    `&select=name,slug,set_name,rarity,image_url,price_aud,${col}`
+  );
+  if (!Array.isArray(rows) || !rows.length) return [];
+  return rows
+    .filter(c => Math.abs(parseFloat(c[col])) <= MOVER_CAP)
+    .slice(0, limit)
+    .map(c => ({
+      name: c.name || '',
+      setName: c.set_name || '',
+      priceAud: parseFloat(c.price_aud).toFixed(2),
+      change7d: parseFloat(parseFloat(c[col]).toFixed(1)),
+      rarity: c.rarity || '',
+      image: c.image_url || '',
+      slug: c.slug || '',
       spark: null,
       game,
     }));
-  } catch { return []; }
 }
 
-async function fetchMTGTopMovers(direction = 'up', limit = 10) {
+async function fetchMTGTopMovers(direction = 'up', limit = 10, period = '7d') {
   try {
     const today = await supabaseGet(`mtg_price_snapshots?order=snapshot_date.desc&limit=1&select=snapshot_date`);
     if (!today.length) return [];
     const latestDate = today[0].snapshot_date;
+    const days = period === '30d' ? 30 : 7;
     const d = new Date(latestDate);
-    d.setDate(d.getDate() - 7);
-    const weekAgoDate = d.toISOString().split('T')[0];
+    d.setDate(d.getDate() - days);
+    const targetDate = d.toISOString().split('T')[0];
 
-    const [latestSnaps, weekAgoSnaps] = await Promise.all([
+    // Nearest snapshot on or before the target date (data is not on every exact day)
+    const priorRow = await supabaseGet(`mtg_price_snapshots?snapshot_date=lte.${targetDate}&order=snapshot_date.desc&limit=1&select=snapshot_date`);
+    const compareDate = priorRow.length ? priorRow[0].snapshot_date : targetDate;
+
+    const [latestSnaps, priorSnaps] = await Promise.all([
       supabaseGet(`mtg_price_snapshots?snapshot_date=eq.${latestDate}&price_aud=gt.1&select=scryfall_id,price_aud&order=price_aud.desc&limit=1500`),
-      supabaseGet(`mtg_price_snapshots?snapshot_date=eq.${weekAgoDate}&price_aud=gt.1&select=scryfall_id,price_aud&order=price_aud.desc&limit=1500`)
+      supabaseGet(`mtg_price_snapshots?snapshot_date=eq.${compareDate}&price_aud=gt.1&select=scryfall_id,price_aud&order=price_aud.desc&limit=1500`)
     ]);
-    if (!latestSnaps.length || !weekAgoSnaps.length) return [];
+    if (!latestSnaps.length || !priorSnaps.length) return [];
 
-    const weekAgoMap = {};
-    weekAgoSnaps.forEach(s => { weekAgoMap[s.scryfall_id] = parseFloat(s.price_aud); });
+    const priorMap = {};
+    priorSnaps.forEach(s => { priorMap[s.scryfall_id] = parseFloat(s.price_aud); });
 
     const movers = latestSnaps
-      .filter(s => weekAgoMap[s.scryfall_id] && weekAgoMap[s.scryfall_id] > 0)
+      .filter(s => priorMap[s.scryfall_id] && priorMap[s.scryfall_id] > 0)
       .map(s => ({
         scryfall_id: s.scryfall_id,
         priceAud: parseFloat(s.price_aud),
-        pct: ((parseFloat(s.price_aud) - weekAgoMap[s.scryfall_id]) / weekAgoMap[s.scryfall_id]) * 100
+        pct: ((parseFloat(s.price_aud) - priorMap[s.scryfall_id]) / priorMap[s.scryfall_id]) * 100
       }))
       .filter(s => direction === 'up' ? s.pct >= 5 : s.pct <= -5)
       .sort((a, b) => direction === 'up' ? b.pct - a.pct : a.pct - b.pct)
@@ -229,7 +258,7 @@ function cardRow(card, mode) {
     ? `<span class="badge sell">Near ${card.nearHighPct}% of high</span>`
     : `<span class="badge ${parseFloat(card.change7d) >= 0 ? 'up' : 'down'}">${pctStr(card.change7d)}</span>`;
   const spark = card.spark ? sparkline(card.spark, parseFloat(card.change7d || 0) >= 0 || mode === 'buy') : '';
-  return `<div class="row" data-game="${escAttr(card.game)}">
+  return `<div class="row" data-game="${escAttr(card.game)}" data-name="${escAttr(card.name)}">
     <div class="row-img">${card.image ? `<img src="${escAttr(card.image)}" alt="${escAttr(card.name)}" loading="lazy">` : '<span class="ph"></span>'}</div>
     <div class="row-info">
       <div class="row-name">${cardPath ? `<a href="${escAttr(cardPath)}">${name}</a>` : name}</div>
@@ -259,9 +288,9 @@ function heroMover(card) {
   </div>`;
 }
 
-function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
-  const hero = gainers[0] || null;
-  const top = gainers[0];
+function renderPage({ p7, p30, buySignals, sellSignals, updated }) {
+  const hero = p7.gainers[0] || null;
+  const top = p7.gainers[0];
   const callBody = top
     ? `This week the market is led by ${esc(top.name)}, ${parseFloat(top.change7d) >= 0 ? 'up' : 'down'} ${Math.abs(parseFloat(top.change7d)).toFixed(1)} per cent in seven days. The full read, what it means and where to list, is in the weekly Seller report.`
     : 'The full market read and this week\u2019s sell-side timing are in the weekly Seller report.';
@@ -271,8 +300,13 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
     return `<button class="game-tab ${g === 'all' ? 'active' : ''}" data-game="${g}" onclick="filterGame('${g}')">${esc(label)}</button>`;
   }).join('');
 
-  const upHTML = gainers.length ? gainers.map(c => cardRow(c, 'movers')).join('') : '<div class="empty">Not enough price history yet. Check back tomorrow.</div>';
-  const downHTML = losers.length ? losers.map(c => cardRow(c, 'movers')).join('') : '<div class="empty">No notable drops right now.</div>';
+  const rowsOrEmpty = (list, kind) => list.length
+    ? list.map(c => cardRow(c, 'movers')).join('')
+    : `<div class="empty">No ${kind} to show right now.</div>`;
+  const up7   = rowsOrEmpty(p7.gainers, 'risers');
+  const down7 = rowsOrEmpty(p7.losers, 'fallers');
+  const up30  = rowsOrEmpty(p30.gainers, 'risers');
+  const down30= rowsOrEmpty(p30.losers, 'fallers');
   const buyTease = buySignals.slice(0, 3).map(c => cardRow(c, 'buy')).join('');
   const sellTease = sellSignals.slice(0, 3).map(c => cardRow(c, 'sell')).join('');
 
@@ -285,7 +319,7 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
 <meta name="description" content="Live AUD price movers across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh and more. See what is rising and falling in the Australian TCG market, updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/market">
 <meta property="og:title" content="Australian TCG Price Movers, Updated Daily">
-<meta property="og:description" content="See what is rising and falling across 31 trading card games in the Australian market, all in AUD, updated daily.">
+<meta property="og:description" content="See what is rising and falling across more than 30 trading card games in the Australian market, all in AUD, updated daily.">
 <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" type="image/png" href="/c3logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -335,10 +369,17 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
   .hm-cta{margin-top:6px}
   .section-h{font-family:'Cinzel',serif;font-size:18px;font-weight:700;margin:30px 0 6px;display:flex;align-items:center;gap:9px}
   .movers-head{margin:30px 0 12px}
-  .movers-toggle{display:inline-flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden}
-  .mt{background:transparent;border:none;color:var(--silver);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;padding:9px 18px;cursor:pointer;transition:all .2s}
+  .movers-toggle,.period-toggle{display:inline-flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;vertical-align:middle}
+  .period-toggle{margin-left:10px}
+  .mt,.pt{background:transparent;border:none;color:var(--silver);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;padding:9px 18px;cursor:pointer;transition:all .2s}
+  .pt{padding:9px 14px;font-size:12px}
+  .pt.active{background:var(--gold-soft);color:var(--gold)}
   .mt.active#t-up{background:rgba(34,197,94,.14);color:var(--green)}
   .mt.active#t-down{background:rgba(239,68,68,.14);color:var(--red)}
+  .search-inner{max-width:1140px;margin:8px auto 0;padding:0 20px}
+  #card-search{width:100%;max-width:320px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-size:13px;padding:9px 13px;outline:none;font-family:'DM Sans',sans-serif}
+  #card-search:focus{border-color:var(--gold-line)}
+  .search-hint{font-size:11px;color:var(--muted);margin-left:10px}
   .section-h.up{color:var(--green)}.section-h.down{color:var(--red)}.section-h.signals{color:var(--gold)}
   .section-sub{font-size:13px;color:var(--muted);margin-bottom:12px}
   .rows{display:flex;flex-direction:column}
@@ -411,12 +452,18 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
   <div class="wrap">
     <div class="eyebrow">Market</div>
     <h1>The Australian TCG Market</h1>
-    <p class="intro">Every day we track price movements across 31 trading card games and convert them to Australian dollars, so you can see what is rising, what is falling, and where the value is, in one place.</p>
+    <p class="intro">Every day we track price movements across more than 30 trading card games and convert them to Australian dollars, so you can see what is rising, what is falling, and where the value is, in one place.</p>
     <span class="stamp"><span class="dot"></span>Updated ${esc(updated)}</span>
   </div>
 </header>
 
-<div class="filterbar"><div class="filter-inner">${gameTabs}</div></div>
+<div class="filterbar">
+  <div class="filter-inner">${gameTabs}</div>
+  <div class="search-inner">
+    <input type="text" id="card-search" placeholder="Jump to a card you own..." aria-label="Search movers by card name" oninput="searchCards(this.value)">
+    <span class="search-hint" id="search-hint"></span>
+  </div>
+</div>
 
 <main class="wrap">
   ${heroMover(hero)}
@@ -431,12 +478,17 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
       <button id="t-up" class="mt active" onclick="showDir('up')">&#9650; Rising</button>
       <button id="t-down" class="mt" onclick="showDir('down')">&#9660; Falling</button>
     </div>
+    <div class="period-toggle" role="group" aria-label="Time period">
+      <button id="p-7" class="pt active" onclick="showPeriod('7d')">7 days</button>
+      <button id="p-30" class="pt" onclick="showPeriod('30d')">30 days</button>
+    </div>
     <div class="section-sub" id="movers-sub">Rising hardest over the last seven days, in AUD.</div>
   </div>
-  <div class="rows" id="sec-up">${upHTML}</div>
-  <div class="empty" id="empty-up" style="display:none">No risers for this game right now.</div>
-  <div class="rows" id="sec-down" style="display:none">${downHTML}</div>
-  <div class="empty" id="empty-down" style="display:none">No fallers for this game right now.</div>
+  <div class="rows period-7d" id="sec-up-7">${up7}</div>
+  <div class="rows period-7d" id="sec-down-7" style="display:none">${down7}</div>
+  <div class="rows period-30d" id="sec-up-30" style="display:none">${up30}</div>
+  <div class="rows period-30d" id="sec-down-30" style="display:none">${down30}</div>
+  <div class="empty" id="empty-movers" style="display:none">No movers for this game in this period.</div>
 
   <div class="capture" id="capture">
     <h3>Get the weekly Top 5 Movers, free</h3>
@@ -467,35 +519,59 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
 </footer>
 
 <script>
-  var curDir='up', curGame='all';
+  var curDir='up', curGame='all', curPeriod='7d', curSearch='';
+  function activeSecId(){
+    return 'sec-'+(curDir==='up'?'up':'down')+'-'+(curPeriod==='7d'?'7':'30');
+  }
   function applyView(){
-    var up=document.getElementById('sec-up'), down=document.getElementById('sec-down');
-    up.style.display=curDir==='up'?'':'none';
-    down.style.display=curDir==='down'?'':'none';
+    // show only the active direction+period container
+    var ids=['sec-up-7','sec-down-7','sec-up-30','sec-down-30'];
+    var active=activeSecId();
+    for(var n=0;n<ids.length;n++){
+      document.getElementById(ids[n]).style.display = ids[n]===active?'':'none';
+    }
+    // toggle button states
     document.getElementById('t-up').classList.toggle('active',curDir==='up');
     document.getElementById('t-down').classList.toggle('active',curDir==='down');
+    document.getElementById('p-7').classList.toggle('active',curPeriod==='7d');
+    document.getElementById('p-30').classList.toggle('active',curPeriod==='30d');
+    var per=curPeriod==='7d'?'seven days':'30 days';
     document.getElementById('movers-sub').textContent=curDir==='up'
-      ?'Rising hardest over the last seven days, in AUD.'
-      :'Falling hardest over the last seven days. Clear stock before it drops further.';
+      ?'Rising hardest over the last '+per+', in AUD.'
+      :'Falling hardest over the last '+per+', in AUD. Clear stock before it drops further.';
     var tabs=document.querySelectorAll('.game-tab');
     for(var i=0;i<tabs.length;i++){tabs[i].classList.toggle('active',tabs[i].getAttribute('data-game')===curGame);}
-    var rows=document.querySelectorAll('.row');
+    // filter rows in the active container by game + search
+    var sec=document.getElementById(active);
+    var rows=sec.querySelectorAll('.row'), vis=0;
     for(var j=0;j<rows.length;j++){
-      var show=(curGame==='all'||rows[j].getAttribute('data-game')===curGame);
+      var g=rows[j].getAttribute('data-game');
+      var nm=(rows[j].getAttribute('data-name')||'').toLowerCase();
+      var okGame=(curGame==='all'||g===curGame);
+      var okSearch=(!curSearch||nm.indexOf(curSearch)!==-1);
+      var show=okGame&&okSearch;
       rows[j].style.display=show?'':'none';
+      if(show)vis++;
     }
+    // hero only on all-games, rising, 7d, no search
     var hm=document.querySelector('.hero-mover');
-    if(hm){hm.style.display=(curGame==='all'||hm.getAttribute('data-game')===curGame)?'':'none';}
-    document.getElementById('empty-up').style.display='none';
-    document.getElementById('empty-down').style.display='none';
-    var activeSec=curDir==='up'?up:down;
-    var activeEmpty=curDir==='up'?'empty-up':'empty-down';
-    var srows=activeSec.querySelectorAll('.row'),vis=0;
-    for(var k=0;k<srows.length;k++){if(srows[k].style.display!=='none')vis++;}
-    document.getElementById(activeEmpty).style.display=vis===0?'':'none';
+    if(hm){hm.style.display=(curGame==='all'&&curDir==='up'&&curPeriod==='7d'&&!curSearch)?'':'none';}
+    document.getElementById('empty-movers').style.display=vis===0?'':'none';
   }
   function showDir(d){curDir=d;applyView();gtag('event','market_dir_toggle',{event_label:d});}
+  function showPeriod(p){curPeriod=p;applyView();gtag('event','market_period_toggle',{event_label:p});}
   function filterGame(g){curGame=g;applyView();gtag('event','market_filter',{event_label:g});}
+  var searchTimer=null;
+  function searchCards(v){
+    curSearch=(v||'').trim().toLowerCase();
+    var hint=document.getElementById('search-hint');
+    if(searchTimer)clearTimeout(searchTimer);
+    searchTimer=setTimeout(function(){
+      applyView();
+      if(curSearch){hint.textContent='Searching movers';}else{hint.textContent='';}
+      gtag('event','market_search');
+    },180);
+  }
   (function(){
     var f=document.getElementById('cap-form');if(!f)return;
     f.addEventListener('submit',async function(e){
@@ -518,45 +594,52 @@ function renderPage({ gainers, losers, buySignals, sellSignals, updated }) {
 }
 
 // ---------- handler ----------
+async function buildPeriod(period) {
+  // MTG via snapshots + every other game via its cards table, in parallel
+  const tasks = [
+    fetchMTGTopMovers('up', 10, period),
+    fetchMTGTopMovers('down', 10, period),
+    ...FANOUT_GAMES.flatMap(g => [
+      fetchTopMovers(g, 'gainers', 4, period),
+      fetchTopMovers(g, 'losers', 4, period),
+    ]),
+  ];
+  const res = await Promise.allSettled(tasks);
+  const v = i => res[i].status === 'fulfilled' ? res[i].value : [];
+  const ups = [v(0)], downs = [v(1)];
+  for (let k = 0; k < FANOUT_GAMES.length; k++) {
+    ups.push(v(2 + k * 2));
+    downs.push(v(3 + k * 2));
+  }
+  const gainers = ups.flat().filter(c => parseFloat(c.change7d) >= 0.1)
+    .sort((a, b) => b.change7d - a.change7d);
+  const losers = downs.flat().filter(c => parseFloat(c.change7d) <= -0.1)
+    .sort((a, b) => a.change7d - b.change7d);
+  return { gainers, losers };
+}
+
 export default async (req) => {
   const updated = new Date().toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 
-  const results = await Promise.allSettled([
-    fetchMTGTopMovers('up', 8),
-    fetchMTGTopMovers('down', 8),
-    fetchMTGBuySignals(8),
-    fetchMTGSellSignals(8),
-    fetchTopMovers('pokemon', 'gainers', 5), fetchTopMovers('pokemon', 'losers', 5),
-    fetchTopMovers('yugioh', 'gainers', 5), fetchTopMovers('yugioh', 'losers', 5),
-    fetchTopMovers('lorcana', 'gainers', 5), fetchTopMovers('lorcana', 'losers', 5),
-    fetchTopMovers('onepiece', 'gainers', 5), fetchTopMovers('onepiece', 'losers', 5),
-    fetchTopMovers('dragonball', 'gainers', 5), fetchTopMovers('dragonball', 'losers', 5),
-    fetchTopMovers('starwars', 'gainers', 5), fetchTopMovers('starwars', 'losers', 5),
-    fetchTopMovers('riftbound', 'gainers', 5), fetchTopMovers('riftbound', 'losers', 5),
+  const [p7, p30, buyRes, sellRes] = await Promise.all([
+    buildPeriod('7d'),
+    buildPeriod('30d'),
+    fetchMTGBuySignals(8).catch(() => []),
+    fetchMTGSellSignals(8).catch(() => []),
   ]);
-  const val = i => results[i].status === 'fulfilled' ? results[i].value : [];
+  const buySignals = buyRes || [];
+  const sellSignals = sellRes || [];
 
-  // Only show genuine movers. A 0% row is not a mover; drop it.
-  // This also filters out non-MTG feed rows that arrive with no change data.
-  const gainers = [val(0), val(4), val(6), val(8), val(10), val(12), val(14), val(16)]
-    .flat().filter(c => parseFloat(c.change7d) >= 0.1)
-    .sort((a, b) => Math.abs(b.change7d) - Math.abs(a.change7d));
-  const losers = [val(1), val(5), val(7), val(9), val(11), val(13), val(15), val(17)]
-    .flat().filter(c => parseFloat(c.change7d) <= -0.1)
-    .sort((a, b) => a.change7d - b.change7d);
-  const buySignals = val(2);
-  const sellSignals = val(3);
-
-  // Attach sparklines for MTG cards across all sections (one batched query)
-  const mtgIds = [...gainers, ...losers, ...buySignals, ...sellSignals]
+  // Sparklines for MTG cards across the visible 7d set + signals (one batched query)
+  const mtgIds = [...p7.gainers, ...p7.losers, ...p30.gainers, ...p30.losers, ...buySignals, ...sellSignals]
     .filter(c => c.game === 'mtg' && c.scryfall_id)
     .map(c => c.scryfall_id);
   const sparkMap = await fetchSparklines([...new Set(mtgIds)]);
-  [...gainers, ...losers, ...buySignals, ...sellSignals].forEach(c => {
+  [...p7.gainers, ...p7.losers, ...p30.gainers, ...p30.losers, ...buySignals, ...sellSignals].forEach(c => {
     if (c.game === 'mtg' && c.scryfall_id && sparkMap[c.scryfall_id]) c.spark = sparkMap[c.scryfall_id];
   });
 
-  const html = renderPage({ gainers, losers, buySignals, sellSignals, updated });
+  const html = renderPage({ p7, p30, buySignals, sellSignals, updated });
 
   return new Response(html, {
     status: 200,
