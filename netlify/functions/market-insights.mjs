@@ -416,6 +416,9 @@ function renderPage({ p7, p30, buySignals, sellSignals, updated }) {
   .capture .msg{font-size:12px;color:var(--silver);margin-top:10px;min-height:15px}
   .lockwrap{position:relative;margin-top:6px}
   .upsell{background:var(--bg2);border:1px solid var(--gold-line);border-radius:var(--radius);padding:26px;text-align:center;margin:10px 0 0}
+  .signals-gate{position:relative;overflow:hidden;border-radius:12px}
+  .signals-gate .rows{filter:blur(4px);pointer-events:none;user-select:none;opacity:0.6}
+  .upsell-sub{font-size:12px;color:var(--muted);margin-top:8px;text-align:center}
   .upsell h3{font-family:'Cinzel',serif;font-size:20px;margin-bottom:8px;color:var(--gold)}
   .upsell p{font-size:14px;color:var(--silver);max-width:520px;margin:0 auto 16px}
   .btn-gold{display:inline-block;background:var(--gold);color:#080b12;font-weight:700;font-size:14px;padding:12px 26px;border-radius:8px}
@@ -502,12 +505,13 @@ function renderPage({ p7, p30, buySignals, sellSignals, updated }) {
 
   <div class="section-h signals">Buy and sell signals</div>
   <div class="section-sub">A taste of the signals. The full buy list and sell-side timing live in the Seller report.</div>
-  <div class="rows">${buyTease}${sellTease}</div>
+  <div class="signals-gate"><div class="rows">${buyTease}${sellTease}</div></div>
 
   <div class="upsell">
-    <h3>Unlock every signal</h3>
-    <p>The weekly Seller report gives you every buy signal, the full sell-side timing, the movers across your games, and the C3 Call, delivered to your inbox each week.</p>
-    <a href="/pricing" class="btn-gold" onclick="gtag('event','market_upsell_click',{event_label:'panel'})">See the Seller plan</a>
+    <h3>Unlock the full signal list</h3>
+    <p>C3 Seller Intelligence gives you every buy signal, full sell-side timing, repricing movers across all games, and the weekly report delivered to your inbox every Monday.</p>
+    <a href="https://buy.stripe.com/6oUfZg6iO16u81ycDBaIM00" class="btn-gold" target="_blank" rel="noopener" onclick="gtag('event','market_upsell_click',{event_label:'subscribe'})">Subscribe for AU$34.95/month &#8599;</a>
+    <p class="upsell-sub">Cancel any time. Billed monthly via Stripe.</p>
   </div>
 </main>
 
