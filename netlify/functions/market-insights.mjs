@@ -463,7 +463,7 @@ function renderPage({ p7, p30, buySignals, sellSignals, updated }) {
 <div class="filterbar">
   <div class="filter-inner">${gameTabs}</div>
   <div class="search-inner">
-    <input type="text" id="card-search" placeholder="Jump to a card you own..." aria-label="Search movers by card name" oninput="searchCards(this.value)">
+    <input type="text" id="card-search" placeholder="Search by card name..." aria-label="Search movers by card name" oninput="searchCards(this.value)">
     <span class="search-hint" id="search-hint"></span>
   </div>
 </div>
