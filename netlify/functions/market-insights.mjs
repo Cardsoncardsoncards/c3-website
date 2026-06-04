@@ -510,7 +510,7 @@ function renderPage({ p7, p30, buySignals, sellSignals, updated }) {
   <div class="upsell">
     <h3>Unlock the full signal list</h3>
     <p>C3 Seller Intelligence gives you every buy signal, full sell-side timing, repricing movers across all games, and the weekly report delivered to your inbox every Monday.</p>
-    <a href="https://buy.stripe.com/eVq5kCfTodTg81y1YXaIM01" class="btn-gold" target="_blank" rel="noopener" onclick="gtag('event','market_upsell_click',{event_label:'subscribe'})">Subscribe for AU$34.95/month &#8599;</a>
+    <a href="https://buy.stripe.com/eVq5kCfTodTg81y1YXaIM01" class="btn-gold" target="_blank" rel="noopener" onclick="gtag('event','market_upsell_click',{event_label:'subscribe'})">Subscribe for AU$14.95/month &#8599;</a>
     <p class="upsell-sub">Cancel any time. Billed monthly via Stripe.</p>
   </div>
 </main>
