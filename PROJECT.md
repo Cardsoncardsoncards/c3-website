@@ -1,6 +1,6 @@
 # PROJECT.md -- C3 Build Plan
 # Cards on Cards on Cards (cardsoncardsoncards.com.au)
-# Last updated: 29 May 2026
+# Last updated: 4 June 2026
 #
 # HOW TO USE THIS FILE:
 # - Read this file at session start to identify the next incomplete item
@@ -197,6 +197,12 @@ Work through Critical first, then High, then Medium. Do not start Phase 4 featur
 - [ ] Pokemon hub: browser-verify set links after s.slug||s.id fix
 - [ ] sync_events INSERT: add to end of each background sync function (approx 30 files) so audit trail builds
 - [ ] yugioh-set-page.mjs: confirm AbortController is present (status unverified)
+- [x] Fix ebayToken [] fallback to null in onepiece-card-page.mjs and riftbound-card-page.mjs (line 88)
+- [x] Stripe AU$14.95 founding member product created, payment links updated in market-insights.mjs and pricing.html
+- [x] MTG price change function rewritten with LATERAL subquery, pg_cron scheduled 20:00 UTC nightly
+- [x] All 7 sibling price change functions refactored to use <= date matching
+- [x] generate-weekly-report.mjs deployed via Resend, confirmed working end to end (1 subscriber + preview)
+- [x] Stripe CLI installed, webhook confirmed active, test mode limitation noted
 
 ---
 

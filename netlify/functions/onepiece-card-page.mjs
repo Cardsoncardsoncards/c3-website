@@ -85,7 +85,7 @@ async function handleSetPage(setSlug, htmlHeaders) {
     getEbayToken()
   ]);
   const sets = _psr0.status === 'fulfilled' ? _psr0.value : [];
-  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
+  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : null;
 
   if (!sets || !sets[0]) return new Response(setNotFoundPage(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   const set = sets[0];
@@ -248,7 +248,7 @@ export default async (req) => {
       (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null)
     ]);
   const relatedCards = _psr0.status === 'fulfilled' ? _psr0.value : [];
-  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
+  const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : null;
 
     const ebayListings = ebayToken ? await getEbayListings(card.name, ebayToken).catch(() => []) : [];
 
