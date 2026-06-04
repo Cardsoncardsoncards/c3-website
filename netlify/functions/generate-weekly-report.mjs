@@ -328,11 +328,22 @@ export default async (req)=>{
     return new Response(JSON.stringify({ok:false,error:'MAILERLITE_API_KEY not set'}),{status:500,headers:{'Content-Type':'application/json'}});
   }
   const baseCounts={up:up.length,down:down.length,buy:buy.length,sell:sell.length};
+  const PREVIEW_EMAIL='ccc.squadhelp@gmail.com';
+  const previewItem={
+    email:PREVIEW_EMAIL,
+    subject:`[PREVIEW] ${callTitle}`,
+    html:htmlEmail.split('{$unsubscribe}').join(`mailto:ccc.squadhelp@gmail.com?subject=Unsubscribe`),
+    text:text.split('{$unsubscribe}').join('mailto:ccc.squadhelp@gmail.com?subject=Unsubscribe'),
+  };
+  try{ await sendBatch([previewItem]); }catch(e){ /* preview failure is non-fatal */ }
   if(subscribers.length===0){
     return new Response(JSON.stringify({
       ok:true,
-      message:'No active paid subscribers found, nothing sent.',
-      counts:{recipients:0,sent:0,failed:0,...baseCounts},
+      sent:0,
+      skipped:0,
+      selfPreview:true,
+      subscriberCount:0,
+      message:'Sent to 0 paid subscribers. Preview sent to ccc.squadhelp@gmail.com.',
     }),{status:200,headers:{'Content-Type':'application/json'}});
   }
 
