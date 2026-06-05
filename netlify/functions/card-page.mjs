@@ -252,7 +252,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     return ' The price has been stable recently.';
   })();
   const edhStr = card.edhrec_rank ? (card.edhrec_rank <= 200 ? ' It is a Commander format staple.' : card.edhrec_rank <= 1000 ? ' It sees regular play in Commander.' : '') : '';
-  const contextPara = `<div class="card-context"><strong>${card.name}</strong> is a ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1)+' ' : ''}${card.type_line || 'card'} from <strong>${card.set_name}</strong>.${edhStr} Legal in ${legalStr}.${trendStr} Prices shown are estimates based on US market data (Scryfall/TCGPlayer) converted to AUD. <a href="${ebayAllUrl}" target="_blank" rel="noopener" style="color:var(--accent)">Check current eBay AU prices →</a></div>`;
+  const contextPara = `<div class="card-context"><strong>${card.name}</strong> is a ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1)+' ' : ''}${card.type_line || 'card'} from <strong>${card.set_name}</strong>.${edhStr} Legal in ${legalStr}.${trendStr} Prices shown are TCGPlayer market price, converted to AUD at the daily exchange rate. TCGPlayer reflects US market conditions and may differ from Australian resale prices. <a href="${ebayAllUrl}" target="_blank" rel="noopener" style="color:var(--accent)">Check current eBay AU prices →</a></div>`;
 
   // Share bar
   const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}`);
