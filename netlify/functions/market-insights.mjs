@@ -503,8 +503,8 @@ function renderPage({ p7, p30, buySignals, sellSignals, updated }) {
     <div class="msg" id="cap-msg"></div>
   </div>
 
-  <div class="section-h signals">Buy and sell signals</div>
-  <div class="section-sub">A taste of the signals. The full buy list and sell-side timing live in the Seller report.</div>
+  <div class="section-h signals">Buy and sell signals (52-week range)</div>
+  <div class="section-sub">Cards near their 52-week low or high based on AU price history. Full signal list in the Seller report.</div>
   <div class="signals-gate"><div class="rows">${buyTease}${sellTease}</div></div>
 
   <div class="upsell">

@@ -28,13 +28,20 @@ const GAME_CONFIG = {
 const MTG_FORMATS = ['standard','pioneer','modern','legacy','vintage','commander'];
 
 async function supabaseGet(path) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 8000);
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+      signal: ctrl.signal
     });
+    clearTimeout(timer);
     if (!res.ok) return [];
     return await res.json();
-  } catch { return []; }
+  } catch {
+    clearTimeout(timer);
+    return [];
+  }
 }
 
 async function getLiveRate() {
@@ -355,9 +362,17 @@ function colorPips(colorIdentity) {
 }
 
 function renderSlots(cards, allTokens, usdToAud) {
+  const FREE_SLOTS = 2;
   const slots = Array(5).fill(null).map((_, i) => cards[i] || null);
   return slots.map((card, i) => {
     if (!card) {
+      if (i >= FREE_SLOTS) {
+        return `<div class="slot slot-locked" id="slot-${i}">
+          <div class="slot-plus">&#x1F512;</div>
+          <div class="slot-add-label">Subscribers only</div>
+          <a href="https://buy.stripe.com/eVq5kCfTodTg81y1YXaIM01" class="slot-subscribe-cta" target="_blank" rel="noopener">Subscribe AU$14.95/month</a>
+        </div>`;
+      }
       return `<div class="slot slot-empty" id="slot-${i}" data-action="focus-search">
         <div class="slot-plus">+</div>
         <div class="slot-add-label">Add a card</div>
@@ -790,6 +805,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
     .slot-empty:hover{border-color:var(--accent);background:rgba(201,168,76,.04)}
     .slot-filled{border-style:solid;border-color:var(--game-color,var(--border));background:var(--bg2)}
     .slot-plus{font-size:28px;color:var(--text3)}
+    .slot-locked{pointer-events:none;opacity:0.6;cursor:default}.slot-locked a.slot-subscribe-cta{pointer-events:all;display:block;margin-top:8px;font-size:11px;color:var(--gold, #C9A84C);text-decoration:underline;text-align:center}
     .slot-add-label{font-size:12px;color:var(--text3);text-align:center}
     .slot-remove{position:absolute;top:8px;right:10px;font-size:18px;color:var(--text3);line-height:1;transition:color .15s;text-decoration:none}
     .slot-remove:hover{color:var(--red);text-decoration:none}
