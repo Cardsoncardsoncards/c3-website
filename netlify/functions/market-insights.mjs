@@ -182,7 +182,7 @@ async function fetchMTGTopMovers(direction = 'up', limit = 10, period = '7d') {
 
 async function fetchMTGBuySignals(limit = 8) {
   try {
-    const data = await supabaseGet(`mtg_price_snapshots?price_52w_low_aud=gt.1&order=price_aud.asc&limit=50&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
+    const data = await supabaseGet(`mtg_price_snapshots?price_52w_low_aud=gt.1&price_aud=gte.5&order=price_aud.desc&limit=50&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
     const signals = data.filter(s => {
       if (!s.price_52w_high_aud || !s.price_52w_low_aud) return false;
       const range = s.price_52w_high_aud - s.price_52w_low_aud;
@@ -207,7 +207,7 @@ async function fetchMTGBuySignals(limit = 8) {
 
 async function fetchMTGSellSignals(limit = 8) {
   try {
-    const data = await supabaseGet(`mtg_price_snapshots?price_52w_high_aud=gt.2&order=price_aud.desc&limit=50&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
+    const data = await supabaseGet(`mtg_price_snapshots?price_52w_high_aud=gt.2&price_aud=gte.5&order=price_aud.desc&limit=50&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
     const signals = data.filter(s => {
       if (!s.price_52w_high_aud || !s.price_52w_low_aud) return false;
       const range = s.price_52w_high_aud - s.price_52w_low_aud;
