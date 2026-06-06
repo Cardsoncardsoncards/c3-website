@@ -1,6 +1,6 @@
 // netlify/functions/market-insights.mjs
 // C3 Market, free public TCG price movers hub at /market
-// Free: top movers up and down across games. Teased: buy and sell signals (Seller report).
+// Free: top movers up and down across games. Teased: buy and sell signals (Seller report). v2
 // Data: per-game Supabase cards tables (price_change_7d) + mtg_price_snapshots for MTG.
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
