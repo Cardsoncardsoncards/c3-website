@@ -104,15 +104,14 @@ async function fetchTopMovers(game, direction = 'gainers', limit = 10, period = 
   const up = direction === 'gainers';
   const col = period === '30d' ? 'price_change_30d' : 'price_change_7d';
   const order = up ? `${col}.desc` : `${col}.asc`;
-  const filter = up ? `${col}=gte.1` : `${col}=lte.-1`;
+  const filter = up ? `${col}=gte.2` : `${col}=lte.-2`;
   const rows = await supabaseGet(
-    `${game}_cards?price_aud=gt.0.5&rarity=not.is.null&rarity=neq.None&${filter}&order=${order}&limit=${limit + 30}` +
+    `${game}_cards?price_aud=gt.0.25&rarity=not.is.null&rarity=neq.None&${filter}&order=${order}&limit=${limit + 30}` +
     `&select=name,slug,set_name,rarity,image_url,price_aud,${col}`
   );
   if (!Array.isArray(rows) || !rows.length) return [];
   return rows
     .filter(c => Math.abs(parseFloat(c[col])) <= MOVER_CAP)
-    .filter(c => Math.abs(parseFloat(c.price_aud) * parseFloat(c[col]) / 100) >= 0.50)
     .slice(0, limit)
     .map(c => ({
       name: c.name || '',
