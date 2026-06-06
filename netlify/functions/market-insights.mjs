@@ -40,13 +40,20 @@ const GAME_CONFIG = {
 };
 
 // Top 8 shown as tabs. Rest go in dropdown.
-const PRIMARY_GAMES = ['mtg','pokemon','yugioh','lorcana','onepiece','dragonball','digimon','finalfantasy'];
+const PRIMARY_GAMES = ['mtg','pokemon','yugioh','lorcana','onepiece','dragonball','starwars','riftbound'];
 
 function esc(s) {
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+// "#C9A84C" -> "201,168,76" so tabs can tint via rgba(var(--tc), alpha)
+function hexRgb(hex) {
+  const h = String(hex || '').replace('#', '');
+  if (h.length !== 6) return '160,168,192';
+  return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)).join(',');
 }
 
 export default async (req) => {
@@ -56,7 +63,8 @@ export default async (req) => {
 
   const primaryTabs = ['all', ...PRIMARY_GAMES].map(g => {
     const label = g === 'all' ? 'All games' : GAME_CONFIG[g].label;
-    return `<button class="game-tab ${g === 'all' ? 'active' : ''}" data-game="${g}" onclick="filterGame('${g}')">${esc(label)}</button>`;
+    const tint = g === 'all' ? '' : ` style="--tc:${hexRgb(GAME_CONFIG[g].color)}"`;
+    return `<button class="game-tab ${g === 'all' ? 'active' : ''}" data-game="${g}"${tint} onclick="filterGame('${g}')">${esc(label)}</button>`;
   }).join('');
 
   const dropdownOptions = Object.entries(GAME_CONFIG)
@@ -127,7 +135,8 @@ export default async (req) => {
   .filterbar{position:sticky;top:57px;z-index:90;background:rgba(8,11,18,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:11px 0}
   .filter-inner{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;max-width:1140px;margin:0 auto;padding:0 20px;align-items:center}
   .filter-inner::-webkit-scrollbar{display:none}
-  .game-tab{flex-shrink:0;background:transparent;border:1px solid var(--border);color:var(--silver);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:7px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:all .2s}
+  .game-tab{flex-shrink:0;background:rgba(var(--tc,160,168,192),.12);border:1px solid rgba(var(--tc,160,168,192),.5);color:var(--silver);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:7px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:all .2s}
+  .game-tab:hover{background:rgba(var(--tc,160,168,192),.2);border-color:rgba(var(--tc,160,168,192),.75);color:var(--white)}
   .game-tab.active{background:var(--gold-soft);border-color:var(--gold-line);color:var(--gold)}
   .more-games{background:var(--bg2);border:1px solid var(--border);color:var(--silver);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:7px 14px;border-radius:20px;cursor:pointer;flex-shrink:0}
   .more-games:focus{outline:none;border-color:var(--gold-line)}
@@ -141,6 +150,7 @@ export default async (req) => {
   .hm-cta{margin-top:6px}
   .section-h{font-family:'Cinzel',serif;font-size:18px;font-weight:700;margin:30px 0 6px;display:flex;align-items:center;gap:9px}
   .movers-head{margin:30px 0 12px}
+  .filter-hint{font-size:12px;color:var(--gold);opacity:.55;margin:20px 0 0;letter-spacing:.02em}
   .movers-toggle,.period-toggle{display:inline-flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;vertical-align:middle}
   .period-toggle{margin-left:10px}
   .mt,.pt{background:transparent;border:none;color:var(--silver);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;padding:9px 18px;cursor:pointer;transition:all .2s}
@@ -265,6 +275,8 @@ export default async (req) => {
     <div class="lbl">The C3 Call</div>
     <p id="call-body">Loading market data...</p>
   </div>
+
+  <div class="filter-hint">Select a game above to filter by TCG, or browse all movers below.</div>
 
   <div class="movers-head">
     <div class="movers-toggle" role="group" aria-label="Mover direction">
