@@ -380,7 +380,7 @@ export default async (req) => {
       +'<div class="row-meta">'+gpill+setSpan+rarSpan+'</div></div>'
       +'<div class="row-spark">'+spark+'</div>'
       +'<div class="row-price">'+formatAUD(card.priceAud)+badge+'</div>'
-      +'<div class="row-cta"><a href="'+esc(ebayUrl(card.name,card.game))+'" target="_blank" rel="noopener" class="ebay" onclick="gtag(\'event\',\'market_mover_click\',{event_label:\'ebay\'})">eBay AU &#8599;</a>'+cmpLink+'</div>'
+      +'<div class="row-cta"><a href="'+esc(ebayUrl(card.name,card.game))+'" target="_blank" rel="noopener" class="ebay" onclick="gtag(\\'event\\',\\'market_mover_click\\',{event_label:\\'ebay\\'})">eBay AU &#8599;</a>'+cmpLink+'</div>'
       +'</div>';
   }
   function heroHTML(card){
@@ -398,7 +398,7 @@ export default async (req) => {
       +'<div class="hm-name">'+nameHtml+'</div>'
       +'<div class="row-meta"><span class="gpill" style="background:'+cfg.color+'22;color:'+cfg.color+';border-color:'+cfg.color+'55">'+esc(cfg.label)+'</span>'+(card.setName?'<span class="setn">'+esc(card.setName)+'</span>':'')+'</div>'
       +'<div class="hm-stats"><span class="hm-price">'+formatAUD(card.priceAud)+'</span><span class="badge '+(up?'up':'down')+' big">'+pctStr(card.change7d)+' 7d</span>'+spark+'</div>'
-      +'<div class="hm-cta"><a href="'+esc(ebayUrl(card.name,card.game))+'" target="_blank" rel="noopener" class="ebay" onclick="gtag(\'event\',\'market_mover_click\',{event_label:\'hero_ebay\'})">See it on eBay AU &#8599;</a></div>'
+      +'<div class="hm-cta"><a href="'+esc(ebayUrl(card.name,card.game))+'" target="_blank" rel="noopener" class="ebay" onclick="gtag(\\'event\\',\\'market_mover_click\\',{event_label:\\'hero_ebay\\'})">See it on eBay AU &#8599;</a></div>'
       +'</div></div>';
   }
   function skeletonRows(n){
@@ -418,7 +418,7 @@ export default async (req) => {
     if(!list||!list.length){
       heroZone.innerHTML='';
       moversZone.innerHTML='<div class="empty">No movers for this game in this period.</div>';
-      callBody.textContent='The full market read and this week\'s sell-side timing are in the weekly Seller report.';
+      callBody.textContent='The full market read and this week\\'s sell-side timing are in the weekly Seller report.';
       return;
     }
     // Hero: all-games rising 7d only, minimum AU$5
@@ -427,7 +427,7 @@ export default async (req) => {
       for(var i=0;i<list.length;i++){if(parseFloat(list[i].priceAud)>=5){hero=list[i];break;}}
       heroZone.innerHTML=heroHTML(hero);
       if(hero){
-        callBody.innerHTML='This week the market is led by '+esc(hero.name)+', '+(parseFloat(hero.change7d)>=0?'up':'down')+' '+Math.abs(parseFloat(hero.change7d)).toFixed(1)+' per cent in seven days. The full read, what it means and where to list, is in the weekly Seller report. <a href="/pricing" onclick="gtag(\'event\',\'market_upsell_click\',{event_label:\'call\'})">See the Seller report &#8594;</a>';
+        callBody.innerHTML='This week the market is led by '+esc(hero.name)+', '+(parseFloat(hero.change7d)>=0?'up':'down')+' '+Math.abs(parseFloat(hero.change7d)).toFixed(1)+' per cent in seven days. The full read, what it means and where to list, is in the weekly Seller report. <a href="/pricing" onclick="gtag(\\'event\\',\\'market_upsell_click\\',{event_label:\\'call\\'})">See the Seller report &#8594;</a>';
       }
     } else {
       heroZone.innerHTML='';
