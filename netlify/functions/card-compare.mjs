@@ -669,7 +669,7 @@ function renderEmptyState() {
   return `<div class="empty-state">
     <div class="empty-icon">⚖️</div>
     <h2>Compare Cards Across All 8 TCGs</h2>
-    <p>Search above to compare up to 5 cards. See AUD prices, trends, format legality and who wins on value.</p>
+    <p>Search above to compare up to 2 cards free. Subscribers unlock all 5 slots. See AUD prices, trends, format legality and who wins on value.</p>
     <div class="suggestions-label">See it in action — try a comparison</div>
     <div class="suggestions-grid">${suggestionsHTML}</div>
     <div id="recent-comparisons" style="margin-top:24px;display:none">
@@ -1016,7 +1016,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
 <div class="page-header">
   <div>
     <h1 class="page-title">⚖️ C3 Card Compare</h1>
-    <p class="page-subtitle">Compare up to 5 cards across all 8 TCGs. AUD prices, updated daily. Live rate: 1 USD = AU$${usdToAud.toFixed(4)}</p>
+    <p class="page-subtitle">Compare up to 2 cards free across all 8 TCGs. AUD prices, updated daily. Live rate: 1 USD = AU$${usdToAud.toFixed(4)}</p>
   </div>
   <div class="page-controls">
     <div class="currency-toggle" role="group" aria-label="Currency selector">
@@ -1032,7 +1032,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
 </div>
 
 <div class="page-label-row">
-  <span class="page-label-item">⚖️ Compare up to 5 cards</span>
+  <span class="page-label-item">⚖️ Compare up to 2 cards free</span>
   <span class="page-label-item">💰 AUD prices updated daily</span>
   <span class="page-label-item">🌏 8 TCGs supported</span>
   <span class="page-label-item">📊 Buy &amp; sell pricing</span>

@@ -655,7 +655,7 @@ export default async (req) => {
     status: 200,
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'no-store',
+      'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
     }
   });
 };

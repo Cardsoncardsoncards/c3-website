@@ -9,6 +9,7 @@ const EBAY_CLIENT_ID = Netlify.env.get('EBAY_CLIENT_ID');
 const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
 const EPN_CAMPID = '5339146789';
 const AMAZON_TAG = 'blasdigital-22';
+const FX_FALLBACK = 1.58; // AUD/USD fallback rate - update periodically
 
 // --- Helpers ---
 
@@ -197,9 +198,9 @@ function esc(str) {
 
 function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings }) {
   const legalities = formatLegalities(card.legalities);
-  const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * 1.58 : null);
-  const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * 1.58 : null;
-  const priceAudEtched = card.price_usd_etched ? card.price_usd_etched * 1.58 : null;
+  const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * FX_FALLBACK : null);
+  const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * FX_FALLBACK : null;
+  const priceAudEtched = card.price_usd_etched ? card.price_usd_etched * FX_FALLBACK : null;
   const latestSnap = snapshots[snapshots.length - 1];
   const high52w = latestSnap?.price_52w_high_aud;
   const low52w = latestSnap?.price_52w_low_aud;
@@ -275,7 +276,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
         <a href="/cards/mtg/${c.slug}" class="mini-card">
           ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" loading="lazy">` : `<div class="mini-card-placeholder">${c.name}</div>`}
           <div class="mini-card-name">${c.name}</div>
-          <div class="mini-card-price">${c.price_usd ? formatAUD(c.price_usd * 1.58) : 'N/A'}</div>
+          <div class="mini-card-price">${c.price_usd ? formatAUD(c.price_usd * FX_FALLBACK) : 'N/A'}</div>
         </a>`).join('')}
     </div>
   </section>` : '';
@@ -767,8 +768,8 @@ ${otherPrintings && otherPrintings.length > 1 ? `
       <button class="printings-arrow" id="arrow-prev" onclick="scrollPrintings(-1)" aria-label="Previous printing">&#8249;</button>
       <div class="printings-track" id="printings-track">
         ${otherPrintings.map((p, i) => {
-          const audNF = p.price_aud > 0 ? 'AU$' + parseFloat(p.price_aud).toFixed(2) : p.price_usd ? '~AU$' + (p.price_usd * 1.58).toFixed(2) : '';
-          const audFoil = p.price_usd_foil ? '~AU$' + (p.price_usd_foil * 1.58).toFixed(2) : '';
+          const audNF = p.price_aud > 0 ? 'AU$' + parseFloat(p.price_aud).toFixed(2) : p.price_usd ? '~AU$' + (p.price_usd * FX_FALLBACK).toFixed(2) : '';
+          const audFoil = p.price_usd_foil ? '~AU$' + (p.price_usd_foil * FX_FALLBACK).toFixed(2) : '';
           return `<div class="printing-thumb${p.scryfall_id === card.scryfall_id ? ' active' : ''}"
             data-idx="${i}"
             data-img="${p.image_uri_normal || p.image_uri_small || ''}"
@@ -789,7 +790,7 @@ ${otherPrintings && otherPrintings.length > 1 ? `
     </div>
     <div class="printing-info" id="printing-info">
       <strong>${card.set_name}</strong>
-      #${card.collector_number} · ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1) : ''}${card.price_aud > 0 ? ' · AU$' + parseFloat(card.price_aud).toFixed(2) : card.price_usd ? ' · ~AU$' + (card.price_usd * 1.58).toFixed(2) : ''}
+      #${card.collector_number} · ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1) : ''}${card.price_aud > 0 ? ' · AU$' + parseFloat(card.price_aud).toFixed(2) : card.price_usd ? ' · ~AU$' + (card.price_usd * FX_FALLBACK).toFixed(2) : ''}
     </div>
   </div>
 </div>` : ''}

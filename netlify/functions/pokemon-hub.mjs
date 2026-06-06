@@ -363,7 +363,7 @@ export default async (req) => {
         const yearNum = s.release_date ? parseInt(s.release_date.slice(0,4)) : 0;
         const era = yearNum >= 2023 ? 'Scarlet and Violet' : yearNum >= 2020 ? 'Sword and Shield' : yearNum >= 2017 ? 'Sun and Moon' : yearNum >= 2013 ? 'XY' : yearNum >= 2011 ? 'Black and White' : 'Classic';
         const eraColor = yearNum >= 2023 ? '#4ADE80' : yearNum >= 2020 ? '#60A5FA' : yearNum >= 2017 ? '#A78BFA' : yearNum >= 2013 ? '#FB923C' : yearNum >= 2011 ? '#9CA3AF' : '#C9A84C';
-        return `<a href="/cards/pokemon/sets/${encodeURIComponent(s.slug||s.abbreviation||s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}" data-era="${era}" style="border-left:3px solid ${eraColor}">
+        return `<a href="/cards/pokemon/sets/${encodeURIComponent(s.slug||s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}" data-era="${era}" style="border-left:3px solid ${eraColor}">
         <span class="set-tile-name">${esc(name)}${newBadge}</span>
         <span class="set-tile-meta">${year}${s.card_count ? ' &middot; ' + s.card_count + ' cards' : ''}</span>
       </a>`;
