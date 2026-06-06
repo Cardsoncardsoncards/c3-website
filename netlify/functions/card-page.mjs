@@ -703,7 +703,7 @@ ${contextPara}
       </div>
 
       <div style="font-size:11px;color:var(--text2);font-family:sans-serif;margin:8px 0 14px">
-        Scryfall estimate · USD converted at ~1.58 AUD/USD · Updated daily
+        Scryfall estimate · USD to AUD · Updated daily
       </div>
 
       ${(high52w || low52w) ? `
@@ -739,7 +739,7 @@ ${contextPara}
 
       <div class="price-disclaimer" style="margin-top:14px">
         <strong style="color:var(--text);font-size:12px">How this price works:</strong><br>
-        The AUD price is a Scryfall USD estimate converted at ~1.58 AUD/USD. It reflects recent US market sales (TCGPlayer mid) and is updated daily. It is a reference, not a guaranteed buy or sell price. Australian eBay prices may vary.
+        The AUD price is a Scryfall USD estimate converted to Australian dollars. It reflects recent US market sales (TCGPlayer mid) and is updated daily. It is a reference, not a guaranteed buy or sell price. Australian eBay prices may vary.
         <a href="${ebayAllUrl}" target="_blank" rel="noopener" style="color:var(--accent);display:block;margin-top:6px">Check live eBay AU prices for ${card.name} →</a>
       </div>
     </div>
@@ -1024,7 +1024,7 @@ async function loadCKPrices() {
     if (!res.ok) return;
     const data = await res.json();
     if (!data || (!data.retail && !data.buylist)) return;
-    const RATE = 1.58;
+    const RATE = ${FX_FALLBACK};
     const block = document.getElementById('ck-price-block');
     const ckRetail = document.getElementById('ck-retail');
     const ckBuylist = document.getElementById('ck-buylist');
@@ -1354,7 +1354,6 @@ async function getExchangeRate() {
 export default async (req, context) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/mtg/', '').replace(/\/$/, '');
-  const AUD_RATE = await getExchangeRate();
 
   // Handle banned pages inline - Netlify resolves :slug+ before :format?
   if (slug === 'banned' || slug.startsWith('banned/')) {

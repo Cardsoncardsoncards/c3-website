@@ -57,10 +57,6 @@ function hexRgb(hex) {
 }
 
 export default async (req) => {
-  const updated = new Date().toLocaleDateString('en-AU', {
-    weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
-  });
-
   const primaryTabs = ['all', ...PRIMARY_GAMES].map(g => {
     const label = g === 'all' ? 'All games' : GAME_CONFIG[g].label;
     const tint = g === 'all' ? '' : ` style="--tc:${hexRgb(GAME_CONFIG[g].color)}"`;
@@ -254,7 +250,7 @@ export default async (req) => {
     <div class="eyebrow">Market</div>
     <h1>The Australian TCG Market</h1>
     <p class="intro">Every day we track price movements across more than 30 trading card games and convert them to Australian dollars, so you can see what is rising, what is falling, and where the value is, in one place.</p>
-    <span class="stamp"><span class="dot"></span>Updated ${esc(updated)}</span>
+    <span class="stamp"><span class="dot"></span>Updated daily</span>
   </div>
 </header>
 
@@ -385,7 +381,7 @@ export default async (req) => {
     var gpill='<span class="gpill" style="background:'+cfg.color+'22;color:'+cfg.color+';border-color:'+cfg.color+'55">'+esc(cfg.label)+'</span>';
     var setSpan=card.setName?'<span class="setn">'+esc(card.setName)+'</span>':'';
     var rarSpan=card.rarity?'<span class="rar">'+esc(card.rarity)+'</span>':'';
-    var cmpLink=card.slug?'<a href="/compare?cards='+esc(card.slug)+'" class="cmp">Compare</a>':'';
+    var cmpLink=card.slug?'<a href="/compare?cards='+esc(card.game+':'+card.slug)+'" class="cmp">Compare</a>':'';
     return '<div class="row" data-game="'+esc(card.game)+'" data-name="'+esc(card.name)+'">'
       +'<div class="row-img">'+img+'</div>'
       +'<div class="row-info"><div class="row-name">'+nameHtml+'</div>'
