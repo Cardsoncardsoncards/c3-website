@@ -171,6 +171,17 @@ nav{background:rgba(8,10,15,.97);border-bottom:1px solid var(--border);padding:1
 footer{border-top:1px solid var(--border);padding:40px 24px;text-align:center;font-size:12px;color:var(--text2)}
 footer a{color:var(--text2);margin:0 8px}
 footer a:hover{color:var(--white)}
+
+  /* C3 mobile hamburger nav */
+  .hamburger{display:none;background:transparent;border:1px solid #1e2235;color:#A0A8C0;padding:6px 11px;border-radius:6px;cursor:pointer;font-size:18px;line-height:1;flex-shrink:0}
+  .hamburger:focus{outline:none;border-color:#C9A84C}
+  @media(max-width:768px){
+    .hamburger{display:block}
+    .nav-inner{position:relative;flex-wrap:nowrap}
+    .nav-links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;flex-wrap:nowrap;gap:6px;background:rgba(8,11,18,.98);border:1px solid #1e2235;border-radius:10px;padding:12px;max-height:78vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 12px 32px rgba(0,0,0,.5)}
+    .nav-links.open{display:flex}
+    .nav-links .nav-link{width:100%;justify-content:flex-start;white-space:normal;font-size:13px;padding:12px 14px}
+  }
 </style>
 </head>
 <body>
@@ -182,6 +193,7 @@ footer a:hover{color:var(--white)}
       <img src="/c3logo.png" alt="C3 Logo">
       <span>Cards on Cards on Cards</span>
     </a>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
     <div class="nav-links">
       <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>

@@ -7,3 +7,7 @@ _site/
 scryfall-bulk.json
 !_site/cards.html  
 !_site/legal.html  
+
+# Local scratch files
+_dropped-blog-posts/
+task.txt
