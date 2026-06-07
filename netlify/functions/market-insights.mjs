@@ -60,7 +60,7 @@ export default async (req) => {
   const primaryTabs = ['all', ...PRIMARY_GAMES].map(g => {
     const label = g === 'all' ? 'All games' : GAME_CONFIG[g].label;
     const tint = g === 'all' ? '' : ` style="--tc:${hexRgb(GAME_CONFIG[g].color)}"`;
-    return `<button class="game-tab ${g === 'all' ? 'active' : ''}" data-game="${g}"${tint} onclick="filterGame('${g}')">${esc(label)}</button>`;
+    return `<button class="game-tab ${g === 'mtg' ? 'active' : ''}" data-game="${g}"${tint} onclick="filterGame('${g}')">${esc(label)}</button>`;
   }).join('');
 
   const dropdownOptions = Object.entries(GAME_CONFIG)
@@ -198,6 +198,11 @@ export default async (req) => {
   .upsell{background:var(--bg2);border:1px solid var(--gold-line);border-radius:var(--radius);padding:26px;text-align:center;margin:10px 0 0}
   .signals-gate{position:relative;overflow:hidden;border-radius:12px;margin-bottom:6px}
   .signals-gate .rows{filter:blur(4px);pointer-events:none;user-select:none;opacity:0.6}
+  .movers-gate{position:relative;overflow:hidden;border-radius:12px;margin-bottom:6px}
+  .movers-gate .rows-locked{filter:blur(5px);pointer-events:none;user-select:none;opacity:0.55}
+  .movers-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to bottom,transparent 0%,rgba(8,11,18,0.92) 40%,rgba(8,11,18,0.98) 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:20px;text-align:center;z-index:10}
+  .movers-overlay h4{font-family:'Cinzel',serif;font-size:16px;color:var(--gold);margin-bottom:6px}
+  .movers-overlay p{font-size:13px;color:var(--silver);margin-bottom:14px;max-width:400px}
   .upsell-sub{font-size:12px;color:var(--muted);margin-top:8px;text-align:center}
   .upsell h3{font-family:'Cinzel',serif;font-size:20px;margin-bottom:8px;color:var(--gold)}
   .upsell p{font-size:14px;color:var(--silver);max-width:520px;margin:0 auto 16px}
@@ -286,13 +291,15 @@ export default async (req) => {
     <div class="section-sub" id="movers-sub">Rising hardest over the last seven days, in AUD.</div>
   </div>
 
-  <div id="movers-zone">
+  <div id="movers-zone" style="margin-bottom:0">
     <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
     <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
     <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
     <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
     <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
   </div>
+
+  <div id="movers-gate-zone"></div>
 
   <div class="capture">
     <h3>Get the weekly Top 5 Movers, free</h3>
@@ -333,7 +340,7 @@ export default async (req) => {
 (function(){
   var GAME_CONFIG = ${gameConfigJson};
   var EPN = '${EPN_CAMPID}';
-  var curDir = 'up', curGame = 'all', curPeriod = '7d';
+  var curDir = 'up', curGame = 'mtg', curPeriod = '7d';
   var cache = {};
   var loading = false;
 
@@ -426,6 +433,7 @@ export default async (req) => {
     if(!list||!list.length){
       heroZone.innerHTML='';
       moversZone.innerHTML='<div class="empty">No movers for this game in this period.</div>';
+      document.getElementById('movers-gate-zone').innerHTML='';
       callBody.textContent='The full market read and this week\\'s sell-side timing are in the weekly Seller report.';
       return;
     }
@@ -440,7 +448,24 @@ export default async (req) => {
     } else {
       heroZone.innerHTML='';
     }
-    moversZone.innerHTML=list.map(function(c){return cardRowHTML(c,'movers');}).join('');
+    var FREE_ROWS = 3;
+    var freeRows = list.slice(0, FREE_ROWS);
+    var lockedRows = list.slice(FREE_ROWS);
+    moversZone.innerHTML = '<div class="rows">' + freeRows.map(function(c){return cardRowHTML(c,'movers');}).join('') + '</div>';
+    var gateZone = document.getElementById('movers-gate-zone');
+    if (lockedRows.length > 0) {
+      gateZone.innerHTML =
+        '<div class="movers-gate">' +
+          '<div class="rows-locked rows">' + lockedRows.map(function(c){return cardRowHTML(c,'movers');}).join('') + '</div>' +
+          '<div class="movers-overlay">' +
+            '<h4>Unlock the full movers list</h4>' +
+            '<p>C3 Seller Intelligence gives you all movers across every game, buy and sell signals, and the weekly AU market report.</p>' +
+            '<a href="https://buy.stripe.com/eVq5kCfTodTg81y1YXaIM01" class="btn-gold" target="_blank" rel="noopener" onclick="gtag(\\'event\\',\\'market_upsell_click\\',{event_label:\\'movers_gate\\'})">Subscribe for AU&#36;14.95/month &#8599;</a>' +
+          '</div>' +
+        '</div>';
+    } else {
+      gateZone.innerHTML = '';
+    }
   }
 
   function loadData(game,period){
@@ -459,6 +484,7 @@ export default async (req) => {
       .catch(function(){
         loading=false;
         document.getElementById('movers-zone').innerHTML='<div class="empty">Could not load data. Try refreshing.</div>';
+        document.getElementById('movers-gate-zone').innerHTML='';
       });
   }
 
@@ -526,7 +552,7 @@ export default async (req) => {
 
   // Boot
   updateToggles();
-  loadData('all','7d');
+  loadData('mtg','7d');
   loadSignals();
 })();
 </script>
