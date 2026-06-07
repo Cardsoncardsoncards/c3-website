@@ -209,21 +209,9 @@ function esc(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-async function getExchangeRate() {
-  try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 3000);
-    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
-    clearTimeout(t);
-    if (!res.ok) return 1.58;
-    const data = await res.json();
-    return data.rates?.AUD || 1.58;
-  } catch { return 1.58; }
-}
 export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/buddyfight/', '').replace(/^\/|\/$/g, '');
-  const AUD_RATE = await getExchangeRate();
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
 
   if (!slug) return new Response(notFoundPage(''), { status: 404, headers });
