@@ -437,8 +437,8 @@ export default async (req) => {
       callBody.textContent='The full market read and this week\\'s sell-side timing are in the weekly Seller report.';
       return;
     }
-    // Hero: all-games rising 7d only, minimum AU$5
-    if(curGame==='all'&&curDir==='up'&&curPeriod==='7d'){
+    // Hero: all-games or MTG tab, rising, 7d only, minimum AU$5
+    if((curGame==='all'||curGame==='mtg')&&curDir==='up'&&curPeriod==='7d'){
       var hero=null;
       for(var i=0;i<list.length;i++){if(parseFloat(list[i].priceAud)>=5){hero=list[i];break;}}
       heroZone.innerHTML=heroHTML(hero);
