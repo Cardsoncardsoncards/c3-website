@@ -1340,17 +1340,6 @@ if (typeof gtag !== 'undefined') {
 // --- Main handler ---
 
 
-async function getExchangeRate() {
-  try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 3000);
-    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
-    clearTimeout(t);
-    if (!res.ok) return 1.58;
-    const data = await res.json();
-    return data.rates?.AUD || 1.58;
-  } catch { return 1.58; }
-}
 export default async (req, context) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/mtg/', '').replace(/\/$/, '');
