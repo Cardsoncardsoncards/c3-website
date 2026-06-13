@@ -30,7 +30,7 @@ async function supabaseGet(path) {
 export default async (req) => {
   const rows = await supabaseGet(
     'amazon_products?is_active=eq.true' +
-    '&select=asin,game,product_name,item_type,image_url,current_price_aud,affiliate_url,priority' +
+    '&select=asin,game,product_name,item_type,image_url,current_price_aud,price_tcgapi_aud,price_ebay_aud,affiliate_url,priority,source,set_name,set_slug' +
     '&order=priority.asc' +
     '&limit=500'
   );

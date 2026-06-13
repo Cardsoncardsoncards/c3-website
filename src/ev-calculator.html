@@ -126,6 +126,22 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     .nav-links .nav-link{width:100%;justify-content:flex-start;white-space:normal;font-size:13px;padding:12px 14px}
   }
 </style>
+<style>
+  .nav-dropdown { position: relative; display: inline-block; }
+  .nav-dropdown-menu {
+    display: none; position: absolute; top: 100%; left: 0;
+    background: #0d1117; border: 1px solid #1e2235;
+    border-radius: 8px; min-width: 180px; z-index: 1000;
+    padding: 6px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+  .nav-dropdown-item {
+    display: block; padding: 9px 16px;
+    color: #c4c9d4; font-size: 13px; font-weight: 500;
+    text-decoration: none; white-space: nowrap;
+  }
+  .nav-dropdown-item:hover { color: #c9a84c; background: #1a1f2e; }
+</style>
 </head>
 <body>
 
@@ -148,7 +164,14 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
       <a href="/pricing" class="nav-link nav-link--pricing" style="color:#C9A84C;border-color:rgba(201,168,76,.35)">Pricing</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <div class="nav-dropdown">
+        <a href="/shop" class="nav-link nav-link--shop">Shop &#9662;</a>
+        <div class="nav-dropdown-menu">
+          <a href="/shop" class="nav-dropdown-item">Sealed Product</a>
+          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=nav-shop&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a>
+          <a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

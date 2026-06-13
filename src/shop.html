@@ -1,104 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TCG Shop | Cards on Cards on Cards</title>
-<meta name="description" content="Shop the latest TCG booster boxes, sealed product and accessories in Australia. MTG, Pokemon, Lorcana, One Piece and more. Prices via Amazon AU.">
-<link rel="canonical" href="https://cardsoncardsoncards.com.au/shop">
-<meta property="og:title" content="TCG Shop | Cards on Cards on Cards">
-<meta property="og:description" content="Shop the latest TCG booster boxes, sealed product and accessories. MTG, Pokemon, Lorcana, One Piece and more. Australian prices via Amazon AU.">
-<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
-<meta property="og:url" content="https://cardsoncardsoncards.com.au/shop">
-<meta property="og:type" content="website">
-<link rel="icon" href="/c3logo.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCG Sealed Product Shop | Cards on Cards on Cards</title>
+  <meta name="description" content="Shop TCG sealed product in Australia. Booster boxes, sets and accessories for Magic, Pokemon, Lorcana, One Piece and 27 more games. Live AUD prices via Amazon AU.">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/shop">
+  <link rel="icon" href="/c3logo.png">
+  <meta property="og:title" content="TCG Sealed Product Shop | Cards on Cards on Cards">
+  <meta property="og:description" content="Live AUD prices on booster boxes and sealed TCG product. 31 games covered. Updated nightly via Amazon AU.">
+  <meta property="og:url" content="https://cardsoncardsoncards.com.au/shop">
+  <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
 <style>
-  :root{
-    --bg:#080b12;--bg2:#0f1420;--bg3:#161c2d;
-    --border:#1e2640;--gold:#C9A84C;--gold-soft:rgba(201,168,76,.15);
-    --gold-line:rgba(201,168,76,.25);--white:#F0F4FF;--silver:#A0A8C0;
-    --muted:#5a6280;--radius:12px;
+  :root {
+    --bg:#080b12; --bg2:#0d1117; --bg3:#1a1f2e;
+    --border:#1e2235; --gold:#c9a84c; --silver:#8892b0;
+    --white:#e8eaf0; --muted:#5a6378; --radius:10px;
+    --red:#EF4444; --green:#22c55e;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--white);min-height:100vh}
+  a{text-decoration:none;color:inherit}
 
-  nav{background:rgba(8,11,18,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 20px}
-  .nav-logo{display:flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--gold)}
-  .nav-logo img{height:32px;width:32px;object-fit:contain}
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(8,11,18,0.95);border-bottom:1px solid var(--border);backdrop-filter:blur(8px)}
+  .nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between}
+  .nav-logo{display:flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold)}
+  .nav-logo img{width:32px;height:32px;object-fit:contain}
   .nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-  .nav-link{font-size:13px;font-weight:500;color:var(--silver);padding:6px 11px;border-radius:7px;transition:color .15s,background .15s}
-  .nav-link:hover{color:var(--white);background:var(--bg3)}
+  .nav-link{padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;color:var(--silver);transition:color .2s}
+  .nav-link:hover,.nav-link.active{color:var(--white)}
   .nav-link--shop{color:var(--gold)}
-  @media(max-width:768px){.nav-links{display:none}}
+  .nav-dropdown{position:relative;display:inline-block}
+  .nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--bg2);border:1px solid var(--border);border-radius:8px;min-width:180px;z-index:1000;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .nav-dropdown:hover .nav-dropdown-menu{display:block}
+  .nav-dropdown-item{display:block;padding:9px 16px;color:#c4c9d4;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}
+  .nav-dropdown-item:hover{color:var(--gold);background:var(--bg3)}
 
-  .hero{padding:48px 0 32px;border-bottom:1px solid var(--border)}
-  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-  .hero h1{font-family:'Cinzel',serif;font-size:34px;font-weight:700;margin-bottom:10px;line-height:1.2}
-  .hero p{font-size:15px;color:var(--silver);max-width:600px;line-height:1.6}
-  .disclosure{font-size:12px;color:var(--muted);margin-top:14px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;max-width:600px}
+  /* LAYOUT */
+  .wrap{max-width:1400px;margin:0 auto;padding:0 24px}
+  .shop-layout{display:grid;grid-template-columns:220px 1fr;gap:32px;padding:32px 0 64px}
+  @media(max-width:900px){.shop-layout{grid-template-columns:1fr}.sidebar{display:none}}
 
-  .tabs-wrap{position:sticky;top:57px;z-index:90;background:rgba(8,11,18,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:10px 0}
-  .tabs-inner{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 20px;max-width:1100px;margin:0 auto}
-  .tabs-inner::-webkit-scrollbar{display:none}
-  .tab{flex-shrink:0;font-size:13px;font-weight:600;padding:7px 15px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--silver);cursor:pointer;transition:all .15s}
-  .tab:hover{color:var(--white);border-color:var(--gold-line)}
-  .tab.active{background:var(--gold-soft);border-color:var(--gold-line);color:var(--gold)}
+  /* SIDEBAR */
+  .sidebar{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 90px);overflow-y:auto}
+  .sidebar-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-left:4px}
+  .sidebar-game{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--silver);transition:all .15s}
+  .sidebar-game:hover,.sidebar-game.active{color:var(--white);background:var(--bg3)}
+  .sidebar-game.active{color:var(--gold)}
+  .sidebar-badge{font-size:11px;color:var(--muted);background:var(--bg3);border-radius:4px;padding:1px 6px;min-width:22px;text-align:center}
+  .sidebar-game.active .sidebar-badge{background:var(--gold);color:#080b12}
 
-  main{padding:32px 0 56px}
-  .tab-panel{display:none}
-  .tab-panel.active{display:block}
-  .section-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  /* HERO */
+  .hero{padding:36px 0 24px;border-bottom:1px solid var(--border)}
+  .eyebrow{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .hero h1{font-family:'Cinzel',serif;font-size:32px;font-weight:700;margin-bottom:10px}
+  .hero p{font-size:14px;color:var(--silver);max-width:560px;line-height:1.6}
+  .disclosure{margin-top:14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--muted);max-width:600px}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
-  @media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+  /* CONTROLS */
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:18px 0 20px}
+  .ctrl-select{background:var(--bg2);border:1px solid var(--border);color:var(--white);padding:7px 12px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer}
+  .ctrl-search{background:var(--bg2);border:1px solid var(--border);color:var(--white);padding:7px 14px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;width:220px}
+  .ctrl-search::placeholder{color:var(--muted)}
+  .ctrl-count{font-size:13px;color:var(--muted);margin-left:auto}
 
-  .tile{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s}
-  .tile:hover{border-color:var(--gold-line)}
-  .tile-img{width:100%;aspect-ratio:1/1;object-fit:contain;background:var(--bg3);padding:12px}
-  .tile-img-ph{width:100%;aspect-ratio:1/1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:28px}
-  .tile-body{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
-  .tile-badge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-  .tile-name{font-size:13px;font-weight:600;line-height:1.35;color:var(--white);flex:1}
-  .tile-price{font-size:15px;font-weight:700;color:var(--gold);padding-top:6px}
-  .tile-price.loading{font-size:12px;color:var(--muted);font-weight:400}
-  .tile-btn{display:block;text-align:center;background:var(--gold);color:#080b12;font-weight:700;font-size:13px;padding:9px 14px;border-radius:8px;margin-top:8px;transition:opacity .15s}
+  /* SET FILTER */
+  .set-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+  .set-btn{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--silver);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s}
+  .set-btn:hover,.set-btn.active{border-color:var(--gold);color:var(--gold)}
+  .set-btn.active{background:rgba(201,168,76,.08)}
+
+  /* SECTION HEADING */
+  .section-heading{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+
+  /* PRODUCT GRID */
+  .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+  @media(max-width:600px){.product-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+
+  /* TILE */
+  .tile{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s}
+  .tile:hover{border-color:rgba(201,168,76,.35)}
+  .tile-img-wrap{position:relative;background:var(--bg3);aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .tile-img{width:100%;height:100%;object-fit:contain;padding:8px}
+  .tile-img-ph{font-size:40px;opacity:.4}
+  .tile-source{position:absolute;top:6px;right:6px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.6)}
+  .tile-source.amazon{color:#f90}
+  .tile-source.tcgapi{color:#4ade80}
+  .tile-source.ebay{color:#86efac}
+  .tile-body{padding:14px;flex:1;display:flex;flex-direction:column;gap:8px}
+  .tile-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .tile-name{font-size:13px;font-weight:600;color:var(--white);line-height:1.35;flex:1}
+  .tile-price{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:var(--gold)}
+  .tile-price.loading{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;color:var(--muted)}
+  .tile-price-sub{font-size:11px;color:var(--muted)}
+  .tile-change{font-size:11px;font-weight:600}
+  .tile-change.up{color:var(--green)}
+  .tile-change.down{color:var(--red)}
+  .tile-btn{display:block;text-align:center;padding:9px;border-radius:7px;font-size:12px;font-weight:700;background:var(--gold);color:#080b12;margin-top:auto;transition:opacity .15s}
   .tile-btn:hover{opacity:.88}
+  .tile-btn.ebay{background:#86efac;color:#080b12}
 
-  .skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
-  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-  .sk-tile{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
-  .sk-img{width:100%;aspect-ratio:1/1}
-  .sk-body{padding:12px;display:flex;flex-direction:column;gap:8px}
-  .sk-line{height:12px;border-radius:4px}
-  .sk-w80{width:80%}.sk-w60{width:60%}
-  .sk-btn{height:34px;border-radius:8px;margin-top:8px}
+  /* EMPTY + LOADING */
+  .empty-state{grid-column:1/-1;text-align:center;padding:48px 0;color:var(--muted);font-size:14px}
+  .loading-state{grid-column:1/-1;text-align:center;padding:48px 0;color:var(--muted);font-size:14px}
 
-  .more-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
-  .more-tile{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s}
-  .more-tile:hover{border-color:var(--gold-line)}
-  .more-name{font-size:14px;font-weight:600;color:var(--white)}
-  .more-links{display:flex;gap:8px;flex-wrap:wrap}
-  .more-link{font-size:12px;color:var(--gold);font-weight:500}
+  /* EBAY SINGLES PANEL */
+  .ebay-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:center;max-width:520px;margin:0 auto}
+  .ebay-panel h3{font-family:'Cinzel',serif;font-size:20px;color:var(--gold);margin-bottom:10px}
+  .ebay-panel p{font-size:14px;color:var(--silver);margin-bottom:20px;line-height:1.55}
+  .btn-primary{display:inline-block;background:var(--gold);color:#080b12;font-weight:700;font-size:14px;padding:12px 28px;border-radius:8px}
 
-  .ebay-block{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;max-width:500px;margin:0 auto}
-  .ebay-block h3{font-family:'Cinzel',serif;font-size:20px;color:var(--gold);margin-bottom:10px}
-  .ebay-block p{font-size:14px;color:var(--silver);margin-bottom:18px;line-height:1.55}
-  .btn-ebay{display:inline-block;background:var(--gold);color:#080b12;font-weight:700;font-size:14px;padding:12px 28px;border-radius:8px}
+  /* MOBILE TABS (replaces sidebar on mobile) */
+  .mobile-game-tabs{display:none;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;-webkit-overflow-scrolling:touch}
+  @media(max-width:900px){.mobile-game-tabs{display:flex}}
+  .mobile-tab{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--silver);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0}
+  .mobile-tab.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
 
-  .empty-msg{color:var(--muted);font-size:14px;padding:20px 0}
-  .empty-msg a{color:var(--gold)}
-
-  footer{border-top:1px solid var(--border);margin-top:56px;padding:30px 0;text-align:center}
-  footer .mission{font-size:13px;color:var(--muted);margin-bottom:10px}
-  footer .disc{font-size:11px;color:var(--muted);max-width:680px;margin:0 auto}
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);margin-top:64px;padding:30px 0;text-align:center}
+  footer .mission{font-size:13px;color:var(--muted);margin-bottom:8px}
+  footer .disc{font-size:11px;color:var(--muted);max-width:680px;margin:0 auto;line-height:1.6}
 </style>
 </head>
 <body>
@@ -107,237 +134,295 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3">Cards on Cards on Cards</a>
     <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
-      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/shop" class="nav-link nav-link--shop">Shop</a>
-      <a href="/pricing" class="nav-link nav-link--pricing">Pricing</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <a href="/cards" class="nav-link">Card Prices</a>
+      <a href="/compare" class="nav-link">Compare</a>
+      <a href="/market" class="nav-link">Market</a>
+      <a href="/tools" class="nav-link">Tools</a>
+      <a href="/play" class="nav-link">Play</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <div class="nav-dropdown">
+        <a href="/shop" class="nav-link nav-link--shop">Shop &#9662;</a>
+        <div class="nav-dropdown-menu">
+          <a href="/shop" class="nav-dropdown-item">Sealed Product</a>
+          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=nav-shop&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a>
+          <a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a>
+        </div>
+      </div>
+      <a href="/pricing" class="nav-link">Pricing</a>
     </div>
   </div>
 </nav>
 
-<header class="hero">
-  <div class="wrap">
+<div class="wrap">
+  <header class="hero">
     <div class="eyebrow">Shop</div>
     <h1>TCG Sealed Product</h1>
-    <p>Booster boxes, sets, and accessories for every game we track. All prices in AUD via Amazon AU, updated nightly.</p>
+    <p>Booster boxes, sets, and accessories for every game we track. Live AUD prices via Amazon AU, updated nightly.</p>
     <div class="disclosure">Products are sold on Amazon AU. Cards on Cards on Cards earns a small commission on qualifying purchases at no extra cost to you.</div>
-  </div>
-</header>
+  </header>
 
-<div class="tabs-wrap">
-  <div class="tabs-inner">
-    <button class="tab active" data-tab="new" onclick="switchTab('new',this)">New &amp; Pre-Orders</button>
-    <button class="tab" data-tab="mtg" onclick="switchTab('mtg',this)">MTG</button>
-    <button class="tab" data-tab="pokemon" onclick="switchTab('pokemon',this)">Pokemon</button>
-    <button class="tab" data-tab="onepiece" onclick="switchTab('onepiece',this)">One Piece</button>
-    <button class="tab" data-tab="lorcana" onclick="switchTab('lorcana',this)">Lorcana</button>
-    <button class="tab" data-tab="starwars" onclick="switchTab('starwars',this)">Star Wars</button>
-    <button class="tab" data-tab="dragonball" onclick="switchTab('dragonball',this)">Dragon Ball</button>
-    <button class="tab" data-tab="riftbound" onclick="switchTab('riftbound',this)">Riftbound</button>
-    <button class="tab" data-tab="yugioh" onclick="switchTab('yugioh',this)">Yu-Gi-Oh</button>
-    <button class="tab" data-tab="accessories" onclick="switchTab('accessories',this)">Accessories</button>
-    <button class="tab" data-tab="dnd" onclick="switchTab('dnd',this)">D&amp;D</button>
-    <button class="tab" data-tab="more" onclick="switchTab('more',this)">More Games</button>
-    <button class="tab" data-tab="singles" onclick="switchTab('singles',this)">Singles (eBay)</button>
+  <!-- MOBILE GAME TABS -->
+  <div class="mobile-game-tabs" id="mobile-tabs"></div>
+
+  <div class="shop-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-title">Browse by Game</div>
+      <div id="sidebar-list"></div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <div class="controls">
+        <select class="ctrl-select" id="sort-sel" onchange="applyFilters()">
+          <option value="priority">Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="preorders">Pre-orders First</option>
+          <option value="name-asc">Name: A to Z</option>
+          <option value="source-amazon">Amazon AU</option>
+          <option value="source-tcgapi">TCGapi</option>
+          <option value="source-ebay">eBay</option>
+        </select>
+        <input class="ctrl-search" type="text" id="search-input" placeholder="Search products..." oninput="applyFilters()">
+        <span class="ctrl-count" id="result-count"></span>
+      </div>
+
+      <div class="set-filter" id="set-filter"></div>
+      <div class="section-heading" id="section-heading">All Products</div>
+      <div class="product-grid" id="product-grid">
+        <div class="loading-state">Loading products...</div>
+      </div>
+    </main>
   </div>
 </div>
 
-<main>
-  <div class="wrap">
-
-    <div class="tab-panel active" id="panel-new">
-      <div class="section-label">New releases and pre-orders</div>
-      <div class="grid" id="grid-new">
-        <div class="sk-tile skeleton"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w80 skeleton"></div><div class="sk-line sk-w60 skeleton"></div><div class="sk-btn skeleton"></div></div></div>
-        <div class="sk-tile skeleton"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w80 skeleton"></div><div class="sk-line sk-w60 skeleton"></div><div class="sk-btn skeleton"></div></div></div>
-        <div class="sk-tile skeleton"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w80 skeleton"></div><div class="sk-line sk-w60 skeleton"></div><div class="sk-btn skeleton"></div></div></div>
-        <div class="sk-tile skeleton"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w80 skeleton"></div><div class="sk-line sk-w60 skeleton"></div><div class="sk-btn skeleton"></div></div></div>
-        <div class="sk-tile skeleton"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w80 skeleton"></div><div class="sk-line sk-w60 skeleton"></div><div class="sk-btn skeleton"></div></div></div>
-        <div class="sk-tile skeleton"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w80 skeleton"></div><div class="sk-line sk-w60 skeleton"></div><div class="sk-btn skeleton"></div></div></div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="panel-mtg"><div class="section-label">Magic: The Gathering</div><div class="grid" id="grid-mtg"></div></div>
-    <div class="tab-panel" id="panel-pokemon"><div class="section-label">Pokemon TCG</div><div class="grid" id="grid-pokemon"></div></div>
-    <div class="tab-panel" id="panel-onepiece"><div class="section-label">One Piece Card Game</div><div class="grid" id="grid-onepiece"></div></div>
-    <div class="tab-panel" id="panel-lorcana"><div class="section-label">Disney Lorcana</div><div class="grid" id="grid-lorcana"></div></div>
-    <div class="tab-panel" id="panel-starwars"><div class="section-label">Star Wars: Unlimited</div><div class="grid" id="grid-starwars"></div></div>
-    <div class="tab-panel" id="panel-dragonball"><div class="section-label">Dragon Ball Super Card Game</div><div class="grid" id="grid-dragonball"></div></div>
-    <div class="tab-panel" id="panel-riftbound"><div class="section-label">Riftbound</div><div class="grid" id="grid-riftbound"></div></div>
-    <div class="tab-panel" id="panel-yugioh"><div class="section-label">Yu-Gi-Oh!</div><div class="grid" id="grid-yugioh"></div></div>
-    <div class="tab-panel" id="panel-accessories"><div class="section-label">TCG Accessories</div><div class="grid" id="grid-accessories"></div></div>
-
-    <div class="tab-panel" id="panel-dnd">
-      <div class="section-label">Dungeons and Dragons</div>
-      <div class="grid" id="grid-dnd"></div>
-      <div class="empty-msg" id="dnd-fallback" style="display:none">
-        We are adding D&amp;D products soon. Browse D&amp;D on <a href="https://www.ebay.com.au/sch/i.html?_nkw=dungeons+dragons&campid=5339146789&mkevt=1" target="_blank" rel="noopener">eBay AU</a>.
-      </div>
-    </div>
-
-    <div class="tab-panel" id="panel-more">
-      <div class="section-label">More games we cover</div>
-      <div class="more-grid">
-        <div class="more-tile"><div class="more-name">Digimon</div><div class="more-links"><a href="/cards/digimon" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=digimon+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Weiss Schwarz</div><div class="more-links"><a href="/cards/weissschwarz" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=weiss+schwarz&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Cardfight Vanguard</div><div class="more-links"><a href="/cards/vanguard" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=cardfight+vanguard&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Shadowverse</div><div class="more-links"><a href="/cards/shadowverse" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=shadowverse+evolve&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Wixoss</div><div class="more-links"><a href="/cards/wixoss" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=wixoss+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Union Arena</div><div class="more-links"><a href="/cards/unionarena" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=union+arena+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Universus</div><div class="more-links"><a href="/cards/universus" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=universus+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Hololive</div><div class="more-links"><a href="/cards/hololive" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=hololive+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Battle Spirits Saga</div><div class="more-links"><a href="/cards/battlespiritssaga" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=battle+spirits+saga&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Final Fantasy TCG</div><div class="more-links"><a href="/cards/finalfantasy" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=final+fantasy+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Force of Will</div><div class="more-links"><a href="/cards/forceofwill" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=force+of+will+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Grand Archive</div><div class="more-links"><a href="/cards/grandarchive" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=grand+archive+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Sorcery</div><div class="more-links"><a href="/cards/sorcery" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=sorcery+contested+realm&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">MetaZoo</div><div class="more-links"><a href="/cards/metazoo" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=metazoo+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Gundam</div><div class="more-links"><a href="/cards/gundam" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=gundam+card+game&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Godzilla TCG</div><div class="more-links"><a href="/cards/godzilla" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=godzilla+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Alpha Clash</div><div class="more-links"><a href="/cards/alphaclash" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=alpha+clash+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Gate Ruler</div><div class="more-links"><a href="/cards/gateruler" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=gate+ruler+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Warhammer</div><div class="more-links"><a href="/cards/warhammer" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=warhammer+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">WoW TCG</div><div class="more-links"><a href="/cards/wow" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=world+of+warcraft+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Bakugan</div><div class="more-links"><a href="/cards/bakugan" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=bakugan+card+game&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">Dragon Ball Z TCG</div><div class="more-links"><a href="/cards/dragonballz" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=dragon+ball+z+tcg&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-        <div class="more-tile"><div class="more-name">DBS Fusion World</div><div class="more-links"><a href="/cards/dbsfusionworld" class="more-link">Card Prices</a><a href="https://www.ebay.com.au/sch/i.html?_nkw=dragon+ball+super+fusion+world&campid=5339146789&mkevt=1" target="_blank" rel="noopener" class="more-link">eBay &#8599;</a></div></div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="panel-singles">
-      <div class="section-label">Singles</div>
-      <div class="ebay-block">
-        <h3>Buy Singles on eBay</h3>
-        <p>Our eBay store has over 27,000 individual card listings across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball, Star Wars, and Riftbound. All listed in AUD with flat-rate postage.</p>
-        <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Shop&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="btn-ebay" onclick="gtag('event','shop_ebay_click',{event_label:'singles_tab'})">Browse the eBay Store &#8599;</a>
-      </div>
-    </div>
-
-  </div>
-</main>
-
 <footer>
   <div class="wrap">
-    <div class="mission">Cards on Cards on Cards is Australia's TCG intelligence platform. Every price in AUD. Every signal built for the local market.</div>
-    <div class="disc">Prices are indicative AUD market estimates and move constantly. C3 participates in the Amazon Associates Program and eBay Partner Network and may earn a small commission on purchases made through links, at no extra cost to you.</div>
+    <div class="mission">Cards on Cards on Cards. Australia's TCG price intelligence hub.</div>
+    <div class="disc">Prices are indicative AUD market estimates and move constantly. Cards on Cards on Cards participates in the Amazon Associates Program and eBay Partner Network and may earn a small commission on purchases made through links on this site, at no extra cost to you.</div>
   </div>
 </footer>
 
 <script>
-(function(){
-  var MAIN_TABS = ['mtg','pokemon','onepiece','lorcana','starwars','dragonball','riftbound','yugioh','accessories'];
+(function() {
 
-  function esc(s){
-    return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+var EPN_CAMPID = '5339146789';
+var AMAZON_TAG = 'blasdigital-22';
+
+var GAME_NAMES = {
+  mtg:'Magic: The Gathering', pokemon:'Pokemon', onepiece:'One Piece',
+  lorcana:'Lorcana', starwars:'Star Wars', dragonball:'Dragon Ball',
+  riftbound:'Riftbound', yugioh:'Yu-Gi-Oh', digimon:'Digimon',
+  weissschwarz:'Weiss Schwarz', vanguard:'Vanguard', shadowverse:'Shadowverse',
+  wixoss:'Wixoss', unionarena:'Union Arena', universus:'UniVersus',
+  hololive:'Hololive', battlespiritssaga:'Battle Spirits Saga',
+  finalfantasy:'Final Fantasy', forceofwill:'Force of Will',
+  grandarchive:'Grand Archive', sorcery:'Sorcery', metazoo:'MetaZoo',
+  gundam:'Gundam', godzilla:'Godzilla', alphaclash:'Alpha Clash',
+  gateruler:'Gate Ruler', warhammer:'Warhammer', wow:'WoW TCG',
+  bakugan:'Bakugan', dbz:'Dragon Ball Z', dbsfusionworld:'DBS Fusion World'
+};
+
+var GAME_ORDER = [
+  'mtg','pokemon','onepiece','lorcana','starwars','dragonball','riftbound','yugioh',
+  'digimon','weissschwarz','vanguard','shadowverse','wixoss','unionarena','universus',
+  'hololive','battlespiritssaga','finalfantasy','forceofwill','grandarchive',
+  'sorcery','metazoo','gundam','godzilla','alphaclash','gateruler','warhammer',
+  'wow','bakugan','dbz','dbsfusionworld'
+];
+
+var PRE_ORDER_WORDS = ['pre-order','preorder','pre order','coming soon'];
+
+var allProducts = [];
+var activeGame = 'all';
+var activeSet = 'all';
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatPrice(p) {
+  if (p == null) return null;
+  return 'AU$' + parseFloat(p).toFixed(2);
+}
+
+function isPreorder(row) {
+  var name = (row.product_name || '').toLowerCase();
+  for (var i = 0; i < PRE_ORDER_WORDS.length; i++) {
+    if (name.indexOf(PRE_ORDER_WORDS[i]) !== -1) return true;
   }
+  return false;
+}
 
-  function fmtPrice(p){
-    if(p==null||p===''||isNaN(parseFloat(p))) return null;
-    return 'AU$'+parseFloat(p).toFixed(2);
-  }
+function getBestPrice(row) {
+  // Returns the best available price: prefer Amazon, fallback to TCGapi, then eBay
+  if (row.current_price_aud != null) return { price: parseFloat(row.current_price_aud), source: row.source || 'amazon' };
+  if (row.price_tcgapi_aud != null) return { price: parseFloat(row.price_tcgapi_aud), source: 'tcgapi' };
+  if (row.price_ebay_aud != null) return { price: parseFloat(row.price_ebay_aud), source: 'ebay' };
+  return null;
+}
 
-  function isNew(row){
-    var n=(row.product_name||'').toLowerCase();
-    var t=(row.item_type||'').toLowerCase();
-    var kw=['pre-order','preorder','2026','2025','new release','latest'];
-    for(var i=0;i<kw.length;i++){ if(n.indexOf(kw[i])!==-1||t.indexOf(kw[i])!==-1) return true; }
-    return false;
-  }
+function buildTile(row) {
+  var best = getBestPrice(row);
+  var priceHtml = best
+    ? '<div class="tile-price">AU$' + best.price.toFixed(2) + '</div>'
+    : '<div class="tile-price loading">Price loading...</div>';
+  var sourceBadge = best
+    ? '<span class="tile-source ' + esc(best.source) + '">' + esc(best.source.toUpperCase()) + '</span>'
+    : '';
+  var imgHtml = row.image_url
+    ? '<img class="tile-img" src="' + esc(row.image_url) + '" alt="' + esc(row.product_name) + '" loading="lazy">'
+    : '<div class="tile-img-ph">&#128230;</div>';
+  var isPreord = isPreorder(row);
+  var badgeText = isPreord ? 'PRE-ORDER' : esc(row.item_type || '');
+  var setLine = row.set_name ? '<div class="tile-price-sub">' + esc(row.set_name) + '</div>' : '';
+  var ctaHtml = row.affiliate_url
+    ? '<a href="' + esc(row.affiliate_url) + '" class="tile-btn" target="_blank" rel="noopener sponsored" onclick="gtag(\'event\',\'shop_click\',{item_name:\'' + esc(row.product_name) + '\',item_category:\'' + esc(row.game) + '\',source:\'' + esc(row.source||'amazon') + '\'})">Buy on Amazon &#8599;</a>'
+    : '<a href="https://www.amazon.com.au/s?k=' + encodeURIComponent(row.product_name||'') + '&tag=' + AMAZON_TAG + '" class="tile-btn" target="_blank" rel="noopener sponsored">Search Amazon AU &#8599;</a>';
 
-  function tile(row, game){
-    var price = fmtPrice(row.current_price_aud);
-    var priceHtml = price
-      ? '<div class="tile-price">'+esc(price)+'</div>'
-      : '<div class="tile-price loading">Price loading...</div>';
-    var imgHtml = row.image_url
-      ? '<img class="tile-img" src="'+esc(row.image_url)+'" alt="'+esc(row.product_name)+'" loading="lazy">'
-      : '<div class="tile-img-ph">&#128230;</div>';
-    var gLabel = esc(game||row.game||'');
-    var pName = esc(row.product_name||'');
-    return '<div class="tile">'
-      +imgHtml
-      +'<div class="tile-body">'
-      +'<div class="tile-badge">'+esc(row.item_type||'')+'</div>'
-      +'<div class="tile-name">'+pName+'</div>'
-      +priceHtml
-      +'<a href="'+esc(row.affiliate_url||'#')+'" class="tile-btn" target="_blank" rel="noopener sponsored"'
-      +' onclick="gtag(\'event\',\'shop_amazon_click\',{item_name:\''+pName+'\',item_category:\''+gLabel+'\'})">Buy on Amazon &#8599;</a>'
-      +'</div></div>';
-  }
+  return '<div class="tile" data-game="' + esc(row.game) + '" data-set="' + esc(row.set_slug||'') + '" data-price="' + (best ? best.price : '') + '" data-preorder="' + (isPreord ? '1' : '0') + '" data-source="' + esc(row.source||'amazon') + '" data-name="' + esc((row.product_name||'').toLowerCase()) + '">'
+    + '<div class="tile-img-wrap">' + imgHtml + sourceBadge + '</div>'
+    + '<div class="tile-body">'
+    + '<div class="tile-badge">' + badgeText + '</div>'
+    + '<div class="tile-name">' + esc(row.product_name) + '</div>'
+    + setLine
+    + priceHtml
+    + ctaHtml
+    + '</div></div>';
+}
 
-  function fill(id, rows, game){
-    var el=document.getElementById(id);
-    if(!el) return;
-    if(!rows||!rows.length){
-      el.innerHTML='<div class="empty-msg">No products available yet. <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&mkevt=1" target="_blank" rel="noopener">Browse eBay</a> instead.</div>';
-      return;
+function buildSidebar(grouped) {
+  var sidebarEl = document.getElementById('sidebar-list');
+  var mobileEl = document.getElementById('mobile-tabs');
+  if (!sidebarEl) return;
+
+  var allBtn = '<div class="sidebar-game active" data-game="all" onclick="selectGame(\'all\',this)">All Games <span class="sidebar-badge" id="badge-all">' + allProducts.length + '</span></div>';
+  var mobileAll = '<button class="mobile-tab active" data-game="all" onclick="selectGame(\'all\',this)">All</button>';
+  var sideHtml = allBtn;
+  var mobHtml = mobileAll;
+
+  GAME_ORDER.forEach(function(g) {
+    var count = (grouped[g] || []).length;
+    if (count === 0) return;
+    var name = GAME_NAMES[g] || g;
+    sideHtml += '<div class="sidebar-game" data-game="' + g + '" onclick="selectGame(\'' + g + '\',this)">'
+      + esc(name) + ' <span class="sidebar-badge" id="badge-' + g + '">' + count + '</span></div>';
+    mobHtml += '<button class="mobile-tab" data-game="' + g + '" onclick="selectGame(\'' + g + '\',this)">' + esc(name) + '</button>';
+  });
+
+  sidebarEl.innerHTML = sideHtml;
+  mobileEl.innerHTML = mobHtml;
+}
+
+function buildSetFilter(game) {
+  var filterEl = document.getElementById('set-filter');
+  if (!filterEl) return;
+  if (game === 'all') { filterEl.innerHTML = ''; activeSet = 'all'; return; }
+
+  var sets = {};
+  allProducts.filter(function(p) { return p.game === game; }).forEach(function(p) {
+    if (p.set_name) sets[p.set_slug || p.set_name] = p.set_name;
+  });
+
+  var keys = Object.keys(sets);
+  if (keys.length <= 1) { filterEl.innerHTML = ''; activeSet = 'all'; return; }
+
+  var html = '<button class="set-btn active" data-set="all" onclick="selectSet(\'all\',this)">All Sets</button>';
+  keys.forEach(function(k) {
+    html += '<button class="set-btn" data-set="' + esc(k) + '" onclick="selectSet(\'' + esc(k) + '\',this)">' + esc(sets[k]) + '</button>';
+  });
+  filterEl.innerHTML = html;
+  activeSet = 'all';
+}
+
+window.selectGame = function(game, el) {
+  activeGame = game;
+  activeSet = 'all';
+  document.querySelectorAll('.sidebar-game').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.mobile-tab').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('[data-game="' + game + '"]').forEach(function(b){b.classList.add('active')});
+  buildSetFilter(game);
+  applyFilters();
+};
+
+window.selectSet = function(set, el) {
+  activeSet = set;
+  document.querySelectorAll('.set-btn').forEach(function(b){b.classList.remove('active')});
+  if (el) el.classList.add('active');
+  applyFilters();
+};
+
+window.applyFilters = function() {
+  var sort = document.getElementById('sort-sel').value;
+  var search = (document.getElementById('search-input').value || '').toLowerCase().trim();
+  var grid = document.getElementById('product-grid');
+  var heading = document.getElementById('section-heading');
+  var countEl = document.getElementById('result-count');
+  if (!grid) return;
+
+  var filtered = allProducts.filter(function(p) {
+    if (activeGame !== 'all' && p.game !== activeGame) return false;
+    if (activeSet !== 'all' && (p.set_slug || p.set_name) !== activeSet) return false;
+    if (sort === 'source-amazon' && (p.source||'amazon') !== 'amazon') return false;
+    if (sort === 'source-tcgapi' && p.source !== 'tcgapi') return false;
+    if (sort === 'source-ebay' && p.source !== 'ebay') return false;
+    if (search && (p.product_name||'').toLowerCase().indexOf(search) === -1) return false;
+    return true;
+  });
+
+  filtered.sort(function(a, b) {
+    var pa = getBestPrice(a); var pb = getBestPrice(b);
+    var pav = pa ? pa.price : 0; var pbv = pb ? pb.price : 0;
+    if (sort === 'price-asc') return pav - pbv;
+    if (sort === 'price-desc') return pbv - pav;
+    if (sort === 'preorders') {
+      var ia = isPreorder(a) ? 0 : 1; var ib = isPreorder(b) ? 0 : 1;
+      return ia - ib || (a.priority||99) - (b.priority||99);
     }
-    el.innerHTML=rows.map(function(r){return tile(r,game);}).join('');
+    if (sort === 'name-asc') return (a.product_name||'').localeCompare(b.product_name||'');
+    return (a.priority||99) - (b.priority||99);
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state">No products found.</div>';
+  } else {
+    grid.innerHTML = filtered.map(buildTile).join('');
   }
 
-  function load(){
-    fetch('/shop-data')
-      .then(function(r){
-        if(!r.ok) throw new Error('fetch failed');
-        return r.json();
-      })
-      .then(function(data){
-        var g=data.grouped||{};
+  countEl.textContent = filtered.length + ' product' + (filtered.length !== 1 ? 's' : '');
+  var gameName = activeGame === 'all' ? 'All Games' : (GAME_NAMES[activeGame] || activeGame);
+  heading.textContent = activeSet === 'all' ? gameName : (GAME_NAMES[activeGame] || activeGame) + ' (' + activeSet + ')';
+};
 
-        // Build new/pre-orders: prefer flagged items, fallback to top 2 per main tab
-        var newRows=[];
-        MAIN_TABS.forEach(function(game){
-          if(!g[game]) return;
-          g[game].forEach(function(row){ if(isNew(row)) newRows.push(row); });
-        });
-        if(newRows.length<6){
-          MAIN_TABS.forEach(function(game){
-            if(!g[game]) return;
-            g[game].slice(0,2).forEach(function(row){
-              if(newRows.indexOf(row)===-1) newRows.push(row);
-            });
-          });
-        }
-        fill('grid-new', newRows.slice(0,12), 'new');
-
-        MAIN_TABS.forEach(function(game){ fill('grid-'+game, g[game], game); });
-
-        // D&D tab
-        var dndRows=g.dnd||[];
-        if(dndRows.length){
-          fill('grid-dnd', dndRows, 'dnd');
-        } else {
-          var dndEl=document.getElementById('grid-dnd');
-          if(dndEl) dndEl.style.display='none';
-          var fb=document.getElementById('dnd-fallback');
-          if(fb) fb.style.display='';
-        }
-      })
-      .catch(function(){
-        // Error state -- show eBay fallback in all grids
-        var ids=['grid-new'].concat(MAIN_TABS.map(function(g){return 'grid-'+g;}));
-        ids.forEach(function(id){
-          var el=document.getElementById(id);
-          if(el) el.innerHTML='<div class="empty-msg">Products temporarily unavailable. <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&mkevt=1" target="_blank" rel="noopener">Browse our eBay store</a> instead.</div>';
-        });
-      });
+async function loadProducts() {
+  var grid = document.getElementById('product-grid');
+  var grouped = {};
+  try {
+    var controller = new AbortController();
+    var timer = setTimeout(function(){ controller.abort(); }, 8000);
+    var res = await fetch('/shop-data', { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error('shop-data error ' + res.status);
+    var data = await res.json();
+    grouped = data.grouped || {};
+    allProducts = [];
+    Object.keys(grouped).forEach(function(g) {
+      (grouped[g] || []).forEach(function(p) { allProducts.push(p); });
+    });
+  } catch(e) {
+    if (grid) grid.innerHTML = '<div class="empty-state">Could not load products. <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=' + EPN_CAMPID + '&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" style="color:var(--gold)">Browse our eBay store</a> instead.</div>';
+    return;
   }
 
-  window.switchTab=function(tab,btn){
-    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-    document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
-    var panel=document.getElementById('panel-'+tab);
-    if(panel) panel.classList.add('active');
-    if(btn) btn.classList.add('active');
-    gtag('event','shop_tab_switch',{tab_name:tab});
-  };
+  buildSidebar(grouped);
+  applyFilters();
+}
 
-  load();
+loadProducts();
+
 })();
 </script>
 </body>
