@@ -195,17 +195,13 @@ export default async (req) => {
   .capture input{flex:1;background:rgba(255,255,255,.04);border:none;padding:12px 15px;color:var(--white);font-size:14px;outline:none;font-family:'DM Sans',sans-serif}
   .capture button{background:var(--gold-soft);border:none;border-left:1.5px solid var(--gold-line);color:var(--gold);padding:12px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
   .capture .msg{font-size:12px;color:var(--silver);margin-top:10px;min-height:15px}
-  .upsell{background:var(--bg2);border:1px solid var(--gold-line);border-radius:var(--radius);padding:26px;text-align:center;margin:10px 0 0}
-  .signals-gate{position:relative;overflow:hidden;border-radius:12px;margin-bottom:6px}
-  .signals-gate .rows{filter:blur(4px);pointer-events:none;user-select:none;opacity:0.6}
+  .upsell-beta{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;margin:10px 0;font-size:13px;color:#A0A8C0}
+  .upsell-beta .beta-link{color:#C9A84C;font-weight:600}
   .movers-gate{position:relative;overflow:hidden;border-radius:12px;margin-bottom:6px}
   .movers-gate .rows-locked{filter:blur(5px);pointer-events:none;user-select:none;opacity:0.55}
   .movers-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to bottom,transparent 0%,rgba(8,11,18,0.92) 40%,rgba(8,11,18,0.98) 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:20px;text-align:center;z-index:10}
   .movers-overlay h4{font-family:'Cinzel',serif;font-size:16px;color:var(--gold);margin-bottom:6px}
   .movers-overlay p{font-size:13px;color:var(--silver);margin-bottom:14px;max-width:400px}
-  .upsell-sub{font-size:12px;color:var(--muted);margin-top:8px;text-align:center}
-  .upsell h3{font-family:'Cinzel',serif;font-size:20px;margin-bottom:8px;color:var(--gold)}
-  .upsell p{font-size:14px;color:var(--silver);max-width:520px;margin:0 auto 16px}
   .btn-gold{display:inline-block;background:var(--gold);color:#080b12;font-weight:700;font-size:14px;padding:12px 26px;border-radius:8px}
   footer{border-top:1px solid var(--border);margin-top:56px;padding:30px 0;text-align:center}
   footer .mission{font-size:13px;color:var(--muted);margin-bottom:10px}
@@ -313,19 +309,15 @@ export default async (req) => {
 
   <div class="section-h signals">Buy and sell signals (52-week range)</div>
   <div class="section-sub">Cards near their 52-week low or high based on AU price history. Full signal list in the Seller report.</div>
-  <div class="signals-gate">
-    <div class="rows" id="signals-zone">
-      <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
-      <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
-      <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
-    </div>
+  <div class="rows" id="signals-zone">
+    <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
+    <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
+    <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
   </div>
 
-  <div class="upsell">
-    <h3>Unlock the full signal list</h3>
-    <p>C3 Seller Intelligence gives you every buy signal, full sell-side timing, repricing movers across all games, and the weekly report delivered to your inbox every Monday.</p>
-    <a href="https://buy.stripe.com/eVq5kCfTodTg81y1YXaIM01" class="btn-gold" target="_blank" rel="noopener" onclick="gtag('event','market_upsell_click',{event_label:'subscribe'})">Subscribe for AU&#36;14.95/month &#8599;</a>
-    <p class="upsell-sub">Cancel any time. Billed monthly via Stripe.</p>
+  <div class="upsell-beta">
+    <p>Buy and sell signals are free during the C3 beta period. Pricing subject to change when the full platform launches.</p>
+    <a href="/pricing" class="beta-link">See what is coming &#8594;</a>
   </div>
 </main>
 

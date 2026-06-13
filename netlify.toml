@@ -4,6 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  SECRETS_SCAN_OMIT_KEYS = "AMAZON_PA_PARTNER_TAG,AMAZON_PA_MARKETPLACE"
 
 [functions]
   node_bundler = "esbuild"
