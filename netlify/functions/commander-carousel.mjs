@@ -1,17 +1,18 @@
 // commander-carousel.mjs
 // Returns top commanders for the carousel on the homepage and set pages
 // Uses Scryfall API (free, no auth required)
+// Netlify v2 function format (default async req handler returning a Response)
 //
 // Query params:
-//   ?mode=top        — top commanders by EDHREC rank (homepage default)
-//   ?mode=set&set=sos — commanders from a specific set, sorted by EDHREC rank
-//   ?limit=20        — number of commanders to return (default 20, max 40)
+//   ?mode=top        - top commanders by EDHREC rank (homepage default)
+//   ?mode=set&setcode=sos - commanders from a specific set, sorted by EDHREC rank
+//   ?limit=20        - number of commanders to return (default 20, max 40)
 //
 // Rotation: update SET_QUERY and SET_DISPLAY_NAME below when new sets release
 
 const SET_QUERY = '(set:sos or set:soa or set:soc)';
 const SET_DISPLAY_NAME = 'Secrets of Strixhaven';
-const CACHE_SECONDS = 3600; // 1 hour — client shuffles for per-load variety
+const CACHE_SECONDS = 3600; // 1 hour - client shuffles for per-load variety
 
 const EPN_CAMPID = '5339146789';
 const EBAY_MKRID = '705-53470-19255-0';
@@ -108,22 +109,23 @@ function formatCard(card, customId) {
   };
 }
 
-export const handler = async function(event) {
+export default async (req) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     'Cache-Control': `public, max-age=${CACHE_SECONDS}`
   };
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+  if (req.method === 'OPTIONS') {
+    return new Response('', { status: 200, headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 
-  const params = event.queryStringParameters || {};
-  const mode = params.mode || 'top';
+  const url = new URL(req.url);
+  const params = url.searchParams;
+  const mode = params.get('mode') || 'top';
   // For top mode: fetch 40 so client can shuffle and show 20 unique each load
   // For set mode: fetch 20 (set has limited legendary creatures anyway)
-  const limit = mode === 'top' ? 40 : Math.min(parseInt(params.limit || '20', 10), 40);
+  const limit = mode === 'top' ? 40 : Math.min(parseInt(params.get('limit') || '20', 10), 40);
 
   try {
     let query;
@@ -133,9 +135,9 @@ export const handler = async function(event) {
     if (mode === 'set') {
       // Use dynamic setcode param if provided (e.g. ?mode=set&setcode=2xm)
       // Falls back to the hardcoded spotlight set if no setcode given
-      const setcode = params.setcode ? params.setcode.trim().toLowerCase() : null;
+      const setcode = params.get('setcode') ? params.get('setcode').trim().toLowerCase() : null;
       if (setcode) {
-        // Single set code — show all legendary creatures from this set
+        // Single set code - show all legendary creatures from this set
         query = `set:${setcode} t:legendary t:creature`;
         displayTitle = `Commanders in This Set`;
       } else {
@@ -145,7 +147,7 @@ export const handler = async function(event) {
       }
       customId = 'C3SetCmdCarousel';
     } else {
-      // Top commanders globally — fetch 40, client shuffles to show 20 different each load
+      // Top commanders globally - fetch 40, client shuffles to show 20 different each load
       query = 't:legendary t:creature f:commander';
       displayTitle = 'Your Next Commander Awaits';
       customId = 'C3TopCmdCarousel';
@@ -153,15 +155,31 @@ export const handler = async function(event) {
 
     const scryfallUrl = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=edhrec&dir=asc&unique=cards`;
 
-    const res = await fetch(scryfallUrl);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    let res;
+    try {
+      res = await fetch(scryfallUrl, { signal: controller.signal });
+      clearTimeout(timer);
+    } catch (e) {
+      clearTimeout(timer);
+      throw e;
+    }
+
     if (!res.ok) {
       console.error('Scryfall error:', res.status);
-      return { statusCode: 200, headers, body: JSON.stringify({ commanders: [], title: displayTitle, error: 'scryfall_' + res.status }) };
+      return new Response(
+        JSON.stringify({ commanders: [], title: displayTitle, error: 'scryfall_' + res.status }),
+        { status: 200, headers }
+      );
     }
 
     const data = await res.json();
     if (!data.data || data.data.length === 0) {
-      return { statusCode: 200, headers, body: JSON.stringify({ commanders: [], title: displayTitle }) };
+      return new Response(
+        JSON.stringify({ commanders: [], title: displayTitle }),
+        { status: 200, headers }
+      );
     }
 
     const commanders = data.data
@@ -171,23 +189,23 @@ export const handler = async function(event) {
 
     console.log(`Commander carousel [${mode}]: returning ${commanders.length} commanders`);
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
+    return new Response(
+      JSON.stringify({
         commanders,
         title: displayTitle,
         setDisplayName: SET_DISPLAY_NAME,
         mode
-      })
-    };
+      }),
+      { status: 200, headers }
+    );
 
   } catch (err) {
     console.error('Commander carousel error:', err.message);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ commanders: [], title: 'Top Commanders', error: err.message })
-    };
+    return new Response(
+      JSON.stringify({ commanders: [], title: 'Top Commanders', error: err.message }),
+      { status: 500, headers }
+    );
   }
 };
+
+export const config = { path: '/commander-carousel' };
