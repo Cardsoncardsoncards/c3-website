@@ -29,7 +29,7 @@ Each deck uses exactly one Leader card. Leaders have:
 
 Your Leader choice is the most important deckbuilding decision. The easiest starting approach is to buy a Starter Deck. pre-built decks with 50 cards and one Leader included. This gives you a functional deck to learn with before you start customising.
 
-**Current Australian Starter Decks**: check the [C3 shop](/shop-piece) for available options.
+**Current Australian Starter Decks**: check the [C3 shop](/shop) for available options.
 
 ## Step 2: Understand the Colour System
 

@@ -197,11 +197,6 @@ export default async (req) => {
   .capture .msg{font-size:12px;color:var(--silver);margin-top:10px;min-height:15px}
   .upsell-beta{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;margin:10px 0;font-size:13px;color:#A0A8C0}
   .upsell-beta .beta-link{color:#C9A84C;font-weight:600}
-  .movers-gate{position:relative;overflow:hidden;border-radius:12px;margin-bottom:6px}
-  .movers-gate .rows-locked{filter:blur(5px);pointer-events:none;user-select:none;opacity:0.55}
-  .movers-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to bottom,transparent 0%,rgba(8,11,18,0.92) 40%,rgba(8,11,18,0.98) 100%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:20px;text-align:center;z-index:10}
-  .movers-overlay h4{font-family:'Cinzel',serif;font-size:16px;color:var(--gold);margin-bottom:6px}
-  .movers-overlay p{font-size:13px;color:var(--silver);margin-bottom:14px;max-width:400px}
   .btn-gold{display:inline-block;background:var(--gold);color:#080b12;font-weight:700;font-size:14px;padding:12px 26px;border-radius:8px}
   footer{border-top:1px solid var(--border);margin-top:56px;padding:30px 0;text-align:center}
   footer .mission{font-size:13px;color:var(--muted);margin-bottom:10px}
@@ -274,6 +269,11 @@ export default async (req) => {
   </div>
 
   <div class="filter-hint">Select a game above to filter by TCG, or browse all movers below.</div>
+
+  <div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px">
+    <span style="font-size:18px">&#9679;</span>
+    <span style="font-size:13px;color:#c9a84c;font-weight:500">Premium features are free during our beta period. Pricing subject to change.</span>
+  </div>
 
   <div class="movers-head">
     <div class="movers-toggle" role="group" aria-label="Mover direction">
@@ -440,24 +440,8 @@ export default async (req) => {
     } else {
       heroZone.innerHTML='';
     }
-    var FREE_ROWS = 3;
-    var freeRows = list.slice(0, FREE_ROWS);
-    var lockedRows = list.slice(FREE_ROWS);
-    moversZone.innerHTML = '<div class="rows">' + freeRows.map(function(c){return cardRowHTML(c,'movers');}).join('') + '</div>';
-    var gateZone = document.getElementById('movers-gate-zone');
-    if (lockedRows.length > 0) {
-      gateZone.innerHTML =
-        '<div class="movers-gate">' +
-          '<div class="rows-locked rows">' + lockedRows.map(function(c){return cardRowHTML(c,'movers');}).join('') + '</div>' +
-          '<div class="movers-overlay">' +
-            '<h4>Unlock the full movers list</h4>' +
-            '<p>C3 Seller Intelligence gives you all movers across every game, buy and sell signals, and the weekly AU market report.</p>' +
-            '<a href="https://buy.stripe.com/eVq5kCfTodTg81y1YXaIM01" class="btn-gold" target="_blank" rel="noopener" onclick="gtag(\\'event\\',\\'market_upsell_click\\',{event_label:\\'movers_gate\\'})">Subscribe for AU&#36;14.95/month &#8599;</a>' +
-          '</div>' +
-        '</div>';
-    } else {
-      gateZone.innerHTML = '';
-    }
+    moversZone.innerHTML = '<div class="rows">' + list.map(function(c){return cardRowHTML(c,'movers');}).join('') + '</div>';
+    document.getElementById('movers-gate-zone').innerHTML = '';
   }
 
   function loadData(game,period){

@@ -99,6 +99,19 @@
   to = "/contact.html"
   status = 200
 
+# ── 301s for dead URLs flagged in Search Console ──
+[[redirects]]
+  from = "/quiz"
+  to = "/play"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cards/dnd"
+  to = "/cards"
+  status = 301
+  force = true
+
 # ── Scheduled function: daily sales history sync at 3am AEST (17:00 UTC) ──
 [functions."sync-sales-history"]
   schedule = "0 17 * * *"
