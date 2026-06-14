@@ -60,20 +60,50 @@ async function getEbayToken() {
 }
 
 async function getEbayListings(cardName, setName, token) {
-  const q = encodeURIComponent(`${cardName} pokemon card ${setName}`);
-  const url = `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${q}&category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=price&limit=6`;
-  const res = await fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU',
-      'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${EPN_CAMPID}`
+  if (!token) return [];
+  const q = encodeURIComponent(cardName + ' pokemon card');
+  const baseParams = 'category_ids=183454&filter=buyingOptions%3A%7BFIXED_PRICE%7D&sort=-price&limit=6';
+  const hdrs = {
+    'Authorization': 'Bearer ' + token,
+    'X-EBAY-C-MARKETPLACE-ID': 'EBAY_AU',
+    'X-EBAY-C-ENDUSERCTX': 'affiliateCampaignId=' + EPN_CAMPID
+  };
+  function mapItems(items, fromC3Store) {
+    return (items || []).map(item => ({
+      ...item,
+      itemId: item.itemId && item.itemId.includes('|') ? item.itemId.split('|')[1] : item.itemId,
+      fromC3Store: !!fromC3Store
+    }));
+  }
+  // Try C3 store first
+  try {
+    const ctrl1 = new AbortController();
+    const t1 = setTimeout(() => ctrl1.abort(), 8000);
+    const storeRes = await fetch(
+      'https://api.ebay.com/buy/browse/v1/item_summary/search?q=' + q + '&seller=cardsoncardsoncards&' + baseParams,
+      { headers: hdrs, signal: ctrl1.signal }
+    );
+    clearTimeout(t1);
+    if (storeRes.ok) {
+      const storeData = await storeRes.json();
+      if (storeData.itemSummaries && storeData.itemSummaries.length >= 2) {
+        return mapItems(storeData.itemSummaries, true);
+      }
     }
-  });
-  const data = await res.json();
-  return (data.itemSummaries || []).map(item => ({
-    ...item,
-    itemId: item.itemId?.includes('|') ? item.itemId.split('|')[1] : item.itemId
-  }));
+  } catch {}
+  // Fallback: all sellers
+  try {
+    const ctrl2 = new AbortController();
+    const t2 = setTimeout(() => ctrl2.abort(), 8000);
+    const res = await fetch(
+      'https://api.ebay.com/buy/browse/v1/item_summary/search?q=' + q + '&' + baseParams,
+      { headers: hdrs, signal: ctrl2.signal }
+    );
+    clearTimeout(t2);
+    if (!res.ok) return [];
+    const d = await res.json();
+    return mapItems(d.itemSummaries, false);
+  } catch { return []; }
 }
 
 function energyPips(types) {
@@ -289,15 +319,25 @@ export default async (req) => {
     }
     const card = cards[0];
 
-    // Parallel: related cards, eBay token, price snapshots for sparkline (last 90 days)
-    const [_psr0, _psr1, _psr2] = await Promise.allSettled([
+    // Snapshot window: last 30 days for the sparkline
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const snapshotCutoff = thirtyDaysAgo.toISOString().slice(0, 10);
+
+    // Parallel: related cards, eBay token, price snapshots (last 30 days), set slug for breadcrumb
+    const [_psr0, _psr1, _psr2, _psr3] = await Promise.allSettled([
       supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(card.set_id)}&slug=neq.${encodeURIComponent(slug)}&image_url=not.is.null&limit=12&order=number.asc&select=*`).catch(() => []),
       (EBAY_CLIENT_ID && EBAY_CLIENT_SECRET) ? getEbayToken().catch(() => null) : Promise.resolve(null),
-      supabaseGet(`pokemon_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => [])
+      supabaseGet(`pokemon_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&snapshot_date=gte.${snapshotCutoff}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => []),
+      supabaseGet(`pokemon_sets?id=eq.${encodeURIComponent(card.set_id)}&limit=1&select=slug`).catch(() => [])
     ]);
   const relatedCards = _psr0.status === 'fulfilled' ? _psr0.value : [];
   const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
   const snapshots = _psr2.status === 'fulfilled' ? _psr2.value : [];
+  const setRow = _psr3.status === 'fulfilled' ? (_psr3.value && _psr3.value[0]) : null;
+  // pokemon_cards has no set_slug column; set pages resolve by slug, so resolve it here.
+  // Fall back to the Pokemon hub rather than emitting a 404-bound numeric set_id URL.
+  const setUrl = setRow && setRow.slug ? `/cards/pokemon/sets/${setRow.slug}` : '/cards/pokemon';
 
     const ebayListings = ebayToken
       ? await getEbayListings(card.name, card.set_name, ebayToken).catch(() => [])
@@ -322,7 +362,7 @@ export default async (req) => {
 
     // Sparkline SVG -- simple line from snapshot data
     function buildSparkline(snaps) {
-      if (!snaps || snaps.length < 2) return '';
+      if (!snaps || snaps.length < 14) return '';
       const prices = snaps.map(s => parseFloat(s.price_aud || (s.market_price * 1.58)) || 0).filter(p => p > 0);
       if (prices.length < 2) return '';
       const min = Math.min(...prices);
@@ -357,7 +397,7 @@ export default async (req) => {
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardsoncardsoncards.com.au" },
         { "@type": "ListItem", "position": 2, "name": "Pokemon Cards", "item": "https://cardsoncardsoncards.com.au/cards/pokemon" },
-        { "@type": "ListItem", "position": 3, "name": card.set_name, "item": `https://cardsoncardsoncards.com.au/cards/pokemon/sets/${card.set_id}` },
+        { "@type": "ListItem", "position": 3, "name": card.set_name, "item": `https://cardsoncardsoncards.com.au${setUrl}` },
         { "@type": "ListItem", "position": 4, "name": card.name, "item": `https://cardsoncardsoncards.com.au/cards/pokemon/${card.slug}` }
       ]
     };
@@ -412,6 +452,46 @@ export default async (req) => {
     <div class="section">
       <h2>Buy on eBay AU</h2>
       <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary">Search eBay AU for ${card.name} →</a>
+    </div>`;
+
+    const amazonSetUrl = 'https://www.amazon.com.au/s?k=' + encodeURIComponent(card.set_name + ' pokemon booster box') + '&tag=' + AMAZON_TAG;
+
+    const amazonTileHTML = `
+    <div class="section" style="background:#141a2e;border-color:rgba(255,153,0,.25)">
+      <h2 style="color:#ff9900">Find Sealed Product on Amazon AU</h2>
+      <p style="font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.6">
+        Looking for booster boxes, elite trainer boxes, or sealed packs from ${card.set_name}?
+        Find current Australian pricing on Amazon AU.
+      </p>
+      <a href="${amazonSetUrl}"
+         target="_blank" rel="noopener"
+         class="cta-btn"
+         style="display:inline-block;padding:11px 22px;background:rgba(255,153,0,.15);border:1px solid rgba(255,153,0,.4);color:#ff9900;border-radius:8px;font-weight:700;font-size:14px"
+         data-gtag-event="amazon_click"
+         data-gtag-card="${card.name.replace(/"/g,'&quot;')}"
+         data-gtag-game="pokemon">
+        Search Amazon AU for ${card.set_name} Sealed &rarr;
+      </a>
+      <p style="font-size:11px;color:var(--text2);margin-top:10px">
+        Prices and availability vary. Cards on Cards on Cards may earn a commission on purchases made through Amazon links.
+      </p>
+    </div>`;
+
+    const buylistHTML = `
+    <div class="section" style="background:rgba(74,222,128,.04);border-color:rgba(74,222,128,.2)">
+      <h2 style="color:#4ADE80">Sell Your Pokemon Cards</h2>
+      <p style="font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.6">
+        We buy Pokemon singles. Join the waitlist and we will be in touch when the C3 buylist goes live.
+        No obligation, unsubscribe any time.
+      </p>
+      <a href="https://landing.mailerlite.com/webforms/submit/mIFDGb"
+         target="_blank" rel="noopener"
+         class="cta-btn"
+         style="display:inline-block;padding:11px 22px;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ADE80;border-radius:8px;font-weight:700;font-size:14px"
+         data-gtag-event="buylist_click"
+         data-gtag-game="pokemon">
+        Join the Buylist Waitlist &rarr;
+      </a>
     </div>`;
 
     const html = `<!DOCTYPE html>
@@ -506,18 +586,21 @@ export default async (req) => {
   </style>
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">Cards on Cards on Cards</a>
-    <div class="nav-links">
-      <a href="/" class="nav-link">← Home</a>
-      <a href="/cards/mtg" class="nav-link">MTG Cards</a>
-      <a href="/cards/pokemon" class="nav-link active">Pokemon</a>
-      <a href="/compare" class="nav-link">Compare</a>
-      <a href="/generators" class="nav-link">Generators</a>
-      <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
+<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100">
+  <div style="display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap">
+    <a href="/" style="display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0">
+      <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
+    <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
+      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(245,166,35,.35);color:#f5a623;white-space:nowrap">Card Vault</a>
+      <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
+      <a href="/market" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ADE80;white-space:nowrap">Market</a>
+      <a href="/tools" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(251,146,60,.35);color:#FB923C;white-space:nowrap">Tools</a>
+      <a href="/play" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(244,114,182,.35);color:#F472B6;white-space:nowrap">Play</a>
+      <a href="/blog" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(126,203,161,.35);color:#7ECBA1;white-space:nowrap">Blog</a>
+      <div class="nav-dropdown"><a href="/shop" class="nav-link nav-link--shop" style="display:inline-block;padding:6px 11px;border-radius:7px;font-size:13px;font-weight:600;color:#C9A84C;text-decoration:none">Shop &#9662;</a><div class="nav-dropdown-menu"><a href="/shop" class="nav-dropdown-item">Sealed Product</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a><a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a></div></div><style>.nav-dropdown{position:relative;display:inline-block}.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#0d1117;border:1px solid #1e2235;border-radius:8px;min-width:180px;z-index:1000;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,0.4)}.nav-dropdown:hover .nav-dropdown-menu{display:block}.nav-dropdown-item{display:block;padding:9px 16px;color:#c4c9d4;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}.nav-dropdown-item:hover{color:#c9a84c;background:#1a1f2e}</style>
     </div>
   </div>
 </nav>
@@ -525,7 +608,7 @@ export default async (req) => {
 <div class="breadcrumb">
   <a href="/">Home</a><span class="breadcrumb-sep">/</span>
   <a href="/cards/pokemon">Pokemon Cards</a><span class="breadcrumb-sep">/</span>
-  <a href="/cards/pokemon/sets/${card.set_id}">${card.set_name}</a><span class="breadcrumb-sep">/</span>
+  <a href="${setUrl}">${card.set_name}</a><span class="breadcrumb-sep">/</span>
   <span>${card.name}</span>
 </div>
 
@@ -604,6 +687,10 @@ export default async (req) => {
 
   ${ebayHTML}
 
+  ${amazonTileHTML}
+
+  ${buylistHTML}
+
   <div class="section">
     <h2>About ${card.set_name}</h2>
     <p style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:16px">
@@ -612,7 +699,7 @@ export default async (req) => {
       ${card.number ? `Card number ${card.number} in the set.` : ''}
     </p>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a href="/cards/pokemon/sets/${card.set_id}" class="cta-btn cta-secondary" style="display:inline-block;padding:8px 16px;font-size:13px">Browse all ${card.set_name} cards →</a>
+      <a href="${setUrl}" class="cta-btn cta-secondary" style="display:inline-block;padding:8px 16px;font-size:13px">Browse all ${card.set_name} cards →</a>
       <a href="/blog/best-pokemon-booster-boxes-australia/" class="cta-btn cta-secondary" style="display:inline-block;padding:8px 16px;font-size:13px">Is ${card.set_name} worth opening? →</a>
     </div>
   </div>
