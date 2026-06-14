@@ -159,7 +159,13 @@ export default async (req) => {
     const timer = setTimeout(() => controller.abort(), 8000);
     let res;
     try {
-      res = await fetch(scryfallUrl, { signal: controller.signal });
+      res = await fetch(scryfallUrl, {
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'CardsOnCardsOnCards/1.0 (https://cardsoncardsoncards.com.au)',
+          'Accept': 'application/json'
+        }
+      });
       clearTimeout(timer);
     } catch (e) {
       clearTimeout(timer);

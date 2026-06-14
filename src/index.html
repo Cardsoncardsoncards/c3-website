@@ -595,7 +595,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 (async () => {
   const FX_FALLBACK = 1.58;
   try {
-    const res = await fetch('/.netlify/functions/commander-carousel?mode=top&limit=40');
+    const res = await fetch('/commander-carousel?mode=top&limit=40');
     if (!res.ok) { console.warn('Carousel fetch failed:', res.status); return; }
     const data = await res.json();
     let commanders = data.commanders || [];

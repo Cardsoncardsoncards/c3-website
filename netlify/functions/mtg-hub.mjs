@@ -638,7 +638,7 @@ function filterSets(query) {
   function loadCommanders() {
     var track = document.getElementById('cmd-mtg-carousel-track');
     if (!track) return;
-    fetch('/.netlify/functions/commander-carousel?mode=top')
+    fetch('/commander-carousel?mode=top')
       .then(function(r) { return r.json(); })
       .then(function(data) {
         if (!data.commanders || !data.commanders.length) { track.innerHTML = '<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders found.</p>'; return; }
