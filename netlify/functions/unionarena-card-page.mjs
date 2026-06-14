@@ -424,4 +424,4 @@ document.querySelectorAll('a[href*="ebay"]').forEach(a => a.addEventListener('cl
   return new Response(html, { status: 200, headers });
 };
 
-export const config = { path: '/cards/unionarena/:slug+' };
+export const config = { path: '/cards/unionarena/:slug+', excludedPath: '/cards/unionarena/sets/*' };

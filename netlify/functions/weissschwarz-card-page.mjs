@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/weissschwarz/:slug+' };
+export const config = { path: '/cards/weissschwarz/:slug+', excludedPath: '/cards/weissschwarz/sets/*' };

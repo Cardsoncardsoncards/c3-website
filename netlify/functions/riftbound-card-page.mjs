@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/riftbound/:slug+' };
+export const config = { path: '/cards/riftbound/:slug+', excludedPath: '/cards/riftbound/sets/*' };

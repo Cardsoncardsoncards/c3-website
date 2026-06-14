@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/godzilla/:slug+' };
+export const config = { path: '/cards/godzilla/:slug+', excludedPath: '/cards/godzilla/sets/*' };

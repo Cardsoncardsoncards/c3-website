@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/sorcery/:slug+' };
+export const config = { path: '/cards/sorcery/:slug+', excludedPath: '/cards/sorcery/sets/*' };

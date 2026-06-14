@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/buddyfight/:slug+' };
+export const config = { path: '/cards/buddyfight/:slug+', excludedPath: '/cards/buddyfight/sets/*' };

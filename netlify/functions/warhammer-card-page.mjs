@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/warhammer/:slug+' };
+export const config = { path: '/cards/warhammer/:slug+', excludedPath: '/cards/warhammer/sets/*' };

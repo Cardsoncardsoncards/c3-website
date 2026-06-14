@@ -49,14 +49,21 @@ async function supabaseGet(path) {
 
 async function getEbayToken() {
   if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
-  const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
-  const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
-    method: 'POST',
-    headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
-  });
-  const data = await res.json();
-  return data.access_token;
+  try {
+    const creds = btoa(`${EBAY_CLIENT_ID}:${EBAY_CLIENT_SECRET}`);
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 8000);
+    const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: { 'Authorization': `Basic ${creds}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.ebay.com%2Foauth%2Fapi_scope'
+    });
+    clearTimeout(timer);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.access_token || null;
+  } catch { return null; }
 }
 
 async function getEbayListings(cardName, setName, token) {
@@ -898,4 +905,4 @@ function notFoundPage(slug) {
   </body></html>`;
 }
 
-export const config = { path: '/cards/pokemon/:slug+' };
+export const config = { path: '/cards/pokemon/:slug+', excludedPath: '/cards/pokemon/sets/*' };

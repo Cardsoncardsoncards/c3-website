@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/vanguard/:slug+' };
+export const config = { path: '/cards/vanguard/:slug+', excludedPath: '/cards/vanguard/sets/*' };

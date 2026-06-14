@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/digimon/:slug+' };
+export const config = { path: '/cards/digimon/:slug+', excludedPath: '/cards/digimon/sets/*' };

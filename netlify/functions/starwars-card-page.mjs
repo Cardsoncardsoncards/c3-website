@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/starwars/:slug+' };
+export const config = { path: '/cards/starwars/:slug+', excludedPath: '/cards/starwars/sets/*' };

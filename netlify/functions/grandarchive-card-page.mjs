@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/grandarchive/:slug+' };
+export const config = { path: '/cards/grandarchive/:slug+', excludedPath: '/cards/grandarchive/sets/*' };

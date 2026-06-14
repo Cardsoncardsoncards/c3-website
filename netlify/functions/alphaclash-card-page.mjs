@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/alphaclash/:slug+' };
+export const config = { path: '/cards/alphaclash/:slug+', excludedPath: '/cards/alphaclash/sets/*' };

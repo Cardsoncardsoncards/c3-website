@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/dragonball/:slug+' };
+export const config = { path: '/cards/dragonball/:slug+', excludedPath: '/cards/dragonball/sets/*' };

@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/gundam/:slug+' };
+export const config = { path: '/cards/gundam/:slug+', excludedPath: '/cards/gundam/sets/*' };

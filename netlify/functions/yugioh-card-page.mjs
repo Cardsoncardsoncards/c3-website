@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/yugioh/:slug+' };
+export const config = { path: '/cards/yugioh/:slug+', excludedPath: '/cards/yugioh/sets/*' };

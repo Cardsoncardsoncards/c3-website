@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/wixoss/:slug+' };
+export const config = { path: '/cards/wixoss/:slug+', excludedPath: '/cards/wixoss/sets/*' };

@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/gateruler/:slug+' };
+export const config = { path: '/cards/gateruler/:slug+', excludedPath: '/cards/gateruler/sets/*' };

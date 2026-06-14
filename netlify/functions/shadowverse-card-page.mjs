@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/shadowverse/:slug+' };
+export const config = { path: '/cards/shadowverse/:slug+', excludedPath: '/cards/shadowverse/sets/*' };

@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/wow/:slug+' };
+export const config = { path: '/cards/wow/:slug+', excludedPath: '/cards/wow/sets/*' };

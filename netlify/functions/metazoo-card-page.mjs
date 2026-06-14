@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/metazoo/:slug+' };
+export const config = { path: '/cards/metazoo/:slug+', excludedPath: '/cards/metazoo/sets/*' };

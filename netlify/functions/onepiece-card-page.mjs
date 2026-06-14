@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/onepiece/:slug+' };
+export const config = { path: '/cards/onepiece/:slug+', excludedPath: '/cards/onepiece/sets/*' };

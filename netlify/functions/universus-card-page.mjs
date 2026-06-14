@@ -429,4 +429,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/universus/:slug+' };
+export const config = { path: '/cards/universus/:slug+', excludedPath: '/cards/universus/sets/*' };
