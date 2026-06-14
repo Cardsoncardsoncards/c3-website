@@ -10,4 +10,11 @@ scryfall-bulk.json
 
 # Local scratch files
 _dropped-blog-posts/
+
+# Task files (local only)
 task.txt
+bug-market-task.txt
+sitemap-sprint-task.txt
+fixes-task.txt
+bug-sprint-task.txt
+temp_check.txt
