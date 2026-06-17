@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subscribe | Cards on Cards on Cards</title>
+<meta name="description" content="Register your interest in C3 paid plans. Price alerts, AU market intelligence and collection tools for Australian TCG players, collectors and sellers. Free during beta.">
+<link rel="icon" type="image/png" href="/c3logo.png">
+<meta property="og:title" content="Subscribe | Cards on Cards on Cards">
+<meta property="og:description" content="Register your interest in C3 paid plans. Price alerts, AU market intelligence and collection tools. Free during our beta period.">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+<meta property="og:url" content="https://cardsoncardsoncards.com.au/subscribe">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/subscribe">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WR68HPE92S');
+</script>
+<style>
+  :root{
+    --bg:#080b12;--bg2:#0f1420;--panel:#0f1420;--bg3:#161d2e;
+    --gold:#C9A84C;--gold-soft:rgba(201,168,76,.12);--gold-line:rgba(201,168,76,.35);
+    --white:#F0F2FF;--silver:#A0A8C0;--muted:#8892b0;
+    --blue:#60A5FA;--green:#22c55e;--border:#1e2235;--radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px}
+
+  /* ===== Shared nav (inlined from netlify/functions/shared/nav.mjs) ===== */
+  nav { background: rgba(8,10,15,.97); border-bottom: 1px solid #1e2235; padding: 10px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(18px); }
+  .nav-inner { display: flex; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; gap: 8px; }
+  .nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; margin-right: 8px; }
+  .nav-logo img { height: 36px; width: 36px; border-radius: 8px; object-fit: cover; }
+  .nav-logo-text { font-family: Cinzel, serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; color: #C9A84C; text-transform: uppercase; white-space: nowrap; }
+  .nav-search-wrap { display: flex; align-items: center; gap: 4px; flex: 1; max-width: 280px; }
+  .nav-search-input { width: 100%; background: rgba(255,255,255,.05); border: 1px solid #2d3254; border-radius: 6px; color: #e8eaf0; font-size: 12px; padding: 6px 10px; outline: none; }
+  .nav-search-input:focus { border-color: rgba(201,168,76,.5); }
+  .nav-search-btn { background: rgba(201,168,76,.15); border: 1px solid rgba(201,168,76,.3); border-radius: 6px; color: #C9A84C; cursor: pointer; font-size: 13px; padding: 5px 9px; flex-shrink: 0; }
+  .nav-links { display: flex; align-items: center; gap: 3px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; flex-shrink: 0; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-link { display: inline-flex; align-items: center; gap: 4px; padding: 6px 9px; border-radius: 6px; font-size: 11px; font-weight: 600; text-decoration: none; letter-spacing: .05em; text-transform: uppercase; border: 1px solid #1e2235; color: #A0A8C0; white-space: nowrap; transition: all .18s; flex-shrink: 0; }
+  .nav-link:hover { color: #F0F2FF; border-color: #A0A8C0; background: rgba(255,255,255,.04); text-decoration: none; }
+  .nav-link--vault  { color:#C9A84C; border-color:rgba(201,168,76,.35); }
+  .nav-link--vault:hover  { background:rgba(201,168,76,.08); border-color:#C9A84C; }
+  .nav-link--compare{ color:#A78BFA; border-color:rgba(167,139,250,.35); }
+  .nav-link--compare:hover{ background:rgba(167,139,250,.08); border-color:#A78BFA; }
+  .nav-link--market { color:#4ADE80; border-color:rgba(74,222,128,.35); }
+  .nav-link--market:hover { background:rgba(74,222,128,.08); border-color:#4ADE80; }
+  .nav-link--tools  { color:#FB923C; border-color:rgba(251,146,60,.35); }
+  .nav-link--tools:hover  { background:rgba(251,146,60,.08); border-color:#FB923C; }
+  .nav-link--play   { color:#F472B6; border-color:rgba(244,114,182,.35); }
+  .nav-link--play:hover   { background:rgba(244,114,182,.08); border-color:#F472B6; }
+  .nav-link--blog   { color:#7ECBA1; border-color:rgba(126,203,161,.35); }
+  .nav-link--blog:hover   { background:rgba(126,203,161,.08); border-color:#7ECBA1; }
+  .nav-link--subscribe { color:#C9A84C; border-color:rgba(201,168,76,.5); background:rgba(201,168,76,.08); }
+  .nav-link--subscribe:hover { background:rgba(201,168,76,.18); border-color:#C9A84C; }
+  .nav-shop-wrap { position: relative; flex-shrink: 0; }
+  .nav-shop-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 9px; border-radius: 6px; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; border: 1px solid rgba(201,168,76,.35); color: #C9A84C; background: rgba(201,168,76,.06); cursor: pointer; white-space: nowrap; transition: all .18s; user-select: none; }
+  .nav-shop-btn:hover { background:rgba(201,168,76,.14); border-color:#C9A84C; }
+  .nav-shop-arrow { font-size: 9px; transition: transform .2s; }
+  .nav-shop-wrap.open .nav-shop-arrow { transform: rotate(180deg); }
+  .nav-shop-dropdown { display: none; position: absolute; top: calc(100% + 6px); right: 0; background: #111420; border: 1px solid #2d3254; border-radius: 8px; min-width: 200px; z-index: 200; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+  .nav-shop-wrap.open .nav-shop-dropdown { display: block; }
+  .nav-shop-item { display: block; padding: 11px 16px; font-size: 12px; font-weight: 600; color: #e8eaf0; text-decoration: none; border-bottom: 1px solid #1e2235; transition: background .15s; }
+  .nav-shop-item:last-child { border-bottom: none; }
+  .nav-shop-item:hover { background: rgba(201,168,76,.1); color: #C9A84C; text-decoration: none; }
+  .nav-shop-item-label { font-size: 10px; color: #9ba3c4; font-weight: 400; display: block; margin-top: 2px; text-transform: none; letter-spacing: 0; }
+  .c3-disclosure-bar { background: rgba(8,10,15,.95); border-bottom: 1px solid rgba(96,165,250,.12); padding: 5px 20px; text-align: center; font-size: 11px; color: #6b7fa3; font-family: sans-serif; line-height: 1.4; }
+  .c3-beta-bar { background: rgba(201,168,76,.07); border-bottom: 1px solid rgba(201,168,76,.2); padding: 6px 20px; text-align: center; font-size: 11px; color: #C9A84C; font-family: sans-serif; line-height: 1.4; }
+  .c3-beta-bar a { color: #C9A84C; text-decoration: underline; }
+  @media (max-width: 768px) {
+    .nav-logo-text { display: none; }
+    .nav-search-wrap { max-width: 140px; }
+    .nav-link { padding: 5px 7px; font-size: 10px; }
+    .nav-shop-btn { padding: 5px 7px; font-size: 10px; }
+  }
+
+  /* ===== Page ===== */
+  .hero{text-align:center;padding:46px 0 10px}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .hero h1{font-family:'Cinzel',serif;font-size:34px;font-weight:700;line-height:1.15;margin-bottom:12px}
+  .hero p{font-size:15px;color:var(--silver);max-width:560px;margin:0 auto}
+
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:28px 26px;margin:26px 0 40px}
+  .form-row{margin-bottom:18px}
+  .form-row label.field-label{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--silver);margin-bottom:7px}
+  .form-row input[type=text],.form-row input[type=email]{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;padding:11px 13px;outline:none;transition:border-color .2s}
+  .form-row input[type=text]:focus,.form-row input[type=email]:focus{border-color:var(--gold-line)}
+  .interests{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+  .interest{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:border-color .2s,background .2s}
+  .interest:hover{border-color:var(--gold-line)}
+  .interest input{margin-top:3px;accent-color:var(--gold);width:16px;height:16px;flex-shrink:0}
+  .interest .i-title{font-size:14px;font-weight:600;color:var(--white)}
+  .interest .i-desc{font-size:12.5px;color:var(--muted)}
+  .submit-btn{width:100%;padding:13px;background:var(--gold);color:#0A0C14;border:none;border-radius:9px;font-weight:700;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;margin-top:6px}
+  .submit-btn:hover{opacity:.88}
+  .submit-btn:disabled{opacity:.5;cursor:not-allowed}
+  .form-msg{margin-top:14px;font-size:13.5px;text-align:center;min-height:20px}
+  .form-state{display:none;text-align:center;padding:18px 0}
+  .form-state.show{display:block}
+  .form-state.ok p{color:var(--green);font-size:15px;font-weight:600}
+  .form-state.err p{color:#ef4444;font-size:14px}
+
+  footer{border-top:1px solid var(--border);margin-top:30px;padding:30px 0 50px}
+  footer .mission{font-size:13px;color:var(--silver);margin-bottom:10px}
+  footer .disc{font-size:11.5px;color:var(--muted);line-height:1.6}
+
+  @media(max-width:600px){.hero h1{font-size:27px}.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" title="Cards on Cards on Cards">
+      <img src="/c3logo.png" alt="C3">
+      <span class="nav-logo-text">Cards on Cards on Cards</span>
+    </a>
+    <div class="nav-search-wrap">
+      <input class="nav-search-input" type="text" id="nav-q"
+        placeholder="Search cards..."
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
+      <button class="nav-search-btn"
+        onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">
+        &#128269;
+      </button>
+    </div>
+    <div class="nav-links">
+      <a href="/cards"   class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market"  class="nav-link nav-link--market">Market</a>
+      <a href="/tools"   class="nav-link nav-link--tools">Tools</a>
+      <a href="/play"    class="nav-link nav-link--play">Play</a>
+      <a href="/blog"    class="nav-link nav-link--blog">Blog</a>
+      <a href="/subscribe" class="nav-link nav-link--subscribe">Subscribe &#10024;</a>
+      <div class="nav-shop-wrap" id="nav-shop-wrap">
+        <button class="nav-shop-btn" onclick="(function(){var w=document.getElementById('nav-shop-wrap');w.classList.toggle('open');})()">
+          Shop <span class="nav-shop-arrow">&#9660;</span>
+        </button>
+        <div class="nav-shop-dropdown">
+          <a href="/shop" class="nav-shop-item">
+            Booster Boxes and Sealed
+            <span class="nav-shop-item-label">Amazon AU prices</span>
+          </a>
+          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3NavShop&toolid=10001&mkevt=1"
+            target="_blank" rel="noopener" class="nav-shop-item">
+            Singles on eBay AU &#8599;
+            <span class="nav-shop-item-label">28,000+ TCG singles listed</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="c3-disclosure-bar">
+  As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.
+</div>
+<div class="c3-beta-bar">
+  C3 is currently in beta. All features are free while we build. Paid plans will launch later in 2026.
+</div>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Early Access</div>
+    <h1>C3 Subscriptions</h1>
+    <p>Register your interest below. We will contact you when paid plans launch and make sure you get early access.</p>
+  </div>
+
+  <div class="card">
+    <form id="sub-form" novalidate>
+      <div class="form-row">
+        <label class="field-label" for="sub-name">Name</label>
+        <input type="text" id="sub-name" name="name" autocomplete="name" required placeholder="Your name">
+      </div>
+      <div class="form-row">
+        <label class="field-label" for="sub-email">Email</label>
+        <input type="email" id="sub-email" name="email" autocomplete="email" required placeholder="you@example.com">
+      </div>
+      <div class="form-row">
+        <label class="field-label">What are you interested in?</label>
+        <div class="interests">
+          <label class="interest">
+            <input type="checkbox" name="interest" value="Price Alerts">
+            <span><span class="i-title">Price Alerts</span><br><span class="i-desc">Get notified when cards you follow move in price.</span></span>
+          </label>
+          <label class="interest">
+            <input type="checkbox" name="interest" value="Market Intelligence">
+            <span><span class="i-title">Market Intelligence</span><br><span class="i-desc">Weekly AU TCG market signals and movers.</span></span>
+          </label>
+          <label class="interest">
+            <input type="checkbox" name="interest" value="Collection Tools">
+            <span><span class="i-title">Collection Tools</span><br><span class="i-desc">Advanced collection tracking and valuation.</span></span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn" id="sub-submit">Register Interest</button>
+      <div class="form-msg" id="sub-msg"></div>
+    </form>
+
+    <div class="form-state ok" id="sub-ok"><p>Thanks! We will be in touch when plans launch.</p></div>
+    <div class="form-state err" id="sub-err"><p>Something went wrong. Please try again.</p></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="mission">Cards on Cards on Cards is Australia's TCG intelligence platform. Every price in AUD. Every signal built for the local market.</div>
+    <div class="disc">C3 participates in the Amazon Associates Program and the eBay Partner Network. Purchases made through links on this site may earn a small commission at no extra cost to you.</div>
+  </div>
+</footer>
+
+<script>
+  // Close shop dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('nav-shop-wrap');
+    if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
+  });
+
+  (function(){
+    var form = document.getElementById('sub-form');
+    var msg  = document.getElementById('sub-msg');
+    var okState  = document.getElementById('sub-ok');
+    var errState = document.getElementById('sub-err');
+    var btn  = document.getElementById('sub-submit');
+
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      msg.style.color = '#A0A8C0';
+      var name  = document.getElementById('sub-name').value.trim();
+      var email = document.getElementById('sub-email').value.trim();
+      var interests = Array.prototype.slice
+        .call(document.querySelectorAll('input[name="interest"]:checked'))
+        .map(function(c){ return c.value; });
+
+      if(!name){ msg.textContent = 'Please enter your name.'; return; }
+      if(!email || email.indexOf('@') === -1){ msg.textContent = 'Please enter a valid email.'; return; }
+      if(interests.length === 0){ msg.textContent = 'Please select at least one option.'; return; }
+
+      btn.disabled = true;
+      msg.textContent = 'Registering...';
+      try {
+        var r = await fetch('/api/register-interest', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, email: email, interests: interests })
+        });
+        var d = await r.json();
+        if(r.ok && d.ok){
+          form.style.display = 'none';
+          errState.classList.remove('show');
+          okState.classList.add('show');
+          gtag('event','subscribe_interest',{event_label: interests.join(',')});
+        } else {
+          msg.textContent = '';
+          errState.classList.add('show');
+          btn.disabled = false;
+        }
+      } catch(err){
+        msg.textContent = '';
+        errState.classList.add('show');
+        btn.disabled = false;
+      }
+    });
+  })();
+</script>
+</body>
+</html>

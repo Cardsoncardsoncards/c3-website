@@ -197,6 +197,8 @@ export default async (req) => {
   .capture .msg{font-size:12px;color:var(--silver);margin-top:10px;min-height:15px}
   .upsell-beta{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;margin:10px 0;font-size:13px;color:#A0A8C0}
   .upsell-beta .beta-link{color:#C9A84C;font-weight:600}
+  .c3-beta-bar{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.2);padding:6px 20px;text-align:center;font-size:11px;color:#C9A84C;font-family:sans-serif;line-height:1.4}
+  .c3-beta-bar a{color:#C9A84C;text-decoration:underline}
   .btn-gold{display:inline-block;background:var(--gold);color:#080b12;font-weight:700;font-size:14px;padding:12px 26px;border-radius:8px}
   footer{border-top:1px solid var(--border);margin-top:56px;padding:30px 0;text-align:center}
   footer .mission{font-size:13px;color:var(--muted);margin-bottom:10px}
@@ -229,6 +231,9 @@ export default async (req) => {
     <button class="hamburger" aria-label="Open menu" onclick="document.getElementById('nav-drawer').classList.add('open')">&#9776;</button>
   </div>
 </nav>
+<div class="c3-beta-bar">
+  C3 Market Intelligence is free during our beta period. Paid plans will launch later in 2026. <a href="/subscribe">Register interest</a>.
+</div>
 <div class="nav-drawer" id="nav-drawer" role="dialog" aria-label="Navigation menu">
   <button class="drawer-close" onclick="document.getElementById('nav-drawer').classList.remove('open')">&#10005; Close</button>
   <a href="/cards" class="drawer-link drawer-link--vault">Card Prices</a>

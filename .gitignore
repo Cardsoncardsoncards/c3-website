@@ -13,6 +13,7 @@ _dropped-blog-posts/
 
 # Task files (local only)
 task.txt
+*-task.txt
 bug-market-task.txt
 sitemap-sprint-task.txt
 fixes-task.txt
