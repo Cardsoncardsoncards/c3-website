@@ -257,6 +257,7 @@ ${NAV}
   </div>
   <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.name} <span style="color:var(--accent)">Card Prices</span></h1>
   <p style="color:var(--text2);margin-bottom:20px;font-size:14px">${cards.length} cards${set.set_code ? ` · ${set.set_code}` : ''}${releaseDate ? ` · Released ${releaseDate}` : ''} · AUD prices updated daily</p>
+  <p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
     <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="background:rgba(200,163,50,.12);border:1px solid rgba(200,163,50,.3);color:#c8a332;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay AU ↗</a>
     <a href="${ebayBoxURL}" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60A5FA;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📦 Buy Booster Box ↗</a>

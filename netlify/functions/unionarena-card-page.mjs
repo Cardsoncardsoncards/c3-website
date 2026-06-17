@@ -331,6 +331,7 @@ export default async (req) => {
           ${card.price_change_30d ? `<div style="font-size:11px;color:${parseFloat(card.price_change_30d) >= 0 ? '#4ADE80' : '#F87171'};font-weight:600">${parseFloat(card.price_change_30d) >= 0 ? '▲' : '▼'} ${Math.abs(parseFloat(card.price_change_30d)).toFixed(1)}% this month</div>` : ''}
           ${card.total_listings > 0 ? `<div style="margin-top:6px;font-size:11px;color:#9ba3c4">${card.total_listings} listings on TCGPlayer</div>` : ''}
         </div>` : ''}
+        <p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
         <div class="cta-row">
           <a href="${ebayCardUrl}" target="_blank" rel="noopener" class="btn btn-primary">&#128722; Buy on eBay AU &#8599;</a>
           <a href="${amazonUrl}" target="_blank" rel="noopener" class="btn btn-ebay">Amazon AU &#8599;</a>

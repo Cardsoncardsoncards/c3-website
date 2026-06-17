@@ -174,6 +174,7 @@ export default async (req) => {
     ${priced > 0 ? `<span>${priced} priced in AUD</span>` : ''}
   </div>
 
+  <p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
   <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px">
     <a href="${ebaySetURL}" class="ebay-btn" target="_blank" rel="noopener">Buy Cards on eBay AU &rarr;</a>
     <a href="${ebayBoxURL}" style="display:inline-block;border:1px solid #C9A84C;color:#C9A84C;padding:10px 20px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px" target="_blank" rel="noopener">Find Booster Box &rarr;</a>
