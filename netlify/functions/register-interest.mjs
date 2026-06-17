@@ -82,7 +82,7 @@ export default async (req) => {
       },
       body: JSON.stringify({
         from: 'C3 Alerts <alerts@cardsoncardsoncards.com.au>',
-        to: ['alerts@cardsoncardsoncards.com.au'],
+        to: ['ccc.squadhelp@gmail.com'],
         subject: 'New subscription interest: ' + interestList.join(', '),
         html: '<p><strong>Name:</strong> ' + name + '</p>'
           + '<p><strong>Email:</strong> ' + email + '</p>'
