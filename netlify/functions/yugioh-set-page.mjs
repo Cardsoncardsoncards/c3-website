@@ -1,3 +1,4 @@
+import { NAV_CSS, navHtml } from './shared/nav.mjs';
 // netlify/functions/yugioh-set-page.mjs
 // Serves /cards/yugioh/sets/:setCode
 
@@ -46,25 +47,6 @@ async function getEbayListings(q, token) {
 }
 
 const ATTR_COLOURS = {'LIGHT':'#FFD700','DARK':'#9966CC','FIRE':'#FF4500','WATER':'#1E90FF','EARTH':'#8B6914','WIND':'#00CC66','DIVINE':'#FFD700'};
-
-const NAV = `<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100">
-  <div style="display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap">
-    <a href="/" style="display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0">
-      <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0">
-      <span>Cards on Cards on Cards</span>
-    </a>
-    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
-    <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
-      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Card Vault</a>
-      <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
-      <a href="/market" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ADE80;white-space:nowrap">Market</a>
-      <a href="/tools" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(251,146,60,.35);color:#FB923C;white-space:nowrap">Tools</a>
-      <a href="/play" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(244,114,182,.35);color:#F472B6;white-space:nowrap">Play</a>
-      <a href="/blog" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(126,203,161,.35);color:#7ECBA1;white-space:nowrap">Blog</a>
-      <div class="nav-dropdown"><a href="/shop" class="nav-link nav-link--shop" style="display:inline-block;padding:6px 11px;border-radius:7px;font-size:13px;font-weight:600;color:#C9A84C;text-decoration:none">Shop &#9662;</a><div class="nav-dropdown-menu"><a href="/shop" class="nav-dropdown-item">Sealed Product</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=${EPN_CAMPID}&customid=nav-shop&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a><a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a></div></div><style>.nav-dropdown{position:relative;display:inline-block}.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#0d1117;border:1px solid #1e2235;border-radius:8px;min-width:180px;z-index:1000;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,0.4)}.nav-dropdown:hover .nav-dropdown-menu{display:block}.nav-dropdown-item{display:block;padding:9px 16px;color:#c4c9d4;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}.nav-dropdown-item:hover{color:#c9a84c;background:#1a1f2e}</style>
-    </div>
-  </div>
-</nav>`;
 
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 export default async (req) => {
@@ -247,7 +229,7 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-${NAV}
+<style>${NAV_CSS}</style>${navHtml({ gameLabel: 'Yu-Gi-Oh', gameHref: '/cards/yugioh' })}
 <div class="wrap" style="padding-top:32px">
   <div style="font-size:12px;color:var(--text2);margin-bottom:16px">
     <a href="/" style="color:var(--text2)">Home</a> ›
@@ -257,7 +239,7 @@ ${NAV}
   </div>
   <h1 style="font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);margin-bottom:6px">${set.name} <span style="color:var(--accent)">Card Prices</span></h1>
   <p style="color:var(--text2);margin-bottom:20px;font-size:14px">${cards.length} cards${set.set_code ? ` · ${set.set_code}` : ''}${releaseDate ? ` · Released ${releaseDate}` : ''} · AUD prices updated daily</p>
-  <p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
+
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
     <a href="${ebaySearchURL}" target="_blank" rel="noopener" style="background:rgba(200,163,50,.12);border:1px solid rgba(200,163,50,.3);color:#c8a332;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay AU ↗</a>
     <a href="${ebayBoxURL}" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60A5FA;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📦 Buy Booster Box ↗</a>

@@ -1,3 +1,4 @@
+import { NAV_CSS, navHtml } from './shared/nav.mjs';
 // netlify/functions/pokemon-card-page.mjs
 // Serves dynamic Pokemon card pages at /cards/pokemon/[slug]
 // Mirrors MTG card page structure, adapted for Pokemon TCG data from TCGdex
@@ -209,19 +210,6 @@ async function handleSetPage(setSlug, headers) {
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;line-height:1.6}
-    nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid #252840;padding:12px 0;position:sticky;top:0;z-index:100}
-    .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-    .nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
-    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-    .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #252840;color:#A0A8C0;white-space:nowrap}
-    .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover,.nav-link--vault.active{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
-    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover,.nav-link--compare.active{background:rgba(167,139,250,.1);border-color:#A78BFA;color:#C4B5FD}
-    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover,.nav-link--market.active{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86EFAC}
-    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover,.nav-link--tools.active{background:rgba(251,146,60,.1);border-color:#FB923C;color:#FDBA74}
-    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover,.nav-link--play.active{background:rgba(244,114,182,.1);border-color:#F472B6;color:#F9A8D4}
-    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover,.nav-link--blog.active{background:rgba(126,203,161,.1);border-color:#7ECBA1;color:#A5DFC0}
-    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA;color:#93C5FD}
     .wrap{max-width:1200px;margin:0 auto;padding:0 20px 60px}
     .hero{padding:36px 0 24px;border-bottom:1px solid #1e2235;margin-bottom:28px}
     .hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${accent};margin-bottom:8px}
@@ -238,21 +226,7 @@ async function handleSetPage(setSlug, headers) {
   </style>
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"><span>Cards on Cards on Cards</span>
-    <div class="nav-search-wrap" style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div></a>
-    <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
-      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <div class="nav-dropdown"><a href="/shop" class="nav-link nav-link--shop" style="display:inline-block;padding:6px 11px;border-radius:7px;font-size:13px;font-weight:600;color:#C9A84C;text-decoration:none">Shop &#9662;</a><div class="nav-dropdown-menu"><a href="/shop" class="nav-dropdown-item">Sealed Product</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=${EPN_CAMPID}&customid=nav-shop&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a><a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a></div></div><style>.nav-dropdown{position:relative;display:inline-block}.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#0d1117;border:1px solid #1e2235;border-radius:8px;min-width:180px;z-index:1000;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,0.4)}.nav-dropdown:hover .nav-dropdown-menu{display:block}.nav-dropdown-item{display:block;padding:9px 16px;color:#c4c9d4;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}.nav-dropdown-item:hover{color:#c9a84c;background:#1a1f2e}</style>
-    </div>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${navHtml({ gameLabel: 'Pokemon TCG', gameHref: '/cards/pokemon' })}
 <div class="wrap">
   <div class="hero">
     <div class="hero-eyebrow">Pokemon TCG · Set</div>
@@ -271,7 +245,7 @@ async function handleSetPage(setSlug, headers) {
       <div><div style="font-size:10px;color:#8892b0;text-transform:uppercase;letter-spacing:.1em">Avg Card Value</div><div style="font-size:18px;font-weight:700;color:#e8eaf0;font-family:'Cinzel',serif">AU$${(pricedCards.reduce((s,c)=>s+toAud(c),0)/pricedCards.length).toFixed(2)}</div></div>
     </div>` : ''}
   </div>
-  <p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
+
   <div class="cta-row">
     <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
     <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' pokemon')}&tag=blasdigital-22" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
@@ -534,13 +508,6 @@ export default async (req) => {
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6}
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
-    nav{position:sticky;top:0;z-index:100;background:rgba(15,17,23,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:10px 0}
-    .nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-    .nav-logo{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
-    .nav-links{display:flex;gap:6px;flex-wrap:wrap}
-    .nav-link{font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);color:var(--text2);transition:all .2s}
-    .nav-link:hover{color:var(--text);border-color:var(--text2);text-decoration:none}
-    .nav-link.active{color:var(--accent2);border-color:var(--accent2);background:rgba(77,189,95,.08)}
     .card-hero{max-width:1100px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start}
     @media(max-width:700px){.card-hero{grid-template-columns:1fr;gap:24px}}
     .card-image-col{position:sticky;top:80px}
@@ -594,24 +561,7 @@ export default async (req) => {
   </style>
 </head>
 <body>
-<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100">
-  <div style="display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap">
-    <a href="/" style="display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0">
-      <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0">
-      <span>Cards on Cards on Cards</span>
-    </a>
-    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
-    <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
-      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(245,166,35,.35);color:#f5a623;white-space:nowrap">Card Vault</a>
-      <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
-      <a href="/market" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ADE80;white-space:nowrap">Market</a>
-      <a href="/tools" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(251,146,60,.35);color:#FB923C;white-space:nowrap">Tools</a>
-      <a href="/play" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(244,114,182,.35);color:#F472B6;white-space:nowrap">Play</a>
-      <a href="/blog" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(126,203,161,.35);color:#7ECBA1;white-space:nowrap">Blog</a>
-      <div class="nav-dropdown"><a href="/shop" class="nav-link nav-link--shop" style="display:inline-block;padding:6px 11px;border-radius:7px;font-size:13px;font-weight:600;color:#C9A84C;text-decoration:none">Shop &#9662;</a><div class="nav-dropdown-menu"><a href="/shop" class="nav-dropdown-item">Sealed Product</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a><a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a></div></div><style>.nav-dropdown{position:relative;display:inline-block}.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#0d1117;border:1px solid #1e2235;border-radius:8px;min-width:180px;z-index:1000;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,0.4)}.nav-dropdown:hover .nav-dropdown-menu{display:block}.nav-dropdown-item{display:block;padding:9px 16px;color:#c4c9d4;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}.nav-dropdown-item:hover{color:#c9a84c;background:#1a1f2e}</style>
-    </div>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${navHtml({ gameLabel: 'Pokemon TCG', gameHref: '/cards/pokemon' })}
 
 <div class="breadcrumb">
   <a href="/">Home</a><span class="breadcrumb-sep">/</span>

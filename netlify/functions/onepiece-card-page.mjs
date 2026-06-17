@@ -1,3 +1,4 @@
+import { NAV_CSS, navHtml } from './shared/nav.mjs';
 // netlify/functions/onepiece-card-page.mjs
 // Serves /cards/onepiece/:slug
 // If slug starts with sets/, renders the set page inline (routing fix)
@@ -51,31 +52,12 @@ async function getEbayListings(cardName, token) {
   } catch { return []; }
 }
 
-const NAV = `<nav style="background:rgba(8,10,15,.97);backdrop-filter:blur(18px);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100">
-  <div style="display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap">
-    <a href="/" style="display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0">
-      <img src="/c3logo.png" alt="C3" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0">
-      <span>Cards on Cards on Cards</span>
-    </a>
-    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
-    <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none">
-      <a href="/cards" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(201,168,76,.35);color:#C9A84C;white-space:nowrap">Card Vault</a>
-      <a href="/compare" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(167,139,250,.35);color:#A78BFA;white-space:nowrap">Compare</a>
-      <a href="/market" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ADE80;white-space:nowrap">Market</a>
-      <a href="/tools" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(251,146,60,.35);color:#FB923C;white-space:nowrap">Tools</a>
-      <a href="/play" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(244,114,182,.35);color:#F472B6;white-space:nowrap">Play</a>
-      <a href="/blog" style="display:inline-flex;align-items:center;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(126,203,161,.35);color:#7ECBA1;white-space:nowrap">Blog</a>
-      <div class="nav-dropdown"><a href="/shop" class="nav-link nav-link--shop" style="display:inline-block;padding:6px 11px;border-radius:7px;font-size:13px;font-weight:600;color:#C9A84C;text-decoration:none">Shop &#9662;</a><div class="nav-dropdown-menu"><a href="/shop" class="nav-dropdown-item">Sealed Product</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=${EPN_CAMPID}&customid=nav-shop&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a><a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a></div></div><style>.nav-dropdown{position:relative;display:inline-block}.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#0d1117;border:1px solid #1e2235;border-radius:8px;min-width:180px;z-index:1000;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,0.4)}.nav-dropdown:hover .nav-dropdown-menu{display:block}.nav-dropdown-item{display:block;padding:9px 16px;color:#c4c9d4;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}.nav-dropdown-item:hover{color:#c9a84c;background:#1a1f2e}</style>
-    </div>
-  </div>
-</nav>`;
-
 function notFoundPage(slug) {
-  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Card Not Found | Cards on Cards on Cards</title><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif">${NAV}<div style="padding:80px 24px;text-align:center"><h1 style="font-family:'Cinzel',serif;color:#C9A84C;margin-bottom:16px">Card Not Found</h1><p style="color:#A0A8C0;margin-bottom:24px">The card "${slug}" doesn't exist or hasn't synced yet.</p><a href="/cards/onepiece" style="display:inline-block;padding:10px 24px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:#E8C97A;border-radius:8px;text-decoration:none">Browse One Piece Cards</a></div></body></html>`;
+  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Card Not Found | Cards on Cards on Cards</title><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif"><style>${NAV_CSS}</style>${navHtml({ gameLabel: 'One Piece', gameHref: '/cards/onepiece' })}<div style="padding:80px 24px;text-align:center"><h1 style="font-family:'Cinzel',serif;color:#C9A84C;margin-bottom:16px">Card Not Found</h1><p style="color:#A0A8C0;margin-bottom:24px">The card "${slug}" doesn't exist or hasn't synced yet.</p><a href="/cards/onepiece" style="display:inline-block;padding:10px 24px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:#E8C97A;border-radius:8px;text-decoration:none">Browse One Piece Cards</a></div></body></html>`;
 }
 
 function setNotFoundPage(setSlug) {
-  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Set Not Found | One Piece | Cards on Cards on Cards</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/c3logo.png"><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif">${NAV}<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;padding:24px;text-align:center"><div><div style="font-size:48px;margin-bottom:16px">🃏</div><h1 style="font-family:'Cinzel',serif;color:#CC0000;font-size:22px;margin-bottom:10px">Set Not Found</h1><p style="color:#8892b0;font-size:14px;margin-bottom:24px">We couldn't find the One Piece set "${setSlug}".</p><a href="/cards/onepiece" style="display:inline-block;background:#CC0000;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px">Browse All One Piece</a><a href="/" style="display:inline-block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px">← Home</a></div></div></body></html>`;
+  return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Set Not Found | One Piece | Cards on Cards on Cards</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/c3logo.png"><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif"><style>${NAV_CSS}</style>${navHtml({ gameLabel: 'One Piece', gameHref: '/cards/onepiece' })}<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;padding:24px;text-align:center"><div><div style="font-size:48px;margin-bottom:16px">🃏</div><h1 style="font-family:'Cinzel',serif;color:#CC0000;font-size:22px;margin-bottom:10px">Set Not Found</h1><p style="color:#8892b0;font-size:14px;margin-bottom:24px">We couldn't find the One Piece set "${setSlug}".</p><a href="/cards/onepiece" style="display:inline-block;background:#CC0000;color:#000;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px">Browse All One Piece</a><a href="/" style="display:inline-block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF;padding:12px 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px;margin:4px">← Home</a></div></div></body></html>`;
 }
 
 async function handleSetPage(setSlug, htmlHeaders) {
@@ -162,7 +144,7 @@ async function handleSetPage(setSlug, htmlHeaders) {
   </style>
 </head>
 <body>
-${NAV}
+<style>${NAV_CSS}</style>${navHtml({ gameLabel: 'One Piece', gameHref: '/cards/onepiece' })}
 <div class="wrap">
   <div class="hero">
     <div class="hero-eyebrow">One Piece · Set</div>
@@ -175,7 +157,7 @@ ${NAV}
     </div>
   </div>
 
-  <p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
+
   <div class="cta-row">
     <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
     <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>
@@ -321,7 +303,7 @@ export default async (req) => {
   </style>
 </head>
 <body>
-${NAV}
+<style>${NAV_CSS}</style>${navHtml({ gameLabel: 'One Piece', gameHref: '/cards/onepiece' })}
 <div class="card-hero">
   <div class="card-img-wrap">
     ${card.image_url ? `<img src="${card.image_url}" alt="${card.name}" loading="eager">` : `<div style="color:var(--text2);font-family:'Cinzel',serif;font-size:18px;padding:24px;text-align:center">${card.name}</div>`}

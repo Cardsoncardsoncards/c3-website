@@ -1,3 +1,4 @@
+import { NAV_CSS, navHtml } from './shared/nav.mjs';
 // netlify/functions/pokemon-set-page.mjs
 // Serves /cards/pokemon/sets/:slug+
 
@@ -135,33 +136,16 @@ export default async (req) => {
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:#0A0C14;color:#F0F2FF;font-family:'DM Sans',sans-serif;line-height:1.6}
-    .nav-bar{background:#080A12;border-bottom:1px solid #1e2235;padding:0 20px;display:flex;align-items:center;gap:16px;height:52px;position:sticky;top:0;z-index:100}
-    .nav-logo{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#C9A84C;text-decoration:none;flex-shrink:0}
-    .nav-links{display:flex;gap:4px;flex-shrink:0}
-    .nav-links a{color:#8892b0;font-size:12px;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:6px;transition:color .2s}
-    .nav-links a:hover{color:#F0F2FF}
-    .nav-search{flex:1;min-width:0;max-width:400px;display:flex}
-    .nav-search input{flex:1;max-width:300px;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none}
-    .nav-search button{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0}
     .ebay-btn{display:inline-block;background:#C9A84C;color:#000;padding:10px 20px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px}
     .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
     .filt-btn{background:rgba(255,255,255,.06);border:1px solid #1e2235;color:#8892b0;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
     .filt-btn.active,.filt-btn:hover{background:#FBBF24;border-color:#FBBF24;color:#000;font-weight:700}
     .wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
-    @media(max-width:600px){.nav-links{display:none}.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
+    @media(max-width:600px){.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
   </style>
 </head>
 <body>
-<nav class="nav-bar">
-  <a href="/" class="nav-logo">C3</a>
-  <div class="nav-links">
-    <a href="/vault">CARD VAULT</a><a href="/compare">COMPARE</a><a href="/market">MARKET</a><a href="/tools">TOOLS</a><a href="/play">PLAY</a><a href="/blog">BLOG</a>
-  </div>
-  <div class="nav-search">
-    <input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
-    <button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${navHtml({ gameLabel: 'Pokemon TCG', gameHref: '/cards/pokemon' })}
 
 <div class="wrap">
   <div style="font-size:12px;color:#8892b0;margin-bottom:12px"><a href="/" style="color:#8892b0;text-decoration:none">Home</a> &rsaquo; <a href="/cards/pokemon" style="color:#8892b0;text-decoration:none">Pokemon</a> &rsaquo; ${esc(set.name)}</div>
@@ -174,7 +158,7 @@ export default async (req) => {
     ${priced > 0 ? `<span>${priced} priced in AUD</span>` : ''}
   </div>
 
-  <p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
+
   <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px">
     <a href="${ebaySetURL}" class="ebay-btn" target="_blank" rel="noopener">Buy Cards on eBay AU &rarr;</a>
     <a href="${ebayBoxURL}" style="display:inline-block;border:1px solid #C9A84C;color:#C9A84C;padding:10px 20px;border-radius:8px;font-weight:700;text-decoration:none;font-size:13px" target="_blank" rel="noopener">Find Booster Box &rarr;</a>

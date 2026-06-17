@@ -1,3 +1,4 @@
+import { NAV_CSS, navHtml } from './shared/nav.mjs';
 // netlify/functions/weissschwarz-set-page.mjs
 // C3 set-page v4 -- full MVP rebuild
 // Serves /cards/weissschwarz/sets/:slug+
@@ -233,33 +234,13 @@ export default async (req) => {
     .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:28px}
     .ebay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:28px}
     .section{margin-bottom:32px}
-    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
-    .nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .nav-logo{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:#C9A84C;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;gap:8px}
-    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-    .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap;transition:all .2s}
-    .nav-link.active{border-color:rgba(16,185,129,.35);color:#10B981;background:rgba(16,185,129,.08)}
     @media(max-width:600px){.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
     .filt-btn{padding:5px 10px;border-radius:6px;border:1px solid #2a3050;background:none;color:#8892b0;font-size:11px;font-weight:600;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif}
     .filt-btn:hover,.filt-btn.active{border-color:#10B981;color:#10B981;background:rgba(16,185,129,.08)}
   </style>
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3" style="height:24px;border-radius:4px"> C3</a>
-    <div style="flex:1;min-width:0;max-width:480px;display:flex;align-items:center"><input type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none"><button onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);" style="background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0">&#128269;</button></div>
-    <div class="nav-links">
-      <a href="/" class="nav-link">Home</a>
-      <a href="/cards" class="nav-link">Card Vault</a>
-      <a href="/cards/weissschwarz" class="nav-link active">Weiss Schwarz</a>
-      <a href="/compare" class="nav-link">Compare</a>
-      <a href="/market" class="nav-link">Market</a>
-      <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-    </div>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${navHtml({ gameLabel: 'Weiss Schwarz', gameHref: '/cards/weissschwarz' })}
 
 <div class="wrap">
   <div class="hero">
@@ -273,7 +254,7 @@ export default async (req) => {
     </div>
   </div>
 
-  <p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
+
   <div class="cta-row">
     <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary" onclick="if(typeof gtag!=='undefined')gtag('event','ebay_set_click',{set_name:'${set.name}',game:'weissschwarz'})">Buy Cards on eBay AU →</a>
     <a href="${ebayBoxURL}" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>

@@ -1,3 +1,4 @@
+import { NAV_CSS, navHtml } from './shared/nav.mjs';
 // netlify/functions/onepiece-hub.mjs
 // Serves /cards/onepiece
 // Rebuilt 24 May 2026 -- hidden sets, market pulse, 24-card carousel, guides, price source, bug widget
@@ -144,24 +145,6 @@ export default async (req) => {
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(${ACCENT_RGB},.05),transparent 60%)}
     a{color:inherit;text-decoration:none}a:hover{text-decoration:none}
-    nav{background:rgba(10,12,20,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-    .nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:8px}
-    .nav-logo{display:flex;align-items:center;flex-shrink:0}.nav-logo img{height:34px;width:34px;border-radius:6px;object-fit:cover}
-    .nav-search-wrap{flex:1;min-width:0;max-width:400px;display:flex}
-    .nav-search-input{flex:1;max-width:300px;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none}
-    .nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0}
-    .nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
-    .nav-links::-webkit-scrollbar{display:none}
-    .nav-link{font-size:11px;padding:5px 9px;border-radius:6px;border:1px solid var(--border);color:var(--silver);font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;white-space:nowrap;text-decoration:none}
-    .nav-link:hover{color:var(--text);border-color:var(--silver);background:rgba(255,255,255,.04)}
-    .nav-link--vault{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--vault:hover{background:rgba(201,168,76,.06);border-color:var(--gold)}
-    .nav-link--active{color:var(--accent);border-color:rgba(${ACCENT_RGB},.4);background:rgba(${ACCENT_RGB},.07)}
-    .nav-link--compare{color:#a78bfa;border-color:rgba(167,139,250,.3)}.nav-link--compare:hover{background:rgba(167,139,250,.06);border-color:#a78bfa}
-    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.3)}.nav-link--market:hover{background:rgba(74,222,128,.06);border-color:#4ADE80}
-    .nav-link--tools{color:#60A5FA;border-color:rgba(96,165,250,.3)}.nav-link--tools:hover{background:rgba(96,165,250,.06);border-color:#60A5FA}
-    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.3)}.nav-link--play:hover{background:rgba(244,114,182,.06);border-color:#F472B6}
-    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.3)}.nav-link--blog:hover{background:rgba(126,203,161,.06);border-color:#7ECBA1}
-    .nav-link--ebay{color:#4ADE80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.05)}.nav-link--ebay:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
     .release-ticker{background:rgba(${ACCENT_RGB},.06);border-bottom:1px solid rgba(${ACCENT_RGB},.15);height:34px;display:flex;align-items:center;overflow:hidden;position:relative}
     .release-ticker::before,.release-ticker::after{content:'';position:absolute;top:0;bottom:0;width:50px;z-index:2;pointer-events:none}
     .release-ticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
@@ -237,33 +220,12 @@ export default async (req) => {
     .fade-up{animation:fadeUp .5s ease both}.fade-up-1{animation-delay:.08s}.fade-up-2{animation-delay:.16s}.fade-up-3{animation-delay:.24s}
     footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:12px;color:var(--text2);margin-top:40px;position:relative;z-index:1}
     footer a{color:var(--text2);margin:0 7px;text-decoration:none}footer a:hover{color:var(--text)}
-    @media(max-width:600px){
-      .nav-links{gap:2px}.nav-link{font-size:10px;padding:4px 7px}
-      .hero{padding:36px 16px 24px}.quick-links{padding:0 12px}.wrap{padding:0 12px}
-      .set-grid{grid-template-columns:1fr}.movers-grid{grid-template-columns:1fr}.guides-grid{grid-template-columns:1fr}
-    }
+    @media(max-width:600px){.hero{padding:36px 16px 24px}.quick-links{padding:0 12px}.wrap{padding:0 12px}
+      .set-grid{grid-template-columns:1fr}.movers-grid{grid-template-columns:1fr}.guides-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo" title="Cards on Cards on Cards"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
-    <div class="nav-search-wrap">
-      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){let v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
-      <button class="nav-search-btn" onclick="let v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
-    </div>
-    <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
-      <a href="/cards/onepiece" class="nav-link nav-link--active">One Piece</a>
-      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <div class="nav-dropdown"><a href="/shop" class="nav-link nav-link--shop" style="display:inline-block;padding:6px 11px;border-radius:7px;font-size:13px;font-weight:600;color:#C9A84C;text-decoration:none">Shop &#9662;</a><div class="nav-dropdown-menu"><a href="/shop" class="nav-dropdown-item">Sealed Product</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=${EPN_CAMPID}&customid=nav-shop&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a><a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a></div></div><style>.nav-dropdown{position:relative;display:inline-block}.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;background:#0d1117;border:1px solid #1e2235;border-radius:8px;min-width:180px;z-index:1000;padding:6px 0;box-shadow:0 8px 24px rgba(0,0,0,0.4)}.nav-dropdown:hover .nav-dropdown-menu{display:block}.nav-dropdown-item{display:block;padding:9px 16px;color:#c4c9d4;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap}.nav-dropdown-item:hover{color:#c9a84c;background:#1a1f2e}</style>
-    </div>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${navHtml({ gameLabel: 'One Piece', gameHref: '/cards/onepiece' })}
 
 ${upcomingEvents.length ? `<div class="release-ticker">
   <span class="ticker-label">&#9763; One Piece TCG</span>
@@ -282,7 +244,7 @@ ${upcomingEvents.length ? `<div class="release-ticker">
   </div>
 </div>
 
-<p style="font-size:11px;color:#9ba3c4;margin:6px 0 12px;padding:6px 10px;background:rgba(96,165,250,.05);border-left:2px solid rgba(96,165,250,.3);border-radius:0 4px 4px 0;line-height:1.4">As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.</p>
+
 <div class="quick-links fade-up fade-up-1">
   <a href="https://www.ebay.com.au/sch/i.html?_nkw=one+piece+tcg+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'onepiece-hub'})" class="quick-link" style="background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff">&#128722; Shop One Piece on eBay &#8599;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
