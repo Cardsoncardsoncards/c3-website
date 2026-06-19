@@ -93,18 +93,6 @@ export default async (req) => {
   body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
-  .hamburger{display:none;background:transparent;border:1px solid var(--border);color:var(--silver);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0}
-  .hamburger:focus{outline:none;border-color:var(--gold-line)}
-  .drawer-close{align-self:flex-end;background:transparent;border:1px solid var(--border);color:var(--silver);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:14px;margin-bottom:10px}
-  .drawer-link{display:block;padding:14px 16px;border-radius:8px;font-size:14px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);transition:all .2s}
-  .drawer-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}
-  .drawer-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
-  .drawer-link--market{color:#080b12;background:#4ADE80;border-color:#4ADE80;font-weight:700}
-  .drawer-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}
-  .drawer-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}
-  .drawer-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
-  .drawer-link--pricing{color:var(--gold);border-color:var(--gold-line)}
-  .drawer-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
   .hero{text-align:center;padding:46px 0 18px}
   .eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
   .hero h1{font-family:'Cinzel',serif;font-size:34px;font-weight:700;line-height:1.15;margin-bottom:12px}
@@ -191,24 +179,13 @@ export default async (req) => {
     .row-spark{display:none}
     .row-cta .cmp{display:none}
     .row-price{min-width:80px}
-    .hamburger{display:block}}
+  }
 </style>
 </head>
 <body>
 <style>${NAV_CSS}</style>${NAV_HTML}
 <div class="c3-beta-bar">
   C3 Market Intelligence is free during our beta period. Paid plans will launch later in 2026. <a href="/subscribe">Register interest</a>.
-</div>
-<div class="nav-drawer" id="nav-drawer" role="dialog" aria-label="Navigation menu">
-  <button class="drawer-close" onclick="document.getElementById('nav-drawer').classList.remove('open')">&#10005; Close</button>
-  <a href="/cards" class="drawer-link drawer-link--vault">Card Prices</a>
-  <a href="/compare" class="drawer-link drawer-link--compare">Compare</a>
-  <a href="/market" class="drawer-link drawer-link--market">Market</a>
-  <a href="/tools" class="drawer-link drawer-link--tools">Tools</a>
-  <a href="/play" class="drawer-link drawer-link--play">Play</a>
-  <a href="/blog" class="drawer-link drawer-link--blog">Blog</a>
-  <a href="/pricing" class="drawer-link drawer-link--pricing">Pricing</a>
-  <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="drawer-link drawer-link--ebay">Shop eBay &#8599;</a>
 </div>
 
 <header class="hero">
