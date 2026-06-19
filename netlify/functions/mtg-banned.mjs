@@ -1,3 +1,4 @@
+import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 // netlify/functions/mtg-banned.mjs
 // Serves: /cards/mtg/banned and /cards/mtg/banned/:format
 
@@ -199,27 +200,6 @@ export default async (req) => {
     .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
     footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:13px;margin-top:48px}
     footer a{color:var(--text2);margin:0 10px}
-    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
-    .nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}
-    .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
-    .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}
-    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-width:0}
-    .nav-links::-webkit-scrollbar{display:none}
-    .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
-    .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
-    .nav-link--active{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
-    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA}
-    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80}
-    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover{background:rgba(251,146,60,.1);border-color:#FB923C}
-    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6}
-    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1}
-    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA}
-    .nav-search-wrap{flex:1;min-width:0;max-width:500px;position:relative;display:flex;align-items:center;gap:0}
-    .nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none;transition:border-color .2s}
-    .nav-search-input:focus{border-color:rgba(201,168,76,.45);background:rgba(255,255,255,.09)}
-    .nav-search-input::placeholder{color:#9ba3c4}
-    .nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;transition:background .2s;flex-shrink:0}
-    .nav-search-btn:hover{background:rgba(201,168,76,.3)}
     /* PAGE */
     .page-header{padding:32px 0 24px}
     .breadcrumb{font-size:12px;color:var(--text2);margin-bottom:12px}
@@ -257,29 +237,11 @@ export default async (req) => {
     .ban-card-link{font-size:11px;color:#60A5FA;font-weight:600;text-decoration:none;margin-top:4px}
     .ban-legal-in{font-size:10px;color:#4ADE80;font-weight:600;margin-top:2px}
     .ban-card-link:hover{text-decoration:underline}
-    @media(max-width:600px){.ban-grid{grid-template-columns:1fr}.nav-links{display:none}.fmt-overview{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.ban-grid{grid-template-columns:1fr}.fmt-overview{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo" title="Cards on Cards on Cards"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
-    <div class="nav-search-wrap">
-      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
-      <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
-    </div>
-    <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--active">Card Vault</a>
-      <a href="/cards/mtg" class="nav-link" style="color:#C9A84C;border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.08)">MTG</a>
-      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
-    </div>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${NAV_HTML}
 
 <div class="wrap" style="padding-top:28px;padding-bottom:48px">
   <div class="breadcrumb">

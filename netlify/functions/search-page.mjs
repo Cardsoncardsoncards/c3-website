@@ -1,3 +1,4 @@
+import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 // netlify/functions/search-page.mjs
 // Serves: /search?q=lightning+bolt
 // Full search results page across all 7 games with card pages
@@ -146,27 +147,6 @@ export default async (req) => {
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
     body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 40% at 50% -5%,rgba(201,168,76,.06),transparent 60%)}
     a{color:var(--gold);text-decoration:none}
-    /* NAV */
-    nav{background:rgba(10,12,20,.97);border-bottom:1px solid var(--border);padding:10px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-    .nav-inner{max-width:1400px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:12px}
-    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
-    .nav-logo img{height:34px;width:34px;border-radius:6px;object-fit:cover}
-    /* GLOBAL SEARCH in nav */
-    .nav-search-wrap{flex:1;min-width:0;max-width:480px}
-    .nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;padding:7px 36px 7px 14px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;transition:border-color .2s;outline:none}
-    .nav-search-input:focus{border-color:rgba(201,168,76,.5);background:rgba(255,255,255,.08)}
-    .nav-search-input::placeholder{color:var(--text2)}
-    .nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
-    .nav-links::-webkit-scrollbar{display:none}
-    .nav-link{font-size:11px;padding:5px 9px;border-radius:6px;border:1px solid var(--border);color:#A0A8C0;text-decoration:none;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;white-space:nowrap}
-    .nav-link:hover{color:var(--text);border-color:#A0A8C0;background:rgba(255,255,255,.04)}
-    .nav-link--vault{color:var(--gold);border-color:rgba(201,168,76,.3)}.nav-link--vault:hover{background:rgba(201,168,76,.06)}
-    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover{background:rgba(167,139,250,.1)}
-    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover{background:rgba(74,222,128,.1)}
-    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover{background:rgba(251,146,60,.1)}
-    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover{background:rgba(244,114,182,.1)}
-    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover{background:rgba(126,203,161,.1)}
-    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12)}
     /* PAGE */
     .search-hero{text-align:center;margin-bottom:32px}
     .search-hero h1{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);color:var(--gold);margin-bottom:16px}
@@ -227,30 +207,11 @@ export default async (req) => {
     .top-badge{position:absolute;top:6px;left:6px;background:var(--gold);color:#000;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:.05em}
     .no-price{color:var(--text2) !important}
     @media(max-width:900px){.sidebar{display:none}.content-wrap{padding:0 16px}}
-    @media(max-width:600px){.results-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}.nav-links{display:none}.controls-bar{padding:8px 12px}}
+    @media(max-width:600px){.results-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}.controls-bar{padding:8px 12px}}
   </style>
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3"></a>
-    <div class="nav-search-wrap">
-      <form action="/search" method="get" style="display:flex;gap:0;width:100%">
-        <input class="nav-search-input" type="text" name="q" value="${safeQuery}" placeholder="Search cards across all TCGs..." autocomplete="off" style="border-radius:7px 0 0 7px;padding-right:8px">
-        <button type="submit" class="nav-search-btn" style="border-radius:0 7px 7px 0;border:1px solid rgba(201,168,76,.35);border-left:none;background:rgba(201,168,76,.15);color:#C9A84C;cursor:pointer;padding:6px 10px;font-size:13px;flex-shrink:0">&#128269;</button>
-      </form>
-    </div>
-    <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
-      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
-    </div>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${NAV_HTML}
 
 <div class="search-hero" style="max-width:1400px;margin:0 auto;padding:32px 20px 0">
   <h1>Search TCG Cards</h1>

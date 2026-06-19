@@ -1,3 +1,4 @@
+import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 // netlify/functions/market-insights.mjs
 // C3 Market page - returns HTML shell instantly. All data loaded client-side via /api/market-data.
 // Architecture: shell renders in <100ms, browser fetches game data on demand per tab click.
@@ -92,16 +93,8 @@ export default async (req) => {
   body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
-  nav{background:rgba(8,11,18,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
-  .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-  .nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
-  .nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-  .nav-links::-webkit-scrollbar{display:none}
   .hamburger{display:none;background:transparent;border:1px solid var(--border);color:var(--silver);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0}
   .hamburger:focus{outline:none;border-color:var(--gold-line)}
-  .nav-drawer{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(8,11,18,.98);padding:20px;flex-direction:column;gap:10px}
-  .nav-drawer.open{display:flex}
   .drawer-close{align-self:flex-end;background:transparent;border:1px solid var(--border);color:var(--silver);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:14px;margin-bottom:10px}
   .drawer-link{display:block;padding:14px 16px;border-radius:8px;font-size:14px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);transition:all .2s}
   .drawer-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}
@@ -112,16 +105,6 @@ export default async (req) => {
   .drawer-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
   .drawer-link--pricing{color:var(--gold);border-color:var(--gold-line)}
   .drawer-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35)}
-  .nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0;transition:all .2s}
-  .nav-link:hover{color:var(--white)}
-  .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}
-  .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
-  .nav-link--market{color:#080b12;background:#4ADE80;border-color:#4ADE80;font-weight:700}
-  .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}
-  .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}
-  .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
-  .nav-link--pricing{color:var(--gold);border-color:var(--gold-line)}
-  .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}
   .hero{text-align:center;padding:46px 0 18px}
   .eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
   .hero h1{font-family:'Cinzel',serif;font-size:34px;font-weight:700;line-height:1.15;margin-bottom:12px}
@@ -203,34 +186,16 @@ export default async (req) => {
   footer{border-top:1px solid var(--border);margin-top:56px;padding:30px 0;text-align:center}
   footer .mission{font-size:13px;color:var(--muted);margin-bottom:10px}
   footer .disc{font-size:11px;color:var(--muted);max-width:680px;margin:0 auto}
-  @media(max-width:640px){
-    .hero h1{font-size:27px}
+  @media(max-width:640px){.hero h1{font-size:27px}
     .hero-mover{flex-direction:column}.hm-img img,.hm-img .ph{width:80px;height:112px}
     .row-spark{display:none}
     .row-cta .cmp{display:none}
     .row-price{min-width:80px}
-    .nav-links{display:none}
-    .hamburger{display:block}
-  }
+    .hamburger{display:block}}
 </style>
 </head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo"><img src="/c3logo.png" alt="C3">Cards on Cards on Cards</a>
-    <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
-      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/pricing" class="nav-link nav-link--pricing">Pricing</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
-    </div>
-    <button class="hamburger" aria-label="Open menu" onclick="document.getElementById('nav-drawer').classList.add('open')">&#9776;</button>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${NAV_HTML}
 <div class="c3-beta-bar">
   C3 Market Intelligence is free during our beta period. Paid plans will launch later in 2026. <a href="/subscribe">Register interest</a>.
 </div>

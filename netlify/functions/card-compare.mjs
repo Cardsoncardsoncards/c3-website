@@ -1,3 +1,4 @@
+import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 // netlify/functions/card-compare.mjs
 // C3 Card Compare — v2 rebuild May 2026
 // Features: verdict banner, stat strips, radar chart, game-aware legality,
@@ -362,17 +363,9 @@ function colorPips(colorIdentity) {
 }
 
 function renderSlots(cards, allTokens, usdToAud) {
-  const FREE_SLOTS = 2;
   const slots = Array(5).fill(null).map((_, i) => cards[i] || null);
   return slots.map((card, i) => {
     if (!card) {
-      if (i >= FREE_SLOTS) {
-        return `<div class="slot slot-locked" id="slot-${i}">
-          <div class="slot-plus">&#x1F512;</div>
-          <div class="slot-add-label">Subscribers only</div>
-          <a href="https://buy.stripe.com/eVq5kCfTodTg81y1YXaIM01" class="slot-subscribe-cta" target="_blank" rel="noopener">Subscribe AU$14.95/month</a>
-        </div>`;
-      }
       return `<div class="slot slot-empty" id="slot-${i}" data-action="focus-search">
         <div class="slot-plus">+</div>
         <div class="slot-add-label">Add a card</div>
@@ -738,23 +731,6 @@ function renderPage({ cards, allTokens, usdToAud }) {
     a:hover{text-decoration:underline}
     button{font-family:'DM Sans',sans-serif;cursor:pointer}
 
-    /* NAV */
-    nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:200}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1300px;margin:0 auto;padding:0 24px;gap:12px}
-    .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--accent);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-    .nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover}
-    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-    .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--border);color:var(--text2);white-space:nowrap;transition:all .15s}
-    .nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}.nav-link--vault:hover,.nav-link--vault.active{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
-    .nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}.nav-link--compare:hover,.nav-link--compare.active{background:rgba(167,139,250,.1);border-color:#A78BFA;color:#C4B5FD}
-    .nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}.nav-link--market:hover,.nav-link--market.active{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86EFAC}
-    .nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}.nav-link--tools:hover,.nav-link--tools.active{background:rgba(251,146,60,.1);border-color:#FB923C;color:#FDBA74}
-    .nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}.nav-link--play:hover,.nav-link--play.active{background:rgba(244,114,182,.1);border-color:#F472B6;color:#F9A8D4}
-    .nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}.nav-link--blog:hover,.nav-link--blog.active{background:rgba(126,203,161,.1);border-color:#7ECBA1;color:#A5DFC0}
-    .nav-link--ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}.nav-link--ebay:hover{background:rgba(96,165,250,.12);border-color:#60A5FA;color:#93C5FD}
-    .nav-link:hover{color:var(--text);border-color:var(--text2)}
-    .nav-link--active{color:var(--accent);border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
-
     /* VERDICT BANNER */
     .verdict-banner{max-width:1300px;margin:20px auto 0;padding:0 24px;display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(124,106,245,.1),rgba(201,168,76,.05));border:1px solid rgba(124,106,245,.25);border-radius:var(--radius);padding:16px 20px;max-width:1300px;margin:20px auto 0}
     .verdict-icon{font-size:24px;flex-shrink:0}
@@ -805,7 +781,6 @@ function renderPage({ cards, allTokens, usdToAud }) {
     .slot-empty:hover{border-color:var(--accent);background:rgba(201,168,76,.04)}
     .slot-filled{border-style:solid;border-color:var(--game-color,var(--border));background:var(--bg2)}
     .slot-plus{font-size:28px;color:var(--text3)}
-    .slot-locked{pointer-events:none;opacity:0.6;cursor:default}.slot-locked a.slot-subscribe-cta{pointer-events:all;display:block;margin-top:8px;font-size:11px;color:var(--gold, #C9A84C);text-decoration:underline;text-align:center}
     .slot-add-label{font-size:12px;color:var(--text3);text-align:center}
     .slot-remove{position:absolute;top:8px;right:10px;font-size:18px;color:var(--text3);line-height:1;transition:color .15s;text-decoration:none}
     .slot-remove:hover{color:var(--red);text-decoration:none}
@@ -983,35 +958,17 @@ function renderPage({ cards, allTokens, usdToAud }) {
     .slot-sparkline{width:100%}
     .sparkline-label{font-size:9px;color:var(--text3);text-align:center;margin-bottom:2px}
 
-    @media(max-width:640px){
-      .page-header{flex-direction:column;align-items:flex-start}
+    @media(max-width:640px){.page-header{flex-direction:column;align-items:flex-start}
       .page-controls{justify-content:flex-start}
       .share-bar{gap:6px}
       .verdict-banner{flex-direction:column;align-items:flex-start}
       .market-teaser-inner{flex-direction:column;text-align:center}
-      .page-label-row{gap:10px}
-    }
+      .page-label-row{gap:10px}}
   </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <img src="/c3logo.png" alt="C3 Logo">
-      <span>Cards on Cards on Cards</span>
-    </a>
-    <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
-      <a href="/compare" class="nav-link nav-link--compare active">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
-      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
-    </div>
-  </div>
-</nav>
+<style>${NAV_CSS}</style>${NAV_HTML}
 
 <div class="page-header">
   <div>
