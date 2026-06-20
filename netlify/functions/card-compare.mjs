@@ -11,7 +11,6 @@ import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
-const EXCHANGE_KEY      = Netlify.env.get('EXCHANGE_RATE_API_KEY');
 const EPN_CAMPID        = '5339146789';
 const AMAZON_TAG        = 'blasdigital-22';
 
@@ -46,13 +45,19 @@ async function supabaseGet(path) {
 }
 
 async function getLiveRate() {
-  if (!EXCHANGE_KEY) return 1.58;
+  const base = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 3000);
   try {
-    const res = await fetch(`https://v6.exchangerate-api.com/v6/${EXCHANGE_KEY}/pair/USD/AUD`);
+    const res = await fetch(`${base}/api/fx-rate`, { signal: ctrl.signal });
+    clearTimeout(timer);
     if (!res.ok) return 1.58;
     const d = await res.json();
-    return d.conversion_rate || 1.58;
-  } catch { return 1.58; }
+    return parseFloat(d.rate) || 1.58;
+  } catch {
+    clearTimeout(timer);
+    return 1.58;
+  }
 }
 
 async function fetchMTGCard(slug, usdToAud) {

@@ -32,11 +32,17 @@ function slugify(name, number, setAbbr) {
 }
 
 async function getExchangeRate() {
+  const base = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
   try {
-    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const res = await fetch(`${base}/api/fx-rate`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) return 1.58;
     const data = await res.json();
-    return data.rates?.AUD || 1.58;
+    return parseFloat(data.rate) || 1.58;
   } catch {
+    clearTimeout(timeout);
     return 1.58;
   }
 }

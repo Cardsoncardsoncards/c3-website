@@ -66,15 +66,19 @@ function graceful404(slug) {
 
 
 async function getExchangeRate() {
+  const base = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 3000);
   try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 3000);
-    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD', { signal: ctrl.signal });
+    const res = await fetch(`${base}/api/fx-rate`, { signal: ctrl.signal });
     clearTimeout(t);
     if (!res.ok) return 1.58;
     const data = await res.json();
-    return data.rates?.AUD || 1.58;
-  } catch { return 1.58; }
+    return parseFloat(data.rate) || 1.58;
+  } catch {
+    clearTimeout(t);
+    return 1.58;
+  }
 }
 export default async (req) => {
   const url     = new URL(req.url);

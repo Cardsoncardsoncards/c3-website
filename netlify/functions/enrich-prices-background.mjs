@@ -256,12 +256,18 @@ export default async (req) => {
     console.log('[enrich-prices] Budget allocations:');
     gameAllocations.forEach(g => console.log(`  ${g.label}: ${g.budget} cards`));
 
-    // Use a fixed AUD rate for consistency (no extra API call needed)
+    // AUD rate from the cached /api/fx-rate endpoint (no direct FX API call)
     let audRate = 1.58;
     try {
-      const fxRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-      const fxData = await fxRes.json();
-      audRate = fxData.rates?.AUD || 1.58;
+      const fxBase = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
+      const fxCtrl = new AbortController();
+      const fxTimer = setTimeout(() => fxCtrl.abort(), 5000);
+      const fxRes = await fetch(`${fxBase}/api/fx-rate`, { signal: fxCtrl.signal });
+      clearTimeout(fxTimer);
+      if (fxRes.ok) {
+        const fxData = await fxRes.json();
+        audRate = parseFloat(fxData.rate) || 1.58;
+      }
     } catch {
       console.log('[enrich-prices] FX fetch failed, using fallback 1.58');
     }
