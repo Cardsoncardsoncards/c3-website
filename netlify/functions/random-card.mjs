@@ -1,6 +1,7 @@
 // netlify/functions/random-card.mjs
 // Returns random cards from any supported TCG game
-// Query params: ?game=pokemon&limit=3
+// Query params: ?game=pokemon&limit=3&sort=price&min_price=10
+// min_price is interpreted in AUD (converted to USD internally for non-MTG market_price)
 // Supported games: mtg, pokemon, yugioh, lorcana, onepiece, riftbound, starwars, dragonball
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
@@ -66,6 +67,10 @@ export default async (req) => {
   const sortParam = (url.searchParams.get('sort') || 'random').toLowerCase();
   const usePrice = sortParam === 'price';
 
+  // Optional minimum price floor, interpreted in AUD. 0 or invalid means no floor.
+  const minPriceRaw = parseFloat(url.searchParams.get('min_price') || '0');
+  const minPrice = Number.isFinite(minPriceRaw) && minPriceRaw > 0 ? minPriceRaw : 0;
+
   // When using price sort, start from offset 0 (top cards)
   // When random, use a safe offset capped at half the total to avoid empty results
   const safeMax = Math.max(1, Math.floor(total * 0.7) - limit);
@@ -129,8 +134,16 @@ export default async (req) => {
   } else {
     orderStr = game === 'mtg' ? 'tcgplayer_id' : 'id';
   }
-  // Add price > 0 filter when sorting by price to avoid zero-price cards
-  const priceFilter = usePrice ? (game === 'mtg' ? '&price_aud=gt.0' : '&market_price=gt.0') : '';
+  // Price filter. MTG filters on price_aud (AUD); other games on market_price (USD, ~1.58 to AUD).
+  // A min_price floor (AUD) applies whenever supplied; otherwise price sort still excludes zero-price cards.
+  let priceFilter = '';
+  if (game === 'mtg') {
+    if (minPrice > 0) priceFilter = `&price_aud=gte.${minPrice}`;
+    else if (usePrice) priceFilter = '&price_aud=gt.0';
+  } else {
+    if (minPrice > 0) priceFilter = `&market_price=gte.${(minPrice / 1.58).toFixed(2)}`;
+    else if (usePrice) priceFilter = '&market_price=gt.0';
+  }
   const query = `${SUPABASE_URL}/rest/v1/${table}?${imageFilter}${rarityFilter}${priceFilter}&order=${orderStr}&limit=${limit}&offset=${offset}&select=${selectFields}`;
 
   try {

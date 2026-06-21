@@ -427,7 +427,7 @@ footer a:hover{color:var(--white)}
   }
 
   CONFIGS.forEach(function(cfg) {
-    fetch('/api/tcg-prices?game=' + cfg.game + '&limit=16&sort=price_desc&min_price=10')
+    fetch('/api/random-card?game=' + cfg.game + '&limit=16&sort=price&min_price=10')
       .then(function(r){ return r.json(); })
       .then(function(data) {
         const el = document.getElementById(cfg.id);
