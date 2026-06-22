@@ -225,11 +225,37 @@
   </div>
 </nav>
 
-<div style="background:linear-gradient(90deg,#FF9900,#FFB84D);padding:14px 24px;text-align:center">
+<div id="prime-day-banner-cal" style="background:linear-gradient(90deg,#FF9900,#FFB84D);padding:14px 24px;text-align:center">
   <strong style="color:#111;font-size:14px">⚡ Prime Day July 7-13. </strong>
   <span style="color:#222;font-size:13px">Stock up on sealed product before new sets drop in July.</span>
+  <span id="pd-countdown-cal" style="color:#111;font-size:13px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"></span>
   <a href="/shop" style="margin-left:12px;background:#111;color:#FF9900;padding:5px 14px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none">Shop Now →</a>
 </div>
+<script>
+(function(){
+  var target = new Date('2026-07-06T14:00:00Z'); // July 7 AEST
+  var end    = new Date('2026-07-13T14:00:00Z'); // July 13 AEST end
+  var el = document.getElementById('pd-countdown-cal');
+  var banner = document.getElementById('prime-day-banner-cal');
+  function tick(){
+    var now = new Date();
+    if(now >= end){ if(banner) banner.style.display='none'; return; }
+    var diff = target - now;
+    if(diff <= 0){
+      if(el) el.textContent = 'Prime Day is LIVE now!';
+      setTimeout(tick,1000);
+      return;
+    }
+    var d = Math.floor(diff/86400000);
+    var h = Math.floor((diff%86400000)/3600000);
+    var m = Math.floor((diff%3600000)/60000);
+    var s = Math.floor((diff%60000)/1000);
+    if(el) el.textContent = 'starts in '+d+'d '+String(h).padStart(2,'0')+'h '+String(m).padStart(2,'0')+'m '+String(s).padStart(2,'0')+'s';
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+</script>
 
 <div class="hero fade-up">
   <div class="hero-eyebrow">Australia and Global</div>

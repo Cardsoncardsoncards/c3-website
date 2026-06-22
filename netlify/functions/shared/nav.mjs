@@ -259,6 +259,18 @@ function buildNav(gameLink = '') {
             Singles on eBay AU &#8599;
             <span class="nav-shop-item-label">28,000+ TCG singles listed</span>
           </a>
+          <a href="/shop#cat-accessories" class="nav-shop-item">
+            Accessories
+            <span class="nav-shop-item-label">Sleeves, binders, deck boxes</span>
+          </a>
+          <a href="/shop#cat-dnd" class="nav-shop-item">
+            D&amp;D
+            <span class="nav-shop-item-label">Dungeons and Dragons products</span>
+          </a>
+          <a href="/calendar" class="nav-shop-item">
+            Release Calendar
+            <span class="nav-shop-item-label">Upcoming set release dates</span>
+          </a>
         </div>
       </div>
     </div>

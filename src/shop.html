@@ -147,6 +147,13 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.97);backdrop-fil
 .tag-red{color:#F87171;border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.06)}
 .release-date{font-size:10px;font-weight:700;color:var(--gold);background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:2px 7px;margin-left:6px}
 .tag-acc{color:var(--silver);border-color:var(--border);background:rgba(160,168,192,.04)}
+.tag-silver{background:rgba(160,168,192,.12);color:#A0A8C0;border:1px solid rgba(160,168,192,.25)}
+.tab-dropdown-wrap{position:relative;display:inline-block}
+.tab-dropdown-btn{cursor:pointer}
+.tab-dropdown-list{display:none;position:absolute;top:100%;left:0;background:#0d1117;border:1px solid #1e2235;border-radius:10px;min-width:220px;z-index:200;padding:6px 0;box-shadow:0 8px 32px rgba(0,0,0,.5);max-height:400px;overflow-y:auto}
+.tab-dropdown-list.open{display:block}
+.tab-dropdown-item{display:block;padding:9px 16px;color:#c4c9d4;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;transition:all .15s}
+.tab-dropdown-item:hover{color:#c9a84c;background:#1a1f2e;text-decoration:none}
 .product-name{font-size:11.5px;font-weight:600;color:var(--white);line-height:1.35;flex:1}
 .product-cta{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gold);margin-top:2px}
 
@@ -276,9 +283,35 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 </nav>
 
 <div id="prime-day-banner" style="background:linear-gradient(90deg,#FF9900 0%,#FFB84D 100%);padding:11px 24px;text-align:center;font-size:13px;font-weight:700;color:#111;letter-spacing:.01em">
-  ⚡ <strong>Prime Day July 7-13.</strong> All products ship via Amazon AU with Prime delivery. Stock up before new sets drop.
+  ⚡ <strong>Prime Day July 7-13.</strong>
+  <span id="pd-countdown-shop" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"></span>
   <a href="#cat-new" onclick="showTab('new')" style="color:#111;text-decoration:underline;margin-left:8px">See new releases →</a>
 </div>
+<script>
+(function(){
+  var target = new Date('2026-07-06T14:00:00Z'); // July 7 AEST
+  var end    = new Date('2026-07-13T14:00:00Z'); // July 13 AEST end
+  var el = document.getElementById('pd-countdown-shop');
+  var banner = document.getElementById('prime-day-banner');
+  function tick(){
+    var now = new Date();
+    if(now >= end){ if(banner) banner.style.display='none'; return; }
+    var diff = target - now;
+    if(diff <= 0){
+      if(el) el.textContent = 'Prime Day is LIVE now!';
+      setTimeout(tick,1000);
+      return;
+    }
+    var d = Math.floor(diff/86400000);
+    var h = Math.floor((diff%86400000)/3600000);
+    var m = Math.floor((diff%3600000)/60000);
+    var s = Math.floor((diff%60000)/1000);
+    if(el) el.textContent = 'starts in '+d+'d '+String(h).padStart(2,'0')+'h '+String(m).padStart(2,'0')+'m '+String(s).padStart(2,'0')+'s';
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+</script>
 
 <div class="wrap">
   <div class="page-hd">
@@ -300,48 +333,6 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 
 <div class="gold-divider"></div>
 
-<div class="email-strip">
-  <div class="wrap">
-    <div class="email-strip-inner">
-      <div>
-        <strong>Get Prime Day deal alerts</strong>
-        <span>We will notify you when TCG prices drop during July 7-13.</span>
-      </div>
-      <form class="email-strip-form" onsubmit="handleEmailSignup(event)">
-        <input type="email" placeholder="your@email.com" id="prime-email" required>
-        <button type="submit">Notify Me</button>
-      </form>
-    </div>
-  </div>
-</div>
-<style>
-.email-strip{background:rgba(201,168,76,.06);border-bottom:1px solid rgba(201,168,76,.18);padding:12px 0}
-.email-strip-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.email-strip-inner strong{color:var(--gold);font-size:14px;display:block}
-.email-strip-inner span{color:var(--silver);font-size:12px}
-.email-strip-form{display:flex;gap:8px;flex-shrink:0}
-.email-strip-form input{padding:8px 12px;border-radius:6px;border:1px solid rgba(201,168,76,.3);background:#111422;color:#f0f2ff;font-size:13px;width:220px}
-.email-strip-form button{padding:8px 16px;border-radius:6px;background:var(--gold);color:#080b12;font-weight:700;font-size:13px;border:none;cursor:pointer}
-</style>
-<script>
-async function handleEmailSignup(e) {
-  e.preventDefault();
-  const email = document.getElementById('prime-email').value;
-  try {
-    const res = await fetch('/email-subscribe', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ email, group: '182892277158381312', source: 'prime-day-shop' })
-    });
-    if (res.ok) {
-      document.querySelector('.email-strip-form').innerHTML = '<span style="color:var(--gold);font-weight:700">✓ You are on the list!</span>';
-    }
-  } catch(err) {
-    document.querySelector('.email-strip-form').innerHTML = '<span style="color:#f87171">Something went wrong. Try again.</span>';
-  }
-}
-</script>
-
 <div class="tabs-wrap">
   <div class="tabs-label" style="padding:5px 20px 0;font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(201,168,76,.5);">Select a Game or Category</div>
 <div class="tabs-scroll">
@@ -358,6 +349,30 @@ async function handleEmailSignup(e) {
     <button class="tab"        data-cat="gundam"      onclick="showTab('gundam')">🤖 Gundam</button>
     <button class="tab"        data-cat="hololive"    onclick="showTab('hololive')">🎴 Hololive</button>
     <button class="tab"        data-cat="weissschwarz" onclick="showTab('weissschwarz')">🃏 Weiss Schwarz</button>
+    <div class="tab-dropdown-wrap" id="more-games-tab">
+      <button class="tab tab-dropdown-btn" onclick="toggleMoreGames(event)">🌐 More Games &#9662;</button>
+      <div class="tab-dropdown-list" id="more-games-list">
+        <a href="/shop#cat-alphaclash" class="tab-dropdown-item" onclick="showTab('alphaclash');closeMoreGames()">Alpha Clash TCG</a>
+        <a href="/shop#cat-bakugan" class="tab-dropdown-item" onclick="showTab('bakugan');closeMoreGames()">Bakugan TCG</a>
+        <a href="/shop#cat-battlespiritssaga" class="tab-dropdown-item" onclick="showTab('battlespiritssaga');closeMoreGames()">Battle Spirits Saga</a>
+        <a href="/shop#cat-buddyfight" class="tab-dropdown-item" onclick="showTab('buddyfight');closeMoreGames()">Buddyfight</a>
+        <a href="/shop#cat-vanguard" class="tab-dropdown-item" onclick="showTab('vanguard');closeMoreGames()">Cardfight Vanguard</a>
+        <a href="/shop#cat-dragonballz" class="tab-dropdown-item" onclick="showTab('dragonballz');closeMoreGames()">Dragon Ball Z TCG</a>
+        <a href="/shop#cat-finalfantasy" class="tab-dropdown-item" onclick="showTab('finalfantasy');closeMoreGames()">Final Fantasy TCG</a>
+        <a href="/shop#cat-forceofwill" class="tab-dropdown-item" onclick="showTab('forceofwill');closeMoreGames()">Force of Will</a>
+        <a href="/shop#cat-gateruler" class="tab-dropdown-item" onclick="showTab('gateruler');closeMoreGames()">Gate Ruler</a>
+        <a href="/shop#cat-godzilla" class="tab-dropdown-item" onclick="showTab('godzilla');closeMoreGames()">Godzilla Card Game</a>
+        <a href="/shop#cat-grandarchive" class="tab-dropdown-item" onclick="showTab('grandarchive');closeMoreGames()">Grand Archive</a>
+        <a href="/shop#cat-metazoo" class="tab-dropdown-item" onclick="showTab('metazoo');closeMoreGames()">MetaZoo</a>
+        <a href="/shop#cat-shadowverse" class="tab-dropdown-item" onclick="showTab('shadowverse');closeMoreGames()">Shadowverse Evolve</a>
+        <a href="/shop#cat-sorcery" class="tab-dropdown-item" onclick="showTab('sorcery');closeMoreGames()">Sorcery: Contested Realm</a>
+        <a href="/shop#cat-unionarena" class="tab-dropdown-item" onclick="showTab('unionarena');closeMoreGames()">Union Arena</a>
+        <a href="/shop#cat-universus" class="tab-dropdown-item" onclick="showTab('universus');closeMoreGames()">UniVersus CCG</a>
+        <a href="/shop#cat-warhammer" class="tab-dropdown-item" onclick="showTab('warhammer');closeMoreGames()">Warhammer AoS Champions</a>
+        <a href="/shop#cat-wixoss" class="tab-dropdown-item" onclick="showTab('wixoss');closeMoreGames()">Wixoss</a>
+        <a href="/shop#cat-wow" class="tab-dropdown-item" onclick="showTab('wow');closeMoreGames()">World of Warcraft TCG</a>
+      </div>
+    </div>
     <button class="tab"        data-cat="accessories" onclick="showTab('accessories')">🛡️ TCG Accessories</button>
     <button class="tab"        data-cat="tools"       onclick="showTab('tools')">🧮 TCG Tools</button>
     <button class="tab tab--dnd" data-cat="dnd"        onclick="showTab('dnd')">🎲 D&amp;D</button>
@@ -5680,6 +5695,690 @@ async function handleEmailSignup(e) {
   </div>
 </section>
 
+<section class="cat-section" id="cat-alphaclash">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Alpha Clash TCG</span>
+      <h2 class="section-title">Alpha Clash TCG Sealed Product</h2>
+      <p class="section-desc">Browse sealed Alpha Clash TCG product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=alpha+clash+tcg+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⚔️</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Alpha Clash TCG Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=alpha+clash+tcg+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⚔️</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Alpha Clash TCG Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=alpha+clash+tcg+booster&campid=5339146789&customid=shop-alphaclash&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Alpha Clash TCG on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-bakugan">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Bakugan TCG</span>
+      <h2 class="section-title">Bakugan TCG Sealed Product</h2>
+      <p class="section-desc">Browse sealed Bakugan TCG product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=bakugan+trading+card+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🔵</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Bakugan TCG Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=bakugan+trading+card+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🔵</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Bakugan TCG Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=bakugan+trading+card+booster&campid=5339146789&customid=shop-bakugan&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Bakugan TCG on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-battlespiritssaga">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Battle Spirits Saga</span>
+      <h2 class="section-title">Battle Spirits Saga Sealed Product</h2>
+      <p class="section-desc">Browse sealed Battle Spirits Saga product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=battle+spirits+saga+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🔥</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Battle Spirits Saga Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=battle+spirits+saga+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🔥</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Battle Spirits Saga Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=battle+spirits+saga+booster&campid=5339146789&customid=shop-battlespiritssaga&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Battle Spirits Saga on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-buddyfight">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Buddyfight</span>
+      <h2 class="section-title">Buddyfight Sealed Product</h2>
+      <p class="section-desc">Browse sealed Buddyfight product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=buddyfight+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">👊</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Buddyfight Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=buddyfight+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">👊</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Buddyfight Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=buddyfight+booster+booster&campid=5339146789&customid=shop-buddyfight&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Buddyfight on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-vanguard">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Cardfight Vanguard</span>
+      <h2 class="section-title">Cardfight Vanguard Sealed Product</h2>
+      <p class="section-desc">Browse sealed Cardfight Vanguard product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=cardfight+vanguard+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛡️</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Cardfight Vanguard Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=cardfight+vanguard+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛡️</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Cardfight Vanguard Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=cardfight+vanguard+booster+booster&campid=5339146789&customid=shop-vanguard&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Cardfight Vanguard on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-dragonballz">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Dragon Ball Z TCG</span>
+      <h2 class="section-title">Dragon Ball Z TCG Sealed Product</h2>
+      <p class="section-desc">Browse sealed Dragon Ball Z TCG product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=dragon+ball+z+trading+card+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🐉</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Dragon Ball Z TCG Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=dragon+ball+z+trading+card+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🐉</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Dragon Ball Z TCG Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=dragon+ball+z+trading+card+booster&campid=5339146789&customid=shop-dragonballz&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Dragon Ball Z TCG on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-finalfantasy">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Final Fantasy TCG</span>
+      <h2 class="section-title">Final Fantasy TCG Sealed Product</h2>
+      <p class="section-desc">Browse sealed Final Fantasy TCG product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=final+fantasy+trading+card+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🎮</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Final Fantasy TCG Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=final+fantasy+trading+card+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🎮</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Final Fantasy TCG Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=final+fantasy+trading+card+booster&campid=5339146789&customid=shop-finalfantasy&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Final Fantasy TCG on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-forceofwill">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Force of Will</span>
+      <h2 class="section-title">Force of Will Sealed Product</h2>
+      <p class="section-desc">Browse sealed Force of Will product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=force+of+will+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🌙</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Force of Will Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=force+of+will+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🌙</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Force of Will Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=force+of+will+booster+booster&campid=5339146789&customid=shop-forceofwill&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Force of Will on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-gateruler">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Gate Ruler</span>
+      <h2 class="section-title">Gate Ruler Sealed Product</h2>
+      <p class="section-desc">Browse sealed Gate Ruler product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=gate+ruler+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⛩️</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Gate Ruler Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=gate+ruler+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⛩️</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Gate Ruler Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=gate+ruler+booster+booster&campid=5339146789&customid=shop-gateruler&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Gate Ruler on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-godzilla">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Godzilla Card Game</span>
+      <h2 class="section-title">Godzilla Card Game Sealed Product</h2>
+      <p class="section-desc">Browse sealed Godzilla Card Game product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=godzilla+card+game+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🦎</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Godzilla Card Game Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=godzilla+card+game+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🦎</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Godzilla Card Game Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=godzilla+card+game+booster&campid=5339146789&customid=shop-godzilla&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Godzilla Card Game on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-grandarchive">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Grand Archive</span>
+      <h2 class="section-title">Grand Archive Sealed Product</h2>
+      <p class="section-desc">Browse sealed Grand Archive product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=grand+archive+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">📜</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Grand Archive Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=grand+archive+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">📜</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Grand Archive Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=grand+archive+booster+booster&campid=5339146789&customid=shop-grandarchive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Grand Archive on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-metazoo">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">MetaZoo</span>
+      <h2 class="section-title">MetaZoo Sealed Product</h2>
+      <p class="section-desc">Browse sealed MetaZoo product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=metazoo+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">👻</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse MetaZoo Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=metazoo+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">👻</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All MetaZoo Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=metazoo+booster+booster&campid=5339146789&customid=shop-metazoo&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse MetaZoo on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-shadowverse">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Shadowverse Evolve</span>
+      <h2 class="section-title">Shadowverse Evolve Sealed Product</h2>
+      <p class="section-desc">Browse sealed Shadowverse Evolve product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=shadowverse+evolve+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🃏</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Shadowverse Evolve Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=shadowverse+evolve+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🃏</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Shadowverse Evolve Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=shadowverse+evolve+booster+booster&campid=5339146789&customid=shop-shadowverse&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Shadowverse Evolve on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-sorcery">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Sorcery: Contested Realm</span>
+      <h2 class="section-title">Sorcery: Contested Realm Sealed Product</h2>
+      <p class="section-desc">Browse sealed Sorcery: Contested Realm product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=sorcery+contested+realm+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🧙</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Sorcery: Contested Realm Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=sorcery+contested+realm+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🧙</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Sorcery: Contested Realm Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=sorcery+contested+realm+booster&campid=5339146789&customid=shop-sorcery&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Sorcery: Contested Realm on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-unionarena">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Union Arena</span>
+      <h2 class="section-title">Union Arena Sealed Product</h2>
+      <p class="section-desc">Browse sealed Union Arena product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=union+arena+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🎴</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Union Arena Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=union+arena+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🎴</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Union Arena Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=union+arena+booster+booster&campid=5339146789&customid=shop-unionarena&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Union Arena on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-universus">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">UniVersus CCG</span>
+      <h2 class="section-title">UniVersus CCG Sealed Product</h2>
+      <p class="section-desc">Browse sealed UniVersus CCG product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=universus+booster+box+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🥊</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse UniVersus CCG Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=universus+booster+box+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🥊</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All UniVersus CCG Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=universus+booster+box+booster&campid=5339146789&customid=shop-universus&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse UniVersus CCG on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-warhammer">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Warhammer AoS Champions</span>
+      <h2 class="section-title">Warhammer AoS Champions Sealed Product</h2>
+      <p class="section-desc">Browse sealed Warhammer AoS Champions product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=warhammer+age+sigmar+champions+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⚙️</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Warhammer AoS Champions Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=warhammer+age+sigmar+champions+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⚙️</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Warhammer AoS Champions Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=warhammer+age+sigmar+champions+booster&campid=5339146789&customid=shop-warhammer&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Warhammer AoS Champions on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-wixoss">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">Wixoss</span>
+      <h2 class="section-title">Wixoss Sealed Product</h2>
+      <p class="section-desc">Browse sealed Wixoss product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=wixoss+booster+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">💜</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse Wixoss Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=wixoss+booster+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">💜</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All Wixoss Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=wixoss+booster+booster&campid=5339146789&customid=shop-wixoss&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse Wixoss on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section" id="cat-wow">
+  <div class="inner-new">
+    <div class="section-hd">
+      <span class="section-eyebrow">World of Warcraft TCG</span>
+      <h2 class="section-title">World of Warcraft TCG Sealed Product</h2>
+      <p class="section-desc">Browse sealed World of Warcraft TCG product available on Amazon AU with fast Prime delivery.</p>
+    </div>
+    <div class="product-grid">
+      <a href="https://www.amazon.com.au/s?k=world+of+warcraft+trading+card+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🐉</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Booster Box</span></div>
+          <div class="product-name">Browse World of Warcraft TCG Booster Boxes on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.amazon.com.au/s?k=world+of+warcraft+trading+card+sealed&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🐉</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-silver">Sealed Product</span></div>
+          <div class="product-name">Browse All World of Warcraft TCG Sealed on Amazon AU</div>
+          <span class="product-cta">Search Amazon AU ↗</span>
+        </div>
+      </a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=world+of+warcraft+trading+card+booster&campid=5339146789&customid=shop-wow&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" target="_blank" rel="noopener" class="product-card">
+        <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🛒</div>
+        <div class="product-body">
+          <div class="product-meta"><span class="product-tag tag-blue">eBay AU</span></div>
+          <div class="product-name">Browse World of Warcraft TCG on eBay AU</div>
+          <span class="product-cta">Shop on eBay AU ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
 <div class="wrap">
   <p class="disclaimer" id="disclaimer">
     <strong>About This Site:</strong> Cards on Cards on Cards is an aggregation and discovery site. We manually search Amazon Australia and our own eBay store to surface TCG products in one place. We do not sell directly or control product listings, pricing, stock, or fulfilment - those are managed by Amazon and eBay respectively. Always check product reviews, seller ratings, and current pricing directly on Amazon or eBay before purchasing. Product images and names belong to their respective rights holders. <strong>Amazon Associates Disclosure:</strong> As an Amazon Associate we earn from qualifying purchases at no extra cost to you. Products marked AU ship from Amazon Australia. Products marked INTL ship internationally - check delivery times and any import conditions on Amazon before purchasing.
@@ -5718,8 +6417,20 @@ function showTab(id) {
   window.location.hash = id;
 }
 
+// === MORE GAMES DROPDOWN TAB ===
+function toggleMoreGames(e){
+  e.stopPropagation();
+  var list = document.getElementById('more-games-list');
+  if(list) list.classList.toggle('open');
+}
+function closeMoreGames(){
+  var list = document.getElementById('more-games-list');
+  if(list) list.classList.remove('open');
+}
+document.addEventListener('click', function(){ closeMoreGames(); });
+
 // Hash routing on load
-const hashMap = {pokemon:'pokemon',mtg:'mtg',onepiece:'onepiece','one-piece':'onepiece',lorcana:'lorcana',dragonball:'dragonball','dragon-ball':'dragonball',starwars:'starwars','star-wars':'starwars',riftbound:'riftbound',yugioh:'yugioh',digimon:'digimon',gundam:'gundam',hololive:'hololive',weissschwarz:'weissschwarz','weiss-schwarz':'weissschwarz',accessories:'accessories',tools:'tools',dnd:'dnd','d&d':'dnd',singles:'singles',new:'new','cat-pokemon':'pokemon','cat-mtg':'mtg','cat-onepiece':'onepiece','cat-lorcana':'lorcana','cat-dragonball':'dragonball','cat-starwars':'starwars','cat-riftbound':'riftbound','cat-yugioh':'yugioh','cat-digimon':'digimon','cat-gundam':'gundam','cat-hololive':'hololive','cat-weissschwarz':'weissschwarz','cat-accessories':'accessories','cat-tools':'tools','cat-dnd':'dnd','cat-singles':'singles','cat-new':'new'};
+const hashMap = {pokemon:'pokemon',mtg:'mtg',onepiece:'onepiece','one-piece':'onepiece',lorcana:'lorcana',dragonball:'dragonball','dragon-ball':'dragonball',starwars:'starwars','star-wars':'starwars',riftbound:'riftbound',yugioh:'yugioh',digimon:'digimon',gundam:'gundam',hololive:'hololive',weissschwarz:'weissschwarz','weiss-schwarz':'weissschwarz',accessories:'accessories',tools:'tools',dnd:'dnd','d&d':'dnd',singles:'singles',new:'new','cat-pokemon':'pokemon','cat-mtg':'mtg','cat-onepiece':'onepiece','cat-lorcana':'lorcana','cat-dragonball':'dragonball','cat-starwars':'starwars','cat-riftbound':'riftbound','cat-yugioh':'yugioh','cat-digimon':'digimon','cat-gundam':'gundam','cat-hololive':'hololive','cat-weissschwarz':'weissschwarz','cat-accessories':'accessories','cat-tools':'tools','cat-dnd':'dnd','cat-singles':'singles','cat-new':'new',alphaclash:'alphaclash','cat-alphaclash':'alphaclash',bakugan:'bakugan','cat-bakugan':'bakugan',battlespiritssaga:'battlespiritssaga','cat-battlespiritssaga':'battlespiritssaga',buddyfight:'buddyfight','cat-buddyfight':'buddyfight',vanguard:'vanguard','cat-vanguard':'vanguard',dragonballz:'dragonballz','cat-dragonballz':'dragonballz',finalfantasy:'finalfantasy','cat-finalfantasy':'finalfantasy',forceofwill:'forceofwill','cat-forceofwill':'forceofwill',gateruler:'gateruler','cat-gateruler':'gateruler',godzilla:'godzilla','cat-godzilla':'godzilla',grandarchive:'grandarchive','cat-grandarchive':'grandarchive',metazoo:'metazoo','cat-metazoo':'metazoo',shadowverse:'shadowverse','cat-shadowverse':'shadowverse',sorcery:'sorcery','cat-sorcery':'sorcery',unionarena:'unionarena','cat-unionarena':'unionarena',universus:'universus','cat-universus':'universus',warhammer:'warhammer','cat-warhammer':'warhammer',wixoss:'wixoss','cat-wixoss':'wixoss',wow:'wow','cat-wow':'wow'};
 window.addEventListener('DOMContentLoaded', () => {
   const hash = window.location.hash.replace('#','');
   if (hash && hashMap[hash]) showTab(hashMap[hash]);
