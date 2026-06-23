@@ -1,6 +1,6 @@
 // netlify/functions/shared/nav.mjs
 // Shared nav for all C3 hub, set-page, and card-page functions.
-// Import: import { NAV_CSS, NAV_HTML, navHtml } from '../shared/nav.mjs';
+// Import: import { NAV_CSS, NAV_HTML, navHtml } from './shared/nav.mjs';
 // Single source of truth. Update here, deploys everywhere.
 // EPN campid: 5339146789 | GA4: G-WR68HPE92S | Amazon tag: blasdigital-22
 //
@@ -8,6 +8,9 @@
 // navHtml({ gameLabel, gameHref }) -> same nav with an active per-game link
 //   inserted after Card Vault, so hub/set/card pages keep the
 //   "which game am I on" indicator when they migrate to this module.
+//
+// Mobile (<=768px): the desktop link row is hidden and a hamburger button
+// opens a right-side slide-out drawer with the same links stacked vertically.
 
 const EPN_CAMPID = '5339146789';
 
@@ -209,17 +212,128 @@ export const NAV_CSS = `
   }
   .c3-beta-bar a { color: #C9A84C; text-decoration: underline; }
 
+  /* Mobile hamburger button (hidden on desktop) */
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 38px;
+    height: 38px;
+    padding: 9px 8px;
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid #1e2235;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .nav-burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: #F0F2FF;
+    transition: transform .25s ease, opacity .25s ease;
+  }
+
+  /* Slide-out drawer + scrim (mobile) */
+  .nav-scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease, visibility .25s ease;
+    z-index: 300;
+  }
+  .nav-scrim.open { opacity: 1; visibility: visible; }
+  .nav-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 280px;
+    max-width: 85vw;
+    background: #0A0C14;
+    border-left: 1px solid #1e2235;
+    box-shadow: -8px 0 24px rgba(0,0,0,.5);
+    z-index: 301;
+    transform: translateX(100%);
+    transition: transform .25s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 16px 28px;
+  }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-close {
+    align-self: flex-end;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: #F0F2FF;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .nav-drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .nav-drawer-link {
+    display: block;
+    padding: 13px 14px;
+    border-radius: 8px;
+    color: #F0F2FF;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transition: background .15s;
+  }
+  .nav-drawer-link:hover { background: rgba(255,255,255,.05); text-decoration: none; }
+  .nav-drawer-link--vault { color: #C9A84C; }
+  .nav-drawer-link--game { color: #C9A84C; }
+  .nav-drawer-link--subscribe { color: #C9A84C; }
+  .nav-drawer-sep { height: 1px; background: #1e2235; margin: 10px 4px; }
+  .nav-drawer-ebay {
+    margin-top: 6px;
+    text-align: center;
+    color: #C9A84C;
+    border: 1px solid rgba(201,168,76,.5);
+    background: rgba(201,168,76,.08);
+  }
+  .nav-drawer-ebay:hover { background: rgba(201,168,76,.18); border-color: #C9A84C; }
+
   @media (max-width: 768px) {
     .nav-logo-text { display: none; }
     .nav-search-wrap { max-width: 140px; }
     .nav-link { padding: 5px 7px; font-size: 10px; }
     .nav-shop-btn { padding: 5px 7px; font-size: 10px; }
+    .nav-links { display: none; }
+    .nav-burger { display: flex; }
   }
 `;
 
-// Builds the nav. gameLink is an optional pre-rendered <a> inserted right
-// after the Card Vault link (used by navHtml for per-game pages).
-function buildNav(gameLink = '') {
+// Builds the nav. gameLabel/gameHref are optional; when present an active
+// per-game link is inserted after Card Vault in BOTH the desktop link row
+// and the mobile drawer.
+function buildNav(gameLabel = '', gameHref = '') {
+  const hasGame = Boolean(gameLabel && gameHref);
+  const gameLink = hasGame
+    ? `\n      <a href="${gameHref}" class="nav-link nav-link--game">${gameLabel}</a>`
+    : '';
+  const drawerGameLink = hasGame
+    ? `\n    <a href="${gameHref}" class="nav-drawer-link nav-drawer-link--game">${gameLabel}</a>`
+    : '';
   return `
 <nav>
   <div class="nav-inner">
@@ -274,8 +388,32 @@ function buildNav(gameLink = '') {
         </div>
       </div>
     </div>
+    <button class="nav-burger" id="nav-burger" type="button"
+      aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="nav-scrim" id="nav-scrim"></div>
+<aside class="nav-drawer" id="nav-drawer" aria-hidden="true" aria-label="Menu">
+  <button class="nav-drawer-close" id="nav-drawer-close" type="button" aria-label="Close menu">&times;</button>
+  <div class="nav-drawer-links">
+    <a href="/cards" class="nav-drawer-link nav-drawer-link--vault">Card Vault</a>${drawerGameLink}
+    <a href="/compare" class="nav-drawer-link">Compare</a>
+    <a href="/market" class="nav-drawer-link">Market</a>
+    <a href="/tools" class="nav-drawer-link">Tools</a>
+    <a href="/play" class="nav-drawer-link">Play</a>
+    <a href="/blog" class="nav-drawer-link">Blog</a>
+    <a href="/subscribe" class="nav-drawer-link nav-drawer-link--subscribe">Subscribe &#10024;</a>
+    <div class="nav-drawer-sep"></div>
+    <a href="/shop" class="nav-drawer-link">Shop: Booster Boxes</a>
+    <a href="/shop#cat-accessories" class="nav-drawer-link">Accessories</a>
+    <a href="/shop#cat-dnd" class="nav-drawer-link">D&amp;D</a>
+    <a href="/calendar" class="nav-drawer-link">Release Calendar</a>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3NavDrawer&toolid=10001&mkevt=1"
+      target="_blank" rel="noopener" class="nav-drawer-link nav-drawer-ebay">Singles on eBay AU &#8599;</a>
+  </div>
+</aside>
 <div class="c3-disclosure-bar">
   As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.
 </div>
@@ -286,6 +424,38 @@ function buildNav(gameLink = '') {
     if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
   });
 </script>
+<script>
+  // Mobile drawer: open/close on hamburger, close on scrim/close/ESC/link.
+  (function(){
+    var burger = document.getElementById('nav-burger');
+    var drawer = document.getElementById('nav-drawer');
+    var scrim  = document.getElementById('nav-scrim');
+    var closeBtn = document.getElementById('nav-drawer-close');
+    if (!burger || !drawer || !scrim) return;
+    function openDrawer() {
+      drawer.classList.add('open');
+      scrim.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      scrim.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    burger.addEventListener('click', function(e){ e.stopPropagation(); openDrawer(); });
+    scrim.addEventListener('click', closeDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeDrawer(); });
+    drawer.addEventListener('click', function(e){
+      var t = e.target;
+      while (t && t !== drawer) { if (t.tagName === 'A') { closeDrawer(); break; } t = t.parentNode; }
+    });
+  })();
+</script>
 `;
 }
 
@@ -293,8 +463,5 @@ export const NAV_HTML = buildNav();
 
 // Per-game variant: keeps the active-game indicator on hub/set/card pages.
 export function navHtml({ gameLabel, gameHref } = {}) {
-  const gameLink = (gameLabel && gameHref)
-    ? `\n      <a href="${gameHref}" class="nav-link nav-link--game">${gameLabel}</a>`
-    : '';
-  return buildNav(gameLink);
+  return buildNav(gameLabel, gameHref);
 }
