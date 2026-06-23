@@ -30,7 +30,7 @@ These sets release in the first week of July, just before Prime Day opens on 7 J
 
 These products release during the Prime Day window itself. That does not mean they will be discounted. New releases almost never get Prime Day pricing. But the timing means you are buying new product and potentially getting deals on older product at the same time.
 
-**10 July 2026 **During Prime Day****, **Star Wars Unlimited: Ashes of the Empire Prerelease Box**, Star Wars Unlimited [View on Amazon AU](https://www.amazon.com.au/s?k=star+wars+unlimited+ashes+empire&tag=blasdigital-22)
+**10 July 2026** **During Prime Day**, **Star Wars Unlimited: Ashes of the Empire Prerelease Box**, Star Wars Unlimited [View on Amazon AU](https://www.amazon.com.au/s?k=star+wars+unlimited+ashes+empire&tag=blasdigital-22)
 
 > **Best Value Pick: Star Wars Unlimited Ashes of the Empire Prerelease Box (10 July)**
 >

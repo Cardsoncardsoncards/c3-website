@@ -24,13 +24,13 @@ Track current Yu-Gi-Oh card prices on the [C3 Yu-Gi-Oh card tracker](/cards/yugi
 
 ## Australian State Championship Results 2026
 
-**23 May 2026**, **Western Australia State Championship** **COMPLETED**Advanced Constructed format. Top 16 earned Continentals invites. Results available at yugioh-card.com.
+**23 May 2026**, **Western Australia State Championship** **COMPLETED** Advanced Constructed format. Top 16 earned Continentals invites. Results available at yugioh-card.com.
 
-**31 May 2026**, **South Australia State Championship** **COMPLETED**Advanced Constructed format. Top 16 earned Continentals invites. Results available at yugioh-card.com.
+**31 May 2026**, **South Australia State Championship** **COMPLETED** Advanced Constructed format. Top 16 earned Continentals invites. Results available at yugioh-card.com.
 
-**6 June 2026**, **New South Wales State Championship** **COMPLETED**Advanced Constructed format. Top 16 earned Continentals invites. Results available at yugioh-card.com.
+**6 June 2026**, **New South Wales State Championship** **COMPLETED** Advanced Constructed format. Top 16 earned Continentals invites. Results available at yugioh-card.com.
 
-**TBC (upcoming)**, **Victoria State Championship** **UPCOMING**Hosted at General Games Chirnside Park. Open to all players. First place wins travel and accommodation to WCQ Continentals. Second place receives ASUS ROG Xbox Ally Handheld Console. Top 16 earn Continentals invites.
+**TBC (upcoming)**, **Victoria State Championship** **UPCOMING** Hosted at General Games Chirnside Park. Open to all players. First place wins travel and accommodation to WCQ Continentals. Second place receives ASUS ROG Xbox Ally Handheld Console. Top 16 earn Continentals invites.
 
 Australia is running all four state championships in the same season rather than a single national event. This is consistent with the format Australia has used since 2022 and gives players in each major city region access to a competitive qualifier event without interstate travel.
 
