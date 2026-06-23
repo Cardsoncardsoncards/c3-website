@@ -35,7 +35,7 @@ async function fetchSlugs(offset = 0) {
     + `?select=slug,market_price,updated_at`
     + `&market_price=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
-    + `&order=market_price.desc`
+    + `&order=market_price.desc.nullslast`
     + `&limit=${PAGE_SIZE}`
     + `&offset=${offset}`;
   try {
