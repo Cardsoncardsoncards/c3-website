@@ -61,23 +61,13 @@ export default async (req) => {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return empty('Error: missing env vars');
 
   try {
-    const countRes = await supabaseFetch(
-      `${SUPABASE_URL}/rest/v1/starwars_cards?select=id&market_price=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
-      { 'Prefer': 'count=exact' }
-    );
-    if (!countRes.ok) return empty('starwars sitemap: count query failed');
-
-    const contentRange = countRes.headers.get('content-range');
-    const totalCount = (contentRange && contentRange.includes('/'))
-      ? parseInt(contentRange.split('/')[1], 10) : 0;
-
-    if (totalCount === 0) return empty('starwars card pages: pending sync or no priced cards');
-
     const allCards = [];
-    for (let offset = 0; offset < Math.min(totalCount, MAX_CARDS); offset += PAGE_SIZE) {
+    let offset = 0;
+    while (offset < MAX_CARDS) {
       const batch = await fetchSlugs(offset);
       allCards.push(...batch);
       if (batch.length < PAGE_SIZE) break;
+      offset += PAGE_SIZE;
     }
 
     const today = new Date().toISOString().slice(0, 10);
