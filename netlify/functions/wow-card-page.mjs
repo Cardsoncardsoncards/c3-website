@@ -79,7 +79,7 @@ async function handleSetPage(setSlug, htmlHeaders) {
   const cards = _psr2.status === 'fulfilled' ? _psr2.value : [];
   const ebayListings = _psr3.status === 'fulfilled' ? _psr3.value : [];
 
-  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
   const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
   const sealedCards = (cards || []).filter(c => !isSingles(c));
@@ -209,7 +209,7 @@ export default async (req) => {
     if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
     const card = cards[0];
 
-    const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.58 : null);
+    const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.45 : null);
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/wow/${card.slug}`);
     const shareText = encodeURIComponent(`${card.name} World of Warcraft TCG Card Game -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
     const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' world of warcraft tcg card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
@@ -238,7 +238,7 @@ export default async (req) => {
       <h2 style="font-size:18px;margin-bottom:16px;font-family:'Cinzel',serif">More from ${card.set_name || 'this Set'}</h2>
       <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none">
         ${relatedCards.map(c => {
-          const rAud = parseFloat(c.price_aud) || (c.market_price ? c.market_price * 1.58 : 0);
+          const rAud = parseFloat(c.price_aud) || (c.market_price ? c.market_price * 1.45 : 0);
           return `<a href="/cards/wow/${c.slug}" style="flex:0 0 130px;background:#161929;border:1px solid #252840;border-radius:8px;padding:8px;text-decoration:none">
             ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:5px">` : ''}
             <div style="font-size:10px;color:#F0F2FF;margin-top:5px;line-height:1.3">${c.name}</div>

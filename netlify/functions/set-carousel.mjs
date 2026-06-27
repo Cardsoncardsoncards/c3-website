@@ -105,7 +105,7 @@ export default async (req) => {
       priceDisplay: c.price_aud
         ? `AU$${parseFloat(c.price_aud).toFixed(0)}`
         : c.market_price
-          ? `~AU$${(parseFloat(c.market_price) * 1.58).toFixed(0)}`
+          ? `~AU$${(parseFloat(c.market_price) * 1.45).toFixed(0)}`
           : '',
     }));
 

@@ -113,7 +113,7 @@ function renderCardHub(sets, topCards) {
     <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
       ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text)">${c.name}</div>
-      <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.58).toFixed(0)}` : ''}</div>
+      <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.45).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
   return `<!DOCTYPE html>
@@ -260,7 +260,7 @@ async function searchCard() {
     }).then(r => r.json());
     if (!data.length) { res.innerHTML = '<p style="color:var(--text2)">No cards found. <a href="https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(q + ' mtg') + '&campid=5339146789" target="_blank">Search eBay AU →</a></p>'; return; }
     res.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px">' +
-      data.map(c => '<a href="/cards/mtg/' + c.slug + '" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block"><img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '"><div style="font-size:11px;margin-top:4px">' + c.name + '</div><div style="font-size:12px;color:var(--accent)">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.58).toFixed(0) : '') + '</div></a>').join('') + '</div>';
+      data.map(c => '<a href="/cards/mtg/' + c.slug + '" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block"><img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '"><div style="font-size:11px;margin-top:4px">' + c.name + '</div><div style="font-size:12px;color:var(--accent)">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.45).toFixed(0) : '') + '</div></a>').join('') + '</div>';
   } catch { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; }
 }
 
@@ -651,7 +651,7 @@ async function fetchOneCommander(exclude) {
 function cardHTML(card, index) {
   const price = card.price_aud > 0
     ? 'AU$' + parseFloat(card.price_aud).toFixed(2)
-    : card.price_usd ? '~AU$' + (card.price_usd * 1.58).toFixed(2) : 'Price N/A';
+    : card.price_usd ? '~AU$' + (card.price_usd * 1.45).toFixed(2) : 'Price N/A';
   const img = card.image_uri_normal || card.image_uri_small || '';
   // Colour identity pips
   const ci = Array.isArray(card.color_identity) ? card.color_identity : [];
@@ -824,7 +824,7 @@ async function renderSetIndex(setSlug) {
   // Helper: convert price_usd to AUD
   const toAud = (c) => {
     if (c.price_aud && c.price_aud > 0) return parseFloat(c.price_aud);
-    if (c.price_usd && c.price_usd > 0) return parseFloat(c.price_usd) * 1.58;
+    if (c.price_usd && c.price_usd > 0) return parseFloat(c.price_usd) * 1.45;
     return 0;
   };
 

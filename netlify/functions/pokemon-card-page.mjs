@@ -146,7 +146,7 @@ async function handleSetPage(setSlug, headers) {
 
   const cards = await supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=400&select=slug,name,image_url,market_price,price_aud,number,rarity,price_change_7d`);
 
-  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
   const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
   const sealedCards = (cards || []).filter(c => !isSingles(c));
@@ -327,9 +327,9 @@ export default async (req) => {
 
     // Use stored price_aud if available, fallback to conversion
     const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud)
-                   : card.market_price > 0 ? parseFloat(card.market_price) * 1.58
+                   : card.market_price > 0 ? parseFloat(card.market_price) * 1.45
                    : null;
-    const audRate = card.aud_rate ? parseFloat(card.aud_rate) : 1.58;
+    const audRate = card.aud_rate ? parseFloat(card.aud_rate) : 1.45;
 
     // Price change badge
     const change7d = card.price_change_7d ? parseFloat(card.price_change_7d) : null;
@@ -345,7 +345,7 @@ export default async (req) => {
     // Sparkline SVG -- simple line from snapshot data
     function buildSparkline(snaps) {
       if (!snaps || snaps.length < 14) return '';
-      const prices = snaps.map(s => parseFloat(s.price_aud || (s.market_price * 1.58)) || 0).filter(p => p > 0);
+      const prices = snaps.map(s => parseFloat(s.price_aud || (s.market_price * 1.45)) || 0).filter(p => p > 0);
       if (prices.length < 2) return '';
       const min = Math.min(...prices);
       const max = Math.max(...prices);
@@ -411,7 +411,7 @@ export default async (req) => {
           <a href="/cards/pokemon/${c.slug}" class="mini-card">
             ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:6px">` : `<div style="height:80px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text2)">${c.name}</div>`}
             <div class="mini-card-name">${c.name}</div>
-            <div class="mini-card-price">${c.market_price ? '~AU$'+(c.market_price*1.58).toFixed(2) : ''}</div>
+            <div class="mini-card-price">${c.market_price ? '~AU$'+(c.market_price*1.45).toFixed(2) : ''}</div>
           </a>`).join('')}
       </div>
     </section>` : '';
@@ -682,7 +682,7 @@ ${relatedHTML}
     <a href="/contact.html">Contact</a>
   </div>
   <p>© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Prices are estimates based on USD Scryfall/TCGdex data converted at approximately 1.58 AUD. Check eBay AU for live Australian pricing.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Prices are estimates based on USD Scryfall/TCGdex data converted at approximately 1.45 AUD. Check eBay AU for live Australian pricing.</p>
 </footer>
 <div id="c3-compare-tray" style="position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1a1d2e;border-top:1px solid #2d3254;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)">
   <div id="c3-tray-cards" style="display:flex;gap:8px;flex:1;align-items:center;overflow-x:auto"></div>

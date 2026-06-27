@@ -72,12 +72,12 @@ async function getExchangeRate() {
   try {
     const res = await fetch(`${base}/api/fx-rate`, { signal: ctrl.signal });
     clearTimeout(t);
-    if (!res.ok) return 1.58;
+    if (!res.ok) return 1.45;
     const data = await res.json();
-    return parseFloat(data.rate) || 1.58;
+    return parseFloat(data.rate) || 1.45;
   } catch {
     clearTimeout(t);
-    return 1.58;
+    return 1.45;
   }
 }
 export default async (req) => {
@@ -148,7 +148,7 @@ export default async (req) => {
   const prevCard = cardIdx > 0 ? allSetCards[cardIdx - 1] : null;
   const nextCard = cardIdx >= 0 && cardIdx < allSetCards.length - 1 ? allSetCards[cardIdx + 1] : null;
 
-  const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * 1.58 : null;
+  const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * 1.45 : null;
 
   // Social share
   const pageUrl   = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/unionarena/${slug}`);
@@ -166,7 +166,7 @@ export default async (req) => {
   const setPageUrl   = set?.slug ? `/cards/unionarena/sets/${esc(set.slug)}` : `/cards/unionarena`;
 
   const relatedHTML = relatedCards.length ? relatedCards.map(c => {
-    const p = c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? (c.market_price*1.58) : 0;
+    const p = c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? (c.market_price*1.45) : 0;
     return `<a href="/cards/unionarena/${c.slug}" style="background:#111420;border:1px solid #242840;border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#10B981'" onmouseout="this.style.borderColor='#242840'">
       ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:5px;max-height:110px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:80px;background:#0d0f1a;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#9ba3c4;margin-bottom:4px">&#127183;</div>`}
       <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${esc(c.name)}</div>
@@ -282,9 +282,9 @@ export default async (req) => {
         <div style="margin-top:12px;background:#111420;border:1px solid #242840;border-radius:10px;padding:14px;font-family:sans-serif">
           <div style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#9ba3c4;margin-bottom:10px">Price Breakdown</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
-            <div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Market Price</div><div style="font-weight:700;color:var(--accent)">AU$${(card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price * (AUD_RATE||1.58)).toFixed(2)}</div><div style="color:#9ba3c4;font-size:10px">US$${parseFloat(card.market_price).toFixed(2)}</div></div>
-            ${card.low_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Low Price</div><div style="font-weight:700;color:#4ADE80">AU$${(card.low_price * (AUD_RATE||1.58)).toFixed(2)}</div><div style="color:#9ba3c4;font-size:10px">US$${parseFloat(card.low_price).toFixed(2)}</div></div>` : ''}
-            ${card.median_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Median</div><div style="font-weight:700;color:#e8eaf0">AU$${(card.median_price * (AUD_RATE||1.58)).toFixed(2)}</div></div>` : ''}
+            <div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Market Price</div><div style="font-weight:700;color:var(--accent)">AU$${(card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price * (AUD_RATE||1.45)).toFixed(2)}</div><div style="color:#9ba3c4;font-size:10px">US$${parseFloat(card.market_price).toFixed(2)}</div></div>
+            ${card.low_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Low Price</div><div style="font-weight:700;color:#4ADE80">AU$${(card.low_price * (AUD_RATE||1.45)).toFixed(2)}</div><div style="color:#9ba3c4;font-size:10px">US$${parseFloat(card.low_price).toFixed(2)}</div></div>` : ''}
+            ${card.median_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Median</div><div style="font-weight:700;color:#e8eaf0">AU$${(card.median_price * (AUD_RATE||1.45)).toFixed(2)}</div></div>` : ''}
             ${card.buylist_price > 0 ? `<div><div style="color:#9ba3c4;font-size:10px;margin-bottom:2px">Buylist (Sell)</div><div style="font-weight:700;color:#F472B6">US$${parseFloat(card.buylist_price).toFixed(2)}</div></div>` : ''}
           </div>
           ${card.price_change_7d ? `<div style="margin-top:8px;font-size:11px;color:${parseFloat(card.price_change_7d) >= 0 ? '#4ADE80' : '#F87171'};font-weight:600">${parseFloat(card.price_change_7d) >= 0 ? '▲' : '▼'} ${Math.abs(parseFloat(card.price_change_7d)).toFixed(1)}% this week</div>` : ''}
@@ -314,8 +314,8 @@ export default async (req) => {
     <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;padding:0 0 0 4px">Sealed Product</div>
     <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none">
       ${sealedCards.map(p => {
-        const sp = p.price_aud > 0 ? parseFloat(p.price_aud) : p.market_price > 0 ? (p.market_price * (AUD_RATE||1.58)) : 0;
-        const sl = p.low_price > 0 ? (p.low_price * (AUD_RATE||1.58)) : 0;
+        const sp = p.price_aud > 0 ? parseFloat(p.price_aud) : p.market_price > 0 ? (p.market_price * (AUD_RATE||1.45)) : 0;
+        const sl = p.low_price > 0 ? (p.low_price * (AUD_RATE||1.45)) : 0;
         return `<a href="/cards/unionarena/${p.slug}" style="flex-shrink:0;width:150px;background:#111420;border:1px solid #242840;border-radius:8px;padding:10px;text-decoration:none;display:block">
           ${p.image_url ? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" style="width:100%;max-height:100px;object-fit:contain;border-radius:4px;margin-bottom:6px" loading="lazy">` : ''}
           <div style="font-size:11px;color:#e8eaf0;font-weight:600;line-height:1.3;margin-bottom:4px">${esc(p.name)}</div>
@@ -353,7 +353,7 @@ export default async (req) => {
     <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made via affiliate links at no extra cost to you. Prices are estimates based on US market data converted to AUD at approximately 1.58.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made via affiliate links at no extra cost to you. Prices are estimates based on US market data converted to AUD at approximately 1.45.</p>
 </footer>
 <script>
 document.querySelectorAll('a[href*="ebay"]').forEach(a => a.addEventListener('click', () => {

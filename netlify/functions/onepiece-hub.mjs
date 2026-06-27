@@ -335,7 +335,7 @@ ${carouselHTML ? `<section class="carousel-section fade-up fade-up-2">
     <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a><a href="/calendar.html">Calendar</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Toei Animation. Prices sourced from TCGPlayer (USD), converted to AUD at approximately 1.58.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Toei Animation. Prices sourced from TCGPlayer (USD), converted to AUD at approximately 1.45.</p>
 </footer>
 
 <script>

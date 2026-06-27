@@ -134,14 +134,14 @@ export default async (req) => {
   } else {
     orderStr = game === 'mtg' ? 'tcgplayer_id' : 'id';
   }
-  // Price filter. MTG filters on price_aud (AUD); other games on market_price (USD, ~1.58 to AUD).
+  // Price filter. MTG filters on price_aud (AUD); other games on market_price (USD, ~1.45 to AUD).
   // A min_price floor (AUD) applies whenever supplied; otherwise price sort still excludes zero-price cards.
   let priceFilter = '';
   if (game === 'mtg') {
     if (minPrice > 0) priceFilter = `&price_aud=gte.${minPrice}`;
     else if (usePrice) priceFilter = '&price_aud=gt.0';
   } else {
-    if (minPrice > 0) priceFilter = `&market_price=gte.${(minPrice / 1.58).toFixed(2)}`;
+    if (minPrice > 0) priceFilter = `&market_price=gte.${(minPrice / 1.45).toFixed(2)}`;
     else if (usePrice) priceFilter = '&market_price=gt.0';
   }
   const query = `${SUPABASE_URL}/rest/v1/${table}?${imageFilter}${rarityFilter}${priceFilter}&order=${orderStr}&limit=${limit}&offset=${offset}&select=${selectFields}`;
@@ -162,7 +162,7 @@ export default async (req) => {
       const priceAud = c.price_aud
         ? `AU$${parseFloat(c.price_aud).toFixed(2)}`
         : c.market_price
-          ? `~AU$${(parseFloat(c.market_price) * 1.58).toFixed(2)}`
+          ? `~AU$${(parseFloat(c.market_price) * 1.45).toFixed(2)}`
           : 'Price TBC';
       return {
         ...c,

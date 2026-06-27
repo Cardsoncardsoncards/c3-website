@@ -9,7 +9,7 @@ const EBAY_CLIENT_ID = Netlify.env.get('EBAY_CLIENT_ID');
 const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
 const EPN_CAMPID = '5339146789';
 const AMAZON_TAG = 'blasdigital-22';
-const FX_FALLBACK = 1.58; // AUD/USD fallback rate - update periodically
+const FX_FALLBACK = 1.45; // AUD/USD fallback rate - update periodically
 
 // --- Helpers ---
 
@@ -31,6 +31,27 @@ async function supabaseGet(path, useService = false) {
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   } catch (e) { clearTimeout(timer); return []; }
+}
+
+// Reads the live USD->AUD rate from site_config (written daily by sync-fx-rate).
+// Falls back to FX_FALLBACK if the lookup fails. Anon key, fast indexed lookup.
+async function getFxRate() {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 3000);
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/site_config?select=value&key=eq.usd_aud_rate&limit=1`,
+      {
+        signal: controller.signal,
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+      }
+    );
+    clearTimeout(timer);
+    if (!res.ok) return FX_FALLBACK;
+    const rows = await res.json();
+    const rate = Array.isArray(rows) && rows[0] ? parseFloat(rows[0].value) : NaN;
+    return rate > 0 ? rate : FX_FALLBACK;
+  } catch (e) { clearTimeout(timer); return FX_FALLBACK; }
 }
 
 async function getEbayToken() {
@@ -196,11 +217,11 @@ function esc(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings }) {
+function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings, fxRate = FX_FALLBACK }) {
   const legalities = formatLegalities(card.legalities);
-  const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * FX_FALLBACK : null);
-  const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * FX_FALLBACK : null;
-  const priceAudEtched = card.price_usd_etched ? card.price_usd_etched * FX_FALLBACK : null;
+  const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * fxRate : null);
+  const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * fxRate : null;
+  const priceAudEtched = card.price_usd_etched ? card.price_usd_etched * fxRate : null;
   const latestSnap = snapshots[snapshots.length - 1];
   const high52w = latestSnap?.price_52w_high_aud;
   const low52w = latestSnap?.price_52w_low_aud;
@@ -276,7 +297,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
         <a href="/cards/mtg/${c.slug}" class="mini-card">
           ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" loading="lazy">` : `<div class="mini-card-placeholder">${c.name}</div>`}
           <div class="mini-card-name">${c.name}</div>
-          <div class="mini-card-price">${c.price_usd ? formatAUD(c.price_usd * FX_FALLBACK) : 'N/A'}</div>
+          <div class="mini-card-price">${c.price_usd ? formatAUD(c.price_usd * fxRate) : 'N/A'}</div>
         </a>`).join('')}
     </div>
   </section>` : '';
@@ -768,8 +789,8 @@ ${otherPrintings && otherPrintings.length > 1 ? `
       <button class="printings-arrow" id="arrow-prev" onclick="scrollPrintings(-1)" aria-label="Previous printing">&#8249;</button>
       <div class="printings-track" id="printings-track">
         ${otherPrintings.map((p, i) => {
-          const audNF = p.price_aud > 0 ? 'AU$' + parseFloat(p.price_aud).toFixed(2) : p.price_usd ? '~AU$' + (p.price_usd * FX_FALLBACK).toFixed(2) : '';
-          const audFoil = p.price_usd_foil ? '~AU$' + (p.price_usd_foil * FX_FALLBACK).toFixed(2) : '';
+          const audNF = p.price_aud > 0 ? 'AU$' + parseFloat(p.price_aud).toFixed(2) : p.price_usd ? '~AU$' + (p.price_usd * fxRate).toFixed(2) : '';
+          const audFoil = p.price_usd_foil ? '~AU$' + (p.price_usd_foil * fxRate).toFixed(2) : '';
           return `<div class="printing-thumb${p.scryfall_id === card.scryfall_id ? ' active' : ''}"
             data-idx="${i}"
             data-img="${p.image_uri_normal || p.image_uri_small || ''}"
@@ -790,7 +811,7 @@ ${otherPrintings && otherPrintings.length > 1 ? `
     </div>
     <div class="printing-info" id="printing-info">
       <strong>${card.set_name}</strong>
-      #${card.collector_number} · ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1) : ''}${card.price_aud > 0 ? ' · AU$' + parseFloat(card.price_aud).toFixed(2) : card.price_usd ? ' · ~AU$' + (card.price_usd * FX_FALLBACK).toFixed(2) : ''}
+      #${card.collector_number} · ${card.rarity ? card.rarity.charAt(0).toUpperCase()+card.rarity.slice(1) : ''}${card.price_aud > 0 ? ' · AU$' + parseFloat(card.price_aud).toFixed(2) : card.price_usd ? ' · ~AU$' + (card.price_usd * fxRate).toFixed(2) : ''}
     </div>
   </div>
 </div>` : ''}
@@ -1024,7 +1045,7 @@ async function loadCKPrices() {
     if (!res.ok) return;
     const data = await res.json();
     if (!data || (!data.retail && !data.buylist)) return;
-    const RATE = ${FX_FALLBACK};
+    const RATE = ${fxRate};
     const block = document.getElementById('ck-price-block');
     const ckRetail = document.getElementById('ck-retail');
     const ckBuylist = document.getElementById('ck-buylist');
@@ -1384,13 +1405,14 @@ export default async (req, context) => {
     const card = cards[0];
 
     // Parallel fetches for all supporting data
-    const [snapshots, relatedData, prevNextData, likeData, printingsData] = await Promise.allSettled([
+    const [snapshots, relatedData, prevNextData, likeData, printingsData, fxData] = await Promise.allSettled([
       supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=90`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,collector_number&order=collector_number.asc`, false),
       supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}`, false),
       // Other printings -- same card name, different sets/variants. scryfall_id is unique per printing.
-      supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=scryfall_id,slug,set_name,released_at,rarity,collector_number,image_uri_normal,image_uri_small,price_usd,price_aud,price_usd_foil&order=released_at.desc&limit=80`, false)
+      supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=scryfall_id,slug,set_name,released_at,rarity,collector_number,image_uri_normal,image_uri_small,price_usd,price_aud,price_usd_foil&order=released_at.desc&limit=80`, false),
+      getFxRate()
     ]);
 
     const snapshotData = snapshots.status === 'fulfilled' ? snapshots.value : [];
@@ -1398,6 +1420,7 @@ export default async (req, context) => {
     const prevNextCards = prevNextData.status === 'fulfilled' ? prevNextData.value : [];
     const likeCount = likeData.status === 'fulfilled' ? (likeData.value[0]?.total_likes || 0) : 0;
     const otherPrintings = printingsData.status === 'fulfilled' ? printingsData.value : [];
+    const fxRate = fxData.status === 'fulfilled' ? fxData.value : FX_FALLBACK;
 
     // Split related cards: top 5 by price + 5 random (no duplicates)
     const topFive = allSetCards.slice(0, 5);
@@ -1431,7 +1454,7 @@ export default async (req, context) => {
       console.error('eBay fetch error:', e.message);
     }
 
-    const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings });
+    const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings, fxRate });
 
     return new Response(html, {
       status: 200,

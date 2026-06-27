@@ -7,7 +7,7 @@
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
-const FALLBACK_RATE     = 1.58;
+const FALLBACK_RATE     = 1.45;
 
 export default async () => {
   const headers = {

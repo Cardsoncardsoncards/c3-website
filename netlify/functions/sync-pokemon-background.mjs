@@ -38,12 +38,12 @@ async function getExchangeRate() {
   try {
     const res = await fetch(`${base}/api/fx-rate`, { signal: controller.signal });
     clearTimeout(timeout);
-    if (!res.ok) return 1.58;
+    if (!res.ok) return 1.45;
     const data = await res.json();
-    return parseFloat(data.rate) || 1.58;
+    return parseFloat(data.rate) || 1.45;
   } catch {
     clearTimeout(timeout);
-    return 1.58;
+    return 1.45;
   }
 }
 

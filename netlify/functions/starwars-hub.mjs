@@ -180,7 +180,7 @@ export default async (req) => {
   const azButtons   = buildAZButtons(sets);
 
   function carouselCard(c, suffix) {
-    const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.58).toFixed(0)}` : '';
+    const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.45).toFixed(0)}` : '';
     const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name+' star wars unlimited card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<div class="carousel-card"><a href="/cards/starwars/${esc(c.slug)}" style="display:block;text-decoration:none"><div class="carousel-img-wrap"><img src="${esc(c.image_url)}${suffix}" alt="${esc(c.name).replace(/"/g,'&quot;')}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3"></div><div class="carousel-name">${esc(c.name)}</div>${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}<div class="carousel-price">${price}</div></a><div class="carousel-buy-row"><a href="${ebay}" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'starwars-hub'})" class="carousel-buy-btn">Buy eBay &#8599;</a></div></div>`;
   }
@@ -316,7 +316,7 @@ ${hasMovers ? `<div style="margin-bottom:28px">
     <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a><a href="/calendar.html">Calendar</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Fantasy Flight Games or Lucasfilm. USD prices converted to AUD at approximately 1.58.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Fantasy Flight Games or Lucasfilm. USD prices converted to AUD at approximately 1.45.</p>
 </footer>
 
 <script>

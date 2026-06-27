@@ -313,7 +313,7 @@ async function handleRandomCard(req) {
       name: c[cfg.nameCol],
       image: c[cfg.imgCol],
       price_usd: c[cfg.priceCol] || null,
-      price_aud: c.price_aud || (c[cfg.priceCol] ? (c[cfg.priceCol] * 1.58).toFixed(2) : null),
+      price_aud: c.price_aud || (c[cfg.priceCol] ? (c[cfg.priceCol] * 1.45).toFixed(2) : null),
       set_name: c.set_name || '',
       rarity: c.rarity || '',
       extra: { type: c.type_line || c.type || '', color: c.color_identity || c.ink || c.attribute || '', ink: c.ink || '' },

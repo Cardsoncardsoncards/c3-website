@@ -51,12 +51,12 @@ async function getLiveRate() {
   try {
     const res = await fetch(`${base}/api/fx-rate`, { signal: ctrl.signal });
     clearTimeout(timer);
-    if (!res.ok) return 1.58;
+    if (!res.ok) return 1.45;
     const d = await res.json();
-    return parseFloat(d.rate) || 1.58;
+    return parseFloat(d.rate) || 1.45;
   } catch {
     clearTimeout(timer);
-    return 1.58;
+    return 1.45;
   }
 }
 
@@ -570,7 +570,7 @@ function renderCompareTable(cards) {
   ).join('')}</tr>`;
 
   const foilRow = hasFoil ? `<tr><th class="tbl-label">Foil (AUD)</th>${cards.map((c, i) =>
-    cell(i, foilWin, `<span class="tbl-price aud-val" data-aud="${c.priceAudFoil || 0}" data-usd="${c.priceAudFoil ? (c.priceAudFoil / 1.58).toFixed(2) : 0}">${fmtAUD(c.priceAudFoil) || '—'}</span>`)
+    cell(i, foilWin, `<span class="tbl-price aud-val" data-aud="${c.priceAudFoil || 0}" data-usd="${c.priceAudFoil ? (c.priceAudFoil / 1.45).toFixed(2) : 0}">${fmtAUD(c.priceAudFoil) || '—'}</span>`)
   ).join('')}</tr>` : '';
 
   const trendRow = `<tr><th class="tbl-label">7D Trend</th>${cards.map(c => {
@@ -1083,7 +1083,7 @@ ${cards.length >= 2 ? `
 (function() {
   var dataEl = document.getElementById('compare-data');
   var data = dataEl ? JSON.parse(dataEl.textContent) : {};
-  window.USD_TO_AUD     = data.usdToAud || 1.58;
+  window.USD_TO_AUD     = data.usdToAud || 1.45;
   window.CURRENT_TOKENS = data.tokens || [];
   window.CURRENT_CARDS  = data.cardCount || 0;
 })();
@@ -1500,7 +1500,7 @@ export default async (req) => {
     getLiveRate(),
     ...rawTokens.map(token => {
       const { game, slug } = parseToken(token);
-      return fetchCard(game, slug, 1.58);
+      return fetchCard(game, slug, 1.45);
     })
   ]);
 
@@ -1512,7 +1512,7 @@ export default async (req) => {
       return {
         ...c,
         priceAud:     c.priceUsd ? parseFloat((c.priceUsd * usdToAud).toFixed(2)) : c.priceAud,
-        priceAudFoil: c.priceAudFoil ? parseFloat((c.priceAudFoil / 1.58 * usdToAud).toFixed(2)) : null,
+        priceAudFoil: c.priceAudFoil ? parseFloat((c.priceAudFoil / 1.45 * usdToAud).toFixed(2)) : null,
       };
     });
 

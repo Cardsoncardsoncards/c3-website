@@ -257,7 +257,7 @@ export default async (req) => {
     gameAllocations.forEach(g => console.log(`  ${g.label}: ${g.budget} cards`));
 
     // AUD rate from the cached /api/fx-rate endpoint (no direct FX API call)
-    let audRate = 1.58;
+    let audRate = 1.45;
     try {
       const fxBase = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
       const fxCtrl = new AbortController();
@@ -266,10 +266,10 @@ export default async (req) => {
       clearTimeout(fxTimer);
       if (fxRes.ok) {
         const fxData = await fxRes.json();
-        audRate = parseFloat(fxData.rate) || 1.58;
+        audRate = parseFloat(fxData.rate) || 1.45;
       }
     } catch {
-      console.log('[enrich-prices] FX fetch failed, using fallback 1.58');
+      console.log('[enrich-prices] FX fetch failed, using fallback 1.45');
     }
 
     // Run enrichment for each game

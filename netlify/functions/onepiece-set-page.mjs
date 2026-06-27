@@ -84,7 +84,7 @@ export default async (req) => {
     const cards = cardsRes.status === 'fulfilled' ? (cardsRes.value || []) : [];
     const ebayListings = ebayRes.status === 'fulfilled' ? (ebayRes.value || []) : [];
 
-    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
     const pricedCards = cards.filter(c => toAud(c) > 0);
     const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
     const moversEligible = cards.filter(c => c.price_change_7d != null && parseFloat(c.price_aud||0) > 0.50);

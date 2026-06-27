@@ -84,7 +84,7 @@ async function tcgMovers(game,direction,limit){
     const d=await res.json();
     return (d.data||[]).map(c=>({
       name:c.name||c.card_name||'', setName:c.set_name||c.set||'',
-      priceAud:((c.market_price||c.price||0)*1.58).toFixed(2),
+      priceAud:((c.market_price||c.price||0)*1.45).toFixed(2),
       change7d:c.price_change_7d||c.change_7d||0, rarity:c.rarity||'',
       slug:c.slug||'', game,
     }));

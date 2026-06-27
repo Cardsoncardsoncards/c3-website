@@ -252,7 +252,7 @@ export default async (req) => {
   const carouselHTML = topCards.map(c => {
     const price = c.price_aud
       ? `AU$${parseFloat(c.price_aud).toFixed(0)}`
-      : c.market_price ? `~AU$${(c.market_price * 1.58).toFixed(0)}` : '';
+      : c.market_price ? `~AU$${(c.market_price * 1.45).toFixed(0)}` : '';
     const ebaySearch = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name + ' pokemon card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<div class="carousel-card">
       <a href="/cards/pokemon/${c.slug}" style="display:block;text-decoration:none">
@@ -273,7 +273,7 @@ export default async (req) => {
   const carouselHTML2 = topCards.map(c => {
     const price = c.price_aud
       ? `AU$${parseFloat(c.price_aud).toFixed(0)}`
-      : c.market_price ? `~AU$${(c.market_price * 1.58).toFixed(0)}` : '';
+      : c.market_price ? `~AU$${(c.market_price * 1.45).toFixed(0)}` : '';
     const ebaySearch = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name + ' pokemon card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<div class="carousel-card">
       <a href="/cards/pokemon/${c.slug}" style="display:block;text-decoration:none">
@@ -466,7 +466,7 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
     <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a><a href="/calendar.html">Calendar</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with The Pokemon Company. USD prices converted to AUD at approximately 1.58.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with The Pokemon Company. USD prices converted to AUD at approximately 1.45.</p>
 </footer>
 
 <script>

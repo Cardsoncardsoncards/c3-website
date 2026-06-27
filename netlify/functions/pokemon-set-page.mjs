@@ -8,7 +8,7 @@ const EBAY_CLIENT_ID     = Netlify.env.get('EBAY_CLIENT_ID');
 const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
 const EPN_CAMPID         = '5339146789';
 const AMAZON_TAG         = 'blasdigital-22';
-const FX_FALLBACK        = 1.58; // AUD/USD fallback rate - update periodically
+const FX_FALLBACK        = 1.45; // AUD/USD fallback rate - update periodically
 
 async function supabaseGet(path) {
   const controller = new AbortController();

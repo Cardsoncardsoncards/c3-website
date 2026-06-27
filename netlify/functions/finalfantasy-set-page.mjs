@@ -95,7 +95,7 @@ export default async (req) => {
       getEbayListings(`${set.name} final fantasy tcg card`, ebayToken)
     ]);
 
-    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.58 : 0;
+    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
     const pricedCards = (cards || []).filter(c => toAud(c) > 0);
     const top5 = pricedCards.slice(0, 5);
     // Biggest movers: min AU$0.50 price, need 5+ eligible cards to show panel
@@ -278,8 +278,8 @@ export default async (req) => {
     const sealedItems = (cards||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && c.market_price > 0; });
     if (!sealedItems.length) return '';
     const itemsHTML = sealedItems.slice(0,4).map(p => {
-      const price = p.price_aud > 0 ? `AU$${parseFloat(p.price_aud).toFixed(2)}` : `~AU$${(p.market_price*1.58).toFixed(2)}`;
-      const low = p.low_price ? `Low: ~AU$${(p.low_price*1.58).toFixed(2)}` : '';
+      const price = p.price_aud > 0 ? `AU$${parseFloat(p.price_aud).toFixed(2)}` : `~AU$${(p.market_price*1.45).toFixed(2)}`;
+      const low = p.low_price ? `Low: ~AU$${(p.low_price*1.45).toFixed(2)}` : '';
       const nm = (p.name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       return `<a href="/cards/finalfantasy/${p.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#EF4444'" onmouseout="this.style.borderColor='#1e2235'">
         ${p.image_url ? `<img src="${p.image_url.replace(/"/g,'&quot;')}" alt="${nm.replace(/"/g,'&quot;')}" style="width:100%;max-height:120px;object-fit:contain;border-radius:6px" loading="lazy">` : ''}
@@ -323,7 +323,7 @@ export default async (req) => {
   </div>
 
   <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0">
-    <strong style="color:#F0F2FF">About this set:</strong> Final Fantasy TCG card prices in AUD, converted from USD at approximately 1.58x. Updated daily.
+    <strong style="color:#F0F2FF">About this set:</strong> Final Fantasy TCG card prices in AUD, converted from USD at approximately 1.45x. Updated daily.
     <div style="margin-top:10px"><a href="/cards/finalfantasy" style="color:#10B981">Browse all Final Fantasy TCG sets</a></div>
   </div>
 </div>

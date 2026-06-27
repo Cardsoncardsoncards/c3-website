@@ -128,7 +128,7 @@ export default async (req) => {
   const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayListings = await getEbayListings(`${set.name} yugioh card`, ebayToken);
 
-  const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * 1.58 : 0;
+  const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * 1.45 : 0;
   const pricedCards = cards.filter(c => toAud(c) > 0);
   const top5 = pricedCards.slice(0, 5);
   const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();

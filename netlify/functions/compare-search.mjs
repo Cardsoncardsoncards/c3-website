@@ -9,7 +9,7 @@ const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 
 // All 27 games with data in Supabase
-// priceCol: isAud=true means price is already AUD (MTG only); false means USD -> convert at 1.58
+// priceCol: isAud=true means price is already AUD (MTG only); false means USD -> convert at 1.45
 const GAME_TABLES = [
   // --- Core 8 (original) ---
   { game: 'mtg',              table: 'mtg_cards',              nameCol: 'name', slugCol: 'slug', priceCol: 'price_aud',    imgCol: 'image_uri_small', setCol: 'set_name', label: 'MTG',                color: '#C9A84C', isAud: true  },
@@ -61,7 +61,7 @@ async function supabaseFetch(path) {
   } catch { clearTimeout(timer); return []; }
 }
 
-function normaliseCard(card, cfg, usdToAud = 1.58) {
+function normaliseCard(card, cfg, usdToAud = 1.45) {
   const { game, nameCol, slugCol, priceCol, imgCol, setCol, label, color, isAud } = cfg;
   const rawPrice = card[priceCol] ? parseFloat(card[priceCol]) : null;
   const priceAud = rawPrice ? (isAud ? rawPrice : rawPrice * usdToAud) : null;
@@ -116,7 +116,7 @@ export default async (req) => {
   }
 
   const tables   = gameFilter ? GAME_TABLES.filter(g => g.game === gameFilter) : GAME_TABLES;
-  const usdToAud = 1.58;
+  const usdToAud = 1.45;
 
   if (printings && gameFilter && tables.length === 1) {
     const results = await getPrintings(tables[0], query, usdToAud);

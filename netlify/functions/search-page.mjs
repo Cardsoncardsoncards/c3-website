@@ -36,7 +36,7 @@ async function searchGame(cfg, query, limit) {
     const data = await res.json();
     return (Array.isArray(data) ? data : []).map(card => {
       const rawPrice = card[cfg.priceCol] ? parseFloat(card[cfg.priceCol]) : null;
-      const priceAud = rawPrice ? (cfg.isAud ? rawPrice : rawPrice * 1.58) : null;
+      const priceAud = rawPrice ? (cfg.isAud ? rawPrice : rawPrice * 1.45) : null;
       return {
         slug:      card.slug,
         name:      card.name,
