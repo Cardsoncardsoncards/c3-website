@@ -261,8 +261,8 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const primaryEbay = ebayStoreListings.length > 0 ? ebayStoreListings : ebayAllListings;
   const fallbackEbay = ebayStoreListings.length > 0 ? ebayAllListings : [];
 
-  const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' mtg')}&campid=${EPN_CAMPID}`;
-  const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}`;
+  const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' mtg')}&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
   // Auto-generated context paragraph (defined after ebayAllUrl)
   const legalFormats = ['standard','pioneer','modern','legacy','vintage','commander'].filter(f => legalities[f] === 'legal');
@@ -1438,7 +1438,7 @@ export default async (req, context) => {
 
 function renderNotFound(slug) {
   const cardName = slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(cardName + ' mtg')}&campid=${EPN_CAMPID}`;
+  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(cardName + ' mtg')}&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>${cardName} | Cards on Cards on Cards</title>
   <meta name="description" content="We are building the full Australian MTG card database. In the meantime, search eBay AU for ${cardName}.">
   <style>body{background:#0f1117;color:#e8eaf0;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}a{color:#f5a623}</style>
@@ -1595,7 +1595,7 @@ async function renderBannedPage(slug) {
     const img = imageMap[card.slug]
       ? `<a href="${cardUrl}" style="display:block;text-decoration:none"><img src="${imageMap[card.slug]}" alt="${safeAlt}" loading="lazy" style="width:60px;height:84px;object-fit:cover;border-radius:4px;display:block"></a>`
       : `<div style="width:60px;height:84px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:22px">&#128683;</div>`;
-    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sacat=183454&campid=${EPN}&mkevt=1`;
+    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sacat=183454&campid=${EPN}&toolid=10001&mkevt=1`;
     const legalBadge = card.legalIn ? `<div style="font-size:10px;color:#4ADE80;font-weight:600">&#9989; Legal in: ${card.legalIn.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';
     return `<div style="background:#1a1d2e;border:1px solid #2d3254;border-radius:10px;overflow:hidden;display:flex;gap:12px;padding:12px">
       <div style="width:60px;flex-shrink:0">${img}</div>
