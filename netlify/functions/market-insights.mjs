@@ -193,7 +193,7 @@ export default async (req) => {
     <div class="eyebrow">Market</div>
     <h1>The Australian TCG Market</h1>
     <p class="intro">Every day we track price movements across more than 30 trading card games and convert them to Australian dollars, so you can see what is rising, what is falling, and where the value is, in one place.</p>
-    <span class="stamp"><span class="dot"></span>Updated daily</span>
+    <span class="stamp"><span class="dot"></span>Updated <span id="market-last-updated">daily</span></span>
   </div>
 </header>
 
@@ -478,6 +478,18 @@ export default async (req) => {
   loadData('mtg','7d');
   loadSignals();
 })();
+</script>
+<script>
+  // Render the "last updated" date client-side so it always reflects today
+  // (server-rendered dates were caching stale on the CDN).
+  document.addEventListener('DOMContentLoaded', function() {
+    var dateEl = document.getElementById('market-last-updated');
+    if (dateEl) {
+      dateEl.textContent = new Date().toLocaleDateString('en-AU', {
+        day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Australia/Sydney'
+      });
+    }
+  });
 </script>
 </body>
 </html>`;
