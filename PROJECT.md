@@ -262,9 +262,10 @@ Build in this exact order:
 ### Blog posts (262 live as of 21 May 2026)
 - [x] p001-p247: complete
 - [x] p258, p259, p261, p262: complete
+- [x] p494-p515: 22 tournament and competitive TCG posts added 27 June 2026
 - [ ] CONFIRMED MISSING: p248-p257 and p260 do not exist in the build -- verify if intentional or an error before attempting to create
 - [ ] Continue publishing at current cadence (target: 2-3 per week minimum)
-- [ ] Next sequential post: p263
+- [ ] Next sequential post: p516
 
 ### eBay store (ongoing operations)
 - Active: 25,441 listings, target to grow
