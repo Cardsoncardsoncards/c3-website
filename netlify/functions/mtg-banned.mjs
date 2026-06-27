@@ -270,6 +270,7 @@ export default async (req) => {
 <footer>
   <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/mtg">MTG Cards</a><a href="/cards/mtg/banned">MTG Banned</a><a href="/blog">Blog</a><a href="/tracker.html">Free Tracker</a></p>
   <p style="margin-top:8px;font-size:12px">Ban lists current as of 2026. All prices in AUD. &copy; 2026 Cards on Cards on Cards &middot; Affiliate links may earn a small commission.</p>
+  <p style="margin-top:6px;font-size:10px;opacity:.5">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
 </footer>
 </body>
 </html>`;
