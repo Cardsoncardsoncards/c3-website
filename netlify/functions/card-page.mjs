@@ -2,6 +2,8 @@
 // Serves dynamic MTG card pages at /cards/mtg/[slug]
 // Server-renders full HTML with all card data, price history, and interlinking
 
+import { NAV_CSS, navHtml } from './shared/nav.mjs';
+
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -382,28 +384,8 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Nav */
-    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}
-    .nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}
-    .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
-    .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}
-    .nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0;min-width:0}
-    .nav-links::-webkit-scrollbar{display:none}
-    .nav-link-item{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap;transition:all .2s}
-    .nav-link-item:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
-    .nl-vault{color:#C9A84C;border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06)}
-    .nl-mtg{color:#C9A84C;border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.08)}
-    .nl-compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
-    .nl-market{color:#4ADE80;border-color:rgba(74,222,128,.35)}
-    .nl-tools{color:#FB923C;border-color:rgba(251,146,60,.35)}
-    .nl-play{color:#F472B6;border-color:rgba(244,114,182,.35)}
-    .nl-blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
-    .nl-ebay{color:#60A5FA;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.05)}
-    .nav-search-wrap{flex:1;min-width:0;max-width:500px;display:flex;align-items:center}
-    .nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none}
-    .nav-search-input:focus{border-color:rgba(201,168,76,.45)}
-    .nav-search-input::placeholder{color:#9ba3c4}
-    .nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0}
+    /* Nav (shared hamburger nav -- single source of truth in shared/nav.mjs) */
+    ${NAV_CSS}
 
     /* Breadcrumb */
     .breadcrumb { padding: 12px 24px; font-size: 13px; color: var(--text2); font-family: sans-serif; }
@@ -640,25 +622,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo" title="Cards on Cards on Cards"><img src="/c3logo.png" alt="C3 - Cards on Cards on Cards"></a>
-    <div class="nav-search-wrap">
-      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
-      <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
-    </div>
-    <div class="nav-links">
-      <a href="/cards" class="nav-link-item nl-vault">Card Vault</a>
-      <a href="/cards/mtg" class="nav-link-item nl-mtg">MTG</a>
-      <a href="/compare" class="nav-link-item nl-compare">Compare</a>
-      <a href="/market" class="nav-link-item nl-market">Market</a>
-      <a href="/tools" class="nav-link-item nl-tools">Tools</a>
-      <a href="/play" class="nav-link-item nl-play">Play</a>
-      <a href="/blog" class="nav-link-item nl-blog">Blog</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link-item nl-ebay">Shop eBay &#8599;</a>
-    </div>
-  </div>
-</nav>
+${navHtml({ gameLabel: 'MTG', gameHref: '/cards/mtg' })}
 
 <div class="breadcrumb">
   <a href="/">Home</a> › <a href="/cards/mtg">MTG Cards</a> › <a href="/cards/mtg/sets/${setSlug}">${card.set_name}</a> › ${card.name}
@@ -1663,30 +1627,14 @@ async function renderBannedPage(slug) {
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}body{background:#0f1117;color:#e8eaf0;font-family:sans-serif;line-height:1.6}a{color:#f5a623;text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1100px;margin:0 auto;padding:0 24px}footer{background:#1a1d2e;border-top:1px solid #2d3254;padding:24px;text-align:center;color:#9ba3c4;font-size:13px;margin-top:48px}footer a{color:#9ba3c4;margin:0 10px}
-    nav{background:rgba(8,10,15,.97);border-bottom:1px solid #1e2235;padding:12px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(18px)}.nav-inner{display:flex;align-items:center;max-width:1400px;margin:0 auto;padding:0 24px;gap:10px}.nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover}.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}.nav-links::-webkit-scrollbar{display:none}.nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}.nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}.nav-search-wrap{flex:1;min-width:0;max-width:500px;display:flex}.nav-search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid #1e2235;border-radius:7px 0 0 7px;padding:6px 12px;font-size:12px;color:#e8eaf0;font-family:sans-serif;outline:none}.nav-search-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-left:none;border-radius:0 7px 7px 0;padding:6px 10px;color:#C9A84C;cursor:pointer;font-size:13px;flex-shrink:0}
+    ${NAV_CSS}
     .ban-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
     .fmt-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:40px}
-    @media(max-width:600px){.ban-grid{grid-template-columns:1fr}.nav-links{display:none}.fmt-overview{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.ban-grid{grid-template-columns:1fr}.fmt-overview{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
-<nav><div class="nav-inner">
-  <a href="/" class="nav-logo" style="text-decoration:none;flex-shrink:0"><img src="/c3logo.png" alt="C3"></a>
-  <div class="nav-search-wrap">
-    <input class="nav-search-input" type="text" id="nav-q" placeholder="Search cards..." autocomplete="off" onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
-    <button class="nav-search-btn" onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">&#128269;</button>
-  </div>
-  <div class="nav-links">
-    <a href="/cards" class="nav-link">Card Vault</a>
-    <a href="/cards/mtg" class="nav-link" style="color:#C9A84C;border-color:rgba(201,168,76,.5)">MTG</a>
-    <a href="/compare" class="nav-link">Compare</a>
-    <a href="/market" class="nav-link">Market</a>
-    <a href="/tools" class="nav-link">Tools</a>
-    <a href="/play" class="nav-link">Play</a>
-    <a href="/blog" class="nav-link">Blog</a>
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=${EPN}&mkevt=1" target="_blank" rel="noopener" class="nav-link">Shop eBay &#8599;</a>
-  </div>
-</div></nav>
+${navHtml({ gameLabel: 'MTG', gameHref: '/cards/mtg' })}
 <div class="wrap" style="padding-top:28px;padding-bottom:48px">
   <div style="font-size:12px;color:#9ba3c4;margin-bottom:12px"><a href="/" style="color:#9ba3c4">Home</a> &rsaquo; <a href="/cards" style="color:#9ba3c4">Card Vault</a> &rsaquo; <a href="/cards/mtg" style="color:#9ba3c4">MTG</a> &rsaquo; ${format ? `<a href="/cards/mtg/banned" style="color:#9ba3c4">Banned Cards</a> &rsaquo; ${format.label}` : 'Banned Cards'}</div>
   <h1 style="font-family:Cinzel,serif;font-size:clamp(22px,4vw,32px);margin-bottom:8px">MTG Banned Cards</h1>
