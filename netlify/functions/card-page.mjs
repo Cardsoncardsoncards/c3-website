@@ -124,13 +124,12 @@ function formatManaSymbols(manaCost) {
   });
 }
 
-function getSellVerdict(priceAud, high52w, low52w) {
-  if (!priceAud || !high52w || !low52w) return null;
-  const range = high52w - low52w;
-  if (range === 0) return null;
-  const position = (priceAud - low52w) / range;
-  if (position >= 0.85) return { label: 'Near 52-week high', advice: 'Potentially good time to sell', class: 'verdict-sell' };
-  if (position <= 0.20) return { label: 'Near 52-week low', advice: 'Consider holding or buying', class: 'verdict-buy' };
+// Buy/sell verdict comes precomputed from the mtg_signals table (buy_verdict /
+// sell_verdict are 'buy' / 'sell' / null). A row with neither set is mid-range.
+function getSignalVerdict(signals) {
+  if (!signals) return null;
+  if (signals.sell_verdict === 'sell') return { label: 'Near 52-week high', advice: 'Potentially good time to sell', class: 'verdict-sell' };
+  if (signals.buy_verdict === 'buy') return { label: 'Near 52-week low', advice: 'Consider holding or buying', class: 'verdict-buy' };
   return { label: 'Mid-range price', advice: 'Price is within normal range', class: 'verdict-neutral' };
 }
 
@@ -219,15 +218,15 @@ function esc(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings, fxRate = FX_FALLBACK }) {
+function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings, fxRate = FX_FALLBACK, signals = null }) {
   const legalities = formatLegalities(card.legalities);
   const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * fxRate : null);
   const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * fxRate : null;
   const priceAudEtched = card.price_usd_etched ? card.price_usd_etched * fxRate : null;
-  const latestSnap = snapshots[snapshots.length - 1];
-  const high52w = latestSnap?.price_52w_high_aud;
-  const low52w = latestSnap?.price_52w_low_aud;
-  const verdict = getSellVerdict(priceAud, high52w, low52w);
+  // 52-week high/low and buy/sell verdict come from the mtg_signals table.
+  const high52w = signals?.price_52w_high_aud != null ? parseFloat(signals.price_52w_high_aud) : null;
+  const low52w = signals?.price_52w_low_aud != null ? parseFloat(signals.price_52w_low_aud) : null;
+  const verdict = getSignalVerdict(signals);
   const edhrecLabel = getEdhrecLabel(card.edhrec_rank);
 
   // 7-day % change
@@ -1370,14 +1369,16 @@ export default async (req, context) => {
     const card = cards[0];
 
     // Parallel fetches for all supporting data
-    const [snapshots, relatedData, prevNextData, likeData, printingsData, fxData] = await Promise.allSettled([
+    const [snapshots, relatedData, prevNextData, likeData, printingsData, fxData, signalsData] = await Promise.allSettled([
       supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=90`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,collector_number&order=collector_number.asc`, false),
       supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}`, false),
       // Other printings -- same card name, different sets/variants. scryfall_id is unique per printing.
       supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=scryfall_id,slug,set_name,released_at,rarity,collector_number,image_uri_normal,image_uri_small,price_usd,price_aud,price_usd_foil&order=released_at.desc&limit=80`, false),
-      getFxRate()
+      getFxRate(),
+      // 52-week high/low and buy/sell verdict come from the precomputed mtg_signals table.
+      supabaseGet(`mtg_signals?scryfall_id=eq.${card.scryfall_id}&select=price_52w_low_aud,price_52w_high_aud,buy_verdict,sell_verdict&limit=1`, false)
     ]);
 
     const snapshotData = snapshots.status === 'fulfilled' ? snapshots.value : [];
@@ -1386,6 +1387,7 @@ export default async (req, context) => {
     const likeCount = likeData.status === 'fulfilled' ? (likeData.value[0]?.total_likes || 0) : 0;
     const otherPrintings = printingsData.status === 'fulfilled' ? printingsData.value : [];
     const fxRate = fxData.status === 'fulfilled' ? fxData.value : FX_FALLBACK;
+    const signals = signalsData.status === 'fulfilled' ? (signalsData.value[0] || null) : null;
 
     // Split related cards: top 5 by price + 5 random (no duplicates)
     const topFive = allSetCards.slice(0, 5);
@@ -1419,7 +1421,7 @@ export default async (req, context) => {
       console.error('eBay fetch error:', e.message);
     }
 
-    const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings, fxRate });
+    const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings, fxRate, signals });
 
     return new Response(html, {
       status: 200,
