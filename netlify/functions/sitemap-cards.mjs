@@ -18,28 +18,38 @@ async function fetchCardSlugs(offset = 0) {
     + `?select=slug,price_usd,updated_at`
     + `&price_usd=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
-    + `&order=price_usd.desc`
+    + `&order=price_usd.desc.nullslast`
     + `&limit=${PAGE_SIZE}`
     + `&offset=${offset}`;
 
-  const res = await fetch(url, {
-    headers: {
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      'Prefer': 'return=representation'
-    }
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=representation'
+      }
+    });
+    clearTimeout(timer);
 
-  if (!res.ok) {
-    const body = await res.text();
-    console.error('[sitemap-cards] Supabase error:', res.status, body.slice(0, 300));
+    if (!res.ok) {
+      const body = await res.text();
+      console.error('[sitemap-cards] Supabase error:', res.status, body.slice(0, 300));
+      return [];
+    }
+
+    const data = await res.json();
+    const count = Array.isArray(data) ? data.length : 0;
+    console.log(`[sitemap-cards] offset ${offset} returned ${count} rows`);
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    clearTimeout(timer);
+    console.error('[sitemap-cards] fetch error:', e.message);
     return [];
   }
-
-  const data = await res.json();
-  const count = Array.isArray(data) ? data.length : 0;
-  console.log(`[sitemap-cards] offset ${offset} returned ${count} rows`);
-  return Array.isArray(data) ? data : [];
 }
 
 export default async (req) => {
@@ -58,33 +68,15 @@ export default async (req) => {
   }
 
   try {
-    // Step 1: get exact count — no Range headers, just Prefer: count=exact
-    const countRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/mtg_cards?select=id&price_usd=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
-      {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'count=exact'
-        }
-      }
-    );
-    const contentRange = countRes.headers.get('content-range');
-    console.log('[sitemap-cards] content-range:', contentRange);
-
-    // content-range format: "0-0/24040" — extract total after the slash
-    const totalCount = (contentRange && contentRange.includes('/'))
-      ? parseInt(contentRange.split('/')[1], 10)
-      : 25000; // safe fallback slightly above actual count
-
-    console.log(`[sitemap-cards] total cards to fetch: ${totalCount}`);
-
-    // Step 2: fetch pages sequentially — avoids hammering Supabase in parallel
+    // Keyset pagination: fetch pages until a short batch signals the end.
+    // No count query (count=exact forces a full sequential scan and 504s under anon).
     const allCards = [];
-    for (let offset = 0; offset < totalCount; offset += PAGE_SIZE) {
+    let offset = 0;
+    while (true) {
       const batch = await fetchCardSlugs(offset);
       allCards.push(...batch);
-      if (batch.length < PAGE_SIZE) break; // reached last page early
+      if (batch.length < PAGE_SIZE) break; // reached last page
+      offset += PAGE_SIZE;
     }
 
     console.log(`[sitemap-cards] fetched ${allCards.length} total cards`);

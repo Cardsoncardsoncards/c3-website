@@ -182,6 +182,7 @@ Work through Critical first, then High, then Medium. Do not start Phase 4 featur
 - [ ] A-Z filtering: not working on non-MTG hubs -- investigate data-letter attribute population on set tiles
 - [ ] Extended game set page 404s: audit all extended game set-page path registrations for route conflicts
 - [ ] Sitemap generation: mtg_cards fetch returns 500 during Netlify build -- generate-sitemap-cards.mjs timeout fix needed
+- [x] Sitemap functions 504/timeout in GSC: removed count=exact (full-scan) and added .nullslast to anon-role queries in sitemap-cards and sitemap-onepiece; other 6 game sitemaps already fixed (28 June 2026)
 
 ### High priority (affects revenue or data integrity)
 - [ ] sync-sales-history: trigger manually and verify card_sales_history receives rows -- has never run successfully

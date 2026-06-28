@@ -8,7 +8,6 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 const PRICE_THRESHOLD   = 1.0;
 const PAGE_SIZE         = 1000;
-const MAX_CARDS         = 10000;
 
 async function supabaseFetch(url, extraHeaders = {}) {
   const controller = new AbortController();
@@ -35,7 +34,7 @@ async function fetchSlugs(offset = 0) {
     + `?select=slug,market_price,updated_at`
     + `&market_price=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
-    + `&order=market_price.desc`
+    + `&order=market_price.desc.nullslast`
     + `&limit=${PAGE_SIZE}`
     + `&offset=${offset}`;
   try {
@@ -61,23 +60,15 @@ export default async (req) => {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return empty('Error: missing env vars');
 
   try {
-    const countRes = await supabaseFetch(
-      `${SUPABASE_URL}/rest/v1/onepiece_cards?select=id&market_price=gte.${PRICE_THRESHOLD}&slug=not.is.null&limit=1`,
-      { 'Prefer': 'count=exact' }
-    );
-    if (!countRes.ok) return empty('onepiece sitemap: count query failed');
-
-    const contentRange = countRes.headers.get('content-range');
-    const totalCount = (contentRange && contentRange.includes('/'))
-      ? parseInt(contentRange.split('/')[1], 10) : 0;
-
-    if (totalCount === 0) return empty('onepiece card pages: pending sync or no priced cards');
-
+    // Keyset pagination: fetch pages until a short batch signals the end.
+    // No count query (count=exact forces a full scan and 504s under anon).
     const allCards = [];
-    for (let offset = 0; offset < Math.min(totalCount, MAX_CARDS); offset += PAGE_SIZE) {
+    let offset = 0;
+    while (true) {
       const batch = await fetchSlugs(offset);
       allCards.push(...batch);
       if (batch.length < PAGE_SIZE) break;
+      offset += PAGE_SIZE;
     }
 
     const today = new Date().toISOString().slice(0, 10);
