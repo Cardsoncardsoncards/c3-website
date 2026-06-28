@@ -56,6 +56,6 @@ Do not expect liquidity. The market is small and selling at your target price ta
 
 ## What to Read Next
 
-- Browse Grand Archive cards at [/cards/grandarchive](/cards/grandarchive)
+- Browse Grand Archive cards at [C3 Grand Archive card prices](/cards/grandarchive)
 - Read the beginner's guide at [/blog/grand-archive-tcg-beginners-guide-australia](/blog/grand-archive-tcg-beginners-guide-australia)
 - Compare across games at [/compare](/compare)

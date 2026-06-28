@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-MTG Sealed Deck is one of the most equitable formats in the game. Everyone opens 6 booster packs, builds a 40-card deck from those 84 cards plus basic lands, and plays with what they have. No existing collection. No pre-built decks. Random sealed pools that every player builds from scratch. See current prices at [/cards/mtg](/cards/mtg).
+MTG Sealed Deck is one of the most equitable formats in the game. Everyone opens 6 booster packs, builds a 40-card deck from those 84 cards plus basic lands, and plays with what they have. No existing collection. No pre-built decks. Random sealed pools that every player builds from scratch. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -110,17 +110,17 @@ After a Sealed event, players keep their pools. This is part of the appeal: ever
 
 Draft requires all players to pass packs simultaneously, which needs synchronised attention and more rules knowledge. Sealed gives players 30 minutes to build at their own pace with no time pressure during deckbuilding. For groups with mixed experience levels, Sealed is significantly more accessible.
 
-Check the [C3 Release Calendar](/market) for upcoming Sealed events at local game stores in Australia if you want a facilitated experience before running your own.
+Check the [C3 Release Calendar](/calendar) for upcoming Sealed events at local game stores in Australia if you want a facilitated experience before running your own.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

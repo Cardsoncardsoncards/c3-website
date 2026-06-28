@@ -64,6 +64,6 @@ MTG has a reputation for complexity that deters potential players before they st
 
 ## What to Read Next
 
-- Browse MTG cards and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG cards and prices at [C3 MTG card prices](/cards/mtg)
 - Find your Commander style at [/quizzes/mtg-commander](/quizzes/mtg-commander)
 - Find your MTG colour at [/quizzes/mtg-colour](/quizzes/mtg-colour)

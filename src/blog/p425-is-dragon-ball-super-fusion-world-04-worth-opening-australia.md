@@ -12,19 +12,19 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Dragon Ball Super Fusion World 04 Perfect Combination covers the Tournament of Power arc from Dragon Ball Super, introducing Universe survival fighters and Ultra Instinct Goku as the marquee power escalation. As the most recent Fusion World set in the Australian market, it represents the current competitive environment. Check current AUD singles prices at [/cards/dragonball](/cards/dragonball) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
+Dragon Ball Super Fusion World 04 Perfect Combination covers the Tournament of Power arc from Dragon Ball Super, introducing Universe survival fighters and Ultra Instinct Goku as the marquee power escalation. As the most recent Fusion World set in the Australian market, it represents the current competitive environment. Check current AUD singles prices at [C3 Dragon Ball card prices](/cards/dragonball) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
 
 ## What Is in Fusion World 04 Perfect Combination?
 
 Fusion World 04 draws on the Tournament of Power where fighters from eight Universes compete for survival, with Universe 7 (the main cast) against the combined power of Universe 11's Jiren. Ultra Instinct Goku and Jiren receive their highest-power card treatments to date in the Fusion World system.
 
-**Packs per box:** Standard booster box structure for this game. Check the set page at [/cards/dragonball](/cards/dragonball) for confirmed pack and box counts.
+**Packs per box:** Standard booster box structure for this game. Check the set page at [C3 Dragon Ball card prices](/cards/dragonball) for confirmed pack and box counts.
 
 ## Top Cards to Know
 
-**Ultra Instinct Goku Leader alternate** and **Jiren Leader** are headline cards. Tournament of Power arc fighters from multiple Universes including Toppo, Dyspo, and the Universe 7 cast receive new competitive support. Active AU market pricing, check [/cards/dragonball](/cards/dragonball) for current values.
+**Ultra Instinct Goku Leader alternate** and **Jiren Leader** are headline cards. Tournament of Power arc fighters from multiple Universes including Toppo, Dyspo, and the Universe 7 cast receive new competitive support. Active AU market pricing, check [C3 Dragon Ball card prices](/cards/dragonball) for current values.
 
-For all current AUD prices on Fusion World 04 Perfect Combination singles, check [/cards/dragonball](/cards/dragonball). Prices update from live eBay AU market data.
+For all current AUD prices on Fusion World 04 Perfect Combination singles, check [C3 Dragon Ball card prices](/cards/dragonball). Prices update from live eBay AU market data.
 
 ## Pull Rates and What to Expect
 
@@ -32,7 +32,7 @@ Pull rates follow the standard structure for this game and release type. The cri
 
 From any booster box, expect a mix of commons, uncommons, and rares. The premium rare-tier cards are where box value concentrates. Most boxes return 60 to 80 percent of their retail cost in singles value on average. Hitting the top-tier cards is the exception, not the expectation, in any single box.
 
-Use the [EV Calculator at /tools](/tools) with current AUD prices from [/cards/dragonball](/cards/dragonball) to get an accurate verdict for your specific purchase price before you open.
+Use the [EV Calculator at /tools](/tools) with current AUD prices from [C3 Dragon Ball card prices](/cards/dragonball) to get an accurate verdict for your specific purchase price before you open.
 
 ## Should You Open or Buy Singles?
 
@@ -56,10 +56,10 @@ The [C3 Dragon Ball Super hub at /cards/dragonball](/cards/dragonball) aggregate
 
 ## The C3 Take
 
-The question of whether to open Fusion World 04 Perfect Combination or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [/cards/dragonball](/cards/dragonball) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
+The question of whether to open Fusion World 04 Perfect Combination or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [C3 Dragon Ball card prices](/cards/dragonball) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
 
 ## What to Read Next
 
-- Browse Dragon Ball Super card prices in AUD at [/cards/dragonball](/cards/dragonball)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse Dragon Ball Super card prices in AUD at [C3 Dragon Ball card prices](/cards/dragonball)
+- Calculate booster box expected value at [C3 tools](/tools)
 - Find your Dragon Ball Super play style at [/quizzes/dragonball-warrior](/quizzes/dragonball-warrior)

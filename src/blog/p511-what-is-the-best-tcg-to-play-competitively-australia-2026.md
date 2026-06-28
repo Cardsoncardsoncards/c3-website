@@ -113,8 +113,8 @@ Yu-Gi-Oh via the State Championship to Oceanic WCQ pathway and Pokemon via Regio
 
 ## Related Posts
 
-- [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p509-how-to-prepare-for-your-first-tcg-tournament-australia)
-- [Budget Competitive Yu-Gi-Oh Deck Australia 2026](/blog/p205-budget-competitive-yugioh-deck-australia)
-- [Best TCG to Start in Australia 2026: Complete Comparison](/blog/p430-best-tcg-to-start-in-australia-2026-complete-comparison)
-- [TCG Flipping Australia: Is It Worth It in 2026?](/blog/p196-tcg-flipping-australia-worth-it-2026)
+- [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-for-your-first-tcg-tournament-australia)
+- [Budget Competitive Yu-Gi-Oh Deck Australia 2026](/blog/budget-competitive-yugioh-deck-australia)
+- [Best TCG to Start in Australia 2026: Complete Comparison](/blog/best-tcg-to-start-in-australia-2026-complete-comparison)
+- [TCG Flipping Australia: Is It Worth It in 2026?](/blog/tcg-flipping-australia-worth-it-2026)

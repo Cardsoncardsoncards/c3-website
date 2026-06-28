@@ -20,6 +20,8 @@ Ravensburger designed the Lorcana rarity system with a distinct premium tier cal
 
 Enchanted Rares are the rarest standard-packable cards in Lorcana. Pull rates are approximately one per two to four booster boxes depending on the set, with the specific card within the Enchanted pool being random.
 
+Search [Lorcana booster boxes](https://www.amazon.com.au/s?k=lorcana+booster+box&tag=blasdigital-22) on Amazon AU
+
 **Elsa, Spirit of Winter (Enchanted)** from The First Chapter has consistently been among the most valuable Enchanted rares since the game launched. Elsa's character popularity drives collector demand beyond what the card's game statistics would suggest.
 
 **Mickey Mouse variants** as Enchanted cards from various sets hold strong value because of Mickey's position as Disney's most iconic character. Any Mickey Enchanted from The First Chapter or Rise of the Floodborn commands attention.
@@ -42,7 +44,7 @@ Legendary cards with both competitive value in current deck formats and strong c
 
 **Into the Inklands (Set 3)** and subsequent sets have expanded the character roster and introduced new gameplay mechanics. Current set Enchanted Rares are most relevant for active players and recent collectors.
 
-**The Wilds of the Unknown (current)** is the active set as of mid-2026. Its Enchanted pool is still being discovered by the Australian market. Check [/cards/lorcana](/cards/lorcana) for current pricing as the market establishes itself.
+**The Wilds of the Unknown (current)** is the active set as of mid-2026. Its Enchanted pool is still being discovered by the Australian market. Check [C3 Lorcana card prices](/cards/lorcana) for current pricing as the market establishes itself.
 
 ## Cold Foil and Special Treatments
 
@@ -60,6 +62,6 @@ Lorcana's value proposition for Australian collectors is clear: it is a premium 
 
 ## What to Read Next
 
-- Check current Lorcana singles prices at [/cards/lorcana](/cards/lorcana)
+- Check current Lorcana singles prices at [C3 Lorcana card prices](/cards/lorcana)
 - Find out which Lorcana character you are at [/quizzes/lorcana-character](/quizzes/lorcana-character)
-- Compare Lorcana and Pokemon for collectors at [/blog/lorcana-vs-pokemon-australia](/blog/p028-lorcana-vs-pokemon-australia)
+- Compare Lorcana and Pokemon for collectors at [/blog/lorcana-vs-pokemon-australia](/blog/lorcana-vs-pokemon-australia)

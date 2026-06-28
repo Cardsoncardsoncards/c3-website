@@ -57,6 +57,6 @@ If you have MetaZoo cards, keep the first edition holofoils of iconic cryptids a
 
 ## What to Read Next
 
-- Browse MetaZoo cards at [/cards/metazoo](/cards/metazoo)
+- Browse MetaZoo cards at [C3 MetaZoo card prices](/cards/metazoo)
 - Read the MetaZoo guide at [/blog/metazoo-tcg-beginners-guide-australia](/blog/metazoo-tcg-beginners-guide-australia)
 - Find an active game at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

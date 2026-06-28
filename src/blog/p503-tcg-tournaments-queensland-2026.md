@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
+[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)
 
 Queensland hosts more major TCG events in July 2026 than any other Australian state. The Brisbane Convention and Exhibition Centre is the venue for four separate Bandai game Regionals on back-to-back days on 18 and 19 July, and Magic Spotlight: The Hobbit follows at the same venue in late August. This guide covers every confirmed Queensland TCG event for 2026.
 
@@ -28,7 +28,7 @@ Magic Spotlight: The Hobbit follows in late August. The combination of events ma
 Brisbane Convention and Exhibition Centre, Rooms M3 and M4, South Brisbane QLD. Constructed format. Part of the TAK Games Oceania Regional series.
 Register: [events.humanitix.com/gundam-card-game-brisbane-regional-championship-2026-oceania](https://events.humanitix.com/gundam-card-game-brisbane-regional-championship-2026-oceania)
 Card prices: [C3 Gundam hub](/cards/gundam)
-Full guide: [Gundam Brisbane Regional 2026](/blog/p496-gundam-card-game-brisbane-regional-2026)
+Full guide: [Gundam Brisbane Regional 2026](/blog/gundam-card-game-brisbane-regional-2026)
 
 ## Dragon Ball Super Queensland 2026
 
@@ -41,7 +41,7 @@ Brisbane Convention and Exhibition Centre, Rooms M3 and M4, South Brisbane QLD. 
 Register: [events.humanitix.com/dragon-ball-super-card-game-fusion-world-brisbane-regional-championship-2026-oceania-c2n2bn4m](https://events.humanitix.com/dragon-ball-super-card-game-fusion-world-brisbane-regional-championship-2026-oceania-c2n2bn4m)
 
 Card prices: [C3 Dragon Ball hub](/cards/dragonball)
-Full guide: [Dragon Ball Super Brisbane Regional 2026](/blog/p497-dragon-ball-super-brisbane-regional-2026)
+Full guide: [Dragon Ball Super Brisbane Regional 2026](/blog/dragon-ball-super-brisbane-regional-2026)
 
 ## Digimon Card Game Queensland 2026
 
@@ -77,14 +77,14 @@ Card prices: [C3 Sorcery hub](/cards/sorcery)
 Good Games Brisbane, Shop 3/74 Little Edward Street, Spring Hill QLD. AU$65 entry. Sealed format. Early access to Riftbound Vendetta before the 31 July wide release.
 Register: [locator.riftbound.uvsgames.com/events/511380](https://locator.riftbound.uvsgames.com/events/511380)
 Card prices: [C3 Riftbound hub](/cards/riftbound)
-Full guide: [Riftbound Vendetta Prerelease Brisbane 2026](/blog/p498-riftbound-vendetta-prerelease-guide-2026-australia)
+Full guide: [Riftbound Vendetta Prerelease Brisbane 2026](/blog/riftbound-vendetta-prerelease-guide-2026-australia)
 
 ## Magic: The Gathering Queensland 2026
 
 **28 to 30 August 2026 Magic Spotlight: The Hobbit Brisbane**
 Brisbane Convention and Exhibition Centre, Grey Street, South Brisbane QLD. Modern format main event. Pro Tour invitations for top finishers. Full side event programme across three days. Organised by Let's Play Games and Wizards of the Coast.
 Card prices: [C3 MTG hub](/cards/mtg)
-Full guide: [Magic Spotlight: The Hobbit Brisbane 2026](/blog/p499-magic-spotlight-the-hobbit-brisbane-2026)
+Full guide: [Magic Spotlight: The Hobbit Brisbane 2026](/blog/magic-spotlight-the-hobbit-brisbane-2026)
 
 This is the most significant Magic event to be held in Queensland and one of the largest in Australia's history. Modern format with Pro Tour invitations means the competitive stakes are the highest of any Magic event in QLD for years.
 
@@ -129,12 +129,12 @@ Good Games Brisbane and Vault Games Brisbane City post their weekly schedules on
 Check [C3](/cards) for current AUD prices first. Good Games Brisbane and Vault Games Brisbane City stock competitive singles for most games. eBay AU is the most liquid secondary market for harder-to-find singles.
 
 **Where can I find an updated list of all Australian TCG tournaments in 2026?**
-The [C3 upcoming TCG tournaments Australia 2026 guide](/blog/p500-upcoming-tcg-tournaments-australia-2026) covers all states and is updated as new events are confirmed by official organisers.
+The [C3 upcoming TCG tournaments Australia 2026 guide](/blog/upcoming-tcg-tournaments-australia-2026) covers all states and is updated as new events are confirmed by official organisers.
 
 ## Related Posts
 
-- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/p500-upcoming-tcg-tournaments-australia-2026)
-- [TCG Tournaments Victoria 2026](/blog/p501-tcg-tournaments-victoria-2026)
-- [TCG Tournaments NSW 2026](/blog/p502-tcg-tournaments-nsw-2026)
-- [Dragon Ball Super Brisbane Regional 2026](/blog/p497-dragon-ball-super-brisbane-regional-2026)
-- [Magic Spotlight: The Hobbit Brisbane 2026](/blog/p499-magic-spotlight-the-hobbit-brisbane-2026)
+- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/upcoming-tcg-tournaments-australia-2026)
+- [TCG Tournaments Victoria 2026](/blog/tcg-tournaments-victoria-2026)
+- [TCG Tournaments NSW 2026](/blog/tcg-tournaments-nsw-2026)
+- [Dragon Ball Super Brisbane Regional 2026](/blog/dragon-ball-super-brisbane-regional-2026)
+- [Magic Spotlight: The Hobbit Brisbane 2026](/blog/magic-spotlight-the-hobbit-brisbane-2026)

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Digimon Card Game Parallel Rare and Secret Rare cards are the premium selling tier in Australia. The Digimon secondary market is smaller than Pokemon or MTG but active among dedicated players. Check current AUD prices at [/cards/digimon](/cards/digimon) and compare against eBay AU sold listings before pricing any valuable singles.
+Digimon Card Game Parallel Rare and Secret Rare cards are the premium selling tier in Australia. The Digimon secondary market is smaller than Pokemon or MTG but active among dedicated players. Check current AUD prices at [C3 Digimon card prices](/cards/digimon) and compare against eBay AU sold listings before pricing any valuable singles.
 
 ## eBay vs Buylist vs Trade: The Three Options
 
@@ -24,7 +24,7 @@ Digimon Card Game Parallel Rare and Secret Rare cards are the premium selling ti
 
 ## How to Price Your Cards
 
-Check current AUD prices at [/cards/digimon](/cards/digimon) before listing anything. Then cross-reference with eBay AU sold listings (filter by Sold Items) to confirm what Australian buyers are actually paying. Never price from asking prices, which can be wildly optimistic. Sold prices are reality.
+Check current AUD prices at [C3 Digimon card prices](/cards/digimon) before listing anything. Then cross-reference with eBay AU sold listings (filter by Sold Items) to confirm what Australian buyers are actually paying. Never price from asking prices, which can be wildly optimistic. Sold prices are reality.
 
 Price at or slightly below the lowest comparable sold listing for the same condition to move cards quickly. Pricing at the top of the range means waiting longer for a buyer. Time in your binder is lost opportunity.
 
@@ -42,7 +42,7 @@ From a card selling at AU$50 on eBay AU you will pay approximately:
 - Envelope, sleeve, cardboard: AU$0.50
 - Tracked postage: AU$5.00 to AU$8.00
 
-After fees, a AU$50 card nets approximately AU$33 to AU$36 before tax considerations. See the full breakdown at the [real cost of selling cards guide at /blog/p178-real-cost-selling-cards-ebay-australia](/blog/p178-real-cost-selling-cards-ebay-australia).
+After fees, a AU$50 card nets approximately AU$33 to AU$36 before tax considerations. See the full breakdown at the [real cost of selling cards guide at /blog/p178-real-cost-selling-cards-ebay-australia](/blog/real-cost-selling-cards-ebay-australia).
 
 ## Digimon-Specific Selling Notes
 
@@ -63,10 +63,10 @@ Card values shift with tournament results, new set releases, and ban list announ
 
 ## The C3 Take
 
-The Australian Digimon singles market is active enough to sell into profitably if you price accurately and move quickly. The biggest mistake sellers make is pricing from memory or from asking prices rather than current sold data. Check [/cards/digimon](/cards/digimon) before every listing. Price competitively. Move volume rather than holding out for theoretical maximum prices that the market may not support.
+The Australian Digimon singles market is active enough to sell into profitably if you price accurately and move quickly. The biggest mistake sellers make is pricing from memory or from asking prices rather than current sold data. Check [C3 Digimon card prices](/cards/digimon) before every listing. Price competitively. Move volume rather than holding out for theoretical maximum prices that the market may not support.
 
 ## What to Read Next
 
-- Check current Digimon card prices at [/cards/digimon](/cards/digimon)
+- Check current Digimon card prices at [C3 Digimon card prices](/cards/digimon)
 - Decide eBay or buylist at [/quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist)
-- See the real cost of selling cards at [/blog/p178-real-cost-selling-cards-ebay-australia](/blog/p178-real-cost-selling-cards-ebay-australia)
+- See the real cost of selling cards at [/blog/p178-real-cost-selling-cards-ebay-australia](/blog/real-cost-selling-cards-ebay-australia)

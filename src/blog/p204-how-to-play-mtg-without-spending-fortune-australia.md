@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-MTG has an expensive reputation. At the high end, competitive Modern and Legacy decks cost thousands. But casual MTG. where most players actually play. has genuinely accessible price points if you choose your format wisely. See current prices at [/cards/mtg](/cards/mtg).
+MTG has an expensive reputation. At the high end, competitive Modern and Legacy decks cost thousands. But casual MTG. where most players actually play. has genuinely accessible price points if you choose your format wisely. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -120,17 +120,17 @@ Every local game store card night has players willing to trade. Trading efficien
 
 A beginner who spends 6 months actively trading at their local game store can assemble multiple functional decks without spending significantly more than their initial entry cost.
 
-Check the [C3 Release Calendar](/market) for upcoming MTG events at stores near you. Building a network of local players is as valuable for trading as it is for gameplay.
+Check the [C3 Release Calendar](/calendar) for upcoming MTG events at stores near you. Building a network of local players is as valuable for trading as it is for gameplay.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

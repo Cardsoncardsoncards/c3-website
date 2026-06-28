@@ -77,5 +77,5 @@ Unleashed is where Riftbound is happening right now. The three new mechanics (XP
 ## What to Read Next
 
 - Browse Unleashed singles and live AUD prices at [/cards/riftbound/sets/unleashed](/cards/riftbound/sets/unleashed)
-- See current AU price movers at [/market](/market)
-- Track your Riftbound collection across all sets at [/tracker](/tracker)
+- See current AU price movers at [C3 Market Insights](/market)
+- Track your Riftbound collection across all sets at [C3 Collection Tracker](/tracker)

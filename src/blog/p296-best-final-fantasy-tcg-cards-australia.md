@@ -54,6 +54,6 @@ For collectors, target Crystal Rares of your favourite Final Fantasy game's char
 
 ## What to Read Next
 
-- Browse Final Fantasy TCG cards at [/cards/finalfantasy](/cards/finalfantasy)
+- Browse Final Fantasy TCG cards at [C3 Final Fantasy TCG card prices](/cards/finalfantasy)
 - Read the beginner's guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/final-fantasy-tcg-beginners-guide-australia)
 - Compare card values at [/compare](/compare)

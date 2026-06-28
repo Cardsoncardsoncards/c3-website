@@ -65,6 +65,6 @@ Star Wars Unlimited has built a strong Australian competitive scene faster than 
 
 ## What to Read Next
 
-- Check current Star Wars Unlimited singles prices at [/cards/starwars](/cards/starwars)
-- Read the Star Wars Unlimited beginners guide at [/blog/star-wars-unlimited-beginners-guide-australia](/blog/p090-star-wars-unlimited-beginners-guide-australia)
+- Check current Star Wars Unlimited singles prices at [C3 Star Wars Unlimited card prices](/cards/starwars)
+- Read the Star Wars Unlimited beginners guide at [/blog/star-wars-unlimited-beginners-guide-australia](/blog/star-wars-unlimited-beginners-guide-australia)
 - Browse SWU on eBay AU at [this search](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dstar+wars+unlimited+singles&_sacat=183454)

@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
+[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)
 
 New South Wales hosts some of the largest TCG events in Australia, with Sydney's Hurstville and Bankstown areas in particular serving as major event hubs for Bandai and ANZ Magic events throughout 2026. This guide lists every confirmed NSW TCG tournament for 2026 with venue, format, and registration links.
 
@@ -25,7 +25,7 @@ Card prices: [C3 Yu-Gi-Oh hub](/cards/yugioh)
 **6 June 2026 NSW State Championship 2026 (COMPLETED)**
 Advanced Constructed format. Top 16 finishers earned invitations to WCQ Continentals. Results available at yugioh-card.com.
 
-For the pathway from NSW States to the Oceanic WCQ, see the [full Yu-Gi-Oh WCQ season guide](/blog/p492-yugioh-wcq-australia-2026).
+For the pathway from NSW States to the Oceanic WCQ, see the [full Yu-Gi-Oh WCQ season guide](/blog/yugioh-wcq-australia-2026).
 
 ## Magic: The Gathering NSW 2026
 
@@ -129,12 +129,12 @@ Good Games stores across NSW post their weekly event schedules at goodgames.com.
 Check [C3](/cards) for current AUD prices first. Good Games stores across NSW stock competitive singles for most games. eBay AU is the most liquid secondary market. Local game stores in Sydney CBD and Parramatta areas also carry competitive stock for major games.
 
 **Is there an ongoing list of NSW TCG events that gets updated?**
-The [C3 upcoming TCG tournaments Australia 2026 guide](/blog/p500-upcoming-tcg-tournaments-australia-2026) is the most comprehensive current list and is updated as new events are confirmed by official organisers.
+The [C3 upcoming TCG tournaments Australia 2026 guide](/blog/upcoming-tcg-tournaments-australia-2026) is the most comprehensive current list and is updated as new events are confirmed by official organisers.
 
 ## Related Posts
 
-- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/p500-upcoming-tcg-tournaments-australia-2026)
-- [TCG Tournaments Victoria 2026](/blog/p501-tcg-tournaments-victoria-2026)
-- [TCG Tournaments Queensland 2026](/blog/p503-tcg-tournaments-queensland-2026)
-- [Bushiroad Summer Fest Sydney 2026](/blog/p504-bushiroad-summer-fest-sydney-2026-australia)
-- [Yu-Gi-Oh WCQ Season Australia 2026](/blog/p492-yugioh-wcq-australia-2026)
+- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/upcoming-tcg-tournaments-australia-2026)
+- [TCG Tournaments Victoria 2026](/blog/tcg-tournaments-victoria-2026)
+- [TCG Tournaments Queensland 2026](/blog/tcg-tournaments-queensland-2026)
+- [Bushiroad Summer Fest Sydney 2026](/blog/bushiroad-summer-fest-sydney-2026-australia)
+- [Yu-Gi-Oh WCQ Season Australia 2026](/blog/yugioh-wcq-australia-2026)

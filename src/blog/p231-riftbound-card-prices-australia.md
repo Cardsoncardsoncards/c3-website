@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-The Australian Riftbound singles market is in its formation stage. Prices have not stabilised, which means informed buyers can move early on cards that will appreciate, and sellers can capture premiums before supply catches up with demand. Here is what you need to know right now. See current prices at [/cards/riftbound](/cards/riftbound).
+The Australian Riftbound singles market is in its formation stage. Prices have not stabilised, which means informed buyers can move early on cards that will appreciate, and sellers can capture premiums before supply catches up with demand. Here is what you need to know right now. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -67,13 +67,13 @@ Prices are approximate and based on current market data. Not financial advice. R
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

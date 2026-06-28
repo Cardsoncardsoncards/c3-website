@@ -66,6 +66,6 @@ If you are an MTG player who wants something with comparable depth and a complet
 
 ## What to Read Next
 
-- Browse Force of Will cards at [/cards/forceofwill](/cards/forceofwill)
+- Browse Force of Will cards at [C3 Force of Will card prices](/cards/forceofwill)
 - Compare all your options in one place at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Use our tools to track your collection at [/tools](/tools)
+- Use our tools to track your collection at [C3 tools](/tools)

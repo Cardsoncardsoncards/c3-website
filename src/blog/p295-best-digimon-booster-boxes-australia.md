@@ -54,6 +54,6 @@ The dual collector and competitive demand structure means good Digimon cards hol
 
 ## What to Read Next
 
-- Browse Digimon cards at [/cards/digimon](/cards/digimon)
+- Browse Digimon cards at [C3 Digimon card prices](/cards/digimon)
 - Read the Digimon beginner's guide at [/blog/digimon-card-game-australia-beginners-guide](/blog/digimon-card-game-australia-beginners-guide)
-- Use the EV Calculator at [/tools](/tools)
+- Use the EV Calculator at [C3 tools](/tools)

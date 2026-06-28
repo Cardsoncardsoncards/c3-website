@@ -101,13 +101,13 @@ For returning players who played in an earlier era, the game has changed signifi
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/yugioh](/cards/yugioh) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Yu-Gi-Oh card prices](/cards/yugioh) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Yu-Gi-Oh card prices at [/cards/yugioh](/cards/yugioh)
+- Browse Yu-Gi-Oh card prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
 - Find your Yu-Gi-Oh deck type at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

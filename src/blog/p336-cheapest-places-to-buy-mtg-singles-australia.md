@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For MTG singles in Australia, eBay AU and specialist online stores consistently offer the most competitive prices. For Standard singles, prices are usually close to global benchmarks. For older formats like Modern, Legacy, and Commander, the Australian market is deep enough that singles are readily available at competitive AUD prices. Always benchmark against [/cards/mtg](/cards/mtg) before buying anywhere.
+For MTG singles in Australia, eBay AU and specialist online stores consistently offer the most competitive prices. For Standard singles, prices are usually close to global benchmarks. For older formats like Modern, Legacy, and Commander, the Australian market is deep enough that singles are readily available at competitive AUD prices. Always benchmark against [C3 MTG card prices](/cards/mtg) before buying anywhere.
 
 ## eBay AU: The Largest Marketplace
 
@@ -77,10 +77,10 @@ If you are building multiple Commander decks or upgrading a collection across se
 
 ## The C3 Take
 
-The MTG singles market in Australia is mature enough that you should never need to overpay. The key habit is benchmarking: check [/cards/mtg](/cards/mtg) before buying anything above AU$5. The five seconds it takes to check current market price is the single most valuable habit for any Australian MTG buyer. After benchmarking, eBay AU sold listings confirm what the Australian market is actually paying. If a local store or community seller is within 10 to 15% of eBay sold prices, the convenience of buying locally is often worth the small premium. If the gap is larger than that, eBay is the right call.
+The MTG singles market in Australia is mature enough that you should never need to overpay. The key habit is benchmarking: check [C3 MTG card prices](/cards/mtg) before buying anything above AU$5. The five seconds it takes to check current market price is the single most valuable habit for any Australian MTG buyer. After benchmarking, eBay AU sold listings confirm what the Australian market is actually paying. If a local store or community seller is within 10 to 15% of eBay sold prices, the convenience of buying locally is often worth the small premium. If the gap is larger than that, eBay is the right call.
 
 ## What to Read Next
 
-- Check current MTG prices before buying at [/cards/mtg](/cards/mtg)
-- Compare singles cost to opening product at [/tools](/tools)
-- Read about the most valuable MTG cards in Australia at [/blog/most-valuable-mtg-cards-australia-2026](/blog/p333-most-valuable-mtg-cards-australia-2026)
+- Check current MTG prices before buying at [C3 MTG card prices](/cards/mtg)
+- Compare singles cost to opening product at [C3 tools](/tools)
+- Read about the most valuable MTG cards in Australia at [/blog/most-valuable-mtg-cards-australia-2026](/blog/most-valuable-mtg-cards-australia-2026)

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Cardfight!! Vanguard uses a rarity system with Common, Rare, Rare Foil, Double Rare (RR), and Triple Rare (RRR) as the main tiers, plus Special Parallel (SP) alternate art versions. Triple Rare is the primary pull target from standard booster product. For current AUD prices across all rarities, check [/cards/vanguard](/cards/vanguard).
+Cardfight!! Vanguard uses a rarity system with Common, Rare, Rare Foil, Double Rare (RR), and Triple Rare (RRR) as the main tiers, plus Special Parallel (SP) alternate art versions. Triple Rare is the primary pull target from standard booster product. For current AUD prices across all rarities, check [C3 Vanguard card prices](/cards/vanguard).
 
 ## The Vanguard Rarity Tiers
 
@@ -52,10 +52,10 @@ When evaluating old Vanguard cards for purchase, confirm their format legality. 
 
 ## The C3 Take
 
-Vanguard's rarity system is one of the most established in the anime TCG space, with fourteen years of consistent structure. The key insight for Australian players is that clan relevance filters rarity value more strongly than in most games. An RRR of a dominant clan's Grade 3 is worth significantly more than an RRR of an obscure or out-of-favour clan at the same pull rate. Always consider clan competitiveness and community size when evaluating Vanguard card values, and use [/cards/vanguard](/cards/vanguard) to confirm current Australian market prices.
+Vanguard's rarity system is one of the most established in the anime TCG space, with fourteen years of consistent structure. The key insight for Australian players is that clan relevance filters rarity value more strongly than in most games. An RRR of a dominant clan's Grade 3 is worth significantly more than an RRR of an obscure or out-of-favour clan at the same pull rate. Always consider clan competitiveness and community size when evaluating Vanguard card values, and use [C3 Vanguard card prices](/cards/vanguard) to confirm current Australian market prices.
 
 ## What to Read Next
 
-- Browse Vanguard singles at [/cards/vanguard](/cards/vanguard)
+- Browse Vanguard singles at [C3 Vanguard card prices](/cards/vanguard)
 - Find your Vanguard clan at [/quizzes/vanguard-clan](/quizzes/vanguard-clan)
-- Read the Vanguard beginners guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/p286-cardfight-vanguard-beginners-guide-australia)
+- Read the Vanguard beginners guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/cardfight-vanguard-beginners-guide-australia)

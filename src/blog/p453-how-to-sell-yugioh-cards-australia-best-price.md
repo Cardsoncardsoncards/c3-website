@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Selling Yu-Gi-Oh cards in Australia for maximum return requires checking current AUD prices at [/cards/yugioh](/cards/yugioh) before listing. High-value competitive staples sell quickly on eBay AU when priced accurately. Bulk commons and uncommons are better sold as lots or to buylist rather than listed individually.
+Selling Yu-Gi-Oh cards in Australia for maximum return requires checking current AUD prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh) before listing. High-value competitive staples sell quickly on eBay AU when priced accurately. Bulk commons and uncommons are better sold as lots or to buylist rather than listed individually.
 
 ## eBay vs Buylist vs Trade: The Three Options
 
@@ -24,7 +24,7 @@ Selling Yu-Gi-Oh cards in Australia for maximum return requires checking current
 
 ## How to Price Your Cards
 
-Check current AUD prices at [/cards/yugioh](/cards/yugioh) before listing anything. Then cross-reference with eBay AU sold listings (filter by Sold Items) to confirm what Australian buyers are actually paying. Never price from asking prices, which can be wildly optimistic. Sold prices are reality.
+Check current AUD prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh) before listing anything. Then cross-reference with eBay AU sold listings (filter by Sold Items) to confirm what Australian buyers are actually paying. Never price from asking prices, which can be wildly optimistic. Sold prices are reality.
 
 Price at or slightly below the lowest comparable sold listing for the same condition to move cards quickly. Pricing at the top of the range means waiting longer for a buyer. Time in your binder is lost opportunity.
 
@@ -42,7 +42,7 @@ From a card selling at AU$50 on eBay AU you will pay approximately:
 - Envelope, sleeve, cardboard: AU$0.50
 - Tracked postage: AU$5.00 to AU$8.00
 
-After fees, a AU$50 card nets approximately AU$33 to AU$36 before tax considerations. See the full breakdown at the [real cost of selling cards guide at /blog/p178-real-cost-selling-cards-ebay-australia](/blog/p178-real-cost-selling-cards-ebay-australia).
+After fees, a AU$50 card nets approximately AU$33 to AU$36 before tax considerations. See the full breakdown at the [real cost of selling cards guide at /blog/p178-real-cost-selling-cards-ebay-australia](/blog/real-cost-selling-cards-ebay-australia).
 
 ## Yu-Gi-Oh-Specific Selling Notes
 
@@ -63,10 +63,10 @@ Card values shift with tournament results, new set releases, and ban list announ
 
 ## The C3 Take
 
-The Australian Yu-Gi-Oh singles market is active enough to sell into profitably if you price accurately and move quickly. The biggest mistake sellers make is pricing from memory or from asking prices rather than current sold data. Check [/cards/yugioh](/cards/yugioh) before every listing. Price competitively. Move volume rather than holding out for theoretical maximum prices that the market may not support.
+The Australian Yu-Gi-Oh singles market is active enough to sell into profitably if you price accurately and move quickly. The biggest mistake sellers make is pricing from memory or from asking prices rather than current sold data. Check [C3 Yu-Gi-Oh card prices](/cards/yugioh) before every listing. Price competitively. Move volume rather than holding out for theoretical maximum prices that the market may not support.
 
 ## What to Read Next
 
-- Check current Yu-Gi-Oh card prices at [/cards/yugioh](/cards/yugioh)
+- Check current Yu-Gi-Oh card prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
 - Decide eBay or buylist at [/quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist)
-- See the real cost of selling cards at [/blog/p178-real-cost-selling-cards-ebay-australia](/blog/p178-real-cost-selling-cards-ebay-australia)
+- See the real cost of selling cards at [/blog/p178-real-cost-selling-cards-ebay-australia](/blog/real-cost-selling-cards-ebay-australia)

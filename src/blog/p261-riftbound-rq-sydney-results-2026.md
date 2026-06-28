@@ -71,11 +71,11 @@ RQ Sydney matters beyond prize money and qualification. It established several t
 
 **Vendetta (Set 4)**: July 31, 2026. The next card pool expansion drops six weeks after RQ Sydney. Any meta development coming out of Sydney will interact with Vendetta cards. Start tracking previews as they release.
 
-Check the [C3 Release Calendar](/market) for confirmed dates as they are announced.
+Check the [C3 Release Calendar](/calendar) for confirmed dates as they are announced.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 

@@ -21,7 +21,7 @@ Budget deckbuilding starts with current tournament results, not personal card pr
 
 ## Where to Find Budget Deck Lists
 
-For Pokemon: the Pokemon TCG official site publishes tournament results with full decklists. For MTG Commander: EDHrec.com tracks popular budget builds. For Yu-Gi-Oh: the YGO Meta and Dueling Nexus sites track current competitive builds with price data. For Lorcana: the Dreamborn.app site tracks Lorcana tournament results. For Riftbound: the community Discord and [C3 blog at /blog](/blog) cover recent Australian event results. For all games: always check Australian pricing at [/cards/mtg](/cards/mtg) or the relevant hub, as US price lists underestimate AU costs by 30 to 50 percent.
+For Pokemon: the Pokemon TCG official site publishes tournament results with full decklists. For MTG Commander: EDHrec.com tracks popular budget builds. For Yu-Gi-Oh: the YGO Meta and Dueling Nexus sites track current competitive builds with price data. For Lorcana: the Dreamborn.app site tracks Lorcana tournament results. For Riftbound: the community Discord and [C3 blog at /blog](/blog) cover recent Australian event results. For all games: always check Australian pricing at [C3 MTG card prices](/cards/mtg) or the relevant hub, as US price lists underestimate AU costs by 30 to 50 percent.
 
 ## Substitution Strategy
 
@@ -29,7 +29,7 @@ Every expensive deck has substitute cards that perform 80 percent as well at 20 
 
 ## Buying Singles vs Building From Packs
 
-For a budget competitive deck, buying targeted singles is always the right approach. Opening packs to build a specific 60-card deck costs three to ten times more than buying the cards directly as singles in every TCG that has been studied. Identify your full decklist, price every card at [/cards/mtg](/cards/mtg) or the relevant hub, and buy the cheapest available condition that meets your play standards.
+For a budget competitive deck, buying targeted singles is always the right approach. Opening packs to build a specific 60-card deck costs three to ten times more than buying the cards directly as singles in every TCG that has been studied. Identify your full decklist, price every card at [C3 MTG card prices](/cards/mtg) or the relevant hub, and buy the cheapest available condition that meets your play standards.
 
 ## Upgrading Over Time
 
@@ -65,5 +65,5 @@ Budget competitive play is a skill in itself. Finding the under-priced strategie
 ## What to Read Next
 
 - Find your budget TCG fit at [/quizzes/tcg-budget](/quizzes/tcg-budget)
-- Browse current card prices at [/cards/mtg](/cards/mtg)
+- Browse current card prices at [C3 MTG card prices](/cards/mtg)
 - Calculate deck cost at [/compare](/compare)

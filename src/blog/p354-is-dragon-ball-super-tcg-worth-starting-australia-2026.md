@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Yes, Dragon Ball Super TCG is worth starting in Australia in 2026, particularly with Fusion World as the active era. The game has an active Australian competitive scene, affordable entry via Starter Decks at AU$20 to AU$30, and a collector market supported by strong Dragon Ball IP demand. The main consideration is whether your local game store runs DBS events, which matters more for DBS than most TCGs because of the game's competitive community focus. Check current card prices at [/cards/dragonball](/cards/dragonball).
+Yes, Dragon Ball Super TCG is worth starting in Australia in 2026, particularly with Fusion World as the active era. The game has an active Australian competitive scene, affordable entry via Starter Decks at AU$20 to AU$30, and a collector market supported by strong Dragon Ball IP demand. The main consideration is whether your local game store runs DBS events, which matters more for DBS than most TCGs because of the game's competitive community focus. Check current card prices at [C3 Dragon Ball card prices](/cards/dragonball).
 
 ## What the Fusion World Refresh Changed
 
@@ -68,6 +68,6 @@ Dragon Ball Super TCG in Australia in 2026 is a solid choice for players who con
 
 ## What to Read Next
 
-- Check current Dragon Ball singles prices at [/cards/dragonball](/cards/dragonball)
+- Check current Dragon Ball singles prices at [C3 Dragon Ball card prices](/cards/dragonball)
 - Find your Dragon Ball warrior at [/quizzes/dragonball-warrior](/quizzes/dragonball-warrior)
-- Read the full DBS TCG beginners guide at [/blog/dragon-ball-super-card-game-beginners-guide-australia](/blog/p087-dragon-ball-super-card-game-beginners-guide-australia)
+- Read the full DBS TCG beginners guide at [/blog/dragon-ball-super-card-game-beginners-guide-australia](/blog/dragon-ball-super-card-game-beginners-guide-australia)

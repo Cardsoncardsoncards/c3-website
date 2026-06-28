@@ -17,15 +17,15 @@ The [C3 Collection Tracker at /tracker](/tracker) is a free downloadable Google 
 
 ## Downloading and Setting Up
 
-Go to [/tracker](/tracker) and download the free tracker. In Google Sheets, go to File > Make a Copy to save it to your own Google Drive account. Making a copy ensures you have your own editable version that does not overwrite the template. The tracker covers MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound across separate tabs.
+Go to [C3 Collection Tracker](/tracker) and download the free tracker. In Google Sheets, go to File > Make a Copy to save it to your own Google Drive account. Making a copy ensures you have your own editable version that does not overwrite the template. The tracker covers MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball Super, Star Wars Unlimited, and Riftbound across separate tabs.
 
 ## Logging Your First Cards
 
-In each game's tab, enter card name, set, quantity, condition (NM/LP/MP), and your purchase price. The tracker has a current value column that you update periodically from [/cards/mtg](/cards/mtg) or the relevant game hub. The profit or loss column calculates automatically from your purchase price versus current value. Start with your 20 most valuable cards across all games to establish the baseline.
+In each game's tab, enter card name, set, quantity, condition (NM/LP/MP), and your purchase price. The tracker has a current value column that you update periodically from [C3 MTG card prices](/cards/mtg) or the relevant game hub. The profit or loss column calculates automatically from your purchase price versus current value. Start with your 20 most valuable cards across all games to establish the baseline.
 
 ## Updating Card Prices
 
-Update current prices monthly for most collectors and weekly for active buyers and sellers. For each price update, check the relevant game hub at [/cards/mtg](/cards/mtg) or the corresponding hub for your game, then search each card name and enter the current AU market price. The tracker's summary tab shows total collection value, total investment, and total profit or loss after each update. Tracking this over time shows whether your collection is growing or shrinking in value.
+Update current prices monthly for most collectors and weekly for active buyers and sellers. For each price update, check the relevant game hub at [C3 MTG card prices](/cards/mtg) or the corresponding hub for your game, then search each card name and enter the current AU market price. The tracker's summary tab shows total collection value, total investment, and total profit or loss after each update. Tracking this over time shows whether your collection is growing or shrinking in value.
 
 ## Using the Wishlist Tab
 
@@ -60,7 +60,7 @@ Using all four tools together gives you visibility into sealed product value, in
 
 C3 is built specifically for Australian TCG players because Australian prices, community context, and market conditions differ meaningfully from international resources. Every tool on the site reflects AUD pricing from the Australian secondary market rather than USD prices converted at a rough exchange rate.
 
-Use the [/play](/play) quiz hub to find the right game for your situation. Use the card hubs at [/cards/mtg](/cards/mtg) and equivalent pages for your game to check prices before every transaction. Use the [blog at /blog](/blog) for Australian TCG event coverage, set reviews, and value analysis specific to the local market. Use the [eBay store](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fstr%2Fcardsoncardsoncards) for singles from all eight games with Australian shipping.
+Use the [/play](/play) quiz hub to find the right game for your situation. Use the card hubs at [C3 MTG card prices](/cards/mtg) and equivalent pages for your game to check prices before every transaction. Use the [blog at /blog](/blog) for Australian TCG event coverage, set reviews, and value analysis specific to the local market. Use the [eBay store](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fstr%2Fcardsoncardsoncards) for singles from all eight games with Australian shipping.
 
 The combination of live price data, analysis tools, and an active singles store makes C3 a complete resource for Australian TCG players across all spending levels and collecting goals.
 
@@ -70,6 +70,6 @@ The collection tracker is only useful if you actually use it. The habit of loggi
 
 ## What to Read Next
 
-- Download the free tracker at [/tracker](/tracker)
-- Browse card prices to update at [/cards/mtg](/cards/mtg)
-- See market movements at [/market](/market)
+- Download the free tracker at [C3 Collection Tracker](/tracker)
+- Browse card prices to update at [C3 MTG card prices](/cards/mtg)
+- See market movements at [C3 Market Insights](/market)

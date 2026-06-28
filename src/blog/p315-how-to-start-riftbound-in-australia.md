@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Riftbound is the official League of Legends trading card game, published by UVS Games and available in Australia since October 2025. As of mid-2026, four sets have been released or announced: Origins (October 2025), Spiritforged (February 2026), Unleashed (May 2026), and Vendetta (July 2026). For a new player, the right first purchase is a Champion Deck at AU$39.99 RRP, which gets you a complete 56-card ready-to-play deck built around a specific champion. Browse current Riftbound singles and prices at [/cards/riftbound](/cards/riftbound) before you spend anything.
+Riftbound is the official League of Legends trading card game, published by UVS Games and available in Australia since October 2025. As of mid-2026, four sets have been released or announced: Origins (October 2025), Spiritforged (February 2026), Unleashed (May 2026), and Vendetta (July 2026). For a new player, the right first purchase is a Champion Deck at AU$39.99 RRP, which gets you a complete 56-card ready-to-play deck built around a specific champion. Browse current Riftbound singles and prices at [C3 Riftbound card prices](/cards/riftbound) before you spend anything.
 
 ## What Is Riftbound?
 
@@ -56,7 +56,7 @@ Local game stores are the right first stop. Vault Games in Brisbane and other AU
 
 Online AU retailers stock Champions Decks and Booster Boxes. Compare prices across stores before buying sealed product, since box prices vary.
 
-eBay AU is a strong option for both singles and sealed, particularly for older Origins stock that has sold out at retail. Search current eBay AU Riftbound listings through the hub at [/cards/riftbound](/cards/riftbound).
+eBay AU is a strong option for both singles and sealed, particularly for older Origins stock that has sold out at retail. Search current eBay AU Riftbound listings through the hub at [C3 Riftbound card prices](/cards/riftbound).
 
 ## The C3 Take
 
@@ -64,6 +64,6 @@ Riftbound is worth starting now, specifically because it is still early in Austr
 
 ## What to Read Next
 
-- Browse all Riftbound cards and current AUD prices at [/cards/riftbound](/cards/riftbound)
+- Browse all Riftbound cards and current AUD prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion with the quiz at [/play](/play)
-- Calculate booster box expected value before you open at [/tools](/tools)
+- Calculate booster box expected value before you open at [C3 tools](/tools)

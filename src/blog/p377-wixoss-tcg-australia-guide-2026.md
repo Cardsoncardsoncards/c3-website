@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Wixoss is a niche but dedicated TCG in Australia with a small passionate community. Its most valuable cards are Secret Rare (SEC) versions of LRIG and SIGNI cards featuring characters from the Wixoss anime. Entry through Starter Decks is accessible. Honest assessment: Wixoss suits players already invested in the IP or willing to find the small but enthusiastic Australian community. Check [/cards/wixoss](/cards/wixoss) for current AUD prices.
+Wixoss is a niche but dedicated TCG in Australia with a small passionate community. Its most valuable cards are Secret Rare (SEC) versions of LRIG and SIGNI cards featuring characters from the Wixoss anime. Entry through Starter Decks is accessible. Honest assessment: Wixoss suits players already invested in the IP or willing to find the small but enthusiastic Australian community. Check [C3 Wixoss card prices](/cards/wixoss) for current AUD prices.
 
 ## What Is Wixoss?
 
@@ -28,7 +28,7 @@ The game has a dedicated following in Japan and a smaller but engaged community 
 
 **Limited distribution promos** from Japanese events command significant premiums in Australia because supply is extremely limited and collector demand from dedicated fans is consistent.
 
-The secondary market for Wixoss in Australia is primarily on eBay AU. Search [eBay AU Wixoss singles](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dwixoss+trading+card&_sacat=183454) for current Australian listings. Check [/cards/wixoss](/cards/wixoss) for aggregated pricing.
+The secondary market for Wixoss in Australia is primarily on eBay AU. Search [eBay AU Wixoss singles](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dwixoss+trading+card&_sacat=183454) for current Australian listings. Check [C3 Wixoss card prices](/cards/wixoss) for aggregated pricing.
 
 ## Entry Cost and Starting Wixoss
 
@@ -62,6 +62,6 @@ Wixoss is the right choice for a specific type of player: someone who has watche
 
 ## What to Read Next
 
-- Browse Wixoss singles at [/cards/wixoss](/cards/wixoss)
+- Browse Wixoss singles at [C3 Wixoss card prices](/cards/wixoss)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Wixoss beginners guide at [/blog/wixoss-tcg-beginners-guide-australia](/blog/p288-wixoss-tcg-beginners-guide-australia)
+- Read the Wixoss beginners guide at [/blog/wixoss-tcg-beginners-guide-australia](/blog/wixoss-tcg-beginners-guide-australia)

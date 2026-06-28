@@ -137,14 +137,14 @@ Buy the deck or decks whose colour combinations and characters appeal to you as 
 Surge Foil is a premium foiling treatment used for Collector's Edition Commander decks and some Collector Booster exclusives. It features a distinctive etched foil pattern that is different from standard foil treatment.
 
 
-Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/market). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
 - [MTG Secrets of Strixhaven: Full Pre-Order Guide Australia](/blog/mtg-secrets-of-strixhaven-australia)
-- [MTG Secrets of Strixhaven vs TMNT: Which Box to Buy?](/blog/mtg-strixhaven-vs-tmnt-australia)
+- [MTG Secrets of Strixhaven vs TMNT: Which Box to Buy?](/blog/mtg-secrets-of-strixhaven-australia)

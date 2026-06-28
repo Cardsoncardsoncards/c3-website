@@ -54,7 +54,7 @@ The single most important thing you can do before any Pokemon card purchase is b
 
 The [EV Calculator at /tools](/tools) is worth using before any sealed product purchase above AU$50. It will tell you the expected value of a box or product type based on current pull rates and single prices.
 
-Want to know whether buying singles or opening packs makes more sense for your goals? The [Pokemon Singles vs Sealed guide at /blog/pokemon-singles-vs-sealed-australia](/blog/p328-pokemon-singles-vs-sealed-australia) covers the comparison in detail.
+Want to know whether buying singles or opening packs makes more sense for your goals? The [Pokemon Singles vs Sealed guide at /blog/pokemon-singles-vs-sealed-australia](/blog/pokemon-singles-vs-sealed-australia) covers the comparison in detail.
 
 ## The C3 Take
 
@@ -62,6 +62,6 @@ The cheapest place to buy Pokemon cards in Australia is almost always eBay AU fo
 
 ## What to Read Next
 
-- Check current Pokemon singles prices at [/cards/pokemon](/cards/pokemon)
-- Compare sealed product expected value at [/tools](/tools)
-- Read the Pokemon booster box guide at [/blog/best-pokemon-booster-boxes-australia](/blog/p014-best-pokemon-booster-boxes-australia)
+- Check current Pokemon singles prices at [C3 Pokemon card prices](/cards/pokemon)
+- Compare sealed product expected value at [C3 tools](/tools)
+- Read the Pokemon booster box guide at [/blog/best-pokemon-booster-boxes-australia](/blog/best-pokemon-booster-boxes-australia)

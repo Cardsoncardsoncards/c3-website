@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Force of Will (FoW) has a loyal but small community in Australia. Its most valuable cards are Secret or Rare Ruler and Resonator cards from sought-after story arcs, with top copies in the AU$30 to AU$150 range. The game suits players who want deep fantasy worldbuilding in a TCG with strategic depth. Entry requires finding the existing community first. Check [/cards/forceofwill](/cards/forceofwill) for current AUD prices.
+Force of Will (FoW) has a loyal but small community in Australia. Its most valuable cards are Secret or Rare Ruler and Resonator cards from sought-after story arcs, with top copies in the AU$30 to AU$150 range. The game suits players who want deep fantasy worldbuilding in a TCG with strategic depth. Entry requires finding the existing community first. Check [C3 Force of Will card prices](/cards/forceofwill) for current AUD prices.
 
 ## What Is Force of Will?
 
@@ -30,7 +30,7 @@ FoW was one of the first Japanese TCGs to directly challenge MTG's strategic dep
 
 **R and Super Rare Rulers** with competitive demand from both the Australian and global FoW communities hold value. The game's competitive scene, though smaller than peak years, still creates demand for top-tier Rulers and key Resonators.
 
-The FoW secondary market in Australia runs primarily through eBay AU. Search [eBay AU Force of Will singles](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dforce+of+will+tcg+singles&_sacat=183454) and check [/cards/forceofwill](/cards/forceofwill) for current AUD pricing.
+The FoW secondary market in Australia runs primarily through eBay AU. Search [eBay AU Force of Will singles](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dforce+of+will+tcg+singles&_sacat=183454) and check [C3 Force of Will card prices](/cards/forceofwill) for current AUD pricing.
 
 ## Entry Cost and Starting FoW
 
@@ -64,6 +64,6 @@ Force of Will deserves more players than it currently has in Australia. The game
 
 ## What to Read Next
 
-- Browse Force of Will singles at [/cards/forceofwill](/cards/forceofwill)
+- Browse Force of Will singles at [C3 Force of Will card prices](/cards/forceofwill)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Force of Will beginners guide at [/blog/force-of-will-tcg-beginners-guide-australia](/blog/p275-force-of-will-tcg-beginners-guide-australia)
+- Read the Force of Will beginners guide at [/blog/force-of-will-tcg-beginners-guide-australia](/blog/force-of-will-tcg-beginners-guide-australia)

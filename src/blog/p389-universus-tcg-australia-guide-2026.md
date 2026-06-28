@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-UniVersus (formerly Universal Fighting System) is a multi-IP TCG from Jasco Games featuring licensed characters from fighting games, anime, and other properties. Its most valuable cards are Super Rare and unique versions of popular characters from high-demand IPs like Street Fighter, Mortal Kombat, and My Hero Academia. The game has a dedicated Australian competitive community. Check [/cards/universus](/cards/universus) for current AUD prices.
+UniVersus (formerly Universal Fighting System) is a multi-IP TCG from Jasco Games featuring licensed characters from fighting games, anime, and other properties. Its most valuable cards are Super Rare and unique versions of popular characters from high-demand IPs like Street Fighter, Mortal Kombat, and My Hero Academia. The game has a dedicated Australian competitive community. Check [C3 UniVersus card prices](/cards/universus) for current AUD prices.
 
 ## What Is UniVersus?
 
@@ -32,7 +32,7 @@ UniVersus has undergone significant evolution over the years (it was previously 
 
 **First appearance versions** of characters added to the UniVersus roster for the first time hold collector interest as the definitive version of that character in the game.
 
-The UniVersus secondary market in Australia is available through eBay AU and specialist stores. Search [eBay AU UniVersus TCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Duniversus+tcg+singles&_sacat=183454) for current listings. Check [/cards/universus](/cards/universus) for aggregated AUD pricing.
+The UniVersus secondary market in Australia is available through eBay AU and specialist stores. Search [eBay AU UniVersus TCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Duniversus+tcg+singles&_sacat=183454) for current listings. Check [C3 UniVersus card prices](/cards/universus) for aggregated AUD pricing.
 
 ## Entry Cost and Starting UniVersus
 
@@ -68,6 +68,6 @@ UniVersus is one of the most distinctly positioned games in the extended TCG spa
 
 ## What to Read Next
 
-- Browse UniVersus singles at [/cards/universus](/cards/universus)
+- Browse UniVersus singles at [C3 UniVersus card prices](/cards/universus)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the UniVersus beginners guide at [/blog/universus-tcg-beginners-guide-australia](/blog/p285-universus-tcg-beginners-guide-australia)
+- Read the UniVersus beginners guide at [/blog/universus-tcg-beginners-guide-australia](/blog/universus-card-game-beginners-guide-australia)

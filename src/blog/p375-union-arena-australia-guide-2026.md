@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Union Arena is worth starting in Australia in 2026 if you have a connection to the IPs it supports and access to local event support. The game features Bleach, Naruto, Hunter x Hunter, and other beloved anime in a single card game, and its most valuable cards are Super Rare Plus (SRP) and Secret Rare versions of popular characters from these series. Entry through Starter Decks is accessible. Check [/cards/unionarena](/cards/unionarena) for current AUD prices.
+Union Arena is worth starting in Australia in 2026 if you have a connection to the IPs it supports and access to local event support. The game features Bleach, Naruto, Hunter x Hunter, and other beloved anime in a single card game, and its most valuable cards are Super Rare Plus (SRP) and Secret Rare versions of popular characters from these series. Entry through Starter Decks is accessible. Check [C3 Union Arena card prices](/cards/unionarena) for current AUD prices.
 
 ## What Is Union Arena?
 
@@ -34,7 +34,7 @@ When a new beloved IP is added to Union Arena, its first set can sometimes be un
 
 **Tournament promos** distributed at Union Arena organised play events feature alternate art versions of competitive cards with genuine scarcity. These trade at premiums among the competitive community.
 
-Check [/cards/unionarena](/cards/unionarena) for current AUD pricing across all Union Arena sets and characters before purchasing.
+Check [C3 Union Arena card prices](/cards/unionarena) for current AUD pricing across all Union Arena sets and characters before purchasing.
 
 ## Entry Cost and Starting the Game
 
@@ -42,7 +42,7 @@ Check [/cards/unionarena](/cards/unionarena) for current AUD pricing across all 
 
 **Booster boxes** cost roughly AU$100 to AU$130 and contain 36 packs of 10 cards. Value is concentrated in SRP and Secret Rare tiers, and the specific IP represented in the set determines the effective value. Sets featuring high-demand IPs have better EV than sets for less popular series.
 
-**Competitive singles** from [/cards/unionarena](/cards/unionarena) and [eBay AU](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dunion+arena+singles&_sacat=183454) are the most cost-effective path for players building toward competitive play.
+**Competitive singles** from [C3 Union Arena card prices](/cards/unionarena) and [eBay AU](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dunion+arena+singles&_sacat=183454) are the most cost-effective path for players building toward competitive play.
 
 ## The Australian Union Arena Community
 
@@ -72,6 +72,6 @@ Union Arena is a well-executed multi-IP TCG that serves anime fans who want to p
 
 ## What to Read Next
 
-- Browse Union Arena singles at [/cards/unionarena](/cards/unionarena)
+- Browse Union Arena singles at [C3 Union Arena card prices](/cards/unionarena)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Union Arena beginners guide at [/blog/union-arena-tcg-beginners-guide-australia](/blog/p284-union-arena-tcg-beginners-guide-australia)
+- Read the Union Arena beginners guide at [/blog/union-arena-tcg-beginners-guide-australia](/blog/union-arena-tcg-beginners-guide-australia)

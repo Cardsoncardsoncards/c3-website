@@ -12,19 +12,19 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Yu-Gi-Oh Infinite Forbidden is a mid-2024 booster set introducing the Centur-Ion Synchro archetype alongside new generic Extra Deck cards that affected multiple competitive builds in Australia. The set is also notable for containing reprints of previously expensive staples that became more accessible to Australian players at retail pricing. Check current AUD singles prices at [/cards/yugioh](/cards/yugioh) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
+Yu-Gi-Oh Infinite Forbidden is a mid-2024 booster set introducing the Centur-Ion Synchro archetype alongside new generic Extra Deck cards that affected multiple competitive builds in Australia. The set is also notable for containing reprints of previously expensive staples that became more accessible to Australian players at retail pricing. Check current AUD singles prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
 
 ## What Is in Infinite Forbidden?
 
 Infinite Forbidden introduced the Centur-Ion archetype as a Synchro-focused strategy alongside new generic Extra Deck support affecting multiple competitive builds. Select reprint inclusions made previously expensive staples accessible at Australian retail for the first time.
 
-**Packs per box:** Standard booster box structure for this game. Check the set page at [/cards/yugioh](/cards/yugioh) for confirmed pack and box counts.
+**Packs per box:** Standard booster box structure for this game. Check the set page at [C3 Yu-Gi-Oh card prices](/cards/yugioh) for confirmed pack and box counts.
 
 ## Top Cards to Know
 
 **New generic Extra Deck staples** and Centur-Ion archetype key cards drove competitive demand. **Selected reprint cards** made accessible at Australian retail pricing for the first time represent genuine value additions for players building multiple decks. Ghost Rare treatments on select cards drove collector value.
 
-For all current AUD prices on Infinite Forbidden singles, check [/cards/yugioh](/cards/yugioh). Prices update from live eBay AU market data.
+For all current AUD prices on Infinite Forbidden singles, check [C3 Yu-Gi-Oh card prices](/cards/yugioh). Prices update from live eBay AU market data.
 
 ## Pull Rates and What to Expect
 
@@ -32,7 +32,7 @@ Pull rates follow the standard structure for this game and release type. The cri
 
 From any booster box, expect a mix of commons, uncommons, and rares. The premium rare-tier cards are where box value concentrates. Most boxes return 60 to 80 percent of their retail cost in singles value on average. Hitting the top-tier cards is the exception, not the expectation, in any single box.
 
-Use the [EV Calculator at /tools](/tools) with current AUD prices from [/cards/yugioh](/cards/yugioh) to get an accurate verdict for your specific purchase price before you open.
+Use the [EV Calculator at /tools](/tools) with current AUD prices from [C3 Yu-Gi-Oh card prices](/cards/yugioh) to get an accurate verdict for your specific purchase price before you open.
 
 ## Should You Open or Buy Singles?
 
@@ -56,10 +56,10 @@ The [C3 Yu-Gi-Oh hub at /cards/yugioh](/cards/yugioh) aggregates current AUD pri
 
 ## The C3 Take
 
-The question of whether to open Infinite Forbidden or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [/cards/yugioh](/cards/yugioh) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
+The question of whether to open Infinite Forbidden or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [C3 Yu-Gi-Oh card prices](/cards/yugioh) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
 
 ## What to Read Next
 
-- Browse Yu-Gi-Oh card prices in AUD at [/cards/yugioh](/cards/yugioh)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse Yu-Gi-Oh card prices in AUD at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
+- Calculate booster box expected value at [C3 tools](/tools)
 - Find your Yu-Gi-Oh play style at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)

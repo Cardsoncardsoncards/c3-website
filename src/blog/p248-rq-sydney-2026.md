@@ -10,7 +10,7 @@ layout: post
 affiliate_disclaimer: true
 ---## Quick Answer
 
-The ANZ Super Series Cycle 11 Regional Championship wrapped up in Sydney on 13 March 2026 with 208 players competing for Pro Tour qualification, World Championship slots, and a share of US$15,000 in prize money. If you were not there and you play Standard, here is everything you need to know, including what it means for card prices in Australia. See current prices at [/cards/mtg](/cards/mtg).
+The ANZ Super Series Cycle 11 Regional Championship wrapped up in Sydney on 13 March 2026 with 208 players competing for Pro Tour qualification, World Championship slots, and a share of US$15,000 in prize money. If you were not there and you play Standard, here is everything you need to know, including what it means for card prices in Australia. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -156,13 +156,13 @@ For card singles from any of the archetypes featured at Sydney, check the [C3 eB
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Gundam Card Game](/blog/p392-gundam-card-game-australia-guide-2026)
+[Blog](/blog) > [Gundam Card Game](/blog/gundam-card-game-australia-guide-2026)
 
 The Gundam Card Game competitive scene in Australia is growing faster in 2026 than any previous year. TAK Games is running three Regional Championships in Oceania between July and September, the Australian player base is expanding steadily, and the game's Mobile Suit Gundam IP gives it one of the strongest franchise foundations of any TCG in the market.
 
@@ -104,8 +104,8 @@ The [C3 Gundam hub](/cards/gundam) shows current AUD prices updated daily from l
 
 ## Related Posts
 
-- [Gundam Card Game Australia Guide 2026](/blog/p392-gundam-card-game-australia-guide-2026)
-- [Gundam Card Game Brisbane Regional Championship 2026](/blog/p496-gundam-card-game-brisbane-regional-2026)
-- [Best Gundam Card Game Cards Australia](/blog/p301-best-gundam-card-game-cards-australia)
-- [Auckland TAK Games Oceania Regionals August 2026](/blog/p505-auckland-tcg-regionals-august-2026-guide)
-- [Best TCG to Play Competitively Australia 2026](/blog/p511-what-is-the-best-tcg-to-play-competitively-australia-2026)
+- [Gundam Card Game Australia Guide 2026](/blog/gundam-card-game-australia-guide-2026)
+- [Gundam Card Game Brisbane Regional Championship 2026](/blog/gundam-card-game-brisbane-regional-2026)
+- [Best Gundam Card Game Cards Australia](/blog/best-gundam-card-game-cards-australia)
+- [Auckland TAK Games Oceania Regionals August 2026](/blog/auckland-tcg-regionals-august-2026-guide)
+- [Best TCG to Play Competitively Australia 2026](/blog/what-is-the-best-tcg-to-play-competitively-australia-2026)

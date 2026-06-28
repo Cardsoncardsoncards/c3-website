@@ -68,6 +68,6 @@ Lorcana is the most well-rounded TCG launch of the last five years and it has ea
 
 ## What to Read Next
 
-- Browse current Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Browse current Lorcana card prices at [C3 Lorcana card prices](/cards/lorcana)
 - Not sure which TCG suits you? [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
 - Check your collector mindset at [/quizzes/investor-collector](/quizzes/investor-collector)

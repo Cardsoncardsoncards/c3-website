@@ -65,5 +65,5 @@ Most Australian collectors do not need to grade their cards. The exception is vi
 ## What to Read Next
 
 - See the Pokemon grading guide at [/blog/pokemon-card-grading-australia-worth-it](/blog/pokemon-card-grading-australia-worth-it)
-- Check current card values before grading at [/cards/mtg](/cards/mtg)
+- Check current card values before grading at [C3 MTG card prices](/cards/mtg)
 - Find your collector style at [/quizzes/collector-or-player](/quizzes/collector-or-player)

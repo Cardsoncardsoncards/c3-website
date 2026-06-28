@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Riftbound Set 3, Unleashed, is the biggest release in the game's short history. More cards, a new rarity tier, three new mechanics, and four new Champions arriving just before the first Australian Regional Qualifier. If you are deciding whether to buy a box, chase specific singles, or sit this one out, here is the breakdown. See current prices at [/cards/riftbound](/cards/riftbound).
+Riftbound Set 3, Unleashed, is the biggest release in the game's short history. More cards, a new rarity tier, three new mechanics, and four new Champions arriving just before the first Australian Regional Qualifier. If you are deciding whether to buy a box, chase specific singles, or sit this one out, here is the breakdown. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -65,13 +65,13 @@ Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks 
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

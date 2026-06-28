@@ -137,8 +137,8 @@ The decisions you make with your TCG collection matter more than most guides sug
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

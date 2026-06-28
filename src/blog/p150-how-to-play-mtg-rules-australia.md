@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Magic: The Gathering has been running since 1993 and has more rules text than most board games combined. That sounds intimidating. It isn't, once someone explains it properly. See current prices at [/cards/mtg](/cards/mtg).
+Magic: The Gathering has been running since 1993 and has more rules text than most board games combined. That sounds intimidating. It isn't, once someone explains it properly. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -106,13 +106,13 @@ Play your first game with two prebuilt decks and don't worry about optimal plays
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -123,4 +123,4 @@ The minimum entry cost depends on the game. Most TCGs have starter or preconstru
 Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
 
 ### Where can I find other Mtg players in Australia?
-Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/market) for upcoming events near you.
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.

@@ -22,7 +22,7 @@ Resale value depends on three factors: demand from players who need specific car
 
 MTG has the strongest long-term resale case of any TCG in Australia. The combination of 30+ years of print history, eternal formats where old cards remain legal, the Reserved List protecting certain cards from reprint, and a globally connected secondary market through eBay AU creates conditions where quality older cards rarely drop to zero value.
 
-For current sets, resale value concentrates in a few high-demand rares and mythics. The bulk of a booster box opening returns 60 to 80 percent of retail in singles value. The top cards carry the value. MTG singles are liquid on eBay AU with consistent sell-through for cards priced at or slightly below market. Check current AU prices at [/cards/mtg](/cards/mtg).
+For current sets, resale value concentrates in a few high-demand rares and mythics. The bulk of a booster box opening returns 60 to 80 percent of retail in singles value. The top cards carry the value. MTG singles are liquid on eBay AU with consistent sell-through for cards priced at or slightly below market. Check current AU prices at [C3 MTG card prices](/cards/mtg).
 
 ## Pokemon Resale Value
 
@@ -42,7 +42,7 @@ The risk is that Lorcana is still establishing its long-term collector base. It 
 
 Riftbound has the highest speculative upside of any current Australian TCG due to League of Legends' enormous existing player base. If the game grows to capture even a small fraction of the LoL community as buyers, early card values could appreciate significantly.
 
-The risk is that new TCGs frequently do not achieve the growth trajectory their IP suggests. Riftbound is worth monitoring rather than treating as a guaranteed investment. Current secondary market prices at [/cards/riftbound](/cards/riftbound).
+The risk is that new TCGs frequently do not achieve the growth trajectory their IP suggests. Riftbound is worth monitoring rather than treating as a guaranteed investment. Current secondary market prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 ## ## Yu-Gi-Oh, One Piece, and Dragon Ball Super Resale
@@ -51,13 +51,13 @@ Yu-Gi-Oh has a well-established secondary market in Australia but cards are vuln
 
 One Piece TCG and Dragon Ball Super Fusion World have growing Australian secondary markets but limited history to draw on for long-term value trends. Popular character variants (Luffy, Goku alt-arts) maintain collector demand independent of competitive relevance, making those safer holds than pure competitive staples.
 
-For all games, current AUD prices are at the relevant hub. [/cards/onepiece](/cards/onepiece), [/cards/dragonball](/cards/dragonball), [/cards/yugioh](/cards/yugioh). Always check before selling.
+For all games, current AUD prices are at the relevant hub. [C3 One Piece card prices](/cards/onepiece), [C3 Dragon Ball card prices](/cards/dragonball), [C3 Yu-Gi-Oh card prices](/cards/yugioh). Always check before selling.
 ## The C3 Take
 
 For resale value, the best game is the one you understand well enough to time your buys and sells correctly. Buying any TCG's chase cards at peak hype and selling six months later has consistently produced poor returns across all games. Buying undervalued cards and selling when competitive demand spikes is the actual strategy. The [Market page at /market](/market) shows recent AUD price movements across games to help identify when prices are moving.
 
 ## What to Read Next
 
-- Check price movements at [/market](/market)
-- Browse all game hubs at [/cards/mtg](/cards/mtg)
+- Check price movements at [C3 Market Insights](/market)
+- Browse all game hubs at [C3 MTG card prices](/cards/mtg)
 - Find your sell strategy at [/quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist)

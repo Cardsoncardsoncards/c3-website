@@ -21,7 +21,7 @@ Expected value (EV) in a booster box context is the weighted average value of al
 
 ## How the C3 Calculator Works
 
-The EV Calculator at [/tools](/tools) uses: current AUD single card prices pulled from the live card hub data, official pull rate data published by card game companies for each set, and your inputted purchase price. The calculator multiplies expected pull counts for each card by current AU market price, sums across all cards in the set, and compares against your purchase price to return a percentage and a verdict. The verdict updates as card prices shift, which is why you should run the calculator at the time of your actual purchase decision, not days earlier.
+The EV Calculator at [C3 tools](/tools) uses: current AUD single card prices pulled from the live card hub data, official pull rate data published by card game companies for each set, and your inputted purchase price. The calculator multiplies expected pull counts for each card by current AU market price, sums across all cards in the set, and compares against your purchase price to return a percentage and a verdict. The verdict updates as card prices shift, which is why you should run the calculator at the time of your actual purchase decision, not days earlier.
 
 ## What the Verdicts Mean
 
@@ -57,10 +57,10 @@ Using all four tools together gives you visibility into sealed product value, in
 
 ## The C3 Take
 
-The EV Calculator at [/tools](/tools) is the single most useful tool for anyone spending money on TCG sealed product in Australia. Run it every time. A 10-minute price check before opening a AU$150 box can save you AU$50 or confirm the opening is justified. There is no good reason not to check.
+The EV Calculator at [C3 tools](/tools) is the single most useful tool for anyone spending money on TCG sealed product in Australia. Run it every time. A 10-minute price check before opening a AU$150 box can save you AU$50 or confirm the opening is justified. There is no good reason not to check.
 
 ## What to Read Next
 
-- Run the EV Calculator at [/tools](/tools)
-- Browse current card prices at [/cards/mtg](/cards/mtg)
+- Run the EV Calculator at [C3 tools](/tools)
+- Browse current card prices at [C3 MTG card prices](/cards/mtg)
 - Decide collector vs player at [/quizzes/collector-or-player](/quizzes/collector-or-player)

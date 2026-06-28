@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Star Wars Unlimited uses six main rarity tiers: Common, Uncommon, Rare, Legendary, and Showcase, plus the Hyperspace foil variants that appear across multiple rarities. Showcase cards are the premium collector tier. For current AUD prices across all rarities, check [/cards/starwars](/cards/starwars).
+Star Wars Unlimited uses six main rarity tiers: Common, Uncommon, Rare, Legendary, and Showcase, plus the Hyperspace foil variants that appear across multiple rarities. Showcase cards are the premium collector tier. For current AUD prices across all rarities, check [C3 Star Wars Unlimited card prices](/cards/starwars).
 
 ## The Star Wars Unlimited Rarity Tiers
 
@@ -71,6 +71,6 @@ Star Wars Unlimited's rarity system is well-designed for both competitive player
 
 ## What to Read Next
 
-- Browse Star Wars Unlimited singles at [/cards/starwars](/cards/starwars)
-- Read about Star Wars Unlimited for competitive players at [/blog/star-wars-unlimited-deck-building-australia](/blog/p210-star-wars-unlimited-deck-building-australia)
-- Read the Star Wars Unlimited beginners guide at [/blog/star-wars-unlimited-beginners-guide-australia](/blog/p090-star-wars-unlimited-beginners-guide-australia)
+- Browse Star Wars Unlimited singles at [C3 Star Wars Unlimited card prices](/cards/starwars)
+- Read about Star Wars Unlimited for competitive players at [/blog/star-wars-unlimited-deck-building-australia](/blog/star-wars-unlimited-deck-building-australia)
+- Read the Star Wars Unlimited beginners guide at [/blog/star-wars-unlimited-beginners-guide-australia](/blog/star-wars-unlimited-beginners-guide-australia)

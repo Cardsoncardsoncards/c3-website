@@ -36,7 +36,7 @@ For local quick sales of entire collections, Facebook is the most practical chan
 
 ## How to Price Your Cards
 
-Check the current AUD price of each card at the relevant game hub: [/cards/mtg](/cards/mtg), [/cards/pokemon](/cards/pokemon), or the equivalent hub for your game. Cross-reference with recent eBay AU sold listings (not asking prices, sold prices) to confirm what buyers are actually paying in Australia today.
+Check the current AUD price of each card at the relevant game hub: [C3 MTG card prices](/cards/mtg), [C3 Pokemon card prices](/cards/pokemon), or the equivalent hub for your game. Cross-reference with recent eBay AU sold listings (not asking prices, sold prices) to confirm what buyers are actually paying in Australia today.
 
 Price high-value cards at or slightly below recent sold prices. Price bulk lots at 60 to 70 percent of combined market value to attract quick buyers.
 
@@ -59,5 +59,5 @@ The most common mistake Australian sellers make is using the wrong channel for t
 ## What to Read Next
 
 - Find your best sell channel at [/quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist)
-- Check current card prices at [/market](/market)
+- Check current card prices at [C3 Market Insights](/market)
 - See the real cost of eBay selling at [/blog/real-cost-selling-cards-ebay-australia](/blog/real-cost-selling-cards-ebay-australia)

@@ -112,13 +112,13 @@ These aren't theoretical risks. Australian TCG collectors deal with climate-rela
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - [How to Organise Your TCG Collection in Australia: Tools and Tips](/blog/how-to-organise-tcg-collection-australia)
 - [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia)
-- [The Best Card Binders for TCG Collections in Australia](/blog/best-card-binders-australia)
+- [The Best Card Binders for TCG Collections in Australia](/blog/best-tcg-binders-australia)
 
 
 ## Frequently Asked Questions

@@ -10,7 +10,7 @@ layout: post
 affiliate_disclaimer: true
 ---## Quick Answer
 
-We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Before listing anything, we tracked the data. See current prices at [/cards/riftbound](/cards/riftbound).
+We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Before listing anything, we tracked the data. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -121,13 +121,13 @@ For the broader question of whether Riftbound is worth getting into as a game, r
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

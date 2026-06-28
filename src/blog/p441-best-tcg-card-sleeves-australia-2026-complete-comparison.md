@@ -58,7 +58,7 @@ Your sleeve needs change as your collection value increases. The natural upgrade
 Do not skip ahead in this progression unnecessarily. AU$80 in Dragon Shield Matte sleeves for a AU$50 collection is unnecessary. AU$15 in Ultra Pro sleeves for a AU$500 collection is under-protecting your investment.
 
 
-Sleeve maintenance matters as much as initial sleeve selection. Replace sleeves that show visible splitting, peeling, or cracking along the sealed edge. A split sleeve edge exposes the card to the risk of moisture and edge contact damage that undermines the purpose of sleeving. Budget for replacing your deck's sleeves every 12 to 18 months with regular play, or sooner if you notice wear. Dragon Shield Matte sleeves at AU$20 to AU$25 per deck per year is a minor cost against the value of a well-maintained TCG collection. Track your collection value at [/tracker](/tracker).
+Sleeve maintenance matters as much as initial sleeve selection. Replace sleeves that show visible splitting, peeling, or cracking along the sealed edge. A split sleeve edge exposes the card to the risk of moisture and edge contact damage that undermines the purpose of sleeving. Budget for replacing your deck's sleeves every 12 to 18 months with regular play, or sooner if you notice wear. Dragon Shield Matte sleeves at AU$20 to AU$25 per deck per year is a minor cost against the value of a well-maintained TCG collection. Track your collection value at [C3 Collection Tracker](/tracker).
 
 ## The C3 Take
 
@@ -68,4 +68,4 @@ Sleeve your cards. The cost of Dragon Shield Matte for a 60-card Pokemon deck is
 
 - Browse TCG accessories at [/shop](/shop)
 - Compare TCG costs at [/quizzes/tcg-budget](/quizzes/tcg-budget)
-- Track collection value at [/tracker](/tracker)
+- Track collection value at [C3 Collection Tracker](/tracker)

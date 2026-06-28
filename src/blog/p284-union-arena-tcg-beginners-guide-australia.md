@@ -65,6 +65,6 @@ The limitation is the same as any franchise-dependent game: if none of the curre
 
 ## What to Read Next
 
-- Browse Union Arena cards at [/cards/unionarena](/cards/unionarena)
+- Browse Union Arena cards at [C3 Union Arena card prices](/cards/unionarena)
 - Find which TCG suits your style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming Union Arena releases at [/calendar](/market)
+- Check upcoming Union Arena releases at [/calendar](/calendar)

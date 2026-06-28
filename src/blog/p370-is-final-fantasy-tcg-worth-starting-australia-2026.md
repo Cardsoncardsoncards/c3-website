@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The Final Fantasy TCG is worth starting in Australia in 2026 if you are a Final Fantasy fan who also enjoys strategic TCG play. The game has beautiful card art, a thoughtful design, and a dedicated community in major Australian cities. The main consideration is that the community is smaller than games like Digimon or Vanguard, so access to local events varies significantly by location. Check [/cards/finalfantasy](/cards/finalfantasy) for current prices and contact your nearest game store about event support before buying.
+The Final Fantasy TCG is worth starting in Australia in 2026 if you are a Final Fantasy fan who also enjoys strategic TCG play. The game has beautiful card art, a thoughtful design, and a dedicated community in major Australian cities. The main consideration is that the community is smaller than games like Digimon or Vanguard, so access to local events varies significantly by location. Check [C3 Final Fantasy TCG card prices](/cards/finalfantasy) for current prices and contact your nearest game store about event support before buying.
 
 ## The Case for FFTCG as a TCG
 
@@ -70,6 +70,6 @@ FFTCG is worth starting if the IP resonates with you and you have community acce
 
 ## What to Read Next
 
-- Browse Final Fantasy TCG singles at [/cards/finalfantasy](/cards/finalfantasy)
-- Read the Full Final Fantasy TCG beginners guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/p274-final-fantasy-tcg-beginners-guide-australia)
+- Browse Final Fantasy TCG singles at [C3 Final Fantasy TCG card prices](/cards/finalfantasy)
+- Read the Full Final Fantasy TCG beginners guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/final-fantasy-tcg-beginners-guide-australia)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

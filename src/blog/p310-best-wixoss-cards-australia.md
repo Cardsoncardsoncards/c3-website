@@ -60,6 +60,6 @@ The thin Australian market means finding specific singles takes effort. Factor t
 
 ## What to Read Next
 
-- Browse WIXOSS cards at [/cards/wixoss](/cards/wixoss)
+- Browse WIXOSS cards at [C3 Wixoss card prices](/cards/wixoss)
 - Read the beginner's guide at [/blog/wixoss-tcg-beginners-guide-australia](/blog/wixoss-tcg-beginners-guide-australia)
 - Compare card values at [/compare](/compare)

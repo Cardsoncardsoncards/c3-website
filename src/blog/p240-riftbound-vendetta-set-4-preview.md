@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-RQ Sydney has not even happened yet and the next Riftbound set is already confirmed. Vendetta (Set 4) releases July 31, 2026, and it marks a significant moment for the game's global development. Here is what Australian players need to know now, before the hype cycle starts. See current prices at [/cards/riftbound](/cards/riftbound).
+RQ Sydney has not even happened yet and the next Riftbound set is already confirmed. Vendetta (Set 4) releases July 31, 2026, and it marks a significant moment for the game's global development. Here is what Australian players need to know now, before the hype cycle starts. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -46,7 +46,7 @@ No Ultimate Rare is confirmed. Riot has stated Ultimate is reserved for special 
 
 Three sets in one calendar year (Unleashed in May, Vendetta in July, Radiance in October) is an aggressive pace. The right approach for most Australian players is: stay engaged with the competitive meta, buy the singles you need for your specific deck, and evaluate sealed product on a set-by-set basis based on pull rates and chase card desirability.
 
-We will publish a full Vendetta preview breakdown when Riot begins card reveals in late June. Subscribe to our newsletter at [/tracker](/tracker) to get it as soon as it is live.
+We will publish a full Vendetta preview breakdown when Riot begins card reveals in late June. Subscribe to our newsletter at [C3 Collection Tracker](/tracker) to get it as soon as it is live.
 
 ---
 
@@ -57,13 +57,13 @@ Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks 
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

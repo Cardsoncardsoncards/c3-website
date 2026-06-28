@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Bakugan is primarily a children's toy and card game with strong nostalgic appeal for players who grew up with the original 2007 series. The most valuable Bakugan cards are rare variants from early series sets and special holographic versions of iconic Bakugan characters like Drago. The game suits casual players and collectors, not competitive TCG players. Check [/cards/bakugan](/cards/bakugan) for current AUD prices.
+Bakugan is primarily a children's toy and card game with strong nostalgic appeal for players who grew up with the original 2007 series. The most valuable Bakugan cards are rare variants from early series sets and special holographic versions of iconic Bakugan characters like Drago. The game suits casual players and collectors, not competitive TCG players. Check [C3 Bakugan card prices](/cards/bakugan) for current AUD prices.
 
 ## What Is the Bakugan Card Game?
 
@@ -32,7 +32,7 @@ For collectors, the most sought Bakugan cards are often from the original 2007-2
 
 **Limited tournament distribution cards** from Bakugan organised play events carry scarcity premiums among the competitive community.
 
-The Bakugan card secondary market in Australia is available on eBay AU. Search [eBay AU Bakugan cards](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dbakugan+card+game&_sacat=183454) for current listings. Check [/cards/bakugan](/cards/bakugan) for aggregated AUD pricing.
+The Bakugan card secondary market in Australia is available on eBay AU. Search [eBay AU Bakugan cards](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dbakugan+card+game&_sacat=183454) for current listings. Check [C3 Bakugan card prices](/cards/bakugan) for aggregated AUD pricing.
 
 ## Entry Cost and Game Versions
 
@@ -70,6 +70,6 @@ Bakugan is not a competitive TCG in the traditional sense, and evaluating it aga
 
 ## What to Read Next
 
-- Browse Bakugan cards at [/cards/bakugan](/cards/bakugan)
+- Browse Bakugan cards at [C3 Bakugan card prices](/cards/bakugan)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Bakugan guide at [/blog/bakugan-card-game-beginners-guide-australia](/blog/p269-bakugan-card-game-beginners-guide-australia)
+- Read the Bakugan guide at [/blog/bakugan-card-game-beginners-guide-australia](/blog/bakugan-tcg-beginners-guide-australia)

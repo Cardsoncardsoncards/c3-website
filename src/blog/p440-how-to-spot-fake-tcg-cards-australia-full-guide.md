@@ -47,10 +47,10 @@ Safe practices: buy from sellers with 100+ feedback ratings and a history of sel
 
 If you receive a card that appears fake, open an eBay case immediately with clear documentation showing why you believe it is counterfeit. eBay AU's buyer protection covers counterfeit goods under their seller guarantee programme.
 
-For local pickup sales, inspect the card before completing payment. A seller who refuses to let you inspect a card before payment in a local sale is a significant red flag. Browse genuine card images at [/cards/mtg](/cards/mtg) and other game hubs for comparison reference.
+For local pickup sales, inspect the card before completing payment. A seller who refuses to let you inspect a card before payment in a local sale is a significant red flag. Browse genuine card images at [C3 MTG card prices](/cards/mtg) and other game hubs for comparison reference.
 
 
-For cards purchased as part of large bulk lots on Facebook Marketplace or from storage unit sales, the risk of counterfeits is higher because the seller often does not know the authenticity of individual cards. Factor in a fake card risk when pricing bulk lot purchases and perform spot-check light tests on the highest-value cards before completing payment. A bulk lot at 50 percent of apparent value is less appealing if 20 percent of the cards turn out to be counterfeit. Current genuine card appearance references are at [/cards/pokemon](/cards/pokemon) and [/cards/mtg](/cards/mtg).
+For cards purchased as part of large bulk lots on Facebook Marketplace or from storage unit sales, the risk of counterfeits is higher because the seller often does not know the authenticity of individual cards. Factor in a fake card risk when pricing bulk lot purchases and perform spot-check light tests on the highest-value cards before completing payment. A bulk lot at 50 percent of apparent value is less appealing if 20 percent of the cards turn out to be counterfeit. Current genuine card appearance references are at [C3 Pokemon card prices](/cards/pokemon) and [C3 MTG card prices](/cards/mtg).
 
 ## The C3 Take
 
@@ -59,5 +59,5 @@ The fake card problem in Australia is real but manageable. The light test catche
 ## What to Read Next
 
 - Spot fake Pokemon cards specifically at [/blog/how-to-spot-fake-pokemon-cards-australia](/blog/how-to-spot-fake-pokemon-cards-australia)
-- Browse verified prices at [/cards/mtg](/cards/mtg)
+- Browse verified prices at [C3 MTG card prices](/cards/mtg)
 - Find your collector style at [/quizzes/collector-or-player](/quizzes/collector-or-player)

@@ -58,6 +58,6 @@ Non-foil competitive cards are accessible and functional for players who want to
 
 ## What to Read Next
 
-- Browse Sorcery cards at [/cards/sorcery](/cards/sorcery)
+- Browse Sorcery cards at [C3 Sorcery card prices](/cards/sorcery)
 - Read the beginner's guide at [/blog/sorcery-contested-realm-beginners-guide-australia](/blog/sorcery-contested-realm-beginners-guide-australia)
-- Use the EV Calculator at [/tools](/tools)
+- Use the EV Calculator at [C3 tools](/tools)

@@ -12,19 +12,19 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For One Piece starter decks, major retailers and Amazon AU offer competitive pricing at or below RRP. For singles, eBay AU and specialist card stores are the most price-competitive sources. Japanese-language product is also worth considering in Australia since the organised play community accepts Japanese cards and prices can be lower for some products. Always benchmark against [/cards/onepiece](/cards/onepiece) before buying.
+For One Piece starter decks, major retailers and Amazon AU offer competitive pricing at or below RRP. For singles, eBay AU and specialist card stores are the most price-competitive sources. Japanese-language product is also worth considering in Australia since the organised play community accepts Japanese cards and prices can be lower for some products. Always benchmark against [C3 One Piece card prices](/cards/onepiece) before buying.
 
 ## Starter Decks: The Best Entry Point
 
 One Piece starter decks at AU$20 to AU$25 are the most cost-effective way to start the game. These are available at major retailers including Big W, Target, and [Amazon AU](https://www.amazon.com.au/s?k=one+piece+card+game+starter+deck&tag=blasdigital-22), typically at or close to RRP across all channels.
 
-For a new player, buying the starter deck for the faction you want to play is the right first purchase. The deck is complete and playable immediately. Then add specific singles from [/cards/onepiece](/cards/onepiece) or eBay AU to upgrade toward the competitive version of that Leader.
+For a new player, buying the starter deck for the faction you want to play is the right first purchase. The deck is complete and playable immediately. Then add specific singles from [C3 One Piece card prices](/cards/onepiece) or eBay AU to upgrade toward the competitive version of that Leader.
 
 ## Singles: Where to Buy Cheapest
 
 **eBay AU** is the most active One Piece singles marketplace in Australia. Trading volume has increased significantly as the game has grown and the Australian organised play scene has expanded. Filter by sold listings to confirm actual sale prices. Search [eBay AU One Piece singles](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Done+piece+card+game+single+cards&_sacat=183454) and compare across multiple listings.
 
-**The C3 shop at [/shop](/shop)** carries One Piece singles from opened product at competitive AUD prices. The [/cards/onepiece](/cards/onepiece) hub links to current listings.
+**The C3 shop at [/shop](/shop)** carries One Piece singles from opened product at competitive AUD prices. The [C3 One Piece card prices](/cards/onepiece) hub links to current listings.
 
 **Local game stores** in major Australian cities are increasingly stocking One Piece singles. Stores with active One Piece communities tend to have the best selection. Prices are usually within 10 to 20% of eBay for common and uncommon singles, and competitive on Super Rares.
 
@@ -67,6 +67,6 @@ One Piece TCG's pricing in Australia is fairly consistent across channels becaus
 
 ## What to Read Next
 
-- Check current One Piece card prices at [/cards/onepiece](/cards/onepiece)
-- Read about One Piece singles vs sealed at [/blog/one-piece-tcg-singles-vs-sealed-australia](/blog/p347-one-piece-tcg-singles-vs-sealed-australia)
+- Check current One Piece card prices at [C3 One Piece card prices](/cards/onepiece)
+- Read about One Piece singles vs sealed at [/blog/one-piece-tcg-singles-vs-sealed-australia](/blog/one-piece-tcg-singles-vs-sealed-australia)
 - Find your One Piece crew at [/quizzes/onepiece-crew](/quizzes/onepiece-crew)

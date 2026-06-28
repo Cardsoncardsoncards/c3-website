@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Sorcery: Contested Realm is a premium independent TCG with genuinely stunning card art based on original fantasy worlds. Its most valuable cards are Exceptional and Unique rarity versions of powerful Avatars and Sites, with top copies trading in the AU$50 to AU$300 range. The game has a small but dedicated Australian community and is worth starting for players who prioritise game design quality and exceptional art. Check [/cards/sorcery](/cards/sorcery) for current AUD prices.
+Sorcery: Contested Realm is a premium independent TCG with genuinely stunning card art based on original fantasy worlds. Its most valuable cards are Exceptional and Unique rarity versions of powerful Avatars and Sites, with top copies trading in the AU$50 to AU$300 range. The game has a small but dedicated Australian community and is worth starting for players who prioritise game design quality and exceptional art. Check [C3 Sorcery card prices](/cards/sorcery) for current AUD prices.
 
 ## What Is Sorcery: Contested Realm?
 
@@ -36,7 +36,7 @@ Sorcery: Contested Realm is an independent TCG published by Erik Olofsson and th
 
 **Site cards** are unique to Sorcery among modern TCGs and some high-power Site cards in Exceptional rarity trade at meaningful prices because of their universal gameplay relevance across many deck types.
 
-The Sorcery secondary market in Australia runs primarily through eBay AU and the game's Discord community. Search [eBay AU Sorcery TCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dsorcery+contested+realm&_sacat=183454) for current listings. Check [/cards/sorcery](/cards/sorcery) for aggregated AUD pricing.
+The Sorcery secondary market in Australia runs primarily through eBay AU and the game's Discord community. Search [eBay AU Sorcery TCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dsorcery+contested+realm&_sacat=183454) for current listings. Check [C3 Sorcery card prices](/cards/sorcery) for aggregated AUD pricing.
 
 ## Entry Cost and Starting Sorcery
 
@@ -72,6 +72,6 @@ Sorcery: Contested Realm is one of the most thoughtfully designed and beautifull
 
 ## What to Read Next
 
-- Browse Sorcery: Contested Realm cards at [/cards/sorcery](/cards/sorcery)
+- Browse Sorcery: Contested Realm cards at [C3 Sorcery card prices](/cards/sorcery)
 - Find your Sorcery element at [/quizzes/sorcery-realm](/quizzes/sorcery-realm)
-- Read the Sorcery beginners guide at [/blog/sorcery-contested-realm-beginners-guide-australia](/blog/p283-sorcery-contested-realm-beginners-guide-australia)
+- Read the Sorcery beginners guide at [/blog/sorcery-contested-realm-beginners-guide-australia](/blog/sorcery-contested-realm-beginners-guide-australia)

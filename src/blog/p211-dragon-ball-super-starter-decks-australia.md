@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Dragon Ball Super Card Game (DBSCG) starter decks are pre-built, ready-to-play 50-card decks that include a Leader card. For new players in Australia, a starter deck is the correct first purchase: they're balanced, legal for tournament play, and represent good value. See current prices at [/cards/dragon-ball-super](/cards/dragon-ball-super).
+Dragon Ball Super Card Game (DBSCG) starter decks are pre-built, ready-to-play 50-card decks that include a Leader card. For new players in Australia, a starter deck is the correct first purchase: they're balanced, legal for tournament play, and represent good value. See current prices at [C3 Dragon Ball card prices](/cards/dragonball).
 
 
 
@@ -109,7 +109,7 @@ Dragon Ball Super Card Game has a dedicated Australian player base concentrated 
 
 The Australian Dragon Ball Super Card Game Facebook group and Discord community are the best places to find local players and events. Tournament results and meta discussion from the Australian competitive scene are active.
 
-Check the [C3 Release Calendar](/market) for upcoming Dragon Ball Super events and new releases in Australia.
+Check the [C3 Release Calendar](/calendar) for upcoming Dragon Ball Super events and new releases in Australia.
 
 ## Checking Current Prices
 
@@ -117,13 +117,13 @@ Use the [C3 Card Compare tool](/compare) for current AUD pricing on Dragon Ball 
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dragon-ball-super](/cards/dragon-ball-super) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Dragon Ball card prices](/cards/dragonball) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

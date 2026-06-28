@@ -54,9 +54,9 @@ For current product, buy from retail at retail prices. The secondary market prem
 
 ## What to Read Next
 
-- Browse Bakugan cards at [/cards/bakugan](/cards/bakugan)
+- Browse Bakugan cards at [C3 Bakugan card prices](/cards/bakugan)
 - Read the Bakugan beginner's guide at [/blog/bakugan-tcg-beginners-guide-australia](/blog/bakugan-tcg-beginners-guide-australia)
-- Use the EV calculator and tools at [/tools](/tools)
+- Use the EV calculator and tools at [C3 tools](/tools)
 
 ## Bakugan Cards That Hold Value Longer Term
 

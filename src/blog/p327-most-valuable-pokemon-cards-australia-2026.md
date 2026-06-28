@@ -40,7 +40,7 @@ Not all rare cards are worth money, and not all valuable cards look rare. The Po
 
 **Tropical Mega Battle and Winner cards** from the early tournament era are the extreme top end of the market. These event-exclusive promos are extremely rare and command prices well above standard retail.
 
-Check [/cards/pokemon](/cards/pokemon) for current AUD pricing across all of these. Market prices shift with each new set release, format announcement, and rotation.
+Check [C3 Pokemon card prices](/cards/pokemon) for current AUD pricing across all of these. Market prices shift with each new set release, format announcement, and rotation.
 
 ## How Condition Affects Value in Australia
 
@@ -72,6 +72,6 @@ The Pokemon TCG secondary market in Australia is mature, liquid, and well-priced
 
 ## What to Read Next
 
-- Learn about pull rates and rarity tiers at [/blog/pokemon-rarity-guide-australia](/blog/p016-are-pokemon-booster-boxes-investment-australia)
-- Compare Pokemon booster box value at [/tools](/tools)
-- Browse current Pokemon singles prices at [/cards/pokemon](/cards/pokemon)
+- Learn about pull rates and rarity tiers at [/blog/pokemon-rarity-guide-australia](/blog/are-pokemon-booster-boxes-investment-australia)
+- Compare Pokemon booster box value at [C3 tools](/tools)
+- Browse current Pokemon singles prices at [C3 Pokemon card prices](/cards/pokemon)

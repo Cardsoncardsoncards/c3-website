@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For competitive Digimon Card Game play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. A standard booster box costs roughly AU$80 to AU$120 at Australian retail and typically returns less than that in card value at current market prices. Starter Decks at AU$15 to AU$25 are the right entry point for new players. Check [/cards/digimon](/cards/digimon) and the [EV Calculator at /tools](/tools) before buying any sealed product above AU$30.
+For competitive Digimon Card Game play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. A standard booster box costs roughly AU$80 to AU$120 at Australian retail and typically returns less than that in card value at current market prices. Starter Decks at AU$15 to AU$25 are the right entry point for new players. Check [C3 Digimon card prices](/cards/digimon) and the [EV Calculator at /tools](/tools) before buying any sealed product above AU$30.
 
 ## Digimon Starter Decks: The Best Entry Point
 
@@ -28,7 +28,7 @@ Value is concentrated in Secret Rares, which pull at roughly one to two per boos
 
 Digimon's Secret Rare prices are generally lower than equivalent-rarity tiers in Pokemon and Yu-Gi-Oh, which means boxes have a lower ceiling on expected value but also lower floor risk. The distribution is more predictable than in games where one chase card can be worth AU$300 and another is worth AU$5.
 
-Use the [EV Calculator at /tools](/tools) with current [/cards/digimon](/cards/digimon) prices to model any specific set before purchasing.
+Use the [EV Calculator at /tools](/tools) with current [C3 Digimon card prices](/cards/digimon) prices to model any specific set before purchasing.
 
 ## When Sealed Digimon Product Makes Sense
 
@@ -58,10 +58,10 @@ Digimon Card Game runs a regular tournament calendar in Australia with Bandai Ch
 
 ## The C3 Take
 
-Digimon Card Game is one of the more accessible TCGs in Australia for both competitive play and collecting. Card prices rarely reach the extreme premiums of Pokemon or Magic, the Starter Deck entry model is genuinely excellent value, and the competitive singles market is liquid enough to build any deck from targeted purchases. For most Australian Digimon players, the right approach is: start with three copies of your preferred Starter Deck, identify the specific singles upgrades you need from [/cards/digimon](/cards/digimon), and buy those targeted singles rather than opening booster product. The maths consistently favours this approach.
+Digimon Card Game is one of the more accessible TCGs in Australia for both competitive play and collecting. Card prices rarely reach the extreme premiums of Pokemon or Magic, the Starter Deck entry model is genuinely excellent value, and the competitive singles market is liquid enough to build any deck from targeted purchases. For most Australian Digimon players, the right approach is: start with three copies of your preferred Starter Deck, identify the specific singles upgrades you need from [C3 Digimon card prices](/cards/digimon), and buy those targeted singles rather than opening booster product. The maths consistently favours this approach.
 
 ## What to Read Next
 
-- Check current Digimon singles prices at [/cards/digimon](/cards/digimon)
-- Calculate Digimon booster box EV at [/tools](/tools)
-- Read the Digimon beginners guide at [/blog/digimon-card-game-australia-beginners-guide](/blog/p273-digimon-card-game-australia-beginners-guide)
+- Check current Digimon singles prices at [C3 Digimon card prices](/cards/digimon)
+- Calculate Digimon booster box EV at [C3 tools](/tools)
+- Read the Digimon beginners guide at [/blog/digimon-card-game-australia-beginners-guide](/blog/digimon-card-game-australia-beginners-guide)

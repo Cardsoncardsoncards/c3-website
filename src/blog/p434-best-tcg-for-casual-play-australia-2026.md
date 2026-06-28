@@ -47,7 +47,7 @@ Casual play has different optimal formats within each game. MTG casual play is a
 
 For group play with mixed commitment levels, Commander (MTG) or Lorcana work well because you can join a game without having built a competitive deck. Starter product is sufficient for casual engagement in both games.
 
-For solo collectors who enjoy casual collecting without structured play, Pokemon's mainstream recognition and wide retail availability makes it the easiest game to engage with purely as a collector. Track your casual collection at [/tracker](/tracker).
+For solo collectors who enjoy casual collecting without structured play, Pokemon's mainstream recognition and wide retail availability makes it the easiest game to engage with purely as a collector. Track your casual collection at [C3 Collection Tracker](/tracker).
 
 
 Casual play is also the context where the social dimension of TCGs matters most. Games designed for four or more players (Commander) create emergent narratives and memorable moments that two-player duelling cannot replicate. If your casual gaming circle has three or more people who can commit to a regular game night, Commander is genuinely worth the AU$60 to AU$90 per person initial investment for the social experience it produces. Browse Commander product at [/shop](/shop).
@@ -63,4 +63,4 @@ Casual play is where most Australian TCG players actually live. Choose based on 
 
 - Find your TCG match at [/quizzes/which-tcg](/quizzes/which-tcg)
 - Find your MTG Commander at [/quizzes/mtg-commander](/quizzes/mtg-commander)
-- Browse game options at [/cards/mtg](/cards/mtg)
+- Browse game options at [C3 MTG card prices](/cards/mtg)

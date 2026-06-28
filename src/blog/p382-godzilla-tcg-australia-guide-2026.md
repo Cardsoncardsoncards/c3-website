@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The Godzilla TCG is a niche collectables-focused card game in Australia primarily appealing to Godzilla franchise fans. Its most valuable cards are holographic and rare versions of iconic Kaiju, with collector demand driven almost entirely by IP nostalgia rather than competitive gameplay. Entry is accessible and the collector experience serves fans well. Check [/cards/godzilla](/cards/godzilla) for current AUD prices.
+The Godzilla TCG is a niche collectables-focused card game in Australia primarily appealing to Godzilla franchise fans. Its most valuable cards are holographic and rare versions of iconic Kaiju, with collector demand driven almost entirely by IP nostalgia rather than competitive gameplay. Entry is accessible and the collector experience serves fans well. Check [C3 Godzilla TCG card prices](/cards/godzilla) for current AUD prices.
 
 ## What Is the Godzilla TCG?
 
@@ -30,7 +30,7 @@ The game's design prioritises accessibility and franchise celebration over compe
 
 **Crossover and anniversary releases** that tie in with specific Godzilla franchise milestones have collector appeal beyond standard product.
 
-The Godzilla TCG secondary market in Australia is thin but present on eBay AU. Search [eBay AU Godzilla TCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dgodzilla+trading+card+game&_sacat=183454) for current listings. Check [/cards/godzilla](/cards/godzilla) for aggregated AUD pricing.
+The Godzilla TCG secondary market in Australia is thin but present on eBay AU. Search [eBay AU Godzilla TCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dgodzilla+trading+card+game&_sacat=183454) for current listings. Check [C3 Godzilla TCG card prices](/cards/godzilla) for aggregated AUD pricing.
 
 ## Entry Cost and Starting the Godzilla TCG
 
@@ -65,6 +65,6 @@ The Godzilla TCG is a fan product first and a competitive TCG second. It succeed
 
 ## What to Read Next
 
-- Browse Godzilla TCG cards at [/cards/godzilla](/cards/godzilla)
+- Browse Godzilla TCG cards at [C3 Godzilla TCG card prices](/cards/godzilla)
 - Compare your TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Godzilla TCG beginners guide at [/blog/godzilla-tcg-beginners-guide-australia](/blog/p277-godzilla-tcg-beginners-guide-australia)
+- Read the Godzilla TCG beginners guide at [/blog/godzilla-tcg-beginners-guide-australia](/blog/godzilla-tcg-beginners-guide-australia)

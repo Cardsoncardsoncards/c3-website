@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For competitive Cardfight!! Vanguard play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. Trial Decks at AU$15 to AU$20 are the right entry point for new players and the multiple-Trial-Deck approach is standard practice in the community. Booster boxes cost roughly AU$70 to AU$100 and value is heavily concentrated in the specific clan the set supports. Check [/cards/vanguard](/cards/vanguard) before buying any sealed product.
+For competitive Cardfight!! Vanguard play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. Trial Decks at AU$15 to AU$20 are the right entry point for new players and the multiple-Trial-Deck approach is standard practice in the community. Booster boxes cost roughly AU$70 to AU$100 and value is heavily concentrated in the specific clan the set supports. Check [C3 Vanguard card prices](/cards/vanguard) before buying any sealed product.
 
 ## Trial Decks: The Vanguard Standard Entry
 
@@ -26,7 +26,7 @@ A standard Vanguard booster box contains 16 packs of 7 cards, giving 112 cards t
 
 **The clan-specific problem.** Vanguard booster sets are typically designed around specific clans. If the box's featured clans are not the clans you play, even the RRR you pull may have low value to you personally and limited secondary market demand. Unlike games where any pack can give you universal staples, Vanguard packs give you clan-specific cards.
 
-The [EV Calculator at /tools](/tools) can model Vanguard box EV using current pricing from [/cards/vanguard](/cards/vanguard). The EV picture is often better if you play the clan the set supports and worse if you do not.
+The [EV Calculator at /tools](/tools) can model Vanguard box EV using current pricing from [C3 Vanguard card prices](/cards/vanguard). The EV picture is often better if you play the clan the set supports and worse if you do not.
 
 ## When Sealed Makes Sense for Vanguard
 
@@ -60,10 +60,10 @@ Bushiroad publishes Vanguard in both Japanese and English. Japanese cards are ge
 
 ## The C3 Take
 
-Vanguard's sealed product works best when you specifically want cards for the clan the product supports. Random booster opening is the least efficient path to a competitive deck for any clan. The Trial Deck path is the right foundation and singles purchases for specific RRR upgrades is the right follow-up. If you are in the Vanguard community, the game's deep history means there are always older products with interesting value propositions for your clan, but buying those requires knowledge of what your specific clan needs. Use [/cards/vanguard](/cards/vanguard) to benchmark prices before any purchase.
+Vanguard's sealed product works best when you specifically want cards for the clan the product supports. Random booster opening is the least efficient path to a competitive deck for any clan. The Trial Deck path is the right foundation and singles purchases for specific RRR upgrades is the right follow-up. If you are in the Vanguard community, the game's deep history means there are always older products with interesting value propositions for your clan, but buying those requires knowledge of what your specific clan needs. Use [C3 Vanguard card prices](/cards/vanguard) to benchmark prices before any purchase.
 
 ## What to Read Next
 
-- Check current Vanguard singles prices at [/cards/vanguard](/cards/vanguard)
-- Calculate Vanguard booster box EV at [/tools](/tools)
-- Read the Vanguard beginners guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/p286-cardfight-vanguard-beginners-guide-australia)
+- Check current Vanguard singles prices at [C3 Vanguard card prices](/cards/vanguard)
+- Calculate Vanguard booster box EV at [C3 tools](/tools)
+- Read the Vanguard beginners guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/cardfight-vanguard-beginners-guide-australia)

@@ -22,7 +22,7 @@ Several DBZ-branded card games have existed over the years:
 
 **Panini America's Dragon Ball Z TCG (2014-2017)** was a licensed relaunch of the Score game with updated design. It had a smaller footprint in Australia.
 
-**Bandai's Japanese Dragon Ball TCG products** span multiple eras and include both the original Dragonball/DBZ era and the current Dragon Ball Super game (Fusion World era, covered separately at [/cards/dragonball](/cards/dragonball)).
+**Bandai's Japanese Dragon Ball TCG products** span multiple eras and include both the original Dragonball/DBZ era and the current Dragon Ball Super game (Fusion World era, covered separately at [C3 Dragon Ball card prices](/cards/dragonball)).
 
 This guide focuses primarily on the Score Entertainment CCG era as the dominant collector market.
 
@@ -73,5 +73,5 @@ The Dragon Ball Z TCG collector market in Australia is personal and nostalgia-dr
 ## What to Read Next
 
 - Browse Dragon Ball Z TCG cards at [/cards/dragonballz](/cards/dragonballz)
-- For the current Dragon Ball Super Fusion World game, visit [/cards/dragonball](/cards/dragonball)
+- For the current Dragon Ball Super Fusion World game, visit [C3 Dragon Ball card prices](/cards/dragonball)
 - Take the TCG quiz at [/quizzes/dragonball-warrior](/quizzes/dragonball-warrior)

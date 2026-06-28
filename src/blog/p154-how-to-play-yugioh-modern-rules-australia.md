@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Yu-Gi-Oh has been running since 1999 and the rules have changed significantly over that time. If you remember the anime or the early card game, the current version is quite different. This guide covers the 2026 rules as they actually work. See current prices at [/cards/yugioh](/cards/yugioh).
+Yu-Gi-Oh has been running since 1999 and the rules have changed significantly over that time. If you remember the anime or the early card game, the current version is quite different. This guide covers the 2026 rules as they actually work. See current prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh).
 
 
 
@@ -135,13 +135,13 @@ Use the [C3 Card Compare tool](/compare) for current AUD pricing on Yu-Gi-Oh sin
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/yugioh](/cards/yugioh) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Yu-Gi-Oh card prices](/cards/yugioh) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Yu-Gi-Oh card prices at [/cards/yugioh](/cards/yugioh)
+- Browse Yu-Gi-Oh card prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
 - Find your Yu-Gi-Oh deck type at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

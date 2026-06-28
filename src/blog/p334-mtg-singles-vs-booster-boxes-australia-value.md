@@ -30,7 +30,7 @@ Use the [EV Calculator at /tools](/tools) before purchasing any MTG sealed produ
 
 **Home draft groups.** Many Australian MTG players run draft nights at home with friends. Buying a booster box for a draft is a social activity with the opening experience built in. The EV is irrelevant when the point is the game.
 
-**Premium products with historically strong EV.** Some MTG products have reliably positive or near-breakeven EV because of their contents. Double Masters products historically perform better than Standard sets because of high-demand reprint content. Check the specific product on [/tools](/tools) before assuming any product is worth opening.
+**Premium products with historically strong EV.** Some MTG products have reliably positive or near-breakeven EV because of their contents. Double Masters products historically perform better than Standard sets because of high-demand reprint content. Check the specific product on [C3 tools](/tools) before assuming any product is worth opening.
 
 **Collector Booster boxes.** These are more expensive per pack but contain a higher proportion of premium foil and special treatment cards. For players who specifically want borderless, full-art, or serialised treatments, Collector Boosters may be the right product. They are not a better EV proposition than Play Boosters on average, just a different product targeting collector demand.
 
@@ -58,6 +58,6 @@ The maths on MTG booster boxes in Australia is clear for most products: negative
 
 ## What to Read Next
 
-- Calculate exact EV on any current MTG set at [/tools](/tools)
-- Browse current MTG singles prices at [/cards/mtg](/cards/mtg)
-- Read about the most valuable MTG cards in Australia at [/blog/most-valuable-mtg-cards-australia-2026](/blog/p333-most-valuable-mtg-cards-australia-2026)
+- Calculate exact EV on any current MTG set at [C3 tools](/tools)
+- Browse current MTG singles prices at [C3 MTG card prices](/cards/mtg)
+- Read about the most valuable MTG cards in Australia at [/blog/most-valuable-mtg-cards-australia-2026](/blog/most-valuable-mtg-cards-australia-2026)

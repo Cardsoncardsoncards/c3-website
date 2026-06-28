@@ -55,10 +55,10 @@ Using all four tools together gives you the data advantage that most casual TCG 
 
 ## The C3 Take
 
-The collecting window in any TCG is shortest at the beginning. Riftbound is still at the beginning. The cards that will be valuable in five years when the game has grown are the ones available at reasonable prices today. Track what you own, identify what you need, and buy strategically rather than opening boxes hoping for the right pulls. The [/tracker](/tracker) and [/cards/riftbound](/cards/riftbound) hub are your two essential tools.
+The collecting window in any TCG is shortest at the beginning. Riftbound is still at the beginning. The cards that will be valuable in five years when the game has grown are the ones available at reasonable prices today. Track what you own, identify what you need, and buy strategically rather than opening boxes hoping for the right pulls. The [C3 Collection Tracker](/tracker) and [C3 Riftbound card prices](/cards/riftbound) hub are your two essential tools.
 
 ## What to Read Next
 
-- Track your Riftbound collection at at [/tracker](/tracker)
-- Browse Riftbound singles and prices at at [/cards/riftbound](/cards/riftbound)
+- Track your Riftbound collection at at [C3 Collection Tracker](/tracker)
+- Browse Riftbound singles and prices at at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)

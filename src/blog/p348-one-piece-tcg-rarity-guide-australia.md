@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The One Piece TCG uses a rarity system with Common, Uncommon, Rare, Super Rare, Secret Rare, and Leader tiers. The most valuable cards are Secret Rares (SEC) and alternate art versions of Leader cards, which pull infrequently and command significant premiums for popular characters. For current AUD prices across all rarities, check [/cards/onepiece](/cards/onepiece).
+The One Piece TCG uses a rarity system with Common, Uncommon, Rare, Super Rare, Secret Rare, and Leader tiers. The most valuable cards are Secret Rares (SEC) and alternate art versions of Leader cards, which pull infrequently and command significant premiums for popular characters. For current AUD prices across all rarities, check [C3 One Piece card prices](/cards/onepiece).
 
 ## The One Piece TCG Rarity Tiers
 
@@ -61,6 +61,6 @@ One Piece TCG's rarity system is relatively clean compared to Yu-Gi-Oh's extensi
 
 ## What to Read Next
 
-- Browse current One Piece card prices at [/cards/onepiece](/cards/onepiece)
+- Browse current One Piece card prices at [C3 One Piece card prices](/cards/onepiece)
 - Find your One Piece crew at [/quizzes/onepiece-crew](/quizzes/onepiece-crew)
-- Read about One Piece singles vs sealed at [/blog/one-piece-tcg-singles-vs-sealed-australia](/blog/p347-one-piece-tcg-singles-vs-sealed-australia)
+- Read about One Piece singles vs sealed at [/blog/one-piece-tcg-singles-vs-sealed-australia](/blog/one-piece-tcg-singles-vs-sealed-australia)

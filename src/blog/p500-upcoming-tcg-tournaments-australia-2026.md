@@ -133,8 +133,8 @@ This post was last updated in June 2026 and covers confirmed events through Dece
 
 ## Related Posts
 
-- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026](/blog/p494-yugioh-oceanic-world-championship-qualifier-melbourne-2026)
-- [Magic Spotlight: The Hobbit Brisbane 2026](/blog/p499-magic-spotlight-the-hobbit-brisbane-2026)
-- [Dragon Ball Super Brisbane Regional 2026](/blog/p497-dragon-ball-super-brisbane-regional-2026)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
-- [TCG Releases July 2026 Australia](/blog/p480-tcg-releases-july-2026-australia)
+- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026](/blog/yugioh-oceanic-world-championship-qualifier-melbourne-2026)
+- [Magic Spotlight: The Hobbit Brisbane 2026](/blog/magic-spotlight-the-hobbit-brisbane-2026)
+- [Dragon Ball Super Brisbane Regional 2026](/blog/dragon-ball-super-brisbane-regional-2026)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)
+- [TCG Releases July 2026 Australia](/blog/tcg-releases-july-2026-australia)

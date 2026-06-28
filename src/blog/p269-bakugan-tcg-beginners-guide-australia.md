@@ -71,6 +71,6 @@ Do not buy it expecting resale value, collectability, or a tournament scene. Non
 
 ## What to Read Next
 
-- Browse Bakugan cards at [/cards/bakugan](/cards/bakugan)
+- Browse Bakugan cards at [C3 Bakugan card prices](/cards/bakugan)
 - Trying to figure out which TCG to commit to? [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming TCG releases at [/calendar](/market)
+- Check upcoming TCG releases at [/calendar](/calendar)

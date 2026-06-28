@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-RQ Singapore is the second APAC Regional Qualifier of 2026, running September 4-6 in Singapore. For Australian players who want to compete at the highest level of Riftbound outside of Sydney, Singapore is the next step. Here is what you need to know now. See current prices at [/cards/riftbound](/cards/riftbound).
+RQ Singapore is the second APAC Regional Qualifier of 2026, running September 4-6 in Singapore. For Australian players who want to compete at the highest level of Riftbound outside of Sydney, Singapore is the next step. Here is what you need to know now. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -89,19 +89,19 @@ For Riftbound singles shopping in Singapore, the local TCG market will have Vend
 
 ---
 
-Subscribe to our newsletter at [/tracker](/tracker) for RQ Singapore updates as the venue, badge details, and meta previews are confirmed.
+Subscribe to our newsletter at [C3 Collection Tracker](/tracker) for RQ Singapore updates as the venue, badge details, and meta previews are confirmed.
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games. Event details current as of May 2026.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

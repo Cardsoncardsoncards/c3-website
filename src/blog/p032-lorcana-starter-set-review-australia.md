@@ -78,7 +78,7 @@ Buy a Starter Deck to play, to give as a gift, or to learn the game. For those p
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Lorcana card prices](/cards/lorcana) to make price-informed decisions every time.
 
 ## What to Read Next
 

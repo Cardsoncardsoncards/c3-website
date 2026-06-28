@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-If you've ever torn open a Pokemon booster pack with your heart rate slightly elevated, you already know something is happening there that goes beyond just looking at cardboard. See current prices at [/cards/mtg](/cards/mtg).
+If you've ever torn open a Pokemon booster pack with your heart rate slightly elevated, you already know something is happening there that goes beyond just looking at cardboard. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -75,13 +75,13 @@ The psychology is designed into the product. Knowing it's there is the first ste
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse TCG card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse TCG card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

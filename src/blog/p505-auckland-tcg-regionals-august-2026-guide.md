@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
+[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)
 
 The Aotea Centre in Auckland is hosting a full weekend of TAK Games Oceania Regionals on 29 and 30 August 2026. Six separate events across two days: One Piece Regional, Dragon Ball Super MASTERS Regional, Dragon Ball Super Fusion World Regional, Digimon Regional, Gundam Regional, and One Piece Treasure Cup.
 
@@ -108,8 +108,8 @@ C3 tracks current AUD prices for [One Piece](/cards/onepiece), [Dragon Ball Supe
 
 ## Related Posts
 
-- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/p500-upcoming-tcg-tournaments-australia-2026)
-- [Dragon Ball Super Brisbane Regional Championship 2026](/blog/p497-dragon-ball-super-brisbane-regional-2026)
-- [Gundam Card Game Brisbane Regional Championship 2026](/blog/p496-gundam-card-game-brisbane-regional-2026)
-- [One Piece Card Game Australia Guide](/blog/p235-one-piece-card-game-australia-guide)
-- [Digimon Card Game Australia Beginners Guide](/blog/p273-digimon-card-game-australia-beginners-guide)
+- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/upcoming-tcg-tournaments-australia-2026)
+- [Dragon Ball Super Brisbane Regional Championship 2026](/blog/dragon-ball-super-brisbane-regional-2026)
+- [Gundam Card Game Brisbane Regional Championship 2026](/blog/gundam-card-game-brisbane-regional-2026)
+- [One Piece Card Game Australia Guide](/blog/one-piece-card-game-australia-guide)
+- [Digimon Card Game Australia Beginners Guide](/blog/digimon-card-game-australia-beginners-guide)

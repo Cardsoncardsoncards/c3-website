@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Commander. also called EDH (Elder Dragon Highlander). is the most popular way to play Magic: The Gathering in Australia. At Friday Night Magic events, local game stores, and kitchen tables across the country, Commander is the format most groups are playing. See current prices at [/cards/mtg](/cards/mtg).
+Commander. also called EDH (Elder Dragon Highlander). is the most popular way to play Magic: The Gathering in Australia. At Friday Night Magic events, local game stores, and kitchen tables across the country, Commander is the format most groups are playing. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -120,17 +120,17 @@ Australian local game stores have built Commander as a social anchor. Weekly Com
 
 For game store owners, Commander is valuable because players regularly upgrade decks and buy new precons, creating consistent revenue that tournament-only formats don't generate. This alignment of player and store interests has made Commander the primary supported format at most Australian game stores.
 
-The [C3 Release Calendar](/market) tracks Commander-relevant set releases and major events in Australia. The [Random Commander Generator](/cards/mtg/random-commander) helps players find their next Commander from 10,000+ legendary creatures.
+The [C3 Release Calendar](/calendar) tracks Commander-relevant set releases and major events in Australia. The [Random Commander Generator](/cards/mtg/random-commander) helps players find their next Commander from 10,000+ legendary creatures.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

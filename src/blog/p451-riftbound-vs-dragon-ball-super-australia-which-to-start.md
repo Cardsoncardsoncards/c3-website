@@ -28,7 +28,7 @@ Dragon Ball Super Fusion World has an established competitive structure with sto
 
 ## Card Values and EV
 
-DBS Fusion World booster box EV follows standard patterns for the game, with chase cards in the Leader alternate and Secret Rare tiers. Check [/cards/dragonball](/cards/dragonball) for current AU prices. Riftbound champion rarity cards are the premium collector tier with similar price concentration patterns. Check [/cards/riftbound](/cards/riftbound). Both games have comparable box EV structures at current retail pricing.
+DBS Fusion World booster box EV follows standard patterns for the game, with chase cards in the Leader alternate and Secret Rare tiers. Check [C3 Dragon Ball card prices](/cards/dragonball) for current AU prices. Riftbound champion rarity cards are the premium collector tier with similar price concentration patterns. Check [C3 Riftbound card prices](/cards/riftbound). Both games have comparable box EV structures at current retail pricing.
 
 ## Long-Term Outlook
 
@@ -60,5 +60,5 @@ Both games are worth playing in Australia in 2026. Dragon Ball Super has the lar
 ## What to Read Next
 
 - Find your TCG match at at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse DBS card prices at at [/cards/dragonball](/cards/dragonball)
-- Browse Riftbound card prices at at [/cards/riftbound](/cards/riftbound)
+- Browse DBS card prices at at [C3 Dragon Ball card prices](/cards/dragonball)
+- Browse Riftbound card prices at at [C3 Riftbound card prices](/cards/riftbound)

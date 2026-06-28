@@ -12,7 +12,9 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Pokemon Scarlet and Violet base set introduced the new ex card era in 2023 and remains one of the more accessible SV sets for Australian collectors. At current retail pricing of AU$130 to AU$180 per booster box, the set sits in borderline territory. The top cards including Charizard ex and Miriam Special Illustration Rare hold meaningful AU value, but the bulk of the box value concentrates in a handful of chase cards. Run the numbers for your specific purchase price at the [EV Calculator at /tools](/tools) before committing. Browse current AUD singles prices at [/cards/pokemon](/cards/pokemon).
+Pokemon Scarlet and Violet base set introduced the new ex card era in 2023 and remains one of the more accessible SV sets for Australian collectors. At current retail pricing of AU$130 to AU$180 per booster box, the set sits in borderline territory. The top cards including Charizard ex and Miriam Special Illustration Rare hold meaningful AU value, but the bulk of the box value concentrates in a handful of chase cards. Run the numbers for your specific purchase price at the [EV Calculator at /tools](/tools) before committing. Browse current AUD singles prices at [C3 Pokemon card prices](/cards/pokemon).
+
+Search [Pokemon booster boxes](https://www.amazon.com.au/s?k=pokemon+booster+box&tag=blasdigital-22) on Amazon AU
 
 ## What Is in Scarlet and Violet Base Set?
 
@@ -26,7 +28,7 @@ Scarlet and Violet base introduced 198 cards plus Secret Rare and Special Illust
 
 ## Top Cards to Know
 
-**Charizard ex Special Illustration Rare** is the headline card and the one most likely to hold long-term AU value due to Charizard's perennial collector demand. Values fluctuate with market conditions, check the current AUD price at [/cards/pokemon](/cards/pokemon) before making any purchase or sale decision.
+**Charizard ex Special Illustration Rare** is the headline card and the one most likely to hold long-term AU value due to Charizard's perennial collector demand. Values fluctuate with market conditions, check the current AUD price at [C3 Pokemon card prices](/cards/pokemon) before making any purchase or sale decision.
 
 **Miriam Special Illustration Rare** attracted strong collector demand as a new character Supporter card with striking art. Iono and Arven in their full-art and Special Illustration versions are competitive staples that see consistent buy pressure from tournament players.
 
@@ -40,7 +42,7 @@ The honest assessment: most boxes return 60 to 80 percent of their retail cost i
 
 ## Box EV at Current Australian Prices
 
-The EV Calculator at [/tools](/tools) uses current AUD market pricing to give you a verdict for your specific purchase price. The inputs that matter most are the current price of the Charizard ex SIR and the base ex card price floor, both of which shift regularly. Run the calculator before you open.
+The EV Calculator at [C3 tools](/tools) uses current AUD market pricing to give you a verdict for your specific purchase price. The inputs that matter most are the current price of the Charizard ex SIR and the base ex card price floor, both of which shift regularly. Run the calculator before you open.
 
 As a framework: if the Charizard ex SIR is trading above AU$120 and you paid under AU$150 for your box, the expected value maths are broadly positive assuming average luck. Below those conditions, buying singles is the better path.
 
@@ -54,10 +56,10 @@ The SV base set ex cards are widely available as singles through eBay AU and Aus
 
 ## The C3 Take
 
-Scarlet and Violet base set matters because it established the SV era mechanics that now run through every set. If you are building an SV collection or need the competitive staple Supporters like Iono and Arven, the singles market is deep and prices are accessible. If you want the Charizard ex SIR specifically, buy it directly, since opening boxes for a single chase card at roughly 1-in-6-box odds is expensive. Check current AU prices at [/cards/pokemon](/cards/pokemon) and let the data drive the decision.
+Scarlet and Violet base set matters because it established the SV era mechanics that now run through every set. If you are building an SV collection or need the competitive staple Supporters like Iono and Arven, the singles market is deep and prices are accessible. If you want the Charizard ex SIR specifically, buy it directly, since opening boxes for a single chase card at roughly 1-in-6-box odds is expensive. Check current AU prices at [C3 Pokemon card prices](/cards/pokemon) and let the data drive the decision.
 
 ## What to Read Next
 
-- Browse Pokemon singles and current prices at [/cards/pokemon](/cards/pokemon)
-- Calculate whether a box is worth opening at [/tools](/tools)
+- Browse Pokemon singles and current prices at [C3 Pokemon card prices](/cards/pokemon)
+- Calculate whether a box is worth opening at [C3 tools](/tools)
 - Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)

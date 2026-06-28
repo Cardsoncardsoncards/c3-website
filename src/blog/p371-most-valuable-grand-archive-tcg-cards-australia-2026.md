@@ -48,7 +48,7 @@ Grand Archive distributes promotional cards at organised play events with unique
 
 The Grand Archive community also trades heavily through Discord servers where player-to-player transactions can be more accessible than eBay for community members.
 
-Check [/cards/grandarchive](/cards/grandarchive) for current AUD pricing on all Grand Archive singles before purchasing.
+Check [C3 Grand Archive card prices](/cards/grandarchive) for current AUD pricing on all Grand Archive singles before purchasing.
 
 ## What Drives Grand Archive Values
 
@@ -71,6 +71,6 @@ Grand Archive's value structure is driven by genuine scarcity rather than artifi
 
 ## What to Read Next
 
-- Browse Grand Archive singles at [/cards/grandarchive](/cards/grandarchive)
+- Browse Grand Archive singles at [C3 Grand Archive card prices](/cards/grandarchive)
 - Find your Grand Archive class at [/quizzes/grand-archive-class](/quizzes/grand-archive-class)
-- Read the Grand Archive beginners guide at [/blog/grand-archive-tcg-beginners-guide-australia](/blog/p278-grand-archive-tcg-beginners-guide-australia)
+- Read the Grand Archive beginners guide at [/blog/grand-archive-tcg-beginners-guide-australia](/blog/grand-archive-tcg-beginners-guide-australia)

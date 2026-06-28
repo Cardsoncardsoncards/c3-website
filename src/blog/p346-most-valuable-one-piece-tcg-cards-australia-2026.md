@@ -36,7 +36,7 @@ SEC versions of top-tier competitive characters (powerful Leaders, critical Even
 
 **OP-04 (Kingdoms of Intrigue)** introduced popular alternate art versions of major characters including Nami and Robin that the collector community responded strongly to.
 
-**OP-10 (Royal Blood)** is the current set as of mid-2026. Its value is still being established as the market absorbs the new supply. Check [/cards/onepiece](/cards/onepiece) for current pricing.
+**OP-10 (Royal Blood)** is the current set as of mid-2026. Its value is still being established as the market absorbs the new supply. Check [C3 One Piece card prices](/cards/onepiece) for current pricing.
 
 The Japanese One Piece TCG (OCG) releases product several months ahead of English, which means cards known from the Japanese market may already have established collector demand before they reach Australia in English.
 
@@ -71,6 +71,6 @@ One Piece TCG's value market in Australia is still developing relative to Pokemo
 
 ## What to Read Next
 
-- Check current One Piece singles prices at [/cards/onepiece](/cards/onepiece)
+- Check current One Piece singles prices at [C3 One Piece card prices](/cards/onepiece)
 - Find your One Piece crew at [/quizzes/onepiece-crew](/quizzes/onepiece-crew)
-- Read the One Piece TCG beginners guide at [/blog/one-piece-card-game-australia-beginners-guide](/blog/p035-one-piece-card-game-australia-beginners-guide)
+- Read the One Piece TCG beginners guide at [/blog/one-piece-card-game-australia-beginners-guide](/blog/one-piece-card-game-australia-beginners-guide)

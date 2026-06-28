@@ -44,7 +44,7 @@ Square Enix distributes promotional FFTCG cards at tournament events, Final Fant
 
 FFTCG cards use a distinct card stock that can be more susceptible to edge wear than other TCGs. Cards described as Near Mint should have genuinely pristine edges and no visible surface wear. For high-value FFTCG singles, requesting photos from multiple angles is worth the extra communication.
 
-Track current prices at [/cards/finalfantasy](/cards/finalfantasy) and confirm against eBay AU sold listings before purchasing any FFTCG card above AU$15.
+Track current prices at [C3 Final Fantasy TCG card prices](/cards/finalfantasy) and confirm against eBay AU sold listings before purchasing any FFTCG card above AU$15.
 
 
 ## Where Australian Buyers Find FFTCG Premium Cards
@@ -57,10 +57,10 @@ Track current prices at [/cards/finalfantasy](/cards/finalfantasy) and confirm a
 
 ## The C3 Take
 
-FFTCG occupies a unique position in the Australian TCG market. Its appeal extends beyond dedicated TCG players to the broader Final Fantasy fan community, which sustains collector demand for beautiful high-rarity versions of iconic characters from beloved games. If you collect FFTCG for the art and the IP connection, Full Art Legendaries of characters from your favourite Final Fantasy game are the natural target. If you play competitively, current format singles are best bought through [/cards/finalfantasy](/cards/finalfantasy) and eBay AU rather than opening product.
+FFTCG occupies a unique position in the Australian TCG market. Its appeal extends beyond dedicated TCG players to the broader Final Fantasy fan community, which sustains collector demand for beautiful high-rarity versions of iconic characters from beloved games. If you collect FFTCG for the art and the IP connection, Full Art Legendaries of characters from your favourite Final Fantasy game are the natural target. If you play competitively, current format singles are best bought through [C3 Final Fantasy TCG card prices](/cards/finalfantasy) and eBay AU rather than opening product.
 
 ## What to Read Next
 
-- Browse Final Fantasy TCG singles at [/cards/finalfantasy](/cards/finalfantasy)
-- Read the Final Fantasy TCG beginners guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/p274-final-fantasy-tcg-beginners-guide-australia)
+- Browse Final Fantasy TCG singles at [C3 Final Fantasy TCG card prices](/cards/finalfantasy)
+- Read the Final Fantasy TCG beginners guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/final-fantasy-tcg-beginners-guide-australia)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

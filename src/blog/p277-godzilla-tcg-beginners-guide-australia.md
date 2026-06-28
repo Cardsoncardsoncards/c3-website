@@ -71,6 +71,6 @@ Buy it if Godzilla is genuinely your franchise and you want physical cards celeb
 
 ## What to Read Next
 
-- Browse Godzilla TCG cards at [/cards/godzilla](/cards/godzilla)
+- Browse Godzilla TCG cards at [C3 Godzilla TCG card prices](/cards/godzilla)
 - Find the right TCG for your specific needs at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
 - Compare cards across all games at [/compare](/compare)

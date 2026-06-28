@@ -73,5 +73,5 @@ Origins is the set that the entire game is built on. Every mechanic, every Domai
 ## What to Read Next
 
 - Browse the full Origins card list and prices at [/cards/riftbound/sets/origins](/cards/riftbound/sets/origins)
-- Use the EV Calculator before opening a booster box at [/tools](/tools)
+- Use the EV Calculator before opening a booster box at [C3 tools](/tools)
 - Find your Riftbound champion at the quiz hub at [/play](/play)

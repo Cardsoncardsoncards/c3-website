@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Azorius (white-blue) is the premier control combination in Commander. White provides removal and wraths; blue provides counterspells and card draw. Together they can answer almost any threat while building toward a win condition at their own pace. See current prices at [/cards/mtg](/cards/mtg).
+Azorius (white-blue) is the premier control combination in Commander. White provides removal and wraths; blue provides counterspells and card draw. Together they can answer almost any threat while building toward a win condition at their own pace. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -116,13 +116,13 @@ Browse current AUD prices on all Azorius Commander staples at the [C3 MTG card h
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The most valuable Riftbound cards in Australia fall into three categories: Overnumbered cards (the rarest collectibles, pulling roughly one per three booster boxes), Alternate Art champion versions (approximately two per box), and high-demand Epic cards that see consistent competitive play. Prices shift with tournament results and set availability. Check live AUD prices on all Riftbound cards at [/cards/riftbound](/cards/riftbound).
+The most valuable Riftbound cards in Australia fall into three categories: Overnumbered cards (the rarest collectibles, pulling roughly one per three booster boxes), Alternate Art champion versions (approximately two per box), and high-demand Epic cards that see consistent competitive play. Prices shift with tournament results and set availability. Check live AUD prices on all Riftbound cards at [C3 Riftbound card prices](/cards/riftbound).
 
 ## Understanding Riftbound's Rarity System
 
@@ -64,6 +64,6 @@ Riftbound value is being established by a market that is still finding its feet.
 
 ## What to Read Next
 
-- Check live Riftbound card prices at [/cards/riftbound](/cards/riftbound)
-- See current AU price movers at [/market](/market)
-- Track your Riftbound collection at [/tracker](/tracker)
+- Check live Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
+- See current AU price movers at [C3 Market Insights](/market)
+- Track your Riftbound collection at [C3 Collection Tracker](/tracker)

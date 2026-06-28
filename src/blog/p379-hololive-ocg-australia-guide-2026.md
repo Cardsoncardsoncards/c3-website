@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The Hololive OCG is designed primarily for Hololive fans rather than competitive TCG players. Its most valuable cards are limited-distribution alternate art and signed cards featuring popular VTubers. Entry is accessible and the collector experience is strong for fans. It is worth starting if you follow Hololive. For current AUD prices, check [/cards/hololive](/cards/hololive).
+The Hololive OCG is designed primarily for Hololive fans rather than competitive TCG players. Its most valuable cards are limited-distribution alternate art and signed cards featuring popular VTubers. Entry is accessible and the collector experience is strong for fans. It is worth starting if you follow Hololive. For current AUD prices, check [C3 Hololive card prices](/cards/hololive).
 
 ## What Is the Hololive OCG?
 
@@ -32,7 +32,7 @@ Unlike most TCGs where you might play a game without knowing the specific charac
 
 **Gen-specific demand** is a notable feature. Hololive is organised into generations (Gen 0, Gen 1, Gen 2, Gamers, HoloEN, HoloID, etc.) and fans often have strong preferences for specific gens. Cards from popular gens with dedicated fan communities hold premiums independent of general demand.
 
-Search [eBay AU Hololive OCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dhololive+card+game&_sacat=183454) for current Australian secondary market prices. Check [/cards/hololive](/cards/hololive) for aggregated AUD pricing.
+Search [eBay AU Hololive OCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dhololive+card+game&_sacat=183454) for current Australian secondary market prices. Check [C3 Hololive card prices](/cards/hololive) for aggregated AUD pricing.
 
 ## Entry Cost and Starting the Game
 
@@ -60,6 +60,6 @@ The Hololive OCG is one of the most honest TCG products in the market. It makes 
 
 ## What to Read Next
 
-- Browse Hololive OCG cards at [/cards/hololive](/cards/hololive)
+- Browse Hololive OCG cards at [C3 Hololive card prices](/cards/hololive)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Hololive OCG beginners guide at [/blog/hololive-tcg-beginners-guide-australia](/blog/p280-hololive-tcg-beginners-guide-australia)
+- Read the Hololive OCG beginners guide at [/blog/hololive-tcg-beginners-guide-australia](/blog/hololive-tcg-beginners-guide-australia)

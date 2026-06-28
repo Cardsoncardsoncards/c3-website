@@ -123,11 +123,11 @@ Play the digital version of your top candidates before spending money on physica
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- [What Is Magic: The Gathering? A Beginner's Guide for Australians](/blog/what-is-magic-the-gathering-australia)
+- [What Is Magic: The Gathering? A Beginner's Guide for Australians](/blog/what-is-mtg)
 - [Pokemon TCG for Beginners: How to Start Playing in Australia](/blog/pokemon-tcg-beginners-guide-australia)
 - [What Is Disney Lorcana? The Complete Beginner's Guide for Australians](/blog/what-is-disney-lorcana-australia)
 

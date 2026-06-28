@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-No Yu-Gi-Oh booster set in 2026 has reliably positive expected value at Australian retail prices. The best EV propositions are sets supporting the current dominant competitive archetype (where Secret Rare prices are highest), Special Edition products with guaranteed ultra rare promos, and occasionally Legendary Collection products where reprint demand is strong. Always check the [EV Calculator at /tools](/tools) before opening anything. For live card prices, use [/cards/yugioh](/cards/yugioh).
+No Yu-Gi-Oh booster set in 2026 has reliably positive expected value at Australian retail prices. The best EV propositions are sets supporting the current dominant competitive archetype (where Secret Rare prices are highest), Special Edition products with guaranteed ultra rare promos, and occasionally Legendary Collection products where reprint demand is strong. Always check the [EV Calculator at /tools](/tools) before opening anything. For live card prices, use [C3 Yu-Gi-Oh card prices](/cards/yugioh).
 
 ## How to Evaluate a Yu-Gi-Oh Set's Value
 
@@ -36,6 +36,8 @@ The [EV Calculator at /tools](/tools) allows you to model this for any current s
 
 **Special Edition products** containing guaranteed Super Rare or Ultra Rare promos add a floor to the EV that standard booster boxes lack.
 
+Search [Yu-Gi-Oh booster boxes](https://www.amazon.com.au/s?k=yugioh+booster+box&tag=blasdigital-22) on Amazon AU
+
 ## Sets to Avoid Opening for Value
 
 **New Standard Sets at launch** almost always have negative EV within one to two months of release as supply reaches the market and prices on common cards decline. The exception is if you specifically want the chance at a Starlight Rare and are treating it as an experience purchase rather than a value purchase.
@@ -48,7 +50,7 @@ The Yu-Gi-Oh banlist (updated roughly every three months) is the single biggest 
 
 Before buying multiple boxes of any set, check whether any of its high-value cards are commonly discussed as ban or limit targets on the current format. The YGO community on social media and competitive forums is good at flagging which cards are most banlist-vulnerable.
 
-The [Yu-Gi-Oh banlist guide at /blog/yugioh-banlist-australia-how-it-works](/blog/p201-yugioh-banlist-australia-how-it-works) explains how the system works and how to factor it into buying decisions.
+The [Yu-Gi-Oh banlist guide at /blog/yugioh-banlist-australia-how-it-works](/blog/yugioh-banlist-australia-how-it-works) explains how the system works and how to factor it into buying decisions.
 
 
 ## The Case for Older Sets Over New Releases
@@ -67,6 +69,6 @@ There is no Yu-Gi-Oh set in 2026 where opening product is a reliable way to get 
 
 ## What to Read Next
 
-- Check current Yu-Gi-Oh set and singles prices at [/cards/yugioh](/cards/yugioh)
-- Calculate box EV at [/tools](/tools)
-- Read about the most valuable Yu-Gi-Oh cards in Australia at [/blog/most-valuable-yugioh-cards-australia-2026](/blog/p341-most-valuable-yugioh-cards-australia-2026)
+- Check current Yu-Gi-Oh set and singles prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
+- Calculate box EV at [C3 tools](/tools)
+- Read about the most valuable Yu-Gi-Oh cards in Australia at [/blog/most-valuable-yugioh-cards-australia-2026](/blog/most-valuable-yugioh-cards-australia-2026)

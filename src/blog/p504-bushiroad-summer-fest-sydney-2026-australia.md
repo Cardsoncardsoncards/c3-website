@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
+[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)
 
 Bushiroad is running three separate Regional Championship events at Bankstown Sports Club in Sydney on 5 and 6 September 2026. Cardfight Vanguard, Weiss Schwarz, and Shadowverse Evolve all run at the same venue across the same weekend as part of Bushiroad Summer Fest 2026.
 
@@ -107,8 +107,8 @@ Take the T3 Bankstown Line train from Central Station to Bankstown Station, appr
 
 ## Related Posts
 
-- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/p500-upcoming-tcg-tournaments-australia-2026)
-- [TCG Tournaments NSW 2026](/blog/p502-tcg-tournaments-nsw-2026)
-- [Cardfight Vanguard Beginners Guide Australia](/blog/p286-cardfight-vanguard-beginners-guide-australia)
-- [Weiss Schwarz Australia Guide 2026](/blog/p390-weiss-schwarz-australia-guide-2026)
-- [Shadowverse Evolve Beginners Guide Australia](/blog/p282-shadowverse-evolve-beginners-guide-australia)
+- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/upcoming-tcg-tournaments-australia-2026)
+- [TCG Tournaments NSW 2026](/blog/tcg-tournaments-nsw-2026)
+- [Cardfight Vanguard Beginners Guide Australia](/blog/cardfight-vanguard-beginners-guide-australia)
+- [Weiss Schwarz Australia Guide 2026](/blog/weiss-schwarz-australia-guide-2026)
+- [Shadowverse Evolve Beginners Guide Australia](/blog/shadowverse-evolve-beginners-guide-australia)

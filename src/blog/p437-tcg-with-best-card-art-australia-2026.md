@@ -34,7 +34,7 @@ Borderless, full-art, and showcase treatments in modern MTG sets consistently pr
 
 Recent Pokemon SV-era Special Illustration Rares represent a significant step up in artistic ambition. Cards like Miriam SIR and various Pokemon ex SIR variants feature detailed backgrounds, character expressions, and scene composition that goes well beyond the character-on-coloured-background format of earlier Pokemon cards.
 
-For art-focused Pokemon collecting, targeting SIR cards from sets where your favourite characters appear is a rewarding collecting strategy. Browse current prices at [/cards/pokemon](/cards/pokemon).
+For art-focused Pokemon collecting, targeting SIR cards from sets where your favourite characters appear is a rewarding collecting strategy. Browse current prices at [C3 Pokemon card prices](/cards/pokemon).
 
 ## Yu-Gi-Oh Ghost Rares and Collector Rares
 
@@ -51,10 +51,10 @@ Collecting specifically for art quality rather than competitive value or resale 
 
 For art-focused collecting, prioritise: Lorcana Enchanted variants of your favourite Disney characters, MTG Borderless and Showcase treatments of cards with exceptional commissioned art, Pokemon Special Illustration Rares from your favourite generations, and Yu-Gi-Oh Ghost Rare cards in person (the holographic effect does not photograph well but is impressive in hand).
 
-Budget for art-focused collecting by targeting specific cards rather than opening boxes. Most of the most visually striking cards are available as direct singles. Check current prices at [/cards/lorcana](/cards/lorcana) and [/cards/mtg](/cards/mtg) for your targets.
+Budget for art-focused collecting by targeting specific cards rather than opening boxes. Most of the most visually striking cards are available as direct singles. Check current prices at [C3 Lorcana card prices](/cards/lorcana) and [C3 MTG card prices](/cards/mtg) for your targets.
 
 
-Photographing cards you are considering purchasing is also a legitimate pre-purchase practice. A clear photo of the front and back of a potential purchase, requested before payment, gives you reference images to check against known genuine prints and to verify condition claims. For art-focused collecting where you are specifically seeking cards in Near Mint condition for their visual quality, condition images before purchase are not negotiable. See current TCG card art across games at [/cards/mtg](/cards/mtg) and other game hubs.
+Photographing cards you are considering purchasing is also a legitimate pre-purchase practice. A clear photo of the front and back of a potential purchase, requested before payment, gives you reference images to check against known genuine prints and to verify condition claims. For art-focused collecting where you are specifically seeking cards in Near Mint condition for their visual quality, condition images before purchase are not negotiable. See current TCG card art across games at [C3 MTG card prices](/cards/mtg) and other game hubs.
 
 ## The C3 Take
 
@@ -62,6 +62,6 @@ Art preference is personal and no guide can determine it for you. Buy the cards 
 
 ## What to Read Next
 
-- Browse Lorcana art at [/cards/lorcana](/cards/lorcana)
-- Browse MTG art at [/cards/mtg](/cards/mtg)
+- Browse Lorcana art at [C3 Lorcana card prices](/cards/lorcana)
+- Browse MTG art at [C3 MTG card prices](/cards/mtg)
 - Find your collector style at [/quizzes/collector-or-player](/quizzes/collector-or-player)

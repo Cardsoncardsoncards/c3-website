@@ -54,6 +54,6 @@ The thin Australian secondary market is the main challenge. You will find what y
 
 ## What to Read Next
 
-- Browse Force of Will cards at [/cards/forceofwill](/cards/forceofwill)
+- Browse Force of Will cards at [C3 Force of Will card prices](/cards/forceofwill)
 - Read the beginner's guide at [/blog/force-of-will-tcg-beginners-guide-australia](/blog/force-of-will-tcg-beginners-guide-australia)
 - Compare card values at [/compare](/compare)

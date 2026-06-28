@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Yes, Riftbound is worth starting in Australia in 2026 if you want a TCG with an active and growing local scene, accessible entry pricing, and a game built on the League of Legends IP. Champion Decks cost AU$39.99 RRP, four sets are released or confirmed for 2026, weekly Nexus Nights run at local game stores, and the first Australian Regional Qualifier events are live. Entry now means you are ahead of the broader adoption curve. Browse current Riftbound cards and prices at [/cards/riftbound](/cards/riftbound).
+Yes, Riftbound is worth starting in Australia in 2026 if you want a TCG with an active and growing local scene, accessible entry pricing, and a game built on the League of Legends IP. Champion Decks cost AU$39.99 RRP, four sets are released or confirmed for 2026, weekly Nexus Nights run at local game stores, and the first Australian Regional Qualifier events are live. Entry now means you are ahead of the broader adoption curve. Browse current Riftbound cards and prices at [C3 Riftbound card prices](/cards/riftbound).
 
 ## What Is Riftbound's Current Status in Australia?
 
@@ -51,7 +51,7 @@ The sensible entry path for an Australian player in 2026:
 1. Take the champion quiz at [/play](/play) to identify your playstyle match.
 2. Buy the Champion Deck for that champion at AU$39.99 from a local game store.
 3. Attend one Nexus Nights event to play against real opponents before spending more.
-4. After five to ten games, check current AU singles prices at [/cards/riftbound](/cards/riftbound) to identify what upgrades your deck needs.
+4. After five to ten games, check current AU singles prices at [C3 Riftbound card prices](/cards/riftbound) to identify what upgrades your deck needs.
 5. Buy those three to six specific singles, nothing more.
 
 Total entry cost following this path: AU$39.99 plus targeted singles. This keeps you in the game with minimal financial commitment while you assess whether the local scene and game itself suit you.
@@ -64,6 +64,6 @@ Riftbound is the most interesting new TCG entry in the Australian market since L
 
 ## What to Read Next
 
-- Browse all Riftbound cards and current AUD prices at [/cards/riftbound](/cards/riftbound)
+- Browse all Riftbound cards and current AUD prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your champion and start with the quiz at [/play](/play)
-- See what's moving in the Riftbound AU market at [/market](/market)
+- See what's moving in the Riftbound AU market at [C3 Market Insights](/market)

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The most valuable Riftbound cards in Australia sit across all four sets. Origins holds the foundational champion cards, Spiritforged has format-defining support pieces, Unleashed has the most actively traded singles due to current competitive relevance, and Vendetta pricing is pending launch. Check live AUD prices for all sets at [/cards/riftbound](/cards/riftbound).
+The most valuable Riftbound cards in Australia sit across all four sets. Origins holds the foundational champion cards, Spiritforged has format-defining support pieces, Unleashed has the most actively traded singles due to current competitive relevance, and Vendetta pricing is pending launch. Check live AUD prices for all sets at [C3 Riftbound card prices](/cards/riftbound).
 
 ## How Riftbound Card Value Works
 
@@ -36,7 +36,7 @@ The [C3 Market page at /market](/market) shows recent price movement data for Ri
 
 ## Selling High-Value Riftbound Cards
 
-If you pull high-value Riftbound singles from booster boxes, the fastest route to sale in Australia is eBay AU. Price your cards at or slightly below the current market price shown at [/cards/riftbound](/cards/riftbound) for quick sales. Alternatively, compare buylist prices from Australian TCG stores using the [eBay or Buylist quiz at /quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist) to decide the best selling channel for each card.
+If you pull high-value Riftbound singles from booster boxes, the fastest route to sale in Australia is eBay AU. Price your cards at or slightly below the current market price shown at [C3 Riftbound card prices](/cards/riftbound) for quick sales. Alternatively, compare buylist prices from Australian TCG stores using the [eBay or Buylist quiz at /quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist) to decide the best selling channel for each card.
 
 
 ## Using C3 Tools for This Decision
@@ -55,10 +55,10 @@ Using all four tools together gives you the data advantage that most casual TCG 
 
 ## The C3 Take
 
-The pattern in every TCG is that early set cards from the game's foundational period hold disproportionate collector value as the game grows. If Riftbound follows this pattern, the window to accumulate Origins and Spiritforged singles at current prices is before the game reaches mainstream awareness. We are likely still in that window. Use [/cards/riftbound](/cards/riftbound) to track prices and [/market](/market) to monitor movement. The combination of a growing competitive scene and a new set arriving in July 2026 means Riftbound card values are in active flux. Check prices before every transaction, not once per month.
+The pattern in every TCG is that early set cards from the game's foundational period hold disproportionate collector value as the game grows. If Riftbound follows this pattern, the window to accumulate Origins and Spiritforged singles at current prices is before the game reaches mainstream awareness. We are likely still in that window. Use [C3 Riftbound card prices](/cards/riftbound) to track prices and [C3 Market Insights](/market) to monitor movement. The combination of a growing competitive scene and a new set arriving in July 2026 means Riftbound card values are in active flux. Check prices before every transaction, not once per month.
 
 ## What to Read Next
 
-- Check live Riftbound prices at at [/cards/riftbound](/cards/riftbound)
-- See price movers at at [/market](/market)
+- Check live Riftbound prices at at [C3 Riftbound card prices](/cards/riftbound)
+- See price movers at at [C3 Market Insights](/market)
 - Decide eBay or buylist at at [/quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist)

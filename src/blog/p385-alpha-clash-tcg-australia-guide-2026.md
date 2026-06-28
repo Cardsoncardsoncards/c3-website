@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Alpha Clash TCG is an independently published American superhero TCG with a small but dedicated Australian following. Its most valuable cards are Ultra Rare and holographic versions of flagship heroes and villains from the game's original IP. The game is worth trying if you want an indie TCG with original characters, but Australian community access is limited. Check [/cards/alphaclash](/cards/alphaclash) for current AUD prices.
+Alpha Clash TCG is an independently published American superhero TCG with a small but dedicated Australian following. Its most valuable cards are Ultra Rare and holographic versions of flagship heroes and villains from the game's original IP. The game is worth trying if you want an indie TCG with original characters, but Australian community access is limited. Check [C3 Alpha Clash card prices](/cards/alphaclash) for current AUD prices.
 
 ## What Is Alpha Clash TCG?
 
@@ -28,7 +28,7 @@ The game launched in 2022 with a Kickstarter campaign and has produced several s
 
 **Signed and artist proof versions** from Alpha Clash community events carry premiums for dedicated collectors.
 
-The Alpha Clash secondary market in Australia is thin but present. Search [eBay AU Alpha Clash TCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dalpha+clash+tcg&_sacat=183454) for current listings. Check [/cards/alphaclash](/cards/alphaclash) for aggregated AUD pricing.
+The Alpha Clash secondary market in Australia is thin but present. Search [eBay AU Alpha Clash TCG](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dalpha+clash+tcg&_sacat=183454) for current listings. Check [C3 Alpha Clash card prices](/cards/alphaclash) for aggregated AUD pricing.
 
 ## Game Design: What Makes Alpha Clash Different
 
@@ -70,6 +70,6 @@ Alpha Clash is the most interesting indie TCG in the current Australian market. 
 
 ## What to Read Next
 
-- Browse Alpha Clash cards at [/cards/alphaclash](/cards/alphaclash)
+- Browse Alpha Clash cards at [C3 Alpha Clash card prices](/cards/alphaclash)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Alpha Clash beginners guide at [/blog/alpha-clash-tcg-beginners-guide-australia](/blog/p268-alpha-clash-tcg-beginners-guide-australia)
+- Read the Alpha Clash beginners guide at [/blog/alpha-clash-tcg-beginners-guide-australia](/blog/alpha-clash-tcg-beginners-guide-australia)

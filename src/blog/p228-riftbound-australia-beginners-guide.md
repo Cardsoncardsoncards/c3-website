@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-If you play League of Legends, you already know the champions. Now Riot has turned them into a physical trading card game, and Australia is officially part of the competitive scene. Here is everything you need to know to get started with Riftbound without wasting money or buying the wrong thing. See current prices at [/cards/riftbound](/cards/riftbound).
+If you play League of Legends, you already know the champions. Now Riot has turned them into a physical trading card game, and Australia is officially part of the competitive scene. Here is everything you need to know to get started with Riftbound without wasting money or buying the wrong thing. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -95,26 +95,26 @@ Local game stores across Australian cities run regular Riftbound nights. Since R
 
 Find Riftbound players through the Riftbound Australia Facebook group, Discord community, and by checking with your local game store.
 
-The [C3 Release Calendar](/market) tracks upcoming Riftbound events in Australia, including RQ Singapore (September 2026) and the Riftbound Melbourne event (October 2026).
+The [C3 Release Calendar](/calendar) tracks upcoming Riftbound events in Australia, including RQ Singapore (September 2026) and the Riftbound Melbourne event (October 2026).
 
 
 ## Your First Steps in Australia
 
 The Australian TCG community is welcoming to new players at all levels. Whether you are starting a new game or returning to one you played before, the best first step is finding a local game store and asking when they run beginner events.
 
-All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/market) tracks upcoming events so you can find one near you.
+All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/calendar) tracks upcoming events so you can find one near you.
 
 For pricing on specific cards before you buy, the [C3 Card Compare tool](/compare) shows current AUD pricing from eBay AU sold data. For tracking your collection as it grows, the [free C3 Collection Tracker](/tracker) works across all 8 TCGs on this site.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -125,6 +125,6 @@ The minimum entry cost depends on the game. Most TCGs have starter or preconstru
 Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
 
 ### Where can I find other Riftbound players in Australia?
-Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/market) for upcoming events near you.
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.
 
-Riftbound releases new sets roughly every three months. The [C3 Release Calendar](/market) tracks Australian release dates for Vendetta (Set 4, July 31, 2026) and beyond.
+Riftbound releases new sets roughly every three months. The [C3 Release Calendar](/calendar) tracks Australian release dates for Vendetta (Set 4, July 31, 2026) and beyond.

@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Magic: The Gathering](/blog/p001-what-is-mtg)
+[Blog](/blog) > [Magic: The Gathering](/blog/what-is-mtg)
 
 The ANZ MTG Super Series Regional Championships #13 is running at Club Central Hurstville in Sydney from 23 to 25 October 2026. It is the thirteenth event in the ANZ Super Series circuit and one of the primary competitive Magic pathways in Australia for players pursuing Regional Championship points toward the Pro Tour qualification system.
 
@@ -95,8 +95,8 @@ The [C3 MTG hub](/cards/mtg) tracks current AUD prices across the full card cata
 
 ## Related Posts
 
-- [Magic Spotlight: The Hobbit Brisbane 2026](/blog/p499-magic-spotlight-the-hobbit-brisbane-2026)
-- [CommandFest Melbourne 2026](/blog/p506-commandfest-melbourne-2026-guide)
-- [TCG Tournaments NSW 2026](/blog/p502-tcg-tournaments-nsw-2026)
-- [Most Expensive MTG Cards Australia 2026](/blog/p180-most-expensive-mtg-cards-australia-2026)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
+- [Magic Spotlight: The Hobbit Brisbane 2026](/blog/magic-spotlight-the-hobbit-brisbane-2026)
+- [CommandFest Melbourne 2026](/blog/commandfest-melbourne-2026-guide)
+- [TCG Tournaments NSW 2026](/blog/tcg-tournaments-nsw-2026)
+- [Most Expensive MTG Cards Australia 2026](/blog/most-expensive-mtg-cards-australia-2026)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)

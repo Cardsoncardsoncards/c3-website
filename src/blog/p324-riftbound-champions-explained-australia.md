@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Riftbound has 39 champion Legends released across three sets as of May 2026: 27 in Origins, 12 in Spiritforged, and additional champions in Unleashed including Vi, Vex, Diana, Master Yi, Kha'Zix, LeBlanc, Evelynn, and others. Every Champion Legend is Rare rarity, meaning no champion requires ultra-rare luck to obtain. Champions are kept in the Legend Zone throughout the game and define your deck's Domain access and playstyle identity. Find your champion using the quiz at [/play](/play), then check current card prices at [/cards/riftbound](/cards/riftbound).
+Riftbound has 39 champion Legends released across three sets as of May 2026: 27 in Origins, 12 in Spiritforged, and additional champions in Unleashed including Vi, Vex, Diana, Master Yi, Kha'Zix, LeBlanc, Evelynn, and others. Every Champion Legend is Rare rarity, meaning no champion requires ultra-rare luck to obtain. Champions are kept in the Legend Zone throughout the game and define your deck's Domain access and playstyle identity. Find your champion using the quiz at [/play](/play), then check current card prices at [C3 Riftbound card prices](/cards/riftbound).
 
 ## How Champion Legends Work in Riftbound
 
@@ -109,5 +109,5 @@ Riftbound's champion system is the best-designed part of the game. By making eve
 ## What to Read Next
 
 - Find your champion with the Riftbound quiz at [/play](/play)
-- Browse all champions and AUD prices at [/cards/riftbound](/cards/riftbound)
-- Calculate booster box expected value before opening sealed at [/tools](/tools)
+- Browse all champions and AUD prices at [C3 Riftbound card prices](/cards/riftbound)
+- Calculate booster box expected value before opening sealed at [C3 tools](/tools)

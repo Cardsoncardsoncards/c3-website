@@ -49,7 +49,7 @@ The national competitive infrastructure matters less than what your specific loc
 
 Before investing in a competitive collection, visit your local stores and confirm: how often do they run events for your target game? How many players typically attend? Is there a regular pod or scene that would include a new competitive player?
 
-This research costs nothing and saves you hundreds in potential wrong investment. The best competitive game in your specific city is the right answer, not the best competitive game nationally. Browse available singles before committing at [/cards/mtg](/cards/mtg) and the relevant game hub.
+This research costs nothing and saves you hundreds in potential wrong investment. The best competitive game in your specific city is the right answer, not the best competitive game nationally. Browse available singles before committing at [C3 MTG card prices](/cards/mtg) and the relevant game hub.
 
 
 The annual schedule for major Australian competitive events is worth tracking regardless of which game you choose. Pokemon Regionals, MTG Grand Prix equivalents, Yu-Gi-Oh Regionals, and Riftbound Regional Qualifiers all run in Sydney and Melbourne with varying frequency. Checking the official event schedules for each game before the season begins helps you plan participation. The [C3 Release Calendar at /market](/market) tracks upcoming TCG events alongside product releases.
@@ -61,5 +61,5 @@ Choose your competitive game based on what your local game store actually suppor
 ## What to Read Next
 
 - Find your TCG match at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse cards before investing at [/cards/mtg](/cards/mtg)
+- Browse cards before investing at [C3 MTG card prices](/cards/mtg)
 - Compare your collector vs player priorities at [/quizzes/collector-or-player](/quizzes/collector-or-player)

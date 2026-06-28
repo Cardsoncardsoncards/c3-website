@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Since Riftbound launched and RQ Sydney was announced, we have been fielding the same questions from Australian players. Here are the 15 most common ones, answered directly. See current prices at [/cards/riftbound](/cards/riftbound).
+Since Riftbound launched and RQ Sydney was announced, we have been fielding the same questions from Australian players. Here are the 15 most common ones, answered directly. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -117,13 +117,13 @@ Check current Riftbound card prices at the [C3 Card Vault](/cards/riftbound) and
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

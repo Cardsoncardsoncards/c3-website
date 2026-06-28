@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Every year there are more TCG options. Every year the question gets harder: which one is actually worth your time and money? Here is a direct comparison of the four most actively played TCGs in Australia right now, Pokemon, MTG, One Piece, and Riftbound, across the metrics that actually matter. See current prices at [/cards/riftbound](/cards/riftbound).
+Every year there are more TCG options. Every year the question gets harder: which one is actually worth your time and money? Here is a direct comparison of the four most actively played TCGs in Australia right now, Pokemon, MTG, One Piece, and Riftbound, across the metrics that actually matter. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -75,13 +75,13 @@ Not affiliated with The Pokemon Company, Wizards of the Coast, Bandai, or Riot G
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

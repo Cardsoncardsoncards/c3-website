@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The Gundam Card Game is Bandai's newest major TCG launch, bringing the iconic Mobile Suit Gundam franchise into a dedicated card game format. Its most valuable cards are Super Rare and Secret Rare versions of iconic Mobile Suits and characters from across the Gundam multiverse. The game is still establishing its Australian community and is worth starting for Gundam fans. Check [/cards/gundam](/cards/gundam) for current AUD prices.
+The Gundam Card Game is Bandai's newest major TCG launch, bringing the iconic Mobile Suit Gundam franchise into a dedicated card game format. Its most valuable cards are Super Rare and Secret Rare versions of iconic Mobile Suits and characters from across the Gundam multiverse. The game is still establishing its Australian community and is worth starting for Gundam fans. Check [C3 Gundam card prices](/cards/gundam) for current AUD prices.
 
 ## What Is the Gundam Card Game?
 
@@ -36,7 +36,7 @@ The Gundam Card Game launched globally in late 2024 and the Australian market is
 
 **Tournament promo cards** from Gundam Card Game championship events have genuine scarcity as the competitive infrastructure develops.
 
-The Gundam Card Game secondary market in Australia is still developing. eBay AU is the primary channel: search [eBay AU Gundam Card Game](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dgundam+card+game+singles&_sacat=183454). Check [/cards/gundam](/cards/gundam) for aggregated AUD pricing.
+The Gundam Card Game secondary market in Australia is still developing. eBay AU is the primary channel: search [eBay AU Gundam Card Game](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dgundam+card+game+singles&_sacat=183454). Check [C3 Gundam card prices](/cards/gundam) for aggregated AUD pricing.
 
 ## Entry Cost and Starting the Gundam Card Game
 
@@ -72,6 +72,6 @@ The Gundam Card Game has two of the most powerful advantages a new TCG can have:
 
 ## What to Read Next
 
-- Browse Gundam Card Game cards at [/cards/gundam](/cards/gundam)
+- Browse Gundam Card Game cards at [C3 Gundam card prices](/cards/gundam)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Gundam Card Game beginners guide at [/blog/gundam-card-game-beginners-guide-australia](/blog/p279-gundam-card-game-beginners-guide-australia)
+- Read the Gundam Card Game beginners guide at [/blog/gundam-card-game-beginners-guide-australia](/blog/gundam-card-game-beginners-guide-australia)

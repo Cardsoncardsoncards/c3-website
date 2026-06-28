@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-MTG card selling timing matters more than most players realise. The same card can sell for AU$40 in the right window and AU$25 two months later. Understanding when to sell helps you maximise what you get. See current prices at [/cards/mtg](/cards/mtg).
+MTG card selling timing matters more than most players realise. The same card can sell for AU$40 in the right window and AU$25 two months later. Understanding when to sell helps you maximise what you get. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -82,13 +82,13 @@ Check live AUD prices at the [C3 MTG card hub](/cards/mtg) before making any sel
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

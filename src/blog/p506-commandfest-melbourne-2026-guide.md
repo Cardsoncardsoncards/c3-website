@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Magic: The Gathering](/blog/p001-what-is-mtg)
+[Blog](/blog) > [Magic: The Gathering](/blog/what-is-mtg)
 
 CommandFest Melbourne 2026 is coming to the Melbourne Convention and Exhibition Centre from 4 to 6 December. It is the largest Commander-focused Magic event ever held in Australia, and for players in the southern hemisphere who cannot easily reach the North American CommandFest circuit, it is a rare opportunity to play competitive Commander at scale.
 
@@ -89,7 +89,7 @@ August and December 2026 represent the two biggest Magic events in Australia for
 
 They serve different audiences and neither conflicts with the other. Serious MTG players in Australia may attend both.
 
-The full guide to Magic Spotlight: The Hobbit Brisbane is at [/blog/p499-magic-spotlight-the-hobbit-brisbane-2026](/blog/p499-magic-spotlight-the-hobbit-brisbane-2026).
+The full guide to Magic Spotlight: The Hobbit Brisbane is at [/blog/p499-magic-spotlight-the-hobbit-brisbane-2026](/blog/magic-spotlight-the-hobbit-brisbane-2026).
 
 ## Frequently Asked Questions
 
@@ -113,8 +113,8 @@ Yes. CommandFest Melbourne is a national event and players from all Australian s
 
 ## Related Posts
 
-- [Magic Spotlight: The Hobbit Brisbane 2026](/blog/p499-magic-spotlight-the-hobbit-brisbane-2026)
-- [Best MTG Commander Decks Australia](/blog/p005-mtg-commander-decks-australia)
-- [Commander Staples MTG Australia Price Guide](/blog/p171-commander-staples-mtg-australia-price-guide)
-- [Budget Commander Deck Under 100 Australia](/blog/p169-budget-commander-deck-under-100-australia)
-- [TCG Tournaments Victoria 2026](/blog/p501-tcg-tournaments-victoria-2026)
+- [Magic Spotlight: The Hobbit Brisbane 2026](/blog/magic-spotlight-the-hobbit-brisbane-2026)
+- [Best MTG Commander Decks Australia](/blog/mtg-commander-decks-australia)
+- [Commander Staples MTG Australia Price Guide](/blog/commander-staples-mtg-australia-price-guide)
+- [Budget Commander Deck Under 100 Australia](/blog/budget-commander-deck-under-100-australia)
+- [TCG Tournaments Victoria 2026](/blog/tcg-tournaments-victoria-2026)

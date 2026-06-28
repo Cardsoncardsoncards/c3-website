@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-The hardest part of growing your Commander pod isn't finding people. it's getting them through the first game. Most people who try MTG for the first time and don't enjoy it had a bad introduction: too many rules at once, decks too complex, someone correcting them every turn. See current prices at [/cards/mtg](/cards/mtg).
+The hardest part of growing your Commander pod isn't finding people. it's getting them through the first game. Most people who try MTG for the first time and don't enjoy it had a bad introduction: too many rules at once, decks too complex, someone correcting them every turn. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -122,17 +122,17 @@ If they enjoyed it, offer to play again immediately. Enthusiasm drops quickly if
 
 If they want to build their own deck, start with the [C3 Random Commander Generator](/cards/mtg/random-commander) to pick a Commander they find interesting, then use the [C3 Card Compare tool](/compare) to check prices on the singles they'll need.
 
-If they want to know more about the game in general, our [MTG beginner guide](/blog/what-is-magic-the-gathering-australia) covers everything without overwhelming context.
+If they want to know more about the game in general, our [MTG beginner guide](/blog/what-is-mtg) covers everything without overwhelming context.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

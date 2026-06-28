@@ -122,13 +122,13 @@ Keep collections away from direct sunlight. UV exposure bleaches card ink and is
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - [Free TCG Collection Tracker Spreadsheet: Track Every Card You Own](/blog/free-tcg-collection-tracker-spreadsheet-australia)
 - [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia)
-- [The Best Card Binders for TCG Collections in Australia](/blog/best-card-binders-australia)
+- [The Best Card Binders for TCG Collections in Australia](/blog/best-tcg-binders-australia)
 
 
 ## Frequently Asked Questions

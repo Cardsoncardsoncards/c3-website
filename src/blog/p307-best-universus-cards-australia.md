@@ -52,6 +52,6 @@ The limited Australian community means selling specific cards can take longer th
 
 ## What to Read Next
 
-- Browse UniVersus cards at [/cards/universus](/cards/universus)
+- Browse UniVersus cards at [C3 UniVersus card prices](/cards/universus)
 - Read the beginner's guide at [/blog/universus-card-game-beginners-guide-australia](/blog/universus-card-game-beginners-guide-australia)
 - Compare card values at [/compare](/compare)

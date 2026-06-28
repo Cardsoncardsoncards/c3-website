@@ -54,6 +54,6 @@ Do not buy Warhammer Champions cards expecting competitive market dynamics or va
 
 ## What to Read Next
 
-- Browse Warhammer TCG cards at [/cards/warhammer](/cards/warhammer)
+- Browse Warhammer TCG cards at [C3 Warhammer TCG card prices](/cards/warhammer)
 - Read the beginner's guide at [/blog/warhammer-tcg-beginners-guide-australia](/blog/warhammer-tcg-beginners-guide-australia)
 - Find the right active TCG at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

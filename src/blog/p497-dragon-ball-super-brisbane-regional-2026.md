@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Dragon Ball Super Card Game](/blog/p087-dragon-ball-super-card-game-beginners-guide-australia)
+[Blog](/blog) > [Dragon Ball Super Card Game](/blog/dragon-ball-super-card-game-beginners-guide-australia)
 
 Brisbane is hosting two Dragon Ball Super events on the same day in July. The DBS Card Game MASTERS Regional Championship and the DBS Fusion World Regional Championship are both at the Brisbane Convention and Exhibition Centre on 19 July 2026. If you play either version of Dragon Ball Super TCG, this is the largest competitive DBS event in Queensland this year.
 
@@ -104,8 +104,8 @@ The [C3 Dragon Ball hub](/cards/dragonball) shows current AUD prices updated dai
 
 ## Related Posts
 
-- [Dragon Ball Super Card Game Australia Beginners Guide](/blog/p087-dragon-ball-super-card-game-beginners-guide-australia)
-- [Dragon Ball Super Booster Boxes Australia](/blog/p088-dragon-ball-super-booster-boxes-australia)
-- [Gundam Card Game Brisbane Regional Championship 2026](/blog/p496-gundam-card-game-brisbane-regional-2026)
-- [Dragon Ball Super Sydney Regional Championship 2026](/blog/p508-dragon-ball-super-sydney-regional-2026)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
+- [Dragon Ball Super Card Game Australia Beginners Guide](/blog/dragon-ball-super-card-game-beginners-guide-australia)
+- [Dragon Ball Super Booster Boxes Australia](/blog/dragon-ball-super-booster-boxes-australia)
+- [Gundam Card Game Brisbane Regional Championship 2026](/blog/gundam-card-game-brisbane-regional-2026)
+- [Dragon Ball Super Sydney Regional Championship 2026](/blog/dragon-ball-super-sydney-regional-2026)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)

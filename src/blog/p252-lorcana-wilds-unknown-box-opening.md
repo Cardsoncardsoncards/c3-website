@@ -10,7 +10,7 @@ layout: post
 affiliate_disclaimer: true
 ---## Quick Answer
 
-We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly. See current prices at [/cards/lorcana](/cards/lorcana).
+We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly. See current prices at [C3 Lorcana card prices](/cards/lorcana).
 
 
 
@@ -95,11 +95,11 @@ For our broader view on whether the set is worth opening, read the [Lorcana Wild
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Lorcana card prices](/cards/lorcana) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Browse Lorcana card prices at [C3 Lorcana card prices](/cards/lorcana)
 - Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 

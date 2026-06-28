@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Yu-Gi-Oh has more rarity tiers than almost any other TCG. From Common at the bottom to Starlight Rare at the top, each tier reflects a different print frequency and foil treatment. The most valuable cards in recent sets are Starlight Rares and Ghost Rares. The text on every version of a card is identical regardless of rarity, which means players can use budget treatments of expensive cards without mechanical disadvantage. For current AUD prices across all rarities, check [/cards/yugioh](/cards/yugioh).
+Yu-Gi-Oh has more rarity tiers than almost any other TCG. From Common at the bottom to Starlight Rare at the top, each tier reflects a different print frequency and foil treatment. The most valuable cards in recent sets are Starlight Rares and Ghost Rares. The text on every version of a card is identical regardless of rarity, which means players can use budget treatments of expensive cards without mechanical disadvantage. For current AUD prices across all rarities, check [C3 Yu-Gi-Oh card prices](/cards/yugioh).
 
 ## The Full Rarity Hierarchy
 
@@ -56,6 +56,6 @@ Yu-Gi-Oh's rarity system is the most complex of any TCG, and the constant introd
 
 ## What to Read Next
 
-- Check current Yu-Gi-Oh card prices at [/cards/yugioh](/cards/yugioh)
+- Check current Yu-Gi-Oh card prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
 - Find your Yu-Gi-Oh playstyle at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)
-- Read the Yu-Gi-Oh banlist guide at [/blog/yugioh-banlist-australia-how-it-works](/blog/p201-yugioh-banlist-australia-how-it-works)
+- Read the Yu-Gi-Oh banlist guide at [/blog/yugioh-banlist-australia-how-it-works](/blog/yugioh-banlist-australia-how-it-works)

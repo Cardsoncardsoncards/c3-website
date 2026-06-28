@@ -46,7 +46,7 @@ Cards from the original Dragon Ball Super Card Game runs (before the Fusion Worl
 
 **Fusion World's competitive structure** tends to reward aggression and specific synergy packages, meaning the meta shifts quickly when new sets release and card values fluctuate accordingly.
 
-Check [/cards/dragonball](/cards/dragonball) for current AUD pricing on all DBS TCG singles.
+Check [C3 Dragon Ball card prices](/cards/dragonball) for current AUD pricing on all DBS TCG singles.
 
 
 ## The Collector Market Beyond Competitive Play
@@ -65,6 +65,6 @@ DBS TCG has a passionate and active community in Australia, and the Fusion World
 
 ## What to Read Next
 
-- Check current Dragon Ball singles prices at [/cards/dragonball](/cards/dragonball)
+- Check current Dragon Ball singles prices at [C3 Dragon Ball card prices](/cards/dragonball)
 - Find your Dragon Ball warrior at [/quizzes/dragonball-warrior](/quizzes/dragonball-warrior)
-- Read the Dragon Ball Super beginners guide at [/blog/dragon-ball-super-card-game-beginners-guide-australia](/blog/p087-dragon-ball-super-card-game-beginners-guide-australia)
+- Read the Dragon Ball Super beginners guide at [/blog/dragon-ball-super-card-game-beginners-guide-australia](/blog/dragon-ball-super-card-game-beginners-guide-australia)

@@ -45,6 +45,6 @@ Alpha Clash is the most interesting game on this list that almost nobody in Aust
 
 ## What to Read Next
 
-- Browse Alpha Clash cards at [/cards/alphaclash](/cards/alphaclash)
+- Browse Alpha Clash cards at [C3 Alpha Clash card prices](/cards/alphaclash)
 - Not sure which TCG suits your play style? [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
 - Compare all your options side by side at [/compare](/compare)

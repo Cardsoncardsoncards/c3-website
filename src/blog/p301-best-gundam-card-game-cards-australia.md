@@ -52,6 +52,6 @@ As the competitive community grows in Australia, competitive-relevant Secret Rar
 
 ## What to Read Next
 
-- Browse Gundam cards at [/cards/gundam](/cards/gundam)
+- Browse Gundam cards at [C3 Gundam card prices](/cards/gundam)
 - Read the beginner's guide at [/blog/gundam-card-game-beginners-guide-australia](/blog/gundam-card-game-beginners-guide-australia)
 - Use the card compare tool at [/compare](/compare)

@@ -61,6 +61,6 @@ Tracking collection value over time is the difference between managing your TCG 
 
 ## What to Read Next
 
-- Download the free collection tracker at [/tracker](/tracker)
-- Browse card prices for value updates at [/cards/mtg](/cards/mtg)
-- See current market movements at [/market](/market)
+- Download the free collection tracker at [C3 Collection Tracker](/tracker)
+- Browse card prices for value updates at [C3 MTG card prices](/cards/mtg)
+- See current market movements at [C3 Market Insights](/market)

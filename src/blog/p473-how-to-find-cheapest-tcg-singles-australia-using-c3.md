@@ -21,7 +21,7 @@ TCG single prices in Australia are fragmented across multiple platforms: eBay AU
 
 ## Using the C3 Card Hubs
 
-Each game has a dedicated hub at [/cards/mtg](/cards/mtg), [/cards/pokemon](/cards/pokemon), [/cards/lorcana](/cards/lorcana), and equivalent paths for all supported games. Search any card name to see the current AUD market price. The displayed price reflects recent eBay AU sold listings, which is the most accurate measure of what Australian buyers are actually paying right now.
+Each game has a dedicated hub at [C3 MTG card prices](/cards/mtg), [C3 Pokemon card prices](/cards/pokemon), [C3 Lorcana card prices](/cards/lorcana), and equivalent paths for all supported games. Search any card name to see the current AUD market price. The displayed price reflects recent eBay AU sold listings, which is the most accurate measure of what Australian buyers are actually paying right now.
 
 ## Comparing eBay AU to Game Store Prices
 
@@ -37,7 +37,7 @@ Cheaper is not always better if the condition does not match your needs. For com
 
 ## Building a Price-Checking Habit
 
-The habit that separates efficient TCG buyers from overspenders is checking [/cards/mtg](/cards/mtg) or the relevant hub before every purchase above AU$10. It takes 30 seconds to verify you are not overpaying. Over a year of regular TCG purchases, that habit saves most collectors AU$200 to AU$500 in overpayments that would otherwise go undetected.
+The habit that separates efficient TCG buyers from overspenders is checking [C3 MTG card prices](/cards/mtg) or the relevant hub before every purchase above AU$10. It takes 30 seconds to verify you are not overpaying. Over a year of regular TCG purchases, that habit saves most collectors AU$200 to AU$500 in overpayments that would otherwise go undetected.
 
 
 
@@ -60,7 +60,7 @@ Using all four tools together gives you visibility into sealed product value, in
 
 C3 is built specifically for Australian TCG players because Australian prices, community context, and market conditions differ meaningfully from international resources. Every tool on the site reflects AUD pricing from the Australian secondary market rather than USD prices converted at a rough exchange rate.
 
-Use the [/play](/play) quiz hub to find the right game for your situation. Use the card hubs at [/cards/mtg](/cards/mtg) and equivalent pages for your game to check prices before every transaction. Use the [blog at /blog](/blog) for Australian TCG event coverage, set reviews, and value analysis specific to the local market. Use the [eBay store](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fstr%2Fcardsoncardsoncards) for singles from all eight games with Australian shipping.
+Use the [/play](/play) quiz hub to find the right game for your situation. Use the card hubs at [C3 MTG card prices](/cards/mtg) and equivalent pages for your game to check prices before every transaction. Use the [blog at /blog](/blog) for Australian TCG event coverage, set reviews, and value analysis specific to the local market. Use the [eBay store](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fstr%2Fcardsoncardsoncards) for singles from all eight games with Australian shipping.
 
 The combination of live price data, analysis tools, and an active singles store makes C3 a complete resource for Australian TCG players across all spending levels and collecting goals.
 
@@ -70,6 +70,6 @@ The cheapest TCG singles in Australia are found through a combination of C3 pric
 
 ## What to Read Next
 
-- Check current card prices at [/cards/mtg](/cards/mtg)
+- Check current card prices at [C3 MTG card prices](/cards/mtg)
 - Browse the C3 eBay store at [https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fstr%2Fcardsoncardsoncards](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fstr%2Fcardsoncardsoncards)
 - Use Card Compare at [/compare](/compare)

@@ -88,4 +88,4 @@ There is no objectively wrong choice among these eight games. There are wrong ch
 
 - Find your TCG match at [/quizzes/which-tcg](/quizzes/which-tcg)
 - Find your TCG budget fit at [/quizzes/tcg-budget](/quizzes/tcg-budget)
-- Browse all TCG card prices at [/cards/mtg](/cards/mtg)
+- Browse all TCG card prices at [C3 MTG card prices](/cards/mtg)

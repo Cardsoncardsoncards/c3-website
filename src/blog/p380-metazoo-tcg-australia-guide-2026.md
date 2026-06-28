@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-MetaZoo TCG's situation in Australia is unusual in 2026. The game publisher entered administration in late 2023 and active support has significantly diminished. The most valuable MetaZoo cards remain certain first-edition and limited-run promos, but the market is speculative rather than supported by an active competitive scene. Before purchasing MetaZoo cards, understand that this is primarily a collector and speculation market. Check [/cards/metazoo](/cards/metazoo) for current AUD pricing.
+MetaZoo TCG's situation in Australia is unusual in 2026. The game publisher entered administration in late 2023 and active support has significantly diminished. The most valuable MetaZoo cards remain certain first-edition and limited-run promos, but the market is speculative rather than supported by an active competitive scene. Before purchasing MetaZoo cards, understand that this is primarily a collector and speculation market. Check [C3 MetaZoo card prices](/cards/metazoo) for current AUD pricing.
 
 ## What Is MetaZoo?
 
@@ -32,7 +32,7 @@ The game received significant speculative investment and media coverage between 
 
 **Artist editions and specialty products** produced during the game's active period trade at collector prices independent of the game's current publisher status.
 
-The MetaZoo secondary market in Australia runs through eBay AU and specialist card stores. Search [eBay AU MetaZoo](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dmetazoo+card+game&_sacat=183454) for current listings. Check [/cards/metazoo](/cards/metazoo) for aggregated AUD pricing.
+The MetaZoo secondary market in Australia runs through eBay AU and specialist card stores. Search [eBay AU MetaZoo](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dmetazoo+card+game&_sacat=183454) for current listings. Check [C3 MetaZoo card prices](/cards/metazoo) for aggregated AUD pricing.
 
 ## Is MetaZoo Worth Starting in Australia in 2026?
 
@@ -55,14 +55,14 @@ For Australian collectors who already hold MetaZoo product purchased at earlier 
 
 Sealed first-edition product from the game's early sets is the most defensible holding because physical scarcity is real and some collectors will always want original print material regardless of the game's active status. Opened cards, particularly played copies, have less compelling cases for long-term value.
 
-If you are considering purchasing MetaZoo product at current market prices, apply the same logic: sealed product from early print runs is more defensible than current-era product. Check [/cards/metazoo](/cards/metazoo) for current pricing before making any decisions.
+If you are considering purchasing MetaZoo product at current market prices, apply the same logic: sealed product from early print runs is more defensible than current-era product. Check [C3 MetaZoo card prices](/cards/metazoo) for current pricing before making any decisions.
 
 ## The C3 Take
 
-MetaZoo is a cautionary tale about TCG speculative bubbles. The game's cryptid IP is genuinely interesting and the card artwork has its own charm. But it was marketed aggressively as an investment vehicle before it had the community infrastructure to support that positioning, and the results were predictable. Australian collectors who purchased MetaZoo at peak prices in 2022 have seen those values decline significantly. The first-edition products retain some collector interest, but the long-term trajectory is uncertain. If you encounter MetaZoo product at very low prices and find the cryptid theme genuinely appealing, it is not worthless. But it should not be purchased at significant cost with investment expectations. Check [/cards/metazoo](/cards/metazoo) for current AUD pricing and make informed decisions accordingly.
+MetaZoo is a cautionary tale about TCG speculative bubbles. The game's cryptid IP is genuinely interesting and the card artwork has its own charm. But it was marketed aggressively as an investment vehicle before it had the community infrastructure to support that positioning, and the results were predictable. Australian collectors who purchased MetaZoo at peak prices in 2022 have seen those values decline significantly. The first-edition products retain some collector interest, but the long-term trajectory is uncertain. If you encounter MetaZoo product at very low prices and find the cryptid theme genuinely appealing, it is not worthless. But it should not be purchased at significant cost with investment expectations. Check [C3 MetaZoo card prices](/cards/metazoo) for current AUD pricing and make informed decisions accordingly.
 
 ## What to Read Next
 
-- Check current MetaZoo card prices at [/cards/metazoo](/cards/metazoo)
+- Check current MetaZoo card prices at [C3 MetaZoo card prices](/cards/metazoo)
 - Compare your TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the MetaZoo card prices guide at [/blog/metazoo-card-prices-australia](/blog/p303-metazoo-card-prices-australia)
+- Read the MetaZoo card prices guide at [/blog/metazoo-card-prices-australia](/blog/metazoo-card-prices-australia)

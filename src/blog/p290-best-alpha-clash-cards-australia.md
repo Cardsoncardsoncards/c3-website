@@ -56,6 +56,6 @@ If you play the game, buying singles is the correct approach. If you are looking
 
 ## What to Read Next
 
-- Browse Alpha Clash cards at [/cards/alphaclash](/cards/alphaclash)
+- Browse Alpha Clash cards at [C3 Alpha Clash card prices](/cards/alphaclash)
 - Read the Alpha Clash beginner's guide at [/blog/alpha-clash-tcg-beginners-guide-australia](/blog/alpha-clash-tcg-beginners-guide-australia)
 - Compare card values across games at [/compare](/compare)

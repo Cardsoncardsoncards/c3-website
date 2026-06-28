@@ -86,12 +86,12 @@ Singles from Wilds Unknown including Enchanted cards and Epic variants are avail
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Lorcana card prices](/cards/lorcana) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - [Lorcana Wilds Unknown: Full Australia Set Guide](/blog/disney-lorcana-wilds-unknown-australia)
-- [I Opened 4 Boxes of Lorcana Wilds Unknown](/blog/p252-lorcana-wilds-unknown-box-opening)
+- [I Opened 4 Boxes of Lorcana Wilds Unknown](/blog/lorcana-wilds-unknown-box-opening)
 - [Are Lorcana Cards Worth Investing In Australia?](/blog/are-lorcana-cards-investment-australia)
 
 ## Frequently Asked Questions
@@ -103,4 +103,4 @@ Mrs Incredible, Determined Rescuer (Enchanted, card 239) and Touch the Sky from 
 At AU$100-350+ each, Enchanted cards are the premium tier. If you collect Enchanteds of specific characters, buying singles is more reliable than opening packs hoping to pull a specific one. Epic cards at one per ten packs are easier to target via singles.
 
 ### How many Epic cards are in Wilds Unknown?
-Wilds Unknown has multiple Epic cards numbered above 204. We pulled nine from four booster boxes (approximately one per ten packs). See our [full box opening breakdown](/blog/p252-lorcana-wilds-unknown-box-opening).
+Wilds Unknown has multiple Epic cards numbered above 204. We pulled nine from four booster boxes (approximately one per ten packs). See our [full box opening breakdown](/blog/lorcana-wilds-unknown-box-opening).

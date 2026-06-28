@@ -56,6 +56,6 @@ Buy singles for competitive play. Open boxes at launch for new clan support sets
 
 ## What to Read Next
 
-- Browse Vanguard cards at [/cards/vanguard](/cards/vanguard)
+- Browse Vanguard cards at [C3 Vanguard card prices](/cards/vanguard)
 - Read the Vanguard beginner's guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/cardfight-vanguard-beginners-guide-australia)
-- Use the EV Calculator at [/tools](/tools)
+- Use the EV Calculator at [C3 tools](/tools)

@@ -14,7 +14,7 @@ affiliate_disclaimer: true
 
 A Regional Championship is different from a locals event in ways that are not always communicated clearly. The field is larger, the competition is more optimised, the environment is louder, and the mental load is higher across a full day or multi-day event. This guide explains what actually happens at an Australian TCG Regional so none of it surprises you on the day.
 
-Find upcoming Regional Championships near you at the [C3 upcoming tournament guide](/blog/p500-upcoming-tcg-tournaments-australia-2026).
+Find upcoming Regional Championships near you at the [C3 upcoming tournament guide](/blog/upcoming-tcg-tournaments-australia-2026).
 
 > **The most important mindset shift for your first Regional**
 >
@@ -99,12 +99,12 @@ Yes, but you should notify the event team before dropping so your opponents are 
 Swiss is the main event rounds where everyone plays every round. Standings determine which players advance to the top cut. Top cut is single-elimination, meaning one loss eliminates you from the tournament.
 
 **How do I find upcoming Australian TCG Regionals?**
-The [C3 upcoming tournament guide](/blog/p500-upcoming-tcg-tournaments-australia-2026) lists confirmed events across all states and games. Game-specific event locators for each organiser are also listed there.
+The [C3 upcoming tournament guide](/blog/upcoming-tcg-tournaments-australia-2026) lists confirmed events across all states and games. Game-specific event locators for each organiser are also listed there.
 
 ## Related Posts
 
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p509-how-to-prepare-for-your-first-tcg-tournament-australia)
-- [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
-- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026](/blog/p494-yugioh-oceanic-world-championship-qualifier-melbourne-2026)
-- [Dragon Ball Super Brisbane Regional 2026](/blog/p497-dragon-ball-super-brisbane-regional-2026)
-- [Best TCG to Play Competitively Australia 2026](/blog/p511-what-is-the-best-tcg-to-play-competitively-australia-2026)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-for-your-first-tcg-tournament-australia)
+- [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)
+- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026](/blog/yugioh-oceanic-world-championship-qualifier-melbourne-2026)
+- [Dragon Ball Super Brisbane Regional 2026](/blog/dragon-ball-super-brisbane-regional-2026)
+- [Best TCG to Play Competitively Australia 2026](/blog/what-is-the-best-tcg-to-play-competitively-australia-2026)

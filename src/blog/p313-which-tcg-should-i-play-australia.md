@@ -60,4 +60,4 @@ The quiz takes two minutes. The beginner guides take ten. The combination of bot
 
 - Take the quiz now at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
 - Browse all game beginner guides at [/blog](/blog)
-- See all card hubs at [/cards](/cards)
+- See all card hubs at [C3 Card Vault](/cards)

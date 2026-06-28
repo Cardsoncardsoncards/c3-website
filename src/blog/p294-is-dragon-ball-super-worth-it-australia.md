@@ -10,7 +10,7 @@ emoji: 🐉
 permalink: /blog/is-dragon-ball-super-worth-it-australia/
 ---## Quick Answer
 
-The Dragon Ball Super Card Game has been running since 2017 and has gone through several major expansions. If you are thinking about getting into it now in Australia, the question is whether the timing still makes sense. Here is an honest breakdown. See current prices at [/cards/dragonball](/cards/dragonball).
+The Dragon Ball Super Card Game has been running since 2017 and has gone through several major expansions. If you are thinking about getting into it now in Australia, the question is whether the timing still makes sense. Here is an honest breakdown. See current prices at [C3 Dragon Ball card prices](/cards/dragonball).
 
 
 
@@ -61,10 +61,10 @@ Check current AUD prices for DBS singles before making any purchases.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/dragonball](/cards/dragonball) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Dragon Ball card prices](/cards/dragonball) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Dragon Ball Super card prices at [/cards/dragonball](/cards/dragonball)
+- Browse Dragon Ball Super card prices at [C3 Dragon Ball card prices](/cards/dragonball)
 - Find your Dragon Ball warrior at [/quizzes/dragonball-warrior](/quizzes/dragonball-warrior)
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)

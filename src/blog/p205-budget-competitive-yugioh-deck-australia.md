@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Competitive Yu-Gi-Oh has a reputation for being expensive: and it is, at the top level. But the strategies that win at locals and regional events don't always require the most expensive build. Knowing where to spend and where to save is the key to competitive Yu-Gi-Oh on a budget in Australia. See current prices at [/cards/yugioh](/cards/yugioh).
+Competitive Yu-Gi-Oh has a reputation for being expensive: and it is, at the top level. But the strategies that win at locals and regional events don't always require the most expensive build. Knowing where to spend and where to save is the key to competitive Yu-Gi-Oh on a budget in Australia. See current prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh).
 
 
 
@@ -73,13 +73,13 @@ Track your Yu-Gi-Oh collection and costs with the [free C3 tracker](/tracker).
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/yugioh](/cards/yugioh) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Yu-Gi-Oh card prices](/cards/yugioh) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Yu-Gi-Oh card prices at [/cards/yugioh](/cards/yugioh)
+- Browse Yu-Gi-Oh card prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
 - Find your Yu-Gi-Oh deck type at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

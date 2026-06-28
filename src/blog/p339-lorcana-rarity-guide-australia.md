@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Disney Lorcana uses six rarity tiers: Common, Uncommon, Rare, Super Rare, Legendary, and Enchanted Rare. Enchanted Rares are the premium collector tier, with unique alternate art and gold foil treatments. They pull at roughly one per two to four booster boxes and are the most valuable cards in the game. For current AUD prices across all rarity tiers, check [/cards/lorcana](/cards/lorcana).
+Disney Lorcana uses six rarity tiers: Common, Uncommon, Rare, Super Rare, Legendary, and Enchanted Rare. Enchanted Rares are the premium collector tier, with unique alternate art and gold foil treatments. They pull at roughly one per two to four booster boxes and are the most valuable cards in the game. For current AUD prices across all rarity tiers, check [C3 Lorcana card prices](/cards/lorcana).
 
 ## The Six Lorcana Rarity Tiers
 
@@ -52,10 +52,10 @@ Competitive players who focus on specific ink colour combinations may value Ench
 
 ## The C3 Take
 
-Lorcana's rarity system is clear once you understand that Enchanted Rares are the true premium tier and that character identity within that tier matters as much as the rarity itself. New Australian Lorcana collectors sometimes make the mistake of focusing on pulling any Enchanted Rare, when the goal should be pulling the right Enchanted Rare. A set where your favourite Disney character gets the Enchanted treatment is a set worth being excited about. A set where you do not particularly care about the Enchanted pool is a set where buying specific singles from [/cards/lorcana](/cards/lorcana) makes more sense than opening product.
+Lorcana's rarity system is clear once you understand that Enchanted Rares are the true premium tier and that character identity within that tier matters as much as the rarity itself. New Australian Lorcana collectors sometimes make the mistake of focusing on pulling any Enchanted Rare, when the goal should be pulling the right Enchanted Rare. A set where your favourite Disney character gets the Enchanted treatment is a set worth being excited about. A set where you do not particularly care about the Enchanted pool is a set where buying specific singles from [C3 Lorcana card prices](/cards/lorcana) makes more sense than opening product.
 
 ## What to Read Next
 
-- Browse Lorcana singles across all rarities at [/cards/lorcana](/cards/lorcana)
+- Browse Lorcana singles across all rarities at [C3 Lorcana card prices](/cards/lorcana)
 - Find out which Lorcana character you are at [/quizzes/lorcana-character](/quizzes/lorcana-character)
-- Read about the most valuable Lorcana cards in Australia at [/blog/most-valuable-lorcana-cards-australia-2026](/blog/p337-most-valuable-lorcana-cards-australia-2026)
+- Read about the most valuable Lorcana cards in Australia at [/blog/most-valuable-lorcana-cards-australia-2026](/blog/most-valuable-lorcana-cards-australia-2026)

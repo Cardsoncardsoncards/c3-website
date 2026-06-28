@@ -57,10 +57,10 @@ Using all four tools together gives you visibility into sealed product value, in
 
 ## The C3 Take
 
-The Market page at [/market](/market) gives Australian TCG players an advantage that most buyers and sellers do not have: visibility into what is moving right now at current AU prices. Used consistently, it catches opportunities to sell at peaks and buy at troughs that are invisible to players who only check prices when they are about to transact.
+The Market page at [C3 Market Insights](/market) gives Australian TCG players an advantage that most buyers and sellers do not have: visibility into what is moving right now at current AU prices. Used consistently, it catches opportunities to sell at peaks and buy at troughs that are invisible to players who only check prices when they are about to transact.
 
 ## What to Read Next
 
-- Check current market movements at [/market](/market)
-- Download the collection tracker at [/tracker](/tracker)
+- Check current market movements at [C3 Market Insights](/market)
+- Download the collection tracker at [C3 Collection Tracker](/tracker)
 - Decide eBay vs buylist at [/quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist)

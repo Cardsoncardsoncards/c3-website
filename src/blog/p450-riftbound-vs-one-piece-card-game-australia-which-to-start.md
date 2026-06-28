@@ -28,7 +28,7 @@ One Piece competitive play in Australia is well-established with regular store e
 
 ## Card Availability and Prices
 
-One Piece singles are widely available through Australian TCG stores and eBay AU. Secret Rare alt-art cards can reach AU$50 to AU$200+ for premium versions. Riftbound singles are available but the secondary market is less deep, meaning some cards are harder to find at retail prices. Check [/cards/onepiece](/cards/onepiece) and [/cards/riftbound](/cards/riftbound) for current AUD pricing on both games.
+One Piece singles are widely available through Australian TCG stores and eBay AU. Secret Rare alt-art cards can reach AU$50 to AU$200+ for premium versions. Riftbound singles are available but the secondary market is less deep, meaning some cards are harder to find at retail prices. Check [C3 One Piece card prices](/cards/onepiece) and [C3 Riftbound card prices](/cards/riftbound) for current AUD pricing on both games.
 
 ## Collector Trajectory
 
@@ -60,5 +60,5 @@ The honest answer is that both games are worth your time. The question is whethe
 ## What to Read Next
 
 - Find your TCG match at at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse One Piece prices at at [/cards/onepiece](/cards/onepiece)
-- Browse Riftbound prices at at [/cards/riftbound](/cards/riftbound)
+- Browse One Piece prices at at [C3 One Piece card prices](/cards/onepiece)
+- Browse Riftbound prices at at [C3 Riftbound card prices](/cards/riftbound)

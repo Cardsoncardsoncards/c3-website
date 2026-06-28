@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Gundam Card Game](/blog/p392-gundam-card-game-australia-guide-2026)
+[Blog](/blog) > [Gundam Card Game](/blog/gundam-card-game-australia-guide-2026)
 
 The Gundam Card Game is running its Brisbane Regional Championship at the Brisbane Convention and Exhibition Centre on 18 July 2026. It is the first of two Gundam Regionals TAK Games is running in Oceania in July, with a Melbourne Regional following at La Trobe University on 25 July. If you play Gundam TCG in Queensland, this is your closest Regional event for 2026.
 
@@ -101,8 +101,8 @@ The [C3 Gundam hub](/cards/gundam) shows current AUD prices updated daily from l
 
 ## Related Posts
 
-- [Gundam Card Game Australia Guide 2026](/blog/p392-gundam-card-game-australia-guide-2026)
-- [Best Gundam Card Game Cards Australia](/blog/p301-best-gundam-card-game-cards-australia)
-- [Dragon Ball Super Brisbane Regional Championship 2026](/blog/p497-dragon-ball-super-brisbane-regional-2026)
-- [TAK Games Oceania Regionals: Auckland August 2026](/blog/p505-auckland-tcg-regionals-august-2026-guide)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
+- [Gundam Card Game Australia Guide 2026](/blog/gundam-card-game-australia-guide-2026)
+- [Best Gundam Card Game Cards Australia](/blog/best-gundam-card-game-cards-australia)
+- [Dragon Ball Super Brisbane Regional Championship 2026](/blog/dragon-ball-super-brisbane-regional-2026)
+- [TAK Games Oceania Regionals: Auckland August 2026](/blog/auckland-tcg-regionals-august-2026-guide)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)

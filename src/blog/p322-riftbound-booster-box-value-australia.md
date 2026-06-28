@@ -66,6 +66,6 @@ Most players open boxes for the wrong reason: they assume the expected value is 
 
 ## What to Read Next
 
-- Calculate expected value on any Riftbound box at [/tools](/tools)
-- Browse Riftbound singles and current AUD prices at [/cards/riftbound](/cards/riftbound)
+- Calculate expected value on any Riftbound box at [C3 tools](/tools)
+- Browse Riftbound singles and current AUD prices at [C3 Riftbound card prices](/cards/riftbound)
 - Compare specific cards before purchasing at [/compare](/compare)

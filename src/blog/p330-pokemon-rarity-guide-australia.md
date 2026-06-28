@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Pokemon cards in the Scarlet and Violet era use a rarity system with more tiers than previous generations. From common (C) at the bottom to Special Illustration Rare (SIR) and Hyper Rare (HR) at the top, each tier has different pull rates and collector value. The cards worth the most money in Australia are almost always SIRs and HRs of popular Pokemon. For live AUD prices at every rarity tier, check [/cards/pokemon](/cards/pokemon).
+Pokemon cards in the Scarlet and Violet era use a rarity system with more tiers than previous generations. From common (C) at the bottom to Special Illustration Rare (SIR) and Hyper Rare (HR) at the top, each tier has different pull rates and collector value. The cards worth the most money in Australia are almost always SIRs and HRs of popular Pokemon. For live AUD prices at every rarity tier, check [C3 Pokemon card prices](/cards/pokemon).
 
 ## The Scarlet and Violet Rarity Tiers Explained
 
@@ -50,7 +50,7 @@ The clearest indicator of tier is the card's visual treatment. A standard holofo
 
 **IRs from popular sets** are borderline. If the raw NM is already AU$40 to AU$60 and a PSA 10 would push it to AU$150 or more, grading may be worthwhile. Do the maths with current sold comps before submitting anything.
 
-The [Pokemon card grading guide for Australia at /blog/pokemon-card-grading-australia-worth-it](/blog/p024-pokemon-card-grading-australia-worth-it) covers this in detail.
+The [Pokemon card grading guide for Australia at /blog/pokemon-card-grading-australia-worth-it](/blog/pokemon-card-grading-australia-worth-it) covers this in detail.
 
 ## How Rarity Interacts With Pull Rate Manipulation
 
@@ -64,6 +64,6 @@ The Scarlet and Violet rarity system gives collectors a clear hierarchy and make
 
 ## What to Read Next
 
-- Browse current prices across all Pokemon rarities at [/cards/pokemon](/cards/pokemon)
-- Check whether opening or buying singles is smarter at [/tools](/tools)
+- Browse current prices across all Pokemon rarities at [C3 Pokemon card prices](/cards/pokemon)
+- Check whether opening or buying singles is smarter at [C3 tools](/tools)
 - Take the [Pokemon player type quiz at /quizzes/pokemon-archetype](/quizzes/pokemon-archetype)

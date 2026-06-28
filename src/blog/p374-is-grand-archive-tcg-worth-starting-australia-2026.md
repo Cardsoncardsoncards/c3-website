@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Grand Archive is worth starting in Australia in 2026 if you can access a local community and value premium card production quality alongside strategic gameplay. The game has outstanding card art, a unique cold foil treatment, and a well-designed combat system. The consideration is that community size is smaller than mainstream TCGs, making local play more location-dependent. Check [/cards/grandarchive](/cards/grandarchive) for current prices.
+Grand Archive is worth starting in Australia in 2026 if you can access a local community and value premium card production quality alongside strategic gameplay. The game has outstanding card art, a unique cold foil treatment, and a well-designed combat system. The consideration is that community size is smaller than mainstream TCGs, making local play more location-dependent. Check [C3 Grand Archive card prices](/cards/grandarchive) for current prices.
 
 ## What Grand Archive Does Well
 
@@ -68,6 +68,6 @@ Grand Archive is the TCG for players who want the best of both worlds: genuinely
 
 ## What to Read Next
 
-- Browse Grand Archive singles at [/cards/grandarchive](/cards/grandarchive)
+- Browse Grand Archive singles at [C3 Grand Archive card prices](/cards/grandarchive)
 - Find your Grand Archive class at [/quizzes/grand-archive-class](/quizzes/grand-archive-class)
-- Read the Grand Archive beginners guide at [/blog/grand-archive-tcg-beginners-guide-australia](/blog/p278-grand-archive-tcg-beginners-guide-australia)
+- Read the Grand Archive beginners guide at [/blog/grand-archive-tcg-beginners-guide-australia](/blog/grand-archive-tcg-beginners-guide-australia)

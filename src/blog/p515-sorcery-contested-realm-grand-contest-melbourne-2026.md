@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Sorcery Contested Realm](/blog/p283-sorcery-contested-realm-beginners-guide-australia)
+[Blog](/blog) > [Sorcery Contested Realm](/blog/sorcery-contested-realm-beginners-guide-australia)
 
 Sorcery Contested Realm is coming to Melbourne for The Grand Contest on 25 and 26 July 2026. Hosted by Plenty of Games on Collins Street in partnership with Erik's Curiosa, it is the largest Sorcery event in Australia this year and a significant moment for the Australian Sorcery community.
 
@@ -101,12 +101,12 @@ Regular events run at Good Games Hobart fortnightly. Check your local game store
 The [C3 Sorcery hub](/cards/sorcery) shows current AUD prices updated daily from live market data.
 
 **Is Sorcery worth starting for a new player in 2026?**
-The [Is Sorcery TCG Worth Starting in Australia 2026?](/blog/p391-sorcery-contested-realm-australia-guide-2026) guide covers the entry cost, community, and collector opportunity in full.
+The [Is Sorcery TCG Worth Starting in Australia 2026?](/blog/sorcery-contested-realm-australia-guide-2026) guide covers the entry cost, community, and collector opportunity in full.
 
 ## Related Posts
 
-- [Sorcery Contested Realm Australia Guide 2026](/blog/p391-sorcery-contested-realm-australia-guide-2026)
-- [Sorcery Contested Realm Beginners Guide Australia](/blog/p283-sorcery-contested-realm-beginners-guide-australia)
-- [Best Sorcery TCG Cards Australia](/blog/p305-best-sorcery-tcg-cards-australia)
-- [TCG Tournaments Victoria 2026](/blog/p501-tcg-tournaments-victoria-2026)
-- [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
+- [Sorcery Contested Realm Australia Guide 2026](/blog/sorcery-contested-realm-australia-guide-2026)
+- [Sorcery Contested Realm Beginners Guide Australia](/blog/sorcery-contested-realm-beginners-guide-australia)
+- [Best Sorcery TCG Cards Australia](/blog/best-sorcery-tcg-cards-australia)
+- [TCG Tournaments Victoria 2026](/blog/tcg-tournaments-victoria-2026)
+- [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)

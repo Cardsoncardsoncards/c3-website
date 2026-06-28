@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Yu-Gi-Oh](/blog/p084-yugioh-tcg-beginners-guide-australia)
+[Blog](/blog) > [Yu-Gi-Oh](/blog/yugioh-tcg-beginners-guide-australia)
 
 The 2026 Oceanic World Championship Qualifier is the most important Yu-Gi-Oh event of the year for Australian duelists. Held at Malvern Town Hall in Melbourne from 10 to 12 July 2026, it is the regional qualifier that sends Oceania's best players to the World Championship in Japan. Whether you are competing, spectating, or buying cards before prices spike around the event, this guide covers everything you need to know.
 
@@ -115,8 +115,8 @@ The [C3 Yu-Gi-Oh hub](/cards/yugioh) shows current AUD prices updated daily from
 
 ## Related Posts
 
-- [Yu-Gi-Oh WCQ Season Australia 2026: States, Continentals and the Cards You Need](/blog/p492-yugioh-wcq-australia-2026)
-- [Yu-Gi-Oh Chaos Origins Australia](/blog/p481-yugioh-chaos-origins-australia)
-- [Budget Competitive Yu-Gi-Oh Deck Australia 2026](/blog/p205-budget-competitive-yugioh-deck-australia)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
-- [Yu-Gi-Oh Banlist Australia: How It Works](/blog/p201-yugioh-banlist-australia-how-it-works)
+- [Yu-Gi-Oh WCQ Season Australia 2026: States, Continentals and the Cards You Need](/blog/yugioh-wcq-australia-2026)
+- [Yu-Gi-Oh Chaos Origins Australia](/blog/yugioh-chaos-origins-australia)
+- [Budget Competitive Yu-Gi-Oh Deck Australia 2026](/blog/budget-competitive-yugioh-deck-australia)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)
+- [Yu-Gi-Oh Banlist Australia: How It Works](/blog/yugioh-banlist-australia-how-it-works)

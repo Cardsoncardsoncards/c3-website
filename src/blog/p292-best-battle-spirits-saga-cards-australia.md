@@ -58,6 +58,6 @@ Buy the specific cards your deck needs. The 12-pack box format makes pack openin
 
 ## What to Read Next
 
-- Browse Battle Spirits Saga cards at [/cards/battlespiritssaga](/cards/battlespiritssaga)
+- Browse Battle Spirits Saga cards at [C3 Battle Spirits Saga card prices](/cards/battlespiritssaga)
 - Read the beginner's guide at [/blog/battle-spirits-saga-beginners-guide-australia](/blog/battle-spirits-saga-beginners-guide-australia)
 - Compare singles prices across games at [/compare](/compare)

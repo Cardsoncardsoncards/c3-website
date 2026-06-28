@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The Final Fantasy TCG uses a rarity system with Common, Rare, Hero, Legend, and Shining rarities as the main tiers. Legendary (L) and Shining (S) are the premium collector and competitive tiers. Pull rates are lower than most TCGs at the top tier. For current AUD prices across all FFTCG rarities, check [/cards/finalfantasy](/cards/finalfantasy).
+The Final Fantasy TCG uses a rarity system with Common, Rare, Hero, Legend, and Shining rarities as the main tiers. Legendary (L) and Shining (S) are the premium collector and competitive tiers. Pull rates are lower than most TCGs at the top tier. For current AUD prices across all FFTCG rarities, check [C3 Final Fantasy TCG card prices](/cards/finalfantasy).
 
 ## The FFTCG Rarity Tiers
 
@@ -55,10 +55,10 @@ FFTCG categorises cards into four types: Forwards (attackers), Backups (support 
 
 ## The C3 Take
 
-FFTCG's rarity system reflects the game's IP strengths: the highest rarity cards are the most iconic characters rendered with the highest production quality, and the specific Final Fantasy game they come from is as important as the rarity tier. For Australian collectors and players, understanding that Legendary and Shining cards of FFVII, FFVI, FFX, and FFXIV characters command structural premiums over other Final Fantasy titles is the key insight. The elemental system adds a competitive dimension that filters rarity value further. Use [/cards/finalfantasy](/cards/finalfantasy) to check current Australian market prices before making any purchase.
+FFTCG's rarity system reflects the game's IP strengths: the highest rarity cards are the most iconic characters rendered with the highest production quality, and the specific Final Fantasy game they come from is as important as the rarity tier. For Australian collectors and players, understanding that Legendary and Shining cards of FFVII, FFVI, FFX, and FFXIV characters command structural premiums over other Final Fantasy titles is the key insight. The elemental system adds a competitive dimension that filters rarity value further. Use [C3 Final Fantasy TCG card prices](/cards/finalfantasy) to check current Australian market prices before making any purchase.
 
 ## What to Read Next
 
-- Browse Final Fantasy TCG singles at [/cards/finalfantasy](/cards/finalfantasy)
-- Check FFTCG box EV at [/tools](/tools)
-- Read the FFTCG beginners guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/p274-final-fantasy-tcg-beginners-guide-australia)
+- Browse Final Fantasy TCG singles at [C3 Final Fantasy TCG card prices](/cards/finalfantasy)
+- Check FFTCG box EV at [C3 tools](/tools)
+- Read the FFTCG beginners guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/final-fantasy-tcg-beginners-guide-australia)

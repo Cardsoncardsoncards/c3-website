@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Battle Spirits Saga is a relaunch of the classic Battle Spirits TCG designed for global audiences. Its most valuable cards are Rare and Masterpiece Rare versions of powerful Spirits from high-demand worlds. The game has a growing English-language community and is worth starting for players attracted to its resource system and fantasy worlds. Check [/cards/battlespirits](/cards/battlespirits) for current AUD prices.
+Battle Spirits Saga is a relaunch of the classic Battle Spirits TCG designed for global audiences. Its most valuable cards are Rare and Masterpiece Rare versions of powerful Spirits from high-demand worlds. The game has a growing English-language community and is worth starting for players attracted to its resource system and fantasy worlds. Check [C3 Battle Spirits Saga card prices](/cards/battlespiritssaga) for current AUD prices.
 
 ## What Is Battle Spirits Saga?
 
@@ -30,7 +30,7 @@ The game uses a unique resource mechanic called the Reserve, where players decid
 
 **Crossover products** featuring characters from other Bandai properties (Dragon Ball, Naruto) that have appeared in Battle Spirits have their own collector demand driven by the IP fanbase.
 
-The Battle Spirits Saga secondary market in Australia runs through eBay AU. Search [eBay AU Battle Spirits Saga](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dbattle+spirits+saga+singles&_sacat=183454) for current Australian listings. Check [/cards/battlespirits](/cards/battlespirits) for aggregated AUD pricing.
+The Battle Spirits Saga secondary market in Australia runs through eBay AU. Search [eBay AU Battle Spirits Saga](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dbattle+spirits+saga+singles&_sacat=183454) for current Australian listings. Check [C3 Battle Spirits Saga card prices](/cards/battlespiritssaga) for aggregated AUD pricing.
 
 ## Entry Cost and Starting Battle Spirits Saga
 
@@ -38,7 +38,7 @@ The Battle Spirits Saga secondary market in Australia runs through eBay AU. Sear
 
 **Booster boxes** run AU$80 to AU$110. Value is concentrated in Masterpiece Rare cards and their competitive relevance.
 
-**Singles** from [/cards/battlespirits](/cards/battlespirits) and eBay AU are the most efficient path for competitive deck building.
+**Singles** from [C3 Battle Spirits Saga card prices](/cards/battlespiritssaga) and eBay AU are the most efficient path for competitive deck building.
 
 ## The Australian Battle Spirits Saga Community
 
@@ -64,6 +64,6 @@ Battle Spirits Saga is a genuinely well-designed TCG with a unique resource mech
 
 ## What to Read Next
 
-- Browse Battle Spirits Saga singles at [/cards/battlespirits](/cards/battlespirits)
+- Browse Battle Spirits Saga singles at [C3 Battle Spirits Saga card prices](/cards/battlespiritssaga)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Battle Spirits Saga beginners guide at [/blog/battle-spirits-saga-beginners-guide-australia](/blog/p270-battle-spirits-saga-beginners-guide-australia)
+- Read the Battle Spirits Saga beginners guide at [/blog/battle-spirits-saga-beginners-guide-australia](/blog/battle-spirits-saga-beginners-guide-australia)

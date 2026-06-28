@@ -76,6 +76,6 @@ Fakes are a solvable problem. The light test alone catches the majority of count
 
 ## What to Read Next
 
-- Browse Pokemon singles from verified Australian sources at [/cards/pokemon](/cards/pokemon)
-- Check the Pokemon rarity guide at [/blog/pokemon-rarity-guide-australia](/blog/p330-pokemon-rarity-guide-australia)
-- Understand the Pokemon grading process at [/blog/pokemon-card-grading-australia-worth-it](/blog/p024-pokemon-card-grading-australia-worth-it)
+- Browse Pokemon singles from verified Australian sources at [C3 Pokemon card prices](/cards/pokemon)
+- Check the Pokemon rarity guide at [/blog/pokemon-rarity-guide-australia](/blog/pokemon-rarity-guide-australia)
+- Understand the Pokemon grading process at [/blog/pokemon-card-grading-australia-worth-it](/blog/pokemon-card-grading-australia-worth-it)

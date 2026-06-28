@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-You have a collection of Pokemon cards. Maybe hundreds, maybe thousands. You want to sell them. Where do you start? See current prices at [/cards/pokemon](/cards/pokemon).
+You have a collection of Pokemon cards. Maybe hundreds, maybe thousands. You want to sell them. Where do you start? See current prices at [C3 Pokemon card prices](/cards/pokemon).
 
 
 
@@ -99,13 +99,13 @@ Use the [free C3 collection tracker](/tracker) to log what you've sold and at wh
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Pokemon card prices](/cards/pokemon) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon card prices at [C3 Pokemon card prices](/cards/pokemon)
 - Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

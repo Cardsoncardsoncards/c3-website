@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For competitive One Piece TCG play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. A booster box costs roughly AU$130 to AU$160 at Australian retail and typically returns less than that in card value. The exception is if you are specifically chasing alternate art Leaders or SEC cards for collection purposes and accept that sealed opening is a premium-cost experience. Check current prices at [/cards/onepiece](/cards/onepiece) and run EV at [/tools](/tools) before buying any sealed product.
+For competitive One Piece TCG play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. A booster box costs roughly AU$130 to AU$160 at Australian retail and typically returns less than that in card value. The exception is if you are specifically chasing alternate art Leaders or SEC cards for collection purposes and accept that sealed opening is a premium-cost experience. Check current prices at [C3 One Piece card prices](/cards/onepiece) and run EV at [C3 tools](/tools) before buying any sealed product.
 
 ## One Piece Booster Box EV in Australia
 
@@ -22,7 +22,7 @@ The value distribution follows the One Piece rarity structure: most cards pull a
 
 **Starter Decks** are a distinct and more cost-effective product. At roughly AU$20 to AU$25, a starter deck contains a complete, playable deck for a specific faction. For a new player, a starter deck plus targeted singles is almost always a better value proposition than opening booster product.
 
-The [EV Calculator at /tools](/tools) can model One Piece booster box EV using current secondary market pricing from [/cards/onepiece](/cards/onepiece).
+The [EV Calculator at /tools](/tools) can model One Piece booster box EV using current secondary market pricing from [C3 One Piece card prices](/cards/onepiece).
 
 ## When Sealed Makes Sense for One Piece
 
@@ -42,7 +42,7 @@ The [EV Calculator at /tools](/tools) can model One Piece booster box EV using c
 
 **Local game stores** are increasingly stocking One Piece singles as the game's Australian community grows. Check specialist stores in your city for current availability.
 
-**The C3 shop at [/shop](/shop)** and [/cards/onepiece](/cards/onepiece) provide Australian singles access and pricing reference.
+**The C3 shop at [/shop](/shop)** and [C3 One Piece card prices](/cards/onepiece) provide Australian singles access and pricing reference.
 
 ## Japanese vs English for One Piece in Australia
 
@@ -62,6 +62,6 @@ One Piece TCG's singles market in Australia is deep enough that you can build an
 
 ## What to Read Next
 
-- Check current One Piece singles prices at [/cards/onepiece](/cards/onepiece)
-- Calculate One Piece booster box EV at [/tools](/tools)
-- Read the One Piece beginners guide at [/blog/one-piece-card-game-australia-beginners-guide](/blog/p035-one-piece-card-game-australia-beginners-guide)
+- Check current One Piece singles prices at [C3 One Piece card prices](/cards/onepiece)
+- Calculate One Piece booster box EV at [C3 tools](/tools)
+- Read the One Piece beginners guide at [/blog/one-piece-card-game-australia-beginners-guide](/blog/one-piece-card-game-australia-beginners-guide)

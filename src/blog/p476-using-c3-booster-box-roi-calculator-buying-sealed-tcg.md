@@ -17,7 +17,7 @@ Before opening any TCG booster box in Australia, run the [EV Calculator at /tool
 
 ## The ROI Framework for Booster Boxes
 
-Return on investment for a booster box is simple: divide the expected value of cards from one box by your purchase price. If expected value is AU$160 and you paid AU$150, your ROI is 106 percent, which is positive. If expected value is AU$90 and you paid AU$150, your ROI is 60 percent, which means you are expected to get back 60 cents for every dollar spent. The EV Calculator at [/tools](/tools) does this calculation for you using current AUD data.
+Return on investment for a booster box is simple: divide the expected value of cards from one box by your purchase price. If expected value is AU$160 and you paid AU$150, your ROI is 106 percent, which is positive. If expected value is AU$90 and you paid AU$150, your ROI is 60 percent, which means you are expected to get back 60 cents for every dollar spent. The EV Calculator at [C3 tools](/tools) does this calculation for you using current AUD data.
 
 ## When Box ROI Is Positive
 
@@ -57,10 +57,10 @@ Using all four tools together gives you visibility into sealed product value, in
 
 ## The C3 Take
 
-The EV Calculator at [/tools](/tools) is available before every single booster box purchase you make in Australia, for free, in under two minutes. There is no excuse for opening a box without checking the numbers first. Run it, check the verdict, make an informed decision. That habit alone saves most Australian TCG collectors AU$200 to AU$500 per year in suboptimal box purchases.
+The EV Calculator at [C3 tools](/tools) is available before every single booster box purchase you make in Australia, for free, in under two minutes. There is no excuse for opening a box without checking the numbers first. Run it, check the verdict, make an informed decision. That habit alone saves most Australian TCG collectors AU$200 to AU$500 per year in suboptimal box purchases.
 
 ## What to Read Next
 
-- Run the EV Calculator at [/tools](/tools)
-- Browse current card prices at [/cards/mtg](/cards/mtg)
+- Run the EV Calculator at [C3 tools](/tools)
+- Browse current card prices at [C3 MTG card prices](/cards/mtg)
 - Decide collector or player at [/quizzes/collector-or-player](/quizzes/collector-or-player)

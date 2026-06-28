@@ -12,11 +12,11 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Riftbound Vendetta is the fourth set in the Riftbound card game, scheduled for release on 31 July 2026. It introduces new champions and mechanics beyond the Unleashed card pool. Australian players can pre-order through local game stores and online retailers ahead of the global launch. Check current Riftbound prices and set listings at [/cards/riftbound](/cards/riftbound).
+Riftbound Vendetta is the fourth set in the Riftbound card game, scheduled for release on 31 July 2026. It introduces new champions and mechanics beyond the Unleashed card pool. Australian players can pre-order through local game stores and online retailers ahead of the global launch. Check current Riftbound prices and set listings at [C3 Riftbound card prices](/cards/riftbound).
 
 ## What We Know About Vendetta
 
-Riftbound Vendetta releases globally on 31 July 2026. It is the fourth set in the Riftbound card game following Origins, Spiritforged, and Unleashed, and continues to expand the champion roster and card pool. Full set details including card list, pull rates, and champion reveals will be confirmed closer to release. Check [/cards/riftbound](/cards/riftbound) for the latest Vendetta card listings as they are added.
+Riftbound Vendetta releases globally on 31 July 2026. It is the fourth set in the Riftbound card game following Origins, Spiritforged, and Unleashed, and continues to expand the champion roster and card pool. Full set details including card list, pull rates, and champion reveals will be confirmed closer to release. Check [C3 Riftbound card prices](/cards/riftbound) for the latest Vendetta card listings as they are added.
 
 ## Why Vendetta Matters for Australian Collectors
 
@@ -36,7 +36,7 @@ New sets shift the competitive Riftbound meta. Champions introduced in Vendetta 
 
 ## Completing the Full Riftbound Collection
 
-For collectors aiming to complete all Riftbound sets, Vendetta's arrival means the full collection grows to four sets. Origins completion is worth prioritising before Vendetta releases, since Origins singles will likely increase in price if new champions in Vendetta create demand for Origins support cards. Track your current Riftbound collection progress at [/tracker](/tracker) and identify which Origins and Spiritforged singles you still need before Vendetta launch.
+For collectors aiming to complete all Riftbound sets, Vendetta's arrival means the full collection grows to four sets. Origins completion is worth prioritising before Vendetta releases, since Origins singles will likely increase in price if new champions in Vendetta create demand for Origins support cards. Track your current Riftbound collection progress at [C3 Collection Tracker](/tracker) and identify which Origins and Spiritforged singles you still need before Vendetta launch.
 
 
 ## Using C3 Tools for This Decision
@@ -55,10 +55,10 @@ Using all four tools together gives you the data advantage that most casual TCG 
 
 ## The C3 Take
 
-Vendetta is the set that will confirm whether Riftbound has the legs to grow into a major long-term TCG in Australia. The first three sets established the game. The fourth set is where player retention gets tested. If Vendetta introduces compelling new champions and the competitive scene continues to grow, the early collector opportunity from Origins through Unleashed will look increasingly significant. Check Vendetta previews at [/cards/riftbound](/cards/riftbound) as they are published.
+Vendetta is the set that will confirm whether Riftbound has the legs to grow into a major long-term TCG in Australia. The first three sets established the game. The fourth set is where player retention gets tested. If Vendetta introduces compelling new champions and the competitive scene continues to grow, the early collector opportunity from Origins through Unleashed will look increasingly significant. Check Vendetta previews at [C3 Riftbound card prices](/cards/riftbound) as they are published.
 
 ## What to Read Next
 
-- Browse all Riftbound sets and prices at at [/cards/riftbound](/cards/riftbound)
-- Calculate booster box value at at [/tools](/tools)
+- Browse all Riftbound sets and prices at at [C3 Riftbound card prices](/cards/riftbound)
+- Calculate booster box value at at [C3 tools](/tools)
 - Find your Riftbound champion at at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)

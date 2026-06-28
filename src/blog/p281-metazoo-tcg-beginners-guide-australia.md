@@ -62,6 +62,6 @@ Do not buy MetaZoo expecting a community, competitive play, or product appreciat
 
 ## What to Read Next
 
-- Browse MetaZoo cards at [/cards/metazoo](/cards/metazoo)
+- Browse MetaZoo cards at [C3 MetaZoo card prices](/cards/metazoo)
 - Looking for an active game with real community backing? [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- See all TCG tools and resources at [/tools](/tools)
+- See all TCG tools and resources at [C3 tools](/tools)

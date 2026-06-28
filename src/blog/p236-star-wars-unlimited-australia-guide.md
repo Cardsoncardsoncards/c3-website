@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Star Wars Unlimited launched in 2024 and quietly became one of the most respected card games in the hobby. It is not the biggest, but players who try it consistently say it is one of the best-designed TCGs in years. Here is the Australian guide for 2026. See current prices at [/cards/star-wars-unlimited](/cards/star-wars-unlimited).
+Star Wars Unlimited launched in 2024 and quietly became one of the most respected card games in the hobby. It is not the biggest, but players who try it consistently say it is one of the best-designed TCGs in years. Here is the Australian guide for 2026. See current prices at [C3 Star Wars Unlimited card prices](/cards/starwars).
 
 
 
@@ -115,19 +115,19 @@ Current Australian Star Wars Unlimited products are listed at the [C3 shop](/sho
 
 The Australian TCG community is welcoming to new players at all levels. Whether you are starting a new game or returning to one you played before, the best first step is finding a local game store and asking when they run beginner events.
 
-All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/market) tracks upcoming events so you can find one near you.
+All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/calendar) tracks upcoming events so you can find one near you.
 
 For pricing on specific cards before you buy, the [C3 Card Compare tool](/compare) shows current AUD pricing from eBay AU sold data. For tracking your collection as it grows, the [free C3 Collection Tracker](/tracker) works across all 8 TCGs on this site.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/star-wars-unlimited](/cards/star-wars-unlimited) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Star Wars Unlimited card prices](/cards/starwars) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

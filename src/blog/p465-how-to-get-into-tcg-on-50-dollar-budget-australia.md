@@ -66,4 +66,4 @@ AU$50 is enough to genuinely learn any TCG in Australia and make an informed dec
 
 - Find your TCG match at [/quizzes/which-tcg](/quizzes/which-tcg)
 - Find your budget fit at [/quizzes/tcg-budget](/quizzes/tcg-budget)
-- Browse starter products at [/cards/mtg](/cards/mtg)
+- Browse starter products at [C3 MTG card prices](/cards/mtg)

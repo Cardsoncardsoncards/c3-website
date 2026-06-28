@@ -57,6 +57,6 @@ The Australian community is the gap. The game is better than its local profile s
 
 ## What to Read Next
 
-- Browse Final Fantasy TCG cards at [/cards/finalfantasy](/cards/finalfantasy)
+- Browse Final Fantasy TCG cards at [C3 Final Fantasy TCG card prices](/cards/finalfantasy)
 - Compare it against all other options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check the TCG release calendar at [/calendar](/market)
+- Check the TCG release calendar at [/calendar](/calendar)

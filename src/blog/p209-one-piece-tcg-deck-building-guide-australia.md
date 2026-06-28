@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-One Piece Card Game deck building starts with one decision: which Leader card. Your Leader defines your deck's colour identity (which cards you can include), your win condition, and your playstyle. See current prices at [/cards/one-piece](/cards/one-piece).
+One Piece Card Game deck building starts with one decision: which Leader card. Your Leader defines your deck's colour identity (which cards you can include), your win condition, and your playstyle. See current prices at [C3 One Piece card prices](/cards/onepiece).
 
 
 
@@ -96,13 +96,13 @@ Track your One Piece collection with the [free C3 tracker](/tracker).
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/one-piece](/cards/one-piece) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 One Piece card prices](/cards/onepiece) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -113,4 +113,4 @@ The minimum entry cost depends on the game. Most TCGs have starter or preconstru
 Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
 
 ### Where can I find other One Piece players in Australia?
-Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/market) for upcoming events near you.
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.

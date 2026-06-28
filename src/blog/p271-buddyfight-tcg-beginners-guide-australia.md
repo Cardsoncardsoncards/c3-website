@@ -71,6 +71,6 @@ Buy it if you find a collection at a fair price, particularly if the Dragon Worl
 
 ## What to Read Next
 
-- Browse Buddyfight cards at [/cards/buddyfight](/cards/buddyfight)
+- Browse Buddyfight cards at [C3 Buddyfight card prices](/cards/buddyfight)
 - Looking for a game with an active Australian scene? [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- See all TCG card tools at [/tools](/tools)
+- See all TCG card tools at [C3 tools](/tools)

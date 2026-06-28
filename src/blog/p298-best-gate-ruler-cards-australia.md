@@ -54,6 +54,6 @@ Gate Ruler's secondary market is a niche collector situation, not an active trad
 
 ## What to Read Next
 
-- Browse Gate Ruler cards at [/cards/gateruler](/cards/gateruler)
-- Looking for an active game with real card values? [/cards](/cards)
+- Browse Gate Ruler cards at [C3 Gate Ruler card prices](/cards/gateruler)
+- Looking for an active game with real card values? [C3 Card Vault](/cards)
 - Find the right TCG for you at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

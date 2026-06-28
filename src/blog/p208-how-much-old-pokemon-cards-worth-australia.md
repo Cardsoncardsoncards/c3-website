@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Old Pokemon cards are in the news regularly because of specific high-profile auctions. The honest reality: most old Pokemon cards are worth very little. Some are worth significant money. Knowing which is which requires checking the right things. See current prices at [/cards/pokemon](/cards/pokemon).
+Old Pokemon cards are in the news regularly because of specific high-profile auctions. The honest reality: most old Pokemon cards are worth very little. Some are worth significant money. Knowing which is which requires checking the right things. See current prices at [C3 Pokemon card prices](/cards/pokemon).
 
 
 
@@ -84,13 +84,13 @@ Track what you find with the [free C3 collection tracker](/tracker): log each ca
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Pokemon card prices](/cards/pokemon) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon card prices at [C3 Pokemon card prices](/cards/pokemon)
 - Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

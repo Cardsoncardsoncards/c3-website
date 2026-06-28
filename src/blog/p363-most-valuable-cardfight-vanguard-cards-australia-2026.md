@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The most valuable Cardfight!! Vanguard cards in Australia in 2026 are Special Parallel (SP) alternate art versions of iconic Grade 3 Vanguards, Triple Rare (RRR) G Units in the G era, and Premium format staples that see universal adoption. Top copies trade from AU$20 to AU$150, with first-edition clan staples from the original era commanding higher premiums. Check current AUD prices at [/cards/vanguard](/cards/vanguard).
+The most valuable Cardfight!! Vanguard cards in Australia in 2026 are Special Parallel (SP) alternate art versions of iconic Grade 3 Vanguards, Triple Rare (RRR) G Units in the G era, and Premium format staples that see universal adoption. Top copies trade from AU$20 to AU$150, with first-edition clan staples from the original era commanding higher premiums. Check current AUD prices at [C3 Vanguard card prices](/cards/vanguard).
 
 ## Triple Rare: The Standard Premium Tier
 
@@ -60,10 +60,10 @@ The gap between asking price and sold price on eBay can be significant for older
 
 ## The C3 Take
 
-Vanguard's secondary market in Australia has deep selection and broadly reasonable pricing for current competitive cards. The game's fourteen-year history creates enormous card pool diversity and a rich collector market for original era cards. If you are buying for collection value, original print Triple Rares and SP versions of the game's most iconic clan Grade 3s are the safest long-term holds. If you are buying for competitive play, use [/cards/vanguard](/cards/vanguard) to track current prices and buy singles rather than opening product.
+Vanguard's secondary market in Australia has deep selection and broadly reasonable pricing for current competitive cards. The game's fourteen-year history creates enormous card pool diversity and a rich collector market for original era cards. If you are buying for collection value, original print Triple Rares and SP versions of the game's most iconic clan Grade 3s are the safest long-term holds. If you are buying for competitive play, use [C3 Vanguard card prices](/cards/vanguard) to track current prices and buy singles rather than opening product.
 
 ## What to Read Next
 
-- Browse Vanguard singles at [/cards/vanguard](/cards/vanguard)
-- Read the Vanguard beginners guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/p286-cardfight-vanguard-beginners-guide-australia)
+- Browse Vanguard singles at [C3 Vanguard card prices](/cards/vanguard)
+- Read the Vanguard beginners guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/cardfight-vanguard-beginners-guide-australia)
 - Find your Vanguard clan at [/quizzes/vanguard-clan](/quizzes/vanguard-clan)

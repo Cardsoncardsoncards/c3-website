@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "How to Sell Riftbound Cards in Australia for the Best Price"
-description: "Selling Riftbound cards in Australia requires checking current AUD prices at [/cards/riftbound](/cards/riftbound) before listing anything. The Riftbound se"
+description: "Selling Riftbound cards in Australia requires checking current AUD prices at [C3 Riftbound card prices](/cards/riftbound) before listing anything. The Riftbound se"
 date: 2026-05-30
 category: value-and-worth
 game: riftbound
@@ -12,15 +12,15 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Selling Riftbound cards in Australia requires checking current AUD prices at [/cards/riftbound](/cards/riftbound) before listing anything. The Riftbound secondary market is active but narrower than Pokemon or MTG, meaning pricing discipline matters more. This guide covers the fastest routes to sale at the best prices.
+Selling Riftbound cards in Australia requires checking current AUD prices at [C3 Riftbound card prices](/cards/riftbound) before listing anything. The Riftbound secondary market is active but narrower than Pokemon or MTG, meaning pricing discipline matters more. This guide covers the fastest routes to sale at the best prices.
 
 ## Check Current Prices First
 
-Before listing any Riftbound card, check current AUD pricing at [/cards/riftbound](/cards/riftbound) and compare against eBay AU sold listings (not asking prices, sold listings) for the specific card. The Riftbound market moves with tournament results, meaning a card that was worth AU$30 three weeks ago may now be AU$15 or AU$50 depending on recent competitive results. Selling based on outdated price memory is the most common mistake.
+Before listing any Riftbound card, check current AUD pricing at [C3 Riftbound card prices](/cards/riftbound) and compare against eBay AU sold listings (not asking prices, sold listings) for the specific card. The Riftbound market moves with tournament results, meaning a card that was worth AU$30 three weeks ago may now be AU$15 or AU$50 depending on recent competitive results. Selling based on outdated price memory is the most common mistake.
 
 ## eBay AU for Singles
 
-eBay AU is the deepest secondary market for Riftbound singles in Australia. List champion rarity cards at Buy It Now pricing at or slightly below current market price for the fastest sale. Auction format works for genuinely scarce cards or recent price spikes where buyer competition drives price. Factor in eBay's approximately 13.5% final value fee and PayPal or payment processing fees when calculating your minimum acceptable price. See the [full eBay fee breakdown at /blog/p178-real-cost-selling-cards-ebay-australia](/blog/p178-real-cost-selling-cards-ebay-australia).
+eBay AU is the deepest secondary market for Riftbound singles in Australia. List champion rarity cards at Buy It Now pricing at or slightly below current market price for the fastest sale. Auction format works for genuinely scarce cards or recent price spikes where buyer competition drives price. Factor in eBay's approximately 13.5% final value fee and PayPal or payment processing fees when calculating your minimum acceptable price. See the [full eBay fee breakdown at /blog/p178-real-cost-selling-cards-ebay-australia](/blog/real-cost-selling-cards-ebay-australia).
 
 ## Buylist Comparison
 
@@ -29,6 +29,8 @@ Several Australian TCG stores now accept Riftbound buylist submissions. Buylist 
 ## Selling Sealed Product
 
 Riftbound sealed booster boxes and Champion Decks sell on eBay AU and through local game store trade-in programmes. Sealed product holds value if demand is consistent. Do not hold sealed product speculating on future price increases unless you have confirmed supply scarcity evidence. Run the [EV Calculator at /tools](/tools) on current box prices to understand whether the sealed product is currently worth more than the expected value of opening it.
+
+Search [Riftbound booster boxes](https://www.amazon.com.au/s?k=riftbound+booster+box&tag=blasdigital-22) on Amazon AU
 
 ## Timing Sales Around Events
 
@@ -55,10 +57,10 @@ Using all four tools together gives you the data advantage that most casual TCG 
 
 ## The C3 Take
 
-The Riftbound market in Australia is active enough to sell into regularly but narrow enough that mispricing kills your sale. Check [/cards/riftbound](/cards/riftbound), compare against recent eBay sold listings, and price competitively. Cards sitting unsold for more than two weeks are priced too high for current demand. Lower the price and move on rather than waiting for a buyer at a price the market is not supporting.
+The Riftbound market in Australia is active enough to sell into regularly but narrow enough that mispricing kills your sale. Check [C3 Riftbound card prices](/cards/riftbound), compare against recent eBay sold listings, and price competitively. Cards sitting unsold for more than two weeks are priced too high for current demand. Lower the price and move on rather than waiting for a buyer at a price the market is not supporting.
 
 ## What to Read Next
 
-- Check current Riftbound prices at at [/cards/riftbound](/cards/riftbound)
+- Check current Riftbound prices at at [C3 Riftbound card prices](/cards/riftbound)
 - Decide eBay vs buylist at at [/quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist)
-- See price movers at at [/market](/market)
+- See price movers at at [C3 Market Insights](/market)

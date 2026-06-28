@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Dragon Ball Super Card Game](/blog/p087-dragon-ball-super-card-game-beginners-guide-australia)
+[Blog](/blog) > [Dragon Ball Super Card Game](/blog/dragon-ball-super-card-game-beginners-guide-australia)
 
 The Dragon Ball Super Card Game MASTERS Sydney Regional Championship 2026 runs at the Alt Events Centre in Hurstville, NSW on 9 August. Organised by LPG, it is the third DBS MASTERS Regional in the Oceania series following Brisbane on 19 July, and it is the only Sydney-based DBS MASTERS Regional for 2026.
 
@@ -91,8 +91,8 @@ The [C3 Dragon Ball hub](/cards/dragonball) shows current AUD prices updated dai
 
 ## Related Posts
 
-- [Dragon Ball Super Brisbane Regional Championship 2026](/blog/p497-dragon-ball-super-brisbane-regional-2026)
-- [Dragon Ball Super Card Game Australia Beginners Guide](/blog/p087-dragon-ball-super-card-game-beginners-guide-australia)
-- [TAK Games Auckland Oceania Regionals August 2026](/blog/p505-auckland-tcg-regionals-august-2026-guide)
-- [TCG Tournaments NSW 2026](/blog/p502-tcg-tournaments-nsw-2026)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
+- [Dragon Ball Super Brisbane Regional Championship 2026](/blog/dragon-ball-super-brisbane-regional-2026)
+- [Dragon Ball Super Card Game Australia Beginners Guide](/blog/dragon-ball-super-card-game-beginners-guide-australia)
+- [TAK Games Auckland Oceania Regionals August 2026](/blog/auckland-tcg-regionals-august-2026-guide)
+- [TCG Tournaments NSW 2026](/blog/tcg-tournaments-nsw-2026)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)

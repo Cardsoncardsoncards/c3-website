@@ -57,10 +57,10 @@ For competitive players: follow the game's official social media and ban list an
 
 For casual players: schedule regular game nights rather than relying on ad-hoc availability. A confirmed monthly Commander night with a consistent group is more sustainable than irregular games. The TCG Facebook groups are useful for finding fill-in players when your regular group has absences.
 
-For collectors: the online community is as valuable as the in-person one. Price tracking, set discussion, and collector tips flow through forums, Discord servers, and Facebook groups continuously. The [Market page at /market](/market) and game hubs at [/cards/mtg](/cards/mtg) are your starting points for staying informed on Australian prices.
+For collectors: the online community is as valuable as the in-person one. Price tracking, set discussion, and collector tips flow through forums, Discord servers, and Facebook groups continuously. The [Market page at /market](/market) and game hubs at [C3 MTG card prices](/cards/mtg) are your starting points for staying informed on Australian prices.
 
 
-Pokemon League events deserve a specific mention for Australian players because they are the most welcoming organised play structure for new players of any TCG. League events run weekly at most participating stores, are explicitly structured around learning and casual play rather than pure competition, and welcome players of all ages and experience levels. The League format uses a relaxed points system rather than elimination brackets, removing the pressure of immediate competitive stakes. If you have never attended a TCG organised play event in Australia, a Pokemon League is the lowest-barrier starting point regardless of your long-term game interest. Find Pokemon League events through the official Play Pokemon locator. Browse all Pokemon cards at [/cards/pokemon](/cards/pokemon).
+Pokemon League events deserve a specific mention for Australian players because they are the most welcoming organised play structure for new players of any TCG. League events run weekly at most participating stores, are explicitly structured around learning and casual play rather than pure competition, and welcome players of all ages and experience levels. The League format uses a relaxed points system rather than elimination brackets, removing the pressure of immediate competitive stakes. If you have never attended a TCG organised play event in Australia, a Pokemon League is the lowest-barrier starting point regardless of your long-term game interest. Find Pokemon League events through the official Play Pokemon locator. Browse all Pokemon cards at [C3 Pokemon card prices](/cards/pokemon).
 
 ## The C3 Take
 
@@ -70,4 +70,4 @@ Finding your local TCG community is worth the effort upfront. Playing at an LGS 
 
 - Browse your game options at [/play](/play)
 - Compare TCGs before committing at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Track your growing collection at [/tracker](/tracker)
+- Track your growing collection at [C3 Collection Tracker](/tracker)

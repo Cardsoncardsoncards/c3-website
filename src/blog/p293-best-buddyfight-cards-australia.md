@@ -56,6 +56,6 @@ Buy what appeals to you at fair prices. The market is stable but illiquid, which
 
 ## What to Read Next
 
-- Browse Buddyfight cards at [/cards/buddyfight](/cards/buddyfight)
+- Browse Buddyfight cards at [C3 Buddyfight card prices](/cards/buddyfight)
 - Read the Buddyfight beginner's guide at [/blog/buddyfight-tcg-beginners-guide-australia](/blog/buddyfight-tcg-beginners-guide-australia)
 - Compare card values at [/compare](/compare)

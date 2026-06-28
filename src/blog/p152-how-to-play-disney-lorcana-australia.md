@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Disney Lorcana uses Disney characters on cards but plays nothing like the Pokemon TCG or MTG. It has its own logic and once you understand it, it's one of the most accessible TCGs for new players. See current prices at [/cards/lorcana](/cards/lorcana).
+Disney Lorcana uses Disney characters on cards but plays nothing like the Pokemon TCG or MTG. It has its own logic and once you understand it, it's one of the most accessible TCGs for new players. See current prices at [C3 Lorcana card prices](/cards/lorcana).
 
 
 
@@ -129,15 +129,15 @@ For competitive play, buying singles is more efficient than opening booster boxe
 
 Local game stores across Australian cities run weekly Lorcana nights. Ravensburger runs official Lorcana events including Store Championships with prize support.
 
-Check the [C3 Release Calendar](/market) for upcoming Lorcana events and competitive qualifiers in Australia.
+Check the [C3 Release Calendar](/calendar) for upcoming Lorcana events and competitive qualifiers in Australia.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Lorcana card prices](/cards/lorcana) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Browse Lorcana card prices at [C3 Lorcana card prices](/cards/lorcana)
 - Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 

@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-eBay AU is the best TCG singles market in Australia. It is also easy to overpay, get the wrong condition, or on high-value cards, buy a counterfeit if you do not know what to look for. Here is the practical guide from a seller's perspective. See current prices at [/cards/mtg](/cards/mtg).
+eBay AU is the best TCG singles market in Australia. It is also easy to overpay, get the wrong condition, or on high-value cards, buy a counterfeit if you do not know what to look for. Here is the practical guide from a seller's perspective. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -79,13 +79,13 @@ Not affiliated with eBay. Information is current as of May 2026 but platform pol
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse TCG card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse TCG card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

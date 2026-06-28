@@ -57,6 +57,6 @@ New players should resist the temptation to buy whatever deck looks best online 
 
 ## What to Read Next
 
-- Browse Digimon cards at [/cards/digimon](/cards/digimon)
+- Browse Digimon cards at [C3 Digimon card prices](/cards/digimon)
 - Find your Digimon partner with our quiz at [/quizzes/digimon-partner](/quizzes/digimon-partner)
-- Check upcoming Digimon releases at [/calendar](/market)
+- Check upcoming Digimon releases at [/calendar](/calendar)

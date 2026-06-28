@@ -12,19 +12,19 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Lorcana Azurite Sea is the sixth set from early 2025, building on the ocean themes from Ursula's Return with an underwater focus featuring The Little Mermaid, Finding Nemo, Atlantis, and other water-connected Disney properties. It introduced new Enchanted treatments and expanded the competitive card pool for ink colours that gained strength from ocean-themed synergies. Check current AUD singles prices at [/cards/lorcana](/cards/lorcana) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
+Lorcana Azurite Sea is the sixth set from early 2025, building on the ocean themes from Ursula's Return with an underwater focus featuring The Little Mermaid, Finding Nemo, Atlantis, and other water-connected Disney properties. It introduced new Enchanted treatments and expanded the competitive card pool for ink colours that gained strength from ocean-themed synergies. Check current AUD singles prices at [C3 Lorcana card prices](/cards/lorcana) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
 
 ## What Is in Azurite Sea?
 
 Azurite Sea draws on Disney's extensive catalogue of water and ocean settings, featuring Ariel, Sebastian, and the underwater world of The Little Mermaid alongside Nemo, Dory, and the Atlantis expedition cast. The set maintained Location card support and introduced new mechanics building on the established Lorcana ruleset.
 
-**Packs per box:** Standard booster box structure for this game. Check the set page at [/cards/lorcana](/cards/lorcana) for confirmed pack and box counts.
+**Packs per box:** Standard booster box structure for this game. Check the set page at [C3 Lorcana card prices](/cards/lorcana) for confirmed pack and box counts.
 
 ## Top Cards to Know
 
 **Ariel Enchanted** and other primary Little Mermaid character Enchanted variants are headline collector targets. Competitive cards from the set introduced new synergies for Sapphire and Emerald inks through ocean-themed character abilities.
 
-For all current AUD prices on Azurite Sea singles, check [/cards/lorcana](/cards/lorcana). Prices update from live eBay AU market data.
+For all current AUD prices on Azurite Sea singles, check [C3 Lorcana card prices](/cards/lorcana). Prices update from live eBay AU market data.
 
 ## Pull Rates and What to Expect
 
@@ -32,7 +32,7 @@ Pull rates follow the standard structure for this game and release type. The cri
 
 From any booster box, expect a mix of commons, uncommons, and rares. The premium rare-tier cards are where box value concentrates. Most boxes return 60 to 80 percent of their retail cost in singles value on average. Hitting the top-tier cards is the exception, not the expectation, in any single box.
 
-Use the [EV Calculator at /tools](/tools) with current AUD prices from [/cards/lorcana](/cards/lorcana) to get an accurate verdict for your specific purchase price before you open.
+Use the [EV Calculator at /tools](/tools) with current AUD prices from [C3 Lorcana card prices](/cards/lorcana) to get an accurate verdict for your specific purchase price before you open.
 
 ## Should You Open or Buy Singles?
 
@@ -56,10 +56,10 @@ The [C3 Lorcana hub at /cards/lorcana](/cards/lorcana) aggregates current AUD pr
 
 ## The C3 Take
 
-The question of whether to open Azurite Sea or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [/cards/lorcana](/cards/lorcana) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
+The question of whether to open Azurite Sea or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [C3 Lorcana card prices](/cards/lorcana) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
 
 ## What to Read Next
 
-- Browse Lorcana card prices in AUD at [/cards/lorcana](/cards/lorcana)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse Lorcana card prices in AUD at [C3 Lorcana card prices](/cards/lorcana)
+- Calculate booster box expected value at [C3 tools](/tools)
 - Find your Lorcana play style at [/quizzes/lorcana-character](/quizzes/lorcana-character)

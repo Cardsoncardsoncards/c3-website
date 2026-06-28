@@ -63,5 +63,5 @@ The Card Compare tool exists to close that gap for Australian players. Use it be
 ## What to Read Next
 
 - Use the Card Compare tool now at [/compare](/compare)
-- Browse all TCG card prices at [/cards](/cards)
+- Browse all TCG card prices at [C3 Card Vault](/cards)
 - Find out which TCG suits you at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

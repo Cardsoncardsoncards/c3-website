@@ -64,6 +64,6 @@ Yu-Gi-Oh sealed events are underutilised in Australian casual play communities. 
 
 ## What to Read Next
 
-- Browse Yu-Gi-Oh sets for sealed at [/cards/yugioh](/cards/yugioh)
+- Browse Yu-Gi-Oh sets for sealed at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
 - Find your deck type at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)
-- Calculate pack value before buying at [/tools](/tools)
+- Calculate pack value before buying at [C3 tools](/tools)

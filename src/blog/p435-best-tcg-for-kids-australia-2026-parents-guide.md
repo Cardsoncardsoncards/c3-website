@@ -51,10 +51,10 @@ If they want to collect their favourite characters: buy targeted singles at reas
 
 If they want to play more seriously: investigate local game store events. Pokemon League events at local stores are explicitly beginner-friendly and many run during after-school hours. The social dimension of meeting other players their age sustains engagement better than home-only play.
 
-If they want to compete: a single competitive-tier Battle Deck at AU$20 to AU$30 is the right starting point before investing in full competitive builds. Confirm they enjoy competitive play before spending AU$150 to AU$300 on a tournament deck. Check prices at [/cards/pokemon](/cards/pokemon).
+If they want to compete: a single competitive-tier Battle Deck at AU$20 to AU$30 is the right starting point before investing in full competitive builds. Confirm they enjoy competitive play before spending AU$150 to AU$300 on a tournament deck. Check prices at [C3 Pokemon card prices](/cards/pokemon).
 
 
-Pokemon League Challenge and League Cup events in Australia are explicitly structured to be accessible to young players. They run in-store, have prize support appropriate for children (booster packs rather than cash prizes at the lower tiers), and provide a structured introduction to competitive play without the pressure of major events. Finding your child's nearest Pokemon League events through the Play Pokemon event locator is the best next step after confirming they enjoy the game. See all Pokemon content at [/cards/pokemon](/cards/pokemon).
+Pokemon League Challenge and League Cup events in Australia are explicitly structured to be accessible to young players. They run in-store, have prize support appropriate for children (booster packs rather than cash prizes at the lower tiers), and provide a structured introduction to competitive play without the pressure of major events. Finding your child's nearest Pokemon League events through the Play Pokemon event locator is the best next step after confirming they enjoy the game. See all Pokemon content at [C3 Pokemon card prices](/cards/pokemon).
 
 ## The C3 Take
 
@@ -64,4 +64,4 @@ Pokemon first, see if the interest sustains, then consider accessories and boost
 
 - Find the right TCG for your family at [/quizzes/which-tcg](/quizzes/which-tcg)
 - Compare TCG costs at [/quizzes/tcg-budget](/quizzes/tcg-budget)
-- Browse Pokemon cards at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon cards at [C3 Pokemon card prices](/cards/pokemon)

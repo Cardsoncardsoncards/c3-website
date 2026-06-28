@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Keeping track of TCG releases across multiple games is a full-time job. We have done it for you. Below is the most complete Australian TCG release calendar for 2026, covering set releases, Regional Qualifiers, and major events across every game we cover. Bookmark this page and we will update it when new dates are confirmed. See current prices at [/cards/mtg](/cards/mtg).
+Keeping track of TCG releases across multiple games is a full-time job. We have done it for you. Below is the most complete Australian TCG release calendar for 2026, covering set releases, Regional Qualifiers, and major events across every game we cover. Bookmark this page and we will update it when new dates are confirmed. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -45,7 +45,7 @@ Riftbound has the most active competitive calendar of any new TCG in 2026. Three
 - 23 October: Radiance (Set 5) releases globally
 - 25-27 October: RQ Los Angeles, final 2026 Regional Qualifier
 
-Read the full RQ Sydney event guide at [/blog/p150-riftbound-rq-sydney-2026-guide](/blog/p150-riftbound-rq-sydney-2026-guide).
+Read the full RQ Sydney event guide at [/blog/p150-riftbound-rq-sydney-2026-guide](/blog/riftbound-rq-sydney-2026-guide).
 
 ---
 
@@ -113,11 +113,11 @@ Australian Yu-Gi-Oh events run through local game stores and regional tournament
 
 This calendar is updated when new dates are confirmed.
 
-Newsletter: subscribe at [/tracker](/tracker) and we will send release alerts as they are announced.
+Newsletter: subscribe at [C3 Collection Tracker](/tracker) and we will send release alerts as they are announced.
 
 Blog: every set release we cover gets a dedicated review and buying guide.
 
-Card Vault: our price database at [/cards](/cards) covers all games we track, updated daily.
+Card Vault: our price database at [C3 Card Vault](/cards) covers all games we track, updated daily.
 
 ---
 
@@ -125,13 +125,13 @@ Dates sourced from official publisher announcements. Australian retail dates may
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse TCG card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse TCG card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

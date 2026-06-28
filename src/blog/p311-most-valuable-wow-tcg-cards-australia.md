@@ -68,4 +68,4 @@ If you have WoW TCG loot cards with intact codes, they are worth significantly m
 
 - Browse WoW TCG cards at [/cards/wow](/cards/wow)
 - Read the WoW TCG beginner's guide at [/blog/world-of-warcraft-tcg-beginners-guide-australia](/blog/world-of-warcraft-tcg-beginners-guide-australia)
-- Use the TCG tools at [/tools](/tools)
+- Use the TCG tools at [C3 tools](/tools)

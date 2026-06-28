@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Gate Ruler is a Japanese TCG with original characters and multi-dimensional story lore. Its most valuable cards are Secret Rare versions of powerful Rulers and key Followers. The Australian community is very small and primarily accessed through online channels. Gate Ruler suits players who want a different kind of strategic TCG experience and are comfortable finding community digitally. Check [/cards/gateruler](/cards/gateruler) for current AUD prices.
+Gate Ruler is a Japanese TCG with original characters and multi-dimensional story lore. Its most valuable cards are Secret Rare versions of powerful Rulers and key Followers. The Australian community is very small and primarily accessed through online channels. Gate Ruler suits players who want a different kind of strategic TCG experience and are comfortable finding community digitally. Check [C3 Gate Ruler card prices](/cards/gateruler) for current AUD prices.
 
 ## What Is Gate Ruler?
 
@@ -32,7 +32,7 @@ Gate Ruler has an active English-language community globally and Anagold has sho
 
 **Japanese promo cards** from events in Japan sometimes reach the Australian secondary market and trade at premiums for collectors seeking complete promo sets.
 
-The Gate Ruler secondary market in Australia is thin. eBay AU has some listings: Search [eBay AU Gate Ruler](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dgate+ruler+card+game&_sacat=183454). Check [/cards/gateruler](/cards/gateruler) for aggregated AUD pricing.
+The Gate Ruler secondary market in Australia is thin. eBay AU has some listings: Search [eBay AU Gate Ruler](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dgate+ruler+card+game&_sacat=183454). Check [C3 Gate Ruler card prices](/cards/gateruler) for aggregated AUD pricing.
 
 ## Game Mechanics: Why Gate Ruler Appeals to Strategic Players
 
@@ -70,6 +70,6 @@ Gate Ruler is one of the most strategically interesting small TCGs in the Englis
 
 ## What to Read Next
 
-- Browse Gate Ruler cards at [/cards/gateruler](/cards/gateruler)
+- Browse Gate Ruler cards at [C3 Gate Ruler card prices](/cards/gateruler)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Gate Ruler beginners guide at [/blog/gate-ruler-tcg-beginners-guide-australia](/blog/p276-gate-ruler-tcg-beginners-guide-australia)
+- Read the Gate Ruler beginners guide at [/blog/gate-ruler-tcg-beginners-guide-australia](/blog/gate-ruler-tcg-beginners-guide-australia)

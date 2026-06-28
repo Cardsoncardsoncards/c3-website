@@ -65,5 +65,5 @@ The WoW TCG occupies a unique position in the Australian TCG collector market. I
 ## What to Read Next
 
 - Check current WoW TCG card prices at [/cards/wow](/cards/wow)
-- Read the WoW TCG collector guide at [/blog/most-valuable-wow-tcg-cards-australia](/blog/p311-most-valuable-wow-tcg-cards-australia)
+- Read the WoW TCG collector guide at [/blog/most-valuable-wow-tcg-cards-australia](/blog/most-valuable-wow-tcg-cards-australia)
 - Compare active TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

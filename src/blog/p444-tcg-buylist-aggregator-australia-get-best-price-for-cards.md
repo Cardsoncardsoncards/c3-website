@@ -34,7 +34,7 @@ All of these stores update their buylists regularly. Check the current list on t
 
 For any card worth more than AU$20, check at least two stores before accepting. The process is:
 
-1. Check the current market value of the card at [/cards/mtg](/cards/mtg) or the relevant game hub
+1. Check the current market value of the card at [C3 MTG card prices](/cards/mtg) or the relevant game hub
 2. Check buylist prices at two or three Australian stores
 3. Calculate the buylist percentage being offered (buylist price divided by market price)
 4. Compare that percentage across stores
@@ -63,7 +63,7 @@ Never send cards without tracking for high-value submissions. The cost of tracke
 For in-person buylist visits to Australian stores (preferred for large collections), call ahead to confirm the store's current buylist and buyer availability. Some stores schedule buylist appointments for large collections.
 
 
-For collections spanning multiple games, run your high-value cards from each game through their respective store buylists. Good Games buys across most games but may offer better prices on MTG than Pokemon, or vice versa, depending on their current stock needs. TCG Singles may have better buylist prices for specific games at any given time. No single store is best for all games at all times. Comparing across stores takes 30 minutes of checking websites and produces better outcomes than defaulting to the nearest store. Verify current card values at [/cards/mtg](/cards/mtg) and other game hubs before any buylist submission.
+For collections spanning multiple games, run your high-value cards from each game through their respective store buylists. Good Games buys across most games but may offer better prices on MTG than Pokemon, or vice versa, depending on their current stock needs. TCG Singles may have better buylist prices for specific games at any given time. No single store is best for all games at all times. Comparing across stores takes 30 minutes of checking websites and produces better outcomes than defaulting to the nearest store. Verify current card values at [C3 MTG card prices](/cards/mtg) and other game hubs before any buylist submission.
 
 ## The C3 Take
 
@@ -72,5 +72,5 @@ Buylists are an underused tool by Australian TCG sellers who default to eBay for
 ## What to Read Next
 
 - Find your sell channel at [/quizzes/ebay-or-buylist](/quizzes/ebay-or-buylist)
-- Check current prices before selling at [/market](/market)
+- Check current prices before selling at [C3 Market Insights](/market)
 - See the full cost of eBay selling at [/blog/real-cost-selling-cards-ebay-australia](/blog/real-cost-selling-cards-ebay-australia)

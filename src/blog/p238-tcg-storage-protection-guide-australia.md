@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-TCG cards are collectibles. A card in Mint condition is worth meaningfully more than the same card in Near Mint. In Australia's variable climate, cards are at real risk of warping, edge wear, and moisture damage if stored poorly. Here is exactly what to do. See current prices at [/cards/mtg](/cards/mtg).
+TCG cards are collectibles. A card in Mint condition is worth meaningfully more than the same card in Near Mint. In Australia's variable climate, cards are at real risk of warping, edge wear, and moisture damage if stored poorly. Here is exactly what to do. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -82,13 +82,13 @@ No affiliation with Dragon Shield, Ultra Pro, BCW, PSA, BGS, or SGC. Products me
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse TCG card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse TCG card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

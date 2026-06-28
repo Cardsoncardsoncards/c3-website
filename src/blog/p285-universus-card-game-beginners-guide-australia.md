@@ -65,9 +65,9 @@ The honest barriers are availability and community size. If you cannot easily fi
 
 ## What to Read Next
 
-- Browse UniVersus cards at [/cards/universus](/cards/universus)
+- Browse UniVersus cards at [C3 UniVersus card prices](/cards/universus)
 - Find which TCG suits your play style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse all card options at [/cards](/cards)
+- Browse all card options at [C3 Card Vault](/cards)
 
 ## How Deck Building Works in UniVersus
 

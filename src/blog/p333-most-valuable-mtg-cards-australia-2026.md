@@ -24,7 +24,7 @@ The MTG Reserve List is a commitment Wizards of the Coast made in 1996 to never 
 
 **Dual Lands** (the original ten dual lands: Tundra, Underground Sea, Tropical Island, Savannah, Taiga, Bayou, Volcanic Island, Badlands, Plateau, Scrubland) are Reserve List cards with direct competitive demand across Legacy and Vintage. Australian prices range from roughly AU$500 for played copies of less-popular duals to AU$2,500 or more for NM Underground Sea.
 
-These prices shift with exchange rates, Legacy event schedules, and overall market sentiment. Always verify at [/cards/mtg](/cards/mtg) before buying or selling.
+These prices shift with exchange rates, Legacy event schedules, and overall market sentiment. Always verify at [C3 MTG card prices](/cards/mtg) before buying or selling.
 
 ## Modern and Pioneer Staples
 
@@ -48,7 +48,7 @@ Commander is the dominant format in Australia, and high-demand Commander singles
 
 **Smothering Tithe, Rhystic Study, Cyclonic Rift** are the three most traded and consistently valued utility Commander cards. Every reprint creates temporary price dips, but demand recovers because of how broadly played they are.
 
-Recent Commander-focused sets have introduced new high-value reprints and new powerful cards. Check [/cards/mtg](/cards/mtg) for current pricing on specific Commander cards before purchasing.
+Recent Commander-focused sets have introduced new high-value reprints and new powerful cards. Check [C3 MTG card prices](/cards/mtg) for current pricing on specific Commander cards before purchasing.
 
 ## What Drives MTG Card Values in Australia
 
@@ -64,10 +64,12 @@ The [EV Calculator at /tools](/tools) is useful for evaluating whether opening s
 
 ## The C3 Take
 
-MTG has the deepest and most mature secondary market of any TCG in Australia. The Reserve List guarantees permanent scarcity on the most sought cards, while the Commander format creates sustained demand for a broader range of singles than any other TCG supports. If you are buying MTG singles to hold value, focus on cards with multi-format appeal or Reserve List status. If you are building to play, buy singles rather than opening product. The gap between box EV and singles cost in MTG is consistently negative for most recent sets, with a few exception products. The [MTG Singles vs Booster Boxes guide at /blog/mtg-singles-vs-booster-boxes-australia](/blog/p011-mtg-singles-vs-booster-boxes-australia) has the detail.
+MTG has the deepest and most mature secondary market of any TCG in Australia. The Reserve List guarantees permanent scarcity on the most sought cards, while the Commander format creates sustained demand for a broader range of singles than any other TCG supports. If you are buying MTG singles to hold value, focus on cards with multi-format appeal or Reserve List status. If you are building to play, buy singles rather than opening product. The gap between box EV and singles cost in MTG is consistently negative for most recent sets, with a few exception products. The [MTG Singles vs Booster Boxes guide at /blog/mtg-singles-vs-booster-boxes-australia](/blog/mtg-singles-vs-booster-boxes-australia) has the detail.
+
+Search [MTG booster boxes](https://www.amazon.com.au/s?k=mtg+booster+box&tag=blasdigital-22) on Amazon AU
 
 ## What to Read Next
 
-- Browse current MTG singles prices at [/cards/mtg](/cards/mtg)
-- Calculate MTG box expected value at [/tools](/tools)
-- Read about the MTG Reserve List at [/blog/mtg-reserve-list-australia-explained](/blog/p197-mtg-reserve-list-australia-explained)
+- Browse current MTG singles prices at [C3 MTG card prices](/cards/mtg)
+- Calculate MTG box expected value at [C3 tools](/tools)
+- Read about the MTG Reserve List at [/blog/mtg-reserve-list-australia-explained](/blog/mtg-reserve-list-australia-explained)

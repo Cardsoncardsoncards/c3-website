@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Australian Pokemon card collectors face a consistent reality: the same card costs more in Australia than in the United States. Understanding why this happens. and how large the gap actually is. helps you make smarter buying decisions. See current prices at [/cards/pokemon](/cards/pokemon).
+Australian Pokemon card collectors face a consistent reality: the same card costs more in Australia than in the United States. Understanding why this happens. and how large the gap actually is. helps you make smarter buying decisions. See current prices at [C3 Pokemon card prices](/cards/pokemon).
 
 
 
@@ -71,13 +71,13 @@ Track your Pokemon collection value in AUD with the [free C3 tracker](/tracker).
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Pokemon card prices](/cards/pokemon) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon card prices at [C3 Pokemon card prices](/cards/pokemon)
 - Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

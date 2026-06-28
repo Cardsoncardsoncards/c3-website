@@ -72,6 +72,6 @@ The honest recommendation: do not buy Gate Ruler as your primary TCG investment.
 
 ## What to Read Next
 
-- Browse Gate Ruler cards at [/cards/gateruler](/cards/gateruler)
+- Browse Gate Ruler cards at [C3 Gate Ruler card prices](/cards/gateruler)
 - Looking for a game with an active scene? [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse all TCG options at [/cards](/cards)
+- Browse all TCG options at [C3 Card Vault](/cards)

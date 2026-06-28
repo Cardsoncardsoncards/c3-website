@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Riftbound](/blog/p206-what-is-riftbound-card-game-australia)
+[Blog](/blog) > [Riftbound](/blog/what-is-riftbound-card-game-australia)
 
 Riftbound Vendetta launches in Australia on 31 July 2026. Three days before the wide release, Good Games Brisbane is running a Pre-Rift Event on Monday 28 July for AU$65. It is a sealed format event: you open Vendetta product on the day, build your deck from what you pull, and keep every card you open.
 
@@ -58,7 +58,7 @@ Vendetta is the fourth Riftbound set, which makes it a significant point in the 
 
 Players who attend the Pre-Rift Event gain a practical advantage in early Constructed Vendetta events. Playing with the new cards in sealed before the wide release gives you a head start in understanding which champions and cards are strong in the new environment.
 
-The [Riftbound Vendetta set guide](/blog/p446-riftbound-vendetta-set-guide-australia) covers the full Vendetta context including how it fits into the existing meta from Origins through Unleashed.
+The [Riftbound Vendetta set guide](/blog/riftbound-vendetta-set-guide-australia) covers the full Vendetta context including how it fits into the existing meta from Origins through Unleashed.
 
 ## Is AU$65 Worth It?
 
@@ -98,8 +98,8 @@ The [C3 Riftbound hub](/cards/riftbound) tracks current AUD prices updated daily
 
 ## Related Posts
 
-- [Riftbound Vendetta Set Guide Australia](/blog/p446-riftbound-vendetta-set-guide-australia)
-- [Riftbound Vendetta Australia: Full Preview](/blog/p488-riftbound-vendetta-australia)
-- [Is Riftbound Worth Starting in Australia 2026?](/blog/p326-is-riftbound-worth-starting-australia-2026)
-- [Riftbound Singles vs Sealed Australia](/blog/p325-riftbound-singles-vs-sealed-australia)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
+- [Riftbound Vendetta Set Guide Australia](/blog/riftbound-vendetta-set-guide-australia)
+- [Riftbound Vendetta Australia: Full Preview](/blog/riftbound-vendetta-australia)
+- [Is Riftbound Worth Starting in Australia 2026?](/blog/is-riftbound-worth-starting-australia-2026)
+- [Riftbound Singles vs Sealed Australia](/blog/riftbound-singles-vs-sealed-australia)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)

@@ -74,6 +74,6 @@ The format complexity from years of restarts can confuse new players. The answer
 
 ## What to Read Next
 
-- Browse Vanguard cards at [/cards/vanguard](/cards/vanguard)
+- Browse Vanguard cards at [C3 Vanguard card prices](/cards/vanguard)
 - Find which TCG suits your style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming Vanguard releases at [/calendar](/market)
+- Check upcoming Vanguard releases at [/calendar](/calendar)

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Weiss Schwarz is Bushiroad's multi-IP anime TCG featuring characters from hundreds of anime series, visual novels, and manga. Its most valuable cards are Special Rare (SP) and Climax versions from high-demand sets, particularly recent Sword Art Online, Attack on Titan, Re:Zero, and Hololive sets. The game has an established Australian community and is worth starting for anime fans. Check [/cards/weissschwarz](/cards/weissschwarz) for current AUD prices.
+Weiss Schwarz is Bushiroad's multi-IP anime TCG featuring characters from hundreds of anime series, visual novels, and manga. Its most valuable cards are Special Rare (SP) and Climax versions from high-demand sets, particularly recent Sword Art Online, Attack on Titan, Re:Zero, and Hololive sets. The game has an established Australian community and is worth starting for anime fans. Check [C3 Weiss Schwarz card prices](/cards/weissschwarz) for current AUD prices.
 
 ## What Is Weiss Schwarz?
 
@@ -38,7 +38,7 @@ Weiss Schwarz has one of the widest IP selection in the TCG market. As of 2026, 
 
 **Sealed English booster boxes** from sets that sold out quickly at launch can trade above retail on secondary markets, particularly for the most popular IP sets.
 
-The Weiss Schwarz secondary market in Australia is active on eBay AU. Search [eBay AU Weiss Schwarz](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dweiss+schwarz+singles&_sacat=183454) for current listings. Check [/cards/weissschwarz](/cards/weissschwarz) for aggregated AUD pricing.
+The Weiss Schwarz secondary market in Australia is active on eBay AU. Search [eBay AU Weiss Schwarz](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dweiss+schwarz+singles&_sacat=183454) for current listings. Check [C3 Weiss Schwarz card prices](/cards/weissschwarz) for aggregated AUD pricing.
 
 ## Entry Cost and Starting Weiss Schwarz
 
@@ -74,6 +74,6 @@ Weiss Schwarz is the definitive multi-IP anime TCG and the largest extended game
 
 ## What to Read Next
 
-- Browse Weiss Schwarz singles at [/cards/weissschwarz](/cards/weissschwarz)
+- Browse Weiss Schwarz singles at [C3 Weiss Schwarz card prices](/cards/weissschwarz)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Weiss Schwarz beginners guide at [/blog/weiss-schwarz-beginners-guide-australia](/blog/p287-weiss-schwarz-beginners-guide-australia)
+- Read the Weiss Schwarz beginners guide at [/blog/weiss-schwarz-beginners-guide-australia](/blog/weiss-schwarz-australia-guide-2026)

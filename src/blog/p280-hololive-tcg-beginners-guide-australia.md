@@ -71,6 +71,6 @@ Hololive TCG succeeds at what it sets out to do. The cards feel authentic to the
 
 ## What to Read Next
 
-- Browse Hololive TCG cards at [/cards/hololive](/cards/hololive)
+- Browse Hololive TCG cards at [C3 Hololive card prices](/cards/hololive)
 - Find which TCG suits your style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
 - Compare card prices across games at [/compare](/compare)

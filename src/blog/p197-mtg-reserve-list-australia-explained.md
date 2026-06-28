@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-The MTG Reserved List is a commitment made by Wizards of the Coast in 1996 to never reprint certain Magic: The Gathering cards. For collectors and investors, it's one of the most consequential policies in the TCG industry. See current prices at [/cards/mtg](/cards/mtg).
+The MTG Reserved List is a commitment made by Wizards of the Coast in 1996 to never reprint certain Magic: The Gathering cards. For collectors and investors, it's one of the most consequential policies in the TCG industry. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -72,13 +72,13 @@ Track any Reserved List cards in your collection with the [free C3 tracker](/tra
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

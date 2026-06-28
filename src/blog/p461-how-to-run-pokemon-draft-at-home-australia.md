@@ -64,6 +64,6 @@ A Pokemon draft night is one of the best value TCG experiences you can run in Au
 
 ## What to Read Next
 
-- Browse Pokemon sets for draft at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon sets for draft at [C3 Pokemon card prices](/cards/pokemon)
 - Find your Pokemon play style at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
-- Calculate set value before buying at [/tools](/tools)
+- Calculate set value before buying at [C3 tools](/tools)

@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Commander decks get expensive fast. Powerful staples, dual lands, and premium commanders add up quickly. But a budget Commander deck doesn't have to be underpowered. it just has to be smart. See current prices at [/cards/mtg](/cards/mtg).
+Commander decks get expensive fast. Powerful staples, dual lands, and premium commanders add up quickly. But a budget Commander deck doesn't have to be underpowered. it just has to be smart. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -127,13 +127,13 @@ Use the [free C3 collection tracker](/tracker) to log what you have and track up
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

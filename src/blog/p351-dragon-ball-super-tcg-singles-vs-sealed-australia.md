@@ -12,13 +12,13 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For competitive Dragon Ball Super TCG play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. A Fusion World booster box costs roughly AU$120 to AU$150 at Australian retail and typically returns less than the purchase price in card value at current secondary market prices. Starter Decks at AU$20 to AU$30 are excellent value for new players. Check prices at [/cards/dragonball](/cards/dragonball) and run EV at [/tools](/tools) before buying sealed product.
+For competitive Dragon Ball Super TCG play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. A Fusion World booster box costs roughly AU$120 to AU$150 at Australian retail and typically returns less than the purchase price in card value at current secondary market prices. Starter Decks at AU$20 to AU$30 are excellent value for new players. Check prices at [C3 Dragon Ball card prices](/cards/dragonball) and run EV at [C3 tools](/tools) before buying sealed product.
 
 ## Starter Decks: The Right Entry Point
 
 Dragon Ball Super TCG Starter Decks are the most cost-effective way into the game. At AU$20 to AU$30, they contain a complete, ready-to-play deck with a specific Leader and a balanced mix of battle and event cards tailored to that Leader's strategy.
 
-For a new Fusion World player, buying the Starter Deck for your preferred playstyle (Goku for aggression, Vegeta for precision, Frieza for control) is the correct first purchase. Adding targeted singles from [/cards/dragonball](/cards/dragonball) to upgrade the starter build is more efficient than opening booster product to find specific upgrades.
+For a new Fusion World player, buying the Starter Deck for your preferred playstyle (Goku for aggression, Vegeta for precision, Frieza for control) is the correct first purchase. Adding targeted singles from [C3 Dragon Ball card prices](/cards/dragonball) to upgrade the starter build is more efficient than opening booster product to find specific upgrades.
 
 ## Booster Box EV in Dragon Ball Super TCG
 
@@ -48,7 +48,7 @@ The [EV Calculator at /tools](/tools) can model DBS TCG box EV using current sec
 
 **Japanese-language cards** are used by many DBS TCG players in Australia. The Japanese market releases content earlier and at competitive prices. Japanese versions are accepted at most Australian organised play events.
 
-**The C3 shop at [/shop](/shop)** and [/cards/dragonball](/cards/dragonball) provide Australian singles access.
+**The C3 shop at [/shop](/shop)** and [C3 Dragon Ball card prices](/cards/dragonball) provide Australian singles access.
 
 
 ## The Dragon Ball Super TCG Format Calendar
@@ -67,6 +67,6 @@ DBS TCG is one of the more budget-friendly competitive TCGs in Australia because
 
 ## What to Read Next
 
-- Check current Dragon Ball singles prices at [/cards/dragonball](/cards/dragonball)
-- Calculate DBS booster box EV at [/tools](/tools)
-- Read the Dragon Ball Super beginners guide at [/blog/dragon-ball-super-card-game-beginners-guide-australia](/blog/p087-dragon-ball-super-card-game-beginners-guide-australia)
+- Check current Dragon Ball singles prices at [C3 Dragon Ball card prices](/cards/dragonball)
+- Calculate DBS booster box EV at [C3 tools](/tools)
+- Read the Dragon Ball Super beginners guide at [/blog/dragon-ball-super-card-game-beginners-guide-australia](/blog/dragon-ball-super-card-game-beginners-guide-australia)

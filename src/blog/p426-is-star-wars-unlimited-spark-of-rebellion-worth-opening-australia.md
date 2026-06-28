@@ -12,19 +12,19 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Star Wars Unlimited Spark of Rebellion launched the game in March 2024 with original trilogy characters as the first Leader options. Luke Skywalker, Darth Vader, Han Solo, and Princess Leia established the Rebel Alliance versus Galactic Empire conflict as the foundational faction structure. Showcase variant cards from this set are among the most-sought SWU collector items in Australia. Check current AUD singles prices at [/cards/starwars](/cards/starwars) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
+Star Wars Unlimited Spark of Rebellion launched the game in March 2024 with original trilogy characters as the first Leader options. Luke Skywalker, Darth Vader, Han Solo, and Princess Leia established the Rebel Alliance versus Galactic Empire conflict as the foundational faction structure. Showcase variant cards from this set are among the most-sought SWU collector items in Australia. Check current AUD singles prices at [C3 Star Wars Unlimited card prices](/cards/starwars) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
 
 ## What Is in Spark of Rebellion?
 
 Spark of Rebellion has 252 cards introducing the full SWU card system: Leaders, Bases, Units, Events, and Upgrades across two faction zones per player. The original trilogy cast anchors the thematic identity, with Rebels and Imperials as the founding archetypes.
 
-**Packs per box:** Standard booster box structure for this game. Check the set page at [/cards/starwars](/cards/starwars) for confirmed pack and box counts.
+**Packs per box:** Standard booster box structure for this game. Check the set page at [C3 Star Wars Unlimited card prices](/cards/starwars) for confirmed pack and box counts.
 
 ## Top Cards to Know
 
 **Darth Vader Showcase** and **Luke Skywalker Showcase** variants are the headline collector pieces. **Han Solo Leader alternate** and other original trilogy Leader alts maintain consistent AU value. Launch set Showcase treatments carry collector premium as the first and rarest versions of iconic characters in the SWU system.
 
-For all current AUD prices on Spark of Rebellion singles, check [/cards/starwars](/cards/starwars). Prices update from live eBay AU market data.
+For all current AUD prices on Spark of Rebellion singles, check [C3 Star Wars Unlimited card prices](/cards/starwars). Prices update from live eBay AU market data.
 
 ## Pull Rates and What to Expect
 
@@ -32,7 +32,7 @@ Pull rates follow the standard structure for this game and release type. The cri
 
 From any booster box, expect a mix of commons, uncommons, and rares. The premium rare-tier cards are where box value concentrates. Most boxes return 60 to 80 percent of their retail cost in singles value on average. Hitting the top-tier cards is the exception, not the expectation, in any single box.
 
-Use the [EV Calculator at /tools](/tools) with current AUD prices from [/cards/starwars](/cards/starwars) to get an accurate verdict for your specific purchase price before you open.
+Use the [EV Calculator at /tools](/tools) with current AUD prices from [C3 Star Wars Unlimited card prices](/cards/starwars) to get an accurate verdict for your specific purchase price before you open.
 
 ## Should You Open or Buy Singles?
 
@@ -56,10 +56,10 @@ The [C3 Star Wars Unlimited hub at /cards/starwars](/cards/starwars) aggregates 
 
 ## The C3 Take
 
-The question of whether to open Spark of Rebellion or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [/cards/starwars](/cards/starwars) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
+The question of whether to open Spark of Rebellion or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [C3 Star Wars Unlimited card prices](/cards/starwars) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
 
 ## What to Read Next
 
-- Browse Star Wars Unlimited card prices in AUD at [/cards/starwars](/cards/starwars)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse Star Wars Unlimited card prices in AUD at [C3 Star Wars Unlimited card prices](/cards/starwars)
+- Calculate booster box expected value at [C3 tools](/tools)
 - Find your Star Wars Unlimited play style at [/quizzes/starwars-affiliation](/quizzes/starwars-affiliation)

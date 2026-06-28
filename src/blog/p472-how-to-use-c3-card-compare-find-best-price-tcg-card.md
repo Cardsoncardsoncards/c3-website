@@ -62,5 +62,5 @@ Card Compare at [/compare](/compare) changes TCG buying and trading from guesswo
 ## What to Read Next
 
 - Use Card Compare at [/compare](/compare)
-- Run the EV Calculator at [/tools](/tools)
-- Browse all TCG card prices at [/cards/mtg](/cards/mtg)
+- Run the EV Calculator at [C3 tools](/tools)
+- Browse all TCG card prices at [C3 MTG card prices](/cards/mtg)

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Every Riftbound starter product in Australia is built around a specific champion. Champion Decks retail at AU$39.99 RRP and contain a 56-card ready-to-play deck, a champion Legend card, 12 Runes, 3 Battlefields, a paper playmat, how-to-play guide, and a booster pack. Eleven Champion Decks have been released across Origins, Spiritforged, and Unleashed as of May 2026. The Proving Grounds four-deck starter box sold out at AU retail and a reprint is confirmed but not yet dated. Browse current Riftbound singles and set prices at [/cards/riftbound](/cards/riftbound).
+Every Riftbound starter product in Australia is built around a specific champion. Champion Decks retail at AU$39.99 RRP and contain a 56-card ready-to-play deck, a champion Legend card, 12 Runes, 3 Battlefields, a paper playmat, how-to-play guide, and a booster pack. Eleven Champion Decks have been released across Origins, Spiritforged, and Unleashed as of May 2026. The Proving Grounds four-deck starter box sold out at AU retail and a reprint is confirmed but not yet dated. Browse current Riftbound singles and set prices at [C3 Riftbound card prices](/cards/riftbound).
 
 ## What Every Riftbound Starter Deck Contains
 
@@ -72,6 +72,6 @@ Eleven Champion Decks across three sets, all at the same AU$39.99 RRP, all with 
 
 ## What to Read Next
 
-- Browse all Riftbound sets and current AUD prices at [/cards/riftbound](/cards/riftbound)
+- Browse all Riftbound sets and current AUD prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your champion with the Riftbound quiz at [/play](/play)
-- See current price movement on Riftbound singles at [/market](/market)
+- See current price movement on Riftbound singles at [C3 Market Insights](/market)

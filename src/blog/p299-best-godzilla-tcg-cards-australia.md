@@ -48,6 +48,6 @@ Do not buy Godzilla TCG cards expecting competitive market dynamics. Buy them as
 
 ## What to Read Next
 
-- Browse Godzilla TCG cards at [/cards/godzilla](/cards/godzilla)
+- Browse Godzilla TCG cards at [C3 Godzilla TCG card prices](/cards/godzilla)
 - Read the beginner's guide at [/blog/godzilla-tcg-beginners-guide-australia](/blog/godzilla-tcg-beginners-guide-australia)
 - Compare card values at [/compare](/compare)

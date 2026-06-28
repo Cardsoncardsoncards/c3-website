@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Pokemon TCG is genuinely playable by children aged 6 and up. but only if you teach it in the right order. Throw the full rulebook at a 7-year-old and you'll lose them. Introduce it piece by piece and most kids are playing independently within two or three sessions. See current prices at [/cards/pokemon](/cards/pokemon).
+Pokemon TCG is genuinely playable by children aged 6 and up. but only if you teach it in the right order. Throw the full rulebook at a 7-year-old and you'll lose them. Introduce it piece by piece and most kids are playing independently within two or three sessions. See current prices at [C3 Pokemon card prices](/cards/pokemon).
 
 
 
@@ -138,17 +138,17 @@ If the child plays Pokemon games on Switch or has watched the anime, the card ga
 
 **Pokemon TCG Live (free)**: The digital version is free on iOS, Android, PC, and Mac. Children who want to practice between physical game sessions can use the digital version without additional cost.
 
-Check the [C3 Release Calendar](/market) for Pokemon events in Australia that include Junior divisions. Junior-level organised play at local game stores is one of the best ways for children aged 8-14 to develop their skills with peers at the same level.
+Check the [C3 Release Calendar](/calendar) for Pokemon events in Australia that include Junior divisions. Junior-level organised play at local game stores is one of the best ways for children aged 8-14 to develop their skills with peers at the same level.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Pokemon card prices](/cards/pokemon) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon card prices at [C3 Pokemon card prices](/cards/pokemon)
 - Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

@@ -10,7 +10,7 @@ layout: post
 affiliate_disclaimer: true
 ---## Quick Answer
 
-Riftbound is the trading card game based on League of Legends, published by Riot Games and released in Australia in 2026. The first set is called Unleashed and it covers a card pool of 219 base cards plus a set of alternate art, overnumbered, and signed variants that sit above the main set number. See current prices at [/cards/riftbound](/cards/riftbound).
+Riftbound is the trading card game based on League of Legends, published by Riot Games and released in Australia in 2026. The first set is called Unleashed and it covers a card pool of 219 base cards plus a set of alternate art, overnumbered, and signed variants that sit above the main set number. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -102,13 +102,13 @@ For current AUD pricing on specific Unleashed singles, the [C3 Riftbound Card Va
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-The Pokemon Melbourne Regional Championships are eight days away. If you are competing, spectating, or just following the Australian scene, here is everything confirmed for May 23-24 at the Melbourne Convention and Exhibition Centre. See current prices at [/cards/pokemon](/cards/pokemon).
+The Pokemon Melbourne Regional Championships are eight days away. If you are competing, spectating, or just following the Australian scene, here is everything confirmed for May 23-24 at the Melbourne Convention and Exhibition Centre. See current prices at [C3 Pokemon card prices](/cards/pokemon).
 
 
 
@@ -82,7 +82,7 @@ Accommodation note: May long weekend accommodation in Melbourne books fast. If y
 
 The Brisbane Regional Championships follow Melbourne as the next major Australian Pokemon event of the 2026 season. Date details for Brisbane are available via the official Pokemon championship series site.
 
-Subscribe to our newsletter at [/tracker](/tracker) for updates on upcoming Australian TCG events as they are confirmed.
+Subscribe to our newsletter at [C3 Collection Tracker](/tracker) for updates on upcoming Australian TCG events as they are confirmed.
 
 ---
 
@@ -92,13 +92,13 @@ Not affiliated with The Pokemon Company or Nintendo. All event details sourced f
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Pokemon card prices](/cards/pokemon) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon card prices at [C3 Pokemon card prices](/cards/pokemon)
 - Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

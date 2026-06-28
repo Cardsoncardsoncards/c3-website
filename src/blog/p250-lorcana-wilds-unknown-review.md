@@ -10,7 +10,7 @@ layout: post
 affiliate_disclaimer: true
 ---## Quick Answer
 
-Wilds Unknown is the twelfth Lorcana set, and it covers an adventure-focused card pool featuring Encanto, Brave, The Incredibles, Rescue Rangers, Atlantis, and Toy Story characters alongside familiar faces from Snow White, Sleeping Beauty, and Robin Hood. See current prices at [/cards/lorcana](/cards/lorcana).
+Wilds Unknown is the twelfth Lorcana set, and it covers an adventure-focused card pool featuring Encanto, Brave, The Incredibles, Rescue Rangers, Atlantis, and Toy Story characters alongside familiar faces from Snow White, Sleeping Beauty, and Robin Hood. See current prices at [C3 Lorcana card prices](/cards/lorcana).
 
 
 
@@ -121,11 +121,11 @@ For pull rate detail from our full four-box opening, see the companion post: [I 
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Lorcana card prices](/cards/lorcana) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Browse Lorcana card prices at [C3 Lorcana card prices](/cards/lorcana)
 - Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 

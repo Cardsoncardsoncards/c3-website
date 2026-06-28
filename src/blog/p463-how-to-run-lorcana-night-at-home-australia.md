@@ -29,7 +29,7 @@ Lorcana games typically take 20 to 40 minutes each. For a three-hour evening wit
 
 ## Deck-Building After the Starter Set
 
-If players enjoy the Starter Set experience and want to upgrade their decks, point them toward the current set's Starter Set upgrades or give them a budget of AU$20 to AU$50 for singles from [/cards/lorcana](/cards/lorcana) to add to their Starter deck. The first upgrade step for most Lorcana beginners is adding the core competitive glimmer cards from their chosen ink combination. Singles are almost always cheaper than packs for targeted upgrades.
+If players enjoy the Starter Set experience and want to upgrade their decks, point them toward the current set's Starter Set upgrades or give them a budget of AU$20 to AU$50 for singles from [C3 Lorcana card prices](/cards/lorcana) to add to their Starter deck. The first upgrade step for most Lorcana beginners is adding the core competitive glimmer cards from their chosen ink combination. Singles are almost always cheaper than packs for targeted upgrades.
 
 ## What to Serve
 
@@ -64,6 +64,6 @@ Lorcana is one of the best TCGs for a home game night in Australia because it ha
 
 ## What to Read Next
 
-- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Browse Lorcana card prices at [C3 Lorcana card prices](/cards/lorcana)
 - Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)

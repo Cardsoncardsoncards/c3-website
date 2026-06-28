@@ -54,6 +54,6 @@ AP rarity versions of the most iconic characters are the safe collector targets 
 
 ## What to Read Next
 
-- Browse Union Arena cards at [/cards/unionarena](/cards/unionarena)
+- Browse Union Arena cards at [C3 Union Arena card prices](/cards/unionarena)
 - Read the beginner's guide at [/blog/union-arena-tcg-beginners-guide-australia](/blog/union-arena-tcg-beginners-guide-australia)
 - Compare card values at [/compare](/compare)

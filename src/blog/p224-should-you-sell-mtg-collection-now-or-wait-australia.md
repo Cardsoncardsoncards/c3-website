@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-"Should I sell my MTG cards now or wait?" is one of the most common questions in card collecting. and it rarely has one right answer. The correct answer depends on which cards you have, what the current market looks like, why you're considering selling, and what you'd do with the money. See current prices at [/cards/mtg](/cards/mtg).
+"Should I sell my MTG cards now or wait?" is one of the most common questions in card collecting. and it rarely has one right answer. The correct answer depends on which cards you have, what the current market looks like, why you're considering selling, and what you'd do with the money. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -72,13 +72,13 @@ Log your full collection value in the [free C3 tracker](/tracker) so you have a 
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

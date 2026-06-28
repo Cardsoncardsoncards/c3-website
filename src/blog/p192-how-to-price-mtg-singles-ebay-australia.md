@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-The most common mistake new MTG sellers on eBay AU make is pricing from wishful thinking rather than current market data. A card that sold for AU$40 three months ago may be selling for AU$25 today. A card you bought for AU$10 may now sell for AU$35. See current prices at [/cards/mtg](/cards/mtg).
+The most common mistake new MTG sellers on eBay AU make is pricing from wishful thinking rather than current market data. A card that sold for AU$40 three months ago may be selling for AU$25 today. A card you bought for AU$10 may now sell for AU$35. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -109,13 +109,13 @@ For a AU$20 card: after fees and postage, you'll typically net AU$13 to AU$16. K
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse MTG singles and prices at [/cards/mtg](/cards/mtg)
+- Browse MTG singles and prices at [C3 MTG card prices](/cards/mtg)
 - Find your MTG colour identity at [/quizzes/mtg-colour](/quizzes/mtg-colour)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

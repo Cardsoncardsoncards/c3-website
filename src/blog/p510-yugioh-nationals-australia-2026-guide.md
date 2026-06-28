@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Yu-Gi-Oh](/blog/p084-yugioh-tcg-beginners-guide-australia)
+[Blog](/blog) > [Yu-Gi-Oh](/blog/yugioh-tcg-beginners-guide-australia)
 
 If you have been searching for "Yu-Gi-Oh Nationals Australia 2026" you may have noticed the results are confusing. That is because Yu-Gi-Oh does not run a single national championship called Nationals in Australia. Instead, the competitive pathway uses a World Championship Qualifier system with State Championships as the entry point.
 
@@ -60,7 +60,7 @@ The Oceanic WCQ is the event that functions closest to what most players mean wh
 
 This is the highest level of competitive Yu-Gi-Oh available in Australia in 2026. Registration: [events.humanitix.com/yu-gi-oh-oceanic-championships-2026](https://events.humanitix.com/yu-gi-oh-oceanic-championships-2026).
 
-The full guide to the Oceanic WCQ is at [/blog/p494-yugioh-oceanic-world-championship-qualifier-melbourne-2026](/blog/p494-yugioh-oceanic-world-championship-qualifier-melbourne-2026).
+The full guide to the Oceanic WCQ is at [/blog/p494-yugioh-oceanic-world-championship-qualifier-melbourne-2026](/blog/yugioh-oceanic-world-championship-qualifier-melbourne-2026).
 
 ## The World Championship: The Global Final
 
@@ -105,15 +105,15 @@ Finish in the top 16 at a State Championship to earn a WCQ Continentals invitati
 Advanced Constructed with the current legal card pool and active ban list. Decklists are submitted through the NEURON app.
 
 **Where can I find upcoming Yu-Gi-Oh events in Australia?**
-yugioh-card.com/en/events for official event listings. Good Games store pages for OTS Championship events. The [C3 upcoming tournament guide](/blog/p500-upcoming-tcg-tournaments-australia-2026) also covers Yu-Gi-Oh events.
+yugioh-card.com/en/events for official event listings. Good Games store pages for OTS Championship events. The [C3 upcoming tournament guide](/blog/upcoming-tcg-tournaments-australia-2026) also covers Yu-Gi-Oh events.
 
 **Where can I check Yu-Gi-Oh card prices in AUD before competing?**
 The [C3 Yu-Gi-Oh hub](/cards/yugioh) shows current AUD prices updated daily from live market data.
 
 ## Related Posts
 
-- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026: The Complete Guide](/blog/p494-yugioh-oceanic-world-championship-qualifier-melbourne-2026)
-- [Yu-Gi-Oh WCQ Season Australia 2026: States, Continentals and the Cards You Need](/blog/p492-yugioh-wcq-australia-2026)
-- [Budget Competitive Yu-Gi-Oh Deck Australia 2026](/blog/p205-budget-competitive-yugioh-deck-australia)
-- [Yu-Gi-Oh Banlist Australia: How It Works](/blog/p201-yugioh-banlist-australia-how-it-works)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p509-how-to-prepare-for-your-first-tcg-tournament-australia)
+- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026: The Complete Guide](/blog/yugioh-oceanic-world-championship-qualifier-melbourne-2026)
+- [Yu-Gi-Oh WCQ Season Australia 2026: States, Continentals and the Cards You Need](/blog/yugioh-wcq-australia-2026)
+- [Budget Competitive Yu-Gi-Oh Deck Australia 2026](/blog/budget-competitive-yugioh-deck-australia)
+- [Yu-Gi-Oh Banlist Australia: How It Works](/blog/yugioh-banlist-australia-how-it-works)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-for-your-first-tcg-tournament-australia)

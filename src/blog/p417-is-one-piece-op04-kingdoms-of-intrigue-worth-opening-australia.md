@@ -12,19 +12,19 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-One Piece OP-04 Kingdoms of Intrigue covers the Alabasta arc featuring Sir Crocodile, the Baroque Works organisation, and Princess Vivi. The set introduced new competitive Leaders and archetype support that remained active in Australian tournament play through multiple later set releases. Check current AUD singles prices at [/cards/onepiece](/cards/onepiece) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
+One Piece OP-04 Kingdoms of Intrigue covers the Alabasta arc featuring Sir Crocodile, the Baroque Works organisation, and Princess Vivi. The set introduced new competitive Leaders and archetype support that remained active in Australian tournament play through multiple later set releases. Check current AUD singles prices at [C3 One Piece card prices](/cards/onepiece) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
 
 ## What Is in OP-04 Kingdoms of Intrigue?
 
 OP-04 draws on the Alabasta story arc from the One Piece series, one of the most beloved narrative sequences from the early manga. Crocodile and the Baroque Works villains receive their dedicated archetype cards alongside the Straw Hats in Alabasta context and Princess Vivi as a playable character.
 
-**Packs per box:** Standard booster box structure for this game. Check the set page at [/cards/onepiece](/cards/onepiece) for confirmed pack and box counts.
+**Packs per box:** Standard booster box structure for this game. Check the set page at [C3 One Piece card prices](/cards/onepiece) for confirmed pack and box counts.
 
 ## Top Cards to Know
 
 **Nico Robin alt-art** and **Crocodile Leader alternate** are the primary collector targets from OP-04. Competitive Leader options introduced in this set added strategic diversity to Australian tournament play. Baroque Works support cards maintained demand from players building villain-aligned strategies.
 
-For all current AUD prices on OP-04 Kingdoms of Intrigue singles, check [/cards/onepiece](/cards/onepiece). Prices update from live eBay AU market data.
+For all current AUD prices on OP-04 Kingdoms of Intrigue singles, check [C3 One Piece card prices](/cards/onepiece). Prices update from live eBay AU market data.
 
 ## Pull Rates and What to Expect
 
@@ -32,7 +32,7 @@ Pull rates follow the standard structure for this game and release type. The cri
 
 From any booster box, expect a mix of commons, uncommons, and rares. The premium rare-tier cards are where box value concentrates. Most boxes return 60 to 80 percent of their retail cost in singles value on average. Hitting the top-tier cards is the exception, not the expectation, in any single box.
 
-Use the [EV Calculator at /tools](/tools) with current AUD prices from [/cards/onepiece](/cards/onepiece) to get an accurate verdict for your specific purchase price before you open.
+Use the [EV Calculator at /tools](/tools) with current AUD prices from [C3 One Piece card prices](/cards/onepiece) to get an accurate verdict for your specific purchase price before you open.
 
 ## Should You Open or Buy Singles?
 
@@ -56,10 +56,10 @@ The [C3 One Piece hub at /cards/onepiece](/cards/onepiece) aggregates current AU
 
 ## The C3 Take
 
-The question of whether to open OP-04 Kingdoms of Intrigue or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [/cards/onepiece](/cards/onepiece) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
+The question of whether to open OP-04 Kingdoms of Intrigue or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [C3 One Piece card prices](/cards/onepiece) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
 
 ## What to Read Next
 
-- Browse One Piece card prices in AUD at [/cards/onepiece](/cards/onepiece)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse One Piece card prices in AUD at [C3 One Piece card prices](/cards/onepiece)
+- Calculate booster box expected value at [C3 tools](/tools)
 - Find your One Piece play style at [/quizzes/onepiece-crew](/quizzes/onepiece-crew)

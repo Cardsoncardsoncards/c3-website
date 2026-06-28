@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Warhammer TCGs are a newer category with Games Workshop's directly published card games (Warhammer Age of Sigmar: Rivals of the Mirrored City and related products) alongside licensed card games. The most valuable cards are rare versions of iconic faction characters. The Warhammer audience has significant overlap with miniature wargaming hobbyists who may approach cards as collectables rather than competitive TCG players. Check [/cards/warhammer](/cards/warhammer) for current AUD prices.
+Warhammer TCGs are a newer category with Games Workshop's directly published card games (Warhammer Age of Sigmar: Rivals of the Mirrored City and related products) alongside licensed card games. The most valuable cards are rare versions of iconic faction characters. The Warhammer audience has significant overlap with miniature wargaming hobbyists who may approach cards as collectables rather than competitive TCG players. Check [C3 Warhammer TCG card prices](/cards/warhammer) for current AUD prices.
 
 ## The Warhammer TCG Landscape in Australia
 
@@ -40,7 +40,7 @@ The specific game most relevant to your interest determines which cards hold the
 
 **Australian Warhammer community tournaments** occasionally produce region-specific promo cards that hold local collector value.
 
-Search [eBay AU Warhammer card game](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dwarhammer+card+game+singles&_sacat=183454) for current Australian listings. Check [/cards/warhammer](/cards/warhammer) for aggregated AUD pricing.
+Search [eBay AU Warhammer card game](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dwarhammer+card+game+singles&_sacat=183454) for current Australian listings. Check [C3 Warhammer TCG card prices](/cards/warhammer) for aggregated AUD pricing.
 
 ## The Warhammer Hobbyist Audience in Australia
 
@@ -72,6 +72,6 @@ Warhammer TCG products in Australia serve the Warhammer hobby community rather t
 
 ## What to Read Next
 
-- Browse Warhammer cards at [/cards/warhammer](/cards/warhammer)
+- Browse Warhammer cards at [C3 Warhammer TCG card prices](/cards/warhammer)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Warhammer card game guide at [/blog/warhammer-tcg-beginners-guide-australia](/blog/p312-warhammer-tcg-beginners-guide-australia)
+- Read the Warhammer card game guide at [/blog/warhammer-tcg-beginners-guide-australia](/blog/warhammer-tcg-beginners-guide-australia)

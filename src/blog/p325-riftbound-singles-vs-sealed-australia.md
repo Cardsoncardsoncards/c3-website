@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For most Australian Riftbound players with a specific champion in mind, buying targeted singles is more cost-efficient than opening sealed booster boxes. Champion Decks at AU$39.99 RRP give you a playable starting point. Targeted singles purchases to upgrade that deck cost less than opening boxes and hoping to pull the same cards. The cases where sealed wins are set completion, the Vault bundle product, and prerelease events where sealed is the point. See current AUD singles prices at [/cards/riftbound](/cards/riftbound) and run box expected value at [/tools](/tools).
+For most Australian Riftbound players with a specific champion in mind, buying targeted singles is more cost-efficient than opening sealed booster boxes. Champion Decks at AU$39.99 RRP give you a playable starting point. Targeted singles purchases to upgrade that deck cost less than opening boxes and hoping to pull the same cards. The cases where sealed wins are set completion, the Vault bundle product, and prerelease events where sealed is the point. See current AUD singles prices at [C3 Riftbound card prices](/cards/riftbound) and run box expected value at [C3 tools](/tools).
 
 ## The Core Maths
 
@@ -46,7 +46,7 @@ The most cost-efficient path for a new Australian Riftbound collector in 2026 is
 2. Play five to ten games to understand what the deck needs.
 3. Identify the three to six singles that improve your deck most.
 4. Buy those singles directly from [eBay AU](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3DRiftbound+singles+Australia) or AU retailers.
-5. Log your collection at [/tracker](/tracker) to track what you own and what you still need.
+5. Log your collection at [C3 Collection Tracker](/tracker) to track what you own and what you still need.
 6. Check the [Market page at /market](/market) before buying any single above bulk price.
 
 This sequence builds a competitive deck for significantly less than a booster box and keeps your spending targeted.
@@ -61,6 +61,6 @@ The singles versus sealed question in Riftbound has a clear answer for 95% of pl
 
 ## What to Read Next
 
-- Calculate expected value on any Riftbound box at [/tools](/tools)
-- Browse current Riftbound singles prices at [/cards/riftbound](/cards/riftbound)
-- Track your Riftbound collection at [/tracker](/tracker)
+- Calculate expected value on any Riftbound box at [C3 tools](/tools)
+- Browse current Riftbound singles prices at [C3 Riftbound card prices](/cards/riftbound)
+- Track your Riftbound collection at [C3 Collection Tracker](/tracker)

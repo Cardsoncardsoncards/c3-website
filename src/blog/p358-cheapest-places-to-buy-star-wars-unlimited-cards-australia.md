@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For Star Wars Unlimited Starter Sets, major retailers and Amazon AU offer competitive pricing at or near RRP. For singles, eBay AU and specialist card stores are the most price-competitive. The SWU secondary market in Australia is growing and actively traded. Always benchmark against [/cards/starwars](/cards/starwars) before buying.
+For Star Wars Unlimited Starter Sets, major retailers and Amazon AU offer competitive pricing at or near RRP. For singles, eBay AU and specialist card stores are the most price-competitive. The SWU secondary market in Australia is growing and actively traded. Always benchmark against [C3 Star Wars Unlimited card prices](/cards/starwars) before buying.
 
 ## Starter Sets: Start Here
 
@@ -30,7 +30,7 @@ The Two-Player Starter Set is the right first purchase for any Australian SWU pl
 
 **eBay AU** is the primary SWU singles marketplace in Australia. The competitive community has grown quickly and trading volume on current format staples is active. Search [eBay AU Star Wars Unlimited singles](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dstar+wars+unlimited+singles&_sacat=183454) and filter by sold listings for accurate pricing.
 
-**The C3 shop at [/shop](/shop)** carries SWU singles at competitive AUD prices. The [/cards/starwars](/cards/starwars) hub provides current pricing reference.
+**The C3 shop at [/shop](/shop)** carries SWU singles at competitive AUD prices. The [C3 Star Wars Unlimited card prices](/cards/starwars) hub provides current pricing reference.
 
 **Local game stores** running SWU events are the best source for in-person singles purchases. Stores with active SWU communities tend to maintain current singles inventories. Ask about their event schedule, as stores with weekly SWU events are the most engaged with the current meta.
 
@@ -69,6 +69,6 @@ Star Wars Unlimited is one of the most accessible TCGs to start in Australia tha
 
 ## What to Read Next
 
-- Check current Star Wars Unlimited card prices at [/cards/starwars](/cards/starwars)
-- Read about Star Wars Unlimited singles vs sealed at [/blog/star-wars-unlimited-singles-vs-sealed-australia](/blog/p356-star-wars-unlimited-singles-vs-sealed-australia)
-- Read the Star Wars Unlimited beginners guide at [/blog/star-wars-unlimited-beginners-guide-australia](/blog/p090-star-wars-unlimited-beginners-guide-australia)
+- Check current Star Wars Unlimited card prices at [C3 Star Wars Unlimited card prices](/cards/starwars)
+- Read about Star Wars Unlimited singles vs sealed at [/blog/star-wars-unlimited-singles-vs-sealed-australia](/blog/star-wars-unlimited-singles-vs-sealed-australia)
+- Read the Star Wars Unlimited beginners guide at [/blog/star-wars-unlimited-beginners-guide-australia](/blog/star-wars-unlimited-beginners-guide-australia)

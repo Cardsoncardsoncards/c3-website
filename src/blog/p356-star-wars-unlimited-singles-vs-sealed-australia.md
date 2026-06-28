@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For competitive Star Wars Unlimited play in Australia, buying singles is more cost-effective than opening sealed product for most sets. A standard SWU booster box costs roughly AU$140 to AU$160 at Australian retail and typical card value returned is below that. Two-Player Starter Sets at AU$30 to AU$40 are the right entry point for new players. Use the [EV Calculator at /tools](/tools) and check [/cards/starwars](/cards/starwars) before buying sealed product.
+For competitive Star Wars Unlimited play in Australia, buying singles is more cost-effective than opening sealed product for most sets. A standard SWU booster box costs roughly AU$140 to AU$160 at Australian retail and typical card value returned is below that. Two-Player Starter Sets at AU$30 to AU$40 are the right entry point for new players. Use the [EV Calculator at /tools](/tools) and check [C3 Star Wars Unlimited card prices](/cards/starwars) before buying sealed product.
 
 ## Two-Player Starter Sets: The Best Entry
 
@@ -26,7 +26,7 @@ A standard SWU booster box contains 24 packs of 16 cards. At Australian retail, 
 
 The SWU rarity system concentrates value at the Showcase and Hyperspace foil tiers. Standard rare and uncommon cards have lower secondary market values. The EV of a box depends on whether the Showcase card you pull (approximately one per box) is a high-demand card for the current competitive meta.
 
-Use the [EV Calculator at /tools](/tools) to model SWU booster box EV using current pricing from [/cards/starwars](/cards/starwars).
+Use the [EV Calculator at /tools](/tools) to model SWU booster box EV using current pricing from [C3 Star Wars Unlimited card prices](/cards/starwars).
 
 ## When Sealed Makes Sense for SWU
 
@@ -44,7 +44,7 @@ Use the [EV Calculator at /tools](/tools) to model SWU booster box EV using curr
 
 **Specialist game stores** with SWU communities carry current format singles. Store-organised SWU events indicate an active community and better singles inventory.
 
-**The C3 shop at [/shop](/shop)** and [/cards/starwars](/cards/starwars) provide Australian singles access and pricing reference.
+**The C3 shop at [/shop](/shop)** and [C3 Star Wars Unlimited card prices](/cards/starwars) provide Australian singles access and pricing reference.
 
 
 ## Building a Competitive SWU Deck: Singles Path
@@ -53,7 +53,7 @@ Assembling a competitive Star Wars Unlimited deck in Australia through singles p
 
 **Identify your Leader.** The Leader you choose determines your deck's identity and the units and events that pair with it. Check current competitive results from Australian SWU events to identify the strongest current Leader strategies.
 
-**Price the key cards.** Use [/cards/starwars](/cards/starwars) and eBay AU sold listings to determine the total cost of the singles you need. Most competitive SWU decks in Australia can be assembled for AU$150 to AU$300 in singles, depending on whether you want Hyperspace foil versions of the key cards.
+**Price the key cards.** Use [C3 Star Wars Unlimited card prices](/cards/starwars) and eBay AU sold listings to determine the total cost of the singles you need. Most competitive SWU decks in Australia can be assembled for AU$150 to AU$300 in singles, depending on whether you want Hyperspace foil versions of the key cards.
 
 **Start with standard art.** If budget is a consideration, standard art versions of every competitive card are functionally identical to Hyperspace versions. Build with standard art, play competitively, and upgrade to foil versions over time if you choose.
 
@@ -65,6 +65,6 @@ Star Wars Unlimited's strong Starter Set product makes it one of the most access
 
 ## What to Read Next
 
-- Check current Star Wars Unlimited prices at [/cards/starwars](/cards/starwars)
-- Calculate SWU booster box EV at [/tools](/tools)
-- Read the Star Wars Unlimited beginners guide at [/blog/star-wars-unlimited-beginners-guide-australia](/blog/p090-star-wars-unlimited-beginners-guide-australia)
+- Check current Star Wars Unlimited prices at [C3 Star Wars Unlimited card prices](/cards/starwars)
+- Calculate SWU booster box EV at [C3 tools](/tools)
+- Read the Star Wars Unlimited beginners guide at [/blog/star-wars-unlimited-beginners-guide-australia](/blog/star-wars-unlimited-beginners-guide-australia)

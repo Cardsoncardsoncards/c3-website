@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Building your first Riftbound deck is the moment the game clicks. You stop following instructions and start making decisions that are yours. Here is how to do it properly, from choosing your Legend to buying the singles you need in Australia. See current prices at [/cards/riftbound](/cards/riftbound).
+Building your first Riftbound deck is the moment the game clicks. You stop following instructions and start making decisions that are yours. Here is how to do it properly, from choosing your Legend to buying the singles you need in Australia. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -113,13 +113,13 @@ See the [C3 Riftbound meta tier list](/blog/riftbound-meta-tier-list-may-2026) f
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

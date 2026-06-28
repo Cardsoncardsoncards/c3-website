@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Pokemon TCG rotation is one of the most financially impactful events in the Pokemon calendar for Australian competitive players and collectors. Understanding how it works helps you make smarter buying and selling decisions. See current prices at [/cards/pokemon](/cards/pokemon).
+Pokemon TCG rotation is one of the most financially impactful events in the Pokemon calendar for Australian competitive players and collectors. Understanding how it works helps you make smarter buying and selling decisions. See current prices at [C3 Pokemon card prices](/cards/pokemon).
 
 
 
@@ -81,13 +81,13 @@ The [free C3 collection tracker](/tracker) lets you tag cards by set and track t
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Pokemon card prices](/cards/pokemon) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Pokemon card prices at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon card prices at [C3 Pokemon card prices](/cards/pokemon)
 - Find your Pokemon archetype at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

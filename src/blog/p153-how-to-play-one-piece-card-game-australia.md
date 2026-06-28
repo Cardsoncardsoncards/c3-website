@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-The One Piece Card Game launched in 2022 and grew faster than almost any TCG in recent memory. It has a distinctive mechanic. DON!! tokens. that makes it feel different from other card games once you understand how it works. See current prices at [/cards/one-piece](/cards/one-piece).
+The One Piece Card Game launched in 2022 and grew faster than almost any TCG in recent memory. It has a distinctive mechanic. DON!! tokens. that makes it feel different from other card games once you understand how it works. See current prices at [C3 One Piece card prices](/cards/onepiece).
 
 
 
@@ -117,17 +117,17 @@ Check the [C3 Card Compare tool](/compare) for current AUD pricing on One Piece 
 
 Local game stores in all major Australian cities run One Piece TCG events. Bandai runs Premier Tournament series with Australian Regional Championships and prize support.
 
-The Australian One Piece community is active on Discord and Facebook. [C3 Release Calendar](/market) tracks upcoming events and set releases.
+The Australian One Piece community is active on Discord and Facebook. [C3 Release Calendar](/calendar) tracks upcoming events and set releases.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/one-piece](/cards/one-piece) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 One Piece card prices](/cards/onepiece) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Ask someone why they play TCG and you'll often hear variations of the same thing: "it gives me something to focus on," "it turns my brain off from everything else," "the community keeps me grounded." These aren't throwaway comments. They describe something real about what the games do. See current prices at [/cards/mtg](/cards/mtg).
+Ask someone why they play TCG and you'll often hear variations of the same thing: "it gives me something to focus on," "it turns my brain off from everything else," "the community keeps me grounded." These aren't throwaway comments. They describe something real about what the games do. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -68,13 +68,13 @@ For tracking the collecting side, the [free C3 collection tracker](/tracker) is 
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse TCG card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse TCG card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 

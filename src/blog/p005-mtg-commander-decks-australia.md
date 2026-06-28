@@ -131,11 +131,11 @@ If you need a new Commander or want to run a random deck challenge, the [C3 Rand
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- [What Is Magic: The Gathering? A Beginner's Guide for Australians](/blog/what-is-magic-the-gathering-australia)
+- [What Is Magic: The Gathering? A Beginner's Guide for Australians](/blog/what-is-mtg)
 - [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
 - [Is Magic: The Gathering Worth Starting in 2026 in Australia?](/blog/is-mtg-worth-starting-2026-australia)
 

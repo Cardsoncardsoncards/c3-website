@@ -43,7 +43,7 @@ The gaps are availability and community size. This is not the game to choose if 
 
 ## What to Read Next
 
-- Browse Grand Archive cards at [/cards/grandarchive](/cards/grandarchive)
+- Browse Grand Archive cards at [C3 Grand Archive card prices](/cards/grandarchive)
 - Compare all TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
 - Use the C3 card compare tool at [/compare](/compare)
 

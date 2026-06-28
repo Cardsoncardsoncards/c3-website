@@ -20,6 +20,8 @@ Starlight Rares were introduced in 2020 as Yu-Gi-Oh's highest print-rarity tier 
 
 Starlight Rares pull at approximately one per case (12 booster boxes), making them significantly rarer than most other TCG premium tiers. The combination of extreme rarity and the fact that they are print-run limited means Starlights from competitively relevant archetypes can trade at AU$200 to AU$600 or more.
 
+Search [Yu-Gi-Oh booster boxes](https://www.amazon.com.au/s?k=yugioh+booster+box&tag=blasdigital-22) on Amazon AU
+
 **Snake-Eye Ash** and other Starlight Rares from competitively dominant archetypes represent the current ceiling of the secondary market for recent sets.
 
 **Ash Blossom and Joyous Spring** as a Starlight Rare is one of the most traded because of Ash Blossom's status as the most universally played hand trap in the game.
@@ -58,6 +60,6 @@ Yu-Gi-Oh's value market in Australia is more volatile than Pokemon or MTG becaus
 
 ## What to Read Next
 
-- Check current Yu-Gi-Oh singles prices at [/cards/yugioh](/cards/yugioh)
+- Check current Yu-Gi-Oh singles prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
 - Find your Yu-Gi-Oh deck type at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)
-- Read the Yu-Gi-Oh beginners guide at [/blog/yugioh-tcg-beginners-guide-australia](/blog/p084-yugioh-tcg-beginners-guide-australia)
+- Read the Yu-Gi-Oh beginners guide at [/blog/yugioh-tcg-beginners-guide-australia](/blog/yugioh-tcg-beginners-guide-australia)

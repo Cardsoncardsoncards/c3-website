@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For competitive Grand Archive TCG play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. Champion Decks at AU$20 to AU$35 are the right entry point for new players and provide a complete ready-to-play deck for a specific Champion. Check [/cards/grandarchive](/cards/grandarchive) and use the [EV Calculator at /tools](/tools) before purchasing any sealed product.
+For competitive Grand Archive TCG play in Australia, buying singles is more cost-effective than opening booster boxes for most sets. Champion Decks at AU$20 to AU$35 are the right entry point for new players and provide a complete ready-to-play deck for a specific Champion. Check [C3 Grand Archive card prices](/cards/grandarchive) and use the [EV Calculator at /tools](/tools) before purchasing any sealed product.
 
 ## Champion Decks: The Grand Archive Entry Product
 
@@ -28,7 +28,7 @@ Grand Archive's booster boxes are smaller print runs than most mainstream TCGs. 
 
 Value is concentrated in cold foil and Legendary rarity cards. The specific cards within these tiers determine the box's effective value. Grand Archive's limited print runs mean that premium cards maintain their value better over time than in games with higher print volume, but it also means the upfront cost of sealed product is higher relative to the expected returns.
 
-The [EV Calculator at /tools](/tools) can model Grand Archive box EV using current [/cards/grandarchive](/cards/grandarchive) pricing.
+The [EV Calculator at /tools](/tools) can model Grand Archive box EV using current [C3 Grand Archive card prices](/cards/grandarchive) pricing.
 
 ## When Sealed Makes Sense for Grand Archive
 
@@ -46,7 +46,7 @@ The [EV Calculator at /tools](/tools) can model Grand Archive box EV using curre
 
 **Discord community trading.** Grand Archive has an active Discord community where direct player-to-player trades are common. The Grand Archive Community Discord is the best source for Australian player-to-player transactions on mid-range singles.
 
-**The C3 shop at [/shop](/shop)** and [/cards/grandarchive](/cards/grandarchive) provide Australian pricing reference and singles access.
+**The C3 shop at [/shop](/shop)** and [C3 Grand Archive card prices](/cards/grandarchive) provide Australian pricing reference and singles access.
 
 ## The Scarcity Premium in Grand Archive
 
@@ -60,6 +60,6 @@ Grand Archive's product structure rewards players who start with Champion Decks 
 
 ## What to Read Next
 
-- Check current Grand Archive prices at [/cards/grandarchive](/cards/grandarchive)
-- Calculate Grand Archive box EV at [/tools](/tools)
+- Check current Grand Archive prices at [C3 Grand Archive card prices](/cards/grandarchive)
+- Calculate Grand Archive box EV at [C3 tools](/tools)
 - Find your Grand Archive class at [/quizzes/grand-archive-class](/quizzes/grand-archive-class)

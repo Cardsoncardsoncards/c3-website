@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For Yu-Gi-Oh singles in Australia, eBay AU and specialist card stores offer the most competitive prices. For Structure Decks and sealed product, major retailers and Amazon AU are often as cheap or cheaper than specialist stores. Structure Decks at around AU$15 to AU$20 are the single most cost-effective Yu-Gi-Oh purchase for new players. Always benchmark against [/cards/yugioh](/cards/yugioh) before buying.
+For Yu-Gi-Oh singles in Australia, eBay AU and specialist card stores offer the most competitive prices. For Structure Decks and sealed product, major retailers and Amazon AU are often as cheap or cheaper than specialist stores. Structure Decks at around AU$15 to AU$20 are the single most cost-effective Yu-Gi-Oh purchase for new players. Always benchmark against [C3 Yu-Gi-Oh card prices](/cards/yugioh) before buying.
 
 ## Structure Decks: The Cheapest Way to Start
 
@@ -65,6 +65,6 @@ Yu-Gi-Oh has one of the most cost-effective entry points of any major TCG in Aus
 
 ## What to Read Next
 
-- Check current Yu-Gi-Oh card prices at [/cards/yugioh](/cards/yugioh)
-- Read about Yu-Gi-Oh singles vs sealed at [/blog/yugioh-singles-vs-sealed-australia](/blog/p342-yugioh-singles-vs-sealed-australia)
+- Check current Yu-Gi-Oh card prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
+- Read about Yu-Gi-Oh singles vs sealed at [/blog/yugioh-singles-vs-sealed-australia](/blog/yugioh-singles-vs-sealed-australia)
 - Find your Yu-Gi-Oh playstyle at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)

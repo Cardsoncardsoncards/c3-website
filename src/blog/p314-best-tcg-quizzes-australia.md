@@ -76,4 +76,4 @@ Start with the Which TCG Should I Play extended edition if you are new to the ho
 
 - See all quizzes at [/play](/play)
 - Take the extended TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse all game card hubs at [/cards](/cards)
+- Browse all game card hubs at [C3 Card Vault](/cards)

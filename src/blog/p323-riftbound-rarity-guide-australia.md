@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Riftbound uses six rarity tiers: Common, Uncommon, Rare, Epic, Overnumbered, and Ultimate (introduced in Unleashed). Every Champion Legend card is Rare by design. Overnumbered cards pull at approximately one per three boxes; Signature Overnumbered cards at roughly one per 30 boxes; Ultimate at fewer than one in every 1,000 packs. See current AUD prices for Riftbound cards at [/cards/riftbound](/cards/riftbound).
+Riftbound uses six rarity tiers: Common, Uncommon, Rare, Epic, Overnumbered, and Ultimate (introduced in Unleashed). Every Champion Legend card is Rare by design. Overnumbered cards pull at approximately one per three boxes; Signature Overnumbered cards at roughly one per 30 boxes; Ultimate at fewer than one in every 1,000 packs. See current AUD prices for Riftbound cards at [C3 Riftbound card prices](/cards/riftbound).
 
 ## Common Cards
 
@@ -56,7 +56,7 @@ The practical implication of this structure for Australian collectors is clear: 
 
 Use the [Compare tool at /compare](/compare) to evaluate specific Riftbound cards across rarities before purchasing.
 
-Track your Riftbound collection progress against the full set at [/tracker](/tracker).
+Track your Riftbound collection progress against the full set at [C3 Collection Tracker](/tracker).
 
 Find specific Riftbound cards by rarity on eBay AU: [search eBay for Riftbound Overnumbered Australia](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3DRiftbound+Overnumbered).
 
@@ -66,6 +66,6 @@ Riftbound's rarity system is one of the more transparent ones in the TCG market.
 
 ## What to Read Next
 
-- Browse Riftbound cards by rarity and current AUD prices at [/cards/riftbound](/cards/riftbound)
-- See which Riftbound cards are moving in the AU market at [/market](/market)
-- Track your Riftbound collection at [/tracker](/tracker)
+- Browse Riftbound cards by rarity and current AUD prices at [C3 Riftbound card prices](/cards/riftbound)
+- See which Riftbound cards are moving in the AU market at [C3 Market Insights](/market)
+- Track your Riftbound collection at [C3 Collection Tracker](/tracker)

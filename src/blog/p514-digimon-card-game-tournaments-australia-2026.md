@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Digimon Card Game Australia](/blog/p273-digimon-card-game-australia-beginners-guide)
+[Blog](/blog) > [Digimon Card Game Australia](/blog/digimon-card-game-australia-beginners-guide)
 
 The Digimon Card Game has three Regional Championships remaining in the 2026 Oceania season: Brisbane in July, Auckland in August, and Melbourne in September. All three are organised by TAK Games and run at major convention venues. For Digimon competitive players in Australia and New Zealand, 2026 has the most structured Regional calendar the game has had in Oceania.
 
@@ -52,7 +52,7 @@ Registration: [events.humanitix.com/digimon-card-game-championship-2026-brisbane
 
 The Digimon Regional at the Aotea Centre in Auckland runs on 29 August alongside the One Piece Regional and Dragon Ball Super MASTERS Regional. It is the only New Zealand Digimon Regional for 2026.
 
-For Australian players, Auckland in August represents an additional ranking event accessible with a short flight from Sydney, Melbourne, or Brisbane. The full Auckland Regionals guide is at [/blog/p505-auckland-tcg-regionals-august-2026-guide](/blog/p505-auckland-tcg-regionals-august-2026-guide).
+For Australian players, Auckland in August represents an additional ranking event accessible with a short flight from Sydney, Melbourne, or Brisbane. The full Auckland Regionals guide is at [/blog/p505-auckland-tcg-regionals-august-2026-guide](/blog/auckland-tcg-regionals-august-2026-guide).
 
 ## Melbourne Digimon Regional: 13 September 2026
 
@@ -101,8 +101,8 @@ The [C3 Digimon hub](/cards/digimon) shows current AUD prices updated daily from
 
 ## Related Posts
 
-- [Digimon Card Game Australia Beginners Guide](/blog/p273-digimon-card-game-australia-beginners-guide)
-- [Best Digimon Booster Boxes Australia](/blog/p295-best-digimon-booster-boxes-australia)
-- [Auckland TAK Games Oceania Regionals August 2026](/blog/p505-auckland-tcg-regionals-august-2026-guide)
-- [TCG Tournaments Queensland 2026](/blog/p503-tcg-tournaments-queensland-2026)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p509-how-to-prepare-for-your-first-tcg-tournament-australia)
+- [Digimon Card Game Australia Beginners Guide](/blog/digimon-card-game-australia-beginners-guide)
+- [Best Digimon Booster Boxes Australia](/blog/best-digimon-booster-boxes-australia)
+- [Auckland TAK Games Oceania Regionals August 2026](/blog/auckland-tcg-regionals-august-2026-guide)
+- [TCG Tournaments Queensland 2026](/blog/tcg-tournaments-queensland-2026)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-for-your-first-tcg-tournament-australia)

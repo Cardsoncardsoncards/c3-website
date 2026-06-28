@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Pokemon card grading in Australia makes financial sense only on high-value cards where a top-grade result meaningfully increases resale value. For most Scarlet and Violet era Special Illustration Rares and Hyper Rares above AU$100 raw NM, the maths can work. For cards under AU$60 raw NM, grading costs typically exceed the premium a grade adds. The logistics of grading from Australia add cost and time that do not apply to US collectors. Check current AUD prices at [/cards/pokemon](/cards/pokemon) before deciding whether any card is worth submitting.
+Pokemon card grading in Australia makes financial sense only on high-value cards where a top-grade result meaningfully increases resale value. For most Scarlet and Violet era Special Illustration Rares and Hyper Rares above AU$100 raw NM, the maths can work. For cards under AU$60 raw NM, grading costs typically exceed the premium a grade adds. The logistics of grading from Australia add cost and time that do not apply to US collectors. Check current AUD prices at [C3 Pokemon card prices](/cards/pokemon) before deciding whether any card is worth submitting.
 
 ## What Card Grading Does
 
@@ -58,16 +58,16 @@ The practical implication: only submit cards that have an excellent chance of hi
 
 **Sleeve and top-loader.** A raw NM card in a premium sleeve and hard top-loader is the standard presentation for high-value secondary market trades in Australia. For cards under AU$100, this is the correct storage and presentation method.
 
-**The C3 Collection Tracker at [/tracker](/tracker)** lets you log cards with condition information and track their value over time without the cost or time commitment of grading.
+**The C3 Collection Tracker at [C3 Collection Tracker](/tracker)** lets you log cards with condition information and track their value over time without the cost or time commitment of grading.
 
 **Sell raw NM.** For many cards, selling raw NM to a motivated Australian buyer via eBay AU produces a better net return than submitting for grading when you factor in time, cost, and the risk of a sub-10 result.
 
 ## The C3 Take
 
-Grading from Australia is a legitimate strategy on the right cards, but the cost structure means the threshold is higher than it is for US collectors. You need a card where the PSA 10 premium is at least AU$150 above raw NM to have a reasonable chance of coming out ahead. That limits sensible submissions to: classic era cards with proven high-grade demand, and a handful of SIRs from the Scarlet and Violet era where the specific Pokemon commands consistent collector premiums. Everything else should stay in a sleeve. If you are not sure whether a card meets the threshold, check current sold comps at [/cards/pokemon](/cards/pokemon) and run the numbers before you send anything off.
+Grading from Australia is a legitimate strategy on the right cards, but the cost structure means the threshold is higher than it is for US collectors. You need a card where the PSA 10 premium is at least AU$150 above raw NM to have a reasonable chance of coming out ahead. That limits sensible submissions to: classic era cards with proven high-grade demand, and a handful of SIRs from the Scarlet and Violet era where the specific Pokemon commands consistent collector premiums. Everything else should stay in a sleeve. If you are not sure whether a card meets the threshold, check current sold comps at [C3 Pokemon card prices](/cards/pokemon) and run the numbers before you send anything off.
 
 ## What to Read Next
 
-- Check current AUD prices before grading decisions at [/cards/pokemon](/cards/pokemon)
-- Read about the most valuable Pokemon cards in Australia at [/blog/most-valuable-pokemon-cards-australia-2026](/blog/p327-most-valuable-pokemon-cards-australia-2026)
+- Check current AUD prices before grading decisions at [C3 Pokemon card prices](/cards/pokemon)
+- Read about the most valuable Pokemon cards in Australia at [/blog/most-valuable-pokemon-cards-australia-2026](/blog/most-valuable-pokemon-cards-australia-2026)
 - Take the [Investor or Collector quiz at /quizzes/investor-collector](/quizzes/investor-collector) to clarify your goals

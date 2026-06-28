@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For competitive Final Fantasy TCG play in Australia, buying singles is more cost-effective than opening sealed product for most sets. A booster box costs roughly AU$100 to AU$130 and typically returns less than that in card value at current market prices. Starter Sets at AU$20 to AU$30 are the right entry point for new players. Check [/cards/finalfantasy](/cards/finalfantasy) and use the [EV Calculator at /tools](/tools) before buying any sealed product.
+For competitive Final Fantasy TCG play in Australia, buying singles is more cost-effective than opening sealed product for most sets. A booster box costs roughly AU$100 to AU$130 and typically returns less than that in card value at current market prices. Starter Sets at AU$20 to AU$30 are the right entry point for new players. Check [C3 Final Fantasy TCG card prices](/cards/finalfantasy) and use the [EV Calculator at /tools](/tools) before buying any sealed product.
 
 ## FFTCG Starter Sets: Where to Begin
 
@@ -28,7 +28,7 @@ Value is concentrated in the Legendary (L) rarity tier, which appears approximat
 
 **Character rarity within the Legendary tier** is as important as the rarity tier itself. A box's EV depends heavily on whether the specific Legendary you pull is from a high-demand Final Fantasy title.
 
-Use the [EV Calculator at /tools](/tools) with current [/cards/finalfantasy](/cards/finalfantasy) pricing to model any specific set.
+Use the [EV Calculator at /tools](/tools) with current [C3 Final Fantasy TCG card prices](/cards/finalfantasy) pricing to model any specific set.
 
 ## When Sealed Makes Sense for FFTCG
 
@@ -46,7 +46,7 @@ Use the [EV Calculator at /tools](/tools) with current [/cards/finalfantasy](/ca
 
 **Specialist hobby stores** with FFTCG communities are less common than stores running Pokemon or MTG events, but exist in major Australian cities. Good Games and some independent specialists carry FFTCG singles.
 
-**The C3 shop at [/shop](/shop)** and [/cards/finalfantasy](/cards/finalfantasy) provide Australian pricing reference and singles access.
+**The C3 shop at [/shop](/shop)** and [C3 Final Fantasy TCG card prices](/cards/finalfantasy) provide Australian pricing reference and singles access.
 
 ## The Collector vs Player Split in FFTCG
 
@@ -69,6 +69,6 @@ FFTCG is one of the most beautifully designed TCGs in terms of artwork and produ
 
 ## What to Read Next
 
-- Check current Final Fantasy TCG prices at [/cards/finalfantasy](/cards/finalfantasy)
-- Calculate FFTCG booster box EV at [/tools](/tools)
-- Read the Final Fantasy TCG beginners guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/p274-final-fantasy-tcg-beginners-guide-australia)
+- Check current Final Fantasy TCG prices at [C3 Final Fantasy TCG card prices](/cards/finalfantasy)
+- Calculate FFTCG booster box EV at [C3 tools](/tools)
+- Read the Final Fantasy TCG beginners guide at [/blog/final-fantasy-tcg-beginners-guide-australia](/blog/final-fantasy-tcg-beginners-guide-australia)

@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Star Wars Unlimited](/blog/p090-star-wars-unlimited-beginners-guide-australia)
+[Blog](/blog) > [Star Wars Unlimited](/blog/star-wars-unlimited-beginners-guide-australia)
 
 Star Wars Unlimited: Ashes of the Empire arrives at Plenty of Games on Collins Street in Melbourne on Saturday 11 July, six days before the 17 July wide release. Entry is AU$55.
 
@@ -118,8 +118,8 @@ The [C3 Star Wars Unlimited hub](/cards/starwars) shows current AUD prices updat
 
 ## Related Posts
 
-- [Star Wars Unlimited Ashes of the Empire Australia](/blog/p484-starwars-ashes-of-the-empire-australia)
-- [Star Wars Unlimited Ashes of the Empire Prerelease Guide: What to Know Before You Play](/blog/p493-starwars-ashes-prerelease-guide-australia)
-- [Star Wars Unlimited Deck Building Guide Australia](/blog/p210-star-wars-unlimited-deck-building-australia)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
-- [TCG Releases July 2026 Australia: Everything Dropping This Month](/blog/p480-tcg-releases-july-2026-australia)
+- [Star Wars Unlimited Ashes of the Empire Australia](/blog/starwars-ashes-of-the-empire-australia)
+- [Star Wars Unlimited Ashes of the Empire Prerelease Guide: What to Know Before You Play](/blog/starwars-ashes-prerelease-guide-australia)
+- [Star Wars Unlimited Deck Building Guide Australia](/blog/star-wars-unlimited-deck-building-australia)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)
+- [TCG Releases July 2026 Australia: Everything Dropping This Month](/blog/tcg-releases-july-2026-australia)

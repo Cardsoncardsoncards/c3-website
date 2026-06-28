@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Yes, Cardfight!! Vanguard is worth starting in Australia in 2026 if you have access to a local game store running Vanguard events. The game has Australia's most established organised play infrastructure of any anime TCG, accessible entry pricing through Trial Decks, and a clan-based system that creates strong personal game identity. Confirm local event support before committing. Check current prices at [/cards/vanguard](/cards/vanguard).
+Yes, Cardfight!! Vanguard is worth starting in Australia in 2026 if you have access to a local game store running Vanguard events. The game has Australia's most established organised play infrastructure of any anime TCG, accessible entry pricing through Trial Decks, and a clan-based system that creates strong personal game identity. Confirm local event support before committing. Check current prices at [C3 Vanguard card prices](/cards/vanguard).
 
 ## Why Vanguard Has Survived Fourteen Years in Australia
 
@@ -68,6 +68,6 @@ Cardfight!! Vanguard is the most proven anime TCG in Australia by any objective 
 
 ## What to Read Next
 
-- Browse Vanguard singles at [/cards/vanguard](/cards/vanguard)
-- Read the full Vanguard beginners guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/p286-cardfight-vanguard-beginners-guide-australia)
+- Browse Vanguard singles at [C3 Vanguard card prices](/cards/vanguard)
+- Read the full Vanguard beginners guide at [/blog/cardfight-vanguard-beginners-guide-australia](/blog/cardfight-vanguard-beginners-guide-australia)
 - Find your clan at [/quizzes/vanguard-clan](/quizzes/vanguard-clan)

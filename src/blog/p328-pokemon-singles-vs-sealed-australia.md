@@ -28,7 +28,7 @@ The honest answer for most sets is negative expected value. The opening experien
 
 ## When Buying Singles Is the Right Call
 
-**Building a competitive deck.** If you know exactly which cards you need for your current deck, buying singles is almost always cheaper than opening packs to find them. A playset of four Boss's Orders costs around AU$20 to AU$30 bought as singles. Opening enough packs to pull four copies from random product would cost multiples of that. Check current single prices at [/cards/pokemon](/cards/pokemon) before buying anything.
+**Building a competitive deck.** If you know exactly which cards you need for your current deck, buying singles is almost always cheaper than opening packs to find them. A playset of four Boss's Orders costs around AU$20 to AU$30 bought as singles. Opening enough packs to pull four copies from random product would cost multiples of that. Check current single prices at [C3 Pokemon card prices](/cards/pokemon) before buying anything.
 
 **Filling out a collection.** If you are collecting specific Pokemon or a complete set and need particular cards, singles let you target exactly what you want. Spending AU$50 on two SIRs you love beats spending AU$150 on a box that may not contain either of them.
 
@@ -38,7 +38,7 @@ The honest answer for most sets is negative expected value. The opening experien
 
 **The opening experience is the point.** If you genuinely enjoy opening packs, whether for yourself or sharing the experience with others, that enjoyment has real value. Collectors who love the ritual of opening product are not making a financial mistake by doing so, as long as they are honest with themselves about what they are paying for.
 
-**Strong collector sets with high SIR demand.** Some sets produce SIRs of Pokemon with such strong collector demand that box EV is closer to breakeven. Sets featuring fan-favourite Pokemon or crossover sets with external IP tend to perform better on this metric. Run the numbers on the specific set via [/tools](/tools) before committing.
+**Strong collector sets with high SIR demand.** Some sets produce SIRs of Pokemon with such strong collector demand that box EV is closer to breakeven. Sets featuring fan-favourite Pokemon or crossover sets with external IP tend to perform better on this metric. Run the numbers on the specific set via [C3 tools](/tools) before committing.
 
 **Sealed speculation.** Holding sealed product long-term can outperform the market if you pick the right sets. Sealed boxes from sets that are no longer in print and contained high-demand SIRs have appreciated significantly over time. This is not guaranteed, requires capital tied up for years, and depends on correct set selection. It is a speculative strategy, not a reliable one.
 
@@ -64,6 +64,6 @@ The Pokemon TCG market in Australia is deep enough that singles are always avail
 
 ## What to Read Next
 
-- Calculate expected value before opening at [/tools](/tools)
-- Check live single prices at [/cards/pokemon](/cards/pokemon)
-- Read the Pokemon booster box guide at [/blog/best-pokemon-booster-boxes-australia](/blog/p014-best-pokemon-booster-boxes-australia)
+- Calculate expected value before opening at [C3 tools](/tools)
+- Check live single prices at [C3 Pokemon card prices](/cards/pokemon)
+- Read the Pokemon booster box guide at [/blog/best-pokemon-booster-boxes-australia](/blog/best-pokemon-booster-boxes-australia)

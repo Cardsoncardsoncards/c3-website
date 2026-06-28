@@ -102,13 +102,13 @@ Storing holographic cards double-sleeved and flat (rather than loose in a box), 
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/pokemon](/cards/pokemon) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Pokemon card prices](/cards/pokemon) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- [The Best Card Binders for TCG Collections in Australia](/blog/best-card-binders-australia)
-- [Dragon Shield vs Ultra Pro Sleeves: Which Is Better?](/blog/dragon-shield-vs-ultra-pro)
-- [Toploaders vs Magnetic Holders: Which Is Better for Card Protection?](/blog/toploaders-vs-magnetic-holders)
+- [The Best Card Binders for TCG Collections in Australia](/blog/best-tcg-binders-australia)
+- [Dragon Shield vs Ultra Pro Sleeves: Which Is Better?](/blog/best-tcg-card-sleeves-australia)
+- [Toploaders vs Magnetic Holders: Which Is Better for Card Protection?](/blog/best-tcg-card-sleeves-australia)
 
 
 

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Shadowverse: Evolve is worth starting in Australia in 2026 for players attracted to its high-quality anime card artwork and digital game crossover. The most valuable cards are Super Rare and Trophy cards featuring beloved characters from the popular Shadowverse mobile game. Entry through Starter Sets is accessible at AU$15 to AU$25. Check [/cards/shadowverse](/cards/shadowverse) for current AUD prices.
+Shadowverse: Evolve is worth starting in Australia in 2026 for players attracted to its high-quality anime card artwork and digital game crossover. The most valuable cards are Super Rare and Trophy cards featuring beloved characters from the popular Shadowverse mobile game. Entry through Starter Sets is accessible at AU$15 to AU$25. Check [C3 Shadowverse Evolve card prices](/cards/shadowverse) for current AUD prices.
 
 ## What Is Shadowverse: Evolve?
 
@@ -30,7 +30,7 @@ The physical game translates Shadowverse's digital mechanics into a tabletop for
 
 **Anne and Grea cards** (Dragoncraft) similarly command premiums because of their popularity in the digital game community.
 
-The secondary market for Shadowverse: Evolve in Australia is active through eBay AU. Search [eBay AU Shadowverse Evolve](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dshadowverse+evolve+singles&_sacat=183454) and filter by sold listings for current Australian market pricing. Check [/cards/shadowverse](/cards/shadowverse) for aggregated prices.
+The secondary market for Shadowverse: Evolve in Australia is active through eBay AU. Search [eBay AU Shadowverse Evolve](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dshadowverse+evolve+singles&_sacat=183454) and filter by sold listings for current Australian market pricing. Check [C3 Shadowverse Evolve card prices](/cards/shadowverse) for aggregated prices.
 
 ## Entry Cost and Starting the Game
 
@@ -38,7 +38,7 @@ The secondary market for Shadowverse: Evolve in Australia is active through eBay
 
 **Booster boxes** cost roughly AU$80 to AU$110. Trophy Rare pull rates are approximately one per two to three boxes. Value depends heavily on which specific characters appear as Trophy Rares in the set.
 
-**Singles purchasing** through [/cards/shadowverse](/cards/shadowverse) and eBay AU is more cost-effective for building competitive decks than opening booster product.
+**Singles purchasing** through [C3 Shadowverse Evolve card prices](/cards/shadowverse) and eBay AU is more cost-effective for building competitive decks than opening booster product.
 
 ## The Australian Shadowverse: Evolve Community
 
@@ -68,6 +68,6 @@ Shadowverse: Evolve is a competently designed TCG with outstanding card artwork 
 
 ## What to Read Next
 
-- Browse Shadowverse: Evolve singles at [/cards/shadowverse](/cards/shadowverse)
+- Browse Shadowverse: Evolve singles at [C3 Shadowverse Evolve card prices](/cards/shadowverse)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Shadowverse: Evolve beginners guide at [/blog/shadowverse-evolve-beginners-guide-australia](/blog/p282-shadowverse-evolve-beginners-guide-australia)
+- Read the Shadowverse: Evolve beginners guide at [/blog/shadowverse-evolve-beginners-guide-australia](/blog/shadowverse-evolve-beginners-guide-australia)

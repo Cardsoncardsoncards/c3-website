@@ -29,7 +29,7 @@ The most common teaching moments in a first Pokemon game are: how Retreat Cost w
 
 ## Using Battle Decks for Teaching
 
-Battle Decks are designed specifically for teaching. The cards in a Battle Deck have clearer synergy than random booster packs, the damage calculations are forgiving, and the decks are approximately equal in power so new players do not feel outmatched. After your first teaching session, both players can keep their Battle Deck and start improving it with targeted singles from [/cards/pokemon](/cards/pokemon).
+Battle Decks are designed specifically for teaching. The cards in a Battle Deck have clearer synergy than random booster packs, the damage calculations are forgiving, and the decks are approximately equal in power so new players do not feel outmatched. After your first teaching session, both players can keep their Battle Deck and start improving it with targeted singles from [C3 Pokemon card prices](/cards/pokemon).
 
 ## What to Focus on in the First Three Games
 
@@ -37,13 +37,13 @@ Game 1: just play. Explain rules as they come up. Game 2: start playing more str
 
 ## Where to Go Next
 
-After learning the basics, direct the new player to the [Pokemon archetype quiz at /quizzes/pokemon-archetype](/quizzes/pokemon-archetype) to find a play style that suits them, and to [/cards/pokemon](/cards/pokemon) to explore current cards and prices for upgrading their Battle Deck.
+After learning the basics, direct the new player to the [Pokemon archetype quiz at /quizzes/pokemon-archetype](/quizzes/pokemon-archetype) to find a play style that suits them, and to [C3 Pokemon card prices](/cards/pokemon) to explore current cards and prices for upgrading their Battle Deck.
 
 
 
 ## After They Learn: The Next Step
 
-Once someone has learned Pokemon TCG through Battle Decks, the natural next step is their first competitive build. Help them identify an archetype they enjoy by using the [Pokemon archetype quiz at /quizzes/pokemon-archetype](/quizzes/pokemon-archetype). Then price out the singles needed for a competitive version of that archetype at [/cards/pokemon](/cards/pokemon). Most Pokemon Standard decks can be assembled competitively for AU$80 to AU$150 in singles. This is a realistic next goal for a new player who has learned the game and wants to take it further.
+Once someone has learned Pokemon TCG through Battle Decks, the natural next step is their first competitive build. Help them identify an archetype they enjoy by using the [Pokemon archetype quiz at /quizzes/pokemon-archetype](/quizzes/pokemon-archetype). Then price out the singles needed for a competitive version of that archetype at [C3 Pokemon card prices](/cards/pokemon). Most Pokemon Standard decks can be assembled competitively for AU$80 to AU$150 in singles. This is a realistic next goal for a new player who has learned the game and wants to take it further.
 
 
 ## Finding Your Local TCG Community in Australia
@@ -64,6 +64,6 @@ Pokemon is the easiest TCG to teach to a complete beginner in Australia. The car
 
 ## What to Read Next
 
-- Browse Pokemon cards and prices at [/cards/pokemon](/cards/pokemon)
+- Browse Pokemon cards and prices at [C3 Pokemon card prices](/cards/pokemon)
 - Find a Pokemon play style at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)
 - Explore Pokemon collecting at [/quizzes/collector-or-player](/quizzes/collector-or-player)

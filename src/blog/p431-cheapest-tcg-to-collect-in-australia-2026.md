@@ -84,10 +84,10 @@ Total accessory budget for a new player: AU$80 to AU$200 depending on quality pr
 
 ## The C3 Take
 
-The cheapest TCG to collect is whichever one your community actually plays. A AU$20 Pokemon deck has no value if nobody in your area runs Pokemon events. A AU$500 Yu-Gi-Oh competitive deck is better value than a AU$150 Pokemon deck if Yu-Gi-Oh is the active scene at your local store. Check your local game stores first, then compare costs. The [TCG Budget quiz at /quizzes/tcg-budget](/quizzes/tcg-budget) factors in both cost and play style. Use current card prices at [/cards/mtg](/cards/mtg) and across other game hubs to verify current AU singles costs before committing.
+The cheapest TCG to collect is whichever one your community actually plays. A AU$20 Pokemon deck has no value if nobody in your area runs Pokemon events. A AU$500 Yu-Gi-Oh competitive deck is better value than a AU$150 Pokemon deck if Yu-Gi-Oh is the active scene at your local store. Check your local game stores first, then compare costs. The [TCG Budget quiz at /quizzes/tcg-budget](/quizzes/tcg-budget) factors in both cost and play style. Use current card prices at [C3 MTG card prices](/cards/mtg) and across other game hubs to verify current AU singles costs before committing.
 
 ## What to Read Next
 
 - Find your TCG budget match at [/quizzes/tcg-budget](/quizzes/tcg-budget)
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Calculate booster box value at [/tools](/tools)
+- Calculate booster box value at [C3 tools](/tools)

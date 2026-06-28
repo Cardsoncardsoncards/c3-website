@@ -114,15 +114,15 @@ Ravensburger's confirmation that Pixar continues through 2026 and into 2027 mean
 
 
 
-Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/market). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
+Check all confirmed Australian TCG release dates at the [C3 Release Calendar](/calendar). Pre-release events, box release dates, and Regional Qualifier dates are updated as they are announced.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Lorcana card prices](/cards/lorcana) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Browse Lorcana card prices at [C3 Lorcana card prices](/cards/lorcana)
 - Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 

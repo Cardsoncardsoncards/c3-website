@@ -53,6 +53,6 @@ Buy it if the anime brought you to it and you are comfortable with the import pr
 
 ## What to Read Next
 
-- Browse WIXOSS cards at [/cards/wixoss](/cards/wixoss)
+- Browse WIXOSS cards at [C3 Wixoss card prices](/cards/wixoss)
 - Find which TCG suits your style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
 - Compare all your options at [/compare](/compare)

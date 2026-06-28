@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
+[Blog](/blog) > [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)
 
 Victoria is one of the most active TCG states in Australia. Melbourne alone has multiple competitive events running every month across 10+ games, and the second half of 2026 brings some of the largest TCG events ever held in the state. This guide lists every confirmed VIC tournament for 2026 with venue, format, registration links, and card price resources.
 
@@ -122,8 +122,8 @@ Check [C3](/cards) for current AUD prices first. Local Victorian stores includin
 
 ## Related Posts
 
-- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/p500-upcoming-tcg-tournaments-australia-2026)
-- [TCG Tournaments NSW 2026](/blog/p502-tcg-tournaments-nsw-2026)
-- [TCG Tournaments Queensland 2026](/blog/p503-tcg-tournaments-queensland-2026)
-- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026](/blog/p494-yugioh-oceanic-world-championship-qualifier-melbourne-2026)
-- [CommandFest Melbourne 2026](/blog/p506-commandfest-melbourne-2026-guide)
+- [Upcoming TCG Tournaments Australia 2026: Complete Calendar](/blog/upcoming-tcg-tournaments-australia-2026)
+- [TCG Tournaments NSW 2026](/blog/tcg-tournaments-nsw-2026)
+- [TCG Tournaments Queensland 2026](/blog/tcg-tournaments-queensland-2026)
+- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026](/blog/yugioh-oceanic-world-championship-qualifier-melbourne-2026)
+- [CommandFest Melbourne 2026](/blog/commandfest-melbourne-2026-guide)

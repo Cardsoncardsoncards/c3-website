@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-The Digimon Card Game uses a rarity system with Common, Uncommon, Rare, Super Rare, Secret Rare, and alternate art parallel tiers. Secret Rare (SEC) is the premium pull tier from standard booster product, appearing roughly once per two booster boxes. For current AUD prices across all rarities, check [/cards/digimon](/cards/digimon).
+The Digimon Card Game uses a rarity system with Common, Uncommon, Rare, Super Rare, Secret Rare, and alternate art parallel tiers. Secret Rare (SEC) is the premium pull tier from standard booster product, appearing roughly once per two booster boxes. For current AUD prices across all rarities, check [C3 Digimon card prices](/cards/digimon).
 
 ## The Digimon Card Game Rarity Tiers
 
@@ -62,6 +62,6 @@ Digimon's rarity system is well-structured for both competitive play and collect
 
 ## What to Read Next
 
-- Browse Digimon singles across all rarities at [/cards/digimon](/cards/digimon)
-- Find out whether Digimon is worth starting at [/blog/is-digimon-card-game-worth-starting-australia-2026](/blog/p362-is-digimon-card-game-worth-starting-australia-2026)
+- Browse Digimon singles across all rarities at [C3 Digimon card prices](/cards/digimon)
+- Find out whether Digimon is worth starting at [/blog/is-digimon-card-game-worth-starting-australia-2026](/blog/is-digimon-card-game-worth-starting-australia-2026)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

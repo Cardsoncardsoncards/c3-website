@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-The Digimon Card Game is one of the most underrated TCGs in Australia. It has deep gameplay, reasonable entry costs, genuine collector appeal, and a nostalgic IP that resonates with anyone who grew up watching the anime in the late 1990s and 2000s. It is also less crowded than Pokemon or MTG, which means Australian players who put in the work can rise quickly. See current prices at [/cards/mtg](/cards/mtg).
+The Digimon Card Game is one of the most underrated TCGs in Australia. It has deep gameplay, reasonable entry costs, genuine collector appeal, and a nostalgic IP that resonates with anyone who grew up watching the anime in the late 1990s and 2000s. It is also less crowded than Pokemon or MTG, which means Australian players who put in the work can rise quickly. See current prices at [C3 MTG card prices](/cards/mtg).
 
 
 
@@ -87,7 +87,7 @@ The Australian Digimon TCG Facebook group and Discord are active communities for
 
 The most cost-efficient path is buying one or two Starter Decks, playing 15 to 20 games, then identifying which specific singles your strategy needs rather than opening booster boxes hoping for the right cards.
 
-Use the [C3 Card Compare tool](/compare) to check current AUD prices on Digimon singles. The [C3 Release Calendar](/market) tracks upcoming Digimon events and set releases in Australia.
+Use the [C3 Card Compare tool](/compare) to check current AUD prices on Digimon singles. The [C3 Release Calendar](/calendar) tracks upcoming Digimon events and set releases in Australia.
 
 ## Digimon TCG vs Other TCGs in Australia
 
@@ -100,19 +100,19 @@ Competitively, Digimon TCG sits at a mid-range entry cost. A competitive deck co
 
 The Australian TCG community is welcoming to new players at all levels. Whether you are starting a new game or returning to one you played before, the best first step is finding a local game store and asking when they run beginner events.
 
-All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/market) tracks upcoming events so you can find one near you.
+All major Australian cities have multiple active game stores running weekly nights for the TCGs covered on this site. The [C3 Release Calendar](/calendar) tracks upcoming events so you can find one near you.
 
 For pricing on specific cards before you buy, the [C3 Card Compare tool](/compare) shows current AUD pricing from eBay AU sold data. For tracking your collection as it grows, the [free C3 Collection Tracker](/tracker) works across all 8 TCGs on this site.
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Browse TCG card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse TCG card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -123,4 +123,4 @@ The minimum entry cost depends on the game. Most TCGs have starter or preconstru
 Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
 
 ### Where can I find other TCG players in Australia?
-Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/market) for upcoming events near you.
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.

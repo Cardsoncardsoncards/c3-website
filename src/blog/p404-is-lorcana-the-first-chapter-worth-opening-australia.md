@@ -12,19 +12,19 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Lorcana The First Chapter is the original 2023 launch set and the game's foundational card pool. As the first set ever printed, it holds collector significance that newer sets cannot replicate. Chase Enchanted cards including Elsa and Mickey Mouse variants are among the most valuable Lorcana singles in Australia, and that status has held since launch. Check current AUD singles prices at [/cards/lorcana](/cards/lorcana) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
+Lorcana The First Chapter is the original 2023 launch set and the game's foundational card pool. As the first set ever printed, it holds collector significance that newer sets cannot replicate. Chase Enchanted cards including Elsa and Mickey Mouse variants are among the most valuable Lorcana singles in Australia, and that status has held since launch. Check current AUD singles prices at [C3 Lorcana card prices](/cards/lorcana) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
 
 ## What Is in The First Chapter?
 
 The First Chapter established Lorcana with 204 standard cards plus Enchanted rarity variants numbered above 204. It introduced all six inks (Amber, Amethyst, Emerald, Ruby, Sapphire, Steel) and the core mechanics of questing for lore, challenging, and singing Songs. Every Lorcana player needs to understand The First Chapter because its cards form the backbone of many competitive builds even years after release.
 
-**Packs per box:** Standard booster box structure for this game. Check the set page at [/cards/lorcana](/cards/lorcana) for confirmed pack and box counts.
+**Packs per box:** Standard booster box structure for this game. Check the set page at [C3 Lorcana card prices](/cards/lorcana) for confirmed pack and box counts.
 
 ## Top Cards to Know
 
 **Elsa Enchanted, Mickey Mouse Enchanted, and Maui Enchanted** are the highest-demand singles and among the most valuable Lorcana cards in Australia. **Simba, Protector of the Pride Lands** and **Dragon Fire** are competitive staples that see consistent tournament play. The full-art treatments on standard rare cards also hold collector value as the original printings.
 
-For all current AUD prices on The First Chapter singles, check [/cards/lorcana](/cards/lorcana). Prices update from live eBay AU market data.
+For all current AUD prices on The First Chapter singles, check [C3 Lorcana card prices](/cards/lorcana). Prices update from live eBay AU market data.
 
 ## Pull Rates and What to Expect
 
@@ -32,7 +32,7 @@ Pull rates follow the standard structure for this game and release type. The cri
 
 From any booster box, expect a mix of commons, uncommons, and rares. The premium rare-tier cards are where box value concentrates. Most boxes return 60 to 80 percent of their retail cost in singles value on average. Hitting the top-tier cards is the exception, not the expectation, in any single box.
 
-Use the [EV Calculator at /tools](/tools) with current AUD prices from [/cards/lorcana](/cards/lorcana) to get an accurate verdict for your specific purchase price before you open.
+Use the [EV Calculator at /tools](/tools) with current AUD prices from [C3 Lorcana card prices](/cards/lorcana) to get an accurate verdict for your specific purchase price before you open.
 
 ## Should You Open or Buy Singles?
 
@@ -56,10 +56,10 @@ The [C3 Lorcana hub at /cards/lorcana](/cards/lorcana) aggregates current AUD pr
 
 ## The C3 Take
 
-The question of whether to open The First Chapter or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [/cards/lorcana](/cards/lorcana) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
+The question of whether to open The First Chapter or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [C3 Lorcana card prices](/cards/lorcana) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
 
 ## What to Read Next
 
-- Browse Lorcana card prices in AUD at [/cards/lorcana](/cards/lorcana)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse Lorcana card prices in AUD at [C3 Lorcana card prices](/cards/lorcana)
+- Calculate booster box expected value at [C3 tools](/tools)
 - Find your Lorcana play style at [/quizzes/lorcana-character](/quizzes/lorcana-character)

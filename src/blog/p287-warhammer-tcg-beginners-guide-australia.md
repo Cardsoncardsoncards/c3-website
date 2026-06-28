@@ -69,6 +69,6 @@ If you are looking purely for a competitive TCG with a strong Australian scene, 
 
 ## What to Read Next
 
-- Browse Warhammer TCG cards at [/cards/warhammer](/cards/warhammer)
+- Browse Warhammer TCG cards at [C3 Warhammer TCG card prices](/cards/warhammer)
 - Find the right TCG for your style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
 - Compare all your options at [/compare](/compare)

@@ -20,7 +20,7 @@ Every Riftbound deck is built around a single champion card, making champion cho
 
 ## Understanding the Card Pool by Set
 
-Origins provides the foundational champion cards and base support pieces. Spiritforged expanded champion options and introduced support cards that upgraded Origins-only builds significantly. Unleashed shifted the competitive meta by introducing new champions and new interactions. A competitive deck in the current Riftbound format will typically draw cards from at least two sets, with Unleashed cards providing the newest and often most powerful options. The set pages at [/cards/riftbound](/cards/riftbound) show current AUD pricing for cards across all sets.
+Origins provides the foundational champion cards and base support pieces. Spiritforged expanded champion options and introduced support cards that upgraded Origins-only builds significantly. Unleashed shifted the competitive meta by introducing new champions and new interactions. A competitive deck in the current Riftbound format will typically draw cards from at least two sets, with Unleashed cards providing the newest and often most powerful options. The set pages at [C3 Riftbound card prices](/cards/riftbound) show current AUD pricing for cards across all sets.
 
 ## Building the 50-Card Deck
 
@@ -28,7 +28,7 @@ A standard Riftbound deck contains 50 cards plus your champion leader card. The 
 
 ## Buying Singles vs Opening Packs
 
-For competitive deck building in Australia, buying targeted singles is nearly always more cost-efficient than opening booster packs. A competitive Riftbound deck can be assembled for AU$80 to AU$150 in singles depending on the champion and the AU market prices of your required cards. Opening boxes hoping to pull specific singles at roughly 1-in-36-pack odds will cost significantly more on average. Use [/cards/riftbound](/cards/riftbound) to price your full decklist before buying anything.
+For competitive deck building in Australia, buying targeted singles is nearly always more cost-efficient than opening booster packs. A competitive Riftbound deck can be assembled for AU$80 to AU$150 in singles depending on the champion and the AU market prices of your required cards. Opening boxes hoping to pull specific singles at roughly 1-in-36-pack odds will cost significantly more on average. Use [C3 Riftbound card prices](/cards/riftbound) to price your full decklist before buying anything.
 
 ## Testing and Iterating Your Build
 
@@ -60,5 +60,5 @@ Competitive Riftbound in Australia is still at a stage where skilled play and go
 ## What to Read Next
 
 - Find your Riftbound champion at at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Browse Riftbound card prices at at [/cards/riftbound](/cards/riftbound)
-- Check price movers at at [/market](/market)
+- Browse Riftbound card prices at at [C3 Riftbound card prices](/cards/riftbound)
+- Check price movers at at [C3 Market Insights](/market)

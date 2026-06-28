@@ -49,6 +49,6 @@ The price point is real and it limits the accessible audience. If the budget is 
 
 ## What to Read Next
 
-- Browse Sorcery cards at [/cards/sorcery](/cards/sorcery)
+- Browse Sorcery cards at [C3 Sorcery card prices](/cards/sorcery)
 - See how Sorcery compares with the full range of options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Use the TCG EV Calculator at [/tools](/tools)
+- Use the TCG EV Calculator at [C3 tools](/tools)

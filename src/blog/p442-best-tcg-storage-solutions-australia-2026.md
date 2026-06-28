@@ -66,6 +66,6 @@ Set up your storage system before your collection outgrows it. Retroactively reo
 
 ## What to Read Next
 
-- Track your collection at [/tracker](/tracker)
-- Value your collection at [/market](/market)
+- Track your collection at [C3 Collection Tracker](/tracker)
+- Value your collection at [C3 Market Insights](/market)
 - Browse accessories at [/shop](/shop)

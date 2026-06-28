@@ -129,8 +129,8 @@ Call a judge immediately. Judges are present at sanctioned events to answer rule
 
 ## Related Posts
 
-- [Upcoming TCG Tournaments Australia 2026](/blog/p500-upcoming-tcg-tournaments-australia-2026)
-- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026](/blog/p494-yugioh-oceanic-world-championship-qualifier-melbourne-2026)
-- [Budget Competitive Yu-Gi-Oh Deck Australia 2026](/blog/p205-budget-competitive-yugioh-deck-australia)
-- [How to Build a Budget Competitive TCG Deck Australia](/blog/p464-how-to-build-budget-competitive-tcg-deck-australia)
-- [TCG Selling Fees Australia: What You Pay to Sell Cards](/blog/p237-tcg-selling-fees-australia)
+- [Upcoming TCG Tournaments Australia 2026](/blog/upcoming-tcg-tournaments-australia-2026)
+- [Yu-Gi-Oh Oceanic WCQ Melbourne 2026](/blog/yugioh-oceanic-world-championship-qualifier-melbourne-2026)
+- [Budget Competitive Yu-Gi-Oh Deck Australia 2026](/blog/budget-competitive-yugioh-deck-australia)
+- [How to Build a Budget Competitive TCG Deck Australia](/blog/how-to-build-budget-competitive-tcg-deck-australia)
+- [TCG Selling Fees Australia: What You Pay to Sell Cards](/blog/tcg-selling-fees-australia)

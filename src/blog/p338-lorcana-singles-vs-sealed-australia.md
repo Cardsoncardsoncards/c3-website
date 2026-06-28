@@ -22,7 +22,7 @@ From a standard box you can expect approximately one Enchanted Rare (or none, de
 
 The issue is that Lorcana has six ink colours and each set has many Legendary cards spread across them. Only a handful of Legendaries from any set have secondary market value above AU$20. The majority sit at AU$5 to AU$15. The maths on most boxes is negative.
 
-The [EV Calculator at /tools](/tools) can model Lorcana box EV using current single prices from [/cards/lorcana](/cards/lorcana). Run the numbers before committing to any sealed purchase above AU$50.
+The [EV Calculator at /tools](/tools) can model Lorcana box EV using current single prices from [C3 Lorcana card prices](/cards/lorcana). Run the numbers before committing to any sealed purchase above AU$50.
 
 ## When Opening Lorcana Sealed Product Makes Sense
 
@@ -48,7 +48,7 @@ If your goal is to compete at Lorcana organised play events in Australia, buying
 
 A competitive Lorcana deck requires playsets of specific Legendaries and Rares. Buying four copies of a AU$15 Legendary as singles costs AU$60. Opening packs until you pull four copies could cost AU$200 or more with no guarantee of success.
 
-Check current deck lists from the Australian competitive scene, identify the cards you need, and price them as singles at [/cards/lorcana](/cards/lorcana) before making any purchasing decision.
+Check current deck lists from the Australian competitive scene, identify the cards you need, and price them as singles at [C3 Lorcana card prices](/cards/lorcana) before making any purchasing decision.
 
 ## The C3 Take
 
@@ -56,6 +56,6 @@ Lorcana is a game where the collector experience and the player experience have 
 
 ## What to Read Next
 
-- Check current Lorcana singles prices at [/cards/lorcana](/cards/lorcana)
-- Calculate Lorcana box EV at [/tools](/tools)
-- Read about the most valuable Lorcana cards in Australia at [/blog/most-valuable-lorcana-cards-australia-2026](/blog/p337-most-valuable-lorcana-cards-australia-2026)
+- Check current Lorcana singles prices at [C3 Lorcana card prices](/cards/lorcana)
+- Calculate Lorcana box EV at [C3 tools](/tools)
+- Read about the most valuable Lorcana cards in Australia at [/blog/most-valuable-lorcana-cards-australia-2026](/blog/most-valuable-lorcana-cards-australia-2026)

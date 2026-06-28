@@ -79,4 +79,4 @@ It is not a game to start if you want organised competitive play, new product, o
 
 - Browse WoW TCG cards at [/cards/wow](/cards/wow)
 - Looking for an active game instead? [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- See which TCG cards hold the most value at [/tools](/tools)
+- See which TCG cards hold the most value at [C3 tools](/tools)

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For competitive Yu-Gi-Oh play in Australia, buying singles is almost always cheaper than opening sealed product. A booster box returns significantly less than its retail price in expected card value for most sets. The exception is if you specifically want the Starlight Rare experience and are willing to pay for the chance of one, which pulls approximately one per case (12 boxes). For competitive deck building, buy singles. Check current prices at [/cards/yugioh](/cards/yugioh) first.
+For competitive Yu-Gi-Oh play in Australia, buying singles is almost always cheaper than opening sealed product. A booster box returns significantly less than its retail price in expected card value for most sets. The exception is if you specifically want the Starlight Rare experience and are willing to pay for the chance of one, which pulls approximately one per case (12 boxes). For competitive deck building, buy singles. Check current prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh) first.
 
 ## Why Yu-Gi-Oh Booster Box EV Is Usually Negative
 
@@ -58,6 +58,6 @@ Yu-Gi-Oh's structure makes it one of the most singles-friendly TCGs in Australia
 
 ## What to Read Next
 
-- Check current Yu-Gi-Oh singles prices at [/cards/yugioh](/cards/yugioh)
-- Calculate Yu-Gi-Oh box EV at [/tools](/tools)
+- Check current Yu-Gi-Oh singles prices at [C3 Yu-Gi-Oh card prices](/cards/yugioh)
+- Calculate Yu-Gi-Oh box EV at [C3 tools](/tools)
 - Find your Yu-Gi-Oh deck type at [/quizzes/yugioh-deck](/quizzes/yugioh-deck)

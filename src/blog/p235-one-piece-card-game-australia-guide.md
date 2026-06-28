@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-The One Piece Card Game is one of the fastest-growing TCGs in the world, and Australia has one of the most active player communities in the Asia Pacific region. If you are coming in fresh, whether you are an anime fan or a TCG player looking for something new, here is everything you need to start without wasting money. See current prices at [/cards/one-piece](/cards/one-piece).
+The One Piece Card Game is one of the fastest-growing TCGs in the world, and Australia has one of the most active player communities in the Asia Pacific region. If you are coming in fresh, whether you are an anime fan or a TCG player looking for something new, here is everything you need to start without wasting money. See current prices at [C3 One Piece card prices](/cards/onepiece).
 
 
 
@@ -99,7 +99,7 @@ Bandai runs Organised Play for One Piece Card Game in Australia including Region
 
 The Australian One Piece Card Game community is active on Facebook and Discord. Finding opponents at local game stores is generally easy in metro areas.
 
-Check the [C3 Release Calendar](/market) for upcoming One Piece events and set releases in Australia.
+Check the [C3 Release Calendar](/calendar) for upcoming One Piece events and set releases in Australia.
 
 ## Building Your First One Piece Deck
 
@@ -109,13 +109,13 @@ Use the [C3 Card Compare tool](/compare) for current AUD pricing on One Piece si
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/one-piece](/cards/one-piece) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 One Piece card prices](/cards/onepiece) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - Compare TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Browse card prices at [/cards/mtg](/cards/mtg)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse card prices at [C3 MTG card prices](/cards/mtg)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 
@@ -126,4 +126,4 @@ The minimum entry cost depends on the game. Most TCGs have starter or preconstru
 Yes. Australia has active local game store communities for all major TCGs in major cities. Regional qualifier events run regularly and online communities on Facebook and Discord are active. The specific size varies by game.
 
 ### Where can I find other One Piece players in Australia?
-Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/market) for upcoming events near you.
+Local game stores run regular events. Facebook groups for Australian TCG players are active. Check the [C3 Release Calendar](/calendar) for upcoming events near you.

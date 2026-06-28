@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Pokemon Paradox Rift is a late-2023 SV set introducing Paradox Pokemon, ancient and future variants of existing Pokemon with distinct visual designs. The set has dual appeal: competitive players want Roaring Moon ex and Iron Valiant ex, which are tournament staples, while collectors target the Special Illustration Rare versions of both. Check current AUD singles prices at [/cards/pokemon](/cards/pokemon) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
+Pokemon Paradox Rift is a late-2023 SV set introducing Paradox Pokemon, ancient and future variants of existing Pokemon with distinct visual designs. The set has dual appeal: competitive players want Roaring Moon ex and Iron Valiant ex, which are tournament staples, while collectors target the Special Illustration Rare versions of both. Check current AUD singles prices at [C3 Pokemon card prices](/cards/pokemon) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
 
 ## What Is in Paradox Rift?
 
@@ -28,13 +28,15 @@ Paradox Rift introduced Ancient and Future variant Pokemon as the central set me
 
 **Roaring Moon ex Special Illustration Rare** and **Iron Valiant ex SIR** are the dual headline cards. Both are competitive format staples and strong collector targets simultaneously, which makes them higher-demand than cards that only serve one of those audiences. **Walking Wake ex SIR** and **Iron Leaves ex SIR** are secondary targets.
 
-For all current AUD prices on Paradox Rift singles, check [/cards/pokemon](/cards/pokemon). Prices update from live eBay AU market data.
+For all current AUD prices on Paradox Rift singles, check [C3 Pokemon card prices](/cards/pokemon). Prices update from live eBay AU market data.
 
 ## Pull Rates and What to Expect
 
 Standard SV-era pull rates apply to this set. From a 36-pack booster box expect roughly 18 Ultra Rare cards. The value of those 18 cards depends entirely on how many are high-demand chase cards versus lower-tier ex cards that sell for AU$5 to AU$15 each.
 
-Most boxes return 60 to 85 percent of retail in singles value on average. To hit full cost recovery you need at least one Special Illustration Rare from the high-demand tier. The EV Calculator at [/tools](/tools) uses current AUD prices to give you an accurate verdict for your specific purchase price.
+Search [Pokemon booster boxes](https://www.amazon.com.au/s?k=pokemon+booster+box&tag=blasdigital-22) on Amazon AU
+
+Most boxes return 60 to 85 percent of retail in singles value on average. To hit full cost recovery you need at least one Special Illustration Rare from the high-demand tier. The EV Calculator at [C3 tools](/tools) uses current AUD prices to give you an accurate verdict for your specific purchase price.
 
 ## Should You Open or Buy Singles?
 
@@ -42,7 +44,7 @@ Most boxes return 60 to 85 percent of retail in singles value on average. To hit
 
 **Buy singles if:** you want specific chase cards from Paradox Rift. The Australian singles market is active and most cards are available as direct singles through eBay AU. Targeting your one or two must-have cards directly is almost always cheaper than opening boxes hoping to pull them.
 
-The Australian TCG community has well-developed single-card selling networks. Use [/market](/market) to see current price trends before buying or selling specific cards.
+The Australian TCG community has well-developed single-card selling networks. Use [C3 Market Insights](/market) to see current price trends before buying or selling specific cards.
 
 ## Australian Market Context
 
@@ -61,10 +63,10 @@ The [C3 Pokemon hub at /cards/pokemon](/cards/pokemon) shows current AUD pricing
 
 ## The C3 Take
 
-Every Pokemon set EV question comes down to the same two numbers: what are the top cards worth today, and what are the odds of pulling them? Both shift constantly. A set that looked poor value six months ago may now be positive EV if competitive demand has driven prices up. Check [/cards/pokemon](/cards/pokemon) for live prices and run the [EV Calculator](/tools) before every purchase. Hype and gut feel are not substitutes for current AU market data.
+Every Pokemon set EV question comes down to the same two numbers: what are the top cards worth today, and what are the odds of pulling them? Both shift constantly. A set that looked poor value six months ago may now be positive EV if competitive demand has driven prices up. Check [C3 Pokemon card prices](/cards/pokemon) for live prices and run the [EV Calculator](/tools) before every purchase. Hype and gut feel are not substitutes for current AU market data.
 
 ## What to Read Next
 
-- Browse Pokemon card prices in AUD at [/cards/pokemon](/cards/pokemon)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse Pokemon card prices in AUD at [C3 Pokemon card prices](/cards/pokemon)
+- Calculate booster box expected value at [C3 tools](/tools)
 - Find your Pokemon play style at [/quizzes/pokemon-archetype](/quizzes/pokemon-archetype)

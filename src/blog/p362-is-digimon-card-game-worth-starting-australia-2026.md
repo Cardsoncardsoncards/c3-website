@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Yes, the Digimon Card Game is worth starting in Australia in 2026. It has an established competitive scene, genuinely unique gameplay mechanics, accessible entry pricing through Starter Decks, and consistent Bandai publishing support. The key question before starting is whether your local game store runs Digimon events. With community access, Digimon is one of the strongest choices among extended TCGs in Australia. Check [/cards/digimon](/cards/digimon) for current prices before buying anything.
+Yes, the Digimon Card Game is worth starting in Australia in 2026. It has an established competitive scene, genuinely unique gameplay mechanics, accessible entry pricing through Starter Decks, and consistent Bandai publishing support. The key question before starting is whether your local game store runs Digimon events. With community access, Digimon is one of the strongest choices among extended TCGs in Australia. Check [C3 Digimon card prices](/cards/digimon) for current prices before buying anything.
 
 ## What Makes Digimon Genuinely Different
 
@@ -66,6 +66,6 @@ Digimon Card Game is the most underrated competitive TCG in Australia. Its reput
 
 ## What to Read Next
 
-- Browse Digimon singles at [/cards/digimon](/cards/digimon)
-- Read the full Digimon beginners guide at [/blog/digimon-card-game-australia-beginners-guide](/blog/p273-digimon-card-game-australia-beginners-guide)
+- Browse Digimon singles at [C3 Digimon card prices](/cards/digimon)
+- Read the full Digimon beginners guide at [/blog/digimon-card-game-australia-beginners-guide](/blog/digimon-card-game-australia-beginners-guide)
 - Take the TCG quiz at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

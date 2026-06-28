@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Riftbound has four sets released or currently available in Australia as of May 2026, with a fifth confirmed for later in the year. In order: Origins (October 2025, 298 cards, 27 champions), Spiritforged (February 2026, 221 cards, 12 new champions), Unleashed (May 8, 2026, 219 cards), and Vendetta (July 31, 2026, confirmed global parity release). Radiance is the fifth set, confirmed for October 23, 2026. See current AUD prices for all sets at [/cards/riftbound](/cards/riftbound).
+Riftbound has four sets released or currently available in Australia as of May 2026, with a fifth confirmed for later in the year. In order: Origins (October 2025, 298 cards, 27 champions), Spiritforged (February 2026, 221 cards, 12 new champions), Unleashed (May 8, 2026, 219 cards), and Vendetta (July 31, 2026, confirmed global parity release). Radiance is the fifth set, confirmed for October 23, 2026. See current AUD prices for all sets at [C3 Riftbound card prices](/cards/riftbound).
 
 ## Set 1: Origins (October 31, 2025)
 
@@ -70,7 +70,7 @@ Radiance is the fifth set in the 2026 Riftbound roadmap, confirmed for October 2
 
 ## Collecting Across All Sets
 
-Riftbound is at an unusual and advantageous point for Australian collectors: five sets are either released or confirmed within a single calendar year, but the total card pool is still manageable compared to mature games. Completing Origins at 298 main set cards is achievable. Log your progress at [/tracker](/tracker) and use the [Compare tool at /compare](/compare) to evaluate which singles are worth your budget.
+Riftbound is at an unusual and advantageous point for Australian collectors: five sets are either released or confirmed within a single calendar year, but the total card pool is still manageable compared to mature games. Completing Origins at 298 main set cards is achievable. Log your progress at [C3 Collection Tracker](/tracker) and use the [Compare tool at /compare](/compare) to evaluate which singles are worth your budget.
 
 The competitive format currently includes all released sets without rotation, meaning Origins, Spiritforged, and Unleashed cards are all legal. Vendetta and Radiance will be added as they release.
 
@@ -80,6 +80,6 @@ Five sets in one year is a significant pace. Riot Games confirmed the full 2026 
 
 ## What to Read Next
 
-- Browse all Riftbound sets and current AUD prices at [/cards/riftbound](/cards/riftbound)
-- Calculate booster box expected value before opening sealed at [/tools](/tools)
-- Track your Riftbound collection across all sets at [/tracker](/tracker)
+- Browse all Riftbound sets and current AUD prices at [C3 Riftbound card prices](/cards/riftbound)
+- Calculate booster box expected value before opening sealed at [C3 tools](/tools)
+- Track your Riftbound collection across all sets at [C3 Collection Tracker](/tracker)

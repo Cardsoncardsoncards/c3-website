@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Grand Archive TCG uses a rarity system with Common, Rare, Super Rare, Legendary, and Majestic as the main tiers, plus cold foil and premium foil treatments that represent the collector premium tier. Legendary and cold foil versions of popular Champion cards are the most valuable. For current AUD prices across all rarities, check [/cards/grandarchive](/cards/grandarchive).
+Grand Archive TCG uses a rarity system with Common, Rare, Super Rare, Legendary, and Majestic as the main tiers, plus cold foil and premium foil treatments that represent the collector premium tier. Legendary and cold foil versions of popular Champion cards are the most valuable. For current AUD prices across all rarities, check [C3 Grand Archive card prices](/cards/grandarchive).
 
 ## The Grand Archive Rarity Tiers
 
@@ -62,10 +62,10 @@ When listing or searching on eBay AU, being explicit about foil treatment in you
 
 ## The C3 Take
 
-Grand Archive's rarity system is clear but the foil treatment layer adds meaningful complexity for collectors. The most important distinction is cold foil versus standard foil versus non-foil, which can represent significant price differences for the same rarity card. For competitive players, non-foil or standard foil versions of Legendary cards are functionally identical to cold foil. For collectors, cold foil is the tier to target. The game's limited print runs mean that premium versions of popular Champion cards hold their value better than equivalent tiers in high-volume games. Use [/cards/grandarchive](/cards/grandarchive) to compare prices across treatments for any specific card before purchasing, and always confirm the foil treatment from seller photos rather than relying on the card name alone.
+Grand Archive's rarity system is clear but the foil treatment layer adds meaningful complexity for collectors. The most important distinction is cold foil versus standard foil versus non-foil, which can represent significant price differences for the same rarity card. For competitive players, non-foil or standard foil versions of Legendary cards are functionally identical to cold foil. For collectors, cold foil is the tier to target. The game's limited print runs mean that premium versions of popular Champion cards hold their value better than equivalent tiers in high-volume games. Use [C3 Grand Archive card prices](/cards/grandarchive) to compare prices across treatments for any specific card before purchasing, and always confirm the foil treatment from seller photos rather than relying on the card name alone.
 
 ## What to Read Next
 
-- Browse Grand Archive singles at [/cards/grandarchive](/cards/grandarchive)
+- Browse Grand Archive singles at [C3 Grand Archive card prices](/cards/grandarchive)
 - Find your Grand Archive class at [/quizzes/grand-archive-class](/quizzes/grand-archive-class)
-- Read the Grand Archive beginners guide at [/blog/grand-archive-tcg-beginners-guide-australia](/blog/p278-grand-archive-tcg-beginners-guide-australia)
+- Read the Grand Archive beginners guide at [/blog/grand-archive-tcg-beginners-guide-australia](/blog/grand-archive-tcg-beginners-guide-australia)

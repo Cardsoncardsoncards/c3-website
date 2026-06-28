@@ -21,7 +21,7 @@ The single most important thing you can know before buying a TCG gift is which g
 
 ## AU$25 Gift Ideas
 
-A single booster pack from the current set of their game (AU$8 to AU$12) plus a quality card sleeve pack (AU$10 to AU$15) makes a thoughtful double gift for under AU$25. Alternatively, a single Chase card from their game that you know they want but have not pulled is personal and practical. Check current AU prices at [/cards/mtg](/cards/mtg) or the relevant hub to identify a AU$20 to AU$25 single they would actually use.
+A single booster pack from the current set of their game (AU$8 to AU$12) plus a quality card sleeve pack (AU$10 to AU$15) makes a thoughtful double gift for under AU$25. Alternatively, a single Chase card from their game that you know they want but have not pulled is personal and practical. Check current AU prices at [C3 MTG card prices](/cards/mtg) or the relevant hub to identify a AU$20 to AU$25 single they would actually use.
 
 ## AU$50 Gift Ideas
 
@@ -29,7 +29,7 @@ An Elite Trainer Box for Pokemon (AU$60 to AU$80 varies, look for sales) or a bo
 
 ## AU$100 Gift Ideas
 
-A booster box from their current game (AU$130 to AU$200 for most games, so close to this range with a contribution). A chase single card they have been wanting but not purchased, priced accurately using [/cards/mtg](/cards/mtg) or the relevant hub. An accessory bundle including sleeves, deck box, and a playmat is a well-rounded AU$80 to AU$120 gift.
+A booster box from their current game (AU$130 to AU$200 for most games, so close to this range with a contribution). A chase single card they have been wanting but not purchased, priced accurately using [C3 MTG card prices](/cards/mtg) or the relevant hub. An accessory bundle including sleeves, deck box, and a playmat is a well-rounded AU$80 to AU$120 gift.
 
 ## AU$200 Gift Ideas
 
@@ -64,6 +64,6 @@ The best TCG gift is one the person will actually use. Know the game, know the f
 
 ## What to Read Next
 
-- Browse current TCG card prices at [/cards/mtg](/cards/mtg)
+- Browse current TCG card prices at [C3 MTG card prices](/cards/mtg)
 - Find the right TCG to gift at [/quizzes/which-tcg](/quizzes/which-tcg)
-- Compare sealed product value at [/tools](/tools)
+- Compare sealed product value at [C3 tools](/tools)

@@ -54,6 +54,6 @@ The safest value targets are Leader promos and the highest rarity Leader variant
 
 ## What to Read Next
 
-- Browse Shadowverse Evolve cards at [/cards/shadowverse](/cards/shadowverse)
+- Browse Shadowverse Evolve cards at [C3 Shadowverse Evolve card prices](/cards/shadowverse)
 - Read the beginner's guide at [/blog/shadowverse-evolve-beginners-guide-australia](/blog/shadowverse-evolve-beginners-guide-australia)
 - Compare card values at [/compare](/compare)

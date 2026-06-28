@@ -12,19 +12,19 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Lorcana Ursula's Return is the fourth set from mid-2024, themed around the sea witch Ursula and ocean settings across Disney's catalogue. The set expanded the Location mechanic from Into the Inklands and introduced new Floodborn and Storyborn variants of popular sea-connected Disney characters. Check current AUD singles prices at [/cards/lorcana](/cards/lorcana) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
+Lorcana Ursula's Return is the fourth set from mid-2024, themed around the sea witch Ursula and ocean settings across Disney's catalogue. The set expanded the Location mechanic from Into the Inklands and introduced new Floodborn and Storyborn variants of popular sea-connected Disney characters. Check current AUD singles prices at [C3 Lorcana card prices](/cards/lorcana) and run your specific purchase price through the [EV Calculator at /tools](/tools) before committing to any sealed product.
 
 ## What Is in Ursula's Return?
 
 Ursula's Return centres on Ursula from The Little Mermaid as the primary antagonist across multiple card treatments, with an ocean theme extending across the full card pool. New Location cards feature underwater Disney settings and sea-connected environments. The set continued the competitive card pool expansion with new ink colour synergies.
 
-**Packs per box:** Standard booster box structure for this game. Check the set page at [/cards/lorcana](/cards/lorcana) for confirmed pack and box counts.
+**Packs per box:** Standard booster box structure for this game. Check the set page at [C3 Lorcana card prices](/cards/lorcana) for confirmed pack and box counts.
 
 ## Top Cards to Know
 
 **Ursula, Deceiver of All Enchanted** is the headline collector card. **Moana, Daughter of the Sea** and other ocean-themed competitive cards drove tournament demand. New Emerald and Sapphire ink support added competitive options for two of Lorcana's most-played ink colours.
 
-For all current AUD prices on Ursula's Return singles, check [/cards/lorcana](/cards/lorcana). Prices update from live eBay AU market data.
+For all current AUD prices on Ursula's Return singles, check [C3 Lorcana card prices](/cards/lorcana). Prices update from live eBay AU market data.
 
 ## Pull Rates and What to Expect
 
@@ -32,7 +32,7 @@ Pull rates follow the standard structure for this game and release type. The cri
 
 From any booster box, expect a mix of commons, uncommons, and rares. The premium rare-tier cards are where box value concentrates. Most boxes return 60 to 80 percent of their retail cost in singles value on average. Hitting the top-tier cards is the exception, not the expectation, in any single box.
 
-Use the [EV Calculator at /tools](/tools) with current AUD prices from [/cards/lorcana](/cards/lorcana) to get an accurate verdict for your specific purchase price before you open.
+Use the [EV Calculator at /tools](/tools) with current AUD prices from [C3 Lorcana card prices](/cards/lorcana) to get an accurate verdict for your specific purchase price before you open.
 
 ## Should You Open or Buy Singles?
 
@@ -56,10 +56,10 @@ The [C3 Lorcana hub at /cards/lorcana](/cards/lorcana) aggregates current AUD pr
 
 ## The C3 Take
 
-The question of whether to open Ursula's Return or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [/cards/lorcana](/cards/lorcana) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
+The question of whether to open Ursula's Return or buy singles has one correct answer: check current prices first. The same box that represents poor value at AU$200 might represent positive EV at AU$150 if a few cards have spiked. The same cards that seemed expensive as singles last month might now be cheaper than your expected pull cost per card. Use the live data at [C3 Lorcana card prices](/cards/lorcana) and the [EV Calculator at /tools](/tools) before every purchase decision. The data is there, free, and more accurate than any guide written before today's prices settled.
 
 ## What to Read Next
 
-- Browse Lorcana card prices in AUD at [/cards/lorcana](/cards/lorcana)
-- Calculate booster box expected value at [/tools](/tools)
+- Browse Lorcana card prices in AUD at [C3 Lorcana card prices](/cards/lorcana)
+- Calculate booster box expected value at [C3 tools](/tools)
 - Find your Lorcana play style at [/quizzes/lorcana-character](/quizzes/lorcana-character)

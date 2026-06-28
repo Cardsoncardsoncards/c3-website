@@ -71,6 +71,6 @@ The honest gap is community size. If you need a large local scene right now, One
 
 ## What to Read Next
 
-- Browse Gundam cards at [/cards/gundam](/cards/gundam)
+- Browse Gundam cards at [C3 Gundam card prices](/cards/gundam)
 - Find which TCG fits your style at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming Gundam releases at [/calendar](/market)
+- Check upcoming Gundam releases at [/calendar](/calendar)

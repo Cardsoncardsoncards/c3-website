@@ -76,6 +76,6 @@ The Australian community is growing but not yet large. If you play the digital g
 
 ## What to Read Next
 
-- Browse Shadowverse cards at [/cards/shadowverse](/cards/shadowverse)
+- Browse Shadowverse cards at [C3 Shadowverse Evolve card prices](/cards/shadowverse)
 - Find which TCG suits you at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming Shadowverse releases at [/calendar](/market)
+- Check upcoming Shadowverse releases at [/calendar](/calendar)

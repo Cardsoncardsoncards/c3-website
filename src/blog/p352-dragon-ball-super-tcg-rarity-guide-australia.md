@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Dragon Ball Super TCG uses a rarity system with Common, Uncommon, Rare, Super Rare, Special Rare, and Starter Deck Rare as the main tiers. Special Rare (SPR) is the premium collector and competitive tier, pulling approximately once or twice per booster box. For live AUD prices across all rarities, check [/cards/dragonball](/cards/dragonball).
+Dragon Ball Super TCG uses a rarity system with Common, Uncommon, Rare, Super Rare, Special Rare, and Starter Deck Rare as the main tiers. Special Rare (SPR) is the premium collector and competitive tier, pulling approximately once or twice per booster box. For live AUD prices across all rarities, check [C3 Dragon Ball card prices](/cards/dragonball).
 
 ## The Fusion World Rarity Tiers
 
@@ -63,6 +63,6 @@ DBS TCG's rarity structure is cleaner and more accessible than Yu-Gi-Oh's, with 
 
 ## What to Read Next
 
-- Check current Dragon Ball singles prices at [/cards/dragonball](/cards/dragonball)
+- Check current Dragon Ball singles prices at [C3 Dragon Ball card prices](/cards/dragonball)
 - Find your Dragon Ball warrior at [/quizzes/dragonball-warrior](/quizzes/dragonball-warrior)
-- Read about DBS singles vs sealed at [/blog/dragon-ball-super-tcg-singles-vs-sealed-australia](/blog/p351-dragon-ball-super-tcg-singles-vs-sealed-australia)
+- Read about DBS singles vs sealed at [/blog/dragon-ball-super-tcg-singles-vs-sealed-australia](/blog/dragon-ball-super-tcg-singles-vs-sealed-australia)

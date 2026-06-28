@@ -10,7 +10,7 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-[Blog](/blog) > [Magic: The Gathering](/blog/p001-what-is-mtg)
+[Blog](/blog) > [Magic: The Gathering](/blog/what-is-mtg)
 
 Magic: The Gathering is bringing one of the biggest events ever held in Australia to Brisbane in August. Magic Spotlight: The Hobbit runs at the Brisbane Convention and Exhibition Centre from 28 to 30 August 2026, featuring a main event in Modern format, Pro Tour invitations for top finishers, and a full weekend of side events open to all players.
 
@@ -92,7 +92,7 @@ Check [current prices on these staples on C3](/cards/mtg) before purchasing. Mod
 
 For Commander players, CommandFest Melbourne is running at the Melbourne Convention and Exhibition Centre from 4 to 6 December 2026. The two events together make the second half of 2026 the biggest Magic season Australia has seen. Brisbane in August for Modern competitive players, Melbourne in December for Commander community players.
 
-The [CommandFest Melbourne guide](/blog/p506-commandfest-melbourne-2026-guide) covers that event in full.
+The [CommandFest Melbourne guide](/blog/commandfest-melbourne-2026-guide) covers that event in full.
 
 ## Frequently Asked Questions
 
@@ -116,8 +116,8 @@ Registration details will be confirmed through the Let's Play Games and Wizards 
 
 ## Related Posts
 
-- [CommandFest Melbourne 2026: What Commander Players Need to Know](/blog/p506-commandfest-melbourne-2026-guide)
-- [ANZ Super Series Regional Championships Australia 2026](/blog/p507-mtg-anz-super-series-regional-13-hurstville-2026)
-- [MTG Modern Horizons 3 Australia: Is It Worth Opening?](/blog/p107-is-mtg-modern-horizons-3-worth-opening-australia)
-- [Most Expensive MTG Cards Australia 2026](/blog/p180-most-expensive-mtg-cards-australia-2026)
-- [How to Prepare for Your First TCG Tournament Australia](/blog/p247-how-to-prepare-first-tcg-tournament-australia)
+- [CommandFest Melbourne 2026: What Commander Players Need to Know](/blog/commandfest-melbourne-2026-guide)
+- [ANZ Super Series Regional Championships Australia 2026](/blog/mtg-anz-super-series-regional-13-hurstville-2026)
+- [MTG Modern Horizons 3 Australia: Is It Worth Opening?](/blog/is-mtg-modern-horizons-3-worth-opening-australia)
+- [Most Expensive MTG Cards Australia 2026](/blog/most-expensive-mtg-cards-australia-2026)
+- [How to Prepare for Your First TCG Tournament Australia](/blog/how-to-prepare-first-tcg-tournament-australia)

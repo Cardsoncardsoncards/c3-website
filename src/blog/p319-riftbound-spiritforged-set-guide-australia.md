@@ -73,5 +73,5 @@ Spiritforged is the set you cannot skip if you are playing Riftbound seriously. 
 ## What to Read Next
 
 - Browse Spiritforged cards and current AUD prices at [/cards/riftbound/sets/spiritforged](/cards/riftbound/sets/spiritforged)
-- Calculate booster box expected value before opening sealed at [/tools](/tools)
-- See current AU price movement on Riftbound cards at [/market](/market)
+- Calculate booster box expected value before opening sealed at [C3 tools](/tools)
+- See current AU price movement on Riftbound cards at [C3 Market Insights](/market)

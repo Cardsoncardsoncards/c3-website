@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-MTG cards come in Common, Uncommon, Rare, and Mythic Rare as the four core rarities, indicated by a symbol in the bottom right corner of every card. Beyond these, the Scarlet and Violet era introduced special treatment versions including Borderless, Full Art, Extended Art, and Serialised cards that sit at the collector premium end of the market. Rarity alone does not determine value in MTG: format legality and demand are the primary drivers. Check current AUD prices at [/cards/mtg](/cards/mtg).
+MTG cards come in Common, Uncommon, Rare, and Mythic Rare as the four core rarities, indicated by a symbol in the bottom right corner of every card. Beyond these, the Scarlet and Violet era introduced special treatment versions including Borderless, Full Art, Extended Art, and Serialised cards that sit at the collector premium end of the market. Rarity alone does not determine value in MTG: format legality and demand are the primary drivers. Check current AUD prices at [C3 MTG card prices](/cards/mtg).
 
 ## The Four Core Rarities
 
@@ -60,18 +60,18 @@ The two things that actually drive MTG card value in Australia are:
 
 When a new MTG set releases, use this mental model before buying anything:
 
-Check all Mythic Rares against current prices at [/cards/mtg](/cards/mtg). Identify which ones are seeing competitive play. These are the cards most likely to hold value or increase in the weeks after release as decks form around them.
+Check all Mythic Rares against current prices at [C3 MTG card prices](/cards/mtg). Identify which ones are seeing competitive play. These are the cards most likely to hold value or increase in the weeks after release as decks form around them.
 
-Check [/tools](/tools) to calculate box EV before opening sealed product. If the total expected value of opening a box is well below the purchase price, buy singles instead.
+Check [C3 tools](/tools) to calculate box EV before opening sealed product. If the total expected value of opening a box is well below the purchase price, buy singles instead.
 
 The [MTG Colour Identity quiz at /quizzes/mtg-colour](/quizzes/mtg-colour) helps new players find their MTG identity before they start building a collection in a specific direction.
 
 ## The C3 Take
 
-MTG's rarity system is a tool for understanding pull rates, not a proxy for value. The player who understands format demand will always make better purchasing decisions than the player who equates Mythic Rare with worth collecting. Conversely, some of the most undervalued cards in the secondary market are Uncommons and Rares that see heavy Legacy or Commander play but are overlooked by new collectors because they are not Mythic. Use [/cards/mtg](/cards/mtg) to check actual prices before making any purchasing decision based on rarity alone.
+MTG's rarity system is a tool for understanding pull rates, not a proxy for value. The player who understands format demand will always make better purchasing decisions than the player who equates Mythic Rare with worth collecting. Conversely, some of the most undervalued cards in the secondary market are Uncommons and Rares that see heavy Legacy or Commander play but are overlooked by new collectors because they are not Mythic. Use [C3 MTG card prices](/cards/mtg) to check actual prices before making any purchasing decision based on rarity alone.
 
 ## What to Read Next
 
-- Check current MTG prices across all rarities at [/cards/mtg](/cards/mtg)
-- Calculate box EV before opening at [/tools](/tools)
-- Read about the most valuable MTG cards in Australia at [/blog/most-valuable-mtg-cards-australia-2026](/blog/p333-most-valuable-mtg-cards-australia-2026)
+- Check current MTG prices across all rarities at [C3 MTG card prices](/cards/mtg)
+- Calculate box EV before opening at [C3 tools](/tools)
+- Read about the most valuable MTG cards in Australia at [/blog/most-valuable-mtg-cards-australia-2026](/blog/most-valuable-mtg-cards-australia-2026)

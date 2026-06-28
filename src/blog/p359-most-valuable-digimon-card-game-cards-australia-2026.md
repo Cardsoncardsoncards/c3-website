@@ -40,7 +40,7 @@ The Digimon Card Game's competitive meta rewards specific evolution lines and Ta
 
 **DigiXros and Digiburst cards** from the Applimonsters and later eras that enable powerful game mechanics across competitive archetypes have established pricing that tracks competitive viability.
 
-Check the current Australian Digimon competitive scene results and [/cards/digimon](/cards/digimon) for live pricing before purchasing any singles above AU$20.
+Check the current Australian Digimon competitive scene results and [C3 Digimon card prices](/cards/digimon) for live pricing before purchasing any singles above AU$20.
 
 ## Tournament Promos and Event-Exclusive Cards
 
@@ -66,10 +66,10 @@ Bandai Japan prints Digimon Card Game sets in larger volumes than some other TCG
 
 ## The C3 Take
 
-The Digimon Card Game secondary market in Australia is one of the more collector-friendly in the TCG space. Premium card prices are meaningful without reaching the extremes of Pokemon's SIR market. If you collect Digimon for the nostalgia, focus on Secret Rare versions of your favourite Digimon from the anime arc you grew up with. If you play competitively, buy the competitive singles you need from [/cards/digimon](/cards/digimon) and eBay AU rather than opening product to find them. The two goals are compatible but the purchasing approach is different.
+The Digimon Card Game secondary market in Australia is one of the more collector-friendly in the TCG space. Premium card prices are meaningful without reaching the extremes of Pokemon's SIR market. If you collect Digimon for the nostalgia, focus on Secret Rare versions of your favourite Digimon from the anime arc you grew up with. If you play competitively, buy the competitive singles you need from [C3 Digimon card prices](/cards/digimon) and eBay AU rather than opening product to find them. The two goals are compatible but the purchasing approach is different.
 
 ## What to Read Next
 
-- Browse current Digimon singles prices at [/cards/digimon](/cards/digimon)
-- Read the Digimon beginners guide at [/blog/digimon-card-game-australia-beginners-guide](/blog/p273-digimon-card-game-australia-beginners-guide)
+- Browse current Digimon singles prices at [C3 Digimon card prices](/cards/digimon)
+- Read the Digimon beginners guide at [/blog/digimon-card-game-australia-beginners-guide](/blog/digimon-card-game-australia-beginners-guide)
 - Compare your TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)

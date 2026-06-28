@@ -124,10 +124,10 @@ No. Mystical Archive cards are legal in Legacy, Vintage, and Commander but not i
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
 - [MTG Secrets of Strixhaven: Full Pre-Order Guide Australia](/blog/mtg-secrets-of-strixhaven-australia)
 - [Best MTG Booster Boxes to Buy in Australia Right Now](/blog/best-mtg-booster-boxes-australia)
-- [Are MTG Booster Boxes Worth Buying in Australia?](/blog/are-mtg-booster-boxes-worth-it-australia)
+- [Are MTG Booster Boxes Worth Buying in Australia?](/blog/should-i-open-mtg-booster-box-or-sell-it-sealed-australia)

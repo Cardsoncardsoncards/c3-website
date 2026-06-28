@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Lorcana competitive play in Australia has grown significantly from its 2023 launch. If you've been playing casually and wondering whether to step into the tournament scene, this guide covers what to expect in 2026. See current prices at [/cards/lorcana](/cards/lorcana).
+Lorcana competitive play in Australia has grown significantly from its 2023 launch. If you've been playing casually and wondering whether to step into the tournament scene, this guide covers what to expect in 2026. See current prices at [C3 Lorcana card prices](/cards/lorcana).
 
 
 
@@ -63,11 +63,11 @@ Browse current Lorcana product at the [C3 shop](/shop). Check Lorcana card price
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/lorcana](/cards/lorcana) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Lorcana card prices](/cards/lorcana) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Lorcana card prices at [/cards/lorcana](/cards/lorcana)
+- Browse Lorcana card prices at [C3 Lorcana card prices](/cards/lorcana)
 - Find your Lorcana character at [/quizzes/lorcana-character](/quizzes/lorcana-character)
 - Compare TCG options at [/quizzes/which-tcg](/quizzes/which-tcg)
 

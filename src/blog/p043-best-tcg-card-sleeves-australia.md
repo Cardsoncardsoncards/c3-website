@@ -109,11 +109,11 @@ For tournament play, all sleeves in your deck must be in matching, undamaged con
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/mtg](/cards/mtg) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 MTG card prices](/cards/mtg) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- [Dragon Shield vs Ultra Pro Sleeves: Which Is Better?](/blog/dragon-shield-vs-ultra-pro)
+- [Dragon Shield vs Ultra Pro Sleeves: Which Is Better?](/blog/best-tcg-card-sleeves-australia)
 - [How to Store and Protect Your MTG Collection in Australia](/blog/how-to-store-mtg-cards-australia)
 - [Best TCG Booster Boxes to Buy in Australia Right Now](/blog/best-tcg-booster-boxes-australia)
 

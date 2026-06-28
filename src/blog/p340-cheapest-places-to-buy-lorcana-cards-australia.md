@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For Lorcana singles in Australia, eBay AU and local game stores with active Lorcana stock are consistently the most competitive. For sealed product, major retailers like Big W, Target, and Amazon AU often undercut specialist hobby stores, particularly on starter decks and standard booster boxes. Always benchmark against [/cards/lorcana](/cards/lorcana) before buying anywhere.
+For Lorcana singles in Australia, eBay AU and local game stores with active Lorcana stock are consistently the most competitive. For sealed product, major retailers like Big W, Target, and Amazon AU often undercut specialist hobby stores, particularly on starter decks and standard booster boxes. Always benchmark against [C3 Lorcana card prices](/cards/lorcana) before buying anywhere.
 
 ## Where to Buy Lorcana Singles Cheapest
 
@@ -65,10 +65,10 @@ Building a full Lorcana collection or assembling multiple competitive decks ofte
 
 ## The C3 Take
 
-Lorcana in Australia is well-distributed through both mass market and specialist channels, which means competitive pricing is available if you know where to look. For sealed product, the difference between the cheapest channel (Big W on sale) and the most expensive (specialist store at RRP) can be 20 to 30% on the same product. For singles, eBay is the most reliable pricing benchmark and the C3 shop provides a trustworthy Australian alternative. The most important step before any purchase above AU$20 is checking [/cards/lorcana](/cards/lorcana) for the current market price. That one habit will save you money consistently.
+Lorcana in Australia is well-distributed through both mass market and specialist channels, which means competitive pricing is available if you know where to look. For sealed product, the difference between the cheapest channel (Big W on sale) and the most expensive (specialist store at RRP) can be 20 to 30% on the same product. For singles, eBay is the most reliable pricing benchmark and the C3 shop provides a trustworthy Australian alternative. The most important step before any purchase above AU$20 is checking [C3 Lorcana card prices](/cards/lorcana) for the current market price. That one habit will save you money consistently.
 
 ## What to Read Next
 
-- Check current Lorcana singles prices at [/cards/lorcana](/cards/lorcana)
-- Calculate Lorcana box EV at [/tools](/tools)
-- Read the Lorcana beginners guide at [/blog/what-is-disney-lorcana-australia](/blog/p025-what-is-disney-lorcana-australia)
+- Check current Lorcana singles prices at [C3 Lorcana card prices](/cards/lorcana)
+- Calculate Lorcana box EV at [C3 tools](/tools)
+- Read the Lorcana beginners guide at [/blog/what-is-disney-lorcana-australia](/blog/what-is-disney-lorcana-australia)

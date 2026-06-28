@@ -54,17 +54,17 @@ For high-value singles, photograph front and back under good lighting with a dat
 A well-photographed and documented collection also sells more easily and at better prices than an undocumented one. Buyers pay more when condition is clearly evidenced. Use the [C3 Tracker at /tracker](/tracker) alongside your photo documentation.
 
 
-For collections that span multiple games, document each game separately. A single spreadsheet with tabs for MTG, Pokemon, Lorcana, and other games is more manageable than a single mixed list, and allows game-specific valuation updates when you check prices at [/cards/mtg](/cards/mtg) or [/cards/pokemon](/cards/pokemon) without updating the full document. The [C3 Tracker at /tracker](/tracker) is structured this way, covering multiple games in a single document with separate tabs per game.
+For collections that span multiple games, document each game separately. A single spreadsheet with tabs for MTG, Pokemon, Lorcana, and other games is more manageable than a single mixed list, and allows game-specific valuation updates when you check prices at [C3 MTG card prices](/cards/mtg) or [C3 Pokemon card prices](/cards/pokemon) without updating the full document. The [C3 Tracker at /tracker](/tracker) is structured this way, covering multiple games in a single document with separate tabs per game.
 
 
 
-For help finding the current market value of any individual card before your documentation, use [/cards/mtg](/cards/mtg), [/cards/pokemon](/cards/pokemon), or the relevant game hub. Current AUD prices from eBay AU sold data are the most accurate basis for any insurance or resale valuation.
+For help finding the current market value of any individual card before your documentation, use [C3 MTG card prices](/cards/mtg), [C3 Pokemon card prices](/cards/pokemon), or the relevant game hub. Current AUD prices from eBay AU sold data are the most accurate basis for any insurance or resale valuation.
 ## The C3 Take
 
 Most Australian TCG collectors with collections worth AU$500 to AU$5,000 are underinsured. A five-minute call to your contents insurer to confirm collectibles coverage and declare your most valuable items costs nothing. The [C3 Tracker at /tracker](/tracker) gives you the documentation foundation. The insurance call uses it.
 
 ## What to Read Next
 
-- Track your collection value at [/tracker](/tracker)
-- Check card prices for valuation at [/cards/mtg](/cards/mtg)
-- See price trends at [/market](/market)
+- Track your collection value at [C3 Collection Tracker](/tracker)
+- Check card prices for valuation at [C3 MTG card prices](/cards/mtg)
+- See price trends at [C3 Market Insights](/market)

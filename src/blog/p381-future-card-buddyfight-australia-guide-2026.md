@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-Future Card Buddyfight is a discontinued TCG from Bushiroad that ended new set production in 2020. In Australia, it exists as a legacy collector and casual play game. The most valuable cards are secret rare parallels and promo versions of iconic Buddy Monsters and Legend Rares from popular worlds. Check [/cards/buddyfight](/cards/buddyfight) for current AUD prices.
+Future Card Buddyfight is a discontinued TCG from Bushiroad that ended new set production in 2020. In Australia, it exists as a legacy collector and casual play game. The most valuable cards are secret rare parallels and promo versions of iconic Buddy Monsters and Legend Rares from popular worlds. Check [C3 Buddyfight card prices](/cards/buddyfight) for current AUD prices.
 
 ## What Is Future Card Buddyfight?
 
@@ -32,7 +32,7 @@ Bushiroad ended new Buddyfight set production in 2020, which stopped the game's 
 
 **Promo cards from championships and events** that ran during the game's active years have genuine scarcity and collector demand among Buddyfight enthusiasts.
 
-The Buddyfight secondary market in Australia runs through eBay AU and specialist card stores. Search [eBay AU Buddyfight singles](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dbuddyfight+card+game+singles&_sacat=183454) for current Australian prices. Check [/cards/buddyfight](/cards/buddyfight) for aggregated AUD pricing.
+The Buddyfight secondary market in Australia runs through eBay AU and specialist card stores. Search [eBay AU Buddyfight singles](https://rover.ebay.com/rover/1/705-53470-19255-0/1?campid=5339146789&toolid=10001&mpre=https%3A%2F%2Fwww.ebay.com.au%2Fsch%2Fi.html%3F_nkw%3Dbuddyfight+card+game+singles&_sacat=183454) for current Australian prices. Check [C3 Buddyfight card prices](/cards/buddyfight) for aggregated AUD pricing.
 
 ## Is Buddyfight Worth Starting in Australia in 2026?
 
@@ -67,6 +67,6 @@ Buddyfight is a game with genuine nostalgia value and a loyal Australian communi
 
 ## What to Read Next
 
-- Check current Buddyfight card prices at [/cards/buddyfight](/cards/buddyfight)
+- Check current Buddyfight card prices at [C3 Buddyfight card prices](/cards/buddyfight)
 - Compare your active TCG options at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Read the Buddyfight beginners guide at [/blog/buddyfight-tcg-beginners-guide-australia](/blog/p271-buddyfight-tcg-beginners-guide-australia)
+- Read the Buddyfight beginners guide at [/blog/buddyfight-tcg-beginners-guide-australia](/blog/buddyfight-tcg-beginners-guide-australia)

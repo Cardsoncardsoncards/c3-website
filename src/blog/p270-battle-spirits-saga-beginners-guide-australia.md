@@ -51,6 +51,6 @@ If you are the type who finds conventional mana systems boring and wants somethi
 
 ## What to Read Next
 
-- Browse Battle Spirits Saga cards at [/cards/battlespiritssaga](/cards/battlespiritssaga)
+- Browse Battle Spirits Saga cards at [C3 Battle Spirits Saga card prices](/cards/battlespiritssaga)
 - See how it stacks up against every other TCG at [/quizzes/which-tcg-extended](/quizzes/which-tcg-extended)
-- Check upcoming releases at [/calendar](/market)
+- Check upcoming releases at [/calendar](/calendar)

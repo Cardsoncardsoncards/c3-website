@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-For Dragon Ball Super TCG Starter Decks, major retailers and Amazon AU offer RRP or competitive pricing. For singles, eBay AU and specialist card stores are the most price-competitive. Japanese-language product is a viable option for Australian DBS TCG players and can offer competitive pricing on some cards. Always benchmark against [/cards/dragonball](/cards/dragonball) before purchasing.
+For Dragon Ball Super TCG Starter Decks, major retailers and Amazon AU offer RRP or competitive pricing. For singles, eBay AU and specialist card stores are the most price-competitive. Japanese-language product is a viable option for Australian DBS TCG players and can offer competitive pricing on some cards. Always benchmark against [C3 Dragon Ball card prices](/cards/dragonball) before purchasing.
 
 ## Starter Decks: Start Here
 
@@ -32,7 +32,7 @@ DBS TCG Starter Decks at AU$20 to AU$30 are among the best entry-point products 
 
 **Local game stores with active DBS communities** carry singles from current Fusion World sets. Stores that run DBS events tend to have the best selection and most competitive prices.
 
-**The C3 shop at [/shop](/shop)** and [/cards/dragonball](/cards/dragonball) provide Australian singles access and pricing benchmarks.
+**The C3 shop at [/shop](/shop)** and [C3 Dragon Ball card prices](/cards/dragonball) provide Australian singles access and pricing benchmarks.
 
 **Japanese importers and specialist stores** are worth checking for Japanese-language DBS cards. Some products and promotional versions are Japanese-exclusive or significantly cheaper in Japanese.
 
@@ -71,6 +71,6 @@ DBS TCG has a genuinely cost-effective competitive entry in Australia through it
 
 ## What to Read Next
 
-- Check current Dragon Ball singles prices at [/cards/dragonball](/cards/dragonball)
-- Read about DBS TCG singles vs sealed at [/blog/dragon-ball-super-tcg-singles-vs-sealed-australia](/blog/p351-dragon-ball-super-tcg-singles-vs-sealed-australia)
+- Check current Dragon Ball singles prices at [C3 Dragon Ball card prices](/cards/dragonball)
+- Read about DBS TCG singles vs sealed at [/blog/dragon-ball-super-tcg-singles-vs-sealed-australia](/blog/dragon-ball-super-tcg-singles-vs-sealed-australia)
 - Find your Dragon Ball warrior at [/quizzes/dragonball-warrior](/quizzes/dragonball-warrior)

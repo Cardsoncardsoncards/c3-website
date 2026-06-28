@@ -52,6 +52,6 @@ For collectors who follow specific talents, buying high-rarity cards featuring t
 
 ## What to Read Next
 
-- Browse Hololive TCG cards at [/cards/hololive](/cards/hololive)
+- Browse Hololive TCG cards at [C3 Hololive card prices](/cards/hololive)
 - Read the beginner's guide at [/blog/hololive-tcg-beginners-guide-australia](/blog/hololive-tcg-beginners-guide-australia)
 - Compare values at [/compare](/compare)

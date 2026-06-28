@@ -10,7 +10,7 @@ affiliate_disclaimer: true
 layout: post
 ---## Quick Answer
 
-Australia is getting a second Riftbound event in 2026. Following RQ Sydney in May, Riftbound returns to Australia with a Melbourne event running October 10-12, 2026. Here is everything confirmed and what Australian players should know now. See current prices at [/cards/riftbound](/cards/riftbound).
+Australia is getting a second Riftbound event in 2026. Following RQ Sydney in May, Riftbound returns to Australia with a Melbourne event running October 10-12, 2026. Here is everything confirmed and what Australian players should know now. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
@@ -56,7 +56,7 @@ Three things worth actioning before Melbourne:
 
 **Hold Ahri-related singles if you have them.** If Ahri, Alluring card art involves the traditional Ahri aesthetic, the cross-appeal to LoL fans who want her specifically will drive demand for this promo beyond the competitive player base.
 
-We will publish a full Melbourne preparation guide as more event details are confirmed. Subscribe at [/tracker](/tracker) to get it when it goes live.
+We will publish a full Melbourne preparation guide as more event details are confirmed. Subscribe at [C3 Collection Tracker](/tracker) to get it when it goes live.
 
 ---
 
@@ -67,13 +67,13 @@ Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks 
 
 ## The C3 Take
 
-The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [/cards/riftbound](/cards/riftbound) to make price-informed decisions every time.
+The decisions you make with your TCG collection matter more than most guides suggest. Whether you are buying, selling, or holding, the difference between a good outcome and a poor one almost always comes down to checking current AUD prices before you act. Use the live data at [C3 Riftbound card prices](/cards/riftbound) to make price-informed decisions every time.
 
 ## What to Read Next
 
-- Browse Riftbound card prices at [/cards/riftbound](/cards/riftbound)
+- Browse Riftbound card prices at [C3 Riftbound card prices](/cards/riftbound)
 - Find your Riftbound champion at [/quizzes/riftbound-champion](/quizzes/riftbound-champion)
-- Calculate booster box expected value at [/tools](/tools)
+- Calculate booster box expected value at [C3 tools](/tools)
 
 ## Frequently Asked Questions
 
