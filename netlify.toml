@@ -112,6 +112,13 @@
   status = 301
   force = true
 
+# ── Legacy pNNN blog URLs (Google-cached) -> current slug-only URLs ──
+[[redirects]]
+  from = "/blog/p:num-:slug"
+  to = "/blog/:slug"
+  status = 301
+  force = true
+
 # ── Scheduled function: daily sales history sync at 3am AEST (17:00 UTC) ──
 [functions."sync-sales-history"]
   schedule = "0 17 * * *"

@@ -191,6 +191,7 @@ export default async (req) => {
   <title>${esc(card.name)} Price Australia | ${esc(card.set_name||'Union Arena')} | Cards on Cards on Cards</title>
   <meta name="description" content="${esc(card.name)} from ${esc(card.set_name||'Union Arena')}. ${priceDisplay} AUD. Buy on eBay AU. Australia's Union Arena price guide.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/unionarena/${esc(slug)}">
+  ${(!priceAud || priceAud < 1.00) ? '<meta name="robots" content="noindex, follow">' : ''}
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="${esc(card.name)} | Union Arena | Cards on Cards on Cards">
   <meta property="og:description" content="${esc(card.name)} - ${priceDisplay} AUD. Buy on eBay AU.">

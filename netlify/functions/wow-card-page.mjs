@@ -208,6 +208,8 @@ export default async (req) => {
     const cards = await supabaseGet(`wow_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`);
     if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
     const card = cards[0];
+    const _setRows = card.set_id ? await supabaseGet(`wow_sets?id=eq.${card.set_id}&limit=1&select=slug`).catch(() => []) : [];
+    const setUrl = (Array.isArray(_setRows) && _setRows[0] && _setRows[0].slug) ? `/cards/wow/sets/${_setRows[0].slug}` : `/cards/wow`;
 
     const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.45 : null);
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/wow/${card.slug}`);
@@ -273,6 +275,7 @@ export default async (req) => {
   <meta name="description" content="${card.name} World of Warcraft TCG card${priceAud ? ` -- ~AU$${priceAud.toFixed(2)}` : ''}. ${card.rarity ? `${card.rarity}. ` : ''}View price and buy on eBay AU.">
   <meta property="og:site_name" content="Cards on Cards on Cards">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/wow/${card.slug}">
+  ${(!priceAud || priceAud < 1.00) ? '<meta name="robots" content="noindex, follow">' : ''}
   <link rel="icon" type="image/png" href="/c3logo.png">
   ${card.image_url ? `<meta property="og:image" content="${card.image_url}">` : ''}
   <meta property="og:title" content="${card.name} | World of Warcraft TCG Price AU">
@@ -311,7 +314,7 @@ export default async (req) => {
   <div class="card-details">
     <div style="font-size:12px;color:var(--text2);margin-bottom:8px">
       <a href="/cards/wow" style="color:var(--text2);text-decoration:none">World of Warcraft TCG</a>
-      ${card.set_name ? ` → <a href="/cards/wow/sets/${encodeURIComponent(card.set_id||'')}" style="color:var(--text2);text-decoration:none">${card.set_name}</a>` : ''}
+      ${card.set_name ? ` → <a href="${setUrl}" style="color:var(--text2);text-decoration:none">${card.set_name}</a>` : ''}
     </div>
     <h1>${card.name}</h1>
     ${card.rarity ? `<div style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#E8C97A;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;margin-bottom:8px;text-transform:uppercase">${card.rarity}</div>` : ''}

@@ -364,6 +364,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   <title>${card.name} Price Australia | ${card.set_name} | Cards on Cards on Cards</title>
   <meta name="description" content="${card.name} is ${priceAud ? `currently ${formatAUD(priceAud)} AUD` : 'available'}. View price history, all printings, format legality, and buy on eBay AU. Australia's MTG price guide.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/${card.slug}">
+  ${(!priceAud || priceAud < 1.00) ? '<meta name="robots" content="noindex, follow">' : ''}
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="${card.name} Price Australia | Cards on Cards on Cards">
   <meta property="og:description" content="${priceAud ? `${card.name} -- ${formatAUD(priceAud)} AUD. ` : ''}MTG card price guide for Australia.">

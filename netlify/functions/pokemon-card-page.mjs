@@ -484,6 +484,7 @@ export default async (req) => {
   <title>${card.name} Price Australia | ${card.set_name} | Cards on Cards on Cards</title>
   <meta name="description" content="${card.name}${card.rarity ? ` (${card.rarity})` : ''} from ${card.set_name}${priceAud ? ` is currently ~AU$${priceAud.toFixed(2)}` : ''}. View price, set details, and buy on eBay AU. Australia's Pokemon card price guide.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/pokemon/${card.slug}">
+  ${(!priceAud || priceAud < 1.00) ? '<meta name="robots" content="noindex, follow">' : ''}
   <meta property="og:title" content="${card.name} | ${card.set_name} | Pokemon Price AU">
   <meta property="og:description" content="${priceAud ? `~AU$${priceAud.toFixed(2)} -- ` : ''}${card.name} from ${card.set_name}. ${card.rarity || ''} Pokemon card.">
   ${card.image_url ? `<meta property="og:image" content="${card.image_url}">` : ''}
