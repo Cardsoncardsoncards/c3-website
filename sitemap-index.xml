@@ -106,4 +106,7 @@
   <sitemap>
     <loc>https://cardsoncardsoncards.com.au/api/sitemap-dbsfusionworld</loc>
   </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-buddyfight</loc>
+  </sitemap>
 </sitemapindex>
