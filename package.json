@@ -4,7 +4,7 @@
   "description": "Cards on Cards on Cards - Eleventy blog",
   "scripts": {
     "start": "eleventy --serve",
-    "build": "node scripts/generate-sitemap-cards.mjs && eleventy",
+    "build": "node scripts/generate-sitemap-cards.mjs && eleventy && node scripts/generate-blog-sitemap.js",
     "build:fast": "eleventy"
   },
   "devDependencies": {
