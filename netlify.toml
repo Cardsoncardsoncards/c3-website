@@ -114,8 +114,69 @@
 
 # ── Legacy pNNN blog URLs (Google-cached) -> current slug-only URLs ──
 [[redirects]]
-  from = "/blog/p:num-:slug"
-  to = "/blog/:slug"
+  from = "/blog/p273-digimon-card-game-australia-beginners-guide"
+  to = "/blog/digimon-card-game-australia-beginners-guide"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/p312-warhammer-tcg-beginners-guide-australia"
+  to = "/blog/warhammer-tcg-beginners-guide-australia"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/p150-riftbound-rq-sydney-2026-guide"
+  to = "/blog/riftbound-rq-sydney-2026-guide"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/p248b-rq-sydney-card-spikes"
+  to = "/blog"
+  status = 301
+  force = true
+
+# ── Deleted/renamed blog posts -> closest current page ──
+[[redirects]]
+  from = "/blog/best-star-wars-unlimited-booster-boxes-australia/"
+  to = "/blog/star-wars-unlimited-booster-boxes-australia/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/is-star-wars-unlimited-worth-it-australia/"
+  to = "/blog/star-wars-unlimited-beginners-guide-australia/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/buylist-vs-ebay-australia/"
+  to = "/blog/buylist-vs-ebay-australia-mtg-cards/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/best-card-binders-australia/"
+  to = "/blog/best-tcg-binders-australia/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/are-mtg-booster-boxes-worth-it-australia/"
+  to = "/blog/should-i-open-mtg-booster-box-or-sell-it-sealed-australia/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/best-mtg-commander-decks-australia/"
+  to = "/blog/mtg-commander-decks-australia/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/first-pixar-characters-lorcana-wilds-unknown-collectors"
+  to = "/blog/first-pixar-lorcana-wilds-unknown-collectors/"
   status = 301
   force = true
 
