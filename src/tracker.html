@@ -409,7 +409,7 @@ footer a:hover{color:var(--white)}
     const displayPrice = priceAud > 0 ? 'AU$' + priceAud.toFixed(2) : '';
     return '<a href="/cards/' + cfg.slug + '/' + card.slug + '" class="c-card" style="border-color:rgba(255,255,255,.07)" onmouseover="this.style.borderColor=\'' + cfg.accent + '\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,.07)\'">'
       + (img
-        ? '<img src="' + img + '" alt="' + (card.name||'').replace(/"/g,'') + '" loading="lazy">'
+        ? '<img src="' + img + '" alt="' + (card.name||'').replace(/"/g,'') + '" loading="lazy" onerror="c3ImgFail(this,\'' + cfg.icon + '\')">'
         : '<div class="c-card-placeholder">' + cfg.icon + '</div>')
       + '<div class="c-card-name">' + (card.name||'') + '</div>'
       + '<div class="c-card-price" style="color:' + cfg.accent + '">' + displayPrice + '</div>'
@@ -425,6 +425,16 @@ footer a:hover{color:var(--white)}
     const duration = Math.max(30, cards.length * 3);
     el.style.animationDuration = duration + 's';
   }
+
+  // Swap any broken card image (e.g. a tcgplayer image that 404s) for the game icon
+  // placeholder instead of showing a broken-image box.
+  window.c3ImgFail = function(el, icon) {
+    el.onerror = null;
+    var d = document.createElement('div');
+    d.className = 'c-card-placeholder';
+    d.innerHTML = icon;
+    if (el.parentNode) el.parentNode.replaceChild(d, el);
+  };
 
   CONFIGS.forEach(function(cfg) {
     fetch('/api/random-card?game=' + cfg.game + '&limit=16&sort=price&min_price=10')

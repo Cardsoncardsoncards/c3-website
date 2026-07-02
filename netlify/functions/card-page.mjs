@@ -744,7 +744,7 @@ ${contextPara}
   </div><!-- end .card-info -->
 </div><!-- end .card-layout -->
 
-<!-- Printings carousel -- full width below both columns -->
+<!-- Printings carousel (full width below both columns) -->
 ${otherPrintings && otherPrintings.length > 1 ? `
 <div class="printings-outer">
   <div class="printings-carousel-wrap">

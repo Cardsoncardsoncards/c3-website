@@ -88,7 +88,7 @@ export default async (req) => {
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- C3 Static Pages, Hub Pages, Tools, Quizzes -- all 27 TCGs -->
+  <!-- C3 Static Pages, Hub Pages, Tools, Quizzes (27 TCGs) -->
   <!-- Generated: ${new Date().toISOString()} -->
   <!-- Total: ${STATIC_PAGES.length} pages -->
 ${staticUrls}

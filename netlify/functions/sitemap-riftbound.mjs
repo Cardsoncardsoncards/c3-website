@@ -51,7 +51,6 @@ export default async (req) => {
   const headers = {
     'Content-Type': 'application/xml; charset=utf-8',
     'Cache-Control': 'public, max-age=86400',
-    'X-Robots-Tag': 'noindex'
   };
 
   const empty = (msg) => new Response(
