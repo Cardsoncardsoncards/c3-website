@@ -141,6 +141,7 @@ export default async (req) => {
     if (minPrice > 0) priceFilter = `&price_aud=gte.${minPrice}`;
     else if (usePrice) priceFilter = '&price_aud=gt.0';
   } else {
+    // TODO: replace with live FX rate once price_aud DB coverage confirmed
     if (minPrice > 0) priceFilter = `&market_price=gte.${(minPrice / 1.45).toFixed(2)}`;
     else if (usePrice) priceFilter = '&market_price=gt.0';
   }

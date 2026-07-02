@@ -87,7 +87,14 @@ export default async (req) => {
         const lastmod = c.updated_at ? c.updated_at.slice(0, 10) : today;
         const price = parseFloat(c.price_usd) || 0;
         const priority = price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7';
-        return `  <url>\n    <loc>${SITE_URL}/cards/mtg/${c.slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+        return [
+          `  <url>`,
+          `    <loc>${SITE_URL}/cards/mtg/${c.slug}</loc>`,
+          `    <lastmod>${lastmod}</lastmod>`,
+          `    <changefreq>daily</changefreq>`,
+          `    <priority>${priority}</priority>`,
+          `  </url>`,
+        ].join('\n');
       })
       .join('\n');
 

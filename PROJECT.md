@@ -107,6 +107,7 @@ Before any build or traffic advice, confirm:
 - GSC average position: 13.5 (page 2 for most queries). Moving to page 1 is primary organic lever.
 - Blog sitemap: SUCCESS confirmed same day (28 June). 500 posts indexed.
 - All 28 game card sitemaps: pending Google crawl as of 28 June. Total indexable card pages: ~96,500.
+- Sitemap XML whitespace fixed 2 July 2026 (yugioh, cards, starwars, dragonball map() returns normalised to array-join).
 
 ---
 
@@ -573,6 +574,8 @@ Approach local game stores once traffic is sufficient. Paid placement for their 
 ---
 
 ## UPCOMING CONTENT DEADLINE
+
+Blog posts p494-p515 done. Next sequential post: p516.
 
 YGO Oceanic WCQ recap post (p516): due within 48 hours of 12 July 2026 event ending.
 
