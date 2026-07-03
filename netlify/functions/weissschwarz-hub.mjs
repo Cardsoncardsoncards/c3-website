@@ -63,15 +63,12 @@ function isNew(releaseDateStr) {
   return releaseDateStr >= cutoff;
 }
 
-function buildAZButtons(sets) {
-  const letters = new Set();
-  sets.forEach(s => {
-    const ch = (s.name || '').trim()[0];
-    if (ch) letters.add(/[A-Z]/.test(ch.toUpperCase()) ? ch.toUpperCase() : '0-9');
-  });
-  return ['All', '0-9', ...[...letters].filter(l => l !== '0-9').sort()]
-    .map(l => `<button class="az-btn${l === 'All' ? ' az-btn--active' : ''}" onclick="filterAZ('${l}',this)">${l}</button>`)
-    .join('');
+function propLabel(slug) {
+  return String(slug || '')
+    .split('-')
+    .map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : '')
+    .join(' ')
+    .trim();
 }
 
 function sharedCSS() {
@@ -157,7 +154,7 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
   const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
-    supabaseGet('weissschwarz_sets?order=release_date.desc&limit=300&select=id,name,slug,release_date,card_count'),
+    supabaseGet('weissschwarz_sets?order=release_date.desc&limit=300&select=id,name,slug,release_date,card_count,property'),
     supabaseGet('weissschwarz_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
     supabaseGet('weissschwarz_cards?order=price_change_7d.desc&price_change_7d=gt.5&market_price=gt.1&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name'),
     supabaseGet('weissschwarz_cards?order=price_change_7d.asc&price_change_7d=lt.-5&market_price=gt.1&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name')
@@ -174,7 +171,6 @@ export default async (req) => {
   const lastUpdated = topCards.length && topCards[0].updated_at ? topCards[0].updated_at.slice(0,10) : null;
   const syncLabel   = lastUpdated ? `Prices updated ${lastUpdated}` : 'Prices updated daily';
   const tickerHTML  = buildTickerHTML(CALENDAR_EVENTS);
-  const azButtons   = buildAZButtons(sets);
 
   function carouselCard(c, suffix) {
     const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.45).toFixed(0)}` : '';
@@ -195,14 +191,27 @@ export default async (req) => {
   const loserHTML  = losers.map(c => moverCard(c, false)).join('');
   const hasMovers  = gainers.length > 0 || losers.length > 0;
 
-  const setListHTML = sets.length ? sets.map(s => {
-    const name      = s.name || '';
-    const ch        = name.trim()[0] ? name.trim()[0].toUpperCase() : '';
-    const letterKey = /[A-Z]/.test(ch) ? ch : '0-9';
-    const year      = s.release_date ? s.release_date.slice(0,4) : '';
-    const newBadge  = isNew(s.release_date) ? '<span class="new-badge">NEW</span>' : '';
-    return `<a href="/cards/weissschwarz/sets/${encodeURIComponent(s.slug||s.id)}" class="set-tile" data-name="${esc(name.toLowerCase())}" data-letter="${letterKey}"><span class="set-tile-name">${esc(name)}${newBadge}</span><span class="set-tile-meta">${year}${s.card_count?' &middot; '+s.card_count+' cards':''}</span></a>`;
-  }).join('') : '<div class="sync-msg">Sets loading -- check back after tonight\'s sync.</div>';
+  const PROP_EXCLUDE = new Set(['promo']);
+  const propGroups = {};
+  for (const s of sets) {
+    const p = s.property;
+    if (!p || PROP_EXCLUDE.has(p)) continue;
+    if (!propGroups[p]) propGroups[p] = { slug: p, count: 0, cards: 0, latest: '' };
+    const g = propGroups[p];
+    g.count += 1;
+    g.cards += parseInt(s.card_count, 10) || 0;
+    if (s.release_date && s.release_date > g.latest) g.latest = s.release_date;
+  }
+  const propList = Object.values(propGroups)
+    .map(g => ({ ...g, label: propLabel(g.slug) || g.slug }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+
+  const propGridHTML = propList.length ? propList.map(g => {
+    const year     = g.latest ? g.latest.slice(0, 4) : '';
+    const newBadge = isNew(g.latest) ? '<span class="new-badge">NEW</span>' : '';
+    const meta     = [`${g.count} set${g.count === 1 ? '' : 's'}`, g.cards ? `${g.cards} cards` : '', year ? `latest ${year}` : ''].filter(Boolean).join(' &middot; ');
+    return `<a href="/cards/weissschwarz/series/${encodeURIComponent(g.slug)}" class="guide-card"><div class="guide-title">${esc(g.label)}${newBadge}</div><div class="guide-desc">${meta}</div></a>`;
+  }).join('') : '<div class="sync-msg">Properties loading -- check back after tonight\'s sync.</div>';
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
@@ -274,13 +283,10 @@ ${hasMovers ? `<div style="margin-bottom:28px">
 
   <div class="section fade-up fade-up-3">
     <div style="text-align:center;margin-bottom:16px">
-      <h2 style="font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px">Browse Every Weiss Schwarz Set</h2>
-      <p style="font-size:13px;color:var(--text2)">${sets.length||'?'} sets. Pick a letter or search to explore.</p>
+      <h2 style="font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px">Browse by Licensed Property</h2>
+      <p style="font-size:13px;color:var(--text2)">${propList.length||'?'} licensed properties. Select one to browse its sets and cards.</p>
     </div>
-    <div class="az-row">${azButtons}</div>
-    <input type="text" id="set-search" placeholder="${esc(SET_PH)}" oninput="filterSets(this.value)" style="margin-bottom:12px">
-    <p id="set-prompt" style="color:var(--text2);font-size:13px;text-align:center;padding:20px 0">Select a letter or search above to browse sets</p>
-    <div id="set-list" class="set-grid" style="display:none">${setListHTML}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">${propGridHTML}</div>
   </div>
 
   <div style="margin-bottom:28px">
@@ -312,29 +318,6 @@ ${hasMovers ? `<div style="margin-bottom:28px">
   <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. USD prices converted to AUD at approximately 1.45.</p>
 </footer>
 
-<script>
-let activeAZ = null;
-function filterAZ(letter, btn) {
-  activeAZ = (letter === 'All') ? null : letter;
-  document.querySelectorAll('.az-btn').forEach(b => b.classList.remove('az-btn--active'));
-  if (btn) btn.classList.add('az-btn--active');
-  showSetList(); applyFilters();
-}
-function filterSets(q) { if (q && q.length > 0) showSetList(); applyFilters(q); }
-function showSetList() {
-  document.getElementById('set-list').style.display = 'grid';
-  const p = document.getElementById('set-prompt'); if (p) p.style.display = 'none';
-}
-function applyFilters(q) {
-  const search = q !== undefined ? q : (document.getElementById('set-search')||{}).value || '';
-  const lower = search.toLowerCase();
-  document.querySelectorAll('#set-list .set-tile').forEach(el => {
-    const nameMatch   = !lower || el.dataset.name.includes(lower);
-    const letterMatch = !activeAZ || el.dataset.letter === activeAZ;
-    el.style.display = (nameMatch && letterMatch) ? '' : 'none';
-  });
-}
-</script>
 <style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-box h3{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:#F0F2FF;margin-bottom:4px}.bug-box p{font-size:12px;color:#9ba3c4;margin-bottom:18px}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer;line-height:1;padding:4px}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none;transition:border-color .2s}.bug-form select:focus,.bug-form textarea:focus{border-color:rgba(201,168,76,.5)}.bug-form textarea{resize:vertical;min-height:80px;max-height:160px}.bug-form select option{background:#e8eaf0;color:#111420}.bug-form select{background:#e8eaf0;color:#111420}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}.bug-submit:hover{opacity:.85}.bug-submit:disabled{opacity:.5;cursor:not-allowed}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px;font-weight:600}</style>
 <div class="bug-float"><a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a></div>
 <div class="bug-modal" id="bugModal" onclick="if(event.target===this)this.classList.remove('open')">

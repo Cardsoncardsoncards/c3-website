@@ -561,6 +561,7 @@ Update homepage copy, meta tags, nav, legal page to reflect worldwide scope and 
 
 ### Step 5: Weiss Schwarz breakout
 Schema work, new hub functions per licensed property.
+WS breakout complete 3 July 2026: new weissschwarz-property-hub.mjs serves /cards/weissschwarz/series/:property (70 licensed property groups), weissschwarz-hub.mjs converted to a property directory index, sync-weissschwarz-background.mjs auto-assigns property on new sets via weissschwarz_property_map. Route namespaced under /series/ to avoid collision with card-page :slug+ (card-page excludedPath updated). Pending: global siteid=15 removal from eBay links (per strategic direction) still applies to WS hub and property hub.
 
 ### Step 6: Expansion games and accessories
 Add remaining tcgapi.dev games and accessory/supply categories.

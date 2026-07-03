@@ -415,4 +415,4 @@ document.addEventListener('click',function(e){
   }
 };
 
-export const config = { path: '/cards/weissschwarz/:slug+', excludedPath: '/cards/weissschwarz/sets/*' };
+export const config = { path: '/cards/weissschwarz/:slug+', excludedPath: ['/cards/weissschwarz/sets/*', '/cards/weissschwarz/series/*'] };

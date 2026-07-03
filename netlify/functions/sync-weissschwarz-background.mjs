@@ -180,6 +180,63 @@ export default async (req) => {
       await supabaseUpsert('weissschwarz_sets', setRows.slice(i, i + 100));
     }
 
+    // Step 2b: Auto-assign a property to any sets that do not have one yet (non-fatal)
+    try {
+      const propHeaders = {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json'
+      };
+
+      const propGet = async (path) => {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 8000);
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { signal: controller.signal, headers: propHeaders });
+          clearTimeout(timer);
+          if (!res.ok) return [];
+          const data = await res.json();
+          return Array.isArray(data) ? data : [];
+        } catch { clearTimeout(timer); return []; }
+      };
+
+      const propPatch = async (setId, property) => {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 8000);
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/weissschwarz_sets?id=eq.${setId}`, {
+            method: 'PATCH',
+            headers: { ...propHeaders, 'Prefer': 'return=minimal' },
+            body: JSON.stringify({ property }),
+            signal: controller.signal
+          });
+          clearTimeout(timer);
+          if (!res.ok) {
+            const errText = await res.text();
+            console.error(`[sync-weissschwarz] property PATCH failed for set ${setId}: ${res.status} ${errText.slice(0, 200)}`);
+          }
+        } catch (e) {
+          clearTimeout(timer);
+          console.error(`[sync-weissschwarz] property PATCH error for set ${setId}: ${e.message}`);
+        }
+      };
+
+      const unassigned = await propGet('weissschwarz_sets?property=is.null&select=id,name');
+      if (unassigned.length) {
+        const propMap = await propGet('weissschwarz_property_map?select=name_pattern,property');
+        let assigned = 0;
+        for (const set of unassigned) {
+          const nm = (set.name || '').toLowerCase();
+          const match = propMap.find(m => m.name_pattern && nm.includes(m.name_pattern.toLowerCase()));
+          await propPatch(set.id, match ? match.property : 'other');
+          assigned++;
+        }
+        console.log(`[sync-weissschwarz] Auto-assigned property for ${assigned} set(s), ${propMap.length} patterns available`);
+      }
+    } catch (e) {
+      console.error(`[sync-weissschwarz] property auto-assign block failed (non-fatal): ${e.message}`);
+    }
+
     // Step 3: For each set, fetch cards + prices
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
