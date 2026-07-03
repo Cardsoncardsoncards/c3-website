@@ -155,7 +155,7 @@ export default async (req) => {
 
   // Fetch sets first and independently so the property directory grid never
   // depends on the card queries. supabaseGet swallows its own errors (returns []).
-  const sets = await supabaseGet('weissschwarz_sets?order=release_date.desc&limit=300&select=id,name,slug,release_date,card_count,property');
+  const sets = await supabaseGet('weissschwarz_sets?order=release_date.desc.nullslast&limit=300&select=id,name,slug,release_date,card_count,property');
 
   const [cardsRes, gainersRes, losersRes] = await Promise.allSettled([
     supabaseGet('weissschwarz_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),

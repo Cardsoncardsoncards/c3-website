@@ -73,7 +73,7 @@ export default async (req) => {
 
   // Fetch core data -- sets and top cards first, market pulse separately to avoid timeout
   const [sets, topCards] = await Promise.allSettled([
-    supabaseGet('mtg_sets?order=release_date.desc&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,set_type,release_date'),
+    supabaseGet('mtg_sets?order=release_date.desc.nullslast&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,set_type,release_date'),
     supabaseGet('mtg_cards?select=slug,name,image_uri_small,price_usd,price_aud&order=price_usd.desc&limit=24&price_usd=gte.10&image_uri_small=not.is.null'),
   ]);
 

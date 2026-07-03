@@ -122,7 +122,7 @@ export default async (req) => {
 
   if (!propSlug) return notFound('No property was specified. Pick one from the directory.');
 
-  const sets = await supabaseGet(`weissschwarz_sets?property=eq.${propSlug}&order=release_date.desc&select=id,name,slug,release_date,card_count`);
+  const sets = await supabaseGet(`weissschwarz_sets?property=eq.${propSlug}&order=release_date.desc.nullslast&select=id,name,slug,release_date,card_count`);
 
   if (!sets.length) return notFound('We could not find any Weiss Schwarz sets for that property yet.');
 

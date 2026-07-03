@@ -168,7 +168,7 @@ export default async (req) => {
   };
 
   const [setsResult, topCardsResult] = await Promise.allSettled([
-    supabaseGet('digimon_sets?order=release_date.desc&limit=200&select=id,name,slug,abbreviation,release_date,card_count'),
+    supabaseGet('digimon_sets?order=release_date.desc.nullslast&limit=200&select=id,name,slug,abbreviation,release_date,card_count'),
     supabaseGet('digimon_cards?order=market_price.desc&market_price=gt.0.5&market_price=lt.200&image_url=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at')
   ]);
 

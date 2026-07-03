@@ -157,7 +157,7 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
   const [setsRes, cardsRes] = await Promise.allSettled([
-    supabaseGet('gateruler_sets?order=release_date.desc&limit=50&select=id,name,slug,release_date,card_count'),
+    supabaseGet('gateruler_sets?order=release_date.desc.nullslast&limit=50&select=id,name,slug,release_date,card_count'),
     supabaseGet('gateruler_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
   ]);
 

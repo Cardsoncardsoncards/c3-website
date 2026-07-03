@@ -164,7 +164,7 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=300, s-maxage=300' };
 
   const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
-    supabaseGet('yugioh_sets?order=release_date.desc&limit=700&select=id,name,slug,release_date,card_count'),
+    supabaseGet('yugioh_sets?order=release_date.desc.nullslast&limit=700&select=id,name,slug,release_date,card_count'),
     supabaseGet('yugioh_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
     supabaseGet('yugioh_cards?order=price_change_7d.desc&price_change_7d=gt.3&market_price=gt.0&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name'),
     supabaseGet('yugioh_cards?order=price_change_7d.asc&price_change_7d=lt.-3&market_price=gt.0&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name')

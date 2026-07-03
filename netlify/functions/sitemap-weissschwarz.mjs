@@ -45,6 +45,25 @@ async function fetchSlugs(offset) {
   } catch { return []; }
 }
 
+async function fetchProperties() {
+  // Distinct non-promo property slugs for the /series/ property hub pages
+  const url = SUPABASE_URL + '/rest/v1/weissschwarz_sets'
+    + '?select=property'
+    + '&property=not.is.null'
+    + '&property=neq.promo'
+    + '&order=property.asc';
+  try {
+    const res = await supabaseFetch(url);
+    if (!res.ok) return [];
+    const data = await res.json();
+    if (!Array.isArray(data)) return [];
+    return [...new Set(data.map(function(r) { return r.property; }).filter(Boolean))];
+  } catch (e) {
+    console.error('[sitemap-weissschwarz] property fetch failed (non-fatal):', e.message);
+    return [];
+  }
+}
+
 export default async (req) => {
   const headers = {
     'Content-Type': 'application/xml; charset=utf-8',
@@ -89,11 +108,19 @@ export default async (req) => {
       })
       .join('\n');
 
+    const propertySlugs = await fetchProperties();
+    const propertyItems = propertySlugs
+      .map(function(slug) {
+        return '  <url>\n    <loc>' + SITE_URL + '/cards/weissschwarz/series/' + slug + '</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>';
+      })
+      .join('\n');
+
     const xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
       + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + '  <!-- weissschwarz card pages: ' + allCards.length + ' cards with price >= AUD$' + PRICE_THRESHOLD + ' -->\n'
       + '  <!-- Generated: ' + new Date().toISOString() + ' -->\n'
       + urlItems + '\n'
+      + (propertyItems ? '  <!-- weissschwarz property hub pages: ' + propertySlugs.length + ' series URLs -->\n' + propertyItems + '\n' : '')
       + '</urlset>';
 
     return new Response(xml, { status: 200, headers });

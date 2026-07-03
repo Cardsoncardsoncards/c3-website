@@ -157,7 +157,7 @@ export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
   const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
-    supabaseGet('finalfantasy_sets?order=release_date.desc&limit=100&select=id,name,slug,release_date,card_count'),
+    supabaseGet('finalfantasy_sets?order=release_date.desc.nullslast&limit=100&select=id,name,slug,release_date,card_count'),
     supabaseGet('finalfantasy_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
     supabaseGet('finalfantasy_cards?order=price_change_7d.desc&price_change_7d=gt.5&market_price=gt.1&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name'),
     supabaseGet('finalfantasy_cards?order=price_change_7d.asc&price_change_7d=lt.-5&market_price=gt.1&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name')

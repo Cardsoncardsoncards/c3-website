@@ -206,7 +206,7 @@ export default async (req) => {
   };
 
   const [setsResult, topCardsResult, countResult, gainersResult, losersResult] = await Promise.allSettled([
-    supabaseGet('pokemon_sets?order=release_date.desc&limit=300&select=id,name,slug,release_date,card_count'),
+    supabaseGet('pokemon_sets?order=release_date.desc.nullslast&limit=300&select=id,name,slug,release_date,card_count'),
     supabaseGet('pokemon_cards?order=price_aud.desc&price_aud=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
     supabaseGet('pokemon_cards?select=id&limit=1&order=updated_at.desc'),
     supabaseGet('pokemon_cards?order=price_change_7d.desc&price_change_7d=gt.5&price_aud=gt.2&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,price_aud,price_change_7d,set_name'),
