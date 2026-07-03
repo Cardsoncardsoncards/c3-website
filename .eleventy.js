@@ -19,6 +19,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"sitemap-dragonball.xml": "sitemap-dragonball.xml"});
   eleventyConfig.addPassthroughCopy({"sitemap-starwars.xml": "sitemap-starwars.xml"});
   eleventyConfig.addPassthroughCopy({"robots.txt": "robots.txt"});
+  eleventyConfig.addPassthroughCopy({"favicon.ico": "favicon.ico"});
   eleventyConfig.addPassthroughCopy({"ev-calculator": "ev-calculator"});
   eleventyConfig.addPassthroughCopy({"quizzes": "quizzes"});
   eleventyConfig.addPassthroughCopy({"netlify": "netlify"});

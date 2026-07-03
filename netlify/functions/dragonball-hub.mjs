@@ -250,7 +250,7 @@ ${tickerHTML}
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
   <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
   <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#9781; Compare Cards</a>
-  <a href="/blog/best-dragon-ball-super-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128230; Best Boxes &#8594;</a>
+  <a href="/blog/dragon-ball-super-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128230; Best Boxes &#8594;</a>
   <a href="/blog/is-dragon-ball-super-worth-it-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128214; Is It Worth It? &#8594;</a>
   <a href="/quizzes/which-tcg-extended" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127919; Which TCG Should I Play? &#8594;</a>
 </div>
@@ -293,7 +293,7 @@ ${hasMovers ? `<div style="margin-bottom:28px">
   <div style="margin-bottom:28px">
     <h2 style="font-size:18px;margin-bottom:16px">Dragon Ball Guides and Blogs</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
-      <a href="/blog/best-dragon-ball-super-booster-boxes-australia/" class="guide-card"><div class="guide-title">Best Dragon Ball Super Booster Boxes in Australia</div><div class="guide-desc">Which Dragon Ball Super boxes are worth opening and where to buy in Australia.</div></a>
+      <a href="/blog/dragon-ball-super-booster-boxes-australia/" class="guide-card"><div class="guide-title">Best Dragon Ball Super Booster Boxes in Australia</div><div class="guide-desc">Which Dragon Ball Super boxes are worth opening and where to buy in Australia.</div></a>
       <a href="/blog/is-dragon-ball-super-worth-it-australia/" class="guide-card"><div class="guide-title">Is Dragon Ball Super Worth It?</div><div class="guide-desc">An honest look at Dragon Ball Super collecting from an Australian perspective.</div></a>
       <a href="/ev-calculator.html" class="guide-card"><div class="guide-title">Booster Box EV Calculator</div><div class="guide-desc">Is your Lorcana box worth opening? Calculate expected value before you crack it.</div></a>
       <a href="/quizzes/which-tcg-extended" class="guide-card"><div class="guide-title">&#127919; Which TCG Should I Play?</div><div class="guide-desc">Not sure which TCG is right for you? Take the quiz in 2 minutes.</div></a>

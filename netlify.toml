@@ -36,6 +36,13 @@
 [functions."starwars-set-page"]
   timeout = 26
 
+# ── MTG set pages have no dedicated handler yet: send /cards/mtg/sets/* to the hub.
+#    Temporary (302) so it can be removed cleanly if an mtg-set-page function is added later.
+[[redirects]]
+  from = "/cards/mtg/sets/*"
+  to = "/cards/mtg"
+  status = 302
+
 # ── Blog redirects (old URLs -> current slugs) ──────────────
 [[redirects]]
   from = "/blog/lorcana-booster-box-guide/"

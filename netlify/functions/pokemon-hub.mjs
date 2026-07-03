@@ -441,10 +441,10 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
     <h2 style="font-size:18px;margin-bottom:16px">Pokemon Guides, Blogs and Quizzes</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
       <a href="/blog/best-pokemon-booster-boxes-australia/" class="guide-card"><div class="guide-title">Best Pokemon Booster Boxes in Australia</div><div class="guide-desc">Which boxes are worth opening right now and where to buy at the best price.</div></a>
-      <a href="/blog/are-pokemon-cards-an-investment/" class="guide-card"><div class="guide-title">Are Pokemon Cards an Investment?</div><div class="guide-desc">The honest data-backed answer for Australian collectors and speculators.</div></a>
-      <a href="/blog/pokemon-tcg-beginners-guide/" class="guide-card"><div class="guide-title">Pokemon TCG Beginners Guide</div><div class="guide-desc">New to Pokemon? Learn how the game works, what sets to start with, and where to buy in Australia.</div></a>
+      <a href="/blog/are-pokemon-booster-boxes-investment-australia/" class="guide-card"><div class="guide-title">Are Pokemon Cards an Investment?</div><div class="guide-desc">The honest data-backed answer for Australian collectors and speculators.</div></a>
+      <a href="/blog/pokemon-tcg-beginners-guide-australia/" class="guide-card"><div class="guide-title">Pokemon TCG Beginners Guide</div><div class="guide-desc">New to Pokemon? Learn how the game works, what sets to start with, and where to buy in Australia.</div></a>
       <a href="/ev-calculator.html" class="guide-card"><div class="guide-title">Pokemon EV Calculator</div><div class="guide-desc">Is your booster box worth opening? Calculate expected value before you crack it.</div></a>
-      <a href="/quizzes/pokemon-era-quiz" class="guide-card"><div class="guide-title">&#127942; Pokemon Era Quiz</div><div class="guide-desc">Which Pokemon era matches your collector soul? Base Set, EX era, or Scarlet and Violet?</div></a>
+      <a href="/quizzes/pokemon-era" class="guide-card"><div class="guide-title">&#127942; Pokemon Era Quiz</div><div class="guide-desc">Which Pokemon era matches your collector soul? Base Set, EX era, or Scarlet and Violet?</div></a>
       <a href="/quizzes/which-tcg-extended" class="guide-card"><div class="guide-title">&#127919; Which TCG Should I Play?</div><div class="guide-desc">Not sure which TCG is right for you? Take the quiz and find out in 2 minutes.</div></a>
     </div>
   </div>

@@ -253,7 +253,7 @@ ${tickerHTML}
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
   <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
   <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#9781; Compare Cards</a>
-  <a href="/blog/best-yugioh-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128230; Best YGO Boxes &#8594;</a>
+  <a href="/blog/yugioh-booster-boxes-australia/" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128230; Best YGO Boxes &#8594;</a>
   <a href="/quizzes/which-tcg-extended" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127919; Which TCG Should I Play? &#8594;</a>
 </div>
 
@@ -295,7 +295,7 @@ ${hasMovers ? `<div style="margin-bottom:28px">
   <div style="margin-bottom:28px">
     <h2 style="font-size:18px;margin-bottom:16px">Yu-Gi-Oh Guides and Blogs</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
-      <a href="/blog/best-yugioh-booster-boxes-australia/" class="guide-card"><div class="guide-title">Best Yu-Gi-Oh Booster Boxes in Australia</div><div class="guide-desc">Which YGO boxes are worth opening and where to buy in Australia.</div></a>
+      <a href="/blog/yugioh-booster-boxes-australia/" class="guide-card"><div class="guide-title">Best Yu-Gi-Oh Booster Boxes in Australia</div><div class="guide-desc">Which YGO boxes are worth opening and where to buy in Australia.</div></a>
       <a href="/ev-calculator.html" class="guide-card"><div class="guide-title">Booster Box EV Calculator</div><div class="guide-desc">Is your Yu-Gi-Oh box worth opening? Calculate expected value before you crack it.</div></a>
       <a href="/quizzes/which-tcg-extended" class="guide-card"><div class="guide-title">&#127919; Which TCG Should I Play?</div><div class="guide-desc">Not sure which TCG is right for you? Take the quiz in 2 minutes.</div></a>
     </div>
