@@ -195,6 +195,9 @@ Weiss Schwarz is a publisher/umbrella brand, not a single game. Each licensed pr
 
 ## KNOWN BUGS (PRIORITY ORDER — FIX BEFORE ANYTHING ELSE)
 
+### Resolved
+- Fix sprint complete 3 July 2026 - 7 audit items resolved: WS hub property load (sets query decoupled from card queries), yugioh-set-page og:title added, onepiece/pokemon-set-page canonical de-www'd, em-dash cleanup (card-compare, card-index, card-page), Promise.allSettled across 29 set-pages, Compare game-count copy (8 to 32 TCGs, C3 Market left at 8), XSS card-name escaping in alt and text positions across card-pages. Note: search-page copy left at "7 games" (accurate to its 7 searchable games; expanding search to 32 is a separate feature task).
+
 ### Critical (blocking user experience)
 - Search bar: "No cards found" on some queries. compare-search endpoint response handling filtering incorrectly.
 - A-Z filtering: not working on non-MTG hubs. Investigate data-letter attribute population on set tiles.

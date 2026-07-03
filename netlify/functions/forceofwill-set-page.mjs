@@ -81,19 +81,23 @@ export default async (req) => {
   if (!setSlug) return new Response(graceful404(''), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
   try {
-    const [sets, ebayToken] = await Promise.all([
+    const [setsR, ebayTokenR] = await Promise.allSettled([
       supabaseGet(`forceofwill_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
       getEbayToken()
     ]);
+    const sets = setsR.status === 'fulfilled' ? setsR.value : [];
+    const ebayToken = ebayTokenR.status === 'fulfilled' ? ebayTokenR.value : null;
 
     if (!sets || !sets[0]) return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
     const set = sets[0];
 
-    const [cards, ebayListings] = await Promise.all([
+    const [cardsR, ebayListingsR] = await Promise.allSettled([
       supabaseGet(`forceofwill_cards?set_id=eq.${set.id}&rarity=neq.None&order=name.asc&limit=200&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,price_change_7d,price_change_30d`),
       getEbayListings(`${set.name} force of will card`, ebayToken)
     ]);
+    const cards = cardsR.status === 'fulfilled' ? cardsR.value : [];
+    const ebayListings = ebayListingsR.status === 'fulfilled' ? ebayListingsR.value : [];
 
     const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
     const pricedCards = (cards || []).filter(c => toAud(c) > 0);

@@ -1,6 +1,6 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 // netlify/functions/card-compare.mjs
-// C3 Card Compare — v2 rebuild May 2026
+// C3 Card Compare - v2 rebuild May 2026
 // Features: verdict banner, stat strips, radar chart, game-aware legality,
 // colour identity pips, Reserve List badge, combine cost, recent history (localStorage),
 // slot customid eBay tracking, game chip active + placeholder feedback,
@@ -110,7 +110,7 @@ async function fetchMTGCard(slug, usdToAud) {
     const colorIdentity = card.color_identity || [];
     const keywords      = card.keywords || [];
 
-    // CK buylist — latest snapshot value
+    // CK buylist - latest snapshot value
     const latestCKSnap = snapshots && snapshots.length ? snapshots[snapshots.length - 1] : null;
     const ckBuylistAud = latestCKSnap && latestCKSnap.price_buy_ck_aud ? parseFloat(latestCKSnap.price_buy_ck_aud) : null;
     const ckBuylistUsd = latestCKSnap && latestCKSnap.price_buy_ck_usd ? parseFloat(latestCKSnap.price_buy_ck_usd) : null;
@@ -345,10 +345,10 @@ function computeVerdict(cards) {
     const fmts = Object.values(winner.legalities || {}).filter(v => v === 'legal').length;
     if (fmts > 0) reasons.push(`legal in ${fmts} format${fmts > 1 ? 's' : ''}`);
   }
-  if (winner.reserved) reasons.push('Reserve List — never reprinted');
+  if (winner.reserved) reasons.push('Reserve List - never reprinted');
 
   const sentence = reasons.length
-    ? `${winner.name} leads overall — ${reasons.slice(0, 2).join(', ')}.`
+    ? `${winner.name} leads overall - ${reasons.slice(0, 2).join(', ')}.`
     : `${winner.name} leads on combined metrics.`;
 
   const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(winner.name + ' ' + winner.label)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=verdict&toolid=10001&mkevt=1`;
@@ -446,7 +446,7 @@ function renderSlots(cards, allTokens, usdToAud) {
           ${card.ckBuylistAud ? '<option value="ck">Card Kingdom buylist (sell)</option>' : ''}
         </select>
       </div>
-      ${card.ckBuylistAud ? `<div class="ck-buylist-row help-item" title="Card Kingdom is a major US TCG retailer. This is what they pay YOU for this card — a sell price.">Sell to Card Kingdom: <strong>${fmtAUD(card.ckBuylistAud)}</strong> <span class="info-icon">?</span></div>` : ''}
+      ${card.ckBuylistAud ? `<div class="ck-buylist-row help-item" title="Card Kingdom is a major US TCG retailer. This is what they pay YOU for this card - a sell price.">Sell to Card Kingdom: <strong>${fmtAUD(card.ckBuylistAud)}</strong> <span class="info-icon">?</span></div>` : ''}
       <a href="${ebayUrl}" target="_blank" rel="noopener" class="slot-buy-btn" style="background:${card.color}" data-gtag-game="${card.game}" data-gtag-card="${card.name.replace(/"/g,'&quot;')}" data-gtag-pos="${i}">Buy on eBay AU →</a>
       <div class="ebay-disclaimer help-item">eBay AU prices may vary from listed price</div>
       <button class="slot-versions-btn" data-game="${card.game}" data-name="${card.name.replace(/"/g,'&quot;')}" data-slot="${i}" aria-label="View other versions">⇄ Other versions</button>
@@ -481,12 +481,12 @@ function renderStatStrips(cards) {
   const strips = [
     {
       label: 'Combined cost',
-      val: fmtAUD(totalCost) || '—',
+      val: fmtAUD(totalCost) || '-',
       sub: `${cards.length} card${cards.length > 1 ? 's' : ''} total`
     },
     {
       label: 'Price gap',
-      val: gap > 0 ? fmtAUD(gap) : '—',
+      val: gap > 0 ? fmtAUD(gap) : '-',
       sub: gap > 0 && minPrice > 0 ? `${(maxPrice/minPrice).toFixed(1)}× difference` : 'Same price'
     },
     edhWinner ? {
@@ -496,12 +496,12 @@ function renderStatStrips(cards) {
       accent: true
     } : {
       label: 'Most formats',
-      val: mostFormats ? mostFormats.fmts.toString() : '—',
+      val: mostFormats ? mostFormats.fmts.toString() : '-',
       sub: mostFormats ? mostFormats.card.name : ''
     },
     hasFoil ? {
       label: 'Cheapest foil',
-      val: fmtAUD(hasFoil.priceAudFoil) || '—',
+      val: fmtAUD(hasFoil.priceAudFoil) || '-',
       sub: hasFoil.name
     } : hasTrend ? {
       label: '7D trend',
@@ -562,7 +562,7 @@ function renderCompareTable(cards) {
   const colCount    = cards.length + 1;
 
   const rarityRow = `<tr><th class="tbl-label">Rarity</th>${cards.map(c =>
-    `<td class="tbl-val"><span class="rarity-pill rarity-${c.rarity || 'common'}">${c.rarity ? c.rarity.charAt(0).toUpperCase() + c.rarity.slice(1) : '—'}</span></td>`
+    `<td class="tbl-val"><span class="rarity-pill rarity-${c.rarity || 'common'}">${c.rarity ? c.rarity.charAt(0).toUpperCase() + c.rarity.slice(1) : '-'}</span></td>`
   ).join('')}</tr>`;
 
   const priceRow = `<tr><th class="tbl-label">Price (AUD)</th>${cards.map((c, i) =>
@@ -570,11 +570,11 @@ function renderCompareTable(cards) {
   ).join('')}</tr>`;
 
   const foilRow = hasFoil ? `<tr><th class="tbl-label">Foil (AUD)</th>${cards.map((c, i) =>
-    cell(i, foilWin, `<span class="tbl-price aud-val" data-aud="${c.priceAudFoil || 0}" data-usd="${c.priceAudFoil ? (c.priceAudFoil / 1.45).toFixed(2) : 0}">${fmtAUD(c.priceAudFoil) || '—'}</span>`)
+    cell(i, foilWin, `<span class="tbl-price aud-val" data-aud="${c.priceAudFoil || 0}" data-usd="${c.priceAudFoil ? (c.priceAudFoil / 1.45).toFixed(2) : 0}">${fmtAUD(c.priceAudFoil) || '-'}</span>`)
   ).join('')}</tr>` : '';
 
   const trendRow = `<tr><th class="tbl-label">7D Trend</th>${cards.map(c => {
-    if (!c.sevenDayChange) return `<td class="tbl-val tbl-dim">—</td>`;
+    if (!c.sevenDayChange) return `<td class="tbl-val tbl-dim">-</td>`;
     return `<td class="tbl-val"><span class="trend ${c.sevenDayChange.up ? 'trend-up' : 'trend-down'}">${c.sevenDayChange.up ? '▲' : '▼'} ${Math.abs(c.sevenDayChange.pct)}%</span></td>`;
   }).join('')}</tr>`;
 
@@ -584,7 +584,7 @@ function renderCompareTable(cards) {
     return `<td class="tbl-val"><div class="cheapest-wrap"><span class="cheapest-price">${fmtAUD(c.cheapestPrinting.priceAud)}</span><span class="cheapest-set">${c.cheapestPrinting.setName || ''}</span><a href="${eu}" target="_blank" rel="noopener" class="cheapest-link">Buy cheapest →</a></div></td>`;
   }).join('')}</tr>`;
 
-  const ckRow = hasCK ? `<tr><th class="tbl-label">Sell to Card Kingdom <span class="info-icon help-item" title="Card Kingdom (CK) is a major US TCG retailer. This is what they pay YOU for this card — converted to AUD at live rate. Card Kingdom buylist prices are updated daily.">?</span></th>${cards.map(c =>
+  const ckRow = hasCK ? `<tr><th class="tbl-label">Sell to Card Kingdom <span class="info-icon help-item" title="Card Kingdom (CK) is a major US TCG retailer. This is what they pay YOU for this card - converted to AUD at live rate. Card Kingdom buylist prices are updated daily.">?</span></th>${cards.map(c =>
     c.ckBuylistAud ? `<td class="tbl-val"><span class="cheapest-price">${fmtAUD(c.ckBuylistAud)}</span><span style="font-size:10px;color:var(--text3);display:block">Sell price · cardkingdom.com</span></td>` : '<td class="tbl-val tbl-dim">Not available</td>'
   ).join('')}</tr>` : '';
 
@@ -593,22 +593,22 @@ function renderCompareTable(cards) {
   ).join('')}</tr>` : '';
 
   const cmcRow = hasCmc ? `<tr><th class="tbl-label">Mana Cost</th>${cards.map((c, i) =>
-    cell(i, cmcWin, c.cmc !== null ? c.cmc : '<span class="tbl-dim">—</span>')
+    cell(i, cmcWin, c.cmc !== null ? c.cmc : '<span class="tbl-dim">-</span>')
   ).join('')}</tr>` : '';
 
   const ptRow = hasPT ? `<tr><th class="tbl-label">Power / Toughness</th>${cards.map(c =>
-    `<td class="tbl-val">${c.power && c.toughness ? `${c.power} / ${c.toughness}` : '<span class="tbl-dim">—</span>'}</td>`
+    `<td class="tbl-val">${c.power && c.toughness ? `${c.power} / ${c.toughness}` : '<span class="tbl-dim">-</span>'}</td>`
   ).join('')}</tr>` : '';
 
   const reservedRow = hasReserved ? `<tr><th class="tbl-label">Reserve List <span class="info-icon help-item" title="The Reserved List is a Wizards of the Coast policy guaranteeing certain older MTG cards will never be reprinted. This makes them scarcer over time, which supports long-term value.">?</span></th>${cards.map(c =>
-    `<td class="tbl-val">${c.reserved ? '<span class="reserve-badge" title="This card is on the Reserved List — it will never be officially reprinted, making it increasingly scarce.">🔒 Never reprinted</span>' : '—'}</td>`
+    `<td class="tbl-val">${c.reserved ? '<span class="reserve-badge" title="This card is on the Reserved List - it will never be officially reprinted, making it increasingly scarce.">🔒 Never reprinted</span>' : '-'}</td>`
   ).join('')}</tr>` : '';
 
   const colorsRow = hasColors ? `<tr><th class="tbl-label">Colour Identity</th>${cards.map(c =>
-    `<td class="tbl-val">${c.color_identity && c.color_identity.length ? colorPips(c.color_identity) : '<span class="tbl-dim">—</span>'}</td>`
+    `<td class="tbl-val">${c.color_identity && c.color_identity.length ? colorPips(c.color_identity) : '<span class="tbl-dim">-</span>'}</td>`
   ).join('')}</tr>` : '';
 
-  // Game-aware legality — only show formats relevant to games in the tray
+  // Game-aware legality - only show formats relevant to games in the tray
   const mtgCards = cards.filter(c => c.game === 'mtg');
   const legalityRows = hasMtg ? MTG_FORMATS.map(fmt => `
     <tr>
@@ -616,8 +616,8 @@ function renderCompareTable(cards) {
       ${cards.map(c => {
         if (c.game !== 'mtg') return `<td class="tbl-val" style="background:var(--bg3)"><span style="font-size:10px;color:var(--text3)">N/A</span></td>`;
         const status = c.legalities[fmt] || 'not_legal';
-        const banTip = status === 'banned' ? ' title="Banned in ' + fmt.charAt(0).toUpperCase() + fmt.slice(1) + ' — this card is not legal to play in this format. It was banned due to power level concerns."' : '';
-        return '<td class="tbl-val"><span class="pip pip-' + (status === 'legal' ? 'legal' : status === 'banned' ? 'banned' : 'no') + '"' + banTip + '>' + (status === 'legal' ? '✓' : status === 'banned' ? 'Banned ⚠' : '–') + '</span></td>';
+        const banTip = status === 'banned' ? ' title="Banned in ' + fmt.charAt(0).toUpperCase() + fmt.slice(1) + ' - this card is not legal to play in this format. It was banned due to power level concerns."' : '';
+        return '<td class="tbl-val"><span class="pip pip-' + (status === 'legal' ? 'legal' : status === 'banned' ? 'banned' : 'no') + '"' + banTip + '>' + (status === 'legal' ? '✓' : status === 'banned' ? 'Banned ⚠' : '-') + '</span></td>';
       }).join('')}
     </tr>`).join('') : '';
 
@@ -640,7 +640,7 @@ function renderCompareTable(cards) {
       <tbody>
         ${rarityRow}${priceRow}${foilRow}${ckRow}${trendRow}${cheapRow}
         ${edhRow}${cmcRow}${ptRow}${colorsRow}${reservedRow}
-        ${legalityRows && hasMtg ? `<tr><td colspan="${colCount}" class="tbl-section-head">Format Legality <span style="font-size:10px;font-weight:400;color:var(--text3)">(MTG only — N/A = not applicable to this game)</span></td></tr>${legalityRows}` : ''}
+        ${legalityRows && hasMtg ? `<tr><td colspan="${colCount}" class="tbl-section-head">Format Legality <span style="font-size:10px;font-weight:400;color:var(--text3)">(MTG only - N/A = not applicable to this game)</span></td></tr>${legalityRows}` : ''}
         ${bestValueRow}
       </tbody>
     </table>
@@ -666,9 +666,9 @@ function renderEmptyState() {
 
   return `<div class="empty-state">
     <div class="empty-icon">⚖️</div>
-    <h2>Compare Cards Across All 8 TCGs</h2>
+    <h2>Compare Cards Across All 32 TCGs</h2>
     <p>Search above to compare up to 2 cards free. Subscribers unlock all 5 slots. See AUD prices, trends, format legality and who wins on value.</p>
-    <div class="suggestions-label">See it in action — try a comparison</div>
+    <div class="suggestions-label">See it in action - try a comparison</div>
     <div class="suggestions-grid">${suggestionsHTML}</div>
     <div id="recent-comparisons" style="margin-top:24px;display:none">
       <div class="suggestions-label">Your recent comparisons</div>
@@ -682,9 +682,9 @@ function renderPage({ cards, allTokens, usdToAud }) {
   const cardNames = cards.map(c => c.name);
   const pageTitle = hasCards
     ? cardNames.join(' vs ') + ' | C3 Card Compare'
-    : 'C3 Card Compare | All 8 TCGs | Cards on Cards on Cards';
+    : 'C3 Card Compare | All 32 TCGs | Cards on Cards on Cards';
   const pageDesc  = hasCards
-    ? `Compare ${cardNames.join(', ')} — AUD prices, trends, format legality and best value. Updated daily.`
+    ? `Compare ${cardNames.join(', ')} - AUD prices, trends, format legality and best value. Updated daily.`
     : 'Compare TCG card prices across MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Dragon Ball, Star Wars and Riftbound.';
   const shareUrl  = `https://cardsoncardsoncards.com.au/compare${allTokens.length ? '?cards=' + allTokens.join(',') : ''}`;
 
@@ -942,7 +942,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
     .sell-view-inner{background:rgba(124,106,245,.08);border:1px solid rgba(124,106,245,.25);border-radius:var(--radius);padding:10px 16px;font-size:12px;color:var(--text2);display:flex;align-items:center;gap:10px}
     .sell-view-inner strong{color:#a78bfa}
 
-    /* HELP ITEMS — hidden when help is off */
+    /* HELP ITEMS - hidden when help is off */
     body.help-off .help-item{display:none!important}
     body.help-off .ebay-disclaimer{display:none!important}
     body.help-off .price-source-label .info-icon{display:none!important}
@@ -978,7 +978,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
 <div class="page-header">
   <div>
     <h1 class="page-title">⚖️ C3 Card Compare</h1>
-    <p class="page-subtitle">Compare up to 2 cards free across all 8 TCGs. AUD prices, updated daily. Live rate: 1 USD = AU$${usdToAud.toFixed(4)}</p>
+    <p class="page-subtitle">Compare up to 2 cards free across all 32 TCGs. AUD prices, updated daily. Live rate: 1 USD = AU$${usdToAud.toFixed(4)}</p>
   </div>
   <div class="page-controls">
     <div class="currency-toggle" role="group" aria-label="Currency selector">
@@ -996,7 +996,7 @@ function renderPage({ cards, allTokens, usdToAud }) {
 <div class="page-label-row">
   <span class="page-label-item">⚖️ Compare up to 2 cards free</span>
   <span class="page-label-item">💰 AUD prices updated daily</span>
-  <span class="page-label-item">🌏 8 TCGs supported</span>
+  <span class="page-label-item">🌏 32 TCGs supported</span>
   <span class="page-label-item">📊 Buy &amp; sell pricing</span>
 </div>
 
@@ -1016,7 +1016,7 @@ ${verdictHtml}
 
 <div id="sell-view-banner" class="sell-view-banner" style="display:none">
   <div class="sell-view-inner">
-    <strong>💰 Sell view active</strong> — prices shown are what you could receive for these cards. Card Kingdom (CK) buylist prices are in USD converted to AUD. eBay sell prices will vary.
+    <strong>💰 Sell view active</strong> - prices shown are what you could receive for these cards. Card Kingdom (CK) buylist prices are in USD converted to AUD. eBay sell prices will vary.
   </div>
 </div>
 
@@ -1030,8 +1030,8 @@ ${statStrips}
   <span class="share-label">Share:</span>
   <button class="share-btn share-copy" id="share-copy-btn" onclick="copyShareUrl()">Copy Link</button>
   <button class="share-btn share-discord" id="share-discord-btn" onclick="copyDiscordShare()">Discord</button>
-  <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(cardNames.join(' vs ') + ' — price compare on C3 ' + shareUrl)}" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
-  <a href="https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(cardNames.join(' vs ') + ' — TCG price compare Australia')}" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
+  <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(cardNames.join(' vs ') + ' - price compare on C3 ' + shareUrl)}" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
+  <a href="https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(cardNames.join(' vs ') + ' - TCG price compare Australia')}" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
 </div>
 
 ${cards.length >= 2 ? `
@@ -1062,7 +1062,7 @@ ${cards.length >= 2 ? `
 <div class="market-teaser">
   <div class="market-teaser-inner">
     <div class="market-teaser-text">
-      <strong>📊 C3 Market</strong> — See which cards are gaining and losing value across all 8 TCGs this week.
+      <strong>📊 C3 Market</strong> - See which cards are gaining and losing value across all 8 TCGs this week.
     </div>
     <a href="/market" class="market-link-btn" onclick="gtag('event','compare_market_link_clicked',{from:'compare_page',card_count:${cards.length}})">View C3 Market →</a>
   </div>
@@ -1279,7 +1279,7 @@ function loadVersions(game, name, slotIdx) {
       if (!data || !data.length) { panel.innerHTML = '<div style="padding:6px;color:var(--text2);font-size:10px">No other versions found</div>'; return; }
       panel.innerHTML = data.map(function(v) {
         return '<div class="version-item" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '" tabindex="0">' +
-          '<span class="version-set">' + (v.setName || '—') + (v.collectorNumber ? ' #' + v.collectorNumber : '') + '</span>' +
+          '<span class="version-set">' + (v.setName || '-') + (v.collectorNumber ? ' #' + v.collectorNumber : '') + '</span>' +
           '<span class="version-price">' + (v.priceDisplay || 'N/A') + '</span>' +
           '<button class="version-swap" data-action="swap" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '">Swap</button>' +
           '<button class="version-compare" data-action="compare" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '">+ Compare</button>' +

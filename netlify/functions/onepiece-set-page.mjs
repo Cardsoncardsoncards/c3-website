@@ -123,10 +123,10 @@ export default async (req) => {
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${esc(set.name)} | One Piece Set | Cards on Cards on Cards</title>
   <meta name="description" content="Browse all ${esc(set.name)} One Piece cards with AUD prices. ${priced} cards priced on Cards on Cards on Cards.">
-  <link rel="canonical" href="https://www.cardsoncardsoncards.com.au/cards/onepiece/sets/${esc(set.slug)}">
+  <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/onepiece/sets/${esc(set.slug)}">
   <meta property="og:title" content="${esc(set.name)} | One Piece | C3">
   <meta property="og:description" content="${priced} cards priced in AUD for ${esc(set.name)}.">
-  <meta property="og:url" content="https://www.cardsoncardsoncards.com.au/cards/onepiece/sets/${esc(set.slug)}">
+  <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards/onepiece/sets/${esc(set.slug)}">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
   <!-- Google tag (gtag.js) -->

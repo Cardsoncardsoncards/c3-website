@@ -91,8 +91,8 @@ async function handleSetPage(setSlug, htmlHeaders) {
   const top5HTML = top5.map(c => {
     const aud = toAud(c);
     return `<a href="/cards/wow/${c.slug}" style="flex:0 0 140px;background:#0e1118;border:1px solid rgba(16,185,129,.35);border-radius:10px;padding:10px;text-align:center;text-decoration:none;display:block">
-      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
-      <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${c.name}</div>
+      ${c.image_url ? `<img src="${c.image_url}" alt="${esc(c.name)}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
+      <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${esc(c.name)}</div>
       ${c.rarity ? `<div style="font-size:10px;color:${accent};margin-bottom:3px">${c.rarity}</div>` : ''}
       ${aud > 0 ? `<div style="font-size:12px;color:#C9A84C;font-weight:700">AU$${aud.toFixed(2)}</div>` : ''}
     </a>`;
@@ -101,8 +101,8 @@ async function handleSetPage(setSlug, htmlHeaders) {
   const allCardsHTML = (cards && cards.length) ? cards.filter(isSingles).map(c => {
     const aud = toAud(c);
     return `<a href="/cards/wow/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block">
-      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
-      <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
+      ${c.image_url ? `<img src="${c.image_url}" alt="${esc(c.name)}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
+      <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${esc(c.name)}</div>
       ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : ''}
     </a>`;
   }).join('') : `<div style="grid-column:1/-1;text-align:center;color:#8892b0;padding:32px;font-size:14px">Card list syncing -- check back after tonight's update.</div>`;
@@ -242,8 +242,8 @@ export default async (req) => {
         ${relatedCards.map(c => {
           const rAud = parseFloat(c.price_aud) || (c.market_price ? c.market_price * 1.45 : 0);
           return `<a href="/cards/wow/${c.slug}" style="flex:0 0 130px;background:#161929;border:1px solid #252840;border-radius:8px;padding:8px;text-decoration:none">
-            ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:5px">` : ''}
-            <div style="font-size:10px;color:#F0F2FF;margin-top:5px;line-height:1.3">${c.name}</div>
+            ${c.image_url ? `<img src="${c.image_url}" alt="${esc(c.name)}" loading="lazy" style="width:100%;border-radius:5px">` : ''}
+            <div style="font-size:10px;color:#F0F2FF;margin-top:5px;line-height:1.3">${esc(c.name)}</div>
             ${rAud >= 0.50 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">~AU$${rAud.toFixed(0)}</div>` : ''}
           </a>`;
         }).join('')}
@@ -309,14 +309,14 @@ export default async (req) => {
 <style>${NAV_CSS}</style>${navHtml({ gameLabel: 'World of Warcraft', gameHref: '/cards/wow' })}
 <div class="card-hero">
   <div class="card-img-wrap">
-    ${card.image_url ? `<img src="${card.image_url}" alt="${card.name}" loading="eager">` : `<div style="color:var(--text2);font-family:'Cinzel',serif;font-size:18px;padding:24px;text-align:center">${card.name}</div>`}
+    ${card.image_url ? `<img src="${card.image_url}" alt="${esc(card.name)}" loading="eager">` : `<div style="color:var(--text2);font-family:'Cinzel',serif;font-size:18px;padding:24px;text-align:center">${esc(card.name)}</div>`}
   </div>
   <div class="card-details">
     <div style="font-size:12px;color:var(--text2);margin-bottom:8px">
       <a href="/cards/wow" style="color:var(--text2);text-decoration:none">World of Warcraft TCG</a>
       ${card.set_name ? ` → <a href="${setUrl}" style="color:var(--text2);text-decoration:none">${card.set_name}</a>` : ''}
     </div>
-    <h1>${card.name}</h1>
+    <h1>${esc(card.name)}</h1>
     ${card.rarity ? `<div style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#E8C97A;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;margin-bottom:8px;text-transform:uppercase">${card.rarity}</div>` : ''}
     <div class="price-tag">${priceAud ? `~AU$${priceAud.toFixed(2)}` : 'Price not available'}</div>
     <div class="meta-grid">

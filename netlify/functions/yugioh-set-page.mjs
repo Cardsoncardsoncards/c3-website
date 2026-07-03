@@ -84,12 +84,14 @@ export default async (req) => {
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
   try {
-  const [sets, ebayToken] = await Promise.all([
+  const [setsR, ebayTokenR] = await Promise.allSettled([
     supabaseGet(`yugioh_sets?abbreviation=ilike.${encodeURIComponent(setCode)}&limit=1`).then(r =>
       r.length ? r : supabaseGet(`yugioh_sets?slug=eq.${encodeURIComponent(setCode)}&limit=1`)
     ),
     getEbayToken()
   ]);
+  const sets = setsR.status === 'fulfilled' ? setsR.value : [];
+  const ebayToken = ebayTokenR.status === 'fulfilled' ? ebayTokenR.value : null;
 
   if (!sets || !sets[0]) return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
@@ -210,6 +212,7 @@ export default async (req) => {
 <title>${set.name} Card Prices Australia | Yu-Gi-Oh | Cards on Cards on Cards</title>
 <meta name="description" content="Browse all ${cards.length} ${set.name} Yu-Gi-Oh cards with live AUD pricing. Filter by attribute and rarity. eBay AU buy links. Updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/yugioh/sets/${setCode}">
+<meta property="og:title" content="${esc(set.name)} | Yu-Gi-Oh Set Prices in Australia | Cards on Cards on Cards">
 <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -250,7 +250,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const legalityBadges = ['standard', 'pioneer', 'modern', 'legacy', 'vintage', 'commander']
     .map(fmt => {
       const status = legalities[fmt] || 'not_legal';
-      const label = status === 'legal' ? '✓' : status === 'banned' ? '✗' : '–';
+      const label = status === 'legal' ? '✓' : status === 'banned' ? '✗' : '-';
       const cls = status === 'legal' ? 'legal' : status === 'banned' ? 'banned' : 'not-legal';
       return `<div class="legality-badge ${cls}"><span class="fmt-name">${fmt.charAt(0).toUpperCase() + fmt.slice(1)}</span><span class="fmt-status">${label}</span></div>`;
     }).join('');

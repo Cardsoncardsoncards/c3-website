@@ -82,7 +82,7 @@ function renderCardHub(sets, topCards) {
   // Sort parents A-Z
   const sortedParents = [...parentMap.values()].sort((a,b) => a.set_name.localeCompare(b.set_name));
 
-  // Build the HTML for the set grid — parents show with sub-set count badge
+  // Build the HTML for the set grid - parents show with sub-set count badge
   // Clicking a parent goes to its set page; sub-sets are revealed on hover/click
   const setListHTML = sortedParents.map(parent => {
     const children = (childMap.get(parent.set_code) || []).sort((a,b) => a.set_name.localeCompare(b.set_name));
@@ -173,7 +173,7 @@ ${NAV_HTML}
     </div>
   </div>
 
-  <!-- Browse by Set — search + grouped alphabetical list -->
+  <!-- Browse by Set - search + grouped alphabetical list -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
     <h2 style="font-size:18px;margin-bottom:12px">Browse by Set</h2>
     <div style="margin-bottom:12px">
@@ -351,7 +351,7 @@ function closeDrawer() {
     const titleEl=document.getElementById('cmd-mtg-carousel-title');
     if(!track)return;
     try{
-      // mode=top returns 40 commanders — shuffle client-side so each load feels fresh
+      // mode=top returns 40 commanders - shuffle client-side so each load feels fresh
       const res=await fetch('/.netlify/functions/commander-carousel?mode=top');
       const data=await res.json();
       if(!data.commanders||data.commanders.length===0){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders found.</p>';return;}
@@ -498,7 +498,7 @@ ${NAV_HTML}
       <button class="btn btn-secondary" style="padding:10px 28px" onclick="generateAll()">🎲 Generate All Again</button>
     </div>
 
-    <!-- Challenge a Friend — upgraded -->
+    <!-- Challenge a Friend - upgraded -->
     <div class="challenge-bar">
       <div style="font-size:32px;margin-bottom:8px">⚔️</div>
       <div class="challenge-title">Think You Can Build Better?</div>
@@ -513,7 +513,7 @@ ${NAV_HTML}
     </div>
   </div>
 
-  <!-- Related Guides — upgraded with coloured cards -->
+  <!-- Related Guides - upgraded with coloured cards -->
   <div style="max-width:900px;margin:0 auto 48px">
     <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Explore More</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
@@ -606,10 +606,10 @@ function setCmc(btn, val) {
 }
 
 async function fetchOneCommander(exclude) {
-  // Build PostgREST query manually — URLSearchParams URL-encodes special chars that PostgREST needs literal
+  // Build PostgREST query manually - URLSearchParams URL-encodes special chars that PostgREST needs literal
   const filters = [];
   filters.push('select=name,type_line,image_uri_normal,image_uri_small,price_aud,price_usd,slug,color_identity,cmc');
-  // Legendary Creature filter — use 'like' with wildcards (case insensitive via ilike but we need URL-safe)
+  // Legendary Creature filter - use 'like' with wildcards (case insensitive via ilike but we need URL-safe)
   filters.push('type_line=ilike.*Legendary*Creature*');
   // Skip digital
   filters.push('digital=eq.false');
@@ -622,7 +622,7 @@ async function fetchOneCommander(exclude) {
   }
   // Colour identity: card colour_identity must be contained by selected colours
   if (selectedColors.length) {
-    // PostgREST array contained-by: cd.{W,U} — braces stay literal
+    // PostgREST array contained-by: cd.{W,U} - braces stay literal
     filters.push('color_identity=cd.{' + selectedColors.join(',') + '}');
   }
   filters.push('image_uri_normal=not.is.null');
@@ -771,7 +771,7 @@ function copyLink() {
 </body></html>`;
 }
 
-// Set Index Page — P2 rebuild with full filter system
+// Set Index Page - P2 rebuild with full filter system
 async function renderSetIndex(setSlug) {
   const sets = await supabaseGet(`mtg_sets?set_slug=eq.${setSlug}&limit=1&select=set_code,set_name,set_type,release_date,card_count,amazon_asin,parent_set_code,set_slug`);
   if (!sets || !sets[0]) return null;
@@ -788,7 +788,7 @@ async function renderSetIndex(setSlug) {
     ),
     // Sub-sets where this is the parent
     supabaseGet(`mtg_sets?parent_set_code=eq.${set.set_code}&select=set_code,set_name,set_slug,release_date&order=set_name.asc`),
-    // Siblings + parent — if this set has a parent_set_code
+    // Siblings + parent - if this set has a parent_set_code
     set.parent_set_code
       ? supabaseGet(`mtg_sets?or=(set_code.eq.${set.parent_set_code},parent_set_code.eq.${set.parent_set_code})&select=set_code,set_name,set_slug,release_date&order=set_name.asc`)
       : Promise.resolve([])
@@ -855,7 +855,7 @@ async function renderSetIndex(setSlug) {
     return ci[0];
   };
 
-  // Top 5 spotlight — already sorted by price desc from query
+  // Top 5 spotlight - already sorted by price desc from query
   const top5 = cards.filter(c => toAud(c) > 0).slice(0, 5);
   const top5HTML = top5.map(c => {
     const aud = toAud(c);
@@ -871,13 +871,13 @@ async function renderSetIndex(setSlug) {
     </a>`;
   }).join('');
 
-  // Context paragraph — top 2 named cards
+  // Context paragraph - top 2 named cards
   const topTwo = cards.filter(c => toAud(c) > 0).slice(0, 2);
   const contextText = topTwo.length >= 2
     ? `${set.set_name} contains ${cards.length} cards. The most valuable in this set are <strong>${topTwo[0].name}</strong> at ~AU$${toAud(topTwo[0]).toFixed(0)} and <strong>${topTwo[1].name}</strong> at ~AU$${toAud(topTwo[1]).toFixed(0)}. Prices are updated daily and displayed in AUD.`
     : `${set.set_name} contains ${cards.length} cards. Prices are updated daily and displayed in AUD.`;
 
-  // Main card grid HTML — data attributes for all filter dimensions
+  // Main card grid HTML - data attributes for all filter dimensions
   const cardGrid = cards.map(c => {
     const aud = toAud(c);
     const priceDisplay = aud >= 0.50 ? `~AU$${aud.toFixed(0)}` : '<span style="color:rgba(160,168,192,.35);font-size:9px">no price</span>';
@@ -887,7 +887,7 @@ async function renderSetIndex(setSlug) {
     const ciRaw = ciArr.join(',');
     const type = primaryType(c.type_line);
     const cmc = c.cmc || 0;
-    // Inline SVG pips — no external dependency
+    // Inline SVG pips - no external dependency
     const pipsHtml = ciArr.length
       ? ciArr.map(pip => manaPip(pip, 12)).join('')
       : manaPip('C', 12);
@@ -1031,7 +1031,7 @@ ${NAV_HTML}
   <!-- Filter bar -->
   <div class="filter-bar">
 
-    <!-- Colour Identity — multi-select toggle, AND logic -->
+    <!-- Colour Identity - multi-select toggle, AND logic -->
     <div class="filter-row">
       <span class="filter-label">Colour</span>
       <button class="filter-btn colour-btn active" data-colour-filter="all" onclick="toggleColour(this,'all')">All</button>
@@ -1043,7 +1043,7 @@ ${NAV_HTML}
       <button class="filter-btn colour-btn" data-colour-filter="C" onclick="toggleColour(this,'C')">${manaFilterPip('C')} Colourless</button>
     </div>
 
-    <!-- Type — multi-select toggle -->
+    <!-- Type - multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Type</span>
       <button class="filter-btn active" data-type-filter="all" onclick="toggleType(this,'all')">All</button>
@@ -1057,7 +1057,7 @@ ${NAV_HTML}
       <button class="filter-btn" data-type-filter="Battle" onclick="toggleType(this,'Battle')">Battle</button>
     </div>
 
-    <!-- Rarity — multi-select toggle -->
+    <!-- Rarity - multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Rarity</span>
       <button class="filter-btn active" data-rarity-filter="all" onclick="toggleRarity(this,'all')">All</button>
@@ -1067,7 +1067,7 @@ ${NAV_HTML}
       <button class="filter-btn" data-rarity-filter="common" onclick="toggleRarity(this,'common')" style="color:#9ca3af;border-color:rgba(156,163,175,.3)">◆ Common</button>
     </div>
 
-    <!-- Mana Value — multi-select toggle -->
+    <!-- Mana Value - multi-select toggle -->
     <div class="filter-row">
       <span class="filter-label">Mana Value</span>
       <button class="filter-btn active" data-cmc-filter="all" onclick="toggleCmc(this,'all')">All</button>
@@ -1188,12 +1188,12 @@ function applyFilters() {
     const type     = card.dataset.type || '';
     const cmc      = parseInt(card.dataset.cmc, 10) || 0;
 
-    // Colour: AND logic — card must contain ALL selected colours
+    // Colour: AND logic - card must contain ALL selected colours
     const colOk = selColours.size === 0
       ? true
       : [...selColours].every(sc => sc === 'C' ? colKey === 'C' : colRaw.includes(sc));
 
-    // Type: OR logic — card matches ANY selected type
+    // Type: OR logic - card matches ANY selected type
     const typeOk   = selTypes.size   === 0 || selTypes.has(type);
 
     // Rarity: OR logic
@@ -1259,11 +1259,11 @@ function clearFilters() {
     const section = document.getElementById('set-cmd-section');
     if (!track) return;
     try {
-      // mode=set with this set's code — shows commanders from THIS set specifically
+      // mode=set with this set's code - shows commanders from THIS set specifically
       const res  = await fetch('/.netlify/functions/commander-carousel?mode=set&setcode=${set.set_code}&limit=20');
       const data = await res.json();
       if (!data.commanders || data.commanders.length === 0) {
-        // Hide the whole section — no legendary creatures in this set
+        // Hide the whole section - no legendary creatures in this set
         if (section) section.style.display = 'none';
         return;
       }

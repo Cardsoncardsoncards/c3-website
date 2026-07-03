@@ -153,14 +153,16 @@ function sharedCSS() {
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
 
-  const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
-    supabaseGet('weissschwarz_sets?order=release_date.desc&limit=300&select=id,name,slug,release_date,card_count,property'),
+  // Fetch sets first and independently so the property directory grid never
+  // depends on the card queries. supabaseGet swallows its own errors (returns []).
+  const sets = await supabaseGet('weissschwarz_sets?order=release_date.desc&limit=300&select=id,name,slug,release_date,card_count,property');
+
+  const [cardsRes, gainersRes, losersRes] = await Promise.allSettled([
     supabaseGet('weissschwarz_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
     supabaseGet('weissschwarz_cards?order=price_change_7d.desc&price_change_7d=gt.5&market_price=gt.1&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name'),
     supabaseGet('weissschwarz_cards?order=price_change_7d.asc&price_change_7d=lt.-5&market_price=gt.1&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name')
   ]);
 
-  const sets    = setsRes.status  === 'fulfilled' ? setsRes.value  : [];
   let rawCards  = cardsRes.status === 'fulfilled' ? cardsRes.value : [];
   const gainers = gainersRes.status === 'fulfilled' ? gainersRes.value : [];
   const losers  = losersRes.status  === 'fulfilled' ? losersRes.value  : [];

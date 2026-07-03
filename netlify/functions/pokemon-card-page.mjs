@@ -157,8 +157,8 @@ async function handleSetPage(setSlug, headers) {
   const top5HTML = top5.map(c => {
     const aud = toAud(c);
     return `<a href="/cards/pokemon/${c.slug}" style="flex:0 0 140px;background:#0e1118;border:1px solid rgba(245,166,35,.35);border-radius:10px;padding:10px;text-align:center;text-decoration:none;display:block">
-      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
-      <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${c.name}</div>
+      ${c.image_url ? `<img src="${c.image_url}" alt="${esc(c.name)}" style="width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px" loading="lazy">` : ''}
+      <div style="font-size:11px;color:#e8eaf0;line-height:1.3;margin-bottom:4px;font-weight:600">${esc(c.name)}</div>
       ${aud > 0 ? `<div style="font-size:12px;color:#C9A84C;font-weight:700">AU$${aud.toFixed(2)}</div>` : ''}
     </a>`;
   }).join('');
@@ -184,8 +184,8 @@ async function handleSetPage(setSlug, headers) {
       : '';
     return `<a href="/cards/pokemon/${c.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:8px;text-decoration:none;text-align:center;display:block;position:relative;transition:border-color .2s" onmouseover="this.style.borderColor='${rarityCol}'" onmouseout="this.style.borderColor='#1e2235'">
       ${trendDot}
-      ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
-      <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${c.name}</div>
+      ${c.image_url ? `<img src="${c.image_url}" alt="${esc(c.name)}" style="width:100%;border-radius:4px;max-height:120px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:100px;background:#1e2235;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;font-size:20px">🃏</div>`}
+      <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${esc(c.name)}</div>
       ${c.number ? `<div style="font-size:9px;color:#8892b0">#${c.number}</div>` : ''}
       ${c.rarity ? `<div style="font-size:9px;color:${rarityCol};font-weight:700;margin-top:2px;text-transform:uppercase;letter-spacing:.04em">${c.rarity}</div>` : ''}
       ${aud > 0 ? `<div style="font-size:11px;color:#C9A84C;font-weight:700;margin-top:2px">AU$${aud.toFixed(2)}</div>` : `<div style="font-size:9px;color:#555;margin-top:2px">no price</div>`}
@@ -409,8 +409,8 @@ export default async (req) => {
       <div class="card-carousel">
         ${relatedCards.map(c => `
           <a href="/cards/pokemon/${c.slug}" class="mini-card">
-            ${c.image_url ? `<img src="${c.image_url}" alt="${c.name}" loading="lazy" style="width:100%;border-radius:6px">` : `<div style="height:80px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text2)">${c.name}</div>`}
-            <div class="mini-card-name">${c.name}</div>
+            ${c.image_url ? `<img src="${c.image_url}" alt="${esc(c.name)}" loading="lazy" style="width:100%;border-radius:6px">` : `<div style="height:80px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text2)">${esc(c.name)}</div>`}
+            <div class="mini-card-name">${esc(c.name)}</div>
             <div class="mini-card-price">${c.market_price ? '~AU$'+(c.market_price*1.45).toFixed(2) : ''}</div>
           </a>`).join('')}
       </div>
@@ -568,7 +568,7 @@ export default async (req) => {
   <a href="/">Home</a><span class="breadcrumb-sep">/</span>
   <a href="/cards/pokemon">Pokemon Cards</a><span class="breadcrumb-sep">/</span>
   <a href="${setUrl}">${card.set_name}</a><span class="breadcrumb-sep">/</span>
-  <span>${card.name}</span>
+  <span>${esc(card.name)}</span>
 </div>
 
 <div class="card-hero">
@@ -583,7 +583,7 @@ export default async (req) => {
 
   <div class="card-info-col">
     ${card.rarity ? `<span class="rarity-badge ${rarityClass(card.rarity)}">${card.rarity}</span>` : ''}
-    <h1>${card.name}</h1>
+    <h1>${esc(card.name)}</h1>
     <p class="card-subtitle">${card.category || 'Pokemon'} · ${card.set_name}${card.series ? ` · ${card.series}` : ''}</p>
 
     ${card.types && card.types.length ? `<div class="energy-pips">${energyPips(card.types)}</div>` : ''}
