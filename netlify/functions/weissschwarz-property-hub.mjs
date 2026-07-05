@@ -137,11 +137,19 @@ export default async (req) => {
   const canonical  = `${SITE}/cards/weissschwarz/series/${propSlug}`;
 
   let topCards = [];
+  let gainers = [], losers = [];
   if (setIds.length) {
-    const [cardsRes] = await Promise.allSettled([
-      supabaseGet(`weissschwarz_cards?set_id=in.(${setIds.join(',')})&order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name`)
+    // Same Weekly Market Pulse queries as the main WS hub, but scoped to just
+    // this property's sets via set_id=in.(...).
+    const inClause = `set_id=in.(${setIds.join(',')})`;
+    const [cardsRes, gainersRes, losersRes] = await Promise.allSettled([
+      supabaseGet(`weissschwarz_cards?${inClause}&order=market_price.desc&market_price=gt.0&image_url=not.is.null&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name`),
+      supabaseGet(`weissschwarz_cards?${inClause}&order=price_change_7d.desc&price_change_7d=gt.5&market_price=gt.1&price_change_7d=lt.5000&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name`),
+      supabaseGet(`weissschwarz_cards?${inClause}&order=price_change_7d.asc&price_change_7d=lt.-5&market_price=gt.1&image_url=not.is.null&limit=5&select=slug,name,image_url,market_price,price_aud,price_change_7d,set_name`)
     ]);
     const rawCards = cardsRes.status === 'fulfilled' ? cardsRes.value : [];
+    gainers = gainersRes.status === 'fulfilled' ? gainersRes.value : [];
+    losers  = losersRes.status  === 'fulfilled' ? losersRes.value  : [];
     const SEALED = ['booster box','booster pack',' case','bundle','display','sealed product','starter deck','starter set','trial deck','box set','collection box','premium set','gift set'];
     topCards = rawCards.filter(c => { const n = (c.name || '').toLowerCase(); return !SEALED.some(k => n.includes(k)); });
   }
@@ -154,6 +162,17 @@ export default async (req) => {
     return `<div class="carousel-card"><a href="/cards/weissschwarz/${esc(c.slug)}" style="display:block;text-decoration:none"><div class="carousel-img-wrap"><img src="${esc(c.image_url)}" alt="${esc(c.name).replace(/"/g,'&quot;')}" loading="lazy" onerror="this.onerror=null;this.style.opacity=0.3"></div><div class="carousel-name">${esc(c.name)}</div>${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}<div class="carousel-price">${price}</div></a><div class="carousel-buy-row"><a href="${ebay}" target="_blank" rel="noopener" class="carousel-buy-btn">Buy eBay &#8599;</a></div></div>`;
   }
   const cardGridHTML = topCards.map(cardTile).join('');
+
+  function moverCard(c, isGainer) {
+    const arrow = isGainer ? '&#8593;' : '&#8595;';
+    const col   = isGainer ? '#4ADE80' : '#f87171';
+    const pct   = Math.abs(parseFloat(c.price_change_7d||0)).toFixed(1);
+    const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price*1.45).toFixed(0) : '';
+    return `<a href="/cards/weissschwarz/${esc(c.slug)}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none">${c.image_url?`<img src="${esc(c.image_url)}" alt="" loading="lazy" style="width:40px;height:56px;object-fit:cover;border-radius:4px;flex-shrink:0">`:'<div style="width:40px;height:56px;background:var(--bg3);border-radius:4px;flex-shrink:0"></div>'}<div style="min-width:0;flex:1"><div style="font-size:11.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(c.name)}</div><div style="font-size:10px;color:var(--text2)">${esc(c.set_name||'')}</div><div style="font-size:11px;color:var(--accent);font-weight:700">${price}</div></div><div style="font-size:12px;font-weight:700;color:${col};flex-shrink:0">${arrow}${pct}%</div></a>`;
+  }
+  const gainerHTML = gainers.map(c => moverCard(c, true)).join('');
+  const loserHTML  = losers.map(c => moverCard(c, false)).join('');
+  const hasMovers  = gainers.length > 0 || losers.length > 0;
 
   const setListHTML = sets.map(s => {
     const name     = s.name || '';
@@ -222,6 +241,23 @@ ${propSlug === 'hololive' ? `<div class="wrap"><div style="background:rgba(${ACC
     <p style="text-align:center;color:var(--text2);font-size:11px;margin-top:14px">Prices sourced from TCGPlayer (USD), converted to AUD at approximately 1.45. Updated daily.</p>
   </div>` : ''}
 
+  ${hasMovers ? `<div class="section fade-up fade-up-3" style="margin-bottom:28px">
+    <div style="text-align:center;margin-bottom:16px">
+      <h2 style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px">&#128200; ${esc(label)} Weekly Market Pulse</h2>
+      <p style="font-size:13px;color:var(--text2)">Biggest ${esc(label)} price movers in the last 7 days. Prices sourced from TCGPlayer (USD), converted to AUD.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px"><span style="color:#4ADE80">&#8593;</span> Biggest Gainers</div>
+        <div style="display:flex;flex-direction:column;gap:8px">${gainerHTML||'<p style="color:var(--text2);font-size:13px">No significant gainers this week.</p>'}</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px"><span style="color:#f87171">&#8595;</span> Biggest Losers</div>
+        <div style="display:flex;flex-direction:column;gap:8px">${loserHTML||'<p style="color:var(--text2);font-size:13px">No significant losers this week.</p>'}</div>
+      </div>
+    </div>
+  </div>` : ''}
+
   <div style="background:rgba(${ACCENT_RGB},.04);border:1px solid rgba(${ACCENT_RGB},.15);border-radius:var(--radius);padding:22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
     <div>
       <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:5px">Track Your Weiss Schwarz Collection</div>
@@ -232,6 +268,7 @@ ${propSlug === 'hololive' ? `<div class="wrap"><div style="background:rgba(${ACC
 </div>
 
 <footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <div style="margin-bottom:10px">
     <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/weissschwarz">Weiss Schwarz</a>
     <a href="/cards/pokemon">Pokemon</a><a href="/cards/mtg">MTG</a>

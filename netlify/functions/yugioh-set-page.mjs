@@ -294,6 +294,7 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
   </div>
 </div>
 <footer style="border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text2);font-size:12px;margin-top:20px">
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <p><a href="/" style="color:var(--text2);margin:0 8px">Home</a><a href="/cards" style="color:var(--text2);margin:0 8px">Card Vault</a><a href="/cards/yugioh" style="color:var(--text2);margin:0 8px">Yu-Gi-Oh</a><a href="/blog" style="color:var(--text2);margin:0 8px">Blog</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px">Yu-Gi-Oh and all related characters © Kazuki Takahashi / Shueisha. Published by Konami. C3 is not affiliated with Konami.</p>

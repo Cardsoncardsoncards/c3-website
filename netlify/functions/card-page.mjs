@@ -884,6 +884,7 @@ ${sealedHTML}
 </div>
 
 <footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <p style="margin-bottom:12px">
     <a href="/">Home</a>
     <a href="/cards/mtg">MTG Cards</a>
@@ -1656,6 +1657,7 @@ ${navHtml({ gameLabel: 'MTG', gameHref: '/cards/mtg' })}
   `}
 </div>
 <footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <p><a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/mtg">MTG</a><a href="/cards/mtg/banned">Banned Cards</a><a href="/blog">Blog</a></p>
   <p style="margin-top:8px;font-size:12px">Ban lists current as of May 2026. &copy; 2026 Cards on Cards on Cards &middot; Affiliate links may earn a small commission.</p>
   <p style="margin-top:6px;font-size:10px;opacity:.4">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>

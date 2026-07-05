@@ -329,6 +329,7 @@ ${carouselHTML ? `<section class="carousel-section fade-up fade-up-2">
 </div>
 
 <footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <div style="margin-bottom:10px">
     <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/onepiece">One Piece</a>
     <a href="/cards/pokemon">Pokemon</a><a href="/cards/mtg">MTG</a>

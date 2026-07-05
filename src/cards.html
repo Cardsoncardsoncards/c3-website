@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The C3 Card Vault | TCG Card Prices Australia | 32 Games, 295,000+ Cards</title>
-<meta name="description" content="295,000+ TCG cards priced in AUD across 32 games. MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Digimon, Vanguard, Weiss Schwarz and more. Live eBay AU buy links, updated daily.">
+<title>The C3 Card Vault | TCG Card Prices Australia | 32 Games, 350,000+ Cards</title>
+<meta name="description" content="350,000+ TCG cards priced in AUD across 32 games. MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Digimon, Vanguard, Weiss Schwarz and more. Live eBay AU buy links, updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards">
 <link rel="icon" type="image/png" href="/c3logo.png">
 <meta property="og:title" content="The C3 Card Vault | TCG Card Prices Australia">
-<meta property="og:description" content="295,000+ cards across 32 TCGs with live AUD pricing and eBay buy links. Australian-built card intelligence covering 32+ games worldwide.">
+<meta property="og:description" content="350,000+ cards across 32 TCGs with live AUD pricing and eBay buy links. Australian-built card intelligence covering 32+ games worldwide.">
 <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"The C3 Card Vault","description":"TCG card prices in AUD across 32 games","url":"https://cardsoncardsoncards.com.au/cards","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cardsoncardsoncards.com.au"},{"@type":"ListItem","position":2,"name":"The Card Vault","item":"https://cardsoncardsoncards.com.au/cards"}]}}</script>
@@ -119,6 +119,10 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 /* ALL GAMES COMPACT GRID */
 .games-section-hd{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .all-games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px}
+.az-row{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
+.az-btn{background:var(--bg2,#111420);border:1px solid var(--border,#242840);color:var(--text2,#9ba3c4);font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .15s}
+.az-btn:hover{border-color:var(--gold,#C9A84C);color:var(--white,#F0F2FF)}
+.az-btn--active{background:var(--gold,#C9A84C);color:#0A0C14;border-color:var(--gold,#C9A84C)}
 .game-tile{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--tile-accent,var(--gold-dim));border-radius:8px;padding:10px 12px;text-decoration:none;transition:all .2s}
 .game-tile:hover{border-color:var(--tile-accent,var(--gold-dim));background:rgba(255,255,255,.02);transform:translateX(2px);text-decoration:none}
 .game-tile-icon{font-size:18px;flex-shrink:0}
@@ -209,7 +213,7 @@ footer a:hover{color:var(--white)}
       <img src="/c3logo.png" alt="C3 Logo" style="height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0;">
     </a>
     <div class="nav-search-wrap">
-      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search 295,000+ cards..." autocomplete="off">
+      <input class="nav-search-input" type="text" id="nav-q" placeholder="Search 350,000+ cards..." autocomplete="off">
       <button class="nav-search-btn" id="nav-q-btn" aria-label="Search">&#128269;</button>
     </div>
     <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
@@ -264,9 +268,9 @@ footer a:hover{color:var(--white)}
   <div class="wrap">
     <div class="hero-eyebrow">Cards on Cards on Cards</div>
     <h1 class="hero-title">The C3 <span>Card Vault</span></h1>
-    <p class="hero-sub">295,000+ cards across 32 TCGs, including 69 individually browsable Weiss Schwarz licensed properties, with live AUD pricing, eBay buy links, and price history. Australian-built card intelligence covering 32+ games worldwide, updated daily.</p>
+    <p class="hero-sub">350,000+ cards across 32 TCGs, including 69 individually browsable Weiss Schwarz licensed properties, with live AUD pricing, eBay buy links, and price history. Australian-built card intelligence covering 32+ games worldwide, updated daily.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="hero-stat-num">295,000+</div><div class="hero-stat-label">Cards Tracked</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">350,000+</div><div class="hero-stat-label">Cards Tracked</div></div>
       <div class="hero-stat"><div class="hero-stat-num">32</div><div class="hero-stat-label">Games Live</div></div>
       <div class="hero-stat"><div class="hero-stat-num">Daily</div><div class="hero-stat-label">Price Updates</div></div>
       <div class="hero-stat"><div class="hero-stat-num">AUD</div><div class="hero-stat-label">Live FX Rate</div></div>
@@ -403,7 +407,9 @@ function discoToggle(){
         <button class="filter-btn" onclick="filterGames('classic',this)">Classic</button>
       </div>
     </div>
-    <p class="section-sub" style="margin-top:8px">Click any game to browse cards, sets and prices in AUD.</p>
+    <p class="section-sub" style="margin-top:8px">Click any game to browse cards, sets and prices in AUD.</p>
+    <div class="az-row" id="games-az" style="margin-top:12px"></div>
+    <p id="games-empty" style="display:none;text-align:center;color:var(--text2);font-size:13px;margin:4px 0 12px">No games match that filter.</p>
 
     <div class="all-games-grid" id="all-games-grid">
       <!-- Anime -->
@@ -434,7 +440,77 @@ function discoToggle(){
       <a href="/cards/warhammer" class="game-tile" style="--tile-accent:#92400E" data-cat="western"><span class="game-tile-icon">&#128736;</span><div class="game-tile-body"><div class="game-tile-name">Warhammer TCG</div><div class="game-tile-count">1,100+ cards &middot; 5 sets</div></div></a>
       <!-- Classic -->
       <a href="/cards/bakugan" class="game-tile" style="--tile-accent:#EF4444" data-cat="classic"><span class="game-tile-icon">&#9655;</span><div class="game-tile-body"><div class="game-tile-name">Bakugan TCG</div><div class="game-tile-count">1,600+ cards &middot; 9 sets</div></div></a>
-      <a href="/cards/wow" class="game-tile" style="--tile-accent:#C9A84C" data-cat="classic"><span class="game-tile-icon">&#128481;</span><div class="game-tile-body"><div class="game-tile-name">World of Warcraft TCG</div><div class="game-tile-count">4,700+ cards &middot; 52 sets</div></div></a>
+      <a href="/cards/wow" class="game-tile" style="--tile-accent:#C9A84C" data-cat="classic"><span class="game-tile-icon">&#128481;</span><div class="game-tile-body"><div class="game-tile-name">World of Warcraft TCG</div><div class="game-tile-count">4,700+ cards &middot; 52 sets</div></div></a>
+      <!-- Weiss Schwarz licensed properties (69) -->
+      <a href="/cards/weissschwarz/series/bang-dream" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Bang Dream</div><div class="game-tile-count">2,575 cards &middot; 12 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/sword-art-online" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Sword Art Online</div><div class="game-tile-count">1,752 cards &middot; 12 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/fate" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Fate</div><div class="game-tile-count">1,454 cards &middot; 10 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/love-live" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Love Live</div><div class="game-tile-count">1,570 cards &middot; 8 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/hololive" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Hololive</div><div class="game-tile-count">1,434 cards &middot; 5 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/rezero" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Rezero</div><div class="game-tile-count">555 cards &middot; 5 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/kancolle" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Kancolle</div><div class="game-tile-count">670 cards &middot; 4 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/konosuba" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Konosuba</div><div class="game-tile-count">576 cards &middot; 4 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/nazarick-overlord" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Nazarick Overlord</div><div class="game-tile-count">357 cards &middot; 4 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/puella-magi-madoka-magica" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Puella Magi Madoka Magica</div><div class="game-tile-count">615 cards &middot; 4 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/quintessential-quintuplets" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Quintessential Quintuplets</div><div class="game-tile-count">871 cards &middot; 4 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/attack-on-titan" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Attack On Titan</div><div class="game-tile-count">525 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/date-a-live" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Date A Live</div><div class="game-tile-count">443 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/fairy-tail" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Fairy Tail</div><div class="game-tile-count">607 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/haruhi-suzumiya" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Haruhi Suzumiya</div><div class="game-tile-count">242 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/hatsune-miku" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Hatsune Miku</div><div class="game-tile-count">729 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/jojo-bizarre-adventure" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Jojo Bizarre Adventure</div><div class="game-tile-count">507 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/persona" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Persona</div><div class="game-tile-count">474 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/rascal-does-not-dream" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Rascal Does Not Dream</div><div class="game-tile-count">557 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/revue-starlight" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Revue Starlight</div><div class="game-tile-count">533 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/saekano" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Saekano</div><div class="game-tile-count">462 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/that-time-i-got-reincarnated-as-a-slime" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">That Time I Got Reincarnated As A Slime</div><div class="game-tile-count">481 cards &middot; 3 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/accel-world" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Accel World</div><div class="game-tile-count">273 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/azur-lane" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Azur Lane</div><div class="game-tile-count">850 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/blue-archive" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Blue Archive</div><div class="game-tile-count">361 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/disgaea" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Disgaea</div><div class="game-tile-count">219 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/kaguya-sama" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Kaguya Sama</div><div class="game-tile-count">702 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/kill-la-kill" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Kill La Kill</div><div class="game-tile-count">179 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/log-horizon" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Log Horizon</div><div class="game-tile-count">156 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/lycoris-recoil" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Lycoris Recoil</div><div class="game-tile-count">323 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/monogatari" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Monogatari</div><div class="game-tile-count">274 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/nisekoi" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Nisekoi</div><div class="game-tile-count">229 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/oshi-no-ko" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Oshi No Ko</div><div class="game-tile-count">490 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/rwby" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Rwby</div><div class="game-tile-count">299 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/seven-deadly-sins" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Seven Deadly Sins</div><div class="game-tile-count">349 cards &middot; 2 sets &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/adventure-time" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Adventure Time</div><div class="game-tile-count">178 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/angel-beats" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Angel Beats</div><div class="game-tile-count">194 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/arifureta" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Arifureta</div><div class="game-tile-count">192 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/avatar-last-airbender" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Avatar Last Airbender</div><div class="game-tile-count">203 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/ayakashi-triangle" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Ayakashi Triangle</div><div class="game-tile-count">211 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/batman-ninja" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Batman Ninja</div><div class="game-tile-count">167 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/bocchi-the-rock" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Bocchi The Rock</div><div class="game-tile-count">260 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/bofuri" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Bofuri</div><div class="game-tile-count">191 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/cardcaptor-sakura" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Cardcaptor Sakura</div><div class="game-tile-count">170 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/chainsaw-man" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Chainsaw Man</div><div class="game-tile-count">207 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/dandadan" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Dandadan</div><div class="game-tile-count">312 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/eminence-in-shadow" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Eminence In Shadow</div><div class="game-tile-count">292 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/frieren" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Frieren</div><div class="game-tile-count">292 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/fruit-of-grisaia" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Fruit Of Grisaia</div><div class="game-tile-count">189 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/girls-band-cry" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Girls Band Cry</div><div class="game-tile-count">208 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/goblin-slayer" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Goblin Slayer</div><div class="game-tile-count">165 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/guilty-gear" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Guilty Gear</div><div class="game-tile-count">216 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/gurren-lagann" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Gurren Lagann</div><div class="game-tile-count">158 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/idolmaster" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Idolmaster</div><div class="game-tile-count">266 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/is-it-wrong-dungeon" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Is It Wrong Dungeon</div><div class="game-tile-count">176 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/macross" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Macross</div><div class="game-tile-count">154 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/makeine" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Makeine</div><div class="game-tile-count">279 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/miss-kobayashis-dragon-maid" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Miss Kobayashis Dragon Maid</div><div class="game-tile-count">220 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/mob-psycho-100" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Mob Psycho 100</div><div class="game-tile-count">169 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/mushoku-tensei" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Mushoku Tensei</div><div class="game-tile-count">188 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/nikke" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Nikke</div><div class="game-tile-count">376 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/no-game-no-life" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">No Game No Life</div><div class="game-tile-count">165 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/rent-a-girlfriend" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Rent A Girlfriend</div><div class="game-tile-count">171 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/rurouni-kenshin" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Rurouni Kenshin</div><div class="game-tile-count">268 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/shakugan-no-shana" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Shakugan No Shana</div><div class="game-tile-count">132 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/spy-x-family" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Spy X Family</div><div class="game-tile-count">218 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/to-love-ru" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">To Love Ru</div><div class="game-tile-count">157 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/tokyo-revengers" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Tokyo Revengers</div><div class="game-tile-count">202 cards &middot; 1 set &middot; WS</div></div></a>
+      <a href="/cards/weissschwarz/series/umamusume" class="game-tile" style="--tile-accent:#EC4899" data-cat="anime"><span class="game-tile-icon">&#9824;</span><div class="game-tile-body"><div class="game-tile-name">Umamusume</div><div class="game-tile-count">9 cards &middot; 1 set &middot; WS</div></div></a>
     </div>
   </div>
 </section>
@@ -605,6 +681,7 @@ function discoToggle(){
 </section>
 
 <footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <div style="max-width:1200px;margin:0 auto">
     <p>
       <a href="/">Home</a>
@@ -631,13 +708,53 @@ function discoToggle(){
 })();
 
 // GAME FILTER
-function filterGames(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  document.querySelectorAll('.game-tile').forEach(function(el){
-    el.style.display = (cat === 'all' || el.dataset.cat === cat) ? '' : 'none';
-  });
-}
+// GAME + A-Z FILTER (32 base games + 69 Weiss Schwarz properties)
+(function(){
+  var gridEl = document.getElementById('all-games-grid');
+  var tiles = gridEl ? Array.prototype.slice.call(gridEl.querySelectorAll('.game-tile')) : [];
+  var activeCat = 'all', activeLetter = null;
+  function letterOf(el){
+    var n = el.querySelector('.game-tile-name');
+    var ch = ((n && n.textContent) || '').trim().charAt(0).toUpperCase();
+    return /[A-Z]/.test(ch) ? ch : '#';
+  }
+  tiles.forEach(function(el){ el.setAttribute('data-letter', letterOf(el)); });
+  var azRow = document.getElementById('games-az');
+  if (azRow){
+    var present = {};
+    tiles.forEach(function(el){ present[el.getAttribute('data-letter')] = 1; });
+    var letters = Object.keys(present).sort(function(a,b){ if(a==='#')return 1; if(b==='#')return -1; return a<b?-1:1; });
+    var html = '<button class="az-btn az-btn--active" onclick="filterGameLetter(null,this)">All</button>';
+    letters.forEach(function(l){ html += '<button class="az-btn" onclick="filterGameLetter(\'' + l + '\',this)">' + l + '</button>'; });
+    azRow.innerHTML = html;
+  }
+  function apply(){
+    var shown = 0;
+    tiles.forEach(function(el){
+      var catOk = (activeCat === 'all') || (el.dataset.cat === activeCat);
+      var letOk = (activeLetter === null) || (el.getAttribute('data-letter') === activeLetter);
+      var vis = catOk && letOk;
+      el.style.display = vis ? '' : 'none';
+      if (vis) shown++;
+    });
+    var empty = document.getElementById('games-empty');
+    if (empty) empty.style.display = shown === 0 ? 'block' : 'none';
+  }
+  window.filterGames = function(cat, btn){
+    activeCat = cat;
+    var b = document.querySelectorAll('.filter-row .filter-btn');
+    for (var i=0;i<b.length;i++) b[i].classList.remove('active');
+    if (btn) btn.classList.add('active');
+    apply();
+  };
+  window.filterGameLetter = function(letter, btn){
+    activeLetter = letter;
+    var b = document.querySelectorAll('#games-az .az-btn');
+    for (var i=0;i<b.length;i++) b[i].classList.remove('az-btn--active');
+    if (btn) btn.classList.add('az-btn--active');
+    apply();
+  };
+})();
 
 // LIVE CARD SEARCH
 (function(){

@@ -269,6 +269,7 @@ export default async (req) => {
 </main>
 
 <footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <div class="wrap">
     <div class="mission">Cards on Cards on Cards is Australia&#8217;s TCG intelligence platform. Every price in AUD. Every signal built for the local market.</div>
     <div class="disc">Prices are indicative AUD market estimates and move constantly. C3 participates in the eBay Partner Network and may earn a small commission on purchases made through links, at no extra cost to you.</div>
