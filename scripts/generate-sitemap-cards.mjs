@@ -75,6 +75,13 @@ async function generateMtgSitemap() {
         priority: price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7'
       };
     });
+  // Sanity guard: the high-value file should always contain thousands of cards.
+  // An empty result here means the query silently returned nothing (e.g. a
+  // partial Supabase outage) — treat it as a hard failure rather than shipping
+  // an empty sitemap that de-indexes every MTG card page.
+  if (urls1.length === 0) {
+    throw new Error('mtg_cards ($2.00+) returned 0 rows — refusing to write an empty sitemap-cards.xml');
+  }
   writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, buildSitemap(urls1, `MTG card pages: ${urls1.length} cards at USD$2.00+`));
   console.log(`  MTG part 1: ${urls1.length} URLs written to sitemap-cards.xml`);
 
@@ -97,174 +104,41 @@ async function generateMtgSitemap() {
   return urls1.length + urls2.length;
 }
 
-async function generatePokemonSitemap() {
-  console.log('Generating Pokemon card sitemap...');
-  try {
-    const cards = await fetchAll(
-      'pokemon_cards',
-      'id,slug,updated_at',
-      'slug=not.is.null&image_url=not.is.null'
-    );
-    if (!cards.length) { console.log('  Pokemon: no cards yet, skipping'); return 0; }
-
-    const urls = cards
-      .filter(c => c.slug && c.slug.trim())
-      .map(c => ({
-        loc: `${SITE_URL}/cards/pokemon/${c.slug}`,
-        lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
-        priority: '0.7'
-      }));
-
-    writeFileSync(`${OUT_DIR}/sitemap-pokemon.xml`, buildSitemap(urls, `Pokemon card pages: ${urls.length} cards`));
-    console.log(`  Pokemon: ${urls.length} URLs written to sitemap-pokemon.xml`);
-    return urls.length;
-  } catch (e) {
-    console.log(`  Pokemon sitemap skipped: ${e.message}`);
-    return 0;
-  }
-}
-
-async function generateLorcanaSitemap() {
-  console.log('Generating Lorcana card sitemap...');
-  try {
-    const cards = await fetchAll(
-      'lorcana_cards',
-      'id,slug,updated_at',
-      'slug=not.is.null&image_url=not.is.null'
-    );
-    if (!cards.length) { console.log('  Lorcana: no cards yet, skipping'); return 0; }
-
-    const urls = cards
-      .filter(c => c.slug && c.slug.trim())
-      .map(c => ({
-        loc: `${SITE_URL}/cards/lorcana/${c.slug}`,
-        lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
-        priority: '0.7'
-      }));
-
-    writeFileSync(`${OUT_DIR}/sitemap-lorcana.xml`, buildSitemap(urls, `Lorcana card pages: ${urls.length} cards`));
-    console.log(`  Lorcana: ${urls.length} URLs written to sitemap-lorcana.xml`);
-    return urls.length;
-  } catch (e) {
-    console.log(`  Lorcana sitemap skipped: ${e.message}`);
-    return 0;
-  }
-}
-
-async function generateYugiohSitemap() {
-  console.log('Generating Yu-Gi-Oh card sitemap...');
-  try {
-    const cards = await fetchAll(
-      'yugioh_cards',
-      'id,slug,updated_at',
-      'slug=not.is.null&image_url=not.is.null'
-    );
-    if (!cards.length) { console.log('  YuGiOh: no cards yet, skipping'); return 0; }
-
-    const urls = cards
-      .filter(c => c.slug && c.slug.trim())
-      .map(c => ({
-        loc: `${SITE_URL}/cards/yugioh/${c.slug}`,
-        lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
-        priority: '0.7'
-      }));
-
-    writeFileSync(`${OUT_DIR}/sitemap-yugioh.xml`, buildSitemap(urls, `Yu-Gi-Oh card pages: ${urls.length} cards`));
-    console.log(`  Yu-Gi-Oh: ${urls.length} URLs written to sitemap-yugioh.xml`);
-    return urls.length;
-  } catch (e) {
-    console.log(`  YuGiOh sitemap skipped: ${e.message}`);
-    return 0;
-  }
-}
-
-// sitemap-index.xml is maintained in the repo root and NOT overwritten by this script.
-// It includes all runtime /api/sitemap-* endpoints plus build-time XML files.
-
-
-async function generateOnePieceSitemap() {
-  console.log('Generating One Piece card sitemap...');
-  try {
-    const cards = await fetchAll('onepiece_cards', 'id,slug,updated_at', 'slug=not.is.null&image_url=not.is.null');
-    if (!cards.length) { console.log('  One Piece: no cards yet, skipping'); return 0; }
-    const urls = cards.filter(c => c.slug && c.slug.trim()).map(c => ({
-      loc: `${SITE_URL}/cards/onepiece/${c.slug}`,
-      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null, priority: '0.7'
-    }));
-    writeFileSync(`${OUT_DIR}/sitemap-onepiece.xml`, buildSitemap(urls, `One Piece card pages: ${urls.length} cards`));
-    console.log(`  One Piece: ${urls.length} URLs written to sitemap-onepiece.xml`);
-    return urls.length;
-  } catch (err) { console.error('  One Piece sitemap error:', err.message); return 0; }
-}
-
-async function generateRiftboundSitemap() {
-  console.log('Generating Riftbound card sitemap...');
-  try {
-    const cards = await fetchAll('riftbound_cards', 'id,slug,updated_at', 'slug=not.is.null&image_url=not.is.null');
-    if (!cards.length) { console.log('  Riftbound: no cards yet, skipping'); return 0; }
-    const urls = cards.filter(c => c.slug && c.slug.trim()).map(c => ({
-      loc: `${SITE_URL}/cards/riftbound/${c.slug}`,
-      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null, priority: '0.7'
-    }));
-    writeFileSync(`${OUT_DIR}/sitemap-riftbound.xml`, buildSitemap(urls, `Riftbound card pages: ${urls.length} cards`));
-    console.log(`  Riftbound: ${urls.length} URLs written to sitemap-riftbound.xml`);
-    return urls.length;
-  } catch (err) { console.error('  Riftbound sitemap error:', err.message); return 0; }
-}
-
-async function generateStarWarsSitemap() {
-  console.log('Generating Star Wars card sitemap...');
-  try {
-    const cards = await fetchAll('starwars_cards', 'id,slug,updated_at', 'slug=not.is.null&image_url=not.is.null');
-    if (!cards.length) { console.log('  Star Wars: no cards yet, skipping'); return 0; }
-    const urls = cards.filter(c => c.slug && c.slug.trim()).map(c => ({
-      loc: `${SITE_URL}/cards/starwars/${c.slug}`,
-      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null, priority: '0.7'
-    }));
-    writeFileSync(`${OUT_DIR}/sitemap-starwars.xml`, buildSitemap(urls, `Star Wars card pages: ${urls.length} cards`));
-    console.log(`  Star Wars: ${urls.length} URLs written to sitemap-starwars.xml`);
-    return urls.length;
-  } catch (err) { console.error('  Star Wars sitemap error:', err.message); return 0; }
-}
-
-async function generateDragonBallSitemap() {
-  console.log('Generating Dragon Ball Super card sitemap...');
-  try {
-    const cards = await fetchAll('dragonball_cards', 'id,slug,updated_at', 'slug=not.is.null&image_url=not.is.null');
-    if (!cards.length) { console.log('  Dragon Ball: no cards yet, skipping'); return 0; }
-    const urls = cards.filter(c => c.slug && c.slug.trim()).map(c => ({
-      loc: `${SITE_URL}/cards/dragonball/${c.slug}`,
-      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null, priority: '0.7'
-    }));
-    writeFileSync(`${OUT_DIR}/sitemap-dragonball.xml`, buildSitemap(urls, `Dragon Ball card pages: ${urls.length} cards`));
-    console.log(`  Dragon Ball: ${urls.length} URLs written to sitemap-dragonball.xml`);
-    return urls.length;
-  } catch (err) { console.error('  Dragon Ball sitemap error:', err.message); return 0; }
-}
+// NOTE: pokemon / lorcana / yugioh / onepiece / riftbound / starwars / dragonball
+// are no longer generated statically here. Each is served at runtime by its
+// /api/sitemap-<game> Netlify Function and referenced directly from
+// sitemap-index.xml. The old build-time generators swallowed Supabase failures
+// and shipped empty (or missing) sitemaps — removing them eliminates that
+// failure mode. Only MTG stays static (its URL count times out the Function).
 
 async function main() {
   console.log('=== Sitemap Generation Start ===', new Date().toISOString());
 
   if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.error('Missing SUPABASE_URL or key — writing empty MTG sitemaps as fallback');
-    writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Build-time generation failed: missing env vars --></urlset>');
-    writeFileSync(`${OUT_DIR}/sitemap-cards-2.xml`, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Build-time generation failed: missing env vars --></urlset>');
+    // Local builds have no Supabase credentials (they live only in Netlify env).
+    // Do NOT overwrite the committed sitemap-cards*.xml artifacts with empty
+    // fallbacks — that silently de-indexes every MTG card page. Leave the
+    // existing files in place and let Eleventy pass them through unchanged.
+    console.warn('Missing SUPABASE_URL or key — skipping build-time sitemap regeneration (local build). Existing sitemaps left untouched.');
     return;
   }
 
-  const mtg        = await generateMtgSitemap();
-  const pokemon    = await generatePokemonSitemap();
-  const lorcana    = await generateLorcanaSitemap();
-  const yugioh     = await generateYugiohSitemap();
-  const onepiece   = await generateOnePieceSitemap();
-  const riftbound  = await generateRiftboundSitemap();
-  const starwars   = await generateStarWarsSitemap();
-  const dragonball = await generateDragonBallSitemap();
-
-  // sitemap-index.xml not overwritten — managed in repo root
-
-  const total = mtg + pokemon + lorcana + yugioh + onepiece + riftbound + starwars + dragonball;
-  console.log(`=== Sitemap Generation Complete === Total URLs: ${total}`);
+  // Only MTG is generated statically: its ~50k URLs time out the Netlify
+  // Function approach, so it is built ahead of Eleventy. Every other game
+  // (pokemon, lorcana, yugioh, onepiece, riftbound, starwars, dragonball) is
+  // served at runtime by its /api/sitemap-* function and referenced directly
+  // from sitemap-index.xml — no static generation needed here.
+  //
+  // Credentials are present, so a fetch failure below MUST fail the build
+  // (see the non-zero exit in main().catch) rather than ship an empty sitemap.
+  // A failed build keeps the previous good deploy — and its good sitemaps — live.
+  const mtg = await generateMtgSitemap();
+  console.log(`=== Sitemap Generation Complete === Total MTG URLs: ${mtg}`);
 }
 
-main().catch(err => { console.error('Sitemap generation failed:', err.message); process.exit(0); }); // exit 0 — don't block build
+main().catch(err => {
+  // Credentials were present but generation failed (Supabase error / empty result).
+  // Exit non-zero so Netlify fails the deploy instead of publishing empty sitemaps.
+  console.error('Sitemap generation FAILED:', err.message);
+  process.exit(1);
+});

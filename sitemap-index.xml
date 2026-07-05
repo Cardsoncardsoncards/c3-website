@@ -19,7 +19,7 @@
     <loc>https://cardsoncardsoncards.com.au/api/sitemap-pokemon</loc>
   </sitemap>
   <sitemap>
-    <loc>https://cardsoncardsoncards.com.au/sitemap-yugioh.xml</loc>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-yugioh</loc>
   </sitemap>
   <sitemap>
     <loc>https://cardsoncardsoncards.com.au/api/sitemap-lorcana</loc>
@@ -31,10 +31,10 @@
     <loc>https://cardsoncardsoncards.com.au/api/sitemap-riftbound</loc>
   </sitemap>
   <sitemap>
-    <loc>https://cardsoncardsoncards.com.au/sitemap-dragonball.xml</loc>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-dragonball</loc>
   </sitemap>
   <sitemap>
-    <loc>https://cardsoncardsoncards.com.au/sitemap-starwars.xml</loc>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-starwars</loc>
   </sitemap>
   <!-- Extended-game card sitemaps (23 games) -->
   <sitemap>
