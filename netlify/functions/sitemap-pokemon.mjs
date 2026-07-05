@@ -8,7 +8,10 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 const PRICE_THRESHOLD   = 1.0;
 const PAGE_SIZE         = 1000;
-const MAX_CARDS         = 10000;
+// 16,126 pokemon cards currently clear the price+slug filter; 10k truncated ~6k
+// of them. Raised to 20k (still well under Google's 50k/sitemap limit) with
+// headroom for growth. Paired with timeout=30 for this function in netlify.toml.
+const MAX_CARDS         = 20000;
 
 async function supabaseFetch(url, extraHeaders = {}) {
   const controller = new AbortController();
