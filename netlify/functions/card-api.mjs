@@ -269,7 +269,7 @@ function getEbayUrls(cardName, game = 'mtg') {
   const q = encodeURIComponent(`${cardName} ${gameKeyword}`);
   const campid = '5339146789';
   const storeUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${q}&campid=${campid}&toolid=10001&mkevt=1`;
-  const allUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${q}&_sacat=183454&_sop=15&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${campid}&toolid=10001&mkevt=1`;
+  const allUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${q}&_sacat=183454&_sop=15&mkcid=1&mkrid=705-53470-19255-0&campid=${campid}&toolid=10001&mkevt=1`;
   return { storeUrl, allUrl };
 }
 

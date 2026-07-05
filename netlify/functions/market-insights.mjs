@@ -310,7 +310,7 @@ export default async (req) => {
   function ebayUrl(name,game){
     var label=GAME_CONFIG[game]?GAME_CONFIG[game].label:game;
     var kw=encodeURIComponent(name+' '+(game==='mtg'?'mtg':label));
-    return 'https://www.ebay.com.au/sch/i.html?_nkw='+kw+'&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid='+EPN+'&toolid=10001&mkevt=1';
+    return 'https://www.ebay.com.au/sch/i.html?_nkw='+kw+'&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid='+EPN+'&toolid=10001&mkevt=1';
   }
   function cardRowHTML(card,mode){
     var cfg=GAME_CONFIG[card.game]||GAME_CONFIG.mtg;

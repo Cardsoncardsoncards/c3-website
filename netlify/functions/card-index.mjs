@@ -995,7 +995,7 @@ ${NAV_HTML}
     ${hasEVCalc ? `<a href="/ev-calculator.html#${set.set_code}" style="background:rgba(124,106,245,.15);border:1px solid var(--accent2);color:var(--accent2);padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📊 EV Calculator</a>` : ''}
     ${set.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${set.amazon_asin}?tag=blasdigital-22" target="_blank" rel="noopener" style="background:#232f3e;border:1px solid #f90;color:#f90;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">📦 Buy Sealed on Amazon AU</a>` : ''}
     <a href="/blog" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:9px 16px;border-radius:8px;font-size:13px;text-decoration:none">📖 Buying Guides</a>
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(set.set_name)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3SetPage&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay ↗</a>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(set.set_name)}&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=C3SetPage&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);color:#60a5fa;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">🛒 Buy Singles on eBay ↗</a>
   </div>
 
   <!-- Related sets (sub-sets, siblings, parent) -->

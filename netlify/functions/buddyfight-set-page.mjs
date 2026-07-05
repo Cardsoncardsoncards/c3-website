@@ -19,9 +19,9 @@ async function supabaseGet(path) {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
     clearTimeout(timer);
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error('supabase_http_' + res.status);
     return await res.json();
-  } catch { clearTimeout(timer); return []; }
+  } catch (e) { clearTimeout(timer); throw e; }
 }
 
 async function getEbayToken() {
@@ -85,7 +85,8 @@ export default async (req) => {
       supabaseGet(`buddyfight_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1`),
       getEbayToken()
     ]);
-    const sets = setsR.status === 'fulfilled' ? setsR.value : [];
+    if (setsR.status === 'rejected') return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
+    const sets = setsR.value;
     const ebayToken = ebayTokenR.status === 'fulfilled' ? ebayTokenR.value : null;
 
     if (!sets || !sets[0]) return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
@@ -101,7 +102,7 @@ export default async (req) => {
 
     const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
     const pricedCards = (cards || []).filter(c => toAud(c) > 0);
-    const top5 = pricedCards.slice(0, 5);
+    const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
     // Biggest movers: min AU$0.50 price, need 5+ eligible cards to show panel
     const moversEligible = (cards||[]).filter(c => c.price_change_7d != null && parseFloat(c.price_aud||0) > 0.50);
     const gainers = [...moversEligible].filter(c => parseFloat(c.price_change_7d) > 0).sort((a,b) => parseFloat(b.price_change_7d)-parseFloat(a.price_change_7d)).slice(0,3);
@@ -110,8 +111,8 @@ export default async (req) => {
     const rarities = [...new Set((cards||[]).map(c => c.rarity).filter(r => r && r !== 'None'))].sort();
     const today = new Date().toISOString().slice(0, 10);
 
-    const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' buddyfight')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-    const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' buddyfight')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
 
     function moverCard(c, isGainer) {
@@ -297,7 +298,7 @@ export default async (req) => {
       <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#EF4444;margin-bottom:8px">Sealed Product</div>
       <h2 style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF;margin-bottom:16px">Buy Sealed ${setNm} Product</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:16px">${itemsHTML}</div>
-      <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((set.name||'')+' buddyfight booster')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-weight:700;font-size:12px;text-decoration:none;background:#EF4444;color:#fff">&#128722; More sealed on eBay AU &#8599;</a>
+      <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((set.name||'')+' buddyfight booster')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-weight:700;font-size:12px;text-decoration:none;background:#EF4444;color:#fff">&#128722; More sealed on eBay AU &#8599;</a>
     </div>`;
   })()}
 
@@ -413,7 +414,7 @@ document.addEventListener('DOMContentLoaded', applyFilters);
 
   } catch (err) {
     console.error('[buddyfight-set-page.mjs] Error:', err.message);
-    return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+    return new Response(graceful404(setSlug), { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
   }
 };
 

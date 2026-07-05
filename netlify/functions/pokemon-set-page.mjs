@@ -19,9 +19,9 @@ async function supabaseGet(path) {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
     clearTimeout(timer);
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error('supabase_http_' + res.status);
     return await res.json();
-  } catch { clearTimeout(timer); return []; }
+  } catch (e) { clearTimeout(timer); throw e; }
 }
 
 async function getEbayToken() {
@@ -70,7 +70,8 @@ export default async (req) => {
       getEbayToken()
     ]);
 
-    const setsVal = sets.status === 'fulfilled' ? sets.value : [];
+    if (sets.status === 'rejected') return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
+    const setsVal = sets.value;
     const ebayTokenVal = ebayToken.status === 'fulfilled' ? ebayToken.value : null;
 
     if (!setsVal || !setsVal[0]) return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
@@ -95,8 +96,8 @@ export default async (req) => {
     const rarities = [...new Set(cards.map(c => c.rarity).filter(r => r && r !== 'None'))].sort();
     const priced = pricedCards.length;
 
-    const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-    const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     const amazonURL  = `https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' pokemon')}&tag=${AMAZON_TAG}`;
 
     const top5HTML = top5.length ? top5.map(c => {
@@ -267,7 +268,7 @@ if(typeof gtag!=='undefined'){
     return new Response(html, { status: 200, headers });
   } catch (err) {
     console.error('[pokemon-set-page] Error:', err.message);
-    return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+    return new Response(graceful404(setSlug), { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
   }
 };
 

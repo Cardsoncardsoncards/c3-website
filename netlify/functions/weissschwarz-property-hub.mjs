@@ -28,10 +28,10 @@ async function supabaseGet(path) {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
     clearTimeout(timer);
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error('supabase_http_' + res.status);
     const data = await res.json();
     return Array.isArray(data) ? data : [];
-  } catch (e) { clearTimeout(timer); return []; }
+  } catch (e) { clearTimeout(timer); throw e; }
 }
 
 function isNew(releaseDateStr) {
@@ -122,7 +122,12 @@ export default async (req) => {
 
   if (!propSlug) return notFound('No property was specified. Pick one from the directory.');
 
-  const sets = await supabaseGet(`weissschwarz_sets?property=eq.${propSlug}&order=release_date.desc.nullslast&select=id,name,slug,release_date,card_count`);
+  let sets;
+  try {
+    sets = await supabaseGet(`weissschwarz_sets?property=eq.${propSlug}&order=release_date.desc.nullslast&select=id,name,slug,release_date,card_count`);
+  } catch (e) {
+    return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
+  }
 
   if (!sets.length) return notFound('We could not find any Weiss Schwarz sets for that property yet.');
 
@@ -141,11 +146,11 @@ export default async (req) => {
     topCards = rawCards.filter(c => { const n = (c.name || '').toLowerCase(); return !SEALED.some(k => n.includes(k)); });
   }
 
-  const ebaySearch = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(label + ' Weiss Schwarz')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebaySearch = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(label + ' Weiss Schwarz')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
   function cardTile(c) {
     const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price * 1.45).toFixed(0)}` : '';
-    const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name + ' Weiss Schwarz card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name + ' Weiss Schwarz card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<div class="carousel-card"><a href="/cards/weissschwarz/${esc(c.slug)}" style="display:block;text-decoration:none"><div class="carousel-img-wrap"><img src="${esc(c.image_url)}" alt="${esc(c.name).replace(/"/g,'&quot;')}" loading="lazy" onerror="this.onerror=null;this.style.opacity=0.3"></div><div class="carousel-name">${esc(c.name)}</div>${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}<div class="carousel-price">${price}</div></a><div class="carousel-buy-row"><a href="${ebay}" target="_blank" rel="noopener" class="carousel-buy-btn">Buy eBay &#8599;</a></div></div>`;
   }
   const cardGridHTML = topCards.map(cardTile).join('');

@@ -190,7 +190,7 @@ export default async (req) => {
 
   const carouselHTML = topCards.map(c => {
     const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.45).toFixed(0)}` : '';
-    const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name+' digimon card game')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name+' digimon card game')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<a href="/cards/digimon/${c.slug}" class="carousel-card" data-rarity="${esc(c.rarity||'')}">
       <div class="carousel-img-wrap"><img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#128009;</div>'"></div>
       <div class="carousel-name">${esc(c.name)}</div>
@@ -251,7 +251,7 @@ ${tickerHTML}
 
 
 <div class="quick-links fade-up fade-up-1">
-  <a href="https://www.ebay.com.au/sch/i.html?_nkw=digimon+card+game&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop Digimon TCG on eBay &#8599;</a>
+  <a href="https://www.ebay.com.au/sch/i.html?_nkw=digimon+card+game&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop Digimon TCG on eBay &#8599;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
   <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
   <a href="/blog/digimon-card-game-australia-beginners-guide/" class="quick-link" style="background:rgba(var(--accent-rgb),.08);border-color:rgba(var(--accent-rgb),.3);color:var(--accent)">&#128214; Beginners Guide &#8594;</a>

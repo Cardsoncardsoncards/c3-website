@@ -42,10 +42,10 @@ async function supabaseGet(path) {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
     clearTimeout(timer);
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error('supabase_http_' + res.status);
     const data = await res.json();
     return Array.isArray(data) ? data : [];
-  } catch (e) { clearTimeout(timer); return []; }
+  } catch (e) { clearTimeout(timer); throw e; }
 }
 
 async function getEbayToken() {
@@ -137,7 +137,8 @@ async function handleSetPage(setSlug, headers) {
   const [_psr0] = await Promise.allSettled([
     supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`)
   ]);
-  const sets = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  if (_psr0.status === 'rejected') return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
+  const sets = _psr0.value;
 
   const notFoundHtml = `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>Set Not Found | Pokemon | Cards on Cards on Cards</title><meta name="robots" content="noindex"><link rel="icon" type="image/png" href="/c3logo.png"></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;padding:24px;text-align:center"><h1 style="font-family:'Cinzel',serif;color:${accent}">Set Not Found</h1><p style="color:#A0A8C0">We couldn't find Pokemon set "${setSlug}".</p><a href="/cards/pokemon" style="color:${accent}">← Browse All Pokemon</a></body></html>`;
 
@@ -150,8 +151,8 @@ async function handleSetPage(setSlug, headers) {
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
   const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
   const sealedCards = (cards || []).filter(c => !isSingles(c));
-  const top5 = pricedCards.slice(0, 5);
-  const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
+  const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
+  const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&toolid=10001&mkevt=1`;
   const metaDesc = `Browse ${cards?.length || 0} Pokemon cards from ${set.name}. View card prices in AUD and buy on eBay AU. Updated daily.`;
 
   const top5HTML = top5.map(c => {
@@ -401,7 +402,7 @@ export default async (req) => {
       ]
     };
 
-    const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' pokemon')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
     const relatedHTML = relatedCards.length ? `
     <section class="related-section" style="max-width:1100px;margin:0 auto 24px;padding:0 24px">
@@ -422,7 +423,7 @@ export default async (req) => {
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px">
         ${ebayListings.slice(0,6).map(item => {
           const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
-          const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+          const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
           return `<a href="${epnUrl}" target="_blank" rel="noopener" style="display:block;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
             <div style="font-size:13px;color:var(--text);margin-bottom:6px;line-height:1.3">${item.title?.slice(0,60) || card.name}${item.title?.length > 60 ? '...' : ''}</div>
             <div style="font-size:16px;font-weight:700;color:var(--accent)">${price}</div>
@@ -844,7 +845,7 @@ document.addEventListener('click', function(e) {
 
   } catch (err) {
     console.error('Pokemon card page error:', err.message);
-    return new Response(`<html><body>Error loading card: ${err.message}</body></html>`, { status: 500, headers });
+    return new Response(`<html><body>Error loading card: ${err.message}</body></html>`, { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
   }
 };
 

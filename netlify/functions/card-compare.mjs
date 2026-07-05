@@ -351,7 +351,7 @@ function computeVerdict(cards) {
     ? `${winner.name} leads overall - ${reasons.slice(0, 2).join(', ')}.`
     : `${winner.name} leads on combined metrics.`;
 
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(winner.name + ' ' + winner.label)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=verdict&toolid=10001&mkevt=1`;
+  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(winner.name + ' ' + winner.label)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&customid=verdict&toolid=10001&mkevt=1`;
 
   return { winner, winnerIdx, sentence, ebayUrl };
 }
@@ -385,7 +385,7 @@ function renderSlots(cards, allTokens, usdToAud) {
     const spark        = buildSparkline(card.sparklinePoints);
 
     // eBay URL with slot-level customid for attribution
-    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' ' + card.label)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=slot${i}&toolid=10001&mkevt=1`;
+    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' ' + card.label)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&customid=slot${i}&toolid=10001&mkevt=1`;
 
     const trendHtml = card.sevenDayChange
       ? `<span class="trend ${card.sevenDayChange.up ? 'trend-up' : 'trend-down'}">${card.sevenDayChange.up ? '▲' : '▼'} ${Math.abs(card.sevenDayChange.pct)}%</span>`

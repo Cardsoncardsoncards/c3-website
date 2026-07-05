@@ -12,7 +12,7 @@ async function supabaseGet(path) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
   });
-  if (!res.ok) return [];
+  if (!res.ok) throw new Error('supabase_http_' + res.status);
   return res.json();
 }
 
@@ -90,7 +90,8 @@ export default async (req) => {
     ),
     getEbayToken()
   ]);
-  const sets = setsR.status === 'fulfilled' ? setsR.value : [];
+  if (setsR.status === 'rejected') return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
+  const sets = setsR.value;
   const ebayToken = ebayTokenR.status === 'fulfilled' ? ebayTokenR.value : null;
 
   if (!sets || !sets[0]) return new Response(`<!DOCTYPE html>
@@ -126,13 +127,13 @@ export default async (req) => {
 
   const cards = set ? await supabaseGet(`yugioh_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=200&select=slug,name,image_url,market_price,rarity,attribute`) : [];
 
-  const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayListings = await getEbayListings(`${set.name} yugioh card`, ebayToken);
 
   const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * 1.45 : 0;
   const pricedCards = cards.filter(c => toAud(c) > 0);
-  const top5 = pricedCards.slice(0, 5);
+  const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
   const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();
   const attributes = [...new Set(cards.map(c => c.attribute).filter(Boolean))].sort();
 
@@ -171,7 +172,7 @@ export default async (req) => {
       <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:12px">
         ${ebayListings.map(item => {
           const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
-          const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+          const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
           return `<a href="${epnUrl}" target="_blank" rel="noopener sponsored" style="flex:0 0 160px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:all .22s" onmouseover="this.style.borderColor='rgba(200,163,50,.4)'" onmouseout="this.style.borderColor='#252840'">
             ${item.image?.imageUrl ? `<img src="${item.image.imageUrl}" alt="${(item.title||'').slice(0,40)}" style="width:100%;height:120px;object-fit:contain;background:#0d0f1a;padding:8px" loading="lazy">` : `<div style="height:120px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:24px">👁</div>`}
             <div style="padding:9px 11px;flex:1;display:flex;flex-direction:column;gap:4px">
@@ -354,7 +355,7 @@ applyFilters();
   return new Response(html, { status: 200, headers });
   } catch(err) {
     console.error('[yugioh-set-page] Error:', err.message);
-    return new Response('<html><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh"><div style="text-align:center"><h1 style="color:#c8a332">Temporarily Unavailable</h1><p>Please try again in a moment.</p><a href="/cards/yugioh" style="color:#c8a332">Browse Yu-Gi-Oh Cards</a></div></body></html>', { status: 503, headers: {'Content-Type':'text/html'} });
+    return new Response('<html><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh"><div style="text-align:center"><h1 style="color:#c8a332">Temporarily Unavailable</h1><p>Please try again in a moment.</p><a href="/cards/yugioh" style="color:#c8a332">Browse Yu-Gi-Oh Cards</a></div></body></html>', { status: 503, headers: {'Content-Type':'text/html','Retry-After':'120'} });
   }
 };
 export const config = { path: '/cards/yugioh/sets/:setCode+', priority: 1 };

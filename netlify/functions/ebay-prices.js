@@ -87,7 +87,7 @@ exports.handler = async function(event, context) {
       // Build EPN-tracked search URL into the C3 eBay store for this card name
       const storeSearch = 'https://www.ebay.com.au/str/cardsoncardsoncards'
         + '?_nkw=' + encodeURIComponent(card.name)
-        + '&mkcid=1&mkrid=705-53470-19255-0&siteid=15'
+        + '&mkcid=1&mkrid=705-53470-19255-0'
         + '&campid=' + EPN_CAMPID
         + '&customid=C3SpotlightCarousel&toolid=10001&mkevt=1';
 

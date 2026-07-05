@@ -28,10 +28,10 @@ async function supabaseGet(path) {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
     clearTimeout(timer);
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error('supabase_http_' + res.status);
     const data = await res.json();
     return Array.isArray(data) ? data : [];
-  } catch (e) { clearTimeout(timer); return []; }
+  } catch (e) { clearTimeout(timer); throw e; }
 }
 
 function parseCustomAttrs(raw) {
@@ -46,7 +46,7 @@ function parseCustomAttrs(raw) {
 
 function graceful404(slug) {
   const cardName = slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(cardName+' final fantasy tcg card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(cardName+' final fantasy tcg card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   return `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -99,7 +99,8 @@ export default async (req) => {
     supabaseGet(`finalfantasy_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`)
   ]);
 
-  const cardArr = cardResult.status === 'fulfilled' ? cardResult.value : [];
+  if (cardResult.status === 'rejected') return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
+  const cardArr = cardResult.value;
   const card    = cardArr[0];
 
   if (!card) {
@@ -161,7 +162,7 @@ export default async (req) => {
     <button onclick="navigator.clipboard.writeText('https://cardsoncardsoncards.com.au/cards/finalfantasy/${slug}').then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})" style="padding:6px 12px;background:#111420;border:1px solid #242840;color:#e8eaf0;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">Copy Link</button>`;  const priceDisplay = priceAud ? `AU$${priceAud.toFixed(2)}` : 'Price TBC';
   const customAttrs  = parseCustomAttrs(card.custom_attributes);
 
-  const ebayCardUrl  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((card.name||slug.replace(/-/g,' '))+' final fantasy tcg card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebayCardUrl  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((card.name||slug.replace(/-/g,' '))+' final fantasy tcg card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const amazonUrl    = `https://www.amazon.com.au/s?k=${encodeURIComponent((card.name||'')+' final fantasy tcg card')}&tag=${AMAZON_TAG}`;
   const setPageUrl   = set?.slug ? `/cards/finalfantasy/sets/${esc(set.slug)}` : `/cards/finalfantasy`;
 

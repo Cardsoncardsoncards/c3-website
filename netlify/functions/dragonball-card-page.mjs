@@ -19,10 +19,10 @@ async function supabaseGet(path) {
       headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
     });
     clearTimeout(timer);
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error('supabase_http_' + res.status);
     const data = await res.json();
     return Array.isArray(data) ? data : [];
-  } catch (e) { clearTimeout(timer); return []; }
+  } catch (e) { clearTimeout(timer); throw e; }
 }
 
 async function getEbayToken() {
@@ -66,7 +66,8 @@ async function handleSetPage(setSlug, htmlHeaders) {
     supabaseGet(`dragonball_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`),
     getEbayToken()
   ]);
-  const sets = _psr0.status === 'fulfilled' ? _psr0.value : [];
+  if (_psr0.status === 'rejected') return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
+  const sets = _psr0.value;
   const ebayToken = _psr1.status === 'fulfilled' ? _psr1.value : [];
 
   if (!sets || !sets[0]) return new Response(setNotFoundPage(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
@@ -83,9 +84,9 @@ async function handleSetPage(setSlug, htmlHeaders) {
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
   const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
   const sealedCards = (cards || []).filter(c => !isSingles(c));
-  const top5 = pricedCards.slice(0, 5);
+  const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
 
-  const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' dragon ball super')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebaySetURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' dragon ball super')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const metaDesc = `Browse ${cards?.length || 0} Dragon Ball Super cards from ${set.name}. View card prices in AUD and buy on eBay AU. Updated daily.`;
 
   const top5HTML = top5.map(c => {
@@ -160,7 +161,7 @@ async function handleSetPage(setSlug, htmlHeaders) {
 
   <div class="cta-row">
     <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
-    <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' dragon ball super booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>
+    <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' dragon ball super booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>
     <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' Dragon Ball Super')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
   </div>
 
@@ -214,7 +215,7 @@ export default async (req) => {
     const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.45 : null);
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/dragonball/${card.slug}`);
     const shareText = encodeURIComponent(`${card.name} Dragon Ball Super Card Game -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
-    const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' dragon ball super card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' dragon ball super card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
     const [_psr0, _psr1] = await Promise.allSettled([
       supabaseGet(`dragonball_cards?set_id=eq.${card.set_id}&slug=neq.${encodeURIComponent(slug)}&market_price=gt.0&image_url=not.is.null&limit=12&order=market_price.desc&select=*`).catch(() => []),
@@ -256,7 +257,7 @@ export default async (req) => {
       ${ebayListings.length ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px">
         ${ebayListings.slice(0,6).map(item => {
           const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
-          const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+          const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
           return `<a href="${epnUrl}" target="_blank" rel="noopener" style="display:block;background:#161929;border:1px solid #252840;border-radius:8px;padding:12px;text-decoration:none">
             <div style="font-size:13px;color:#F0F2FF;margin-bottom:6px;line-height:1.3">${(item.title||card.name).slice(0,60)}...</div>
             <div style="font-size:16px;font-weight:700;color:#C9A84C">${price}</div>
@@ -411,7 +412,7 @@ document.addEventListener('click',function(e){
     return new Response(html, { status: 200, headers });
   } catch (err) {
     console.error('[dragonball-card-page]', err.message);
-    return new Response(notFoundPage(slug), { status: 404, headers });
+    return new Response(notFoundPage(slug), { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
   }
 };
 

@@ -29,10 +29,10 @@ async function supabaseGet(path, useService = false) {
       }
     });
     clearTimeout(timer);
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error('supabase_http_' + res.status);
     const data = await res.json();
     return Array.isArray(data) ? data : [];
-  } catch (e) { clearTimeout(timer); return []; }
+  } catch (e) { clearTimeout(timer); throw e; }
 }
 
 // Reads the live USD->AUD rate from site_config (written daily by sync-fx-rate).
@@ -1435,7 +1435,7 @@ export default async (req, context) => {
 
   } catch (err) {
     console.error('[card-page] Error:', err.message);
-    return new Response('<h1>Something went wrong</h1>', { status: 500, headers: { 'Content-Type': 'text/html' }});
+    return new Response('<h1>Something went wrong</h1>', { status: 503, headers: { 'Content-Type': 'text/html', 'Retry-After': '120' }});
   }
 };
 

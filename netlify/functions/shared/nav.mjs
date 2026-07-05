@@ -368,7 +368,7 @@ function buildNav(gameLabel = '', gameHref = '') {
             Booster Boxes and Sealed
             <span class="nav-shop-item-label">Amazon AU prices</span>
           </a>
-          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3NavShop&toolid=10001&mkevt=1"
+          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&customid=C3NavShop&toolid=10001&mkevt=1"
             target="_blank" rel="noopener" class="nav-shop-item">
             Singles on eBay AU &#8599;
             <span class="nav-shop-item-label">28,000+ TCG singles listed</span>
@@ -410,7 +410,7 @@ function buildNav(gameLabel = '', gameHref = '') {
     <a href="/shop#cat-accessories" class="nav-drawer-link">Accessories</a>
     <a href="/shop#cat-dnd" class="nav-drawer-link">D&amp;D</a>
     <a href="/calendar" class="nav-drawer-link">Release Calendar</a>
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&customid=C3NavDrawer&toolid=10001&mkevt=1"
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&customid=C3NavDrawer&toolid=10001&mkevt=1"
       target="_blank" rel="noopener" class="nav-drawer-link nav-drawer-ebay">Singles on eBay AU &#8599;</a>
   </div>
 </aside>

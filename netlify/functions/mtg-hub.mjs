@@ -153,7 +153,7 @@ export default async (req) => {
     const priceStr = price > 0 ? 'AU$' + price.toFixed(0) : '';
     const safeName = c.name.replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     const ebayQ = encodeURIComponent(c.name + ' mtg card');
-    const ebayHref = 'https://www.ebay.com.au/sch/i.html?_nkw=' + ebayQ + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1';
+    const ebayHref = 'https://www.ebay.com.au/sch/i.html?_nkw=' + ebayQ + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&toolid=10001&mkevt=1';
     return '<div class="top-card" style="flex-shrink:0;width:155px;display:inline-block;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:10px;text-align:center;transition:all .25s;vertical-align:top">'
       + '<a href="/cards/mtg/' + c.slug + '" style="display:block;text-decoration:none">'
       + (c.image_uri_small ? '<div style="height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:7px;overflow:hidden"><img src="' + c.image_uri_small + '" alt="' + safeName + '" loading="eager" style="max-height:130px;max-width:100%;object-fit:contain;border-radius:4px"></div>' : '<div style="height:130px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:24px">&#127922;</div>')

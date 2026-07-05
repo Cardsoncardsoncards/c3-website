@@ -101,7 +101,7 @@ export default async (req) => {
     cards = cards.map(c => ({
       ...c,
       cardUrl:      `${cardPath}/${c.slug}`,
-      ebayUrl:      `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`,
+      ebayUrl:      `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`,
       priceDisplay: c.price_aud
         ? `AU$${parseFloat(c.price_aud).toFixed(0)}`
         : c.market_price

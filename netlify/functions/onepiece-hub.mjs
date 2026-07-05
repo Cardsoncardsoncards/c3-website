@@ -66,7 +66,7 @@ export default async (req) => {
   // Top cards carousel
   const carouselHTML = topCards.map(c => {
     const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : '';
-    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((c.name||'one piece card')+' one piece tcg')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((c.name||'one piece card')+' one piece tcg')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<a href="/cards/onepiece/${esc(c.slug)}" class="carousel-card">
       <div class="carousel-img-wrap">
         <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">
@@ -246,7 +246,7 @@ ${upcomingEvents.length ? `<div class="release-ticker">
 
 
 <div class="quick-links fade-up fade-up-1">
-  <a href="https://www.ebay.com.au/sch/i.html?_nkw=one+piece+tcg+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'onepiece-hub'})" class="quick-link" style="background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff">&#128722; Shop One Piece on eBay &#8599;</a>
+  <a href="https://www.ebay.com.au/sch/i.html?_nkw=one+piece+tcg+cards&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'onepiece-hub'})" class="quick-link" style="background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff">&#128722; Shop One Piece on eBay &#8599;</a>
   <a href="/tracker.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Free Tracker</a>
   <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator &#8594;</a>
   <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128221; Compare Cards</a>
