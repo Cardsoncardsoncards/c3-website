@@ -194,6 +194,7 @@ export default async (req) => {
     <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-label">Updates</div></div>
   </div>
 </div>
+${propSlug === 'hololive' ? `<div class="wrap"><div style="background:rgba(${ACCENT_RGB},.06);border:1px solid rgba(${ACCENT_RGB},.2);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--text2)">Looking for the standalone <a href="/cards/hololive" style="color:var(--accent);font-weight:600">Hololive Official Card Game</a>? That is a separate product with its own sets and prices.</div></div>` : ''}
 
 <div class="quick-links fade-up fade-up-1">
   <a href="${ebaySearch}" target="_blank" rel="noopener" class="quick-link" style="background:linear-gradient(135deg,#1a1a2e,${ACCENT});color:#fff">&#128722; Shop ${esc(label)} on eBay &#8599;</a>

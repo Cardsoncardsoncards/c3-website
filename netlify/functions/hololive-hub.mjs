@@ -232,6 +232,7 @@ ${tickerHTML}
   <div class="hero-eyebrow">Card Vault -- Hololive TCG</div>
   <h1>Hololive TCG Card Prices <span>in Australia</span></h1>
   <p class="hero-sub">Hololive TCG card prices in AUD. Browse by set or search by card name. eBay AU buy links updated daily.</p>
+  <p class="hero-sub" style="margin-top:-16px;font-size:13px"><a href="/cards/weissschwarz/series/hololive" style="color:var(--accent);font-weight:600">Looking for Weiss Schwarz's Hololive-licensed cards? Browse them here &#8594;</a></p>
   <div class="stat-bar">
     <div class="stat-item"><div class="stat-num">${sets.length||'?'}</div><div class="stat-label">Sets</div></div>
     <div class="stat-item"><div class="stat-num">1.3k+</div><div class="stat-label">Cards</div></div>

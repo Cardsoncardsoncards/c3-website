@@ -193,27 +193,39 @@ export default async (req) => {
   const loserHTML  = losers.map(c => moverCard(c, false)).join('');
   const hasMovers  = gainers.length > 0 || losers.length > 0;
 
-  const PROP_EXCLUDE = new Set(['promo']);
+  // anthology (mixed-property crossover) and promo are not licensed properties: keep them
+  // out of the main directory and count, surfaced only via a small catch-all link.
+  const PROP_EXCLUDE = new Set(['promo', 'anthology']);
   const propGroups = {};
+  const catchAll = { sets: 0, cards: 0 };
   for (const s of sets) {
     const p = s.property;
-    if (!p || PROP_EXCLUDE.has(p)) continue;
+    if (!p) continue;
+    if (PROP_EXCLUDE.has(p)) { catchAll.sets += 1; catchAll.cards += parseInt(s.card_count, 10) || 0; continue; }
     if (!propGroups[p]) propGroups[p] = { slug: p, count: 0, cards: 0, latest: '' };
     const g = propGroups[p];
     g.count += 1;
     g.cards += parseInt(s.card_count, 10) || 0;
     if (s.release_date && s.release_date > g.latest) g.latest = s.release_date;
   }
+  // Default order is set count descending (label A-Z breaks ties). The A-Z buttons filter this same grid.
   const propList = Object.values(propGroups)
     .map(g => ({ ...g, label: propLabel(g.slug) || g.slug }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+    .sort((a, b) => (b.count - a.count) || a.label.localeCompare(b.label));
+
+  const letterKeyOf = (label) => { const ch = (label[0] || '').toUpperCase(); return /[A-Z]/.test(ch) ? ch : '0-9'; };
+  const propLetters = [...new Set(propList.map(g => letterKeyOf(g.label)))].sort();
+  const azButtons = ['All', ...propLetters]
+    .map(l => `<button class="az-btn${l === 'All' ? ' az-btn--active' : ''}" onclick="filterProps('${l}',this)">${l}</button>`)
+    .join('');
 
   const propGridHTML = propList.length ? propList.map(g => {
-    const year     = g.latest ? g.latest.slice(0, 4) : '';
     const newBadge = isNew(g.latest) ? '<span class="new-badge">NEW</span>' : '';
-    const meta     = [`${g.count} set${g.count === 1 ? '' : 's'}`, g.cards ? `${g.cards} cards` : '', year ? `latest ${year}` : ''].filter(Boolean).join(' &middot; ');
-    return `<a href="/cards/weissschwarz/series/${encodeURIComponent(g.slug)}" class="guide-card"><div class="guide-title">${esc(g.label)}${newBadge}</div><div class="guide-desc">${meta}</div></a>`;
+    const meta     = [`${g.count} set${g.count === 1 ? '' : 's'}`, g.cards ? `${g.cards} cards` : ''].filter(Boolean).join(' &middot; ');
+    return `<a href="/cards/weissschwarz/series/${encodeURIComponent(g.slug)}" class="set-tile" data-name="${esc(g.label.toLowerCase())}" data-letter="${letterKeyOf(g.label)}"><span class="set-tile-name">${esc(g.label)}${newBadge}</span><span class="set-tile-meta">${meta}</span></a>`;
   }).join('') : '<div class="sync-msg">Properties loading -- check back after tonight\'s sync.</div>';
+
+  const catchAllHTML = catchAll.sets ? `<div style="text-align:center;margin-top:14px"><a href="/cards/weissschwarz/series/anthology" style="font-size:12px;color:var(--text2);text-decoration:underline">Anthology and promo sets (${catchAll.sets} set${catchAll.sets === 1 ? '' : 's'}, not licensed properties) &#8594;</a></div>` : '';
 
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
@@ -285,11 +297,42 @@ ${hasMovers ? `<div style="margin-bottom:28px">
 
   <div class="section fade-up fade-up-3">
     <div style="text-align:center;margin-bottom:16px">
-      <h2 style="font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px">Browse by Licensed Property</h2>
-      <p style="font-size:13px;color:var(--text2)">${propList.length||'?'} licensed properties. Select one to browse its sets and cards.</p>
+      <h2 style="font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px">Browse All ${propList.length} Weiss Schwarz Properties</h2>
+      <p style="font-size:13px;color:var(--text2)">Every licensed property, ordered by set count. Filter A to Z or search by name.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">${propGridHTML}</div>
+    <input id="prop-search" type="text" placeholder="Filter properties by name..." oninput="filterProps()" aria-label="Filter Weiss Schwarz properties by name" style="width:100%;max-width:440px;display:block;margin:0 auto 12px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif">
+    <div class="az-row" id="prop-az" style="justify-content:center">${azButtons}</div>
+    <div class="set-grid" id="prop-grid">${propGridHTML}</div>
+    <p id="prop-empty" style="display:none;text-align:center;color:var(--text2);font-size:13px;margin-top:12px">No properties match that filter.</p>
+    ${catchAllHTML}
   </div>
+  <script>
+  (function(){
+    var activeLetter = null;
+    window.filterProps = function(letter, btn){
+      if (typeof letter === 'string') {
+        activeLetter = (letter === 'All') ? null : letter;
+        var btns = document.querySelectorAll('#prop-az .az-btn');
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('az-btn--active');
+        if (btn) btn.classList.add('az-btn--active');
+      }
+      var box = document.getElementById('prop-search');
+      var q = ((box && box.value) || '').trim().toLowerCase();
+      var tiles = document.querySelectorAll('#prop-grid .set-tile');
+      var shown = 0;
+      for (var j = 0; j < tiles.length; j++) {
+        var el = tiles[j];
+        var letterMatch = !activeLetter || el.getAttribute('data-letter') === activeLetter;
+        var nameMatch = !q || (el.getAttribute('data-name') || '').indexOf(q) !== -1;
+        var vis = letterMatch && nameMatch;
+        el.style.display = vis ? '' : 'none';
+        if (vis) shown++;
+      }
+      var empty = document.getElementById('prop-empty');
+      if (empty) empty.style.display = shown === 0 ? 'block' : 'none';
+    };
+  })();
+  </script>
 
   <div style="margin-bottom:28px">
     <h2 style="font-size:18px;margin-bottom:16px">Weiss Schwarz Guides and Resources</h2>

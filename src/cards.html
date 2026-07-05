@@ -264,7 +264,7 @@ footer a:hover{color:var(--white)}
   <div class="wrap">
     <div class="hero-eyebrow">Cards on Cards on Cards</div>
     <h1 class="hero-title">The C3 <span>Card Vault</span></h1>
-    <p class="hero-sub">295,000+ cards across 32 TCGs with live AUD pricing, eBay AU buy links, and price history. Australia's most complete TCG price database, updated daily.</p>
+    <p class="hero-sub">295,000+ cards across 32 TCGs, including 69 individually browsable Weiss Schwarz licensed properties, with live AUD pricing, eBay AU buy links, and price history. Australia's most complete TCG price database, updated daily.</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num">295,000+</div><div class="hero-stat-label">Cards Tracked</div></div>
       <div class="hero-stat"><div class="hero-stat-num">32</div><div class="hero-stat-label">Games Live</div></div>
@@ -283,6 +283,40 @@ footer a:hover{color:var(--white)}
 </section>
 
 <div class="gold-divider" style="margin:0 24px"></div>
+
+<!-- DISCOVERY CAROUSEL (dual-direction; WCAG 2.2.2 pausable; respects prefers-reduced-motion) -->
+<style>
+.disco{padding:6px 0 2px}
+.disco-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.disco-strip{overflow:hidden;position:relative;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+.disco-track{display:flex;gap:10px;padding:8px 0;width:max-content;animation:disco-l 64s linear infinite}
+.disco-track.rev{animation-name:disco-r}
+.disco.paused .disco-track{animation-play-state:paused}
+.disco-link{flex:0 0 auto;font-size:12.5px;font-weight:600;color:#A0A8C0;text-decoration:none;padding:4px 13px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.03);white-space:nowrap}
+.disco-link:hover{color:#C9A84C;border-color:rgba(201,168,76,.45)}
+.disco-toggle{flex-shrink:0;font-size:11px;font-weight:700;color:#9ba3c4;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:6px;padding:5px 11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.disco-toggle:hover{color:#C9A84C;border-color:rgba(201,168,76,.4)}
+@keyframes disco-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes disco-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media (prefers-reduced-motion: reduce){.disco-track{animation:none!important}}
+</style>
+<section class="disco" id="disco" aria-label="Browse games and Weiss Schwarz properties">
+  <div class="wrap disco-head">
+    <div class="section-eyebrow" style="margin-bottom:0">Explore 32 TCGs and 69 Weiss Schwarz properties</div>
+    <button type="button" id="disco-toggle" class="disco-toggle" aria-pressed="false" onclick="discoToggle()">&#10073;&#10073; Pause</button>
+  </div>
+  <div class="disco-strip"><div class="disco-track"><a class="disco-link" href="/cards/mtg">Magic: The Gathering</a><a class="disco-link" href="/cards/pokemon">Pokemon</a><a class="disco-link" href="/cards/yugioh">Yu-Gi-Oh</a><a class="disco-link" href="/cards/lorcana">Disney Lorcana</a><a class="disco-link" href="/cards/onepiece">One Piece</a><a class="disco-link" href="/cards/dragonball">Dragon Ball Super</a><a class="disco-link" href="/cards/starwars">Star Wars Unlimited</a><a class="disco-link" href="/cards/riftbound">Riftbound</a><a class="disco-link" href="/cards/digimon">Digimon</a><a class="disco-link" href="/cards/vanguard">Cardfight Vanguard</a><a class="disco-link" href="/cards/weissschwarz">Weiss Schwarz</a><a class="disco-link" href="/cards/gundam">Gundam</a><a class="disco-link" href="/cards/finalfantasy">Final Fantasy TCG</a><a class="disco-link" href="/cards/sorcery">Sorcery</a><a class="disco-link" href="/cards/godzilla">Godzilla</a><a class="disco-link" href="/cards/warhammer">Warhammer</a><a class="disco-link" href="/cards/mtg">Magic: The Gathering</a><a class="disco-link" href="/cards/pokemon">Pokemon</a><a class="disco-link" href="/cards/yugioh">Yu-Gi-Oh</a><a class="disco-link" href="/cards/lorcana">Disney Lorcana</a><a class="disco-link" href="/cards/onepiece">One Piece</a><a class="disco-link" href="/cards/dragonball">Dragon Ball Super</a><a class="disco-link" href="/cards/starwars">Star Wars Unlimited</a><a class="disco-link" href="/cards/riftbound">Riftbound</a><a class="disco-link" href="/cards/digimon">Digimon</a><a class="disco-link" href="/cards/vanguard">Cardfight Vanguard</a><a class="disco-link" href="/cards/weissschwarz">Weiss Schwarz</a><a class="disco-link" href="/cards/gundam">Gundam</a><a class="disco-link" href="/cards/finalfantasy">Final Fantasy TCG</a><a class="disco-link" href="/cards/sorcery">Sorcery</a><a class="disco-link" href="/cards/godzilla">Godzilla</a><a class="disco-link" href="/cards/warhammer">Warhammer</a></div></div>
+  <div class="disco-strip"><div class="disco-track rev"><a class="disco-link" href="/cards/weissschwarz/series/sword-art-online">Sword Art Online</a><a class="disco-link" href="/cards/weissschwarz/series/bang-dream">BanG Dream!</a><a class="disco-link" href="/cards/weissschwarz/series/fate">Fate</a><a class="disco-link" href="/cards/weissschwarz/series/love-live">Love Live!</a><a class="disco-link" href="/cards/weissschwarz/series/rezero">Re:Zero</a><a class="disco-link" href="/cards/weissschwarz/series/hololive">Hololive (Weiss Schwarz)</a><a class="disco-link" href="/cards/weissschwarz/series/nazarick-overlord">Overlord</a><a class="disco-link" href="/cards/weissschwarz/series/kancolle">KanColle</a><a class="disco-link" href="/cards/hololive">Hololive Official Card Game</a><a class="disco-link" href="/cards/unionarena">Union Arena</a><a class="disco-link" href="/cards/shadowverse">Shadowverse</a><a class="disco-link" href="/cards/grandarchive">Grand Archive</a><a class="disco-link" href="/cards/weissschwarz/series/sword-art-online">Sword Art Online</a><a class="disco-link" href="/cards/weissschwarz/series/bang-dream">BanG Dream!</a><a class="disco-link" href="/cards/weissschwarz/series/fate">Fate</a><a class="disco-link" href="/cards/weissschwarz/series/love-live">Love Live!</a><a class="disco-link" href="/cards/weissschwarz/series/rezero">Re:Zero</a><a class="disco-link" href="/cards/weissschwarz/series/hololive">Hololive (Weiss Schwarz)</a><a class="disco-link" href="/cards/weissschwarz/series/nazarick-overlord">Overlord</a><a class="disco-link" href="/cards/weissschwarz/series/kancolle">KanColle</a><a class="disco-link" href="/cards/hololive">Hololive Official Card Game</a><a class="disco-link" href="/cards/unionarena">Union Arena</a><a class="disco-link" href="/cards/shadowverse">Shadowverse</a><a class="disco-link" href="/cards/grandarchive">Grand Archive</a></div></div>
+</section>
+<script>
+function discoToggle(){
+  var s=document.getElementById('disco');
+  var b=document.getElementById('disco-toggle');
+  var paused=s.classList.toggle('paused');
+  b.setAttribute('aria-pressed',paused?'true':'false');
+  b.innerHTML=paused?'&#9654; Play':'&#10073;&#10073; Pause';
+}
+</script>
 
 <!-- FLAGSHIP GAMES -->
 <section style="padding:40px 0 0">

@@ -46,11 +46,12 @@ async function fetchSlugs(offset) {
 }
 
 async function fetchProperties() {
-  // Distinct non-promo property slugs for the /series/ property hub pages
+  // Distinct real licensed property slugs for the /series/ property hub pages (excludes promo and anthology)
   const url = SUPABASE_URL + '/rest/v1/weissschwarz_sets'
     + '?select=property'
     + '&property=not.is.null'
     + '&property=neq.promo'
+    + '&property=neq.anthology'
     + '&order=property.asc';
   try {
     const res = await supabaseFetch(url);
