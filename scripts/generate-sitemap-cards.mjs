@@ -18,6 +18,36 @@ const OUT_DIR      = '.'; // write to repo root — passthrough to _site
 
 import { writeFileSync } from 'fs';
 
+// Retry-with-backoff for transient Supabase failures (5xx, 429, network errors).
+// Exponential backoff: 0.5s, 1s, 2s, 4s. Client errors (other 4xx) fail fast —
+// they will not self-heal. If every attempt fails the error propagates to
+// main()'s catch, which exits non-zero so the build fails LOUDLY rather than
+// shipping an empty/partial sitemap. This decouples transient blips (retried
+// and usually recovered) from genuine outages (still block the deploy).
+const MAX_RETRIES = 4;
+async function fetchWithRetry(url, options, label) {
+  let lastErr;
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const res = await fetch(url, options);
+      if (res.ok) return res;
+      if (res.status < 500 && res.status !== 429) {
+        throw new Error(`Supabase ${label} fetch failed: ${res.status} (non-retryable)`);
+      }
+      lastErr = new Error(`Supabase ${label} fetch failed: ${res.status}`);
+    } catch (e) {
+      if (/non-retryable/.test(e.message)) throw e; // client error — do not retry
+      lastErr = e;                                   // network error — retryable
+    }
+    if (attempt < MAX_RETRIES) {
+      const delayMs = 500 * 2 ** attempt;
+      console.warn(`  ${label}: attempt ${attempt + 1}/${MAX_RETRIES + 1} failed (${lastErr.message}) — retrying in ${delayMs}ms`);
+      await new Promise(r => setTimeout(r, delayMs));
+    }
+  }
+  throw lastErr;
+}
+
 // Cursor-based pagination — avoids Supabase timeout on large offsets
 // Uses id > last_seen_id pattern which uses the primary key index efficiently
 async function fetchAll(table, select, filters = '') {
@@ -28,10 +58,9 @@ async function fetchAll(table, select, filters = '') {
   while (true) {
     const cursorFilter = lastId ? `&id=gt.${lastId}` : '';
     const url = `${SUPABASE_URL}/rest/v1/${table}?select=${select}&${filters}${cursorFilter}&order=id.asc&limit=${PAGE_SIZE}`;
-    const res = await fetch(url, {
+    const res = await fetchWithRetry(url, {
       headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-    });
-    if (!res.ok) throw new Error(`Supabase ${table} fetch failed: ${res.status}`);
+    }, table);
     const rows = await res.json();
     if (!Array.isArray(rows) || rows.length === 0) break;
     allRows.push(...rows);
