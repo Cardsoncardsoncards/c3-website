@@ -1336,7 +1336,7 @@ export default async (req, context) => {
   if (slug === 'banned' || slug.startsWith('banned/')) {
     const bannedHtml = await renderBannedPage(slug);
     return new Response(bannedHtml, {
-      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=86400' }
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=86400', 'Netlify-CDN-Cache-Control': 'public, s-maxage=86400,durable' }
     });
   }
 
@@ -1431,6 +1431,7 @@ export default async (req, context) => {
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        'Netlify-CDN-Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400,durable',
         'X-Robots-Tag': 'index, follow'
       }
     });
