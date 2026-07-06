@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 const PRICE_THRESHOLD   = 1.0;
 const PAGE_SIZE         = 1000;
-const MAX_CARDS         = 10000;
+const SAFETY_MAX        = 50000; // sitemaps.org hard limit — split before exceeding, never silently cap
 
 async function supabaseFetch(url, extraHeaders = {}) {
   const controller = new AbortController();
@@ -30,20 +30,23 @@ async function supabaseFetch(url, extraHeaders = {}) {
   }
 }
 
-async function fetchSlugs(offset = 0) {
+// Keyset pagination on the primary key: each page fetches rows with id greater
+// than the last seen. Unlike OFFSET this stays O(n) as the table grows and never
+// re-scans. A failed page THROWS (caught below) instead of returning [] — a
+// swallowed error would silently truncate the sitemap and de-index real pages.
+async function fetchSlugs(afterId) {
   const url = `${SUPABASE_URL}/rest/v1/yugioh_cards`
-    + `?select=slug,market_price,updated_at`
+    + `?select=id,slug,market_price,updated_at`
     + `&market_price=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
-    + `&order=market_price.desc.nullslast`
-    + `&limit=${PAGE_SIZE}`
-    + `&offset=${offset}`;
-  try {
-    const res = await supabaseFetch(url, { 'Prefer': 'return=representation' });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return Array.isArray(data) ? data : [];
-  } catch { return []; }
+    + (afterId != null ? `&id=gt.${afterId}` : ``)
+    + `&order=id.asc`
+    + `&limit=${PAGE_SIZE}`;
+  const res = await supabaseFetch(url, { 'Prefer': 'return=representation' });
+  if (!res.ok) throw new Error(`Supabase fetch failed: ${res.status}`);
+  const data = await res.json();
+  if (!Array.isArray(data)) throw new Error('Supabase returned a non-array payload');
+  return data;
 }
 
 export default async (req) => {
@@ -61,12 +64,17 @@ export default async (req) => {
 
   try {
     const allCards = [];
-    let offset = 0;
-    while (offset < MAX_CARDS) {
-      const batch = await fetchSlugs(offset);
+    let lastId = null;
+    while (allCards.length < SAFETY_MAX) {
+      const batch = await fetchSlugs(lastId);
       allCards.push(...batch);
       if (batch.length < PAGE_SIZE) break;
-      offset += PAGE_SIZE;
+      lastId = batch[batch.length - 1].id;
+    }
+    if (allCards.length >= SAFETY_MAX) {
+      // A single sitemap may not exceed 50,000 URLs. If this ever trips, the
+      // file must be split into indexed sub-sitemaps — fail loud, never cap.
+      throw new Error(`exceeded ${SAFETY_MAX} URLs — sitemap must be split`);
     }
 
     const today = new Date().toISOString().slice(0, 10);
@@ -100,7 +108,7 @@ ${urls}
     console.error('[sitemap-yugioh] error:', err.message);
     return new Response(
       `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><!-- Error: ${err.message} --></urlset>`,
-      { status: 200, headers }
+      { status: 500, headers } // fail loud: Google keeps the last good sitemap instead of caching a partial one
     );
   }
 };

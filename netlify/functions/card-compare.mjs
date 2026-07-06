@@ -1071,6 +1071,7 @@ ${cards.length >= 2 ? `
 
 <script type="application/json" id="compare-data">{"usdToAud":${usdToAud.toFixed(4)},"tokens":${JSON.stringify(allTokens)},"cardCount":${JSON.stringify(cards.length)}}</script>
 <footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <p>
     <a href="/">Home</a><a href="/compare">Compare</a><a href="/market">Market</a>
     <a href="/tracker">Tracker</a><a href="/blog">Blog</a><a href="/contact">Contact</a>

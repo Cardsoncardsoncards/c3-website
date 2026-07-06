@@ -262,6 +262,7 @@ async function handleSetPage(setSlug, headers) {
   </div>
 </div>
 <footer style="border-top:1px solid #252840;padding:24px;text-align:center;color:#8892b0;font-size:12px;margin-top:20px">
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/cards/pokemon" style="color:#8892b0;margin:0 8px">Pokemon</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker.html" style="color:#8892b0;margin:0 8px">Tracker</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
 </footer>
@@ -675,6 +676,7 @@ export default async (req) => {
 ${relatedHTML}
 
 <footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <div style="margin-bottom:12px">
     <a href="/">Home</a>
     <a href="/cards/mtg">MTG Cards</a>
