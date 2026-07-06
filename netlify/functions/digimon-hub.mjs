@@ -164,7 +164,7 @@ function css() {
 export default async (req) => {
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=1800, s-maxage=3600'
+    'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable'
   };
 
   const [setsResult, topCardsResult] = await Promise.allSettled([
@@ -304,6 +304,7 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Toei Animation. USD prices converted to AUD at approximately 1.45.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 
 <script>

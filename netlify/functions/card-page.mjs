@@ -897,6 +897,7 @@ ${sealedHTML}
   </p>
   <p>Card data via <a href="https://scryfall.com/card/${card.set_code}/${card.collector_number}" target="_blank" rel="noopener">Scryfall</a>. Prices in AUD are estimates based on USD conversion at live rates. Not financial advice.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: Cards on Cards on Cards earns commissions from eBay AU and Amazon AU purchases made through links on this site, at no extra cost to you.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
   <p style="margin-top:6px;font-size:10px;opacity:.4">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · <a href="https://cardsoncardsoncards.com.au">cardsoncardsoncards.com.au</a></p>
 </footer>

@@ -248,6 +248,7 @@ ${NAV_HTML}
   <p><a href="/">Home</a><a href="/cards/mtg">MTG Cards</a><a href="/ev-calculator.html">EV Calculator</a><a href="/shop.html">Shop</a><a href="/blog">Blog</a><a href="/tracker.html">Free Tracker</a></p>
   <p style="font-size:10px;opacity:.4;margin-top:6px">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 
 <script>
@@ -543,6 +544,7 @@ ${NAV_HTML}
   <p><a href="/">Home</a><a href="/cards/mtg">MTG Cards</a><a href="/cards/mtg/random-commander">Random Commander</a><a href="/ev-calculator.html">EV Calculator</a><a href="/blog">Blog</a></p><p style="font-size:11px;opacity:.5;margin-top:8px">Affiliate links may earn a commission at no extra cost to you.</p>
   <p style="font-size:10px;opacity:.4;margin-top:6px">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 
 <script>
@@ -1136,6 +1138,7 @@ ${NAV_HTML}
 
     <p style="font-size:11px;opacity:.4;margin-top:8px;text-align:center">Affiliate links may earn a commission at no extra cost to you.</p>
     <p style="font-size:10px;opacity:.35;margin-top:6px;text-align:center;max-width:1100px;margin-left:auto;margin-right:auto;padding:0 24px">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
   </footer>
 
 <script>

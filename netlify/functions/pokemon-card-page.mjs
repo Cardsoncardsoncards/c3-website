@@ -265,6 +265,7 @@ async function handleSetPage(setSlug, headers) {
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/cards/pokemon" style="color:#8892b0;margin:0 8px">Pokemon</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker.html" style="color:#8892b0;margin:0 8px">Tracker</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 </body></html>`;
 
@@ -286,7 +287,7 @@ export default async (req) => {
     return new Response('Not found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
   }
 
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
+  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200', 'Netlify-CDN-Cache-Control': 'public, max-age=3600, s-maxage=7200,durable' };
 
 
 
@@ -687,6 +688,7 @@ ${relatedHTML}
   </div>
   <p>© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Prices are estimates based on USD Scryfall/TCGdex data converted at approximately 1.45 AUD. Check eBay AU for live Australian pricing.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 <div id="c3-compare-tray" style="position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1a1d2e;border-top:1px solid #2d3254;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)">
   <div id="c3-tray-cards" style="display:flex;gap:8px;flex:1;align-items:center;overflow-x:auto"></div>

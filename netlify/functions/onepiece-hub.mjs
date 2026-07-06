@@ -39,7 +39,7 @@ async function supabaseGet(path) {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600' };
+  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable' };
   const today = new Date(); today.setHours(0,0,0,0);
   const cutoff45 = new Date(Date.now()-45*864e5).toISOString().slice(0,10);
 
@@ -337,6 +337,7 @@ ${carouselHTML ? `<section class="carousel-section fade-up fade-up-2">
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Toei Animation. Prices sourced from TCGPlayer (USD), converted to AUD at approximately 1.45.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 
 <script>

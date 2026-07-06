@@ -197,7 +197,7 @@ function esc(str) {
 export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/forceofwill/', '').replace(/^\/|\/$/g, '');
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200' };
+  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200', 'Netlify-CDN-Cache-Control': 'public, max-age=3600, s-maxage=7200,durable' };
 
   if (!slug) return new Response(notFoundPage(''), { status: 404, headers });
 

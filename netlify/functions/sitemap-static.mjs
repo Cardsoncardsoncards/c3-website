@@ -76,7 +76,7 @@ const STATIC_PAGES = [
 export default async (req) => {
   const headers = {
     'Content-Type': 'application/xml; charset=utf-8',
-    'Cache-Control': 'public, max-age=43200',
+    'Cache-Control': 'public, max-age=43200', 'Netlify-CDN-Cache-Control': 'public, max-age=43200,durable',
   };
 
   const today = new Date().toISOString().slice(0, 10);

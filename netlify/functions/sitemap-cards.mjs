@@ -55,7 +55,7 @@ async function fetchCardSlugs(offset = 0) {
 export default async (req) => {
   const headers = {
     'Content-Type': 'application/xml; charset=utf-8',
-    'Cache-Control': 'public, max-age=86400',
+    'Cache-Control': 'public, max-age=86400', 'Netlify-CDN-Cache-Control': 'public, max-age=86400,durable',
   };
 
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {

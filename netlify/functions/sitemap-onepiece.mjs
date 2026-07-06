@@ -48,7 +48,7 @@ async function fetchSlugs(offset = 0) {
 export default async (req) => {
   const headers = {
     'Content-Type': 'application/xml; charset=utf-8',
-    'Cache-Control': 'public, max-age=86400',
+    'Cache-Control': 'public, max-age=86400', 'Netlify-CDN-Cache-Control': 'public, max-age=86400,durable',
   };
 
   const empty = (msg) => new Response(

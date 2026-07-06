@@ -274,6 +274,7 @@ export default async (req) => {
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au &middot; Prices in AUD updated daily</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate links may earn a small commission at no extra cost to you.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 
 <script>

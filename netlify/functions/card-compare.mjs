@@ -1077,6 +1077,7 @@ ${cards.length >= 2 ? `
     <a href="/tracker">Tracker</a><a href="/blog">Blog</a><a href="/contact">Contact</a>
   </p>
   <p style="margin-top:8px">Prices in AUD at live rates. Card data via tcgapi.dev and Scryfall. Not financial advice.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
   <p style="margin-top:6px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
 </footer>
 
