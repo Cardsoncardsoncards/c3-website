@@ -15,6 +15,31 @@ const SEARCHABLE_GAMES = [
   { game: 'onepiece',  table: 'onepiece_cards',  imgCol: 'image_url',       priceCol: 'market_price', isAud: false, label: 'One Piece', color: '#F97316', emoji: '⚓' },
   { game: 'starwars',  table: 'starwars_cards',  imgCol: 'image_url',       priceCol: 'market_price', isAud: false, label: 'Star Wars', color: '#FFE81F', emoji: '🌟' },
   { game: 'riftbound', table: 'riftbound_cards', imgCol: 'image_url',       priceCol: 'market_price', isAud: false, label: 'Riftbound', color: '#10B981', emoji: '⚔' },
+  { game: 'dragonball',        table: 'dragonball_cards',        imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Dragon Ball',         color: '#F97316', emoji: '🐉' },
+  { game: 'digimon',           table: 'digimon_cards',           imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Digimon',             color: '#3B82F6', emoji: '💻' },
+  { game: 'vanguard',          table: 'vanguard_cards',          imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Vanguard',            color: '#DC2626', emoji: '🛡' },
+  { game: 'weissschwarz',      table: 'weissschwarz_cards',      imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Weiss Schwarz',       color: '#EC4899', emoji: '🎴' },
+  { game: 'finalfantasy',      table: 'finalfantasy_cards',      imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Final Fantasy TCG',   color: '#6366F1', emoji: '🔮' },
+  { game: 'forceofwill',       table: 'forceofwill_cards',       imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Force of Will',       color: '#0EA5E9', emoji: '🌀' },
+  { game: 'buddyfight',        table: 'buddyfight_cards',        imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Buddyfight',          color: '#F59E0B', emoji: '👊' },
+  { game: 'shadowverse',       table: 'shadowverse_cards',       imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Shadowverse Evolve',  color: '#8B5CF6', emoji: '🌓' },
+  { game: 'dbsfusionworld',    table: 'dbsfusionworld_cards',    imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'DBS Fusion World',    color: '#FF6B35', emoji: '🔥' },
+  { game: 'wow',               table: 'wow_cards',               imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'WoW TCG',             color: '#C9A84C', emoji: '🐺' },
+  { game: 'unionarena',        table: 'unionarena_cards',        imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Union Arena',         color: '#10B981', emoji: '🏟' },
+  { game: 'universus',         table: 'universus_cards',         imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'UniVersus',           color: '#6366F1', emoji: '♾' },
+  { game: 'metazoo',           table: 'metazoo_cards',           imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'MetaZoo',             color: '#84CC16', emoji: '🦎' },
+  { game: 'grandarchive',      table: 'grandarchive_cards',      imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Grand Archive',       color: '#C084FC', emoji: '📜' },
+  { game: 'wixoss',            table: 'wixoss_cards',            imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Wixoss',              color: '#F43F5E', emoji: '💿' },
+  { game: 'sorcery',           table: 'sorcery_cards',           imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Sorcery TCG',         color: '#A78BFA', emoji: '🪄' },
+  { game: 'hololive',          table: 'hololive_cards',          imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Hololive TCG',        color: '#06B6D4', emoji: '🎤' },
+  { game: 'alphaclash',        table: 'alphaclash_cards',        imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Alpha Clash',         color: '#EF4444', emoji: '💥' },
+  { game: 'gundam',            table: 'gundam_cards',            imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Gundam Card Game',    color: '#64748B', emoji: '🤖' },
+  { game: 'battlespiritssaga', table: 'battlespiritssaga_cards', imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Battle Spirits Saga', color: '#FB923C', emoji: '👻' },
+  { game: 'dragonballz',       table: 'dragonballz_cards',       imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Dragon Ball Z TCG',   color: '#EAB308', emoji: '☄' },
+  { game: 'bakugan',           table: 'bakugan_cards',           imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Bakugan TCG',         color: '#EF4444', emoji: '🔵' },
+  { game: 'godzilla',          table: 'godzilla_cards',          imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Godzilla TCG',        color: '#22C55E', emoji: '🦖' },
+  { game: 'warhammer',         table: 'warhammer_cards',         imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Warhammer TCG',       color: '#92400E', emoji: '🔨' },
+  { game: 'gateruler',         table: 'gateruler_cards',         imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Gate Ruler',          color: '#0891B2', emoji: '🚪' },
 ];
 
 async function searchGame(cfg, query, limit) {
@@ -130,10 +155,10 @@ export default async (req) => {
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${safeQuery ? `"${safeQuery}" | Card Search` : 'Search Cards'} | Cards on Cards on Cards</title>
-  <meta name="description" content="${safeQuery ? `Search results for "${safeQuery}" across MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Star Wars and Riftbound. Live AUD prices.` : 'Search all TCG cards across MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Star Wars and Riftbound. Live AUD prices.'}">
+  <meta name="description" content="${safeQuery ? `Search results for "${safeQuery}" across all 32 TCGs including MTG, Pokemon and Yu-Gi-Oh. Live AUD prices.` : 'Search all TCG cards across all 32 TCGs including MTG, Pokemon and Yu-Gi-Oh. Live AUD prices.'}">
   <meta name="robots" content="noindex,follow">
   <meta property="og:title" content="Search TCG Cards | Cards on Cards on Cards">
-  <meta property="og:description" content="Search MTG, Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Star Wars and Riftbound card prices in AUD.">
+  <meta property="og:description" content="Search all 32 TCGs including MTG, Pokemon and Yu-Gi-Oh card prices in AUD.">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/search">
