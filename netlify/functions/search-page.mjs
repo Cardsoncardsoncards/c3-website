@@ -1,7 +1,7 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 // netlify/functions/search-page.mjs
 // Serves: /search?q=lightning+bolt
-// Full search results page across all 7 games with card pages
+// Full search results page across all 32 games with card pages
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');

@@ -337,7 +337,7 @@ export default async (req) => {
   <link rel="canonical" href="${CANONICAL}">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="Pokemon Card Prices Australia | Cards on Cards on Cards">
-  <meta property="og:description" content="${sets.length || '216'}+ sets, 130k+ cards. Live AUD prices and eBay AU buy links updated daily.">
+  <meta property="og:description" content="${sets.length || '216'}+ sets, 32,000+ cards. Live AUD prices and eBay AU buy links updated daily.">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   <meta property="og:url" content="${CANONICAL}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -357,7 +357,7 @@ ${tickerHTML}
   <p class="hero-sub">Pokemon TCG card prices in AUD. Browse by set or search by card name. eBay AU buy links updated daily.</p>
   <div class="stat-bar">
     <div class="stat-item"><div class="stat-num">${sets.length || '216'}</div><div class="stat-label">Sets</div></div>
-    <div class="stat-item"><div class="stat-num">130k+</div><div class="stat-label">Cards</div></div>
+    <div class="stat-item"><div class="stat-num">32,000+</div><div class="stat-label">Cards</div></div>
     <div class="stat-item"><div class="stat-num">AU$</div><div class="stat-label">Live Prices</div></div>
     <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-label">Updates</div></div>
   </div>

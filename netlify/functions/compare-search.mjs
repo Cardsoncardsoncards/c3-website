@@ -2,13 +2,13 @@
 // Autocomplete API for the Card Compare page and all hub card search boxes
 // GET /api/compare-search?q=lightning+bolt&limit=8&game=mtg
 // GET /api/compare-search?q=lightning+bolt&game=mtg&printings=1
-// Supports all 27 TCGs with data in Supabase
+// Supports all 32 TCGs with data in Supabase
 // Updated: 20 May 2026 -- added 19 additional games
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 
-// All 27 games with data in Supabase
+// All 32 games with data in Supabase
 // priceCol: isAud=true means price is already AUD (MTG only); false means USD -> convert at 1.45
 const GAME_TABLES = [
   // --- Core 8 (original) ---

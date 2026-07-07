@@ -10,7 +10,7 @@ const STATIC_PAGES = [
   { path: '/',                    priority: '1.0', changefreq: 'daily'   },
   { path: '/cards',               priority: '0.9', changefreq: 'weekly'  },
 
-  // TCG Hubs -- all 27 games
+  // TCG Hubs -- all 32 games
   { path: '/cards/mtg',           priority: '0.9', changefreq: 'daily'   },
   { path: '/cards/pokemon',       priority: '0.9', changefreq: 'daily'   },
   { path: '/cards/yugioh',        priority: '0.9', changefreq: 'daily'   },
@@ -88,7 +88,7 @@ export default async (req) => {
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- C3 Static Pages, Hub Pages, Tools, Quizzes (27 TCGs) -->
+  <!-- C3 Static Pages, Hub Pages, Tools, Quizzes (32 TCGs) -->
   <!-- Generated: ${new Date().toISOString()} -->
   <!-- Total: ${STATIC_PAGES.length} pages -->
 ${staticUrls}
