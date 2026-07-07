@@ -248,8 +248,8 @@ async function handleSetPage(setSlug, headers) {
   </div>
 
   <div class="cta-row">
-    <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
-    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' pokemon')}&tag=blasdigital-22" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
+    <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy on eBay AU →</a>
+    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' pokemon')}&tag=blasdigital-22" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Amazon AU →</a>
   </div>
   ${top5.length ? `<div style="margin-bottom:28px"><div class="section-title">Most Valuable Cards</div><div class="cards-scroll">${top5HTML}</div></div>` : ''}
   <div style="margin-bottom:28px">
@@ -455,7 +455,7 @@ export default async (req) => {
          data-gtag-event="amazon_click"
          data-gtag-card="${card.name.replace(/"/g,'&quot;')}"
          data-gtag-game="pokemon">
-        Search Amazon AU for ${card.set_name} Sealed &rarr;
+        Amazon AU for ${card.set_name} Sealed &rarr;
       </a>
       <p style="font-size:11px;color:var(--text2);margin-top:10px">
         Prices and availability vary. Cards on Cards on Cards may earn a commission on purchases made through Amazon links.
@@ -607,7 +607,7 @@ export default async (req) => {
 
     <div class="cta-group">
       <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary" data-gtag-event="ebay_card_click" data-gtag-card="${card.name}" data-gtag-game="pokemon">Buy on eBay AU →</a>
-      <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(card.name+' pokemon '+card.set_name)}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:#f90;color:#f90">Search Amazon AU →</a>
+      <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(card.name+' pokemon '+card.set_name)}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:#f90;color:#f90">Amazon AU →</a>
       <button id="c3-compare-btn" class="cta-btn cta-secondary" style="cursor:pointer;border-color:rgba(124,106,245,.4);color:#7c6af5" data-action="add-to-compare" data-slug="${card.slug}" data-name="${card.name.replace(/"/g,'&quot;')}" data-img="${(card.image_url||'').replace(/"/g,'&quot;')}" data-price="${card.price_aud > 0 ? 'AU$'+parseFloat(card.price_aud).toFixed(2) : 'N/A'}" data-game="pokemon">
         <span id="c3-compare-lbl">⚖️ Add to Compare</span>
       </button>

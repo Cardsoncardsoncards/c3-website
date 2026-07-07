@@ -160,9 +160,9 @@ async function handleSetPage(setSlug, htmlHeaders) {
 
 
   <div class="cta-row">
-    <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy Cards on eBay AU →</a>
+    <a href="${ebaySetURL}" target="_blank" rel="noopener" class="cta-btn cta-primary">Buy on eBay AU →</a>
     <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name + ' weiss schwarz booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="cta-btn cta-secondary">Find Booster Box →</a>
-    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' Weiss Schwarz')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Search Amazon AU →</a>
+    <a href="https://www.amazon.com.au/s?k=${encodeURIComponent(set.name + ' Weiss Schwarz')}&tag=${AMAZON_TAG}" target="_blank" rel="noopener" class="cta-btn cta-secondary" style="border-color:rgba(255,153,0,.35);color:#ff9900">Amazon AU →</a>
   </div>
 
   ${top5.length ? `<div class="section"><div class="section-title">Most Valuable Cards</div><div class="cards-scroll">${top5HTML}</div></div>` : ''}
