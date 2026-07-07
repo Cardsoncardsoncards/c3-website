@@ -1062,7 +1062,7 @@ ${cards.length >= 2 ? `
 <div class="market-teaser">
   <div class="market-teaser-inner">
     <div class="market-teaser-text">
-      <strong>📊 C3 Market</strong> - See which cards are gaining and losing value across all 8 TCGs this week.
+      <strong>📊 C3 Market</strong> - See which cards are gaining and losing value across all 32 TCGs this week.
     </div>
     <a href="/market" class="market-link-btn" onclick="gtag('event','compare_market_link_clicked',{from:'compare_page',card_count:${cards.length}})">View C3 Market →</a>
   </div>
