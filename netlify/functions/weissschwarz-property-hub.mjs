@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { wsPropertyLabel } from './shared/ws-properties.mjs';
 // netlify/functions/weissschwarz-property-hub.mjs
 // Serves /cards/weissschwarz/:property (licensed property landing page)
 // Built to Weiss Schwarz hub standard -- 3 July 2026
@@ -40,12 +41,9 @@ function isNew(releaseDateStr) {
   return releaseDateStr >= cutoff;
 }
 
+// Canonical property display name (single source: ./shared/ws-properties.mjs).
 function propertyLabel(slug) {
-  return String(slug || '')
-    .split('-')
-    .map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : '')
-    .join(' ')
-    .trim();
+  return wsPropertyLabel(slug);
 }
 
 function sharedCSS() {

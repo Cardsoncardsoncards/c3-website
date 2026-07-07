@@ -371,7 +371,7 @@ function buildNav(gameLabel = '', gameHref = '') {
           <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&customid=C3NavShop&toolid=10001&mkevt=1"
             target="_blank" rel="noopener" class="nav-shop-item">
             Singles on eBay AU &#8599;
-            <span class="nav-shop-item-label">28,000+ TCG singles listed</span>
+            <span class="nav-shop-item-label">30,000+ TCG singles listed</span>
           </a>
           <a href="/shop#cat-accessories" class="nav-shop-item">
             Accessories

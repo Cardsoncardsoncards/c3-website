@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { wsPropertyLabel } from './shared/ws-properties.mjs';
 // netlify/functions/weissschwarz-hub.mjs
 // Serves /cards/weissschwarz
 // Rebuilt to Pokemon hub standard -- 28 May 2026
@@ -63,12 +64,9 @@ function isNew(releaseDateStr) {
   return releaseDateStr >= cutoff;
 }
 
+// Canonical property display name (single source: ./shared/ws-properties.mjs).
 function propLabel(slug) {
-  return String(slug || '')
-    .split('-')
-    .map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : '')
-    .join(' ')
-    .trim();
+  return wsPropertyLabel(slug);
 }
 
 function sharedCSS() {

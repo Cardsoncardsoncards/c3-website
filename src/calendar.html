@@ -282,44 +282,6 @@
 
 <div class="wrap">
 
-  <!-- FILTER BAR -->
-  <div class="filter-bar fade-up">
-    <span class="filter-label">Game</span>
-    <button class="filter-btn active" onclick="filterGame('all',this)">All Games</button>
-    <button class="filter-btn" onclick="filterGame('MTG',this)">MTG</button>
-    <button class="filter-btn" onclick="filterGame('POKEMON',this)">Pokemon</button>
-    <button class="filter-btn" onclick="filterGame('LORCANA',this)">Lorcana</button>
-    <button class="filter-btn" onclick="filterGame('ONEPIECE',this)">One Piece</button>
-    <button class="filter-btn" onclick="filterGame('YUGIOH',this)">Yu-Gi-Oh</button>
-    <button class="filter-btn" onclick="filterGame('RIFTBOUND',this)">Riftbound</button>
-    <button class="filter-btn" onclick="filterGame('STARWARS',this)">Star Wars</button>
-    <button class="filter-btn" onclick="filterGame('DRAGONBALL',this)">Dragon Ball</button>
-    <button class="filter-btn" onclick="filterGame('OTHER',this)">Other TCGs</button>
-  </div>
-
-  <!-- STATE FILTER -->
-  <div class="filter-bar fade-up" id="state-filter-bar" style="margin-top:8px">
-    <span class="filter-label">State</span>
-    <button class="state-btn state-btn--active" onclick="filterState('all',this)">All States</button>
-    <button class="state-btn" onclick="filterState('NSW',this)">NSW</button>
-    <button class="state-btn" onclick="filterState('VIC',this)">VIC</button>
-    <button class="state-btn" onclick="filterState('QLD',this)">QLD</button>
-    <button class="state-btn" onclick="filterState('WA',this)">WA</button>
-    <button class="state-btn" onclick="filterState('SA',this)">SA</button>
-    <button class="state-btn" onclick="filterState('TAS',this)">TAS</button>
-    <button class="state-btn" onclick="filterState('ACT',this)">ACT</button>
-  </div>
-
-  <!-- COMMUNITY POLL -->
-<div class="poll-embed fade-up" style="margin:16px 0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-  <div>
-    <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Community Poll</div>
-    <div style="font-size:14px;font-weight:700;color:var(--text)">Which 2026 TCG Release Are You Most Hyped For?</div>
-    <div style="font-size:12px;color:var(--text2);margin-top:2px">Cast your vote and see live results from the AU community.</div>
-  </div>
-  <a href="https://form.jotform.com/261402870260045" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;background:var(--gold);color:#000;white-space:nowrap;flex-shrink:0">Vote Now &#8599;</a>
-</div>
-
   <!-- VISUAL RELEASE MAP -->
   <div class="section-eyebrow">At a Glance</div>
   <div class="section-heading">Release Map, July to October 2026</div>
@@ -372,6 +334,44 @@
       </div>
     </div>
   </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar fade-up">
+    <span class="filter-label">Game</span>
+    <button class="filter-btn active" onclick="filterGame('all',this)">All Games</button>
+    <button class="filter-btn" onclick="filterGame('MTG',this)">MTG</button>
+    <button class="filter-btn" onclick="filterGame('POKEMON',this)">Pokemon</button>
+    <button class="filter-btn" onclick="filterGame('LORCANA',this)">Lorcana</button>
+    <button class="filter-btn" onclick="filterGame('ONEPIECE',this)">One Piece</button>
+    <button class="filter-btn" onclick="filterGame('YUGIOH',this)">Yu-Gi-Oh</button>
+    <button class="filter-btn" onclick="filterGame('RIFTBOUND',this)">Riftbound</button>
+    <button class="filter-btn" onclick="filterGame('STARWARS',this)">Star Wars</button>
+    <button class="filter-btn" onclick="filterGame('DRAGONBALL',this)">Dragon Ball</button>
+    <button class="filter-btn" onclick="filterGame('OTHER',this)">Other TCGs</button>
+  </div>
+
+  <!-- STATE FILTER -->
+  <div class="filter-bar fade-up" id="state-filter-bar" style="margin-top:8px">
+    <span class="filter-label">State</span>
+    <button class="state-btn state-btn--active" onclick="filterState('all',this)">All States</button>
+    <button class="state-btn" onclick="filterState('NSW',this)">NSW</button>
+    <button class="state-btn" onclick="filterState('VIC',this)">VIC</button>
+    <button class="state-btn" onclick="filterState('QLD',this)">QLD</button>
+    <button class="state-btn" onclick="filterState('WA',this)">WA</button>
+    <button class="state-btn" onclick="filterState('SA',this)">SA</button>
+    <button class="state-btn" onclick="filterState('TAS',this)">TAS</button>
+    <button class="state-btn" onclick="filterState('ACT',this)">ACT</button>
+  </div>
+
+  <!-- COMMUNITY POLL -->
+<div class="poll-embed fade-up" style="margin:16px 0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+  <div>
+    <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Community Poll</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text)">Which 2026 TCG Release Are You Most Hyped For?</div>
+    <div style="font-size:12px;color:var(--text2);margin-top:2px">Cast your vote and see live results from the AU community.</div>
+  </div>
+  <a href="https://form.jotform.com/261402870260045" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;background:var(--gold);color:#000;white-space:nowrap;flex-shrink:0">Vote Now &#8599;</a>
+</div>
 
   <!-- CALENDAR CONTENT -->
   <div id="calendar-content"></div>
