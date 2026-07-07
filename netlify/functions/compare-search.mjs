@@ -77,6 +77,7 @@ function normaliseCard(card, cfg, usdToAud = 1.45) {
     image:        card[imgCol] || null,
     setName:      card[setCol] || null,
     collectorNumber: card.collector_number || null,
+    scryfallId:   card.scryfall_id || null,   // MTG printing-unique id (null for other games); used by the compare version-switcher
     cardPath:     `/cards/${game}/${card[slugCol]}`
   };
 }
@@ -100,7 +101,7 @@ async function searchGame(cfg, query, limit, usdToAud, extraFilter = '') {
 async function getPrintings(cfg, name, usdToAud, extraFilter = '') {
   const { table, nameCol, slugCol, priceCol, imgCol, setCol } = cfg;
   const encoded = encodeURIComponent(name);
-  const extraCols = cfg.game === 'mtg' ? ',collector_number' : '';
+  const extraCols = cfg.game === 'mtg' ? ',collector_number,scryfall_id' : '';
   const path = `${table}?${nameCol}=eq.${encoded}${extraFilter}&select=${slugCol},${nameCol},${priceCol},${imgCol},${setCol}${extraCols}&order=${priceCol}.asc.nullslast&limit=40`;
   const data = await supabaseFetch(path);
   return (data || []).map(c => normaliseCard(c, cfg, usdToAud));

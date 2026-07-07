@@ -60,14 +60,22 @@ async function getLiveRate() {
   }
 }
 
-async function fetchMTGCard(slug, usdToAud) {
-  const cards = await supabaseGet(`mtg_cards?slug=eq.${encodeURIComponent(slug)}&order=price_aud.desc.nullslast&limit=1`);
+async function fetchMTGCard(token, usdToAud) {
+  // MTG slugs are shared across every printing of a card, so a slug alone cannot
+  // identify a printing. New compare links pass a printing-unique scryfall_id;
+  // resolve by it exactly. Old (pre-fix) links pass a slug -> fall back to the
+  // legacy highest-priced-printing lookup so existing bookmarked/shared /compare
+  // URLs keep working unchanged.
+  const SCRYFALL_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const cards = SCRYFALL_UUID.test(token)
+    ? await supabaseGet(`mtg_cards?scryfall_id=eq.${encodeURIComponent(token)}&limit=1`)
+    : await supabaseGet(`mtg_cards?slug=eq.${encodeURIComponent(token)}&order=price_aud.desc.nullslast&limit=1`);
   if (!cards || !cards[0]) return null;
   const card = cards[0];
 
   const [snapshots, cheapestPrinting] = await Promise.all([
     supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=14&select=snapshot_date,price_aud,price_usd,price_buy_ck_aud,price_buy_ck_usd`).catch(() => []),
-    supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&slug=neq.${encodeURIComponent(slug)}&select=slug,set_name,price_aud,price_usd&order=price_aud.asc.nullslast&limit=1`).catch(() => [])
+    supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&scryfall_id=neq.${encodeURIComponent(card.scryfall_id)}&select=slug,set_name,price_aud,price_usd&order=price_aud.asc.nullslast&limit=1`).catch(() => [])
   ]);
 
   const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? parseFloat(card.price_usd) * usdToAud : null);
@@ -1279,12 +1287,17 @@ function loadVersions(game, name, slotIdx) {
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (!data || !data.length) { panel.innerHTML = '<div style="padding:6px;color:var(--text2);font-size:10px">No other versions found</div>'; return; }
+      var e = function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
       panel.innerHTML = data.map(function(v) {
-        return '<div class="version-item" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '" tabindex="0">' +
-          '<span class="version-set">' + (v.setName || '-') + (v.collectorNumber ? ' #' + v.collectorNumber : '') + '</span>' +
-          '<span class="version-price">' + (v.priceDisplay || 'N/A') + '</span>' +
-          '<button class="version-swap" data-action="swap" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '">Swap</button>' +
-          '<button class="version-compare" data-action="compare" data-game="' + game + '" data-slug="' + v.slug + '" data-slot="' + slotIdx + '">+ Compare</button>' +
+        var slug = e(v.slug);
+        var id   = e(v.scryfallId || '');   // MTG printing-unique id; empty for other games (they use slug)
+        var img  = v.image ? '<img src="' + e(v.image) + '" alt="' + e(v.setName || '') + '" style="width:36px;height:50px;object-fit:cover;border-radius:3px;flex-shrink:0">' : '';
+        return '<div class="version-item" data-game="' + game + '" data-slug="' + slug + '" data-id="' + id + '" data-slot="' + slotIdx + '" tabindex="0">' +
+          img +
+          '<span class="version-set">' + e(v.setName || '-') + (v.collectorNumber ? ' #' + e(v.collectorNumber) : '') + '</span>' +
+          '<span class="version-price">' + e(v.priceDisplay || 'N/A') + '</span>' +
+          '<button class="version-swap" data-action="swap" data-game="' + game + '" data-slug="' + slug + '" data-id="' + id + '" data-slot="' + slotIdx + '">Swap</button>' +
+          '<button class="version-compare" data-action="compare" data-game="' + game + '" data-slug="' + slug + '" data-id="' + id + '" data-slot="' + slotIdx + '">+ Compare</button>' +
           '</div>';
       }).join('');
     })
@@ -1403,9 +1416,9 @@ document.addEventListener('click', function(e) {
   var resultItem = e.target.closest('.result-item[data-game]');
   if (resultItem && !resultItem.dataset.disabled) { addCard(resultItem.dataset.game, resultItem.dataset.slug); return; }
   var swapBtn = e.target.closest('.version-swap[data-action="swap"]');
-  if (swapBtn) { switchVersion(swapBtn.dataset.game, swapBtn.dataset.slug, parseInt(swapBtn.dataset.slot, 10)); return; }
+  if (swapBtn) { var sref = (swapBtn.dataset.game === 'mtg' && swapBtn.dataset.id) ? swapBtn.dataset.id : swapBtn.dataset.slug; switchVersion(swapBtn.dataset.game, sref, parseInt(swapBtn.dataset.slot, 10)); return; }
   var compareBtn = e.target.closest('.version-compare[data-action="compare"]');
-  if (compareBtn) { addVersionToSlot(compareBtn.dataset.game, compareBtn.dataset.slug, parseInt(compareBtn.dataset.slot, 10)); return; }
+  if (compareBtn) { var cref = (compareBtn.dataset.game === 'mtg' && compareBtn.dataset.id) ? compareBtn.dataset.id : compareBtn.dataset.slug; addVersionToSlot(compareBtn.dataset.game, cref, parseInt(compareBtn.dataset.slot, 10)); return; }
   var vBtn = e.target.closest('.slot-versions-btn');
   if (vBtn) { loadVersions(vBtn.dataset.game, vBtn.dataset.name, parseInt(vBtn.dataset.slot, 10)); return; }
   // Buy/sell view toggle

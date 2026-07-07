@@ -736,7 +736,7 @@ ${contextPara}
       <button class="cta-btn cta-watch" id="watch-btn" onclick="toggleWatch('${card.scryfall_id}','${card.name.replace(/'/g,"\'")}')">
         <span id="watch-icon">☆</span> <span id="watch-label">Watch this card</span>
       </button>
-      <button class="cta-btn cta-compare" id="compare-btn" onclick="addToCompare('${card.slug}','${card.name.replace(/'/g,"\\'")}','${(card.image_uri_small || card.image_uri_normal || '').replace(/'/g,"\\'")}','${priceAud ? formatAUD(priceAud) : 'N/A'}')">
+      <button class="cta-btn cta-compare" id="compare-btn" onclick="addToCompare('${card.scryfall_id}','${card.name.replace(/'/g,"\\'")}','${(card.image_uri_small || card.image_uri_normal || '').replace(/'/g,"\\'")}','${priceAud ? formatAUD(priceAud) : 'N/A'}')">
         <span id="compare-icon">⚖️</span> <span id="compare-label">Add to Compare</span>
       </button>
     </div>
@@ -1249,7 +1249,7 @@ function renderCompareTray() {
   const compareBtn = document.getElementById('compare-btn');
   const compareLabel = document.getElementById('compare-label');
   if (compareBtn && compareLabel) {
-    const inTray = tray.some(c => c.slug === '${card.slug}');
+    const inTray = tray.some(c => c.slug === '${card.scryfall_id}');
     compareBtn.classList.toggle('in-compare', inTray);
     compareLabel.textContent = inTray ? 'Added to Compare ✓' : 'Add to Compare';
   }
