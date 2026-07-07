@@ -91,18 +91,25 @@ async function supabaseGet(path) {
   }
 }
 
+// Weiss Schwarz has no property column; resolve set ids from weissschwarz_sets so
+// the movers query can narrow via set_id=in.(...). Returns [] on failure.
+async function resolveWsSetIds(property) {
+  const rows = await supabaseGet(`weissschwarz_sets?property=eq.${encodeURIComponent(property)}&select=id`);
+  return (rows || []).map(r => r.id).filter(id => id != null);
+}
+
 // ---------- data fetchers ----------
 
-async function fetchGameMovers(game, period) {
+async function fetchGameMovers(game, period, wsSetFilter = '') {
   const col = period === '30d' ? 'price_change_30d' : 'price_change_7d';
   const [gainersRaw, losersRaw] = await Promise.all([
     supabaseGet(
-      `${game}_cards?price_aud=gt.0.25&rarity=not.is.null&rarity=neq.None` +
+      `${game}_cards?price_aud=gt.0.25&rarity=not.is.null&rarity=neq.None${wsSetFilter}` +
       `&${col}=gte.2&order=${col}.desc&limit=40` +
       `&select=name,slug,set_name,rarity,image_url,price_aud,${col}`
     ),
     supabaseGet(
-      `${game}_cards?price_aud=gt.0.25&rarity=not.is.null&rarity=neq.None` +
+      `${game}_cards?price_aud=gt.0.25&rarity=not.is.null&rarity=neq.None${wsSetFilter}` +
       `&${col}=lte.-2&order=${col}.asc&limit=40` +
       `&select=name,slug,set_name,rarity,image_url,price_aud,${col}`
     )
@@ -292,6 +299,7 @@ export default async (req) => {
   const url    = new URL(req.url);
   const game   = (url.searchParams.get('game')   || 'all').toLowerCase().trim();
   const period = (url.searchParams.get('period') || '7d').toLowerCase().trim();
+  const property = url.searchParams.get('property') || null;
 
   // Signals route
   if (game === 'mtg_signals') {
@@ -301,9 +309,15 @@ export default async (req) => {
 
   // Single known game
   if (game !== 'all' && GAME_CONFIG[game]) {
+    // Weiss Schwarz property narrowing: resolve set ids once, then filter movers.
+    let wsSetFilter = '';
+    if (game === 'weissschwarz' && property) {
+      const ids = await resolveWsSetIds(property);
+      if (ids.length) wsSetFilter = `&set_id=in.(${ids.join(',')})`;
+    }
     const data = game === 'mtg'
       ? await fetchMTGMovers(period)
-      : await fetchGameMovers(game, period);
+      : await fetchGameMovers(game, period, wsSetFilter);
     return jsonResponse(data);
   }
 

@@ -12,7 +12,7 @@ affiliate_disclaimer: true
 
 ## Quick Answer
 
-C3 has 15 free TCG quizzes available at [/play](/play). They cover everything from which TCG to start, to which Yu-Gi-Oh archetype suits your play style, to whether you are a collector or an investor. All are free, take two minutes, and are built specifically for the Australian TCG market. No email required.
+C3 has 29 free TCG quizzes available at [/play](/play). They cover everything from which TCG to start, to which Yu-Gi-Oh archetype suits your play style, to whether you are a collector or an investor. All are free, take two minutes, and are built specifically for the Australian TCG market. No email required.
 
 ## Why TCG Quizzes Are More Useful Than They Sound
 

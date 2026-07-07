@@ -42,13 +42,31 @@ const SEARCHABLE_GAMES = [
   { game: 'gateruler',         table: 'gateruler_cards',         imgCol: 'image_url', priceCol: 'market_price', isAud: false, label: 'Gate Ruler',          color: '#0891B2', emoji: '🚪' },
 ];
 
-async function searchGame(cfg, query, limit) {
+// Weiss Schwarz has no property column; resolve set ids from weissschwarz_sets so
+// the card query can narrow via set_id=in.(...). Returns [] on failure (caller
+// falls back to unfiltered). AbortController + timeout + res.ok per house standard.
+async function resolveWsSetIds(property) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/weissschwarz_sets?property=eq.${encodeURIComponent(property)}&select=id`, {
+      signal: controller.signal,
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data.map(r => r.id).filter(id => id != null) : [];
+  } catch { clearTimeout(timer); return []; }
+}
+
+async function searchGame(cfg, query, limit, extraFilter = '') {
   // ilike value appended manually - URLSearchParams.set encodes * to %2A breaking PostgREST wildcard
   const baseUrl = new URL(`${SUPABASE_URL}/rest/v1/${cfg.table}`);
   baseUrl.searchParams.set('select', `slug,name,${cfg.imgCol},${cfg.priceCol},set_name,rarity`);
   baseUrl.searchParams.set('order', `${cfg.priceCol}.desc.nullslast`);
   baseUrl.searchParams.set('limit', String(limit));
-  const searchUrl = baseUrl.toString() + '&name=ilike.*' + encodeURIComponent(query) + '*';
+  const searchUrl = baseUrl.toString() + '&name=ilike.*' + encodeURIComponent(query) + '*' + extraFilter;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 6000);
   try {
@@ -109,6 +127,7 @@ export default async (req) => {
   // Sanitise for safe HTML interpolation - strip tags, limit length
   const safeQuery = query.replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c])).slice(0, 100);
   const gameFilter = url.searchParams.get('game') || '';
+  const propertyFilter = url.searchParams.get('property') || '';
 
   const tables = gameFilter
     ? SEARCHABLE_GAMES.filter(g => g.game === gameFilter)
@@ -118,7 +137,13 @@ export default async (req) => {
   let totalByGame = {};
 
   if (query.length >= 2) {
-    const settled = await Promise.allSettled(tables.map(g => searchGame(g, query, 40)));
+    // Weiss Schwarz property narrowing: resolve set ids once, applied only to the WS table.
+    let wsSetFilter = '';
+    if (gameFilter === 'weissschwarz' && propertyFilter) {
+      const ids = await resolveWsSetIds(propertyFilter);
+      if (ids.length) wsSetFilter = `&set_id=in.(${ids.join(',')})`;
+    }
+    const settled = await Promise.allSettled(tables.map(g => searchGame(g, query, 40, g.game === 'weissschwarz' ? wsSetFilter : '')));
     settled.forEach((r, i) => {
       if (r.status === 'fulfilled' && r.value.length) {
         results.push(...r.value);

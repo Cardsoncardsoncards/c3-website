@@ -2,7 +2,8 @@
 // Returns random cards from any supported TCG game
 // Query params: ?game=pokemon&limit=3&sort=price&min_price=10
 // min_price is interpreted in AUD (converted to USD internally for non-MTG market_price)
-// Supported games: mtg, pokemon, yugioh, lorcana, onepiece, riftbound, starwars, dragonball
+// Supported games: mtg, pokemon, yugioh, lorcana, onepiece, riftbound, starwars, dragonball, weissschwarz
+// Optional &property=<slug> narrows Weiss Schwarz to one licensed property (via weissschwarz_sets).
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -17,17 +18,20 @@ const GAME_TABLES = {
   riftbound:  'riftbound_cards',
   starwars:   'starwars_cards',
   dragonball: 'dragonball_cards',
+  weissschwarz: 'weissschwarz_cards',
 };
 
 const GAME_COUNTS = {
   mtg: 96480, pokemon: 31642, yugioh: 46588, lorcana: 2000,  // conservative: not all have images
   onepiece: 6289, riftbound: 1159, starwars: 6113, dragonball: 6261,
+  weissschwarz: 29000,  // 30,484 total (all imaged); ~29,832 with rarity != None; conservative
 };
 
 const GAME_PATHS = {
   mtg: '/cards/mtg', pokemon: '/cards/pokemon', yugioh: '/cards/yugioh',
   lorcana: '/cards/lorcana', onepiece: '/cards/onepiece', riftbound: '/cards/riftbound',
   starwars: '/cards/starwars', dragonball: '/cards/dragonball',
+  weissschwarz: '/cards/weissschwarz',
 };
 
 // MTG uses image_uri_small; all other games use image_url
@@ -36,6 +40,24 @@ const IMAGE_FIELD = {
 };
 function getImageField(game) {
   return IMAGE_FIELD[game] || 'image_url';
+}
+
+// Weiss Schwarz has no property column on the cards table. Resolve the set ids
+// for a licensed property from weissschwarz_sets, so the card query can narrow
+// via set_id=in.(...). Returns [] on any failure (caller falls back to unfiltered).
+async function resolveWsSetIds(property) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/weissschwarz_sets?property=eq.${encodeURIComponent(property)}&select=id`,
+      { signal: controller.signal, headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
+    clearTimeout(timer);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data.map(r => r.id).filter(id => id != null) : [];
+  } catch { clearTimeout(timer); return []; }
 }
 
 function json(data, status = 200) {
@@ -54,6 +76,7 @@ export default async (req) => {
   const game  = (url.searchParams.get('game') || '').toLowerCase();
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '1'), 20);
   const rarityParam = (url.searchParams.get('rarity') || 'all').toLowerCase();
+  const property = url.searchParams.get('property') || null;
 
   if (!game || !GAME_TABLES[game]) {
     return json({ error: 'Invalid game. Supported: ' + Object.keys(GAME_TABLES).join(', ') }, 400);
@@ -74,7 +97,7 @@ export default async (req) => {
   // When using price sort, start from offset 0 (top cards)
   // When random, use a safe offset capped at half the total to avoid empty results
   const safeMax = Math.max(1, Math.floor(total * 0.7) - limit);
-  const offset = usePrice ? 0 : Math.floor(Math.random() * safeMax);
+  let offset = usePrice ? 0 : Math.floor(Math.random() * safeMax);
 
   // MTG: filter on image_uri_small; others: filter on image_url
   let imageFilter, rarityFilter, selectFields;
@@ -145,7 +168,15 @@ export default async (req) => {
     if (minPrice > 0) priceFilter = `&market_price=gte.${(minPrice / 1.45).toFixed(2)}`;
     else if (usePrice) priceFilter = '&market_price=gt.0';
   }
-  const query = `${SUPABASE_URL}/rest/v1/${table}?${imageFilter}${rarityFilter}${priceFilter}&order=${orderStr}&limit=${limit}&offset=${offset}&select=${selectFields}`;
+  // Weiss Schwarz property filter: resolve set ids first, then narrow by set_id.
+  // Property pools are small, so reset the offset to 0 (the full-table offset would
+  // overshoot the filtered pool and 404). Falls back to unfiltered if zero sets match.
+  let wsSetFilter = '';
+  if (game === 'weissschwarz' && property) {
+    const ids = await resolveWsSetIds(property);
+    if (ids.length) { wsSetFilter = `&set_id=in.(${ids.join(',')})`; offset = 0; }
+  }
+  const query = `${SUPABASE_URL}/rest/v1/${table}?${imageFilter}${rarityFilter}${priceFilter}${wsSetFilter}&order=${orderStr}&limit=${limit}&offset=${offset}&select=${selectFields}`;
 
   try {
     const res = await fetch(query, {

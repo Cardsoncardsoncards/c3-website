@@ -81,19 +81,27 @@ function normaliseCard(card, cfg, usdToAud = 1.45) {
   };
 }
 
-async function searchGame(cfg, query, limit, usdToAud) {
+// Weiss Schwarz has no property column; resolve set ids from weissschwarz_sets.
+// Returns [] on failure (caller falls back to unfiltered). Reuses supabaseFetch
+// (AbortController + timeout + res.ok already handled there).
+async function resolveWsSetIds(property) {
+  const rows = await supabaseFetch(`weissschwarz_sets?property=eq.${encodeURIComponent(property)}&select=id`);
+  return (rows || []).map(r => r.id).filter(id => id != null);
+}
+
+async function searchGame(cfg, query, limit, usdToAud, extraFilter = '') {
   const { table, nameCol, slugCol, priceCol, imgCol, setCol } = cfg;
   const encoded = encodeURIComponent(query);
-  const path = `${table}?${nameCol}=ilike.*${encoded}*&select=${slugCol},${nameCol},${priceCol},${imgCol},${setCol}&order=${priceCol}.desc.nullslast&limit=${limit}`;
+  const path = `${table}?${nameCol}=ilike.*${encoded}*${extraFilter}&select=${slugCol},${nameCol},${priceCol},${imgCol},${setCol}&order=${priceCol}.desc.nullslast&limit=${limit}`;
   const data = await supabaseFetch(path);
   return (data || []).map(c => normaliseCard(c, cfg, usdToAud));
 }
 
-async function getPrintings(cfg, name, usdToAud) {
+async function getPrintings(cfg, name, usdToAud, extraFilter = '') {
   const { table, nameCol, slugCol, priceCol, imgCol, setCol } = cfg;
   const encoded = encodeURIComponent(name);
   const extraCols = cfg.game === 'mtg' ? ',collector_number' : '';
-  const path = `${table}?${nameCol}=eq.${encoded}&select=${slugCol},${nameCol},${priceCol},${imgCol},${setCol}${extraCols}&order=${priceCol}.asc.nullslast&limit=40`;
+  const path = `${table}?${nameCol}=eq.${encoded}${extraFilter}&select=${slugCol},${nameCol},${priceCol},${imgCol},${setCol}${extraCols}&order=${priceCol}.asc.nullslast&limit=40`;
   const data = await supabaseFetch(path);
   return (data || []).map(c => normaliseCard(c, cfg, usdToAud));
 }
@@ -103,6 +111,7 @@ export default async (req) => {
   const query      = (url.searchParams.get('q') || '').trim();
   const limit      = Math.min(parseInt(url.searchParams.get('limit') || '8'), 20);
   const gameFilter = url.searchParams.get('game') || null;
+  const propertyFilter = url.searchParams.get('property') || null;
   const printings  = url.searchParams.get('printings') === '1';
 
   const headers = {
@@ -118,13 +127,21 @@ export default async (req) => {
   const tables   = gameFilter ? GAME_TABLES.filter(g => g.game === gameFilter) : GAME_TABLES;
   const usdToAud = 1.45;
 
+  // Weiss Schwarz property narrowing: resolve set ids once; applied only to the
+  // weissschwarz table below (tables is already isolated to WS when game=weissschwarz).
+  let wsSetFilter = '';
+  if (gameFilter === 'weissschwarz' && propertyFilter) {
+    const ids = await resolveWsSetIds(propertyFilter);
+    if (ids.length) wsSetFilter = `&set_id=in.(${ids.join(',')})`;
+  }
+
   if (printings && gameFilter && tables.length === 1) {
-    const results = await getPrintings(tables[0], query, usdToAud);
+    const results = await getPrintings(tables[0], query, usdToAud, tables[0].game === 'weissschwarz' ? wsSetFilter : '');
     return new Response(JSON.stringify(results), { headers });
   }
 
   const perGame = gameFilter ? limit : Math.ceil(limit / tables.length) + 2;
-  const settled = await Promise.allSettled(tables.map(g => searchGame(g, query, perGame, usdToAud)));
+  const settled = await Promise.allSettled(tables.map(g => searchGame(g, query, perGame, usdToAud, g.game === 'weissschwarz' ? wsSetFilter : '')));
   const allCards = settled
     .filter(r => r.status === 'fulfilled')
     .flatMap(r => r.value)
