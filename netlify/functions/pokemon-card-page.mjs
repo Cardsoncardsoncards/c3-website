@@ -623,7 +623,18 @@ export default async (req) => {
       <a class="share-btn" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener" style="background:#ff450018;color:#ff4500;border-color:#ff450055">Reddit</a>
       <a class="share-btn" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener" style="background:#00000055;color:#e8eaf0;border-color:#444">𝕏 Twitter</a>
       <a class="share-btn" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener" style="background:#25d36618;color:#25d366;border-color:#25d36655">WhatsApp</a>
+      <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank" rel="noopener" style="background:#1877f218;color:#1877f2;border-color:#1877f255">Facebook</a>
       <button class="share-btn" style="background:#5865f218;color:#5865f2;border-color:#5865f255" data-action="copy-discord">Discord</button>
+    </div>
+    <style>
+    .helpful-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.10);border-radius:8px;margin:20px 0;font-family:sans-serif;font-size:13px;color:var(--text2)}
+    .helpful-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .18s}
+    .helpful-btn:hover,.helpful-btn.voted{border-color:var(--accent);color:var(--accent)}
+    </style>
+    <div class="helpful-bar" id="helpful-bar">
+      <span>Was this page helpful?</span>
+      <button class="helpful-btn" onclick="voteHelpful(1,this)">👍 Yes</button>
+      <button class="helpful-btn" onclick="voteHelpful(0,this)">👎 No</button>
     </div>
   </div>
 </div>
@@ -701,6 +712,14 @@ ${relatedHTML}
 <script>
 ${(await import('fs')).readFileSync ? '' : ''}
 const COMPARE_KEY='c3_compare_tray';
+function voteHelpful(val, btn) {
+  document.querySelectorAll('.helpful-btn').forEach(b => b.classList.remove('voted'));
+  btn.classList.add('voted');
+  btn.textContent = val === 1 ? '👍 Thanks!' : '👎 Noted';
+  if (typeof gtag !== 'undefined') gtag('event', 'page_helpful', { value: val, page: window.location.pathname });
+  setTimeout(() => { const bar = document.getElementById('helpful-bar'); if (bar) bar.innerHTML = '<span style="color:var(--text2);font-size:13px;font-family:sans-serif">Thanks for the feedback!</span>'; }, 800);
+}
+
 function getCompareTray(){try{return JSON.parse(localStorage.getItem(COMPARE_KEY)||'[]');}catch{return[];}}
 function saveCompareTray(t){localStorage.setItem(COMPARE_KEY,JSON.stringify(t));}
 function renderCompareTray(currentSlug,currentName){
