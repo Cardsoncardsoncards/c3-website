@@ -125,7 +125,10 @@ async function fetchMTGCard(token, usdToAud) {
     const snapshotDate = latestCKSnap && latestCKSnap.snapshot_date ? latestCKSnap.snapshot_date : null;
 
     return {
-      slug, game: 'mtg',
+      // Token identity for MTG is the printing-unique scryfall_id (the param may
+      // arrive as a scryfall_id or, for old links, a slug that we resolved to one
+      // printing) -- keeps allTokens/share/remove URLs printing-precise per task-25.
+      slug: card.scryfall_id, game: 'mtg',
       name:         card.name,
       image:        card.image_uri_small || card.image_uri_normal || null,
       setName:      card.set_name || null,
@@ -153,7 +156,7 @@ async function fetchMTGCard(token, usdToAud) {
       keywords,
       power:        card.power || null,
       toughness:    card.toughness || null,
-      cardPath:     `/cards/mtg/${slug}`,
+      cardPath:     `/cards/mtg/${card.slug}`,
       ...GAME_CONFIG.mtg
     };
   } catch { return null; }
