@@ -255,6 +255,99 @@ function buildSparkline(points, w=80, h=24) {
   return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="display:block;overflow:visible"><path d="${d}" fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
 
+// Escape for safe interpolation of card/set names into bar-label HTML.
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// 1-10 metric scores, mirroring buildRadar's internal score() formulas exactly
+// (Price: cheaper scores higher; Trend: rising scores higher; Rarity: rarer scores
+// higher). Shared so the metric bars reuse the identical radar logic.
+function cardMetricScores(card) {
+  const price = card.priceAud
+    ? Math.max(1, Math.min(10, 10 - Math.log10(Math.max(card.priceAud, 1)) * 2.5))
+    : 5;
+  const tPct = card.sevenDayChange ? parseFloat(card.sevenDayChange.pct) : 0;
+  const trend = Math.min(10, Math.max(1, 5 + tPct * 0.3));
+  const rarityMap = { common: 3, uncommon: 5, rare: 7, mythic: 9, legendary: 8, secret: 10 };
+  const rarity = rarityMap[card.rarity ? card.rarity.toLowerCase() : ''] || 5;
+  return { price, trend, rarity };
+}
+
+const BAR_COLORS = ['#C9A84C', '#7c6af5', '#4caf50', '#EF4444', '#3B82F6'];
+
+// Same-card view: each printing's price as a % of the most expensive printing
+// currently in the tray (no new query -- computed from cards already fetched).
+function buildValueBars(cards) {
+  const maxPriceAud = Math.max(...cards.map(c => c.priceAud || 0));
+  if (!(maxPriceAud > 0)) return '<div style="font-size:12px;color:var(--text2);padding:10px 0">No price data available to compare these printings.</div>';
+  return `<div class="metric-bars">${cards.map((c, i) => {
+    const price = c.priceAud || 0;
+    const pct = Math.round((price / maxPriceAud) * 100);
+    const name = escHtml(c.setName || c.name || 'Printing');
+    const col = BAR_COLORS[i] || '#888';
+    return `<div class="metric-bar-block">
+      <div class="metric-bar-title">${name}</div>
+      <div class="metric-bar-row">
+        <div class="metric-bar-track"><div class="metric-bar-fill" style="width:${pct}%;background:${col}"></div></div>
+        <span class="metric-bar-val">${pct}% of most expensive &middot; ${fmtAUD(price) || 'N/A'}</span>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+// Different-card view: one bar-group per metric, one bar per card. Pure rendering
+// over already-fetched fields (no new query). Legality group only when allMtg.
+function buildMetricBars(cards, allMtg) {
+  function row(card, i, widthPct, valHtml, colorOverride, dim) {
+    const col = colorOverride || BAR_COLORS[i] || '#888';
+    const w = Math.max(0, Math.min(100, widthPct));
+    const track = dim
+      ? '<div class="metric-bar-track"></div>'
+      : `<div class="metric-bar-track"><div class="metric-bar-fill" style="width:${w}%;background:${col}"></div></div>`;
+    return `<div class="metric-bar-row"><span class="metric-bar-name">${escHtml(card.name)}</span>${track}<span class="metric-bar-val${dim ? ' metric-bar-dim' : ''}">${valHtml}</span></div>`;
+  }
+  const groups = [];
+  // Price -- radar price score (1-10) rescaled to 0-100; label with actual price.
+  groups.push(`<div class="metric-group"><div class="metric-group-label">Price</div>${cards.map((c, i) => {
+    const s = cardMetricScores(c);
+    return row(c, i, (s.price / 10) * 100, c.priceAud ? (fmtAUD(c.priceAud) || 'N/A') : 'N/A');
+  }).join('')}</div>`);
+  // Trend -- signed 7-day %, green up / red down; grey "no recent data" when null
+  // (no faked bar). Bar width scales |pct| x5 so a 20% move fills the track.
+  groups.push(`<div class="metric-group"><div class="metric-group-label">7-Day Trend</div>${cards.map((c, i) => {
+    if (!c.sevenDayChange) return row(c, i, 0, 'no recent data', '#888', true);
+    const pct = parseFloat(c.sevenDayChange.pct);
+    const up = c.sevenDayChange.up;
+    return row(c, i, Math.min(100, Math.abs(pct) * 5), (up ? '&#9650; +' : '&#9660; ') + pct + '%', up ? '#4caf50' : '#EF4444');
+  }).join('')}</div>`);
+  // Value Score -- (priceScore + trendScore)/20 x100. When 7-day trend is absent we
+  // score on price alone (priceScore/10 x100) rather than injecting the neutral
+  // trend midpoint, which would imply a flat-price signal we have not observed.
+  groups.push(`<div class="metric-group"><div class="metric-group-label">Value Score</div>${cards.map((c, i) => {
+    const s = cardMetricScores(c);
+    const hasTrend = !!c.sevenDayChange;
+    const vs = hasTrend ? ((s.price + s.trend) / 20) * 100 : (s.price / 10) * 100;
+    return row(c, i, vs, Math.round(vs) + '/100' + (hasTrend ? '' : ' (price only)'));
+  }).join('')}</div>`);
+  // Rarity -- radar rarity score (1-10) rescaled to 0-100; label with rarity name.
+  groups.push(`<div class="metric-group"><div class="metric-group-label">Rarity</div>${cards.map((c, i) => {
+    const s = cardMetricScores(c);
+    const r = c.rarity ? c.rarity.charAt(0).toUpperCase() + c.rarity.slice(1) : '-';
+    return row(c, i, (s.rarity / 10) * 100, escHtml(r));
+  }).join('')}</div>`);
+  // Format Legality -- ONLY when every card is MTG; % of MTG formats legal in.
+  if (allMtg) {
+    groups.push(`<div class="metric-group"><div class="metric-group-label">Format Legality</div>${cards.map((c, i) => {
+      const legal = MTG_FORMATS.filter(f => (c.legalities || {})[f] === 'legal').length;
+      return row(c, i, (legal / MTG_FORMATS.length) * 100, legal + ' / ' + MTG_FORMATS.length + ' formats');
+    }).join('')}</div>`);
+  }
+  return `<div class="metric-bars metric-bars-grouped">${groups.join('')}</div>`;
+}
+
 // Radar chart: 3 axes (Price, Trend, Rarity), applies to all games
 function buildRadar(cards) {
   if (!cards || cards.length < 1) return '';
@@ -702,6 +795,10 @@ function renderPage({ cards, allTokens, usdToAud }) {
   const verdict     = computeVerdict(cards);
   const statStrips  = hasCards && cards.length >= 2 ? renderStatStrips(cards) : '';
   const radar       = hasCards && cards.length >= 1 ? buildRadar(cards) : '';
+  const isSameCard  = new Set(cards.map(c => c.name)).size === 1 && cards.length > 1;
+  const allMtg      = cards.length > 0 && cards.every(c => c.game === 'mtg');
+  const valueBars   = isSameCard ? buildValueBars(cards) : '';
+  const metricBars  = (!isSameCard && cards.length >= 2) ? buildMetricBars(cards, allMtg) : '';
 
   const gameChips = Object.entries(GAME_CONFIG).map(([g, cfg]) =>
     `<button class="game-chip" data-game="${g}" style="--gc:${cfg.color}">${cfg.label}</button>`
@@ -898,7 +995,26 @@ function renderPage({ cards, allTokens, usdToAud }) {
     .best-value-badge{background:var(--purple);color:#fff;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:700}
 
     /* RADAR */
-    .radar-section{max-width:1300px;margin:28px auto 0;padding:0 24px}
+        .metric-bars{display:flex;flex-direction:column;gap:12px;min-width:300px;flex:1}
+    .metric-group{margin-bottom:2px}
+    .metric-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);margin-bottom:6px;font-family:sans-serif}
+    .metric-bar-block{margin-bottom:10px}
+    .metric-bar-title{font-size:12px;color:var(--text);margin-bottom:4px;font-family:sans-serif}
+    .metric-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+    .metric-bar-name{font-size:11px;color:var(--text2);width:110px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:sans-serif}
+    .metric-bar-track{flex:1;height:14px;background:var(--bg3);border-radius:7px;overflow:hidden;min-width:60px}
+    .metric-bar-fill{height:100%;border-radius:7px}
+    .metric-bar-val{font-size:11px;color:var(--text2);white-space:nowrap;font-family:sans-serif;min-width:74px}
+    .metric-bar-dim{color:var(--text3);font-style:italic}
+    .profile-viz{flex-shrink:0}
+    .profile-viz-bars{flex:1;min-width:280px}
+    .profile-side{flex:1;min-width:200px}
+    .profile-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+    .profile-toggle .view-btn{padding:5px 12px}
+    .profile-value-bars{display:none}
+    body.profile-value-view .profile-radar{display:none}
+    body.profile-value-view .profile-value-bars{display:block}
+.radar-section{max-width:1300px;margin:28px auto 0;padding:0 24px}
     .radar-inner{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
     .radar-chart{flex-shrink:0}
     .radar-legend{display:flex;flex-direction:column;gap:8px}
@@ -1055,17 +1171,34 @@ ${cards.length >= 2 ? `
 
 <div class="radar-section">
   <div class="radar-inner">
-    <div class="radar-chart">${radar}</div>
-    <div>
-      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px">Card Strength Profile</div>
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.5;margin:6px 0 10px;">Three axes, all games. Price: cheaper cards score higher. Trend: rising prices score higher. Rarity: rarer cards score higher. A larger shape means stronger overall value signal.</p>
+    ${isSameCard ? `
+    <div class="profile-viz">
+      <div class="radar-chart profile-radar">${radar}</div>
+      <div class="profile-value-bars">${valueBars}</div>
+    </div>
+    <div class="profile-side">
+      <div class="profile-head">
+        <div style="font-size:13px;font-weight:600;color:var(--text)">Card Strength Profile</div>
+        <div class="view-toggle profile-toggle" role="group" aria-label="Profile view selector">
+          <button class="view-btn active" id="btn-radar" onclick="setProfileView('radar')">Radar</button>
+          <button class="view-btn" id="btn-value" onclick="setProfileView('value')">% Value</button>
+        </div>
+      </div>
+      <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.5;margin:6px 0 10px;">Comparing printings of the same card. <strong>Radar</strong>: Price (cheaper scores higher), Trend and Rarity. <strong>% Value</strong>: each printing's price as a share of the most expensive printing here.</p>
       <div class="radar-legend">
-        ${cards.map((c, i) => {
-          const colors = ['#C9A84C','#7c6af5','#4caf50','#EF4444','#3B82F6'];
-          return `<div class="radar-legend-item"><div class="radar-swatch" style="background:${colors[i] || '#888'}"></div><span>${c.name}</span></div>`;
-        }).join('')}
+        ${cards.map((c, i) => `<div class="radar-legend-item"><div class="radar-swatch" style="background:${BAR_COLORS[i] || '#888'}"></div><span>${escHtml(c.setName || c.name)}</span></div>`).join('')}
       </div>
     </div>
+    ` : `
+    <div class="profile-viz profile-viz-bars">${metricBars}</div>
+    <div class="profile-side">
+      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px">Card Strength Profile</div>
+      <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.5;margin:6px 0 10px;">Horizontal bars compare each card on Price, 7-day Trend, a combined Value Score and Rarity${allMtg ? ', plus MTG format legality' : ''}. Longer bars indicate a stronger signal on that metric.</p>
+      <div class="radar-legend">
+        ${cards.map((c, i) => `<div class="radar-legend-item"><div class="radar-swatch" style="background:${BAR_COLORS[i] || '#888'}"></div><span>${escHtml(c.name)}</span></div>`).join('')}
+      </div>
+    </div>
+    `}
   </div>
 </div>
 ` : `<div style="max-width:1300px;margin:24px auto;padding:0 24px;font-size:13px;color:var(--text2)">Add at least 2 cards to see the comparison table.</div>`}
@@ -1125,6 +1258,18 @@ function setCurrency(cur) {
 }
 
 // Buy / Sell view toggle
+// Card Strength Profile: radar <-> % Value toggle (mirrors the AUD/USD + Buy/Sell
+// toggle pattern; default state is Radar, matching those toggles' "default = the
+// more commonly useful view" convention).
+function setProfileView(view) {
+  var isValue = view === 'value';
+  var r = document.getElementById('btn-radar'), v = document.getElementById('btn-value');
+  if (r) r.classList.toggle('active', !isValue);
+  if (v) v.classList.toggle('active', isValue);
+  document.body.classList.toggle('profile-value-view', isValue);
+  if (typeof gtag !== 'undefined') gtag('event', 'compare_profile_view_toggled', { view: view });
+}
+
 function setView(view) {
   var isSell = view === 'sell';
   document.getElementById('btn-buy').classList.toggle('active', !isSell);
