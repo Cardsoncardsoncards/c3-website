@@ -26,6 +26,30 @@ async function supabaseGet(path) {
   } catch (e) { clearTimeout(timer); throw e; }
 }
 
+// 30-day price sparkline from <game>_price_snapshots (ported from pokemon-card-page.mjs)
+function buildSparkline(snaps) {
+  if (!snaps || snaps.length < 14) return '';
+  const prices = snaps.map(s => parseFloat(s.price_aud || (s.market_price * 1.45)) || 0).filter(p => p > 0);
+  if (prices.length < 2) return '';
+  const min = Math.min(...prices), max = Math.max(...prices), range = max - min || 1;
+  const W = 160, H = 40, pad = 4;
+  const pts = prices.map((p, i) => {
+    const x = pad + (i / (prices.length - 1)) * (W - pad * 2);
+    const y = H - pad - ((p - min) / range) * (H - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const last = prices[prices.length - 1], first = prices[0];
+  const trendCol = last >= first ? '#4dbd5f' : '#e57373';
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;margin-top:8px">
+    <polyline points="${pts}" fill="none" stroke="${trendCol}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${(W - pad).toFixed(1)}" cy="${(H - pad - ((last - min) / range) * (H - pad * 2)).toFixed(1)}" r="3" fill="${trendCol}"/>
+  </svg>
+  <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin-top:2px">
+    <span>${snaps[0].snapshot_date?.slice(5) || ''}</span>
+    <span>${snaps[snaps.length - 1].snapshot_date?.slice(5) || 'Today'}</span>
+  </div>`;
+}
+
 async function getEbayToken() {
   if (!EBAY_CLIENT_ID || !EBAY_CLIENT_SECRET) return null;
   try {
@@ -211,6 +235,10 @@ export default async (req) => {
     const cards = await supabaseGet(`bakugan_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`);
     if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
     const card = cards[0];
+
+    const _snapCutoff = new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10);
+    const snapshots = await supabaseGet(`bakugan_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&snapshot_date=gte.${_snapCutoff}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => []);
+    const sparklineHTML = buildSparkline(snapshots);
     const _setRows = card.set_id ? await supabaseGet(`bakugan_sets?id=eq.${card.set_id}&limit=1&select=slug`).catch(() => []) : [];
     const setUrl = (Array.isArray(_setRows) && _setRows[0] && _setRows[0].slug) ? `/cards/bakugan/sets/${_setRows[0].slug}` : `/cards/bakugan`;
 
@@ -328,18 +356,40 @@ export default async (req) => {
       ${card.rarity ? `<div class="meta-item"><div class="meta-label">Rarity</div><div class="meta-value">${card.rarity}</div></div>` : ''}
       <div class="meta-item"><div class="meta-label">Price (AUD)</div><div class="meta-value" style="color:var(--accent)">${priceAud ? `AU$${priceAud.toFixed(2)}` : 'N/A'}</div></div>
     </div>
+    ${sparklineHTML ? `<div style="margin:14px 0 0"><div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">Recent price trend</div>${sparklineHTML}</div>` : ''}
     <div class="cta-row">
       <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary">🛒 Buy on eBay AU →</a>
       <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
     </div>
     <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. Updated daily. eBay links may earn affiliate commission.</p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px">
-      <span style="font-size:11px;color:rgba(160,168,192,.6);font-weight:700;letter-spacing:.1em;text-transform:uppercase">Share</span>
-      <button style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #3d4270;background:#2d3254;color:#e8eaf0;font-family:'DM Sans',sans-serif" data-action="copy-link">📋 Copy Link</button>
-      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#ff450018;color:#ff4500;border:1px solid #ff450055" href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener">Reddit</a>
-      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#00000055;color:#e8eaf0;border:1px solid #444" href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
-      <a style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:#25d36618;color:#25d366;border:1px solid #25d36655" href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener">WhatsApp</a>
-      <button style="padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;background:#5865f218;color:#5865f2;border:1px solid #5865f255;font-family:'DM Sans',sans-serif" data-action="copy-discord">Discord</button>
+    <style>
+    .share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0;padding:16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-family:sans-serif}
+    .share-bar-label{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-right:4px;white-space:nowrap}
+    .share-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .share-btn:hover{transform:translateY(-1px);text-decoration:none;opacity:.9}
+    .share-discord{background:#5865F2;color:#fff}
+    .share-reddit{background:#FF4500;color:#fff}
+    .share-twitter{background:#000;color:#fff}
+    .share-facebook{background:#1877F2;color:#fff}
+    .share-whatsapp{background:#25D366;color:#fff}
+    .share-copy{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
+    .helpful-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.10);border-radius:8px;margin:20px 0;font-family:sans-serif;font-size:13px;color:var(--text2)}
+    .helpful-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .18s}
+    .helpful-btn:hover,.helpful-btn.voted{border-color:var(--accent);color:var(--accent)}
+    </style>
+    <div class="share-bar">
+      <span class="share-bar-label">Share</span>
+      <button class="share-btn share-discord" onclick="navigator.clipboard.writeText(location.href).then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
+      <a href="https://reddit.com/submit?url=${pageUrl}&title=${shareText}" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
+      <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}" target="_blank" rel="noopener" class="share-btn share-twitter">𝕏 Twitter</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
+      <a href="https://wa.me/?text=${shareText}%20${pageUrl}" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
+      <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(location.href).then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
+    </div>
+    <div class="helpful-bar" id="helpful-bar">
+      <span>Was this page helpful?</span>
+      <button class="helpful-btn" onclick="voteHelpful(1,this)">👍 Yes</button>
+      <button class="helpful-btn" onclick="voteHelpful(0,this)">👎 No</button>
     </div>
   </div>
 </div>
@@ -379,6 +429,13 @@ function addToCompare(slug,name,img,price,game){
 function removeFromCompare(slug){saveCompareTray(getCompareTray().filter(c=>c.slug!==slug));renderCompareTray();}
 function goToCompare(){const tray=getCompareTray();if(!tray.length)return;window.location.href='/compare?cards='+tray.map(c=>(c.game||'bakugan')+':'+c.slug).join(',');}
 renderCompareTray();
+function voteHelpful(val, btn) {
+  document.querySelectorAll('.helpful-btn').forEach(b => b.classList.remove('voted'));
+  btn.classList.add('voted');
+  btn.textContent = val === 1 ? '👍 Thanks!' : '👎 Noted';
+  if (typeof gtag !== 'undefined') gtag('event', 'page_helpful', { value: val, page: window.location.pathname });
+  setTimeout(() => { const bar = document.getElementById('helpful-bar'); if (bar) bar.innerHTML = '<span style="color:var(--text2);font-size:13px;font-family:sans-serif">Thanks for the feedback!</span>'; }, 800);
+}
 document.addEventListener('click',function(e){
   if(e.target.closest('[data-action="copy-discord"]')){
     const btn=e.target.closest('[data-action="copy-discord"]');

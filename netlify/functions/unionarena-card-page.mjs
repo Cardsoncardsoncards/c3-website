@@ -349,6 +349,16 @@ export default async (req) => {
     <span style="font-size:11px;color:#9ba3c4;text-transform:uppercase;letter-spacing:.08em">Share</span>
     ${shareBar}
   </div>
+    <style>
+    .helpful-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.10);border-radius:8px;margin:20px 0;font-family:sans-serif;font-size:13px;color:var(--text2)}
+    .helpful-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .18s}
+    .helpful-btn:hover,.helpful-btn.voted{border-color:var(--accent);color:var(--accent)}
+    </style>
+    <div class="helpful-bar" id="helpful-bar">
+      <span>Was this page helpful?</span>
+      <button class="helpful-btn" onclick="voteHelpful(1,this)">👍 Yes</button>
+      <button class="helpful-btn" onclick="voteHelpful(0,this)">👎 No</button>
+    </div>
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <div style="margin-bottom:8px">
@@ -361,6 +371,13 @@ export default async (req) => {
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 <script>
+function voteHelpful(val, btn) {
+  document.querySelectorAll('.helpful-btn').forEach(b => b.classList.remove('voted'));
+  btn.classList.add('voted');
+  btn.textContent = val === 1 ? '👍 Thanks!' : '👎 Noted';
+  if (typeof gtag !== 'undefined') gtag('event', 'page_helpful', { value: val, page: window.location.pathname });
+  setTimeout(() => { const bar = document.getElementById('helpful-bar'); if (bar) bar.innerHTML = '<span style="color:var(--text2);font-size:13px;font-family:sans-serif">Thanks for the feedback!</span>'; }, 800);
+}
 document.querySelectorAll('a[href*="ebay"]').forEach(a => a.addEventListener('click', () => {
   if (typeof gtag !== 'undefined') gtag('event','ebay_card_click',{card_name:'${(card.name||'').replace(/'/g,"\\'")}',game:'unionarena'});
 }));
