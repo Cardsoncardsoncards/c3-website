@@ -1,5 +1,6 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
+import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 // netlify/functions/pokemon-card-page.mjs
 // Serves dynamic Pokemon card pages at /cards/pokemon/[slug]
 // Mirrors MTG card page structure, adapted for Pokemon TCG data from TCGdex
@@ -307,7 +308,7 @@ export default async (req) => {
 
     // Snapshot window: last 30 days for the sparkline
     const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 90);
     const snapshotCutoff = thirtyDaysAgo.toISOString().slice(0, 10);
 
     // Parallel: related cards, eBay token, price snapshots (last 30 days), set slug for breadcrumb
@@ -346,34 +347,7 @@ export default async (req) => {
       return `<span style="display:inline-flex;align-items:center;gap:3px;background:${col}18;border:1px solid ${col}44;color:${col};padding:2px 8px;border-radius:100px;font-size:11px;font-weight:700">${arrow} ${Math.abs(pct).toFixed(1)}% ${label}</span>`;
     }
 
-    // Sparkline SVG -- simple line from snapshot data
-    function buildSparkline(snaps) {
-      if (!snaps || snaps.length < 14) return '';
-      const prices = snaps.map(s => parseFloat(s.price_aud || (s.market_price * 1.45)) || 0).filter(p => p > 0);
-      if (prices.length < 2) return '';
-      const min = Math.min(...prices);
-      const max = Math.max(...prices);
-      const range = max - min || 1;
-      const W = 160, H = 40, pad = 4;
-      const pts = prices.map((p, i) => {
-        const x = pad + (i / (prices.length - 1)) * (W - pad * 2);
-        const y = H - pad - ((p - min) / range) * (H - pad * 2);
-        return `${x.toFixed(1)},${y.toFixed(1)}`;
-      }).join(' ');
-      const last = prices[prices.length - 1];
-      const first = prices[0];
-      const trendCol = last >= first ? '#4dbd5f' : '#e57373';
-      return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;margin-top:8px">
-        <polyline points="${pts}" fill="none" stroke="${trendCol}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-        <circle cx="${(pad + (prices.length-1)/(prices.length-1)*(W-pad*2)).toFixed(1)}" cy="${(H - pad - ((last-min)/range)*(H-pad*2)).toFixed(1)}" r="3" fill="${trendCol}"/>
-      </svg>
-      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin-top:2px">
-        <span>${snaps[0].snapshot_date?.slice(5) || ''}</span>
-        <span>${snaps[snaps.length-1].snapshot_date?.slice(5) || 'Today'}</span>
-      </div>`;
-    }
-
-    const sparklineHTML = buildSparkline(snapshots);
+    const priceChartHTML = priceChartHtml(snapshots);
 
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/pokemon/${card.slug}`);
     const shareText = encodeURIComponent(`${card.name} -- ${priceAud ? '~AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
@@ -601,7 +575,7 @@ export default async (req) => {
              ${changeBadge(change24h,'24h')}
              ${changeBadge(change7d,'7d')}
            </div>
-           ${sparklineHTML ? `<div style="margin-top:8px"><div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">14-day trend</div>${sparklineHTML}</div>` : ''}`
+           ${priceChartHTML ? `<div style="margin:16px 0"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:sans-serif">Price History (AUD)</div>${priceChartHTML}${PRICE_CHART_SCRIPT}</div>` : ''}`
         : `<div class="price-main" style="color:var(--text2);font-size:20px">Price unavailable</div>
            <div class="price-usd">Check eBay AU for current pricing</div>`}
     </div>

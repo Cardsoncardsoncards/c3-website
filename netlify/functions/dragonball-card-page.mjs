@@ -1,5 +1,6 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
+import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 // netlify/functions/dragonball-card-page.mjs
 // Serves /cards/dragonball/:slug
 // If slug starts with sets/, renders the set page inline (routing fix)
@@ -24,30 +25,6 @@ async function supabaseGet(path) {
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   } catch (e) { clearTimeout(timer); throw e; }
-}
-
-// 30-day price sparkline from <game>_price_snapshots (ported from pokemon-card-page.mjs)
-function buildSparkline(snaps) {
-  if (!snaps || snaps.length < 14) return '';
-  const prices = snaps.map(s => parseFloat(s.price_aud || (s.market_price * 1.45)) || 0).filter(p => p > 0);
-  if (prices.length < 2) return '';
-  const min = Math.min(...prices), max = Math.max(...prices), range = max - min || 1;
-  const W = 160, H = 40, pad = 4;
-  const pts = prices.map((p, i) => {
-    const x = pad + (i / (prices.length - 1)) * (W - pad * 2);
-    const y = H - pad - ((p - min) / range) * (H - pad * 2);
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(' ');
-  const last = prices[prices.length - 1], first = prices[0];
-  const trendCol = last >= first ? '#4dbd5f' : '#e57373';
-  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;margin-top:8px">
-    <polyline points="${pts}" fill="none" stroke="${trendCol}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <circle cx="${(W - pad).toFixed(1)}" cy="${(H - pad - ((last - min) / range) * (H - pad * 2)).toFixed(1)}" r="3" fill="${trendCol}"/>
-  </svg>
-  <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text2);margin-top:2px">
-    <span>${snaps[0].snapshot_date?.slice(5) || ''}</span>
-    <span>${snaps[snaps.length - 1].snapshot_date?.slice(5) || 'Today'}</span>
-  </div>`;
 }
 
 async function getEbayToken() {
@@ -236,9 +213,8 @@ export default async (req) => {
     if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
     const card = cards[0];
 
-    const _snapCutoff = new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10);
-    const snapshots = await supabaseGet(`dragonball_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&snapshot_date=gte.${_snapCutoff}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => []);
-    const sparklineHTML = buildSparkline(snapshots);
+    const snapshots = await supabaseGet(`dragonball_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => []);
+    const priceChartHTML = priceChartHtml(snapshots);
     const _setRows = card.set_id ? await supabaseGet(`dragonball_sets?id=eq.${card.set_id}&limit=1&select=slug`).catch(() => []) : [];
     const setUrl = (Array.isArray(_setRows) && _setRows[0] && _setRows[0].slug) ? `/cards/dragonball/sets/${_setRows[0].slug}` : `/cards/dragonball`;
 
@@ -356,7 +332,7 @@ export default async (req) => {
       ${card.rarity ? `<div class="meta-item"><div class="meta-label">Rarity</div><div class="meta-value">${card.rarity}</div></div>` : ''}
       <div class="meta-item"><div class="meta-label">Price (AUD)</div><div class="meta-value" style="color:var(--accent)">${priceAud ? `AU$${priceAud.toFixed(2)}` : 'N/A'}</div></div>
     </div>
-    ${sparklineHTML ? `<div style="margin:14px 0 0"><div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">Recent price trend</div>${sparklineHTML}</div>` : ''}
+    ${priceChartHTML ? `<div style="margin:16px 0"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:sans-serif">Price History (AUD)</div>${priceChartHTML}${PRICE_CHART_SCRIPT}</div>` : ''}
     <div class="cta-row">
       <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary">🛒 Buy on eBay AU →</a>
       <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
