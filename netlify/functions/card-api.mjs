@@ -8,17 +8,23 @@ const RESEND_API_KEY = Netlify.env.get('RESEND_API_KEY');
 
 async function supabasePost(table, data, useService = true) {
   const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-    method: 'POST',
-    headers: {
-      'apikey': key,
-      'Authorization': `Bearer ${key}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'resolution=merge-duplicates,return=minimal'
-    },
-    body: JSON.stringify(data)
-  });
-  return res;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    return await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: {
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify(data)
+    });
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 async function supabaseDelete(table, filter, useService = true) {
@@ -59,16 +65,25 @@ async function handleLike(req) {
 }
 
 // --- View tracker ---
+// Generic sitewide view logging: writes to card_views keyed by (game, card_ref).
+// card_ref is scryfall_id for MTG (ambiguous slugs) and the unique slug for the
+// other 31 games. Best-effort analytics: never fail the request.
 async function handleView(req) {
   const body = await req.json();
-  const { scryfallId, sessionId } = body;
-  if (!scryfallId) return json({ ok: true });
-  await supabasePost('mtg_card_views', {
-    scryfall_id: scryfallId,
-    session_id: sessionId || null,
-    viewed_at: new Date().toISOString(),
-    country_code: 'AU'
-  });
+  let { game, cardRef, sessionId, scryfallId } = body;
+  // Backward-compat: the old MTG-only client shape sent { scryfallId } with no
+  // game/cardRef, so any caller not yet redeployed keeps working as game='mtg'.
+  if (!game && scryfallId) { game = 'mtg'; cardRef = scryfallId; }
+  if (!game || !cardRef) return json({ ok: true });
+  try {
+    await supabasePost('card_views', {
+      game,
+      card_ref: cardRef,
+      session_id: sessionId || null,
+      viewed_at: new Date().toISOString(),
+      country_code: 'AU'
+    });
+  } catch { /* analytics is best-effort; do not fail the request */ }
   return json({ ok: true });
 }
 

@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { viewTrackingScript } from './shared/view-tracking.mjs';
 // netlify/functions/riftbound-card-page.mjs
 // Serves /cards/riftbound/:slug
 // If slug starts with sets/, renders the set page inline (routing fix)
@@ -408,6 +409,7 @@ document.addEventListener('click',function(e){
   </div>
 </div>
 <script>(function(){const u=document.getElementById('bugPageUrl');if(u)u.value=window.location.href;const f=document.getElementById('bugReportForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();const b=document.getElementById('bugSubmit');b.disabled=true;b.textContent='Sending...';const d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';f.querySelector('select').style.display='none';f.querySelector('textarea').style.display='none';b.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){b.disabled=false;b.textContent='Submit Report';});});})();</script>
+${viewTrackingScript('riftbound', card.slug)}
 </body>
 </html>`;
 

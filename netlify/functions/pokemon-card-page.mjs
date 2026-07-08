@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { viewTrackingScript } from './shared/view-tracking.mjs';
 // netlify/functions/pokemon-card-page.mjs
 // Serves dynamic Pokemon card pages at /cards/pokemon/[slug]
 // Mirrors MTG card page structure, adapted for Pokemon TCG data from TCGdex
@@ -842,6 +843,7 @@ document.addEventListener('click', function(e) {
   </div>
 </div>
 <script>(function(){const u=document.getElementById('bugPageUrl');if(u)u.value=window.location.href;const f=document.getElementById('bugReportForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();const b=document.getElementById('bugSubmit');b.disabled=true;b.textContent='Sending...';const d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';f.querySelector('select').style.display='none';f.querySelector('textarea').style.display='none';b.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){b.disabled=false;b.textContent='Submit Report';});});})();</script>
+${viewTrackingScript('pokemon', card.slug)}
 </body>
 </html>`;
 

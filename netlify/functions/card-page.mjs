@@ -3,6 +3,7 @@
 // Server-renders full HTML with all card data, price history, and interlinking
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { viewTrackingScript } from './shared/view-tracking.mjs';
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -1081,8 +1082,7 @@ async function toggleLike(scryfallId) {
   } catch(e) { console.error('Like error:', e); }
 }
 
-// Track page view
-fetch('/api/card-view', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({scryfallId: '${card.scryfall_id}', sessionId: getSession()}) }).catch(()=>{});
+// (card-view tracking now injected via shared/view-tracking.mjs before </body>)
 
 
 // Watch this card
@@ -1321,6 +1321,7 @@ if (typeof gtag !== 'undefined') {
   </div>
 </div>
 <script>(function(){const u=document.getElementById('bugPageUrl');if(u)u.value=window.location.href;const f=document.getElementById('bugReportForm');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();const b=document.getElementById('bugSubmit');b.disabled=true;b.textContent='Sending...';const d=new FormData(f);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(d).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';f.querySelector('select').style.display='none';f.querySelector('textarea').style.display='none';b.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){b.disabled=false;b.textContent='Submit Report';});});})();</script>
+${viewTrackingScript('mtg', card.scryfall_id)}
 </body>
 </html>`;
 }

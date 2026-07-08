@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { viewTrackingScript } from './shared/view-tracking.mjs';
 // netlify/functions/finalfantasy-card-page.mjs
 // Serves /cards/finalfantasy/:slug
 // Final Fantasy TCG individual card pages with AUD pricing and affiliate links
@@ -383,6 +384,7 @@ document.querySelectorAll('a[href*="ebay"]').forEach(a => a.addEventListener('cl
   </div>
 </div>
 <script>(function(){const urlInput=document.getElementById('bugPageUrl');if(urlInput)urlInput.value=window.location.href;const form=document.getElementById('bugReportForm');if(!form)return;form.addEventListener('submit',function(e){e.preventDefault();let btn=document.getElementById('bugSubmit');btn.disabled=true;btn.textContent='Sending...';const data=new FormData(form);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';form.querySelector('select').style.display='none';form.querySelector('textarea').style.display='none';btn.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){btn.disabled=false;btn.textContent='Submit Report';});});})();</script>
+${viewTrackingScript('finalfantasy', slug)}
 </body>
 </html>`;
 
