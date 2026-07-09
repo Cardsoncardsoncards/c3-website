@@ -201,10 +201,14 @@ Weiss Schwarz is a publisher/umbrella brand, not a single game. Each licensed pr
 - Fix sprint complete 3 July 2026 - 7 audit items resolved: WS hub property load (sets query decoupled from card queries), yugioh-set-page og:title added, onepiece/pokemon-set-page canonical de-www'd, em-dash cleanup (card-compare, card-index, card-page), Promise.allSettled across 29 set-pages, Compare game-count copy (8 to 32 TCGs, C3 Market left at 8), XSS card-name escaping in alt and text positions across card-pages. Note: search-page copy left at "7 games" (accurate to its 7 searchable games; expanding search to 32 is a separate feature task).
 
 ### Critical (blocking user experience)
-- Search bar: "No cards found" on some queries. compare-search endpoint response handling filtering incorrectly.
-- A-Z filtering: not working on non-MTG hubs. Investigate data-letter attribute population on set tiles.
-- Extended game set page 404s: audit all extended game set-page path registrations for route conflicts.
-- Sitemap generation: mtg_cards fetch returns 500 during Netlify build. generate-sitemap-cards.mjs timeout fix needed.
+- ~~Search bar: "No cards found" on some queries. compare-search endpoint response handling filtering incorrectly.~~
+  RESOLVED (task-40, confirmed live 10 Jul 2026): compare-search.mjs already lists all 32 games via GAME_TABLES; live /api/compare-search returned results for charizard (Pokemon) and luffy (One Piece). No fix needed.
+- ~~A-Z filtering: not working on non-MTG hubs. Investigate data-letter attribute population on set tiles.~~
+  RESOLVED (task-40, confirmed in source 10 Jul 2026): data-letter is populated from the first char of the set name (letterKey/lk) on pokemon-hub, lorcana-hub, onepiece-hub; not blank/undefined.
+- ~~Extended game set page 404s: audit all extended game set-page path registrations for route conflicts.~~
+  RESOLVED (task-40, confirmed live 10 Jul 2026): set pages are served by per-game functions at /cards/<game>/sets/:slug+ (not netlify.toml routes). Live HTTP 200 for godzilla, hololive, warhammer, grandarchive, wow, dragonballz. The old /sets/<game>/ URL shape 404s but is not the real route.
+- ~~Sitemap generation: mtg_cards fetch returns 500 during Netlify build. generate-sitemap-cards.mjs timeout fix needed.~~
+  RESOLVED (task-40/41, 10 Jul 2026): the active build script scripts/generate-sitemap-cards.mjs already has fetchWithRetry (exp backoff), a zero-row sanity guard, and process.exit(1) on genuine failure. The stale unused duplicate netlify/functions/generate-sitemap-cards.mjs was deleted in task-41.
 
 ### High priority (affects revenue or data integrity)
 - var u= minified pattern: present in 8 primary hubs and 7 primary card-pages. Breaks search and A-Z filters.
@@ -213,11 +217,16 @@ Weiss Schwarz is a publisher/umbrella brand, not a single game. Each licensed pr
 - yugioh-set-page.mjs: possibly still has const cards = [] hardcoded. Verify.
 - onepiece-card-page and riftbound-card-page: triple bug (extra brace + escaped backtick + duplicate _psr0).
 - sync-sales-history: has never run successfully. Trigger manually and verify card_sales_history receives rows.
-- netlify.toml: confirm and add explicit schedule entries for lorcana, riftbound, starwars, dragonball if missing.
-- MTG Batch A streaming JSON fix: artist, edhrec_rank, reserved fields all zero in database. sync-mtg-cards.mjs streaming parser not capturing these fields from Scryfall.
+  STILL OPEN (task-40/41, 10 Jul 2026): trigger mechanism confirmed present (POST with header x-sync-secret matching SYNC_SECRET env var; also scheduled 0 17). card_sales_history confirmed 0 rows / null week_date on 10 Jul 2026, so it has genuinely never received data. Not triggered in task-41 (read-only check per instructions). Manual trigger + verification still required.
+- ~~netlify.toml: confirm and add explicit schedule entries for lorcana, riftbound, starwars, dragonball if missing.~~
+  RESOLVED (task-41, 10 Jul 2026): dragonball already had a dedicated sync-ids schedule. Added sync-ids-lorcana-background (10 3), sync-ids-riftbound-background (20 3), sync-ids-starwars-background (30 3), staggered within the 03:00 window. All three target files confirmed to exist.
+- ~~MTG Batch A streaming JSON fix: artist, edhrec_rank, reserved fields all zero in database. sync-mtg-cards.mjs streaming parser not capturing these fields from Scryfall.~~
+  RESOLVED (task-40, confirmed in code + DB 10 Jul 2026): the active sync (scripts/sync-mtg-daily.mjs) maps artist, reserved, edhrec_rank into the upsert. DB over 98,052 mtg_cards rows: artist populated 97,358, edhrec_rank 91,197, reserved=true 1,068 (reserved non-null on all rows). Not zero.
 - eBay carousel (ebay-prices.js): filter by seller=cardsoncardsoncards, sort by price desc, EPN campid 5339146789 on all links, category_ids=183454.
+  ADDRESSED (task-41, 10 Jul 2026): seller filter (/str/cardsoncardsoncards) and campid=5339146789 were already present. Added _sacat=183454 (CCG Individual Cards category) and _sop=16 (price high-to-low sort) to the store-search link. Store (/str/) support for these params needs live browser verification after deploy; item search (/sch/i.html) elsewhere in the repo already uses _sacat=183454.
 - Pre-existing em-dash in card-compare.mjs: CLAUDE.md violation. Fix in next push.
-- package-lock.json: has unrelated pre-existing local modification. Include in next push.
+- ~~package-lock.json: has unrelated pre-existing local modification. Include in next push.~~
+  RESOLVED (task-41, 10 Jul 2026): the local change removes the direct stream-chain dependency (consistent with package.json, which no longer lists it). Committed in task-41. NOTE: scripts/sync-mtg-daily.mjs still imports stream-chain, which now resolves only as a transitive dep of stream-json - worth adding back as a direct dep if that import is intended to be relied on.
 - siteid=15 in all eBay links: must be removed for worldwide routing. International users currently sent to eBay AU only.
 
 ### Medium priority (affects quality)

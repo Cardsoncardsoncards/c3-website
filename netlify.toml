@@ -211,3 +211,16 @@
   schedule = "0 3 * * *"
 [functions."sync-ids-onepiece-background"]
   schedule = "0 3 * * *"
+
+# Added task-41: lorcana/riftbound/starwars were missing dedicated ID-sync
+# schedules (only dragonball had one). Staggered by 10-min offsets within the
+# 03:00 window so the three new jobs don't all fire at the same instant as the
+# five existing "0 3" jobs above.
+[functions."sync-ids-lorcana-background"]
+  schedule = "10 3 * * *"
+
+[functions."sync-ids-riftbound-background"]
+  schedule = "20 3 * * *"
+
+[functions."sync-ids-starwars-background"]
+  schedule = "30 3 * * *"

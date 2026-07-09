@@ -84,9 +84,15 @@ exports.handler = async function(event, context) {
         image = card.card_faces[0].image_uris.normal || card.card_faces[0].image_uris.large || null;
       }
 
-      // Build EPN-tracked search URL into the C3 eBay store for this card name
+      // Build EPN-tracked search URL into the C3 eBay store for this card name.
+      // _sacat=183454 = CCG Individual Cards category (matches sch/i.html links used
+      // sitewide); _sop=16 = eBay sort code for price + postage highest first.
+      // NOTE: store (/str/) search param support for _sacat/_sop should be
+      // browser-verified on the live carousel after deploy; item search (/sch/i.html)
+      // is confirmed to honour both. Seller filter and campid left untouched.
       const storeSearch = 'https://www.ebay.com.au/str/cardsoncardsoncards'
         + '?_nkw=' + encodeURIComponent(card.name)
+        + '&_sacat=183454&_sop=16'
         + '&mkcid=1&mkrid=705-53470-19255-0'
         + '&campid=' + EPN_CAMPID
         + '&customid=C3SpotlightCarousel&toolid=10001&mkevt=1';
