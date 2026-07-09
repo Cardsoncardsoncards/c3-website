@@ -372,7 +372,16 @@ async function updateSnapshotVerdicts() {
     AND s.snapshot_date = '${today}';
   `;
 
-  const { error } = await supabase.rpc('exec_sql', { query: sql }).catch(() => ({ error: { message: 'rpc not available' } }));
+  // supabase.rpc() returns a thenable query builder, NOT a native Promise, so
+  // chaining .catch() directly on it throws "catch is not a function" and crashed
+  // the whole sync after the data had already synced. Await it (SQL errors surface
+  // in the returned { error }) and catch any thrown error around the await instead.
+  let error = null;
+  try {
+    ({ error } = await supabase.rpc('exec_sql', { query: sql }));
+  } catch (e) {
+    error = { message: e && e.message ? e.message : 'rpc not available' };
+  }
 
   if (error) {
     try {
