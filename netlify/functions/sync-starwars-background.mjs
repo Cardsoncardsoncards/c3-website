@@ -11,6 +11,14 @@ const GAME_SLUG            = 'star-wars-unlimited';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
+const ENRICH_MAX_PER_RUN   = 1500;
+const SWU_SET_CODES = {
+  'Spark of Rebellion': 'sor',
+  'Shadows of the Galaxy': 'shd',
+  'Twilight of the Republic': 'twi',
+  'Jump to Lightspeed': 'jtl',
+  'Legends of the Force': 'lof'
+};
 
 function slugify(name, number, setAbbr) {
   const base = name
@@ -68,6 +76,41 @@ async function tcgapiGet(path) {
     clearTimeout(timeout);
     throw err;
   }
+}
+
+async function supabaseGet(path) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` },
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch { clearTimeout(timeout); return []; }
+}
+
+// Card Details enrichment: swu-db (free, no key). Join = set code + numeric part of number.
+async function fetchStarwarsStats(setCode, number) {
+  if (!setCode || !number) return null;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`https://api.swu-db.com/cards/${setCode}/${encodeURIComponent(number)}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) return null;
+    const c = await res.json();
+    if (!c || (c.Cost == null && c.Power == null && c.HP == null)) return null;
+    return {
+      cost: c.Cost ?? null, power: c.Power ?? null, hp: c.HP ?? null,
+      aspects: Array.isArray(c.Aspects) ? c.Aspects : null,
+      traits: Array.isArray(c.Traits) ? c.Traits : null,
+      arenas: Array.isArray(c.Arenas) ? c.Arenas : null,
+      type: c.Type ?? null
+    };
+  } catch { clearTimeout(timeout); return null; }
 }
 
 async function supabaseUpsert(table, rows) {
@@ -185,6 +228,7 @@ export default async (req) => {
     let totalCards = 0;
     let totalSnaps = 0;
     const failedSets = [];
+    let enrichCount = 0;
 
     for (const set of allSets) {
       const setCards = [];
@@ -197,6 +241,12 @@ export default async (req) => {
         cardPage++;
       }
       if (!setCards.length) continue;
+
+      // Card Details: existing enrichment for this set (preserve on upsert, skip re-fetch)
+      const enrichedMap = new Map();
+      for (const r of await supabaseGet(`starwars_cards?set_id=eq.${set.id}&custom_attributes=not.is.null&select=id,custom_attributes`)) {
+        if (r.custom_attributes) enrichedMap.set(r.id, r.custom_attributes);
+      }
 
       // Bulk prices
       const cardIds = setCards.map(c => c.id);
@@ -230,6 +280,16 @@ export default async (req) => {
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
 
+        let customAttrs = enrichedMap.get(card.id) || card.custom_attributes || null;
+        if (!enrichedMap.has(card.id) && enrichCount < ENRICH_MAX_PER_RUN) {
+          const swuCode = SWU_SET_CODES[set.name];
+          const swuNum = card.number ? String(card.number).split('/')[0].replace(/[^0-9]/g, '') : null;
+          if (swuCode && swuNum) {
+            const stats = await fetchStarwarsStats(swuCode, swuNum);
+            if (stats) { customAttrs = stats; enrichCount++; }
+          }
+        }
+
         cardRows.push({
           id:                card.id,
           tcgplayer_id:      card.tcgplayer_id || null,
@@ -243,7 +303,7 @@ export default async (req) => {
           set_id:            set.id,
           set_name:          set.name,
           game_slug:         GAME_SLUG,
-          custom_attributes: card.custom_attributes || null,
+          custom_attributes: customAttrs,
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,
