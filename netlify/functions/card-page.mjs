@@ -741,6 +741,7 @@ ${contextPara}
         <span id="compare-icon">⚖️</span> <span id="compare-label">Add to Compare</span>
       </button>
     </div>
+    <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. Updated daily. eBay and Amazon links may earn affiliate commission.</p>
     ${shareBar}
   </div><!-- end .card-info -->
 </div><!-- end .card-layout -->

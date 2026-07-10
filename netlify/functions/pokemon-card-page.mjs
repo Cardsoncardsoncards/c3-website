@@ -590,6 +590,7 @@ export default async (req) => {
         🔔 Watch This Card
       </button>
     </div>
+    <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. Updated daily. eBay and Amazon links may earn affiliate commission.</p>
 
     <div class="share-bar">
       <span style="font-size:11px;color:var(--text2);font-weight:700;letter-spacing:.1em;text-transform:uppercase">Share</span>
