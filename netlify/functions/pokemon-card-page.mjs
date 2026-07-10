@@ -618,17 +618,18 @@ export default async (req) => {
   <div class="section">
     <h2>Card Details</h2>
     <div class="stats-grid">
-      ${card.stage ? `<div class="stat-box"><div class="stat-label">Stage</div><div class="stat-value">${card.stage}</div></div>` : ''}
+      ${card.stage ? `<div class="stat-box"><div class="stat-label">Stage</div><div class="stat-value">${esc(card.stage)}</div></div>` : ''}
       ${card.hp ? `<div class="stat-box">
         <div class="stat-label">HP</div>
-        <div class="stat-value">${card.hp}</div>
-        <div class="hp-bar-wrap"><div class="hp-bar"><div class="hp-fill" style="width:${Math.min(100,(card.hp/340)*100)}%"></div></div></div>
+        <div class="stat-value">${esc(card.hp)}</div>
+        <div class="hp-bar-wrap"><div class="hp-bar"><div class="hp-fill" style="width:${Math.min(100,((parseFloat(card.hp)||0)/340)*100)}%"></div></div></div>
       </div>` : ''}
-      ${card.rarity ? `<div class="stat-box"><div class="stat-label">Rarity</div><div class="stat-value">${card.rarity}</div></div>` : ''}
-      ${card.number ? `<div class="stat-box"><div class="stat-label">Card Number</div><div class="stat-value">#${card.number}</div></div>` : ''}
-      ${card.set_name ? `<div class="stat-box"><div class="stat-label">Set</div><div class="stat-value">${card.set_name}</div></div>` : ''}
-      ${card.series ? `<div class="stat-box"><div class="stat-label">Series</div><div class="stat-value">${card.series}</div></div>` : ''}
-      ${card.illustrator ? `<div class="stat-box"><div class="stat-label">Illustrator</div><div class="stat-value">${card.illustrator}</div></div>` : ''}
+      ${Array.isArray(card.types) && card.types.length ? `<div class="stat-box"><div class="stat-label">Type</div><div class="stat-value">${card.types.map(esc).join(' / ')}</div></div>` : ''}
+      ${Array.isArray(card.weaknesses) && card.weaknesses.length ? `<div class="stat-box"><div class="stat-label">Weakness</div><div class="stat-value">${card.weaknesses.map(w => esc(w && w.type) + (w && w.value ? ' ' + esc(w.value) : '')).join(', ')}</div></div>` : ''}
+      ${(card.retreat_cost !== null && card.retreat_cost !== undefined) ? `<div class="stat-box"><div class="stat-label">Retreat Cost</div><div class="stat-value">${esc(card.retreat_cost)}</div></div>` : ''}
+      ${card.rarity ? `<div class="stat-box"><div class="stat-label">Rarity</div><div class="stat-value">${esc(card.rarity)}</div></div>` : ''}
+      ${card.number ? `<div class="stat-box"><div class="stat-label">Card Number</div><div class="stat-value">#${esc(card.number)}</div></div>` : ''}
+      ${card.set_name ? `<div class="stat-box"><div class="stat-label">Set</div><div class="stat-value">${esc(card.set_name)}</div></div>` : ''}
     </div>
     ${card.description ? `<div style="margin-top:20px;padding:16px;background:var(--bg3);border-radius:8px;font-size:14px;line-height:1.7;color:var(--text2);font-style:italic">${card.description}</div>` : ''}
   </div>

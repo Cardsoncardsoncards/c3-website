@@ -31,6 +31,19 @@ function slugify(name, number, setAbbr) {
   return prefix ? `${prefix}-${withNumber}` : withNumber;
 }
 
+// pokemontcg.io has no direct "stage" field: it lives inside subtypes (e.g. "Basic",
+// "Stage 1", "Stage 2", "VMAX") for Pokemon supertype cards. For Trainer/Energy cards
+// there is no stage, so fall back to the supertype. Returns null when nothing applies.
+function derivePokemonStage(supertype, subtypes) {
+  const subs = Array.isArray(subtypes) ? subtypes : [];
+  const STAGE_WORDS = ['basic', 'stage 1', 'stage 2', 'stage 3', 'baby', 'mega', 'restored',
+    'vmax', 'vstar', 'v-union', 'break', 'level-up'];
+  const found = subs.find(s => STAGE_WORDS.includes(String(s || '').toLowerCase()));
+  if (found) return found;
+  if (supertype && supertype !== 'Pokemon' && supertype !== 'Pokémon') return supertype;
+  return subs[0] || null;
+}
+
 async function getExchangeRate() {
   const base = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
   const controller = new AbortController();
@@ -143,7 +156,7 @@ async function fetchPokemonTCGPricesForSet(pokemonSetId) {
     let page = 1;
     while (page <= 20) {
       const res = await fetch(
-        `https://api.pokemontcg.io/v2/cards?q=set.id:${encodeURIComponent(pokemonSetId)}&page=${page}&pageSize=250&select=name,number,tcgplayer,cardmarket`,
+        `https://api.pokemontcg.io/v2/cards?q=set.id:${encodeURIComponent(pokemonSetId)}&page=${page}&pageSize=250&select=name,number,tcgplayer,cardmarket,hp,types,attacks,weaknesses,retreatCost,supertype,subtypes`,
         { headers: { 'X-Api-Key': POKEMONTCG_API_KEY } }
       );
       if (!res.ok) break;
@@ -154,6 +167,13 @@ async function fetchPokemonTCGPricesForSet(pokemonSetId) {
         const tcgp = c.tcgplayer?.prices || {};
         const cm   = c.cardmarket?.prices || {};
         priceMap.set(key, {
+          // Card Details stats (task-48) -- flat columns on pokemon_cards
+          stat_hp:           c.hp ?? null,
+          stat_stage:        derivePokemonStage(c.supertype, c.subtypes),
+          stat_types:        Array.isArray(c.types) ? c.types : null,
+          stat_attacks:      Array.isArray(c.attacks) ? c.attacks : null,
+          stat_weaknesses:   Array.isArray(c.weaknesses) ? c.weaknesses : null,
+          stat_retreat_cost: Array.isArray(c.retreatCost) ? c.retreatCost.length : null,
           tcg_low:             tcgp.normal?.low            ?? tcgp.holofoil?.low          ?? null,
           tcg_mid:             tcgp.normal?.mid            ?? tcgp.holofoil?.mid          ?? null,
           tcg_market:          tcgp.normal?.market         ?? tcgp.holofoil?.market       ?? null,
@@ -350,7 +370,7 @@ export default async (req) => {
         continue;
       }
 
-      // New set — full card + snapshot write
+      // New set -- full card + snapshot write
       setCount++;
       if (setCount % 10 === 0) {
         const elapsed = ((Date.now() - start) / 1000).toFixed(1);
@@ -411,6 +431,10 @@ export default async (req) => {
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
 
+        // pokemontcg.io stats + prices, joined on name|number (same key used for snapshots below)
+        const key  = `${(card.clean_name || card.name).toLowerCase().trim()}|${(card.number || '').toLowerCase().trim()}`;
+        const ptcg = ptcgPrices.get(key) || {};
+
         cardRows.push({
           id:                card.id,
           tcgplayer_id:      card.tcgplayer_id || null,
@@ -425,6 +449,12 @@ export default async (req) => {
           set_name:          set.name,
           game_slug:         GAME_SLUG,
           custom_attributes: card.custom_attributes || null,
+          hp:                ptcg.stat_hp           ?? null,
+          stage:             ptcg.stat_stage        ?? null,
+          types:             ptcg.stat_types        ?? null,
+          attacks:           ptcg.stat_attacks      ?? null,
+          weaknesses:        ptcg.stat_weaknesses   ?? null,
+          retreat_cost:      ptcg.stat_retreat_cost ?? null,
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,
@@ -439,8 +469,6 @@ export default async (req) => {
         });
 
         if (marketPrice && marketPrice >= 0.50) {
-          const key  = `${(card.clean_name || card.name).toLowerCase().trim()}|${(card.number || '').toLowerCase().trim()}`;
-          const ptcg = ptcgPrices.get(key) || {};
           snapRows.push({
             card_id:       card.id,
             snapshot_date: today,
