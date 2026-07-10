@@ -11,6 +11,7 @@ const GAME_SLUG            = 'one-piece-card-game';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
+const ENRICH_MAX_PER_RUN   = 1500;
 
 function slugify(name, number, setAbbr) {
   const base = name
@@ -95,6 +96,40 @@ async function supabaseUpsert(table, rows) {
     clearTimeout(timeout);
     throw err;
   }
+}
+
+async function supabaseGet(path) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` },
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch { clearTimeout(timeout); return []; }
+}
+
+// Card Details enrichment: optcgapi (free, no key). Join key = number (card_set_id, e.g. OP16-080).
+async function fetchOnepieceStats(number) {
+  if (!number || !/^[A-Za-z0-9]+-\d+$/.test(number)) return null;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`https://optcgapi.com/api/sets/card/${encodeURIComponent(number)}/`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const c = Array.isArray(data) ? data[0] : null;
+    if (!c) return null;
+    return {
+      card_cost: c.card_cost ?? null, card_power: c.card_power ?? null,
+      counter_amount: c.counter_amount ?? null, attribute: c.attribute ?? null,
+      card_color: c.card_color ?? null, card_type: c.card_type ?? null, life: c.life ?? null
+    };
+  } catch { clearTimeout(timeout); return null; }
 }
 
 async function supabaseUpsertSnapshots(table, rows) {
@@ -185,6 +220,7 @@ export default async (req) => {
     let totalCards = 0;
     let totalSnaps = 0;
     const failedSets = [];
+    let enrichCount = 0;
 
     for (const set of allSets) {
       const setCards = [];
@@ -197,6 +233,12 @@ export default async (req) => {
         cardPage++;
       }
       if (!setCards.length) continue;
+
+      // Card Details: existing enrichment for this set (preserve on upsert, skip re-fetch)
+      const enrichedMap = new Map();
+      for (const r of await supabaseGet(`onepiece_cards?set_id=eq.${set.id}&custom_attributes=not.is.null&select=id,custom_attributes`)) {
+        if (r.custom_attributes) enrichedMap.set(r.id, r.custom_attributes);
+      }
 
       // Bulk prices
       const cardIds = setCards.map(c => c.id);
@@ -230,6 +272,12 @@ export default async (req) => {
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
 
+        let customAttrs = enrichedMap.get(card.id) || card.custom_attributes || null;
+        if (!enrichedMap.has(card.id) && enrichCount < ENRICH_MAX_PER_RUN) {
+          const stats = await fetchOnepieceStats(card.number);
+          if (stats) { customAttrs = stats; enrichCount++; }
+        }
+
         cardRows.push({
           id:                card.id,
           tcgplayer_id:      card.tcgplayer_id || null,
@@ -243,7 +291,7 @@ export default async (req) => {
           set_id:            set.id,
           set_name:          set.name,
           game_slug:         GAME_SLUG,
-          custom_attributes: card.custom_attributes || null,
+          custom_attributes: customAttrs,
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,
