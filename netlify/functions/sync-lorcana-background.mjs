@@ -11,6 +11,7 @@ const GAME_SLUG            = 'lorcana-tcg';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
+const ENRICH_MAX_PER_RUN   = 1500;
 
 function slugify(name, number, setAbbr) {
   const base = name
@@ -68,6 +69,40 @@ async function tcgapiGet(path) {
     clearTimeout(timeout);
     throw err;
   }
+}
+
+async function supabaseGet(path) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` },
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch { clearTimeout(timeout); return []; }
+}
+
+// Card Details enrichment: Lorcast (free, no key). Join key = card name.
+async function fetchLorcanaStats(name) {
+  if (!name) return null;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`https://api.lorcast.com/v0/cards/search?q=${encodeURIComponent(name)}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const c = data && Array.isArray(data.results) ? data.results[0] : null;
+    if (!c) return null;
+    return {
+      cost: c.cost ?? null, ink: c.ink ?? null,
+      inkwell: (typeof c.inkwell === 'boolean' ? c.inkwell : null),
+      strength: c.strength ?? null, willpower: c.willpower ?? null, lore: c.lore ?? null
+    };
+  } catch { clearTimeout(timeout); return null; }
 }
 
 async function supabaseUpsert(table, rows) {
@@ -184,6 +219,7 @@ export default async (req) => {
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
+    let enrichCount = 0;
 
     for (const set of allSets) {
       const setCards = [];
@@ -196,6 +232,12 @@ export default async (req) => {
         cardPage++;
       }
       if (!setCards.length) continue;
+
+      // Card Details: existing enrichment for this set (preserve on upsert, skip re-fetch)
+      const enrichedMap = new Map();
+      for (const r of await supabaseGet(`lorcana_cards?set_id=eq.${set.id}&custom_attributes=not.is.null&select=id,custom_attributes`)) {
+        if (r.custom_attributes) enrichedMap.set(r.id, r.custom_attributes);
+      }
 
       // Bulk prices
       const cardIds = setCards.map(c => c.id);
@@ -228,6 +270,12 @@ export default async (req) => {
         if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
         slugsSeen.add(slug);
 
+        let customAttrs = enrichedMap.get(card.id) || card.custom_attributes || null;
+        if (!enrichedMap.has(card.id) && enrichCount < ENRICH_MAX_PER_RUN) {
+          const stats = await fetchLorcanaStats(card.name);
+          if (stats) { customAttrs = stats; enrichCount++; }
+        }
+
         cardRows.push({
           id:                card.id,
           tcgplayer_id:      card.tcgplayer_id || null,
@@ -241,7 +289,7 @@ export default async (req) => {
           set_id:            set.id,
           set_name:          set.name,
           game_slug:         GAME_SLUG,
-          custom_attributes: card.custom_attributes || null,
+          custom_attributes: customAttrs,
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,

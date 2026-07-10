@@ -370,6 +370,21 @@ export default async (req) => {
   </div>
 </div>
 
+${(() => {
+  const ca = card.custom_attributes || {};
+  const box = (label, val) => `<div class="cd-box"><div class="cd-label">${label}</div><div class="cd-value">${val}</div></div>`;
+  const boxes = [];
+  if (ca.cost != null) boxes.push(box('Cost', esc(ca.cost)));
+  if (ca.ink) boxes.push(box('Ink', esc(ca.ink)));
+  if (ca.inkwell != null) boxes.push(box('Inkwell', ca.inkwell ? 'Yes' : 'No'));
+  if (ca.strength != null) boxes.push(box('Strength', esc(ca.strength)));
+  if (ca.willpower != null) boxes.push(box('Willpower', esc(ca.willpower)));
+  if (ca.lore != null) boxes.push(box('Lore', esc(ca.lore)));
+  if (!boxes.length) return '';
+  return `<style>.cd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:4px}.cd-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:12px}.cd-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#9ba3c4;margin-bottom:4px}.cd-value{font-size:15px;font-weight:700;color:#e8eaf0}</style>
+  <div style="max-width:1100px;margin:0 auto 24px;padding:20px 24px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:12px"><h2 style="font-size:18px;margin-bottom:16px">Card Details</h2><div class="cd-grid">${boxes.join('')}</div></div>`;
+})()}
+
 ${relatedHTML}
 ${ebayHTML}
 
