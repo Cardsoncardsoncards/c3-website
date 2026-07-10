@@ -80,7 +80,7 @@ export default async (req) => {
 <meta name="description" content="Live AUD price movers across MTG, Pokemon, Lorcana, One Piece, Yu-Gi-Oh and more. See what is rising and falling in the Australian TCG market, updated daily.">
 <link rel="canonical" href="https://cardsoncardsoncards.com.au/market">
 <meta property="og:title" content="Australian TCG Price Movers, Updated Daily">
-<meta property="og:description" content="See what is rising and falling across more than 30 trading card games in the Australian market, all in AUD, updated daily.">
+<meta property="og:description" content="See what is rising and falling across 32 trading card games in the Australian market, all in AUD, updated daily.">
 <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" type="image/png" href="/c3logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -192,7 +192,7 @@ export default async (req) => {
   <div class="wrap">
     <div class="eyebrow">Market</div>
     <h1>The Australian TCG Market</h1>
-    <p class="intro">Every day we track price movements across more than 30 trading card games and convert them to Australian dollars, so you can see what is rising, what is falling, and where the value is, in one place.</p>
+    <p class="intro">Every day we track price movements across 32 trading card games and convert them to Australian dollars, so you can see what is rising, what is falling, and where the value is, in one place.</p>
     <span class="stamp"><span class="dot"></span>Updated <span id="market-last-updated">daily</span></span>
   </div>
 </header>
