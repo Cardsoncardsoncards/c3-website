@@ -1,4 +1,16 @@
 User-agent: *
+
+# sitemap-index.xml submits 32 of its 36 sitemaps as /api/sitemap-* runtime endpoints
+# (Pokemon, Yu-Gi-Oh, Lorcana, One Piece, Riftbound, Dragon Ball, Star Wars, Digimon and
+# the rest). The broad "Disallow: /api/" below was therefore blocking Googlebot from
+# fetching almost every sitemap on the site. This Allow re-opens the sitemap endpoints
+# only. Google resolves Allow/Disallow by specificity, not file order, so the longer
+# "/api/sitemap-" prefix wins over "/api/"; it is placed first for human readability.
+#
+# Verified against every /api/ route in the repo: only the 33 sitemap-* routes match this
+# prefix. All 28 other /api/ routes, including stripe-webhook, price-alert, my-follows,
+# confirm-follow and unsubscribe-follow, remain blocked.
+Allow: /api/sitemap-
 Disallow: /api/
 Disallow: /rest/
 Disallow: /rest/v1/
