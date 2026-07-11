@@ -140,6 +140,7 @@ async function handleSetPage(setSlug, htmlHeaders) {
     .cta-btn{display:inline-flex;align-items:center;padding:11px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none}
     .cta-primary{background:${accent};color:#000}
     .cta-secondary{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#F0F2FF}
+    .cta-follow{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);color:#C9A84C}
     .cards-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;margin-bottom:28px}
     .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:28px}
     .section{margin-bottom:32px}
@@ -336,7 +337,44 @@ export default async (req) => {
     <div class="cta-row">
       <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary">🛒 Buy on eBay AU →</a>
       <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
+      <button class="cta-btn cta-follow" id="follow-btn" onclick="openFollow()">🔔 Follow this card</button>
     </div>
+    <div id="follow-box" style="display:none;margin-top:12px;padding:14px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.25);border-radius:8px">
+      <div style="font-size:13px;color:#e8eaf0;margin-bottom:8px">Email me when this card's price moves significantly.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="follow-email" type="email" placeholder="you@example.com" style="flex:1;min-width:200px;padding:9px 12px;border-radius:6px;border:1px solid #242840;background:#0d1117;color:#e8eaf0;font-size:13px">
+        <button id="follow-submit" onclick="submitFollow()" style="padding:9px 16px;border-radius:6px;border:none;background:#C9A84C;color:#0A0C14;font-weight:700;font-size:13px;cursor:pointer">Follow</button>
+      </div>
+      <div id="follow-msg" style="font-size:12px;color:#9ba3c4;margin-top:8px"></div>
+      <div style="font-size:11px;color:rgba(160,168,192,.5);margin-top:6px">One confirmation email, then alerts on significant moves. Prices are estimates, see our <a href="/methodology" style="color:#C9A84C">methodology</a>.</div>
+    </div>
+    <script>
+      var FOLLOW_SLUG = ${JSON.stringify(card.slug)};
+      var FOLLOW_NAME = ${JSON.stringify(card.name)};
+      function openFollow(){ var b=document.getElementById('follow-box'); if(b) b.style.display = (b.style.display==='none' ? 'block' : 'none'); }
+      function submitFollow(){
+        var emailEl=document.getElementById('follow-email');
+        var msg=document.getElementById('follow-msg');
+        var btn=document.getElementById('follow-submit');
+        var email=(emailEl.value||'').trim();
+        var at=email.indexOf('@');
+        if(at<1 || email.lastIndexOf('.')<at){ msg.textContent='Please enter a valid email address.'; return; }
+        btn.disabled=true; btn.textContent='Saving...';
+        fetch('/api/card-follow',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({email:email,game:'starwars',cardSlug:FOLLOW_SLUG,cardName:FOLLOW_NAME})
+        }).then(function(r){ return r.json(); }).then(function(d){
+          if(d && d.ok){
+            msg.textContent = d.alreadyFollowing ? 'You are already following this card.' : 'Check your inbox to confirm.';
+            emailEl.style.display='none'; btn.style.display='none';
+          } else {
+            msg.textContent = (d && d.error) || 'Something went wrong. Please try again.';
+            btn.disabled=false; btn.textContent='Follow';
+          }
+        }).catch(function(){ msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; btn.textContent='Follow'; });
+      }
+    </script>
     <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. Updated daily. eBay links may earn affiliate commission.</p>
     <style>
     .share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0;padding:16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-family:sans-serif}
