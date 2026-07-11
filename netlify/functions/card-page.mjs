@@ -256,10 +256,20 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
       return `<div class="legality-badge ${cls}"><span class="fmt-name">${fmt.charAt(0).toUpperCase() + fmt.slice(1)}</span><span class="fmt-status">${label}</span></div>`;
     }).join('');
 
+  // Both lists come from the two getEbayListing() calls in the handler. `all` is already
+  // filtered there to exclude C3's own items, so it is strictly "other AU sellers".
+  //
+  // The buy row deep-links into these via eBay's itemAffiliateWebUrl, which carries EPN
+  // tracking natively (verified against the live Browse API: it comes back containing
+  // campid=5339146789, mkevt and mkcid, generated from the X-EBAY-C-ENDUSERCTX
+  // affiliateCampaignId header we send). The plain search URLs are only fallbacks.
+  //
+  // The original code had a `fallbackEbay` that was [] whenever the card was NOT in C3's
+  // store, which is most cards, so the second API call was fetched and discarded in the
+  // common case. ebayAllListings is used directly instead: identical when the card IS in
+  // store, and actually useful when it is not.
   const ebayStoreListings = ebayListings.store || [];
   const ebayAllListings = ebayListings.all || [];
-  const primaryEbay = ebayStoreListings.length > 0 ? ebayStoreListings : ebayAllListings;
-  const fallbackEbay = ebayStoreListings.length > 0 ? ebayAllListings : [];
 
   const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' mtg')}&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
@@ -733,8 +743,8 @@ ${contextPara}
     </div>
 
     <div class="cta-group">
-      ${ebayStoreListings.length ? `<a href="${ebayStoreUrl}" class="cta-btn cta-c3" target="_blank" rel="noopener">🛒 Buy from C3 on eBay</a>` : ''}
-      <a href="${ebayAllUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">🔍 Find on eBay AU</a>
+      ${ebayStoreListings.length ? `<a href="${ebayStoreListings[0].itemAffiliateWebUrl || ebayStoreUrl}" class="cta-btn cta-c3" target="_blank" rel="noopener">🛒 Buy from C3 on eBay</a>` : ''}
+      <a href="${ebayAllListings[0]?.itemAffiliateWebUrl || ebayAllUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">${ebayAllListings[0]?.itemAffiliateWebUrl ? '🔍 Cheapest on eBay AU' : '🔍 Find on eBay AU'}</a>
       ${card.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${card.amazon_asin}?tag=${AMAZON_TAG}" class="cta-btn cta-amazon" target="_blank" rel="noopener">📦 Buy Sealed on Amazon AU</a>` : ''}
       ${hasEVCalc ? `<a href="/ev-calculator.html#${card.set_code}" class="cta-btn cta-ev">📊 ${card.set_name} EV Calculator</a>` : ''}
       <button class="cta-btn cta-watch" id="watch-btn" onclick="toggleWatch('${card.scryfall_id}','${card.name.replace(/'/g,"\'")}')">
