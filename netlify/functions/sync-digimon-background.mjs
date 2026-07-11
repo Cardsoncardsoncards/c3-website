@@ -241,7 +241,9 @@ export default async (req) => {
           set_id:            set.id,
           set_name:          set.name,
           game_slug:         GAME_SLUG,
-          custom_attributes: card.custom_attributes || null,
+          // custom_attributes is deliberately NOT written here. tcgapi.dev supplies no
+          // attributes for this game, so writing it would upsert null and wipe the gameplay
+          // stats backfilled from apitcg.com by enrich-apitcg-stats-background.mjs (task-57).
           market_price:      marketPrice,
           low_price:         lowPrice,
           foil_market_price: foilPrice,
