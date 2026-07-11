@@ -111,6 +111,11 @@
   to = "/contact.html"
   status = 200
 
+[[redirects]]
+  from = "/methodology"
+  to = "/methodology.html"
+  status = 200
+
 # ── 301s for dead URLs flagged in Search Console ──
 [[redirects]]
   from = "/quiz"

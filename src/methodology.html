@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology, How C3 Sources Prices | Cards on Cards on Cards</title>
+<meta name="description" content="How Cards on Cards on Cards sources and updates TCG prices in AUD. Data sources, update frequency, and what our confidence badges mean.">
+<link rel="canonical" href="https://cardsoncardsoncards.com.au/methodology">
+<link rel="icon" href="/c3logo.png" type="image/png">
+<meta property="og:title" content="Methodology, How C3 Sources Prices | Cards on Cards on Cards">
+<meta property="og:description" content="How Cards on Cards on Cards sources and updates TCG prices in AUD. Data sources, update frequency, and what our confidence badges mean.">
+<meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
+<meta property="og:url" content="https://cardsoncardsoncards.com.au/methodology">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080a0f;--bg2:#0e1118;--gold:#C9A84C;--gold-dim:#7A621E;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.7}
+nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap;flex-shrink:0}
+.nav-link:hover{color:#F0F2FF;text-decoration:none}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--vault:hover{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
+.nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
+.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA;color:#C4B5FD}
+.nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}
+.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86EFAC}
+.nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}
+.nav-link--tools:hover{background:rgba(251,146,60,.1);border-color:#FB923C;color:#FDBA74}
+.nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}
+.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6;color:#F9A8D4}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1;color:#A5DFC0}
+.nav-link--pricing{color:#C9A84C;border-color:rgba(201,168,76,.25)}
+.nav-link--pricing:hover{background:rgba(201,168,76,.08);border-color:#C9A84C;color:#E8C86A}
+.wrap{max-width:820px;margin:0 auto;padding:48px 24px 80px}
+h1{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,36px);font-weight:700;color:var(--gold);margin-bottom:8px}
+.updated{font-size:13px;color:var(--text2);margin-bottom:24px}
+.intro{font-size:16px;color:rgba(240,242,255,.8);margin-bottom:8px}
+h2{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gold);margin-top:48px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);scroll-margin-top:80px}
+p{font-size:15px;color:rgba(240,242,255,.75);margin-bottom:14px}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+ul{padding-left:20px;margin-bottom:14px;list-style:none}
+li{font-size:15px;color:rgba(240,242,255,.75);margin-bottom:10px}
+.conf{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:20px;margin-right:6px}
+.conf-high{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.35);color:#4ADE80}
+.conf-med{background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.35);color:#FB923C}
+.conf-low{background:rgba(160,168,192,.08);border:1px solid rgba(160,168,192,.3);color:#A0A8C0}
+footer{border-top:1px solid var(--border);padding:28px 0}
+.footer-inner{max-width:1100px;margin:0 auto;padding:0 24px;text-align:center}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.footer-link{font-size:12px;color:rgba(160,168,192,.4);text-decoration:none;transition:color .2s}
+.footer-link:hover{color:var(--silver)}
+.footer-copy{font-size:11px;color:rgba(160,168,192,.25);margin-top:8px}
+
+  /* C3 mobile hamburger nav */
+  .hamburger{display:none;background:transparent;border:1px solid #1e2235;color:#A0A8C0;padding:6px 11px;border-radius:6px;cursor:pointer;font-size:18px;line-height:1;flex-shrink:0}
+  .hamburger:focus{outline:none;border-color:#C9A84C}
+  @media(max-width:768px){
+    .hamburger{display:block}
+    .nav-inner{position:relative;flex-wrap:nowrap}
+    .nav-links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;flex-wrap:nowrap;gap:6px;background:rgba(8,11,18,.98);border:1px solid #1e2235;border-radius:10px;padding:12px;max-height:78vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 12px 32px rgba(0,0,0,.5)}
+    .nav-links.open{display:flex}
+    .nav-links .nav-link{width:100%;justify-content:flex-start;white-space:normal;font-size:13px;padding:12px 14px}
+  }
+</style>
+<style>
+  .nav-dropdown { position: relative; display: inline-block; }
+  .nav-dropdown-menu {
+    display: none; position: absolute; top: 100%; left: 0;
+    background: #0d1117; border: 1px solid #1e2235;
+    border-radius: 8px; min-width: 180px; z-index: 1000;
+    padding: 6px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+  .nav-dropdown-item {
+    display: block; padding: 9px 16px;
+    color: #c4c9d4; font-size: 13px; font-weight: 500;
+    text-decoration: none; white-space: nowrap;
+  }
+  .nav-dropdown-item:hover { color: #c9a84c; background: #1a1f2e; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3 Logo">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
+    <div class="nav-links">
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/pricing" class="nav-link nav-link--pricing">Pricing</a>
+      <div class="nav-dropdown">
+        <a href="/shop" class="nav-link nav-link--shop">Shop &#9662;</a>
+        <div class="nav-dropdown-menu">
+          <a href="/shop" class="nav-dropdown-item">Sealed Product</a>
+          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=nav-shop&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a>
+          <a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <h1>How We Price Cards</h1>
+  <p class="updated">Last updated: 11 July 2026 &middot; Cards on Cards on Cards (cardsoncardsoncards.com.au)</p>
+
+  <p class="intro">Cards on Cards on Cards pulls pricing data from multiple sources and converts it to Australian dollars daily. This page explains exactly where every number on this site comes from, how often it updates, and what our confidence badges mean, so you know how much to trust what you're looking at.</p>
+
+  <h2 id="sources">Where Our Prices Come From</h2>
+
+  <p>Card catalogue data (names, sets, images) and base pricing for most games comes from <a href="https://tcgapi.dev" target="_blank" rel="noopener">tcgapi.dev</a>, a licensed third-party data provider covering the TCGPlayer marketplace. For Magic: The Gathering, we use <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>, a widely trusted open data source built directly from Wizards of the Coast's own card database.</p>
+
+  <p>Gameplay stats (attack/defence, cost, rarity, and similar card details) come from a mix of free, community-run sources depending on the game: Pokemon via pokemontcg.io, Yu-Gi-Oh via YGOPRODeck, Lorcana via Lorcast, One Piece via optcgapi.com, Star Wars Unlimited via swu-db.com, and Digimon, Gundam, Union Arena, Riftbound, and Dragon Ball Fusion World via apitcg.com. None of these carry a formal service agreement, they're maintained by independent hobbyists and small teams, so we treat them as best-effort rather than guaranteed.</p>
+
+  <p>All prices are converted to AUD using a daily exchange rate and displayed with a timestamp showing exactly when that price was last updated.</p>
+
+  <h2 id="confidence">What Our Confidence Badges Mean</h2>
+
+  <p>Not every game on C3 gets the same level of daily attention. We'd rather tell you that plainly than let a stale price look identical to a fresh one.</p>
+
+  <ul>
+    <li><span class="conf conf-high">High confidence</span> synced daily, active market, price reflects current conditions.</li>
+    <li><span class="conf conf-med">Medium confidence</span> synced daily, but the market for this game is thin, meaning fewer trades happen, so prices can be less stable day to day.</li>
+    <li><span class="conf conf-low">Low confidence</span> historical reference pricing only. Low market activity means we can't guarantee this reflects what the card is worth today. Treat it as a starting point, not a quote.</li>
+  </ul>
+
+  <h2 id="frequency">Update Frequency</h2>
+
+  <p>Core games (Magic, Pokemon, Lorcana, One Piece, Yu-Gi-Oh, Dragon Ball, Star Wars Unlimited) sync daily. Every other game on the platform also syncs on a regular schedule, though update frequency and depth of coverage varies, reflected in the confidence badge on each page.</p>
+
+  <h2 id="affiliate">Affiliate Disclosure</h2>
+
+  <p>Cards on Cards on Cards earns a commission on qualifying purchases made through eBay and Amazon links on this site, via the eBay Partner Network and Amazon Associates. This doesn't affect the price you pay, and it doesn't influence which listings we show you, our job is to show you the real market price regardless of where you choose to buy.</p>
+
+  <h2 id="questions">Questions</h2>
+
+  <p>If something on this site looks wrong, <a href="/contact">contact us</a> and we'll look into it.</p>
+
+</div>
+
+<footer>
+  <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="/" class="footer-link">Home</a>
+      <a href="/cards" class="footer-link" style="color:#C9A84C">Card Vault</a>
+      <a href="/compare" class="footer-link" style="color:#A78BFA">Compare</a>
+      <a href="/market" class="footer-link" style="color:#4ADE80">Market</a>
+      <a href="/tools" class="footer-link" style="color:#FB923C">Tools</a>
+      <a href="/play" class="footer-link" style="color:#F472B6">Play</a>
+      <a href="/blog" class="footer-link" style="color:#7ECBA1">Blog</a>
+      <a href="/pricing" class="footer-link">Pricing</a>
+      <a href="/methodology" class="footer-link">Methodology</a>
+      <a href="/legal" class="footer-link">Legal</a>
+    </div>
+    <p class="footer-copy">&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au &middot; ABN 65 246 763 997 &middot; As an Amazon Associate we earn from qualifying purchases. eBay affiliate links may earn a commission at no extra cost to you.</p>
+  </div>
+</footer>
+
+</body>
+</html>

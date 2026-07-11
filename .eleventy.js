@@ -32,6 +32,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/dashboard.html": "dashboard.html"});
   eleventyConfig.addPassthroughCopy({"src/cards.html": "cards.html"});
   eleventyConfig.addPassthroughCopy({"src/legal.html": "legal.html"});
+  eleventyConfig.addPassthroughCopy({"src/methodology.html": "methodology.html"});
   eleventyConfig.addPassthroughCopy({"src/calendar.html": "calendar.html"});
   eleventyConfig.addPassthroughCopy({"src/generators.html": "generators.html"});
   eleventyConfig.addPassthroughCopy({"src/quizzes.html": "quizzes.html"});
