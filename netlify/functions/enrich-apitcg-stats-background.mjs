@@ -204,11 +204,16 @@ async function enrichGame(cfg, dryRun, log) {
 }
 
 export default async (req) => {
+  // This is a Netlify background function: it returns 202 with an empty body
+  // immediately and the Response below is discarded. Logs are therefore the ONLY
+  // channel for results, so every line is console.log'd as well as collected.
   const secret = req.headers.get('x-sync-secret');
   if (secret !== SYNC_SECRET) {
+    console.warn('[enrich-apitcg] Unauthorized: bad or missing x-sync-secret');
     return new Response('Unauthorized', { status: 401 });
   }
   if (!APITCG_API_KEY) {
+    console.error('[enrich-apitcg] APITCG_API_KEY not configured');
     return new Response('APITCG_API_KEY not configured', { status: 500 });
   }
 
@@ -216,7 +221,13 @@ export default async (req) => {
   const dryRun     = url.searchParams.get('dryRun') === '1';
   const gameFilter = url.searchParams.get('game') || null;
 
-  const log = [];
+  const log = {
+    lines: [],
+    push(line) {
+      console.log(`[enrich-apitcg] ${line}`);
+      this.lines.push(line);
+    }
+  };
   const results = [];
   apitcgRequests = 0;
 
@@ -225,6 +236,7 @@ export default async (req) => {
     : GAMES;
 
   if (gamesToProcess.length === 0) {
+    console.error(`[enrich-apitcg] Unknown game: ${gameFilter}`);
     return new Response(`Unknown game: ${gameFilter}`, { status: 400 });
   }
 
@@ -248,8 +260,10 @@ export default async (req) => {
     totalUnmatched: results.reduce((n, r) => n + (r.unmatched || 0), 0),
     totalWritten:   results.reduce((n, r) => n + (r.written   || 0), 0),
     results,
-    log
+    log: log.lines
   };
+
+  console.log(`[enrich-apitcg] SUMMARY ${JSON.stringify(summary)}`);
 
   return new Response(JSON.stringify(summary, null, 2), {
     headers: { 'Content-Type': 'application/json' }
