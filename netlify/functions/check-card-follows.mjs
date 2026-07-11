@@ -180,9 +180,20 @@ export default async (req) => {
       checked++;
 
       let cards;
+      // slug is NOT unique in mtg_cards: 98,052 rows share only 33,799 distinct slugs, so
+      // roughly two thirds of MTG cards have several printings under one slug (Thundermare
+      // has four, from AU$0.00 to AU$15.35). The other six Core games have unique slugs.
+      //
+      // Without an explicit order, limit=1 returns an ARBITRARY printing, so the alert was
+      // silently evaluating a different card than the one followed: a real run skipped
+      // Thundermare on the AU$5 price floor by reading a AU$1.32 printing while the one on
+      // the page was AU$15.35 and up 934%.
+      //
+      // Order by price deliberately, so a follow always tracks the most valuable printing
+      // of that card. That is both deterministic and the printing worth alerting on.
       try {
         cards = await supabaseGet(
-          `${table}?select=slug,name,price_aud,price_change_7d,price_change_30d&slug=eq.${encodeURIComponent(row.card_slug)}&limit=1`
+          `${table}?select=slug,name,price_aud,price_change_7d,price_change_30d&slug=eq.${encodeURIComponent(row.card_slug)}&order=price_aud.desc.nullslast&limit=1`
         );
       } catch (e) {
         log.push(`${row.game}/${row.card_slug}: read error ${e.message}`);
