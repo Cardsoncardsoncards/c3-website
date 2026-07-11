@@ -111,7 +111,7 @@ Both are valid. The data we have from four boxes gives you an honest picture of 
 
 ## Where to Buy Wilds Unknown Singles in Australia
 
-Over 1,077 individual Wilds Unknown cards are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards). We have both regular and foil versions of most cards in the set, and the nine Epic cards we pulled are listed individually.
+Over 1,077 individual Wilds Unknown cards are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=BlogP250Lorcana&toolid=10001&mkevt=1). We have both regular and foil versions of most cards in the set, and the nine Epic cards we pulled are listed individually.
 
 For pull rate detail from our full four-box opening, see the companion post: [I Opened 4 Boxes of Lorcana Wilds Unknown](https://cardsoncardsoncards.com.au/blog/p252-lorcana-wilds-unknown-box-opening).
 
