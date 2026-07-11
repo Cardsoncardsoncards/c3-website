@@ -1484,13 +1484,18 @@ export default async (req, context) => {
 
     const html = renderHTML({ card, snapshots: snapshotData, relatedCards, sealedProducts, prevCard, nextCard, ebayListings, likeCount, setSlugResolved, otherPrintings, fxRate, signals });
 
+    // No X-Robots-Tag header here on purpose. It used to send 'index, follow' on every MTG
+    // card page, while the HTML separately emits <meta name="robots" content="noindex,
+    // follow"> for cards under AU$1.00. That is two contradictory signals on the same page:
+    // Google resolves the conflict to the most restrictive (noindex wins anyway), so the
+    // header changed nothing except to hide the real behaviour from anyone inspecting
+    // headers. The meta tag is now the single source of truth for indexability.
     return new Response(html, {
       status: 200,
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-        'Netlify-CDN-Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400,durable',
-        'X-Robots-Tag': 'index, follow'
+        'Netlify-CDN-Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400,durable'
       }
     });
 
