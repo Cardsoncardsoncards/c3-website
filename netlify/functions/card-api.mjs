@@ -48,6 +48,14 @@ const json = (data, status = 200) => new Response(JSON.stringify(data), {
   status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
 });
 
+// Escape anything DB- or user-sourced before it goes into HTML (confirmation page,
+// alert emails). Card names come from the request body, so they are untrusted.
+function esc(str) {
+  return (str == null ? '' : String(str))
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 // --- Like handler ---
 async function handleLike(req) {
   const body = await req.json();
@@ -130,6 +138,178 @@ async function handlePriceAlert(req) {
   return json({ ok: true });
 }
 
+// --- Follow this card (multi-game percentage-change alerts) ---
+//
+// Distinct from handlePriceAlert above, which is the MTG-only, one-shot target-price
+// system backed by mtg_price_alerts. This one is multi-game and backed by
+// card_price_alerts with alert_type 'follow': no target price, no direction. The user
+// is emailed when the card moves by a threshold percentage (see check-card-follows.mjs).
+//
+// Double opt-in: rows land with confirmed=false and a confirm_token, and only become
+// eligible for alerts once the confirm link is visited.
+const SITE_ORIGIN = 'https://cardsoncardsoncards.com.au';
+
+const FOLLOW_GAMES = new Set([
+  'mtg', 'pokemon', 'lorcana', 'onepiece', 'yugioh', 'dbsfusionworld', 'starwars'
+]);
+
+function isValidEmail(email) {
+  return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+}
+
+async function handleCardFollow(req) {
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return json({ error: 'Invalid JSON' }, 400);
+  }
+
+  const { email, game, cardSlug, cardName } = body || {};
+
+  if (!isValidEmail(email))        return json({ error: 'A valid email is required' }, 400);
+  if (!FOLLOW_GAMES.has(game))     return json({ error: 'Unsupported game' }, 400);
+  if (!cardSlug || typeof cardSlug !== 'string') return json({ error: 'Card is required' }, 400);
+
+  // Don't create a second row if this email already follows this card.
+  const existing = await supabaseGet(
+    `card_price_alerts?select=id,confirmed&email=eq.${encodeURIComponent(email)}&game=eq.${encodeURIComponent(game)}&card_slug=eq.${encodeURIComponent(cardSlug)}&alert_type=eq.follow&limit=1`,
+    true
+  ).catch(() => []);
+
+  if (Array.isArray(existing) && existing.length) {
+    return json({ ok: true, alreadyFollowing: true, confirmed: !!existing[0].confirmed });
+  }
+
+  const confirmToken = crypto.randomUUID();
+
+  const res = await supabasePost('card_price_alerts', {
+    email,
+    game,
+    card_slug:  cardSlug,
+    card_name:  cardName || null,
+    alert_type: 'follow',
+    confirmed:  false,
+    confirm_token: confirmToken
+  });
+
+  if (!res || !res.ok) {
+    console.error('[card-follow] insert failed', res && res.status);
+    return json({ error: 'Could not save your follow. Please try again.' }, 500);
+  }
+
+  const confirmUrl = `${SITE_ORIGIN}/api/confirm-follow?token=${encodeURIComponent(confirmToken)}`;
+  const safeName   = esc(cardName || cardSlug);
+
+  if (RESEND_API_KEY) {
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'C3 Price Alerts <alerts@cardsoncardsoncards.com.au>',
+          to: [email],
+          subject: `Confirm your price alerts for ${cardName || cardSlug}`,
+          html: `<p>Hi,</p>
+<p>Please confirm you want price alerts for <strong>${safeName}</strong>.</p>
+<p><a href="${confirmUrl}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">Confirm my alerts</a></p>
+<p>Once confirmed, we will email you when this card's price moves significantly. We check daily.</p>
+<p>If you did not request this, just ignore this email and nothing further will happen.</p>
+<p>The C3 Team</p>
+<p style="font-size:11px;color:#999">Prices are estimates in AUD. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them.</p>`
+        })
+      });
+    } catch (e) {
+      console.error('[card-follow] Resend error:', e.message);
+      // The row is saved; the user can be re-sent a confirmation by following again.
+    }
+  }
+
+  return json({ ok: true, pendingConfirmation: true });
+}
+
+// --- Confirm a follow (double opt-in landing page) ---
+function confirmPage(title, message) {
+  return new Response(`<!DOCTYPE html>
+<html lang="en-AU"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)} | Cards on Cards on Cards</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/c3logo.png" type="image/png">
+<style>
+body{background:#080a0f;color:#F0F2FF;font-family:system-ui,sans-serif;line-height:1.7;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:24px}
+.box{max-width:520px;text-align:center;background:#0e1118;border:1px solid #1e2235;border-radius:14px;padding:36px}
+h1{color:#C9A84C;font-size:22px;margin:0 0 12px}
+p{color:rgba(240,242,255,.75);font-size:15px}
+a{color:#C9A84C}
+</style></head>
+<body><div class="box">
+<h1>${esc(title)}</h1>
+<p>${esc(message)}</p>
+<p><a href="/cards">Browse the Card Vault</a></p>
+</div></body></html>`, {
+    status: 200,
+    headers: { 'Content-Type': 'text/html; charset=utf-8', 'X-Robots-Tag': 'noindex' }
+  });
+}
+
+async function handleConfirmFollow(req) {
+  const url = new URL(req.url);
+  const token = url.searchParams.get('token');
+
+  if (!token) {
+    return confirmPage('Link not valid', 'That confirmation link is missing its token.');
+  }
+
+  const rows = await supabaseGet(
+    `card_price_alerts?select=id,card_name,card_slug,confirmed&confirm_token=eq.${encodeURIComponent(token)}&limit=1`,
+    true
+  ).catch(() => []);
+
+  if (!Array.isArray(rows) || rows.length === 0) {
+    return confirmPage('Link not valid', 'That confirmation link is not recognised. It may have already been used.');
+  }
+
+  const row = rows[0];
+  if (row.confirmed) {
+    return confirmPage('Already confirmed', `You are already getting price alerts for ${row.card_name || row.card_slug}.`);
+  }
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/card_price_alerts?id=eq.${row.id}`, {
+      method: 'PATCH',
+      signal: controller.signal,
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        confirmed: true,
+        confirmed_at: new Date().toISOString(),
+        confirm_token: null      // single use
+      })
+    });
+    clearTimeout(timer);
+    if (!res.ok) {
+      console.error('[confirm-follow] patch failed', res.status);
+      return confirmPage('Something went wrong', 'We could not confirm your alerts just now. Please try the link again shortly.');
+    }
+  } catch (e) {
+    clearTimeout(timer);
+    console.error('[confirm-follow] error:', e.message);
+    return confirmPage('Something went wrong', 'We could not confirm your alerts just now. Please try the link again shortly.');
+  }
+
+  return confirmPage('You are all set', `We will email you when ${row.card_name || row.card_slug} moves significantly in price.`);
+}
+
 // --- Collection waitlist ---
 async function handleWaitlist(req) {
   const body = await req.json();
@@ -194,7 +374,7 @@ async function handleFeedback(req) {
         body: JSON.stringify({
           from: 'C3 Feedback <alerts@cardsoncardsoncards.com.au>',
           to: ['ccc.squadhelp@gmail.com'],
-          subject: `C3 Feedback${rating ? ' (' + '★'.repeat(rating) + ')' : ''} — ${page || 'unknown page'}`,
+          subject: `C3 Feedback${rating ? ' (' + '★'.repeat(rating) + ')' : ''} - ${page || 'unknown page'}`,
           html: `
             <h2>New C3 Feedback</h2>
             <p><strong>Page:</strong> ${page || 'N/A'}</p>
@@ -433,6 +613,11 @@ export default async (req) => {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
     return handleSellAlert(req);
   }
+  if (path === '/api/card-follow') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handleCardFollow(req);
+  }
+  if (path === '/api/confirm-follow') return handleConfirmFollow(req);
   if (path === '/api/newsletter') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
     return handleNewsletter(req);
@@ -454,6 +639,8 @@ export const config = {
     '/api/feedback',
     '/api/newsletter',
     '/api/sell-alert',
+    '/api/card-follow',
+    '/api/confirm-follow',
     '/api/quiz-result',
     '/api/quiz-stats'
   ]
