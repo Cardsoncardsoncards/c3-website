@@ -201,9 +201,13 @@ async function handleCardFollow(req) {
   const confirmUrl = `${SITE_ORIGIN}/api/confirm-follow?token=${encodeURIComponent(confirmToken)}`;
   const safeName   = esc(cardName || cardSlug);
 
+  // The Resend response is checked, not discarded. Previously this awaited the fetch and
+  // ignored its status, so a 4xx from Resend passed silently and nothing was logged: the
+  // endpoint reported success while no email had actually been sent, and the logs gave no
+  // way to tell the difference. The send outcome is now observable.
   if (RESEND_API_KEY) {
     try {
-      await fetch('https://api.resend.com/emails', {
+      const mailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${RESEND_API_KEY}`,
@@ -222,10 +226,19 @@ async function handleCardFollow(req) {
 <p style="font-size:11px;color:#999">Prices are estimates in AUD. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them.</p>`
         })
       });
+
+      if (!mailRes.ok) {
+        console.error(`[card-follow] Resend send FAILED ${mailRes.status}: ${(await mailRes.text()).slice(0, 200)}`);
+      } else {
+        const sent = await mailRes.json().catch(() => ({}));
+        console.log(`[card-follow] Resend send OK, id=${sent.id || 'unknown'}, to=${email}, card=${cardSlug}`);
+      }
     } catch (e) {
       console.error('[card-follow] Resend error:', e.message);
       // The row is saved; the user can be re-sent a confirmation by following again.
     }
+  } else {
+    console.warn('[card-follow] RESEND_API_KEY not configured, no confirmation email sent');
   }
 
   return json({ ok: true, pendingConfirmation: true });
