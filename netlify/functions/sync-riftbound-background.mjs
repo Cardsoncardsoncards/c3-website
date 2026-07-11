@@ -29,6 +29,8 @@ async function getExchangeRate() {
   const base = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8000);
+  await logSyncEvent('sync_start');
+
   try {
     const res = await fetch(`${base}/api/fx-rate`, { signal: controller.signal });
     clearTimeout(timeout);
@@ -121,6 +123,43 @@ async function supabaseUpsertSnapshots(table, rows) {
   } catch (err) {
     clearTimeout(timeout);
     throw err;
+  }
+}
+
+// Audit trail into sync_events. Fire-and-forget: a logging failure must never break
+// the sync itself, so this swallows its own errors and only warns.
+//
+// The live sync_events schema is deliberately thin: event_type (required), game,
+// rows_affected, triggered_at (defaults to now()), webhook_fired (defaults false).
+// There is no status/started_at/finished_at/error_message column, so run status is
+// encoded in event_type and there is nowhere to persist an error string. The message
+// still goes to the function logs via console.error.
+async function logSyncEvent(eventType, rowsAffected = null) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/sync_events`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify([{
+        event_type:    eventType,
+        game:          GAME_SLUG,
+        rows_affected: rowsAffected
+      }]),
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    if (!res.ok) {
+      console.warn(`[sync-${GAME_SLUG}] sync_events log failed ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    }
+  } catch (e) {
+    clearTimeout(timer);
+    console.warn(`[sync-${GAME_SLUG}] sync_events log error: ${e.message}`);
   }
 }
 
@@ -303,6 +342,7 @@ export default async (req) => {
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
     console.log(`[sync-riftbound] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
+    await logSyncEvent('sync_success', totalCards);
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
@@ -310,6 +350,7 @@ export default async (req) => {
 
   } catch (err) {
     console.error('[sync-riftbound] FATAL:', err.message);
+    await logSyncEvent('sync_error');
     return new Response(err.message, { status: 500 });
   }
 };
