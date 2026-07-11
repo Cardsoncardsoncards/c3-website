@@ -355,7 +355,7 @@ function closeDrawer() {
     if(!track)return;
     try{
       // mode=top returns 40 commanders - shuffle client-side so each load feels fresh
-      const res=await fetch('/.netlify/functions/commander-carousel?mode=top');
+      const res=await fetch('/commander-carousel?mode=top');
       const data=await res.json();
       if(!data.commanders||data.commanders.length===0){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders found.</p>';return;}
       // Fisher-Yates shuffle then take 20
@@ -1269,7 +1269,7 @@ function clearFilters() {
     if (!track) return;
     try {
       // mode=set with this set's code - shows commanders from THIS set specifically
-      const res  = await fetch('/.netlify/functions/commander-carousel?mode=set&setcode=${set.set_code}&limit=20');
+      const res  = await fetch('/commander-carousel?mode=set&setcode=${set.set_code}&limit=20');
       const data = await res.json();
       if (!data.commanders || data.commanders.length === 0) {
         // Hide the whole section - no legendary creatures in this set
