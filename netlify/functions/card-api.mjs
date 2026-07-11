@@ -29,11 +29,20 @@ async function supabasePost(table, data, useService = true) {
 
 async function supabaseDelete(table, filter, useService = true) {
   const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
-    method: 'DELETE',
-    headers: { 'apikey': key, 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' }
-  });
-  return res;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
+      method: 'DELETE',
+      signal: controller.signal,
+      headers: { 'apikey': key, 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' }
+    });
+    clearTimeout(timer);
+    return res;
+  } catch (e) {
+    clearTimeout(timer);
+    return { ok: false, status: 0, statusText: e.message };
+  }
 }
 
 async function supabaseGet(path, useService = false) {
@@ -145,156 +154,50 @@ async function handlePriceAlert(req) {
 // card_price_alerts with alert_type 'follow': no target price, no direction. The user
 // is emailed when the card moves by a threshold percentage (see check-card-follows.mjs).
 //
-// Double opt-in: rows land with confirmed=false and a confirm_token, and only become
-// eligible for alerts once the confirm link is visited.
+// Double opt-in: rows land with confirmed=false and a confirm_token. Confirmation requires
+// an explicit POST (see handleConfirmFollow) because a GET link is fetched automatically by
+// mail security scanners: Outlook Safe Links auto-confirmed a real test follow 14 seconds
+// after the email was sent, with nobody clicking. A bare GET is therefore inert.
 const SITE_ORIGIN = 'https://cardsoncardsoncards.com.au';
 
 const FOLLOW_GAMES = new Set([
   'mtg', 'pokemon', 'lorcana', 'onepiece', 'yugioh', 'dbsfusionworld', 'starwars'
 ]);
 
+// PART E: generous, observational cap. Existing rows are NEVER touched when this is hit,
+// only new inserts are checked, so lowering it later cannot force anyone's follows away.
+const FOLLOW_CAP = 100;
+
+const MAGIC_LINK_TTL_HOURS = 24;
+
+const GAME_TABLES = {
+  mtg: 'mtg_cards', pokemon: 'pokemon_cards', lorcana: 'lorcana_cards',
+  onepiece: 'onepiece_cards', yugioh: 'yugioh_cards',
+  dbsfusionworld: 'dbsfusionworld_cards', starwars: 'starwars_cards'
+};
+
+// MTG stores images as image_uri_*; every other Core game uses a single image_url.
+const GAME_IMAGE_COL = {
+  mtg: 'image_uri_normal', pokemon: 'image_url', lorcana: 'image_url',
+  onepiece: 'image_url', yugioh: 'image_url',
+  dbsfusionworld: 'image_url', starwars: 'image_url'
+};
+
+const GAME_LABELS = {
+  mtg: 'Magic: The Gathering', pokemon: 'Pokemon', lorcana: 'Lorcana',
+  onepiece: 'One Piece', yugioh: 'Yu-Gi-Oh',
+  dbsfusionworld: 'Dragon Ball Fusion World', starwars: 'Star Wars Unlimited'
+};
+
 function isValidEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
 }
 
-async function handleCardFollow(req) {
-  let body;
-  try {
-    body = await req.json();
-  } catch {
-    return json({ error: 'Invalid JSON' }, 400);
-  }
-
-  const { email, game, cardSlug, cardName } = body || {};
-
-  if (!isValidEmail(email))        return json({ error: 'A valid email is required' }, 400);
-  if (!FOLLOW_GAMES.has(game))     return json({ error: 'Unsupported game' }, 400);
-  if (!cardSlug || typeof cardSlug !== 'string') return json({ error: 'Card is required' }, 400);
-
-  // Don't create a second row if this email already follows this card.
-  const existing = await supabaseGet(
-    `card_price_alerts?select=id,confirmed&email=eq.${encodeURIComponent(email)}&game=eq.${encodeURIComponent(game)}&card_slug=eq.${encodeURIComponent(cardSlug)}&alert_type=eq.follow&limit=1`,
-    true
-  ).catch(() => []);
-
-  if (Array.isArray(existing) && existing.length) {
-    return json({ ok: true, alreadyFollowing: true, confirmed: !!existing[0].confirmed });
-  }
-
-  const confirmToken = crypto.randomUUID();
-
-  const res = await supabasePost('card_price_alerts', {
-    email,
-    game,
-    card_slug:  cardSlug,
-    card_name:  cardName || null,
-    alert_type: 'follow',
-    confirmed:  false,
-    confirm_token: confirmToken
-  });
-
-  if (!res || !res.ok) {
-    console.error('[card-follow] insert failed', res && res.status);
-    return json({ error: 'Could not save your follow. Please try again.' }, 500);
-  }
-
-  const confirmUrl = `${SITE_ORIGIN}/api/confirm-follow?token=${encodeURIComponent(confirmToken)}`;
-  const safeName   = esc(cardName || cardSlug);
-
-  // The Resend response is checked, not discarded. Previously this awaited the fetch and
-  // ignored its status, so a 4xx from Resend passed silently and nothing was logged: the
-  // endpoint reported success while no email had actually been sent, and the logs gave no
-  // way to tell the difference. The send outcome is now observable.
-  if (RESEND_API_KEY) {
-    try {
-      const mailRes = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          from: 'C3 Price Alerts <alerts@cardsoncardsoncards.com.au>',
-          to: [email],
-          subject: `Confirm your price alerts for ${cardName || cardSlug}`,
-          html: `<p>Hi,</p>
-<p>Please confirm you want price alerts for <strong>${safeName}</strong>.</p>
-<p><a href="${confirmUrl}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">Confirm my alerts</a></p>
-<p>Once confirmed, we will email you when this card's price moves significantly. We check daily.</p>
-<p>If you did not request this, just ignore this email and nothing further will happen.</p>
-<p>The C3 Team</p>
-<p style="font-size:11px;color:#999">Prices are estimates in AUD. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them.</p>`
-        })
-      });
-
-      if (!mailRes.ok) {
-        console.error(`[card-follow] Resend send FAILED ${mailRes.status}: ${(await mailRes.text()).slice(0, 200)}`);
-      } else {
-        const sent = await mailRes.json().catch(() => ({}));
-        console.log(`[card-follow] Resend send OK, id=${sent.id || 'unknown'}, to=${email}, card=${cardSlug}`);
-      }
-    } catch (e) {
-      console.error('[card-follow] Resend error:', e.message);
-      // The row is saved; the user can be re-sent a confirmation by following again.
-    }
-  } else {
-    console.warn('[card-follow] RESEND_API_KEY not configured, no confirmation email sent');
-  }
-
-  return json({ ok: true, pendingConfirmation: true });
-}
-
-// --- Confirm a follow (double opt-in landing page) ---
-function confirmPage(title, message) {
-  return new Response(`<!DOCTYPE html>
-<html lang="en-AU"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(title)} | Cards on Cards on Cards</title>
-<meta name="robots" content="noindex">
-<link rel="icon" href="/c3logo.png" type="image/png">
-<style>
-body{background:#080a0f;color:#F0F2FF;font-family:system-ui,sans-serif;line-height:1.7;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:24px}
-.box{max-width:520px;text-align:center;background:#0e1118;border:1px solid #1e2235;border-radius:14px;padding:36px}
-h1{color:#C9A84C;font-size:22px;margin:0 0 12px}
-p{color:rgba(240,242,255,.75);font-size:15px}
-a{color:#C9A84C}
-</style></head>
-<body><div class="box">
-<h1>${esc(title)}</h1>
-<p>${esc(message)}</p>
-<p><a href="/cards">Browse the Card Vault</a></p>
-</div></body></html>`, {
-    status: 200,
-    headers: { 'Content-Type': 'text/html; charset=utf-8', 'X-Robots-Tag': 'noindex' }
-  });
-}
-
-async function handleConfirmFollow(req) {
-  const url = new URL(req.url);
-  const token = url.searchParams.get('token');
-
-  if (!token) {
-    return confirmPage('Link not valid', 'That confirmation link is missing its token.');
-  }
-
-  const rows = await supabaseGet(
-    `card_price_alerts?select=id,card_name,card_slug,confirmed&confirm_token=eq.${encodeURIComponent(token)}&limit=1`,
-    true
-  ).catch(() => []);
-
-  if (!Array.isArray(rows) || rows.length === 0) {
-    return confirmPage('Link not valid', 'That confirmation link is not recognised. It may have already been used.');
-  }
-
-  const row = rows[0];
-  if (row.confirmed) {
-    return confirmPage('Already confirmed', `You are already getting price alerts for ${row.card_name || row.card_slug}.`);
-  }
-
+async function supabasePatch(path, data) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 8000);
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/card_price_alerts?id=eq.${row.id}`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
       method: 'PATCH',
       signal: controller.signal,
       headers: {
@@ -303,24 +206,282 @@ async function handleConfirmFollow(req) {
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({
-        confirmed: true,
-        confirmed_at: new Date().toISOString(),
-        confirm_token: null      // single use
-      })
+      body: JSON.stringify(data)
     });
     clearTimeout(timer);
-    if (!res.ok) {
-      console.error('[confirm-follow] patch failed', res.status);
-      return confirmPage('Something went wrong', 'We could not confirm your alerts just now. Please try the link again shortly.');
-    }
+    return res;
   } catch (e) {
     clearTimeout(timer);
-    console.error('[confirm-follow] error:', e.message);
-    return confirmPage('Something went wrong', 'We could not confirm your alerts just now. Please try the link again shortly.');
+    return { ok: false, status: 0, statusText: e.message };
+  }
+}
+
+
+// --- Shared page shell for the follow pages ---
+function followPage(title, bodyHtml, status = 200) {
+  return new Response(`<!DOCTYPE html>
+<html lang="en-AU"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)} | Cards on Cards on Cards</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/c3logo.png" type="image/png">
+<style>
+body{background:#080a0f;color:#F0F2FF;font-family:system-ui,sans-serif;line-height:1.7;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:24px}
+.box{max-width:560px;width:100%;text-align:center;background:#0e1118;border:1px solid #1e2235;border-radius:14px;padding:36px}
+h1{color:#C9A84C;font-size:22px;margin:0 0 12px}
+p{color:rgba(240,242,255,.75);font-size:15px}
+a{color:#C9A84C}
+img.card{max-width:200px;border-radius:10px;margin:8px auto;display:block}
+button{background:#C9A84C;color:#0A0C14;border:none;padding:12px 22px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer}
+button:hover{opacity:.9}
+input[type=email]{width:100%;padding:11px 13px;border-radius:8px;border:1px solid #242840;background:#0d1117;color:#e8eaf0;font-size:14px;margin-bottom:10px;box-sizing:border-box}
+ul.follows{list-style:none;padding:0;margin:18px 0;text-align:left}
+ul.follows li{border:1px solid #1e2235;border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.meta{font-size:12px;color:#7a8099}
+.small{font-size:12px;color:#7a8099}
+</style></head>
+<body><div class="box">
+<h1>${esc(title)}</h1>
+${bodyHtml}
+<p><a href="/cards">Browse the Card Vault</a></p>
+</div></body></html>`, {
+    status,
+    headers: { 'Content-Type': 'text/html; charset=utf-8', 'X-Robots-Tag': 'noindex' }
+  });
+}
+
+const followMessage = (title, message, status = 200) =>
+  followPage(title, `<p>${esc(message)}</p>`, status);
+
+// Reads a token from the query string, or from a POST body (form or JSON).
+async function readToken(req, url) {
+  let token = url.searchParams.get('token');
+  if (req.method === 'POST') {
+    try {
+      const ct = req.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        const b = await req.json();
+        token = (b && b.token) || token;
+      } else {
+        const form = await req.formData();
+        token = form.get('token') || token;
+      }
+    } catch { /* fall back to the query-string token */ }
+  }
+  return token;
+}
+
+// --- PART A: confirm a follow. A GET is INERT, only a POST confirms. ---
+//
+// Mail security scanners (Outlook Safe Links, Defender, corporate gateways) prefetch every
+// URL in an email. One of them auto-confirmed a live test follow 14 seconds after the email
+// was sent, with nobody clicking, which defeats double opt-in entirely. A GET now only
+// renders a page with a button; nothing is written until that button POSTs.
+async function handleConfirmFollow(req) {
+  const url = new URL(req.url);
+  const token = await readToken(req, url);
+
+  if (!token) {
+    return followMessage('Link not valid', 'That confirmation link is missing its token.', 400);
   }
 
-  return confirmPage('You are all set', `We will email you when ${row.card_name || row.card_slug} moves significantly in price.`);
+  const rows = await supabaseGet(
+    `card_price_alerts?select=id,email,game,card_name,card_slug,confirmed,unsubscribe_token&confirm_token=eq.${encodeURIComponent(token)}&limit=1`,
+    true
+  ).catch(() => []);
+
+  if (!Array.isArray(rows) || rows.length === 0) {
+    return followMessage('Link not valid', 'That confirmation link is not recognised. It may have already been used.', 404);
+  }
+
+  const row  = rows[0];
+  const name = row.card_name || row.card_slug;
+
+  if (row.confirmed) {
+    return followMessage('Already confirmed', `You are already getting price alerts for ${name}.`);
+  }
+
+  // GET: show the button. Deliberately no state change of any kind.
+  if (req.method !== 'POST') {
+    const imageUrl = await getCardImage(row.game, row.card_slug);
+    return followPage('Confirm your price alerts', `
+<p>Confirm you want price alerts for <strong>${esc(name)}</strong> (${esc(GAME_LABELS[row.game] || row.game)}).</p>
+${imageUrl ? `<img class="card" src="${esc(imageUrl)}" alt="${esc(name)}">` : ''}
+<form method="POST" action="/api/confirm-follow">
+  <input type="hidden" name="token" value="${esc(token)}">
+  <button type="submit">Yes, confirm my alerts</button>
+</form>
+<p class="small">Nothing is confirmed until you press the button.</p>`);
+  }
+
+  // POST: the only path that writes.
+  const res = await supabasePatch(`card_price_alerts?id=eq.${row.id}`, {
+    confirmed: true,
+    confirmed_at: new Date().toISOString(),
+    confirm_token: null            // single use
+  });
+
+  if (!res.ok) {
+    console.error('[confirm-follow] patch failed', res.status);
+    return followMessage('Something went wrong', 'We could not confirm your alerts just now. Please try the link again shortly.', 500);
+  }
+
+  return followPage('You are all set', `
+<p>We will email you when <strong>${esc(name)}</strong> moves significantly in price.</p>
+<p class="small">Changed your mind? <a href="/api/unsubscribe-follow?token=${encodeURIComponent(row.unsubscribe_token || '')}">Unsubscribe from this card</a>.</p>`);
+}
+
+// --- PART B: unsubscribe. A GET is inert here for exactly the same reason as confirm: a
+// scanner prefetching the unsubscribe link would otherwise silently switch a user's alerts
+// off without them ever clicking. ---
+async function handleUnsubscribeFollow(req) {
+  const url = new URL(req.url);
+  const token = await readToken(req, url);
+
+  if (!token) {
+    return followMessage('Link not valid', 'That unsubscribe link is missing its token.', 400);
+  }
+
+  const rows = await supabaseGet(
+    `card_price_alerts?select=id,email,card_name,card_slug&unsubscribe_token=eq.${encodeURIComponent(token)}&limit=1`,
+    true
+  ).catch(() => []);
+
+  if (!Array.isArray(rows) || rows.length === 0) {
+    // Already gone is the outcome the user wanted, so say that rather than erroring.
+    return followMessage('Already unsubscribed', 'That follow is no longer active, so there is nothing to unsubscribe from.');
+  }
+
+  const row  = rows[0];
+  const name = row.card_name || row.card_slug;
+
+  if (req.method !== 'POST') {
+    return followPage('Unsubscribe', `
+<p>Stop price alerts for <strong>${esc(name)}</strong>?</p>
+<form method="POST" action="/api/unsubscribe-follow">
+  <input type="hidden" name="token" value="${esc(token)}">
+  <button type="submit">Yes, unsubscribe me</button>
+</form>
+<p class="small">Nothing changes until you press the button.</p>`);
+  }
+
+  const res = await supabaseDelete('card_price_alerts', `id=eq.${row.id}`);
+  if (!res.ok) {
+    console.error('[unsubscribe-follow] delete failed', res.status);
+    return followMessage('Something went wrong', 'We could not unsubscribe you just now. Please try the link again shortly.', 500);
+  }
+
+  await logEmail(row.email, 'follow_unsubscribe', row.id, true, null);
+  return followMessage('You have been unsubscribed', `You have been unsubscribed from alerts for ${name}.`);
+}
+
+// --- PART C: lightweight "my follows", magic link, no accounts ---
+//
+// Anti-enumeration: the response is identical whether the email has follows, has none, or
+// has never been seen. Otherwise this becomes a way to test which addresses are in the system.
+async function handleMyFollowsRequest(req) {
+  let email = null;
+  try {
+    const ct = req.headers.get('content-type') || '';
+    if (ct.includes('application/json')) {
+      const b = await req.json();
+      email = b && b.email;
+    } else {
+      const form = await req.formData();
+      email = form.get('email');
+    }
+  } catch { /* handled below */ }
+
+  const GENERIC = 'If that email has any followed cards, we have sent it a link to manage them. Check your inbox.';
+
+  if (isValidEmail(email)) {
+    const follows = await supabaseGet(
+      `card_price_alerts?select=id&email=eq.${encodeURIComponent(email)}&alert_type=eq.follow&limit=1`,
+      true
+    ).catch(() => []);
+
+    // Only actually send if there is something to show. The response never changes.
+    if (Array.isArray(follows) && follows.length > 0) {
+      const token = crypto.randomUUID();
+      const expiresAt = new Date(Date.now() + MAGIC_LINK_TTL_HOURS * 3600 * 1000).toISOString();
+
+      const ins = await supabasePost('follow_magic_links', { email, token, expires_at: expiresAt });
+      if (ins && ins.ok) {
+        const link = `${SITE_ORIGIN}/api/my-follows?token=${encodeURIComponent(token)}`;
+        await sendAlertEmail({
+          to: email,
+          emailType: 'follow_magic_link',
+          alertId: null,
+          subject: 'Manage your followed cards',
+          html: `<p>Hi,</p>
+<p>Here is your link to view and manage the cards you follow on Cards on Cards on Cards.</p>
+<p><a href="${link}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">View my followed cards</a></p>
+<p>This link works for ${MAGIC_LINK_TTL_HOURS} hours, then it expires.</p>
+<p>If you did not request this, you can ignore this email.</p>
+<p>The C3 Team</p>`
+        });
+      } else {
+        console.error('[my-follows] magic link insert failed');
+      }
+    }
+  }
+
+  return followMessage('Check your inbox', GENERIC);
+}
+
+async function handleMyFollows(req) {
+  const url = new URL(req.url);
+  const token = url.searchParams.get('token');
+
+  // No token: show the request form.
+  if (!token) {
+    return followPage('Manage your followed cards', `
+<p>Enter your email and we will send you a link to view the cards you follow.</p>
+<form method="POST" action="/api/my-follows">
+  <input type="email" name="email" placeholder="you@example.com" required>
+  <button type="submit">Email me my follows</button>
+</form>
+<p class="small">No account needed. The link expires after ${MAGIC_LINK_TTL_HOURS} hours.</p>`);
+  }
+
+  const links = await supabaseGet(
+    `follow_magic_links?select=email,expires_at&token=eq.${encodeURIComponent(token)}&limit=1`,
+    true
+  ).catch(() => []);
+
+  if (!Array.isArray(links) || links.length === 0) {
+    return followMessage('Link not valid', 'That link is not recognised. Request a new one from the manage page.', 404);
+  }
+
+  const link = links[0];
+  if (new Date(link.expires_at).getTime() < Date.now()) {
+    return followMessage('Link expired', `That link has expired. Links are valid for ${MAGIC_LINK_TTL_HOURS} hours. Request a new one.`, 410);
+  }
+
+  const rows = await supabaseGet(
+    `card_price_alerts?select=game,card_name,card_slug,confirmed,created_at,unsubscribe_token&email=eq.${encodeURIComponent(link.email)}&alert_type=eq.follow&order=created_at.desc`,
+    true
+  ).catch(() => []);
+
+  if (!Array.isArray(rows) || rows.length === 0) {
+    return followMessage('No followed cards', 'You are not following any cards right now.');
+  }
+
+  const items = rows.map(r => {
+    const name = r.card_name || r.card_slug;
+    const when = (r.created_at || '').slice(0, 10);
+    return `<li>
+  <span>
+    <strong>${esc(name)}</strong><br>
+    <span class="meta">${esc(GAME_LABELS[r.game] || r.game)} &middot; followed ${esc(when)}${r.confirmed ? '' : ' &middot; not yet confirmed'}</span>
+  </span>
+  <a href="/api/unsubscribe-follow?token=${encodeURIComponent(r.unsubscribe_token || '')}">Remove</a>
+</li>`;
+  }).join('');
+
+  return followPage('Your followed cards', `
+<ul class="follows">${items}</ul>
+<p class="small">${rows.length} card${rows.length === 1 ? '' : 's'} followed.</p>`);
 }
 
 // --- Collection waitlist ---
@@ -630,7 +791,13 @@ export default async (req) => {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
     return handleCardFollow(req);
   }
-  if (path === '/api/confirm-follow') return handleConfirmFollow(req);
+  // GET renders a button, POST performs the action. Both methods reach the handler, which
+  // is what makes a scanner's GET prefetch inert.
+  if (path === '/api/confirm-follow')     return handleConfirmFollow(req);
+  if (path === '/api/unsubscribe-follow') return handleUnsubscribeFollow(req);
+  if (path === '/api/my-follows') {
+    return req.method === 'POST' ? handleMyFollowsRequest(req) : handleMyFollows(req);
+  }
   if (path === '/api/newsletter') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
     return handleNewsletter(req);
@@ -654,6 +821,8 @@ export const config = {
     '/api/sell-alert',
     '/api/card-follow',
     '/api/confirm-follow',
+    '/api/unsubscribe-follow',
+    '/api/my-follows',
     '/api/quiz-result',
     '/api/quiz-stats'
   ]

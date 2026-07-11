@@ -39,6 +39,17 @@ const GAME_TABLES = {
   starwars:       'starwars_cards'
 };
 
+// MTG stores art as image_uri_*; every other Core game uses a single image_url.
+const GAME_IMAGE_COL = {
+  mtg:            'image_uri_normal',
+  pokemon:        'image_url',
+  lorcana:        'image_url',
+  onepiece:       'image_url',
+  yugioh:         'image_url',
+  dbsfusionworld: 'image_url',
+  starwars:       'image_url'
+};
+
 const GAME_LABELS = {
   mtg:            'Magic: The Gathering',
   pokemon:        'Pokemon',
@@ -104,15 +115,57 @@ async function markTriggered(id, currentPrice) {
   }
 }
 
-async function sendAlertEmail(row, card, changePct, windowLabel) {
-  if (!RESEND_API_KEY) return false;
+// PART F: permanent record of every alert email attempt. Fire-and-forget: a logging
+// failure must never make a real send look like it failed.
+async function logEmail(recipient, emailType, relatedAlertId, success, errorMessage) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/email_log`, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify([{
+        recipient,
+        email_type: emailType,
+        related_card_alert_id: relatedAlertId || null,
+        success: !!success,
+        error_message: errorMessage ? String(errorMessage).slice(0, 500) : null
+      }])
+    });
+    clearTimeout(timer);
+    if (!res.ok) console.warn(`[email_log] insert failed ${res.status}`);
+  } catch (e) {
+    clearTimeout(timer);
+    console.warn(`[email_log] insert error: ${e.message}`);
+  }
+}
 
+async function sendAlertEmail(row, card, changePct, windowLabel) {
   const dir      = changePct >= 0 ? 'up' : 'down';
   const name     = esc(card.name || row.card_name || row.card_slug);
   const gameName = esc(GAME_LABELS[row.game] || row.game);
   const price    = Number(card.price_aud).toFixed(2);
   const abs      = Math.abs(changePct).toFixed(1);
   const cardUrl  = `${SITE_ORIGIN}/cards/${row.game}/${encodeURIComponent(row.card_slug)}`;
+
+  // PART D: card art. PART B: per-row unsubscribe link, required in every alert email.
+  const imageHtml = card.image_url
+    ? `<p><img src="${esc(card.image_url)}" alt="${name}" width="220" style="max-width:220px;border-radius:10px;display:block"></p>`
+    : '';
+  const unsubUrl  = `${SITE_ORIGIN}/api/unsubscribe-follow?token=${encodeURIComponent(row.unsubscribe_token || '')}`;
+  const manageUrl = `${SITE_ORIGIN}/api/my-follows`;
+
+  if (!RESEND_API_KEY) {
+    console.warn('[check-card-follows] RESEND_API_KEY not configured, no alert sent');
+    await logEmail(row.email, 'follow_alert', row.id, false, 'RESEND_API_KEY not configured');
+    return false;
+  }
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12000);
@@ -130,21 +183,29 @@ async function sendAlertEmail(row, card, changePct, windowLabel) {
         subject: `${name} is ${dir} ${abs}%`,
         html: `<p>Hi,</p>
 <p><strong>${name}</strong> (${gameName}) has moved <strong>${dir} ${abs}%</strong> over the last ${windowLabel}.</p>
+${imageHtml}
 <p>It is now around <strong>AU$${price}</strong>.</p>
 <p><a href="${cardUrl}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">View the card</a></p>
 <p>The C3 Team</p>
+<p style="font-size:11px;color:#999">Don't want alerts for this card any more? <a href="${unsubUrl}">Unsubscribe</a>. You can also <a href="${manageUrl}">manage all your followed cards</a>.</p>
 <p style="font-size:11px;color:#999">Prices are estimates in AUD and are not a quote. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them. This alert fires once. Follow the card again to be alerted on its next move.</p>`
       })
     });
     clearTimeout(timer);
     if (!res.ok) {
-      console.error(`[check-card-follows] Resend ${res.status}: ${(await res.text()).slice(0, 200)}`);
+      const body = (await res.text()).slice(0, 300);
+      console.error(`[check-card-follows] Resend ${res.status}: ${body}`);
+      await logEmail(row.email, 'follow_alert', row.id, false, `${res.status}: ${body}`);
       return false;
     }
+    const sent = await res.json().catch(() => ({}));
+    console.log(`[check-card-follows] Resend OK id=${sent.id || 'unknown'} to=${row.email}`);
+    await logEmail(row.email, 'follow_alert', row.id, true, null);
     return true;
   } catch (e) {
     clearTimeout(timer);
     console.error(`[check-card-follows] Resend error: ${e.message}`);
+    await logEmail(row.email, 'follow_alert', row.id, false, e.message);
     return false;
   }
 }
@@ -164,7 +225,7 @@ export default async (req) => {
 
   try {
     const rows = await supabaseGet(
-      `card_price_alerts?select=id,email,game,card_slug,card_name&alert_type=eq.follow&confirmed=is.true&triggered=is.false&limit=${BATCH}`
+      `card_price_alerts?select=id,email,game,card_slug,card_name,unsubscribe_token&alert_type=eq.follow&confirmed=is.true&triggered=is.false&limit=${BATCH}`
     );
 
     if (!Array.isArray(rows) || rows.length === 0) {
@@ -191,9 +252,13 @@ export default async (req) => {
       //
       // Order by price deliberately, so a follow always tracks the most valuable printing
       // of that card. That is both deterministic and the printing worth alerting on.
+      //
+      // The image column differs per game (MTG uses image_uri_normal, the rest image_url),
+      // so it is aliased to a single image_url field for the email template.
+      const imageCol = GAME_IMAGE_COL[row.game] || 'image_url';
       try {
         cards = await supabaseGet(
-          `${table}?select=slug,name,price_aud,price_change_7d,price_change_30d&slug=eq.${encodeURIComponent(row.card_slug)}&order=price_aud.desc.nullslast&limit=1`
+          `${table}?select=slug,name,price_aud,price_change_7d,price_change_30d,image_url:${imageCol}&slug=eq.${encodeURIComponent(row.card_slug)}&order=price_aud.desc.nullslast&limit=1`
         );
       } catch (e) {
         log.push(`${row.game}/${row.card_slug}: read error ${e.message}`);
