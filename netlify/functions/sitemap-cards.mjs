@@ -80,13 +80,26 @@ export default async (req) => {
 
     console.log(`[sitemap-cards] fetched ${allCards.length} total cards`);
 
+    // slug is NOT unique in mtg_cards: every printing of a card is its own row, while the
+    // card page is served per slug. Emitting one <loc> per ROW submitted the same URL many
+    // times over. Dedupe by slug, keeping the highest-priced printing, which also decides
+    // the <priority> band.
+    const bySlug = new Map();
+    for (const c of allCards) {
+      if (!c.slug || c.slug.trim() === '') continue;
+      const price = parseFloat(c.price_usd) || 0;
+      const existing = bySlug.get(c.slug);
+      if (!existing || price > existing.price) {
+        bySlug.set(c.slug, { slug: c.slug, price, updated_at: c.updated_at });
+      }
+    }
+    console.log(`[sitemap-cards] ${allCards.length} rows -> ${bySlug.size} distinct slugs (${allCards.length - bySlug.size} duplicates collapsed)`);
+
     const today = new Date().toISOString().slice(0, 10);
-    const urls = allCards
-      .filter(c => c.slug && c.slug.trim() !== '')
+    const urls = [...bySlug.values()]
       .map(c => {
         const lastmod = c.updated_at ? c.updated_at.slice(0, 10) : today;
-        const price = parseFloat(c.price_usd) || 0;
-        const priority = price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7';
+        const priority = c.price >= 20 ? '0.9' : c.price >= 5 ? '0.8' : '0.7';
         return [
           `  <url>`,
           `    <loc>${SITE_URL}/cards/mtg/${c.slug}</loc>`,
@@ -100,7 +113,7 @@ export default async (req) => {
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- MTG card pages: ${allCards.length} cards with price >= USD$${PRICE_THRESHOLD} -->
+  <!-- MTG card pages: ${bySlug.size} distinct cards with price >= USD$${PRICE_THRESHOLD} (from ${allCards.length} rows) -->
   <!-- Generated: ${new Date().toISOString()} -->
 ${urls}
 </urlset>`;

@@ -88,22 +88,47 @@ ${urlXml}
 async function generateMtgSitemap() {
   console.log('Generating MTG card sitemaps (split into 2 files)...');
 
-  // File 1: $2.00+ high value cards
-  const cards1 = await fetchAll(
+  // slug is NOT unique in mtg_cards: 98,052 rows share only ~33,799 distinct slugs, because
+  // every printing of a card is its own row while the card page is served per slug. Emitting
+  // one <loc> per ROW produced 17,707 entries for 7,022 real URLs in sitemap-cards.xml, and
+  // 35,618 for 15,824 in sitemap-cards-2.xml: over 30,000 duplicate submissions.
+  //
+  // Fetch the whole $0.25+ range in one pass and dedupe by slug, keeping the highest-priced
+  // printing. Deduping per file would not be enough: a slug with a $5.00 printing and a
+  // $0.50 printing would still appear in BOTH files. Deduping globally first, then splitting
+  // on the winning price, guarantees each URL appears exactly once across both sitemaps.
+  //
+  // Highest price wins, matching how the follow-alert checker resolves an ambiguous slug.
+  const all = await fetchAll(
     'mtg_cards',
     'id,slug,price_usd,updated_at',
-    'price_usd=gte.2.00&slug=not.is.null'
+    'price_usd=gte.0.25&slug=not.is.null'
   );
-  const urls1 = cards1
-    .filter(c => c.slug && c.slug.trim())
-    .map(c => {
-      const price = parseFloat(c.price_usd) || 0;
-      return {
-        loc: `${SITE_URL}/cards/mtg/${c.slug}`,
-        lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
-        priority: price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7'
-      };
-    });
+
+  const bySlug = new Map();
+  for (const c of all) {
+    if (!c.slug || !c.slug.trim()) continue;
+    const price = parseFloat(c.price_usd) || 0;
+    const existing = bySlug.get(c.slug);
+    if (!existing || price > existing.price) {
+      bySlug.set(c.slug, { slug: c.slug, price, updated_at: c.updated_at });
+    }
+  }
+  console.log(`  MTG: ${all.length} rows -> ${bySlug.size} distinct slugs (${all.length - bySlug.size} duplicate rows collapsed)`);
+
+  const toUrl = (c, priority) => ({
+    loc: `${SITE_URL}/cards/mtg/${c.slug}`,
+    lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
+    priority
+  });
+
+  const cards = [...bySlug.values()];
+
+  // File 1: $2.00+ high value cards
+  const urls1 = cards
+    .filter(c => c.price >= 2.00)
+    .map(c => toUrl(c, c.price >= 20 ? '0.9' : c.price >= 5 ? '0.8' : '0.7'));
+
   // Sanity guard: the high-value file should always contain thousands of cards.
   // An empty result here means the query silently returned nothing (e.g. a
   // partial Supabase outage) — treat it as a hard failure rather than shipping
@@ -115,18 +140,10 @@ async function generateMtgSitemap() {
   console.log(`  MTG part 1: ${urls1.length} URLs written to sitemap-cards.xml`);
 
   // File 2: $0.25-$1.99 budget cards
-  const cards2 = await fetchAll(
-    'mtg_cards',
-    'id,slug,price_usd,updated_at',
-    'price_usd=gte.0.25&price_usd=lt.2.00&slug=not.is.null'
-  );
-  const urls2 = cards2
-    .filter(c => c.slug && c.slug.trim())
-    .map(c => ({
-      loc: `${SITE_URL}/cards/mtg/${c.slug}`,
-      lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
-      priority: '0.7'
-    }));
+  const urls2 = cards
+    .filter(c => c.price >= 0.25 && c.price < 2.00)
+    .map(c => toUrl(c, '0.7'));
+
   writeFileSync(`${OUT_DIR}/sitemap-cards-2.xml`, buildSitemap(urls2, `MTG card pages: ${urls2.length} cards at USD$0.25-$1.99`));
   console.log(`  MTG part 2: ${urls2.length} URLs written to sitemap-cards-2.xml`);
 
