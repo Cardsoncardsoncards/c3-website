@@ -693,6 +693,102 @@ function handleNotify(btn, eventName, game) {
 
 buildUpcomingCarousel();
 buildCalendar();
+
+/* ---------------------------------------------------------------------------
+   Additive merge from tcg_releases (/api/tcg-releases).
+
+   The curated EVENTS array above stays the source of truth. It carries
+   descriptions, price windows, hub links and AU timing context that tcg_releases
+   does not have. Live rows are only used to FILL GAPS, mostly for long-tail games
+   (Shadowverse, Vanguard, Union Arena, Hololive, Weiss Schwarz) that the curated
+   list does not cover. A live row is never allowed to replace a curated entry.
+
+   Tournament entries are untouched: this only ever appends type 'Set Release'.
+
+   These dates are US/TCGplayer street dates, not AU release dates, so every merged
+   entry says so in its description and is tagged 'US street date'.
+--------------------------------------------------------------------------- */
+const GAME_MAP = {
+  mtg:            ['MTG',        '#A78BFA'],
+  pokemon:        ['POKEMON',    '#FFCC00'],
+  lorcana:        ['LORCANA',    '#38BDF8'],
+  onepiece:       ['ONEPIECE',   '#FB923C'],
+  yugioh:         ['YUGIOH',     '#C084FC'],
+  dragonball:     ['DRAGONBALL', '#F97316'],
+  dbsfusionworld: ['DRAGONBALL', '#F97316'],
+  starwars:       ['STARWARS',   '#F87171'],
+  riftbound:      ['RIFTBOUND',  '#EF4444']
+};
+
+function normaliseSetName(name) {
+  return String(name || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+}
+
+async function mergeLiveReleases() {
+  let releases;
+  try {
+    const res = await fetch('/api/tcg-releases');
+    if (!res.ok) return;                       // fail silently, curated calendar still renders
+    const data = await res.json();
+    releases = data && data.releases;
+  } catch (e) {
+    return;
+  }
+  if (!Array.isArray(releases) || !releases.length) return;
+
+  // Suppress a live row the curated list already covers.
+  //
+  // Name matching is containment-based, because the curated names are prefixed and the
+  // live ones are not: curated "Weiss Schwarz: Blue Archive The Animation" has to match
+  // live "Blue Archive The Animation".
+  //
+  // The game+date rule (which catches live "ME05: Pitch Black" against curated
+  // "Mega Evolution: Pitch Black") is only safe for games with their OWN display code.
+  // Many games collapse into the shared 'OTHER' bucket, where game+date would collide
+  // across completely unrelated games and wrongly drop real releases, so 'OTHER' relies
+  // on the name rule alone.
+  const curatedNames    = EVENTS.map(e => normaliseSetName(e.name)).filter(Boolean);
+  const curatedGameDate = new Set(EVENTS.map(e => e.game + '|' + e.date));
+
+  function curatedCovers(liveName) {
+    const n = normaliseSetName(liveName);
+    if (!n) return true;
+    return curatedNames.some(c => c === n || (n.length >= 8 && (c.includes(n) || n.includes(c))));
+  }
+
+  let added = 0;
+  for (const r of releases) {
+    const [code, colour] = GAME_MAP[r.game] || ['OTHER', '#94A3B8'];
+    if (curatedCovers(r.name)) continue;
+    if (code !== 'OTHER' && curatedGameDate.has(code + '|' + r.date)) continue;
+
+    EVENTS.push({
+      date:   r.date,
+      game:   code,
+      colour: colour,
+      name:   r.name,
+      type:   'Set Release',
+      desc:   'US street date from TCGplayer data. Australian availability may differ.',
+      status: 'confirmed',
+      ebay:   encodeURIComponent(r.name).replace(/%20/g, '+'),
+      prize:  null,
+      hub:    '/cards',
+      state:  null,
+      source: 'tcg_releases'
+    });
+    curatedNames.push(normaliseSetName(r.name));
+    added++;
+  }
+
+  if (added) {
+    buildUpcomingCarousel();
+    buildCalendar();
+  }
+}
+
+mergeLiveReleases();
 </script>
 </body>
 </html>
