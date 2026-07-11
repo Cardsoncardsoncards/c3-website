@@ -123,12 +123,47 @@ async function selfChain() {
   } catch (_) {}
 }
 
+// Audit trail into sync_events. Fire-and-forget: never breaks the sync itself.
+//
+// NOTE: this function has no top-level try/catch (it self-chains when it runs out of
+// time), so there is no error path to hook. Only ids_sync_start and ids_sync_success
+// are emitted; a hard failure shows up as a missing success row, plus the Netlify logs.
+// Each self-chained continuation emits its own start row.
+async function logSyncEvent(eventType, rowsAffected = null) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/sync_events`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify([{
+        event_type:    eventType,
+        game:          GAME_CONFIG.game,
+        rows_affected: rowsAffected
+      }]),
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    if (!res.ok) console.warn(`[sync-ids-starwars] sync_events log failed ${res.status}`);
+  } catch (e) {
+    clearTimeout(timer);
+    console.warn(`[sync-ids-starwars] sync_events log error: ${e.message}`);
+  }
+}
+
 export default async (req) => {
   const startTime = Date.now();
   const { table, priceCol, game } = GAME_CONFIG;
   let totalProcessed = 0, totalSucceeded = 0, totalFailed = 0;
   let rateLimitHit = false, timeLimitHit = false, currentRemaining = 50000;
   const log = [];
+
+  await logSyncEvent('ids_sync_start');
 
   while (true) {
     if (rateLimitHit || timeLimitHit) break;
@@ -159,6 +194,8 @@ export default async (req) => {
   if (timeLimitHit && !rateLimitHit) {
     await selfChain();
   }
+
+  await logSyncEvent('ids_sync_success', totalSucceeded);
 
   return new Response(JSON.stringify({ game, totalProcessed, totalSucceeded, totalFailed, rateLimitHit, timeLimitHit, currentRemaining, elapsedSec, done, log }, null, 2), {
     headers: { 'Content-Type': 'application/json' }

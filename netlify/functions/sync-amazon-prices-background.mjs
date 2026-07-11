@@ -154,10 +154,40 @@ async function insertPriceHistory(rows) {
   } catch (e) { clearTimeout(timer); }
 }
 
+// Audit trail into sync_events. Fire-and-forget: never breaks the sync itself.
+//
+// This is a cross-game price sync, so game is left null. It also has no top-level
+// try/catch, so only start and success are emitted; a hard failure shows as a missing
+// success row plus the Netlify logs.
+async function logSyncEvent(eventType, rowsAffected = null) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/sync_events`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify([{ event_type: eventType, game: null, rows_affected: rowsAffected }]),
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    if (!res.ok) console.warn(`[amazon-sync] sync_events log failed ${res.status}`);
+  } catch (e) {
+    clearTimeout(timer);
+    console.warn(`[amazon-sync] sync_events log error: ${e.message}`);
+  }
+}
+
 export default async (req) => {
   if (!PA_CREDENTIAL_ID || !PA_SECRET) {
     return new Response(JSON.stringify({ error: 'Missing Amazon Creators API credentials' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
+
+  await logSyncEvent('amazon_prices_sync_start');
 
   const startTime = Date.now();
   const log = [];
@@ -226,6 +256,7 @@ export default async (req) => {
 
   const elapsed = Math.round((Date.now() - startTime) / 1000);
   console.log('[amazon-sync] complete:', { updated, priceHistoryRows, elapsed });
+  await logSyncEvent('amazon_prices_sync_success', updated);
   return new Response(JSON.stringify({ updated, failed, notFound, priceHistoryRows, elapsed, log }, null, 2), {
     headers: { 'Content-Type': 'application/json' }
   });
