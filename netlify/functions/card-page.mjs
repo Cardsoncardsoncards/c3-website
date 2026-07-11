@@ -452,6 +452,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .cta-btn { display: block; text-align: center; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; font-family: sans-serif; transition: opacity 0.2s; }
     .cta-btn:hover { opacity: 0.85; text-decoration: none; }
     .cta-primary { background: var(--accent); color: #000; }
+    .cta-c3 { background: linear-gradient(135deg, #7A621E, #C9A84C); color: #0A0C14; border: 1px solid #C9A84C; }
     .cta-secondary { background: var(--bg3); border: 1px solid var(--border); color: var(--text); }
     .cta-follow{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);color:#C9A84C;cursor:pointer}
     .cta-amazon { background: #232f3e; border: 1px solid #f90; color: #f90; }
@@ -732,6 +733,7 @@ ${contextPara}
     </div>
 
     <div class="cta-group">
+      ${ebayStoreListings.length ? `<a href="${ebayStoreUrl}" class="cta-btn cta-c3" target="_blank" rel="noopener">🛒 Buy from C3 on eBay</a>` : ''}
       <a href="${ebayAllUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">🔍 Find on eBay AU</a>
       ${card.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${card.amazon_asin}?tag=${AMAZON_TAG}" class="cta-btn cta-amazon" target="_blank" rel="noopener">📦 Buy Sealed on Amazon AU</a>` : ''}
       ${hasEVCalc ? `<a href="/ev-calculator.html#${card.set_code}" class="cta-btn cta-ev">📊 ${card.set_name} EV Calculator</a>` : ''}
