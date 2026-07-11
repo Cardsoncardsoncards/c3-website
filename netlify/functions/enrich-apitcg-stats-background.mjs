@@ -52,6 +52,11 @@ function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
 
+// Thrown when apitcg reports the monthly quota is gone. That cannot recover part way
+// through a run, so it aborts everything rather than letting each remaining game spend
+// more requests discovering the same wall (the first live run burned 22 that way).
+class QuotaExhaustedError extends Error {}
+
 async function apitcgGetPage(slug, page) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 20000);
@@ -63,6 +68,9 @@ async function apitcgGetPage(slug, page) {
     });
     clearTimeout(timer);
     apitcgRequests++;
+    if (res.status === 429) {
+      throw new QuotaExhaustedError(`apitcg 429: ${(await res.text()).slice(0, 200)}`);
+    }
     if (!res.ok) throw new Error(`apitcg ${res.status}: ${(await res.text()).slice(0, 200)}`);
     const body = await res.json();
     return Array.isArray(body.data) ? body.data : [];
@@ -242,20 +250,30 @@ export default async (req) => {
 
   log.push(dryRun ? 'DRY RUN: matching only, no writes' : 'LIVE RUN: writing custom_attributes');
 
+  let quotaExhausted = false;
+
   for (const cfg of gamesToProcess) {
     try {
       results.push(await enrichGame(cfg, dryRun, log));
     } catch (e) {
-      // One game failing should not abort the rest of the run.
       log.push(`  ERROR (${cfg.game}): ${e.message}`);
       results.push({ game: cfg.game, error: e.message });
+      if (e instanceof QuotaExhaustedError) {
+        // Every remaining game would just spend more requests hitting the same wall.
+        quotaExhausted = true;
+        log.push('  ABORTING RUN: apitcg monthly quota is exhausted. Nothing further will be attempted.');
+        log.push('  The quota is per apitcg account and resets monthly. Rotating the key does NOT reset it.');
+        break;
+      }
+      // Any other single-game failure should not abort the rest of the run.
     }
   }
 
   const summary = {
     dryRun,
+    quotaExhausted,
     totalApitcgRequests: apitcgRequests,
-    quotaNote: 'Free plan allows 1000 requests/month',
+    quotaNote: 'Free plan allows 1000 requests/month, per account, resets monthly',
     totalMatched:   results.reduce((n, r) => n + (r.matched   || 0), 0),
     totalUnmatched: results.reduce((n, r) => n + (r.unmatched || 0), 0),
     totalWritten:   results.reduce((n, r) => n + (r.written   || 0), 0),
