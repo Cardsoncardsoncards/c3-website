@@ -370,6 +370,32 @@ export default async (req) => {
   </div>
 </div>
 
+${(() => {
+  const raw = card.custom_attributes;
+  let ca = raw;
+  if (typeof raw === 'string') { try { ca = JSON.parse(raw); } catch { ca = null; } }
+  if (!ca || typeof ca !== 'object') return '';
+  // Preferred display order. apitcg attributes is a dynamic object, so any key
+  // actually present but not listed here is appended after these.
+  const PREFERRED = ['Level', 'Cost', 'CardType', 'Color', 'Trait', 'Attack Points', 'Hit Points'];
+  const SKIP = new Set(['Description', 'Flavor Text', 'Number', 'Name']);
+  const clean = v => String(v == null ? '' : v).replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const labelFor = k => k.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+  const shown = k => !SKIP.has(k) && clean(ca[k]) !== '';
+  const keys = [
+    ...PREFERRED.filter(k => Object.prototype.hasOwnProperty.call(ca, k) && shown(k)),
+    ...Object.keys(ca).filter(k => !PREFERRED.includes(k) && shown(k))
+  ];
+  if (!keys.length) return '';
+  const boxes = keys.map(k => {
+    const val = clean(ca[k]);
+    const wide = val.length > 60 ? ' cd-box-wide' : '';
+    return `<div class="cd-box${wide}"><div class="cd-label">${esc(labelFor(k))}</div><div class="cd-value">${esc(val)}</div></div>`;
+  });
+  return `<style>.cd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:4px}.cd-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:12px}.cd-box-wide{grid-column:1/-1}.cd-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#9ba3c4;margin-bottom:4px}.cd-value{font-size:15px;font-weight:700;color:#e8eaf0}.cd-box-wide .cd-value{font-size:13px;font-weight:600;line-height:1.5}</style>
+  <div style="max-width:1100px;margin:0 auto 24px;padding:20px 24px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:12px"><h2 style="font-size:18px;margin-bottom:16px">Card Details</h2><div class="cd-grid">${boxes.join('')}</div></div>`;
+})()}
+
 ${relatedHTML}
 ${ebayHTML}
 
