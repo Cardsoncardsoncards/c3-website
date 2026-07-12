@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://cardsoncardsoncards.com.au/sitemap.xml</loc>
-  </sitemap>
-  <sitemap>
     <loc>https://cardsoncardsoncards.com.au/sitemap-blog.xml</loc>
   </sitemap>
   <sitemap>
@@ -11,6 +8,9 @@
   </sitemap>
   <sitemap>
     <loc>https://cardsoncardsoncards.com.au/api/sitemap-static</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://cardsoncardsoncards.com.au/api/sitemap-sets</loc>
   </sitemap>
   <sitemap>
     <loc>https://cardsoncardsoncards.com.au/api/sitemap-pokemon</loc>
