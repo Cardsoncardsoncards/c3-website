@@ -375,7 +375,7 @@ export default async (req) => {
         }).catch(function(){ msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; btn.textContent='Follow'; });
       }
     </script>
-    <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. Updated daily. eBay links may earn affiliate commission.</p>
+    <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. <a href="/methodology" style="color:inherit;text-decoration:underline">Updated daily</a>. eBay links may earn affiliate commission.</p>
     <style>
     .share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0;padding:16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-family:sans-serif}
     .share-bar-label{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-right:4px;white-space:nowrap}

@@ -791,7 +791,7 @@ ${contextPara}
         }).catch(function(){ msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; btn.textContent='Follow'; });
       }
     </script>
-    <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. Updated daily. eBay and Amazon links may earn affiliate commission.</p>
+    <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. <a href="/methodology" style="color:inherit;text-decoration:underline">Updated daily</a>. eBay and Amazon links may earn affiliate commission.</p>
     ${shareBar}
   </div><!-- end .card-info -->
 </div><!-- end .card-layout -->
