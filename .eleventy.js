@@ -18,6 +18,12 @@ module.exports = function(eleventyConfig) {
   // Per-game sitemaps (pokemon/yugioh/lorcana/onepiece/riftbound/dragonball/starwars)
   // are served at runtime by /api/sitemap-* Functions — no static passthrough needed.
   eleventyConfig.addPassthroughCopy({"robots.txt": "robots.txt"});
+
+  // IndexNow ownership key. IndexNow verifies the caller owns the host by fetching this file
+  // at https://cardsoncardsoncards.com.au/<key>.txt and matching its contents to the key sent
+  // in the payload, so it MUST be served from the site root. The same value is stored as the
+  // INDEXNOW_KEY Netlify env var, which sync-indexnow-ping.mjs reads; it is not hardcoded twice.
+  eleventyConfig.addPassthroughCopy({"src/5cfc6acc94f0967802d3ca69b1198b8f.txt": "5cfc6acc94f0967802d3ca69b1198b8f.txt"});
   eleventyConfig.addPassthroughCopy({"favicon.ico": "favicon.ico"});
   eleventyConfig.addPassthroughCopy({"ev-calculator": "ev-calculator"});
   eleventyConfig.addPassthroughCopy({"quizzes": "quizzes"});
