@@ -18,7 +18,8 @@
 // its contents against `key`. The key lives in the INDEXNOW_KEY env var and is served from
 // https://cardsoncardsoncards.com.au/<key>.txt (Eleventy passthrough).
 //
-// Trigger: scheduled daily, or manually with an x-sync-secret header.
+// Trigger: scheduled daily, or manually with an x-sync-secret header against
+// /.netlify/functions/sync-indexnow-ping (a scheduled function cannot have a custom path).
 // Pass ?dryRun=1 to collect and count URLs without submitting anything.
 
 const SITE_HOST     = 'cardsoncardsoncards.com.au';
@@ -168,7 +169,8 @@ export default async (req) => {
   }
 };
 
+// No `path` key here. Netlify rejects a custom path on a scheduled function, so this is
+// reachable only at its default URL, /.netlify/functions/sync-indexnow-ping.
 export const config = {
-  path: '/api/sync-indexnow-ping',
   schedule: '0 3 * * *'   // daily 03:00 UTC, after the 02:30 UTC tcg_releases sync
 };

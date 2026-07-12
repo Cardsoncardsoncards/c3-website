@@ -14,7 +14,9 @@
 // It was briefly "0 22 * * 0", which is 22:00 UTC Sunday = 8am MONDAY Sydney. Cron day 0 is
 // Sunday, so the day number has to be the day BEFORE the intended Sydney morning.
 //
-// Trigger: scheduled weekly, or manually with an x-sync-secret header.
+// Trigger: scheduled weekly, or manually with an x-sync-secret header against
+// /.netlify/functions/generate-weekly-digest-free (a scheduled function cannot have a custom
+// path, so there is no /api/... alias for this one).
 // Pass ?dryRun=1 to build the email and count recipients WITHOUT sending to the list.
 // Pass ?testEmail=you@example.com to send a single real email to that address only.
 
@@ -210,7 +212,8 @@ export default async (req) => {
   });
 };
 
+// No `path` key here. Netlify rejects a custom path on a scheduled function, so this is
+// reachable only at its default URL, /.netlify/functions/generate-weekly-digest-free.
 export const config = {
-  path: '/api/generate-weekly-digest-free',
   schedule: '0 22 * * 6'   // 22:00 UTC Saturday = 8am Sunday Sydney. See the note at the top.
 };
