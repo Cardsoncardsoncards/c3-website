@@ -86,29 +86,34 @@ ${urlXml}
 }
 
 async function generateMtgSitemap() {
-  console.log('Generating MTG card sitemaps (split into 2 files)...');
+  console.log('Generating MTG card sitemap (single file)...');
 
-  // slug is NOT unique in mtg_cards: 98,052 rows share only ~33,799 distinct slugs, because
-  // every printing of a card is its own row while the card page is served per slug. Emitting
-  // one <loc> per ROW produced 17,707 entries for 7,022 real URLs in sitemap-cards.xml, and
-  // 35,618 for 15,824 in sitemap-cards-2.xml: over 30,000 duplicate submissions.
+  // The sitemap must submit exactly what the card page considers indexable, no more and no
+  // less. card-page.mjs noindexes any card where priceAud < 1.00, and every other game's
+  // card page applies the identical rule. So the sole filter here is price_aud >= 1.00, in
+  // AUD, matching the render-time rule exactly.
   //
-  // Fetch the whole $0.25+ range in one pass and dedupe by slug, keeping the highest-priced
-  // printing. Deduping per file would not be enough: a slug with a $5.00 printing and a
-  // $0.50 printing would still appear in BOTH files. Deduping globally first, then splitting
-  // on the winning price, guarantees each URL appears exactly once across both sitemaps.
+  // Previously this filtered on price_usd (>= 0.25, split into two files at the $2.00 line),
+  // which is a different column in a different currency. USD 0.25 is about AU$0.36, so the
+  // sitemap was submitting thousands of URLs the page itself then told Google not to index:
+  // 9,589 of MTG's 20,094 submitted URLs were noindexed (task-81).
   //
-  // Highest price wins, matching how the follow-alert checker resolves an ambiguous slug.
+  // Two files are no longer needed. The eligible set is ~10,500 URLs, comfortably inside
+  // Google's 50,000-per-sitemap limit, so sitemap-cards-2.xml is retired.
+  //
+  // slug is NOT unique in mtg_cards: every printing is its own row while the card page is
+  // served per slug, so dedupe by slug, keeping the highest-priced printing (matching how
+  // the follow-alert checker resolves an ambiguous slug).
   const all = await fetchAll(
     'mtg_cards',
-    'id,slug,price_usd,updated_at',
-    'price_usd=gte.0.25&slug=not.is.null'
+    'id,slug,price_aud,updated_at',
+    'price_aud=gte.1.00&slug=not.is.null'
   );
 
   const bySlug = new Map();
   for (const c of all) {
     if (!c.slug || !c.slug.trim()) continue;
-    const price = parseFloat(c.price_usd) || 0;
+    const price = parseFloat(c.price_aud) || 0;
     const existing = bySlug.get(c.slug);
     if (!existing || price > existing.price) {
       bySlug.set(c.slug, { slug: c.slug, price, updated_at: c.updated_at });
@@ -116,38 +121,27 @@ async function generateMtgSitemap() {
   }
   console.log(`  MTG: ${all.length} rows -> ${bySlug.size} distinct slugs (${all.length - bySlug.size} duplicate rows collapsed)`);
 
-  const toUrl = (c, priority) => ({
+  const urls = [...bySlug.values()].map(c => ({
     loc: `${SITE_URL}/cards/mtg/${c.slug}`,
     lastmod: c.updated_at ? c.updated_at.slice(0, 10) : null,
-    priority
-  });
+    priority: c.price >= 20 ? '0.9' : c.price >= 5 ? '0.8' : '0.7'
+  }));
 
-  const cards = [...bySlug.values()];
-
-  // File 1: $2.00+ high value cards
-  const urls1 = cards
-    .filter(c => c.price >= 2.00)
-    .map(c => toUrl(c, c.price >= 20 ? '0.9' : c.price >= 5 ? '0.8' : '0.7'));
-
-  // Sanity guard: the high-value file should always contain thousands of cards.
-  // An empty result here means the query silently returned nothing (e.g. a
-  // partial Supabase outage) — treat it as a hard failure rather than shipping
-  // an empty sitemap that de-indexes every MTG card page.
-  if (urls1.length === 0) {
-    throw new Error('mtg_cards ($2.00+) returned 0 rows — refusing to write an empty sitemap-cards.xml');
+  // Sanity guard: this file should always contain thousands of cards. An empty result means
+  // the query silently returned nothing (e.g. a partial Supabase outage) — treat it as a hard
+  // failure rather than shipping an empty sitemap that de-indexes every MTG card page.
+  if (urls.length === 0) {
+    throw new Error('mtg_cards (AU$1.00+) returned 0 rows — refusing to write an empty sitemap-cards.xml');
   }
-  writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, buildSitemap(urls1, `MTG card pages: ${urls1.length} cards at USD$2.00+`));
-  console.log(`  MTG part 1: ${urls1.length} URLs written to sitemap-cards.xml`);
 
-  // File 2: $0.25-$1.99 budget cards
-  const urls2 = cards
-    .filter(c => c.price >= 0.25 && c.price < 2.00)
-    .map(c => toUrl(c, '0.7'));
+  if (urls.length >= 50000) {
+    throw new Error(`mtg_cards returned ${urls.length} URLs — exceeds the 50,000 per-sitemap limit, must be split again`);
+  }
 
-  writeFileSync(`${OUT_DIR}/sitemap-cards-2.xml`, buildSitemap(urls2, `MTG card pages: ${urls2.length} cards at USD$0.25-$1.99`));
-  console.log(`  MTG part 2: ${urls2.length} URLs written to sitemap-cards-2.xml`);
+  writeFileSync(`${OUT_DIR}/sitemap-cards.xml`, buildSitemap(urls, `MTG card pages: ${urls.length} cards at AU$1.00+`));
+  console.log(`  MTG: ${urls.length} URLs written to sitemap-cards.xml`);
 
-  return urls1.length + urls2.length;
+  return urls.length;
 }
 
 // NOTE: pokemon / lorcana / yugioh / onepiece / riftbound / starwars / dragonball

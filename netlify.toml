@@ -9,9 +9,6 @@
 [functions]
   node_bundler = "esbuild"
 
-[functions."sitemap-cards"]
-  timeout = 30
-
 # pokemon sitemap paginates up to 20k rows (~17-20 sequential Supabase fetches);
 # default timeout is too tight, matching sitemap-cards at 30s.
 [functions."sitemap-pokemon"]
