@@ -9,10 +9,10 @@
 // shared/weekly-report-core.mjs, extracted verbatim from the paid function so the two
 // cannot drift. Only the subscriber source and the copy differ.
 //
-// Schedule: "0 22 * * 0" as specified. Cron day 0 is Sunday, and Netlify crons run in UTC,
-// so this fires 22:00 UTC Sunday = 8am MONDAY Sydney (AEST, UTC+10), NOT Sunday morning.
-// If Sunday-morning-Sydney delivery was the intent, this needs to be "0 22 * * 6".
-// Left as specified rather than silently changed; flagged so it can be decided deliberately.
+// Schedule: "0 22 * * 6". Cron day 6 is Saturday and Netlify crons run in UTC, so this fires
+// 22:00 UTC Saturday = 8am SUNDAY Sydney (AEST, UTC+10), which is the intended send time.
+// It was briefly "0 22 * * 0", which is 22:00 UTC Sunday = 8am MONDAY Sydney. Cron day 0 is
+// Sunday, so the day number has to be the day BEFORE the intended Sydney morning.
 //
 // Trigger: scheduled weekly, or manually with an x-sync-secret header.
 // Pass ?dryRun=1 to build the email and count recipients WITHOUT sending to the list.
@@ -212,5 +212,5 @@ export default async (req) => {
 
 export const config = {
   path: '/api/generate-weekly-digest-free',
-  schedule: '0 22 * * 0'   // 22:00 UTC Sunday = 8am Monday Sydney. See the note at the top.
+  schedule: '0 22 * * 6'   // 22:00 UTC Saturday = 8am Sunday Sydney. See the note at the top.
 };
