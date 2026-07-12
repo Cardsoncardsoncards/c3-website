@@ -4,7 +4,12 @@
 
 [build.environment]
   NODE_VERSION = "22"
-  SECRETS_SCAN_OMIT_KEYS = "AMAZON_PA_PARTNER_TAG,AMAZON_PA_MARKETPLACE"
+  # INDEXNOW_KEY is deliberately public and MUST appear in the build output: IndexNow proves
+  # host ownership by fetching /<key>.txt from the site root and matching it to the key in the
+  # payload. Secrets scanning sees an env var value published verbatim and fails the build, so
+  # it has to be told this one is intentional. It is not a credential; it grants nothing beyond
+  # the right to tell search engines our own URLs changed.
+  SECRETS_SCAN_OMIT_KEYS = "AMAZON_PA_PARTNER_TAG,AMAZON_PA_MARKETPLACE,INDEXNOW_KEY"
 
 [functions]
   node_bundler = "esbuild"
