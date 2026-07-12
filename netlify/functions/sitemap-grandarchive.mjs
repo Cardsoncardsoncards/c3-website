@@ -5,7 +5,7 @@
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
-const PRICE_THRESHOLD   = 1.0;
+const PRICE_THRESHOLD   = 1.00;
 const PAGE_SIZE         = 1000;
 const MAX_CARDS         = 50000;
 
@@ -31,10 +31,10 @@ async function supabaseFetch(url, extraHeaders = {}) {
 
 async function fetchSlugs(offset) {
   const url = SUPABASE_URL + '/rest/v1/grandarchive_cards'
-    + '?select=slug,market_price,updated_at'
-    + '&market_price=gte.' + PRICE_THRESHOLD
+    + '?select=slug,price_aud,updated_at'
+    + '&price_aud=gte.' + PRICE_THRESHOLD
     + '&slug=not.is.null'
-    + '&order=market_price.desc'
+    + '&order=price_aud.desc'
     + '&limit=' + PAGE_SIZE
     + '&offset=' + offset;
   try {
@@ -60,7 +60,7 @@ export default async (req) => {
 
   try {
     const countRes = await supabaseFetch(
-      SUPABASE_URL + '/rest/v1/grandarchive_cards?select=id&market_price=gte.' + PRICE_THRESHOLD + '&slug=not.is.null&limit=1',
+      SUPABASE_URL + '/rest/v1/grandarchive_cards?select=id&price_aud=gte.' + PRICE_THRESHOLD + '&slug=not.is.null&limit=1',
       { Prefer: 'count=exact' }
     );
     if (!countRes.ok) return empty('grandarchive sitemap: count query failed');
@@ -83,7 +83,7 @@ export default async (req) => {
       .filter(function(c) { return c.slug && c.slug.trim() !== ''; })
       .map(function(c) {
         const lastmod = c.updated_at ? c.updated_at.slice(0, 10) : today;
-        const price = parseFloat(c.market_price) || 0;
+        const price = parseFloat(c.price_aud) || 0;
         const priority = price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7';
         return '  <url>\n    <loc>' + SITE_URL + '/cards/grandarchive/' + c.slug + '</loc>\n    <lastmod>' + lastmod + '</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>' + priority + '</priority>\n  </url>';
       })

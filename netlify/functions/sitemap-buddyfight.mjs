@@ -1,12 +1,12 @@
 // netlify/functions/sitemap-buddyfight.mjs
 // Generates XML sitemap for buddyfight card pages at /cards/buddyfight/[slug]
 // Registered in sitemap-index.xml as /api/sitemap-buddyfight
-// Pattern matches sitemap-lorcana.mjs: AbortController on all fetches, market_price column, keyset pagination
+// Pattern matches sitemap-lorcana.mjs: AbortController on all fetches, price_aud column, keyset pagination
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
-const PRICE_THRESHOLD   = 1.0;
+const PRICE_THRESHOLD   = 1.00;
 const PAGE_SIZE         = 1000;
 const SAFETY_MAX        = 50000; // sitemaps.org hard limit — split before exceeding, never silently cap
 
@@ -36,8 +36,8 @@ async function supabaseFetch(url, extraHeaders = {}) {
 // swallowed error would silently truncate the sitemap and de-index real pages.
 async function fetchSlugs(afterId) {
   const url = `${SUPABASE_URL}/rest/v1/buddyfight_cards`
-    + `?select=id,slug,market_price,updated_at`
-    + `&market_price=gte.${PRICE_THRESHOLD}`
+    + `?select=id,slug,price_aud,updated_at`
+    + `&price_aud=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
     + (afterId != null ? `&id=gt.${afterId}` : ``)
     + `&order=id.asc`
@@ -83,7 +83,7 @@ export default async (req) => {
       .filter(c => c.slug && c.slug.trim() !== '')
       .map(c => {
         const lastmod = c.updated_at ? c.updated_at.slice(0, 10) : today;
-        const price = parseFloat(c.market_price) || 0;
+        const price = parseFloat(c.price_aud) || 0;
         const priority = price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7';
         return `  <url>\n    <loc>${SITE_URL}/cards/buddyfight/${c.slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
       })
@@ -91,7 +91,7 @@ export default async (req) => {
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- buddyfight card pages: ${allCards.length} cards with price >= USD$${PRICE_THRESHOLD} -->
+  <!-- buddyfight card pages: ${allCards.length} cards with price >= AU${PRICE_THRESHOLD} -->
   <!-- Generated: ${new Date().toISOString()} -->
 ${urls}
 </urlset>`;
