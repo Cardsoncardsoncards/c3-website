@@ -125,7 +125,16 @@ export default async (req) => {
 </html>`, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   const set = sets[0];
 
-  const cards = set ? await supabaseGet(`yugioh_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=200&select=slug,name,image_url,market_price,rarity,attribute`) : [];
+  // yugioh_cards has no `attribute` column. Selecting it returned Supabase 400
+  // ("column yugioh_cards.attribute does not exist"), which the handler surfaced as a 503,
+  // so EVERY Yu-Gi-Oh set page (614 of them) was broken in production. The gameplay stats
+  // moved into the custom_attributes JSONB when task-48 wired up YGOPRODeck, so read the
+  // attribute from there and expose it under the same `attribute` key the render already uses.
+  const rawCards = set ? await supabaseGet(`yugioh_cards?set_id=eq.${set.id}&order=market_price.desc.nullslast&limit=200&select=slug,name,image_url,market_price,rarity,custom_attributes`) : [];
+  const cards = rawCards.map(c => {
+    const ca = (c && typeof c.custom_attributes === 'object' && c.custom_attributes) || {};
+    return { ...c, attribute: ca.attribute || null };
+  });
 
   const ebaySearchURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
