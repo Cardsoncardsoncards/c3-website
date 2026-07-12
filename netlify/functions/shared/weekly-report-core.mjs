@@ -108,40 +108,73 @@ async function mtgMovers(direction,limit){
     }).filter(Boolean);
   }catch{return[];}
 }
+// The buy and sell signals used to query mtg_price_snapshots with no snapshot_date
+// filter, so they ranged over every date in the table and returned one row per card
+// per day of history. Ordered by price, a single expensive card filled the whole
+// section (Timetwister appeared six times at six different prices). Both signals now
+// pin to the latest snapshot_date, exactly as mtgMovers already does.
+const SIGNAL_SCAN_LIMIT = 400;
+
+async function latestSnapshotDate(){
+  const rows=await sbGet(`mtg_price_snapshots?order=snapshot_date.desc&limit=1&select=snapshot_date`);
+  return rows.length?rows[0].snapshot_date:null;
+}
+
+// A card name has many printings, each its own scryfall_id. The email lists cards,
+// not printings, so collapse by name and keep the most valuable printing of each.
+function dedupeByName(list){
+  const best=new Map();
+  for(const c of list){
+    const prev=best.get(c.name);
+    if(!prev||parseFloat(c.priceAud)>parseFloat(prev.priceAud))best.set(c.name,c);
+  }
+  return [...best.values()];
+}
+
 async function mtgBuy(limit){
   try{
-    const data=await sbGet(`mtg_price_snapshots?price_52w_low_aud=gt.1&order=price_aud.asc&limit=50&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
+    const latest=await latestSnapshotDate();
+    if(!latest)return[];
+    const data=await sbGet(`mtg_price_snapshots?snapshot_date=eq.${latest}&price_aud=gt.1&price_52w_low_aud=gt.1&order=price_aud.asc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
     const sig=data.filter(s=>{
       if(!s.price_52w_high_aud||!s.price_52w_low_aud)return false;
       const r=s.price_52w_high_aud-s.price_52w_low_aud; if(r<1)return false;
       return ((s.price_aud-s.price_52w_low_aud)/r)<=0.20;
-    }).slice(0,limit);
+    });
     if(!sig.length)return[];
     const ids=sig.map(s=>s.scryfall_id).join(',');
     const cards=await sbGet(`mtg_cards?scryfall_id=in.(${ids})&select=name,slug,set_name,rarity,scryfall_id`);
-    return sig.map(s=>{
+    const rows=sig.map(s=>{
       const c=cards.find(x=>x.scryfall_id===s.scryfall_id); if(!c)return null;
       const discount=Math.round(((s.price_52w_high_aud-s.price_aud)/s.price_52w_high_aud)*100);
       return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:s.price_aud,discount,game:'mtg'};
     }).filter(Boolean);
+    return dedupeByName(rows)
+      .sort((a,b)=>parseFloat(a.priceAud)-parseFloat(b.priceAud))
+      .slice(0,limit);
   }catch{return[];}
 }
 async function mtgSell(limit){
   try{
-    const data=await sbGet(`mtg_price_snapshots?price_52w_high_aud=gt.2&order=price_aud.desc&limit=50&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
+    const latest=await latestSnapshotDate();
+    if(!latest)return[];
+    const data=await sbGet(`mtg_price_snapshots?snapshot_date=eq.${latest}&price_aud=gt.1&price_52w_high_aud=gt.2&order=price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
     const sig=data.filter(s=>{
       if(!s.price_52w_high_aud||!s.price_52w_low_aud)return false;
       const r=s.price_52w_high_aud-s.price_52w_low_aud; if(r<1)return false;
       return ((s.price_aud-s.price_52w_low_aud)/r)>=0.80;
-    }).slice(0,limit);
+    });
     if(!sig.length)return[];
     const ids=sig.map(s=>s.scryfall_id).join(',');
     const cards=await sbGet(`mtg_cards?scryfall_id=in.(${ids})&select=name,slug,set_name,rarity,scryfall_id`);
-    return sig.map(s=>{
+    const rows=sig.map(s=>{
       const c=cards.find(x=>x.scryfall_id===s.scryfall_id); if(!c)return null;
       const nearHighPct=Math.round(((s.price_aud-s.price_52w_low_aud)/(s.price_52w_high_aud-s.price_52w_low_aud))*100);
       return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:s.price_aud,nearHighPct,game:'mtg'};
     }).filter(Boolean);
+    return dedupeByName(rows)
+      .sort((a,b)=>parseFloat(b.priceAud)-parseFloat(a.priceAud))
+      .slice(0,limit);
   }catch{return[];}
 }// ---------- email row + html ----------
 function row(card,mode){
@@ -210,9 +243,11 @@ function buildEmail({dateStr,callTitle,callBody,up,down,buy,sell,reportLabel='We
     <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#C9A84C" style="border-radius:8px;">
       <a href="https://cardsoncardsoncards.com.au/market" style="display:inline-block;padding:13px 28px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;color:#080b12;text-decoration:none;">See the full live market &rarr;</a>
     </td></tr></table>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;margin-top:12px;"><a href="https://cardsoncardsoncards.com.au/compare" style="color:#C9A84C;text-decoration:none;">Compare prices across sellers &rarr;</a></div>
   </td></tr>
   <tr><td bgcolor="#0b0e16" style="background:#0b0e16;border:1px solid #1e2638;border-top:none;border-radius:0 0 10px 10px;padding:22px 26px;">
-    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.6;">Know a seller who would use this? Forward it on. They can join free at <a href="https://cardsoncardsoncards.com.au/pricing" style="color:#C9A84C;text-decoration:none;">cardsoncardsoncards.com.au</a>.</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.6;">Follow any card for real-time price alerts, no need to wait for the weekly email. <a href="https://cardsoncardsoncards.com.au/market" style="color:#C9A84C;text-decoration:none;">Browse the market and follow a card &rarr;</a></div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.6;margin-top:12px;">Know a seller who would use this? Forward it on. They can join free at <a href="https://cardsoncardsoncards.com.au/pricing" style="color:#C9A84C;text-decoration:none;">cardsoncardsoncards.com.au</a>.</div>
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;line-height:1.6;margin-top:14px;">Prices are indicative AUD market estimates and move constantly. Always check the live price before you buy or sell. C3 participates in the eBay Partner Network and may earn a small commission on purchases made through links, at no extra cost to you.</div>
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;margin-top:12px;">The C3 Team &middot; <a href="{$unsubscribe}" style="color:#8892b0;text-decoration:underline;">Manage subscription</a></div>
   </td></tr>
@@ -221,7 +256,7 @@ function buildEmail({dateStr,callTitle,callBody,up,down,buy,sell,reportLabel='We
 }
 
 function plainText(dateStr,reportLabel='C3 Weekly Seller Report'){
-  return `${reportLabel}, ${dateStr}.\n\nYour email client cannot display HTML. View the full market at https://cardsoncardsoncards.com.au/market\n\nThe C3 Team.\nManage subscription: {$unsubscribe}`;
+  return `${reportLabel}, ${dateStr}.\n\nYour email client cannot display HTML.\n\nSee the full live market: https://cardsoncardsoncards.com.au/market\nCompare prices across sellers: https://cardsoncardsoncards.com.au/compare\n\nFollow any card for real-time price alerts, no need to wait for the weekly email: https://cardsoncardsoncards.com.au/market\n\nThe C3 Team.\nManage subscription: {$unsubscribe}`;
 }
 
 // Send up to 100 emails in one Resend batch call.

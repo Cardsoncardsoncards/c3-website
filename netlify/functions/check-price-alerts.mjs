@@ -3,13 +3,13 @@
 // Fires Resend emails for:
 //   - BUYER alerts: price dropped below target (alert_type: 'below')
 //   - SELLER alerts: price rose above target (alert_type: 'above')
-// Runs at 9am AEST (11pm UTC) daily — after price syncs have completed
+// Runs at 9am AEST (11pm UTC) daily, after price syncs have completed
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY') || Netlify.env.get('SUPABASE_ANON_KEY');
 const RESEND_API_KEY    = Netlify.env.get('RESEND_API_KEY');
 const MAILERLITE_KEY    = Netlify.env.get('MAILERLITE_API_KEY');
-const SYNC_SECRET       = Netlify.env.get('SYNC_SECRET') || 'c3sync2026riftbound';
+const SYNC_SECRET       = Netlify.env.get('SYNC_SECRET');
 
 async function supabaseGet(path, useService = false) {
   const key = useService ? SUPABASE_SERVICE_KEY : Netlify.env.get('SUPABASE_ANON_KEY');
@@ -136,7 +136,7 @@ function sellerEmail(cardName, cardSlug, targetAud, currentAud) {
           </p>
           <p style="color:#9ba3c4;font-size:13px;margin-bottom:20px">
             You set a sell alert at AU$${targetAud.toFixed(2)}.
-            The price is now AU$${gain} above your target — it may be time to sell.
+            The price is now AU$${gain} above your target, it may be time to sell.
           </p>
           <table style="width:100%;border-collapse:collapse;margin-bottom:20px">
             <tr>
@@ -243,7 +243,9 @@ async function run() {
 export default async (req) => {
   // Allow both scheduled trigger and manual POST with secret
   const isScheduled = req.headers.get('x-nf-event') === 'schedule';
-  const isManual = req.method === 'POST' && req.headers.get('x-sync-secret') === SYNC_SECRET;
+  // SYNC_SECRET has no fallback value. If it is not configured, manual triggering is
+  // refused outright rather than comparing against undefined.
+  const isManual = req.method === 'POST' && !!SYNC_SECRET && req.headers.get('x-sync-secret') === SYNC_SECRET;
 
   if (!isScheduled && !isManual) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), {

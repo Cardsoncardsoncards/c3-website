@@ -68,12 +68,31 @@ async function supabasePatch(path, data) {
   }
 }
 
+// A non-2xx from PostgREST used to fall straight through res.json() as a parsed error
+// object. Callers check Array.isArray(), so every system failure (bad key, 500, RLS
+// denial) was indistinguishable from "no rows matched" and got reported to the user as
+// "Link not valid". Throw instead, so a caller can tell a broken backend apart from a
+// genuinely unknown token.
+class SupabaseError extends Error {}
+
 async function supabaseGet(path, useService = false) {
   const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_ANON_KEY;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
-  });
-  return res.json();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      headers: { 'apikey': key, 'Authorization': `Bearer ${key}` },
+      signal: controller.signal
+    });
+    if (!res.ok) {
+      let detail = '';
+      try { detail = (await res.text()).slice(0, 200); } catch { /* empty body */ }
+      throw new SupabaseError(`Supabase ${res.status}: ${detail}`);
+    }
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
@@ -472,10 +491,18 @@ async function handleConfirmFollow(req) {
     return followMessage('Link not valid', 'That confirmation link is missing its token.', 400);
   }
 
-  const rows = await supabaseGet(
-    `card_price_alerts?select=id,email,game,card_name,card_slug,confirmed,unsubscribe_token&confirm_token=eq.${encodeURIComponent(token)}&limit=1`,
-    true
-  ).catch(() => []);
+  // A lookup failure is NOT the same as an unknown token. Saying "Link not valid" when
+  // Supabase is down sends the user away for good on a link that was always fine.
+  let rows;
+  try {
+    rows = await supabaseGet(
+      `card_price_alerts?select=id,email,game,card_name,card_slug,confirmed,unsubscribe_token&confirm_token=eq.${encodeURIComponent(token)}&limit=1`,
+      true
+    );
+  } catch (e) {
+    console.error('[confirm-follow] lookup failed:', e.message);
+    return followMessage('Something went wrong', 'We could not check that link just now. Your link is still good. Please try again shortly.', 503);
+  }
 
   if (!Array.isArray(rows) || rows.length === 0) {
     return followMessage('Link not valid', 'That confirmation link is not recognised. It may have already been used.', 404);
@@ -696,7 +723,7 @@ async function handleRandomCommander(req) {
   let query = `mtg_cards?select=slug,color_identity,cmc&type_line=like.*Legendary*Creature*&image_uri_normal=not.is.null&limit=2000`;
   if (maxCmc) query += `&cmc=lte.${maxCmc}`;
 
-  const cards = await supabaseGet(query);
+  const cards = await supabaseGet(query).catch(() => []);
   if (!Array.isArray(cards) || cards.length === 0) return json({ slug: null });
 
   let filtered = colors
