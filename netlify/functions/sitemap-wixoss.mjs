@@ -29,20 +29,19 @@ async function supabaseFetch(url, extraHeaders = {}) {
   }
 }
 
-async function fetchSlugs(offset) {
+async function fetchSlugs(afterId) {
   const url = SUPABASE_URL + '/rest/v1/wixoss_cards'
-    + '?select=slug,price_aud,updated_at'
+    + '?select=id,slug,price_aud,updated_at'
     + '&price_aud=gte.' + PRICE_THRESHOLD
     + '&slug=not.is.null'
-    + '&order=price_aud.desc'
+    + '&order=id.asc'
     + '&limit=' + PAGE_SIZE
-    + '&offset=' + offset;
-  try {
-    const res = await supabaseFetch(url, { Prefer: 'return=representation' });
-    if (!res.ok) return [];
+    + (afterId != null ? '&id=gt.' + afterId : '');
+      const res = await supabaseFetch(url, { 'Prefer': 'return=representation' });
+    if (!res.ok) throw new Error(`Supabase fetch failed: ${res.status}`);
     const data = await res.json();
-    return Array.isArray(data) ? data : [];
-  } catch { return []; }
+    if (!Array.isArray(data)) throw new Error('Supabase returned a non-array payload');
+    return data;
 }
 
 export default async (req) => {
@@ -72,10 +71,12 @@ export default async (req) => {
     if (totalCount === 0) return empty('wixoss card pages: pending sync or no priced cards');
 
     const allCards = [];
-    for (let offset = 0; offset < Math.min(totalCount, MAX_CARDS); offset += PAGE_SIZE) {
-      const batch = await fetchSlugs(offset);
+    let lastId = null;
+    while (allCards.length < Math.min(totalCount, MAX_CARDS)) {
+      const batch = await fetchSlugs(lastId);
       allCards.push(...batch);
       if (batch.length < PAGE_SIZE) break;
+      lastId = batch[batch.length - 1].id;
     }
 
     const today = new Date().toISOString().slice(0, 10);

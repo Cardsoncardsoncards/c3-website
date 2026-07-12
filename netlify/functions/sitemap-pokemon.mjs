@@ -33,20 +33,19 @@ async function supabaseFetch(url, extraHeaders = {}) {
   }
 }
 
-async function fetchSlugs(offset = 0) {
+async function fetchSlugs(afterId) {
   const url = `${SUPABASE_URL}/rest/v1/pokemon_cards`
-    + `?select=slug,price_aud,updated_at`
+    + `?select=id,slug,price_aud,updated_at`
     + `&price_aud=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
-    + `&order=price_aud.desc.nullslast`
+    + `&order=id.asc`
     + `&limit=${PAGE_SIZE}`
-    + `&offset=${offset}`;
-  try {
-    const res = await supabaseFetch(url, { 'Prefer': 'return=representation' });
-    if (!res.ok) return [];
+    + (afterId != null ? `&id=gt.${afterId}` : ``);
+      const res = await supabaseFetch(url, { 'Prefer': 'return=representation' });
+    if (!res.ok) throw new Error(`Supabase fetch failed: ${res.status}`);
     const data = await res.json();
-    return Array.isArray(data) ? data : [];
-  } catch { return []; }
+    if (!Array.isArray(data)) throw new Error('Supabase returned a non-array payload');
+    return data;
 }
 
 export default async (req) => {
@@ -64,12 +63,12 @@ export default async (req) => {
 
   try {
     const allCards = [];
-    let offset = 0;
-    while (offset < MAX_CARDS) {
-      const batch = await fetchSlugs(offset);
+    let lastId = null;
+    while (allCards.length < MAX_CARDS) {
+      const batch = await fetchSlugs(lastId);
       allCards.push(...batch);
       if (batch.length < PAGE_SIZE) break;
-      offset += PAGE_SIZE;
+      lastId = batch[batch.length - 1].id;
     }
 
     const today = new Date().toISOString().slice(0, 10);

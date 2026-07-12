@@ -8,6 +8,7 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 const PRICE_THRESHOLD   = 1.00;
 const PAGE_SIZE         = 1000;
+const SAFETY_MAX        = 50000; // sitemaps.org hard limit, fail loud rather than silently cap
 
 async function supabaseFetch(url, extraHeaders = {}) {
   const controller = new AbortController();
@@ -29,20 +30,19 @@ async function supabaseFetch(url, extraHeaders = {}) {
   }
 }
 
-async function fetchSlugs(offset = 0) {
+async function fetchSlugs(afterId) {
   const url = `${SUPABASE_URL}/rest/v1/onepiece_cards`
-    + `?select=slug,price_aud,updated_at`
+    + `?select=id,slug,price_aud,updated_at`
     + `&price_aud=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
-    + `&order=price_aud.desc.nullslast`
+    + `&order=id.asc`
     + `&limit=${PAGE_SIZE}`
-    + `&offset=${offset}`;
-  try {
-    const res = await supabaseFetch(url, { 'Prefer': 'return=representation' });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return Array.isArray(data) ? data : [];
-  } catch { return []; }
+    + (afterId != null ? `&id=gt.${afterId}` : ``);
+  const res = await supabaseFetch(url, { 'Prefer': 'return=representation' });
+  if (!res.ok) throw new Error(`Supabase fetch failed: ${res.status}`);
+  const data = await res.json();
+  if (!Array.isArray(data)) throw new Error('Supabase returned a non-array payload');
+  return data;
 }
 
 export default async (req) => {
@@ -62,12 +62,15 @@ export default async (req) => {
     // Keyset pagination: fetch pages until a short batch signals the end.
     // No count query (count=exact forces a full scan and 504s under anon).
     const allCards = [];
-    let offset = 0;
-    while (true) {
-      const batch = await fetchSlugs(offset);
+    let lastId = null;
+    while (allCards.length < SAFETY_MAX) {
+      const batch = await fetchSlugs(lastId);
       allCards.push(...batch);
       if (batch.length < PAGE_SIZE) break;
-      offset += PAGE_SIZE;
+      lastId = batch[batch.length - 1].id;
+    }
+    if (allCards.length >= SAFETY_MAX) {
+      throw new Error(`exceeded ${SAFETY_MAX} URLs, sitemap must be split`);
     }
 
     const today = new Date().toISOString().slice(0, 10);
