@@ -206,11 +206,11 @@ export default async (req) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>MTG Card Prices Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, 52-week price ranges, and eBay AU buy links.">
+  <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, recent price ranges, and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="MTG Card Prices Australia | Cards on Cards on Cards">
-  <meta property="og:description" content="Browse Magic: The Gathering card prices in AUD. Live pricing, 52-week ranges, and eBay AU buy links. Updated daily.">
+  <meta property="og:description" content="Browse Magic: The Gathering card prices in AUD. Live pricing, recent ranges, and eBay AU buy links. Updated daily.">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -341,7 +341,7 @@ export default async (req) => {
 <div style="padding:52px 24px 36px;text-align:center;position:relative;z-index:1">
   <div style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Card Vault -- MTG</div>
   <h1 style="font-family:'Cinzel',serif;font-size:clamp(24px,5vw,50px);font-weight:900;color:var(--text);margin-bottom:12px;line-height:1.1">MTG Card Prices <span style="color:var(--gold)">in Australia</span></h1>
-  <p style="font-size:14px;color:var(--text2);max-width:520px;margin:0 auto 8px">Australia's MTG price guide with live AUD pricing, 52-week price ranges, and direct eBay AU buy links. Updated daily.</p>
+  <p style="font-size:14px;color:var(--text2);max-width:520px;margin:0 auto 8px">Australia's MTG price guide with live AUD pricing, recent price ranges, and direct eBay AU buy links. Updated daily.</p>
 </div>
 <div class="wrap">
 

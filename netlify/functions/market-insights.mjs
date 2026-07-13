@@ -254,8 +254,8 @@ export default async (req) => {
     <div class="msg" id="cap-msg"></div>
   </div>
 
-  <div class="section-h signals">Buy and sell signals (52-week range)</div>
-  <div class="section-sub">Cards near their 52-week low or high based on AU price history. Full signal list in the Seller report.</div>
+  <div class="section-h signals">Buy and sell signals (recent range)</div>
+  <div class="section-sub">Cards near their recent low or high based on AU price history. Full signal list in the Seller report.</div>
   <div class="rows" id="signals-zone">
     <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>
     <div class="sk-row"><div class="sk-img skeleton"></div><div class="sk-body"><div class="sk-line sk-w60 skeleton"></div><div class="sk-line sk-w40 skeleton"></div></div><div class="sk-price skeleton"></div></div>

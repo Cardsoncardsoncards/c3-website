@@ -117,17 +117,24 @@ async function mtgMovers(direction,limit){
     }).filter(Boolean);
   }catch{return[];}
 }
-// The buy and sell signals used to query mtg_price_snapshots with no snapshot_date
-// filter, so they ranged over every date in the table and returned one row per card
-// per day of history. Ordered by price, a single expensive card filled the whole
-// section (Timetwister appeared six times at six different prices). Both signals now
-// pin to the latest snapshot_date, exactly as mtgMovers already does.
-const SIGNAL_SCAN_LIMIT = 400;
-
-async function latestSnapshotDate(){
-  const rows=await sbGet(`mtg_price_snapshots?order=snapshot_date.desc&limit=1&select=snapshot_date`);
-  return rows.length?rows[0].snapshot_date:null;
-}
+// Buy and sell signals come from mtg_signals, a table rebuilt nightly by the
+// update-mtg-signals-daily pg_cron job. The high/low columns on mtg_price_snapshots
+// were abandoned on 18 June 2026 when that job took over, and have been NULL on every
+// row written since, so anything reading them returns nothing. mtg_signals also ships
+// buy_verdict and sell_verdict already computed, so the ratio thresholds that used to
+// live here are gone.
+//
+// The range is a high/low over all price history C3 holds, roughly ten weeks, not a
+// true 52 week window. The column names say 52w because the schema predates that
+// reality. Customer-facing copy says "recent", which is what the data can support.
+// Every scanned row is already a signal (the verdict is the filter), so all of them reach
+// the scryfall_id=in.(...) card lookup. At 400 ids that URL runs past 15KB and the request
+// dies with a header overflow before it ever reaches Supabase. The top 50 rows already hold
+// 46 distinct names and only 6 are ever shown, so scan far less and chunk the lookup so the
+// URL cannot overflow whatever the scan returns.
+const SIGNAL_SCAN_LIMIT   = 120;
+const SIGNAL_MIN_AUD      = 5;
+const CARD_LOOKUP_CHUNK   = 50;
 
 // A card name has many printings, each its own scryfall_id. The email lists cards,
 // not printings, so collapse by name and keep the most valuable printing of each.
@@ -140,46 +147,51 @@ function dedupeByName(list){
   return [...best.values()];
 }
 
+// Attaches card identity to a batch of mtg_signals rows. Returns [] rather than
+// throwing so a signal section degrades to "Nothing notable" instead of killing the send.
+async function namedSignals(rows){
+  if(!rows.length)return[];
+  const chunks=[];
+  for(let i=0;i<rows.length;i+=CARD_LOOKUP_CHUNK){
+    const ids=rows.slice(i,i+CARD_LOOKUP_CHUNK).map(s=>s.scryfall_id).join(',');
+    chunks.push(sbGet(`mtg_cards?scryfall_id=in.(${ids})&select=name,slug,set_name,rarity,scryfall_id`));
+  }
+  const settled=await Promise.allSettled(chunks);
+  const cards=settled.flatMap(r=>r.status==='fulfilled'&&Array.isArray(r.value)?r.value:[]);
+  const byId=new Map(cards.map(c=>[c.scryfall_id,c]));
+  return rows.map(s=>{
+    const c=byId.get(s.scryfall_id); if(!c)return null;
+    return {row:s,card:c};
+  }).filter(Boolean);
+}
+
 async function mtgBuy(limit){
   try{
-    const latest=await latestSnapshotDate();
-    if(!latest)return[];
-    const data=await sbGet(`mtg_price_snapshots?snapshot_date=eq.${latest}&price_aud=gt.1&price_52w_low_aud=gt.1&order=price_aud.asc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
-    const sig=data.filter(s=>{
-      if(!s.price_52w_high_aud||!s.price_52w_low_aud)return false;
-      const r=s.price_52w_high_aud-s.price_52w_low_aud; if(r<1)return false;
-      return ((s.price_aud-s.price_52w_low_aud)/r)<=0.20;
-    });
-    if(!sig.length)return[];
-    const ids=sig.map(s=>s.scryfall_id).join(',');
-    const cards=await sbGet(`mtg_cards?scryfall_id=in.(${ids})&select=name,slug,set_name,rarity,scryfall_id`);
-    const rows=sig.map(s=>{
-      const c=cards.find(x=>x.scryfall_id===s.scryfall_id); if(!c)return null;
-      const discount=Math.round(((s.price_52w_high_aud-s.price_aud)/s.price_52w_high_aud)*100);
-      return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:s.price_aud,discount,game:'mtg'};
+    // Ordered by value, not cheapness. Ordering ascending surfaced six A$1.01 cards,
+    // which is not a buy list any seller can act on.
+    const data=await sbGet(`mtg_signals?buy_verdict=eq.buy&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud`);
+    const pairs=await namedSignals(data);
+    const rows=pairs.map(({row:s,card:c})=>{
+      const high=parseFloat(s.price_52w_high_aud), price=parseFloat(s.latest_price_aud);
+      if(!(high>0))return null;
+      const discount=Math.round(((high-price)/high)*100);
+      return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:price,discount,game:'mtg'};
     }).filter(Boolean);
     return dedupeByName(rows)
-      .sort((a,b)=>parseFloat(a.priceAud)-parseFloat(b.priceAud))
+      .sort((a,b)=>parseFloat(b.priceAud)-parseFloat(a.priceAud))
       .slice(0,limit);
   }catch{return[];}
 }
 async function mtgSell(limit){
   try{
-    const latest=await latestSnapshotDate();
-    if(!latest)return[];
-    const data=await sbGet(`mtg_price_snapshots?snapshot_date=eq.${latest}&price_aud=gt.1&price_52w_high_aud=gt.2&order=price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`);
-    const sig=data.filter(s=>{
-      if(!s.price_52w_high_aud||!s.price_52w_low_aud)return false;
-      const r=s.price_52w_high_aud-s.price_52w_low_aud; if(r<1)return false;
-      return ((s.price_aud-s.price_52w_low_aud)/r)>=0.80;
-    });
-    if(!sig.length)return[];
-    const ids=sig.map(s=>s.scryfall_id).join(',');
-    const cards=await sbGet(`mtg_cards?scryfall_id=in.(${ids})&select=name,slug,set_name,rarity,scryfall_id`);
-    const rows=sig.map(s=>{
-      const c=cards.find(x=>x.scryfall_id===s.scryfall_id); if(!c)return null;
-      const nearHighPct=Math.round(((s.price_aud-s.price_52w_low_aud)/(s.price_52w_high_aud-s.price_52w_low_aud))*100);
-      return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:s.price_aud,nearHighPct,game:'mtg'};
+    const data=await sbGet(`mtg_signals?sell_verdict=eq.sell&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud`);
+    const pairs=await namedSignals(data);
+    const rows=pairs.map(({row:s,card:c})=>{
+      const high=parseFloat(s.price_52w_high_aud), low=parseFloat(s.price_52w_low_aud), price=parseFloat(s.latest_price_aud);
+      const range=high-low;
+      if(!(range>0))return null;
+      const nearHighPct=Math.round(((price-low)/range)*100);
+      return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:price,nearHighPct,game:'mtg'};
     }).filter(Boolean);
     return dedupeByName(rows)
       .sort((a,b)=>parseFloat(b.priceAud)-parseFloat(a.priceAud))
@@ -239,11 +251,11 @@ function buildEmail({dateStr,callTitle,callBody,up,down,buy,sell}){
   </td></tr>
   <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 10px;">${sectionRows(down,'down')}</td></tr>
   <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
-    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#C9A84C;border-top:1px solid #1e2638;padding-top:18px;">Grab these, well below their 52 week high</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#C9A84C;border-top:1px solid #1e2638;padding-top:18px;">Grab these, well below their recent high</div>
   </td></tr>
   <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 10px;">${sectionRows(buy,'buy')}</td></tr>
   <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
-    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#f97316;border-top:1px solid #1e2638;padding-top:18px;">List these now, near their 52 week high</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#f97316;border-top:1px solid #1e2638;padding-top:18px;">List these now, near their recent high</div>
   </td></tr>
   <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 18px;">${sectionRows(sell,'sell')}</td></tr>
   <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:4px 26px 26px;" align="center">

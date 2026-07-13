@@ -129,8 +129,8 @@ function formatManaSymbols(manaCost) {
 // sell_verdict are 'buy' / 'sell' / null). A row with neither set is mid-range.
 function getSignalVerdict(signals) {
   if (!signals) return null;
-  if (signals.sell_verdict === 'sell') return { label: 'Near 52-week high', advice: 'Potentially good time to sell', class: 'verdict-sell' };
-  if (signals.buy_verdict === 'buy') return { label: 'Near 52-week low', advice: 'Consider holding or buying', class: 'verdict-buy' };
+  if (signals.sell_verdict === 'sell') return { label: 'Near recent high', advice: 'Potentially good time to sell', class: 'verdict-sell' };
+  if (signals.buy_verdict === 'buy') return { label: 'Near recent low', advice: 'Consider holding or buying', class: 'verdict-buy' };
   return { label: 'Mid-range price', advice: 'Price is within normal range', class: 'verdict-neutral' };
 }
 
@@ -706,9 +706,9 @@ ${contextPara}
 
       ${(high52w || low52w) ? `
       <div class="price-stats">
-        <div class="price-stat"><div class="price-stat-label">52W High</div><div class="price-stat-value">${formatAUD(high52w) || 'N/A'}</div></div>
+        <div class="price-stat"><div class="price-stat-label">Recent High</div><div class="price-stat-value">${formatAUD(high52w) || 'N/A'}</div></div>
         <div class="price-stat"><div class="price-stat-label">Current</div><div class="price-stat-value">${formatAUD(priceAud) || 'N/A'}</div></div>
-        <div class="price-stat"><div class="price-stat-label">52W Low</div><div class="price-stat-value">${formatAUD(low52w) || 'N/A'}</div></div>
+        <div class="price-stat"><div class="price-stat-label">Recent Low</div><div class="price-stat-value">${formatAUD(low52w) || 'N/A'}</div></div>
       </div>` : ''}
 
       ${priceAud ? `<div class="condition-guide">Condition: NM ${formatAUD(priceAud)} · LP ${formatAUD(priceAud * 0.80)} · Played ${formatAUD(priceAud * 0.60)}</div>` : ''}

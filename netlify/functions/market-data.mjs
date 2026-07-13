@@ -205,87 +205,112 @@ async function fetchMTGMovers(period) {
   }
 }
 
+// Signals come from mtg_signals, rebuilt nightly by the update-mtg-signals-daily
+// pg_cron job. This used to read price_52w_high_aud / price_52w_low_aud off
+// mtg_price_snapshots, but those columns were abandoned on 18 June 2026 when that job
+// took over and have been NULL on every row written since, so both filters matched zero
+// rows and the buy/sell sections on /market rendered empty. mtg_signals carries
+// buy_verdict and sell_verdict already computed, so the ratio thresholds are gone.
+//
+// The high/low spans all price history C3 holds, roughly ten weeks, not a true 52 week
+// window. The columns are named 52w because the schema predates that. Copy says "recent".
+// Every scanned row is already a signal (the verdict is the filter), so all of them reach the
+// scryfall_id=in.(...) lookup. Buy and sell ids are merged into one query, so a large scan
+// builds a URL past 15KB and the request dies with a header overflow before it reaches
+// Supabase. Scan modestly and chunk the lookup so the URL cannot overflow.
+const SIGNAL_MIN_AUD    = 5;
+const SIGNAL_SCAN_LIMIT = 120;
+const CARD_LOOKUP_CHUNK = 50;
+
+// Resolves scryfall_ids to cards in chunks, so the request URL stays bounded.
+async function lookupCardsChunked(ids) {
+  const chunks = [];
+  for (let i = 0; i < ids.length; i += CARD_LOOKUP_CHUNK) {
+    const batch = ids.slice(i, i + CARD_LOOKUP_CHUNK).join(',');
+    chunks.push(supabaseGet(
+      `mtg_cards?scryfall_id=in.(${batch})&select=name,slug,set_name,rarity,image_uri_small,scryfall_id`
+    ));
+  }
+  const settled = await Promise.allSettled(chunks);
+  return settled.flatMap(r => (r.status === 'fulfilled' && Array.isArray(r.value)) ? r.value : []);
+}
+
+// One printing per card name, keeping the most valuable. Printings share a name but
+// each has its own scryfall_id, so without this one card can fill the section.
+function dedupeSignalsByName(list) {
+  const best = new Map();
+  for (const c of list) {
+    const prev = best.get(c.name);
+    if (!prev || parseFloat(c.priceAud) > parseFloat(prev.priceAud)) best.set(c.name, c);
+  }
+  return [...best.values()];
+}
+
 async function fetchMTGSignals() {
   try {
-    const latest = await supabaseGet(
-      `mtg_price_snapshots?order=snapshot_date.desc&limit=1&select=snapshot_date`
-    );
-    if (!latest.length) return { buySignals: [], sellSignals: [] };
-    const latestDate = latest[0].snapshot_date;
-
-    const [buyRaw, sellRaw] = await Promise.all([
+    const [buyRaw, sellRaw] = await Promise.allSettled([
       supabaseGet(
-        `mtg_price_snapshots?snapshot_date=eq.${latestDate}` +
-        `&price_52w_low_aud=gt.1&price_aud=gte.5` +
-        `&order=price_aud.desc&limit=50` +
-        `&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`
+        `mtg_signals?buy_verdict=eq.buy&latest_price_aud=gte.${SIGNAL_MIN_AUD}` +
+        `&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}` +
+        `&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud`
       ),
       supabaseGet(
-        `mtg_price_snapshots?snapshot_date=eq.${latestDate}` +
-        `&price_52w_high_aud=gt.2&price_aud=gte.5` +
-        `&order=price_aud.desc&limit=50` +
-        `&select=scryfall_id,price_aud,price_52w_high_aud,price_52w_low_aud`
+        `mtg_signals?sell_verdict=eq.sell&latest_price_aud=gte.${SIGNAL_MIN_AUD}` +
+        `&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}` +
+        `&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud`
       )
     ]);
+    const buySig  = buyRaw.status  === 'fulfilled' && Array.isArray(buyRaw.value)  ? buyRaw.value  : [];
+    const sellSig = sellRaw.status === 'fulfilled' && Array.isArray(sellRaw.value) ? sellRaw.value : [];
 
-    const filterBuy = buyRaw.filter(s => {
-      if (!s.price_52w_high_aud || !s.price_52w_low_aud) return false;
-      const range = s.price_52w_high_aud - s.price_52w_low_aud;
-      if (range < 1) return false;
-      return ((s.price_aud - s.price_52w_low_aud) / range) <= 0.20;
-    }).slice(0, 8);
-
-    const filterSell = sellRaw.filter(s => {
-      if (!s.price_52w_high_aud || !s.price_52w_low_aud) return false;
-      const range = s.price_52w_high_aud - s.price_52w_low_aud;
-      if (range < 1) return false;
-      return ((s.price_aud - s.price_52w_low_aud) / range) >= 0.80;
-    }).slice(0, 8);
-
-    const allIds = [...filterBuy, ...filterSell].map(s => s.scryfall_id);
+    const allIds = [...new Set([...buySig, ...sellSig].map(s => s.scryfall_id))];
     if (!allIds.length) return { buySignals: [], sellSignals: [] };
 
-    const cards = await supabaseGet(
-      `mtg_cards?scryfall_id=in.(${allIds.join(',')})&select=name,slug,set_name,rarity,image_uri_small,scryfall_id`
-    );
+    const cards = await lookupCardsChunked(allIds);
 
-    const enrichBuy = filterBuy.map(snap => {
+    const enrichBuy = dedupeSignalsByName(buySig.map(snap => {
       const card = cards.find(c => c.scryfall_id === snap.scryfall_id);
       if (!card) return null;
-      const discount = Math.round(((snap.price_52w_high_aud - snap.price_aud) / snap.price_52w_high_aud) * 100);
+      const high = parseFloat(snap.price_52w_high_aud);
+      const price = parseFloat(snap.latest_price_aud);
+      if (!(high > 0)) return null;
+      const discount = Math.round(((high - price) / high) * 100);
       return {
         name:     card.name,
         setName:  card.set_name,
         rarity:   card.rarity || '',
         image:    card.image_uri_small || '',
         slug:     card.slug,
-        priceAud: snap.price_aud,
+        priceAud: price,
         discount,
         spark:    null,
         scryfall_id: card.scryfall_id,
         game:     'mtg',
       };
-    }).filter(Boolean);
+    }).filter(Boolean)).slice(0, 8);
 
-    const enrichSell = filterSell.map(snap => {
+    const enrichSell = dedupeSignalsByName(sellSig.map(snap => {
       const card = cards.find(c => c.scryfall_id === snap.scryfall_id);
       if (!card) return null;
-      const nearHighPct = Math.round(
-        ((snap.price_aud - snap.price_52w_low_aud) / (snap.price_52w_high_aud - snap.price_52w_low_aud)) * 100
-      );
+      const high = parseFloat(snap.price_52w_high_aud);
+      const low = parseFloat(snap.price_52w_low_aud);
+      const price = parseFloat(snap.latest_price_aud);
+      const range = high - low;
+      if (!(range > 0)) return null;
+      const nearHighPct = Math.round(((price - low) / range) * 100);
       return {
         name:     card.name,
         setName:  card.set_name,
         rarity:   card.rarity || '',
         image:    card.image_uri_small || '',
         slug:     card.slug,
-        priceAud: snap.price_aud,
+        priceAud: price,
         nearHighPct,
         spark:    null,
         scryfall_id: card.scryfall_id,
         game:     'mtg',
       };
-    }).filter(Boolean);
+    }).filter(Boolean)).slice(0, 8);
 
     return { buySignals: enrichBuy, sellSignals: enrichSell };
   } catch {

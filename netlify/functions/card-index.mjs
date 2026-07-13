@@ -122,7 +122,7 @@ function renderCardHub(sets, topCards) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>MTG Card Prices Australia | Cards on Cards on Cards</title>
-  <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, 52-week price ranges, and eBay AU buy links.">
+  <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, recent price ranges, and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
   ${BASE_STYLES}
@@ -131,7 +131,7 @@ function renderCardHub(sets, topCards) {
 ${NAV_HTML}
 <div class="wrap" style="padding-top:32px">
   <h1 style="font-size:32px;margin-bottom:8px">MTG Card Prices in Australia</h1>
-  <p style="color:var(--text2);margin-bottom:32px">Australia's MTG price guide with live AUD pricing, 52-week price ranges, and direct eBay AU buy links. Updated daily.</p>
+  <p style="color:var(--text2);margin-bottom:32px">Australia's MTG price guide with live AUD pricing, recent price ranges, and direct eBay AU buy links. Updated daily.</p>
 
   <!-- Search -->
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px">
