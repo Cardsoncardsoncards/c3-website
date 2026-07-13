@@ -341,6 +341,21 @@ async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
   return { upserted: 0, failed: rows.length };
 }
 
+// DEAD CODE, kept for reference only. Do not rely on anything below this line.
+//
+// The exec_sql RPC this calls does not exist in the database (confirmed absent from
+// pg_proc), so both the supabase.rpc() path and the REST fallback fail on every run and
+// this function has silently done nothing since 18 June 2026. The catch blocks swallow
+// the failure and the sync reports success, which is why it went unnoticed.
+//
+// Nothing depends on it any more. The 52w stats and buy/sell verdicts are now built by the
+// update-mtg-signals-daily pg_cron job, which writes mtg_signals, and every reader
+// (market-data.mjs, card-page.mjs, generate-weekly-report.mjs, shared/weekly-report-core.mjs)
+// reads its verdicts from there. The mtg_price_snapshots.price_52w_* columns this UPDATE
+// targets are themselves dead, see DATA_SOURCES.md.
+//
+// Left in place rather than deleted because it is harmless and documents the old approach.
+// If you revive it, note the "52w" window is really all history C3 holds, roughly ten weeks.
 async function updateSnapshotVerdicts() {
   console.log('\nUpdating snapshot verdicts and 52w stats...');
   const today = new Date().toISOString().slice(0, 10);
@@ -396,7 +411,7 @@ async function updateSnapshotVerdicts() {
       });
       if (!res.ok) {
         console.warn('Verdict update via RPC failed:', await res.text());
-        console.log('Verdict update skipped — will retry on next sync.');
+        console.log('Verdict update skipped, will retry on next sync (see dead code note above).');
       } else {
         console.log('Snapshot verdicts updated successfully.');
       }
