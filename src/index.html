@@ -568,16 +568,16 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="carousel-viewport"><div id="unleashed-carousel" class="carousel-scroll"></div></div>
   </div>
 
-  <!-- Lorcana Wilds Unknown carousel -->
+  <!-- MTG Marvel Super Heroes carousel -->
   <div style="margin-bottom:48px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <div>
-        <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#38BDF8;display:block;margin-bottom:4px">Lorcana &middot; Latest Set</span>
-        <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">Wilds Unknown: Top Cards</span>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#A78BFA;display:block;margin-bottom:4px">Magic: The Gathering &middot; Latest Set</span>
+        <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">Marvel Super Heroes: Top Cards</span>
       </div>
-      <a href="/cards/lorcana/sets/4500014" style="font-size:12px;color:#38BDF8;text-decoration:none;font-weight:600">View all &rarr;</a>
+      <a href="/cards/mtg/sets/marvel-super-heroes" style="font-size:12px;color:#A78BFA;text-decoration:none;font-weight:600">View all &rarr;</a>
     </div>
-    <div class="carousel-viewport"><div id="wilds-carousel" class="carousel-scroll carousel-scroll--right"></div></div>
+    <div class="carousel-viewport"><div id="marvel-carousel" class="carousel-scroll carousel-scroll--right"></div></div>
   </div>
 
   <div style="text-align:center;margin:0 0 16px"><span style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#4a5068">START HERE</span></div>
@@ -734,11 +734,15 @@ function buildCardEl(c, colour) {
   return a;
 }
 
-async function loadSetCarousel(game, setId, containerId, colour) {
+// setKey is the set identifier. Most games key sets on a numeric set_id; MTG has no set_id
+// column and keys on set_code instead, so the param name is passed in rather than assumed.
+async function loadSetCarousel(game, setKey, containerId, colour, limit, setParam) {
   var el = document.getElementById(containerId);
   if (!el) return;
+  limit = limit || 16;
+  setParam = setParam || 'set_id';
   try {
-    var res = await fetch('/api/set-carousel?game='+game+'&set_id='+setId+'&limit=16');
+    var res = await fetch('/api/set-carousel?game='+game+'&'+setParam+'='+encodeURIComponent(setKey)+'&limit='+limit);
     if (!res.ok) { el.parentElement.style.display='none'; return; }
     var data = await res.json();
     if (!data.cards || !data.cards.length) { el.parentElement.style.display='none'; return; }
@@ -751,8 +755,10 @@ async function loadSetCarousel(game, setId, containerId, colour) {
   } catch(e) { if(el.parentElement) el.parentElement.style.display='none'; }
 }
 
-loadSetCarousel('riftbound', 500006,  'unleashed-carousel', '#818CF8');
-loadSetCarousel('lorcana',   4500014, 'wilds-carousel',     '#38BDF8');
+loadSetCarousel('riftbound', 500006, 'unleashed-carousel', '#818CF8');
+// MTG Marvel Super Heroes (set_code msh, the flagship set, not the Commander, Spider-Man or
+// Universe sets). Top 20 by price_aud, deduped by slug server-side so no card repeats.
+loadSetCarousel('mtg', 'msh', 'marvel-carousel', '#A78BFA', 20, 'set_code');
 
 var cpause=document.getElementById('cpause');if(cpause){cpause.addEventListener('click',function(){var paused=this.dataset.p==='1';document.querySelectorAll('[class*="track"]').forEach(function(t){t.style.animationPlayState=paused?'running':'paused'});this.dataset.p=paused?'0':'1';this.textContent=paused?'Pause':'Play';});}
 

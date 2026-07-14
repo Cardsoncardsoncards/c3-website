@@ -118,6 +118,12 @@
   to = "/methodology.html"
   status = 200
 
+# QR destination on the parcel insert card. Must resolve at the clean /welcome address.
+[[redirects]]
+  from = "/welcome"
+  to = "/welcome.html"
+  status = 200
+
 # ── 301s for dead URLs flagged in Search Console ──
 [[redirects]]
   from = "/quiz"

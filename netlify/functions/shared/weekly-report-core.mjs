@@ -5,15 +5,13 @@
 // Extracted VERBATIM from generate-weekly-report.mjs (the paid Seller Intelligence report),
 // so the two cannot drift through re-typing.
 //
-// NOTE ON DUPLICATION: task-87 required that generate-weekly-report.mjs be left fully
-// untouched (it is live, paid and revenue-bearing) while also asking not to duplicate the
-// template/Resend layer across two files. Those two constraints conflict. The safety one
-// wins: the paid function keeps its own copy and is not modified. That leaves this module
-// duplicating it. The clean follow-up, once the free digest has run in production, is to
-// migrate generate-weekly-report.mjs onto this module and delete its local copies. Flagged
-// rather than quietly accepted.
+// task-87 left generate-weekly-report.mjs carrying its own copy of all of this, because it is
+// live, paid and revenue-bearing and could not be touched at the time. That duplication is now
+// resolved (task-100): the paid report imports this module and its local copies are deleted, so
+// there is exactly one implementation of the queries, the template and the Resend layer.
 //
-// Callers supply their own subscriber source and their own copy strings.
+// Callers supply their own subscriber source, their own copy strings, and their own
+// List-Unsubscribe header value.
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -26,7 +24,13 @@ const FROM_EMAIL    = 'alerts@cardsoncardsoncards.com.au';
 const FROM_NAME     = 'Cards on Cards on Cards';
 const FETCH_TIMEOUT = 9000;
 const SUPPORT_EMAIL = 'ccc.squadhelp@gmail.com';
-const LIST_UNSUBSCRIBE = `<mailto:${SUPPORT_EMAIL}?subject=Unsubscribe%20C3%20Weekly>`;
+
+// The List-Unsubscribe subject differs per list: the paid Seller Intelligence report says
+// "Unsubscribe C3 Weekly Report", the free digest says "Unsubscribe C3 Weekly". Neither is
+// the shared module's to decide, so callers pass their own into sendBatch. This value is a
+// last-resort fallback only, so a caller that forgets still sends a valid RFC 8058 header
+// rather than the string "undefined". It is deliberately neither list's wording.
+const LIST_UNSUBSCRIBE = `<mailto:${SUPPORT_EMAIL}?subject=Unsubscribe%20C3>`;
 
 const GAME_CONFIG = {
   mtg:        { label: 'MTG',         path: '/cards/mtg' },
@@ -272,7 +276,9 @@ function plainText(dateStr,reportLabel='C3 Weekly Seller Report'){
 }
 
 // Send up to 100 emails in one Resend batch call.
-async function sendBatch(items){
+// `listUnsubscribe` is the RFC 8058 List-Unsubscribe header value. Each caller supplies its
+// own, because the paid report and the free digest carry different unsubscribe subjects.
+async function sendBatch(items, listUnsubscribe = LIST_UNSUBSCRIBE){
   return timedFetch('https://api.resend.com/emails/batch',{
     method:'POST',
     headers:{
@@ -285,7 +291,7 @@ async function sendBatch(items){
       subject:it.subject,
       html:it.html,
       text:it.text,
-      headers:{'List-Unsubscribe':LIST_UNSUBSCRIBE},
+      headers:{'List-Unsubscribe':listUnsubscribe},
     }))),
   });
 }

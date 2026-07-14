@@ -38,6 +38,11 @@ const ML_BASE       = 'https://connect.mailerlite.com/api';
 const FETCH_TIMEOUT = 9000;
 const REPORT_LABEL  = 'Weekly Market Digest';
 
+// Free-tier unsubscribe subject. Passed explicitly into sendBatch (task-100) so this list can
+// never inherit the paid report's "Unsubscribe C3 Weekly Report" wording. Unchanged from the
+// value the shared module used to hardcode.
+const LIST_UNSUBSCRIBE = `<mailto:${SUPPORT_EMAIL}?subject=Unsubscribe%20C3%20Weekly>`;
+
 async function timedFetch(url, opts) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT);
@@ -127,7 +132,7 @@ export default async (req) => {
       subject: `[TEST] ${callTitle}`,
       html: htmlEmail.split('{$unsubscribe}').join(link),
       text: text.split('{$unsubscribe}').join(link),
-    }]);
+    }], LIST_UNSUBSCRIBE);
     let detail = '';
     try { detail = (await res.text()).slice(0, 300); } catch { /* body optional */ }
     console.log(`[weekly-digest-free] TEST send to ${testEmail}: HTTP ${res.status}`);
@@ -180,7 +185,7 @@ export default async (req) => {
       };
     });
     let res;
-    try { res = await sendBatch(items); }
+    try { res = await sendBatch(items, LIST_UNSUBSCRIBE); }
     catch (e) {
       failedCount += chunk.length;
       errors.push({ status: 0, detail: String(e && e.message || e).slice(0, 200) });

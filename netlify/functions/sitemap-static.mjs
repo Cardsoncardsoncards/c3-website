@@ -67,6 +67,9 @@ const STATIC_PAGES = [
   { path: '/pricing',             priority: '0.8', changefreq: 'weekly'  },
   { path: '/methodology',                              priority: '0.7', changefreq: 'monthly' },
   { path: '/subscribe',                                priority: '0.6', changefreq: 'monthly' },
+  // QR destination on the parcel insert card. Not linked from the nav or any other page, so
+  // this sitemap entry is the only way Google will ever discover it.
+  { path: '/welcome',                                  priority: '0.6', changefreq: 'monthly' },
   { path: '/mtg-strixhaven.html',                      priority: '0.6', changefreq: 'monthly' },
 
   // Quizzes

@@ -8,10 +8,14 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 const PRICE_THRESHOLD   = 1.00;
 const PAGE_SIZE         = 1000;
-// 16,126 pokemon cards currently clear the price+slug filter; 10k truncated ~6k
-// of them. Raised to 20k (still well under Google's 50k/sitemap limit) with
-// headroom for growth. Paired with timeout=30 for this function in netlify.toml.
-const MAX_CARDS         = 20000;
+// This was MAX_CARDS = 20000, used as a bare while-loop bound: on hitting it the loop simply
+// stopped and shipped whatever it had, silently dropping every card past the cap. Pokemon was
+// at 17,549 eligible cards, 88% of that ceiling, so the truncation was close and would have
+// been invisible when it arrived. Every other sitemap function fails loud instead of capping,
+// and this one now matches them (task-104). 50,000 is the sitemaps.org hard limit, not a
+// tuning knob: if it ever trips, the file must be split into indexed sub-sitemaps.
+// Paired with timeout=30 for this function in netlify.toml.
+const SAFETY_MAX        = 50000;
 
 async function supabaseFetch(url, extraHeaders = {}) {
   const controller = new AbortController();
@@ -64,11 +68,16 @@ export default async (req) => {
   try {
     const allCards = [];
     let lastId = null;
-    while (allCards.length < MAX_CARDS) {
+    while (allCards.length < SAFETY_MAX) {
       const batch = await fetchSlugs(lastId);
       allCards.push(...batch);
       if (batch.length < PAGE_SIZE) break;
       lastId = batch[batch.length - 1].id;
+    }
+    if (allCards.length >= SAFETY_MAX) {
+      // A single sitemap may not exceed 50,000 URLs. If this ever trips, the
+      // file must be split into indexed sub-sitemaps. Fail loud, never cap.
+      throw new Error(`exceeded ${SAFETY_MAX} URLs, sitemap must be split`);
     }
 
     const today = new Date().toISOString().slice(0, 10);

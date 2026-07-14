@@ -5,10 +5,24 @@
 // Query params:
 //   ?game=riftbound&set_id=500006&limit=16
 //   ?game=lorcana&set_id=4500014&limit=16
+//   ?game=mtg&set_code=msh&limit=20
+//
+// The tcgapi-backed games (riftbound, lorcana, pokemon, yugioh, onepiece, starwars,
+// dragonball) all share one column shape: set_id, image_url, market_price, number.
+// MTG does NOT. Its table came from Scryfall and uses set_code, image_uri, price_aud and
+// collector_number, with no set_id column at all. The old single query shape here selected
+// the tcgapi columns for every game, so ?game=mtg errored on a missing column and the
+// carousel silently hid itself. Each game now carries its own column map (task-108) and
+// the query is built from that, so adding a game means adding a config entry, not editing
+// the query.
+//
+// Whatever the source columns, the JSON returned is always normalised to image_url +
+// priceDisplay, because that is what buildCardEl on the homepage reads.
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
+const USD_TO_AUD        = 1.45;
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -21,56 +35,59 @@ function json(data, status = 200) {
   });
 }
 
-// Map game name to table name
-const GAME_TABLES = {
-  riftbound: 'riftbound_cards',
-  lorcana:   'lorcana_cards',
-  pokemon:   'pokemon_cards',
-  yugioh:    'yugioh_cards',
-  onepiece:  'onepiece_cards',
-  starwars:  'starwars_cards',
-  dragonball:'dragonball_cards',
-  mtg:       'mtg_cards',
-};
-
-// Map game to card URL path
-const GAME_PATHS = {
-  riftbound:  '/cards/riftbound',
-  lorcana:    '/cards/lorcana',
-  pokemon:    '/cards/pokemon',
-  yugioh:     '/cards/yugioh',
-  onepiece:   '/cards/onepiece',
-  starwars:   '/cards/starwars',
-  dragonball: '/cards/dragonball',
-  mtg:        '/cards/mtg',
+// Per-game table, URL path and column map.
+//   setCol    column the set filter applies to
+//   imageCol  image column
+//   priceCol  column to sort and price by
+//   numberCol collector number column
+//   priceIsAud  true when priceCol is already AUD, false when it needs the USD conversion
+//   dedupeBySlug  MTG only. Every printing of a card is its own row but the card page is
+//                 served per slug, so an undeduped top-20 shows the same card several times,
+//                 each tile linking to the same page. Collapse by slug keeping the
+//                 highest-priced printing, the same rule generate-sitemap-cards.mjs uses.
+const GAME_CONFIG = {
+  riftbound:  { table: 'riftbound_cards',  path: '/cards/riftbound',  setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
+  lorcana:    { table: 'lorcana_cards',    path: '/cards/lorcana',    setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
+  pokemon:    { table: 'pokemon_cards',    path: '/cards/pokemon',    setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
+  yugioh:     { table: 'yugioh_cards',     path: '/cards/yugioh',     setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
+  onepiece:   { table: 'onepiece_cards',   path: '/cards/onepiece',   setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
+  starwars:   { table: 'starwars_cards',   path: '/cards/starwars',   setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
+  dragonball: { table: 'dragonball_cards', path: '/cards/dragonball', setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
+  mtg:        { table: 'mtg_cards',        path: '/cards/mtg',        setCol: 'set_code', imageCol: 'image_uri', priceCol: 'price_aud', numberCol: 'collector_number', priceIsAud: true, dedupeBySlug: true },
 };
 
 export default async (req) => {
   const url   = new URL(req.url);
   const game  = (url.searchParams.get('game') || '').toLowerCase();
-  const setId = url.searchParams.get('set_id');
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '16'), 24);
 
-  if (!game || !GAME_TABLES[game]) {
+  const cfg = GAME_CONFIG[game];
+  if (!game || !cfg) {
     return json({ error: 'Invalid game parameter' }, 400);
   }
 
-  const table    = GAME_TABLES[game];
-  const cardPath = GAME_PATHS[game];
+  // set_code is the MTG-shaped param, set_id the tcgapi-shaped one. Accept either and apply
+  // it to whichever column this game actually keys its sets on, so the existing set_id callers
+  // keep working untouched.
+  const setValue = url.searchParams.get('set_code') || url.searchParams.get('set_id');
 
-  // Build query - filter out sealed products (name contains Booster/Box/Case) and items without images
-  let query = `${SUPABASE_URL}/rest/v1/${table}?`;
+  // Deduping collapses rows, so fetch a deeper page first or a top-20 could come back short.
+  const fetchLimit = cfg.dedupeBySlug ? Math.min(limit * 5, 120) : limit;
 
-  if (setId) {
-    query += `set_id=eq.${encodeURIComponent(setId)}&`;
+  let query = `${SUPABASE_URL}/rest/v1/${cfg.table}?`;
+  if (setValue) {
+    query += `${cfg.setCol}=eq.${encodeURIComponent(setValue)}&`;
   }
-
-  // Filter: must have image, must have price, exclude sealed products
-  query += `image_url=not.is.null&market_price=gt.0&rarity=not.is.null&rarity=neq.None`;
-
-  // For games that use price_aud
-  query += `&order=market_price.desc.nullslast&limit=${limit}`;
-  query += `&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name`;
+  // Filter: must have an image, must have a price, must be a real card not a sealed product
+  query += `${cfg.imageCol}=not.is.null&${cfg.priceCol}=gt.0&rarity=not.is.null&rarity=neq.None`;
+  query += `&order=${cfg.priceCol}.desc.nullslast&limit=${fetchLimit}`;
+  // Every one of these tables also carries price_aud. The tcgapi games sort by market_price
+  // (USD) but DISPLAY price_aud when it is populated, which is the behaviour that shipped, so
+  // price_aud is always selected. For MTG it is the sort column, hence the dedupe of the list.
+  const selectCols = [...new Set(
+    ['slug', 'name', cfg.numberCol, cfg.imageCol, cfg.priceCol, 'price_aud', 'rarity', 'set_name']
+  )];
+  query += `&select=${selectCols.join(',')}`;
 
   try {
     const res = await fetch(query, {
@@ -85,11 +102,14 @@ export default async (req) => {
       return json({ error: `Supabase error: ${err.slice(0, 200)}` }, 500);
     }
 
-    let cards = await res.json();
+    let rows = await res.json();
+    if (!Array.isArray(rows)) {
+      return json({ error: 'Supabase returned a non-array payload' }, 500);
+    }
 
     // Filter out sealed products server-side
     const sealedKeywords = ['booster box', 'booster case', 'elite trainer', 'display box', 'case (wave', 'booster set', 'display case', 'event kit', 'trove case', 'champion deck', 'display', 'sealed', 'bundle', 'collection box'];
-    cards = cards.filter(c => {
+    rows = rows.filter(c => {
       const nameLower = (c.name || '').toLowerCase();
       // Keep if rarity is set (individual cards always have rarity)
       if (c.rarity && c.rarity !== 'None' && c.rarity !== 'none') return true;
@@ -97,19 +117,51 @@ export default async (req) => {
       return !sealedKeywords.some(kw => nameLower.includes(kw));
     });
 
-    // Add card URL and formatted price
-    cards = cards.map(c => ({
-      ...c,
-      cardUrl:      `${cardPath}/${c.slug}`,
-      ebayUrl:      `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`,
-      priceDisplay: c.price_aud
-        ? `AU$${parseFloat(c.price_aud).toFixed(0)}`
-        : c.market_price
-          ? `~AU$${(parseFloat(c.market_price) * 1.45).toFixed(0)}`
-          : '',
-    }));
+    // MTG only: one row per printing, one card page per slug. Keep the dearest printing.
+    if (cfg.dedupeBySlug) {
+      const bySlug = new Map();
+      for (const c of rows) {
+        if (!c.slug) continue;
+        const prev = bySlug.get(c.slug);
+        if (!prev || parseFloat(c[cfg.priceCol]) > parseFloat(prev[cfg.priceCol])) {
+          bySlug.set(c.slug, c);
+        }
+      }
+      rows = [...bySlug.values()].sort(
+        (a, b) => parseFloat(b[cfg.priceCol]) - parseFloat(a[cfg.priceCol])
+      );
+    }
 
-    return json({ cards, game, set_id: setId, count: cards.length });
+    rows = rows.slice(0, limit);
+
+    // Normalise to the shape the homepage carousel reads, whatever the source columns were.
+    // priceDisplay keeps the original precedence exactly: a real price_aud renders as AU$X,
+    // and only when it is missing does the USD market_price get converted and marked with a
+    // tilde as an estimate. MTG sets price_aud as its own priceCol, so it takes the first arm.
+    const cards = rows.map(c => {
+      const aud    = parseFloat(c.price_aud);
+      const source = parseFloat(c[cfg.priceCol]);
+      let priceDisplay = '';
+      if (Number.isFinite(aud) && aud > 0) {
+        priceDisplay = `AU$${aud.toFixed(0)}`;
+      } else if (Number.isFinite(source) && source > 0) {
+        priceDisplay = `~AU$${(source * USD_TO_AUD).toFixed(0)}`;
+      }
+      return {
+        slug:         c.slug,
+        name:         c.name,
+        rarity:       c.rarity,
+        set_name:     c.set_name,
+        number:       c[cfg.numberCol],
+        image_url:    c[cfg.imageCol],
+        price_aud:    Number.isFinite(aud) ? aud.toFixed(2) : null,
+        cardUrl:      `${cfg.path}/${c.slug}`,
+        ebayUrl:      `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`,
+        priceDisplay,
+      };
+    });
+
+    return json({ cards, game, set: setValue, count: cards.length });
   } catch (e) {
     return json({ error: e.message }, 500);
   }

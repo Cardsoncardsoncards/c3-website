@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
 const PRICE_THRESHOLD   = 1.00;
 const PAGE_SIZE         = 1000;
-const SAFETY_MAX        = 50000; // sitemaps.org hard limit — split before exceeding, never silently cap
+const SAFETY_MAX        = 50000; // sitemaps.org hard limit, split before exceeding, never silently cap
 
 async function supabaseFetch(url, extraHeaders = {}) {
   const controller = new AbortController();
@@ -32,7 +32,7 @@ async function supabaseFetch(url, extraHeaders = {}) {
 
 // Keyset pagination on the primary key: each page fetches rows with id greater
 // than the last seen. Unlike OFFSET this stays O(n) as the table grows and never
-// re-scans. A failed page THROWS (caught below) instead of returning [] — a
+// re-scans. A failed page THROWS (caught below) instead of returning [], because a
 // swallowed error would silently truncate the sitemap and de-index real pages.
 async function fetchSlugs(afterId) {
   const url = `${SUPABASE_URL}/rest/v1/lorcana_cards`
@@ -73,8 +73,8 @@ export default async (req) => {
     }
     if (allCards.length >= SAFETY_MAX) {
       // A single sitemap may not exceed 50,000 URLs. If this ever trips, the
-      // file must be split into indexed sub-sitemaps — fail loud, never cap.
-      throw new Error(`exceeded ${SAFETY_MAX} URLs — sitemap must be split`);
+      // file must be split into indexed sub-sitemaps. Fail loud, never cap.
+      throw new Error(`exceeded ${SAFETY_MAX} URLs, sitemap must be split`);
     }
 
     const today = new Date().toISOString().slice(0, 10);
