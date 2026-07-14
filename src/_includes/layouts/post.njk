@@ -168,7 +168,25 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     <a href="/shop.html" class="btn-gold-sm">Browse TCG Shop →</a>
   </div>
 
+  <!-- Free-account growth banner (task-110). Primary placement: blog readers are the audience
+       this exists to capture. After the post body, before the footer, on all 509+ posts.
+       Visual pattern deliberately matches the /welcome callout box: gold border, tinted fill. -->
+  <aside class="c3-growth">
+    <h2 class="c3-growth-h">Enjoyed this? Track the cards mentioned here</h2>
+    <p class="c3-growth-b">Create a free C3 account to follow any card, get price alerts, and check back any time.</p>
+    <a class="c3-growth-cta" href="/account">Create a free account</a>
+  </aside>
+
 </article>
+
+<style>
+.c3-growth{background:rgba(201,168,76,.07);border:1px solid #C9A84C;border-radius:12px;padding:28px 24px;margin:40px 0 8px;text-align:center}
+.c3-growth-h{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:#E8C86A;margin:0 0 10px;line-height:1.3}
+.c3-growth-b{font-size:15px;color:#A0A8C0;margin:0 0 18px;line-height:1.6}
+.c3-growth-cta{display:inline-block;background:#C9A84C;color:#080a0f;font-weight:600;font-size:14px;padding:12px 26px;border-radius:8px;text-decoration:none}
+.c3-growth-cta:hover{background:#E8C86A;color:#080a0f;text-decoration:none}
+@media(max-width:768px){.c3-growth{padding:22px 18px}.c3-growth-h{font-size:17px}.c3-growth-b{font-size:14px}}
+</style>
 
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>

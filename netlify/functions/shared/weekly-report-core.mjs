@@ -265,7 +265,7 @@ function buildEmail({dateStr,callTitle,callBody,up,down,buy,sell,reportLabel='We
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.6;">Follow any card for real-time price alerts, no need to wait for the weekly email. <a href="https://cardsoncardsoncards.com.au/market" style="color:#C9A84C;text-decoration:none;">Browse the market and follow a card &rarr;</a></div>
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.6;margin-top:12px;">Know a seller who would use this? Forward it on. They can join free at <a href="https://cardsoncardsoncards.com.au/pricing" style="color:#C9A84C;text-decoration:none;">cardsoncardsoncards.com.au</a>.</div>
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;line-height:1.6;margin-top:14px;">Prices are indicative AUD market estimates and move constantly. Always check the live price before you buy or sell. C3 participates in the eBay Partner Network and may earn a small commission on purchases made through links, at no extra cost to you.</div>
-    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;margin-top:12px;">The C3 Team &middot; <a href="{$unsubscribe}" style="color:#8892b0;text-decoration:underline;">Manage subscription</a></div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;margin-top:12px;">The C3 Team &middot; <a href="https://cardsoncardsoncards.com.au/account" style="color:#8892b0;text-decoration:underline;">Your account</a> &middot; <a href="{$unsubscribe}" style="color:#8892b0;text-decoration:underline;">Manage subscription</a></div>
   </td></tr>
 </table>
 </td></tr></table>`;

@@ -18,32 +18,94 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080a0f;--bg2:#0e1118;--gold:#C9A84C;--gold-lit:#E8C86A;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099}
+:root{--bg:#080a0f;--ink:#080a0f;--bg2:#0e1118;--card:#111420;--gold:#C9A84C;--gold-lit:#E8C86A;--silver:#A0A8C0;--white:#F0F2FF;--border:#1e2235;--text2:#7a8099}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.7}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.7;overflow-x:hidden}
 a{color:var(--gold);text-decoration:none}
 a:hover{color:var(--gold-lit)}
 
-/* Landing page header: logo and a home link only, no browsing nav */
-header.landing{border-bottom:1px solid var(--border);padding:16px 0;background:rgba(10,12,20,.97)}
-.landing-inner{display:flex;align-items:center;justify-content:space-between;max-width:900px;margin:0 auto;padding:0 20px;gap:12px}
-.landing-logo{display:flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
-.landing-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;flex-shrink:0}
-.home-link{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--silver);border:1px solid var(--border);border-radius:6px;padding:6px 12px;white-space:nowrap}
-.home-link:hover{color:var(--white);border-color:var(--gold)}
+/* Full site nav, matching the standalone-page convention used by /methodology, /tools, /play.
+   task-112 replaces task-102's trimmed logo-only header on purpose: the goal is now to drive
+   people further into the site, not to keep them on a single page. The logo is an <a href="/">
+   here, which is what fixes the unclickable-logo bug that only ever existed on this page. */
+nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:#C9A84C;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.nav-logo img{height:32px;width:32px;border-radius:6px;object-fit:cover;flex-shrink:0}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap;flex-shrink:0}
+.nav-link:hover{color:#F0F2FF;text-decoration:none}
+.nav-link--vault{color:#C9A84C;border-color:rgba(201,168,76,.35)}
+.nav-link--vault:hover{background:rgba(201,168,76,.1);border-color:#C9A84C;color:#E8C86A}
+.nav-link--compare{color:#A78BFA;border-color:rgba(167,139,250,.35)}
+.nav-link--compare:hover{background:rgba(167,139,250,.1);border-color:#A78BFA;color:#C4B5FD}
+.nav-link--market{color:#4ADE80;border-color:rgba(74,222,128,.35)}
+.nav-link--market:hover{background:rgba(74,222,128,.1);border-color:#4ADE80;color:#86EFAC}
+.nav-link--tools{color:#FB923C;border-color:rgba(251,146,60,.35)}
+.nav-link--tools:hover{background:rgba(251,146,60,.1);border-color:#FB923C;color:#FDBA74}
+.nav-link--play{color:#F472B6;border-color:rgba(244,114,182,.35)}
+.nav-link--play:hover{background:rgba(244,114,182,.1);border-color:#F472B6;color:#F9A8D4}
+.nav-link--blog{color:#7ECBA1;border-color:rgba(126,203,161,.35)}
+.nav-link--blog:hover{background:rgba(126,203,161,.1);border-color:#7ECBA1;color:#A5DFC0}
+.nav-link--pricing{color:#C9A84C;border-color:rgba(201,168,76,.25)}
+.nav-link--pricing:hover{background:rgba(201,168,76,.08);border-color:#C9A84C;color:#E8C86A}
+.hamburger{display:none;background:transparent;border:1px solid #1e2235;color:#A0A8C0;padding:6px 11px;border-radius:6px;cursor:pointer;font-size:18px;line-height:1;flex-shrink:0}
+.hamburger:focus{outline:none;border-color:#C9A84C}
 
-main{max-width:900px;margin:0 auto;padding:56px 20px 24px}
+/* Release ticker, reused verbatim from the homepage */
+.release-ticker{background:rgba(201,168,76,.07);border-bottom:1px solid rgba(201,168,76,.15);padding:0;overflow:hidden;height:36px;display:flex;align-items:center;position:relative}
+.release-ticker::before,.release-ticker::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+.release-ticker::before{left:0;background:linear-gradient(to right,var(--ink),transparent)}
+.release-ticker::after{right:0;background:linear-gradient(to left,var(--ink),transparent)}
+.ticker-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);white-space:nowrap;padding:0 16px 0 20px;flex-shrink:0;z-index:3}
+.ticker-track{display:flex;gap:0;animation:tickerScroll 50s linear infinite;flex-shrink:0}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;white-space:nowrap;font-size:11px;color:rgba(240,242,255,.7);border-left:1px solid rgba(201,168,76,.15)}
+.ticker-item strong{color:var(--white);font-weight:600}
+.ticker-game{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border-radius:3px;flex-shrink:0}
+
+/* Commander carousel, reused verbatim from the homepage */
+.carousel-section{width:100vw;margin-left:calc(-50vw + 50%);margin-bottom:40px;overflow:hidden;position:relative}
+.carousel-section::before,.carousel-section::after{content:'';position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none}
+.carousel-section::before{left:0;background:linear-gradient(to right,var(--ink),transparent)}
+.carousel-section::after{right:0;background:linear-gradient(to left,var(--ink),transparent)}
+.carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;padding:0 24px}
+.carousel-heading{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:16px;padding:0 24px}
+.carousel-track{display:flex;gap:14px;padding:4px 24px 12px;animation:scrollTrack 30s linear infinite}
+.carousel-track:hover{animation-play-state:paused}
+@keyframes scrollTrack{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.c-card{flex-shrink:0;width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .22s;display:block}
+.c-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 20px rgba(201,168,76,.15);text-decoration:none}
+.c-card img{width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px}
+.c-card-name{font-size:11px;color:var(--white);font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-card-price{font-size:12px;color:var(--gold);font-weight:700;margin-top:2px}
+
+/* Set carousel (Riftbound), reused verbatim from the homepage */
+@keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scrollRight{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.carousel-scroll{display:flex;gap:12px;animation:scrollLeft 30s linear infinite;will-change:transform;width:max-content}
+.carousel-scroll--right{animation:scrollRight 30s linear infinite}
+.carousel-scroll:hover,.carousel-scroll--right:hover{animation-play-state:paused}
+.carousel-viewport{width:100vw;margin-left:calc(-50vw + 50%);overflow:hidden;position:relative}
+.carousel-viewport::before,.carousel-viewport::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;pointer-events:none}
+.carousel-viewport::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.carousel-viewport::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+
+main{max-width:900px;margin:0 auto;padding:48px 20px 24px}
 h1{font-family:'Cinzel',serif;font-size:34px;font-weight:700;line-height:1.25;color:var(--white);margin-bottom:18px}
 .subhead{font-size:17px;color:var(--silver);max-width:680px;margin-bottom:44px}
 
-.features{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:36px}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:40px}
 .feature{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px}
 .feature-eyebrow{display:block;font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .feature h2{font-family:'Cinzel',serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.35}
 .feature p{font-size:15px;color:var(--silver);margin-bottom:14px}
 .feature a{font-size:14px;font-weight:600}
+.feature-secondary{font-size:12px;color:var(--text2);margin:10px 0 0}
+.feature-secondary a{font-size:12px;font-weight:600}
 
-/* Callout: deliberately distinct from the feature blocks above, gold border and tinted fill */
 .callout{background:rgba(201,168,76,.07);border:1px solid var(--gold);border-radius:12px;padding:28px;margin-bottom:44px;text-align:center}
 .callout h2{font-family:'Cinzel',serif;font-size:21px;font-weight:700;color:var(--gold-lit);margin-bottom:10px}
 .callout p{font-size:15px;color:var(--silver);margin-bottom:16px}
@@ -56,30 +118,78 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
 .footer-disclaimer{font-size:11px;color:var(--text2);max-width:680px;margin:16px auto 0;line-height:1.6}
 
 @media (max-width:768px){
-  main{padding:36px 18px 20px}
+  .hamburger{display:block}
+  .nav-inner{position:relative;flex-wrap:nowrap}
+  .nav-links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;flex-wrap:nowrap;gap:6px;background:rgba(8,11,18,.98);border:1px solid #1e2235;border-radius:10px;padding:12px;max-height:78vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 12px 32px rgba(0,0,0,.5)}
+  .nav-links.open{display:flex}
+  .nav-links .nav-link{width:100%;justify-content:flex-start;white-space:normal;font-size:13px;padding:12px 14px}
+  main{padding:32px 18px 20px}
   h1{font-size:26px}
   .subhead{font-size:15px;margin-bottom:32px}
   .features{grid-template-columns:1fr;gap:14px}
   .feature{padding:20px}
   .callout{padding:22px}
-  .landing-logo{font-size:10px}
-  .landing-logo img{height:34px;width:34px}
 }
+@media(max-width:600px){[class*="carousel"]:before,[class*="carousel"]:after{width:20px!important}[class*="track"]{gap:8px!important}}
 </style>
 </head>
 <body>
 
-<header class="landing">
-  <div class="landing-inner">
-    <span class="landing-logo"><img src="/c3logo.png" alt="Cards on Cards on Cards logo">Cards on Cards on Cards</span>
-    <a class="home-link" href="/">Visit the site</a>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/c3logo.png" alt="C3 Logo">
+      <span>Cards on Cards on Cards</span>
+    </a>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
+    <div class="nav-links">
+      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/market" class="nav-link nav-link--market">Market</a>
+      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
+      <a href="/play" class="nav-link nav-link--play">Play</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/pricing" class="nav-link nav-link--pricing">Pricing</a>
+    </div>
   </div>
-</header>
+</nav>
+
+<!-- Release ticker, reused as-is from src/index.html. Hand-maintained static markup, not a
+     live feed: the only JS attached to it is pause-on-hover. Content deliberately unchanged. -->
+<div class="release-ticker">
+  <span class="ticker-label">Releases</span>
+  <div class="ticker-track" id="relTicker">
+    <span class="ticker-item"><a href="/cards/lorcana/sets/4500014" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Wilds Unknown</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound/sets/unleashed" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Unleashed</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Final Fantasy</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>OP-12</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Twilight of the Republic</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Late 2026</a></span>
+    <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
+    <!-- duplicate for loop -->
+    <span class="ticker-item"><a href="/cards/lorcana/sets/4500014" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Wilds Unknown</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound/sets/unleashed" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Unleashed</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> &middot; May 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Final Fantasy</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>OP-12</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Twilight of the Republic</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Late 2026</a></span>
+    <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
+  </div>
+</div></div>
 
 <main>
   <h1>Thanks for shopping with us. Here's what else C3 does.</h1>
   <p class="subhead">Cards on Cards on Cards isn't just an eBay store. The website tracks live prices across every major TCG, sold in Australian dollars, updated daily.</p>
 
+  <!-- Tile row 1: Market, Compare -->
   <div class="features">
     <section class="feature">
       <span class="feature-eyebrow">Market</span>
@@ -94,7 +204,25 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
       <p>Search any card and see it priced out in one place instead of checking five different sites.</p>
       <a href="/compare">Compare prices</a>
     </section>
+  </div>
+</main>
 
+<!-- Carousel 1: Riftbound Unleashed. Same /api/set-carousel endpoint and the same call already
+     live on the homepage. No new carousel logic. -->
+<div style="max-width:900px;margin:0 auto;padding:0 20px 8px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <div>
+      <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#818CF8;display:block;margin-bottom:4px">Riftbound &middot; Latest Set</span>
+      <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">Unleashed: Top Cards</span>
+    </div>
+    <a href="/cards/riftbound/sets/unleashed" style="font-size:12px;color:#818CF8;text-decoration:none;font-weight:600">View all &rarr;</a>
+  </div>
+</div>
+<div class="carousel-viewport" style="margin-bottom:44px"><div id="unleashed-carousel" class="carousel-scroll"></div></div>
+
+<main>
+  <!-- Tile row 2: Calendar, Follow -->
+  <div class="features">
     <section class="feature">
       <span class="feature-eyebrow">Calendar</span>
       <h2>Never miss a new set</h2>
@@ -107,13 +235,37 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
       <h2>Get notified, for free</h2>
       <p>Follow any card and we'll email you when the price moves. No subscription, no cost.</p>
       <a href="/cards">Browse cards to follow</a>
+      <!-- task-111: additive only. The primary link above is unchanged. -->
+      <p class="feature-secondary">Already have follows? <a href="/account">View your account</a></p>
     </section>
+  </div>
+</main>
 
+<!-- Carousel 2: MTG Commanders. Same /commander-carousel endpoint and the same loader already
+     live on the homepage, writing into #carousel-track-inner. No new carousel logic. -->
+<div class="carousel-section" style="margin-bottom:44px">
+  <p class="carousel-eyebrow">MTG Commander Spotlight</p>
+  <p class="carousel-heading">Your Next Commander Awaits</p>
+  <div class="carousel-track" id="carousel-track-inner">
+    <div class="c-card" style="color:rgba(160,168,192,.4);font-size:12px;padding:20px">Loading commanders...</div>
+  </div>
+</div>
+
+<main>
+  <!-- Tile row 3: Card Vault, Free Tracker (new sixth tile, so the grid reads as three even rows) -->
+  <div class="features">
     <section class="feature">
       <span class="feature-eyebrow">Card Vault</span>
       <h2>More games than we sell</h2>
       <p>We track prices across more than 30 trading card games on the site, even ones we don't currently list on eBay. Browse the full card vault to see what's covered.</p>
       <a href="/cards">Browse the card vault</a>
+    </section>
+
+    <section class="feature">
+      <span class="feature-eyebrow">Free Tracker</span>
+      <h2>Track your own collection, free</h2>
+      <p>Download the free TCG collection tracker spreadsheet and keep tabs on what you own and what it's worth.</p>
+      <a href="/tracker.html">Get the free tracker</a>
     </section>
   </div>
 
@@ -129,6 +281,84 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
   <p class="signoff">The C3 Team</p>
   <p class="footer-disclaimer">C3 participates in the eBay Partner Network. The eBay store link on this page is an affiliate link and we may earn a small commission on purchases made through it, at no extra cost to you. Prices shown on the site are indicative AUD market estimates and move constantly, so always check the live price before you buy or sell.</p>
 </footer>
+
+<script>
+// Ticker pause on hover / touch. Copied as-is from src/index.html.
+(function(){
+  var ticker = document.getElementById('relTicker');
+  if (!ticker) return;
+  ticker.addEventListener('mouseenter', function(){ ticker.style.animationPlayState = 'paused'; });
+  ticker.addEventListener('mouseleave', function(){ ticker.style.animationPlayState = 'running'; });
+  ticker.addEventListener('touchstart', function(){ ticker.style.animationPlayState = 'paused'; }, {passive:true});
+  ticker.addEventListener('touchend', function(){ setTimeout(function(){ ticker.style.animationPlayState = 'running'; }, 2000); }, {passive:true});
+})();
+</script>
+
+<script>
+// Commander Carousel. Copied as-is from src/index.html: same endpoint, same shuffle, same
+// markup. The site's convention for standalone static pages is to duplicate the snippet per
+// page (methodology, tools, play and index all inline their own JS and nav rather than sharing
+// a module), so this follows that rather than introducing a new sharing pattern.
+(async () => {
+  const FX_FALLBACK = 1.58;
+  try {
+    const res = await fetch('/commander-carousel?mode=top&limit=40');
+    if (!res.ok) { console.warn('Carousel fetch failed:', res.status); return; }
+    const data = await res.json();
+    let commanders = data.commanders || [];
+    if (!commanders.length) return;
+    for (let i = commanders.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [commanders[i], commanders[j]] = [commanders[j], commanders[i]];
+    }
+    commanders = commanders.slice(0, 20);
+    const items = commanders.map(c => {
+      const price = c.price ? '~AU$' + (parseFloat(c.price) * FX_FALLBACK).toFixed(0) : '';
+      return `<a href="${c.cardVaultUrl || '/cards/mtg/' + c.slug}" class="c-card">
+        <img src="${c.image || ''}" alt="${c.name || ''}" loading="lazy" onerror="this.style.display='none'">
+        <div class="c-card-name">${c.name || ''}</div>
+        <div class="c-card-price">${price}</div>
+      </a>`;
+    }).join('');
+    const track = document.getElementById('carousel-track-inner');
+    if (track) track.innerHTML = items + items;
+  } catch(e) { console.warn('Carousel error', e); }
+})();
+
+// Set carousel. Copied as-is from src/index.html, same /api/set-carousel endpoint.
+function buildCardEl(c, colour) {
+  var a = document.createElement('a');
+  a.href = c.cardUrl || '#';
+  a.style.cssText = 'flex:0 0 150px;background:#111420;border:1px solid #252840;border-radius:10px;padding:10px;text-decoration:none;display:block;transition:border-color .2s';
+  a.onmouseover = function(){this.style.borderColor=colour;};
+  a.onmouseout  = function(){this.style.borderColor='#252840';};
+  var name = (c.name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  a.innerHTML = (c.image_url
+    ? '<img src="'+c.image_url+'" alt="'+name+'" style="width:100%;border-radius:6px;display:block" loading="lazy">'
+    : '<div style="height:120px;background:#0d0f1a;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px">&#128228;</div>') +
+    '<div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">'+name+'</div>'+
+    '<div style="font-size:11px;color:'+colour+';font-weight:700;margin-top:3px">'+(c.priceDisplay||'')+'</div>';
+  return a;
+}
+
+async function loadSetCarousel(game, setKey, containerId, colour, limit, setParam) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  limit = limit || 16;
+  setParam = setParam || 'set_id';
+  try {
+    var res = await fetch('/api/set-carousel?game='+game+'&'+setParam+'='+encodeURIComponent(setKey)+'&limit='+limit);
+    if (!res.ok) { el.parentElement.style.display='none'; return; }
+    var data = await res.json();
+    if (!data.cards || !data.cards.length) { el.parentElement.style.display='none'; return; }
+    var cards = data.cards;
+    cards.forEach(function(c){ el.appendChild(buildCardEl(c, colour)); });
+    cards.forEach(function(c){ el.appendChild(buildCardEl(c, colour)); });
+  } catch(e) { if(el.parentElement) el.parentElement.style.display='none'; }
+}
+
+loadSetCarousel('riftbound', 500006, 'unleashed-carousel', '#818CF8');
+</script>
 
 </body>
 </html>

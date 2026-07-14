@@ -1,3 +1,5 @@
+import { MANAGE_FOLLOWS_LINK } from './shared/follow-links.mjs';
+
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
@@ -347,6 +349,7 @@ export default async (req) => {
       </div>
       <div id="follow-msg" style="font-size:12px;color:#9ba3c4;margin-top:8px"></div>
       <div style="font-size:11px;color:rgba(160,168,192,.5);margin-top:6px">One confirmation email, then alerts on significant moves. Prices are estimates, see our <a href="/methodology" style="color:#C9A84C">methodology</a>.</div>
+      ${MANAGE_FOLLOWS_LINK}
     </div>
     <script>
       var FOLLOW_SLUG = ${JSON.stringify(card.slug)};

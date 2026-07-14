@@ -313,6 +313,36 @@ export const NAV_CSS = `
   }
   .nav-drawer-ebay:hover { background: rgba(201,168,76,.18); border-color: #C9A84C; }
 
+  /* Account (task-110). Deliberately NOT an eighth pill inside .nav-links: that row already
+     carries seven pills plus the Shop dropdown, and .nav-links is display:none on mobile, so
+     an Account pill in there would simply vanish on phones. It sits OUTSIDE that group, at the
+     far right of nav-inner next to the burger, which keeps it visible at every width and reads
+     as account chrome rather than as another destination in the browse group. */
+  .nav-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    padding: 5px 10px;
+    margin-left: 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(160,168,192,.3);
+    color: #A0A8C0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .2s;
+  }
+  .nav-account:hover {
+    color: #F0F2FF;
+    border-color: #C9A84C;
+    background: rgba(201,168,76,.08);
+    text-decoration: none;
+  }
+
   @media (max-width: 768px) {
     .nav-logo-text { display: none; }
     .nav-search-wrap { max-width: 140px; }
@@ -320,6 +350,9 @@ export const NAV_CSS = `
     .nav-shop-btn { padding: 5px 7px; font-size: 10px; }
     .nav-links { display: none; }
     .nav-burger { display: flex; }
+    /* Keep the icon, drop the word, so it costs almost no width next to the burger. */
+    .nav-account { padding: 5px 8px; margin-left: 2px; }
+    .nav-account-text { display: none; }
   }
 `;
 
@@ -388,6 +421,9 @@ function buildNav(gameLabel = '', gameHref = '') {
         </div>
       </div>
     </div>
+    <a href="/account" class="nav-account" title="Your C3 account">
+      &#128100;<span class="nav-account-text">Account</span>
+    </a>
     <button class="nav-burger" id="nav-burger" type="button"
       aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
       <span></span><span></span><span></span>
@@ -405,6 +441,8 @@ function buildNav(gameLabel = '', gameHref = '') {
     <a href="/play" class="nav-drawer-link">Play</a>
     <a href="/blog" class="nav-drawer-link">Blog</a>
     <a href="/subscribe" class="nav-drawer-link nav-drawer-link--subscribe">Subscribe &#10024;</a>
+    <div class="nav-drawer-sep"></div>
+    <a href="/account" class="nav-drawer-link">&#128100; Your Account</a>
     <div class="nav-drawer-sep"></div>
     <a href="/shop" class="nav-drawer-link">Shop: Booster Boxes</a>
     <a href="/shop#cat-accessories" class="nav-drawer-link">Accessories</a>

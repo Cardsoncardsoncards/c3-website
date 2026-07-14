@@ -10,6 +10,13 @@ const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY') || Netlify.
 const RESEND_API_KEY    = Netlify.env.get('RESEND_API_KEY');
 const MAILERLITE_KEY    = Netlify.env.get('MAILERLITE_API_KEY');
 const SYNC_SECRET       = Netlify.env.get('SYNC_SECRET');
+const SITE_ORIGIN       = 'https://cardsoncardsoncards.com.au';
+
+// task-111: both alert emails below now point at the /account dashboard alongside the existing
+// reply-to-unsubscribe line. The reply option is deliberately kept: it is the only route for
+// someone who cannot or will not click a link. The dashboard is offered as the easier one.
+const MANAGE_ALERTS_LINE =
+  `Manage this and all your other alerts at <a href="${SITE_ORIGIN}/account" style="color:#C9A84C">your C3 account</a>.`;
 
 async function supabaseGet(path, useService = false) {
   const key = useService ? SUPABASE_SERVICE_KEY : Netlify.env.get('SUPABASE_ANON_KEY');
@@ -110,6 +117,7 @@ function buyerEmail(cardName, cardSlug, targetAud, currentAud) {
             Prices are estimates based on US market data converted to AUD. Check eBay AU for live pricing.
           </p>
           <p style="font-size:11px;color:#666;margin-top:8px">
+            ${MANAGE_ALERTS_LINE}<br>
             To unsubscribe from price alerts, reply to this email with "unsubscribe".
           </p>
         </div>
@@ -159,6 +167,7 @@ function sellerEmail(cardName, cardSlug, targetAud, currentAud) {
           </a>
           <p style="font-size:11px;color:#666;margin-top:16px">
             Prices are estimates based on Scryfall/TCGPlayer data converted to AUD. Always check eBay AU for live Australian pricing before selling.
+            ${MANAGE_ALERTS_LINE}
             To unsubscribe, reply with "unsubscribe".
           </p>
         </div>

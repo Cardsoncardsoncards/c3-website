@@ -90,7 +90,7 @@ async function markTriggered(id, currentPrice) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 10000);
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/card_price_alerts?id=eq.${id}`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/follows?id=eq.${id}`, {
       method: 'PATCH',
       signal: controller.signal,
       headers: {
@@ -224,9 +224,24 @@ export default async (req) => {
   let checked = 0, sent = 0, skippedFloor = 0, belowThreshold = 0, missingCard = 0;
 
   try {
-    const rows = await supabaseGet(
-      `card_price_alerts?select=id,email,game,card_slug,card_name,unsubscribe_token&alert_type=eq.follow&confirmed=is.true&triggered=is.false&limit=${BATCH}`
+    // task-109: reads the unified follows table, not card_price_alerts.
+    //
+    // unsubscribed_at=is.null is the send-time half of the soft delete. An unsubscribed follow
+    // still exists (the user keeps the card in their list) but must never be emailed about.
+    // Miss this filter and a soft delete silently does nothing.
+    //
+    // The email now lives on accounts, joined through, rather than being copied onto every
+    // follow row. That is what stops the same person existing twice under different casings.
+    const raw = await supabaseGet(
+      `follows?select=id,game,card_slug,card_name,unsubscribe_token,accounts(email)` +
+      `&confirmed=is.true&triggered=is.false&unsubscribed_at=is.null&limit=${BATCH}`
     );
+
+    // Flatten the joined account back onto the row so the rest of this function, which was
+    // written against a flat row.email, keeps working unchanged.
+    const rows = (Array.isArray(raw) ? raw : [])
+      .map(r => ({ ...r, email: r.accounts ? r.accounts.email : null }))
+      .filter(r => r.email);
 
     if (!Array.isArray(rows) || rows.length === 0) {
       return new Response(JSON.stringify({ ok: true, checked: 0, sent: 0, note: 'no confirmed follows pending' }, null, 2), {

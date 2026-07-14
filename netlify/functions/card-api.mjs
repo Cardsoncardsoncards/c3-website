@@ -1,5 +1,29 @@
 // netlify/functions/card-api.mjs
-// Handles: likes, views, price alerts, collection waitlist, random commander
+// Handles: likes, views, price alerts, collection waitlist, random commander, card follows
+//
+// task-109: every follow now goes through shared/accounts-core.mjs. This file no longer
+// writes card_price_alerts, no longer matches people by a raw case-sensitive email string,
+// and no longer carries its own inline cap check. Follows live in the unified follows table,
+// keyed to a real accounts row that is created silently on first follow.
+
+import {
+  normaliseEmail,
+  resolveOrCreateAccount,
+  applyFollow,
+  listFollows,
+  countFollows,
+  unsubscribeFollow,
+  deleteFollow,
+  findFollowByUnsubToken,
+  findFollowByConfirmToken,
+  confirmFollow,
+  createMagicLink,
+  resolveMagicLink,
+  getTier,
+  capFor,
+  FREE_FOLLOW_CAP,
+  MAGIC_LINK_TTL_HOURS,
+} from './shared/accounts-core.mjs';
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -192,9 +216,9 @@ async function handlePriceAlert(req) {
 // --- Follow this card (multi-game percentage-change alerts) ---
 //
 // Distinct from handlePriceAlert above, which is the MTG-only, one-shot target-price
-// system backed by mtg_price_alerts. This one is multi-game and backed by
-// card_price_alerts with alert_type 'follow': no target price, no direction. The user
-// is emailed when the card moves by a threshold percentage (see check-card-follows.mjs).
+// system backed by mtg_price_alerts and untouched by task-109. This one is multi-game and
+// backed by the unified follows table, one row per (account, card), no target price. The
+// user is emailed when the card moves by a threshold percentage (see check-card-follows.mjs).
 //
 // Double opt-in: rows land with confirmed=false and a confirm_token. Confirming requires an
 // explicit POST (see handleConfirmFollow), because mail security scanners prefetch every URL
@@ -208,9 +232,11 @@ const FOLLOW_GAMES = new Set([
 
 // PART E: generous, observational cap. Existing rows are NEVER touched when it is reached,
 // only new inserts are checked, so lowering it later cannot force anyone's follows away.
-const FOLLOW_CAP = 100;
-
-const MAGIC_LINK_TTL_HOURS = 24;
+//
+// The cap and the magic-link TTL now live in shared/accounts-core.mjs as FREE_FOLLOW_CAP and
+// MAGIC_LINK_TTL_HOURS, imported at the top of this file. They are deliberately NOT redeclared
+// here: a second copy is exactly how a cap drifts out of sync once a second surface appears.
+// The value itself is unchanged at 100.
 
 const GAME_TABLES = {
   mtg: 'mtg_cards', pokemon: 'pokemon_cards', lorcana: 'lorcana_cards',
@@ -332,80 +358,44 @@ async function handleCardFollow(req) {
 
   const { email, game, cardSlug, cardName } = body || {};
 
-  if (!isValidEmail(email))        return json({ error: 'A valid email is required' }, 400);
+  if (!normaliseEmail(email))      return json({ error: 'A valid email is required' }, 400);
   if (!FOLLOW_GAMES.has(game))     return json({ error: 'Unsupported game' }, 400);
   if (!cardSlug || typeof cardSlug !== 'string') return json({ error: 'Card is required' }, 400);
 
-  // Don't create a second row if this email already follows this card.
-  const existing = await supabaseGet(
-    `card_price_alerts?select=id,confirmed&email=eq.${encodeURIComponent(email)}&game=eq.${encodeURIComponent(game)}&card_slug=eq.${encodeURIComponent(cardSlug)}&alert_type=eq.follow&limit=1`,
-    true
-  ).catch(() => []);
+  // The ONE follow write path. It normalises the email, silently resolves or creates the
+  // account (sending nothing), resolves the tier, applies the right cap, and writes. The cap
+  // check, the duplicate check and the insert used to be inline here; they are not any more,
+  // because a second surface would have had to reimplement all three.
+  const result = await applyFollow({ email, game, cardSlug, cardName });
 
-  if (Array.isArray(existing) && existing.length) {
-    return json({ ok: true, alreadyFollowing: true, confirmed: !!existing[0].confirmed });
-  }
-
-  // PART E: cap check. Counts every row for this email across all games, confirmed or not,
-  // because an unconfirmed spam-filled list is still a list. Never deletes anything.
-  let currentCount = 0;
-  try {
-    const countRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/card_price_alerts?select=id&email=eq.${encodeURIComponent(email)}`,
-      {
-        headers: {
-          'apikey': SUPABASE_SERVICE_KEY,
-          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-          'Prefer': 'count=exact',
-          'Range': '0-0'
-        }
-      }
-    );
-    const range = countRes.headers.get('content-range') || '';
-    currentCount = parseInt(range.split('/')[1] || '0', 10) || 0;
-  } catch (e) {
-    console.warn('[card-follow] cap count failed, allowing follow:', e.message);
-  }
-
-  if (currentCount >= FOLLOW_CAP) {
-    return json({
-      error: `You have reached the maximum number of followed cards (${FOLLOW_CAP}). Remove one to add another.`,
-      capReached: true
-    }, 429);
-  }
-
-  const confirmToken = crypto.randomUUID();
-  const unsubToken   = crypto.randomUUID();
-
-  const res = await supabasePost('card_price_alerts', {
-    email,
-    game,
-    card_slug:  cardSlug,
-    card_name:  cardName || null,
-    alert_type: 'follow',
-    confirmed:  false,
-    confirm_token: confirmToken,
-    unsubscribe_token: unsubToken
-  });
-
-  if (!res || !res.ok) {
-    console.error('[card-follow] insert failed', res && res.status);
+  if (!result.ok) {
+    if (result.reason === 'cap_reached') {
+      return json({
+        error: `You have reached the maximum number of followed cards (${result.cap}). Remove one to add another.`,
+        capReached: true
+      }, 429);
+    }
+    if (result.reason === 'invalid_email') {
+      return json({ error: 'A valid email is required' }, 400);
+    }
+    console.error('[card-follow] applyFollow failed:', result.reason);
     return json({ error: 'Could not save your follow. Please try again.' }, 500);
   }
 
-  // Need the row id so email_log can reference it.
-  const created = await supabaseGet(
-    `card_price_alerts?select=id&confirm_token=eq.${encodeURIComponent(confirmToken)}&limit=1`,
-    true
-  ).catch(() => []);
-  const alertId = (Array.isArray(created) && created[0] && created[0].id) || null;
+  if (result.alreadyFollowing) {
+    return json({ ok: true, alreadyFollowing: true, confirmed: !!result.confirmed });
+  }
+
+  const alertId      = (result.follow && result.follow.id) || null;
+  const unsubToken   = (result.follow && result.follow.unsubscribe_token) || '';
+  const confirmToken = result.confirmToken;
 
   const confirmUrl = `${SITE_ORIGIN}/api/confirm-follow?token=${encodeURIComponent(confirmToken)}`;
   const safeName   = esc(cardName || cardSlug);
   const imageUrl   = await getCardImage(game, cardSlug);
 
   await sendFollowEmail({
-    to: email,
+    to: result.account.email,   // the normalised address, not whatever casing was typed
     emailType: 'follow_confirm',
     alertId,
     subject: `Confirm your price alerts for ${cardName || cardSlug}`,
@@ -415,6 +405,7 @@ ${cardImageHtml(imageUrl, cardName || cardSlug)}
 <p>Click below, then press the confirm button on the page that opens. Alerts only start once you have done that.</p>
 <p><a href="${confirmUrl}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">Confirm my alerts</a></p>
 <p>If you did not request this, just ignore this email. Nothing will happen and you will not be subscribed.</p>
+<p>Manage all your follows any time at <a href="${SITE_ORIGIN}/account">your C3 account</a>.</p>
 <p>The C3 Team</p>
 ${unsubscribeFooterHtml(unsubToken)}
 <p style="font-size:11px;color:#999">Prices are estimates in AUD. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them.</p>`
@@ -493,22 +484,18 @@ async function handleConfirmFollow(req) {
 
   // A lookup failure is NOT the same as an unknown token. Saying "Link not valid" when
   // Supabase is down sends the user away for good on a link that was always fine.
-  let rows;
+  let row;
   try {
-    rows = await supabaseGet(
-      `card_price_alerts?select=id,email,game,card_name,card_slug,confirmed,unsubscribe_token&confirm_token=eq.${encodeURIComponent(token)}&limit=1`,
-      true
-    );
+    row = await findFollowByConfirmToken(token);
   } catch (e) {
     console.error('[confirm-follow] lookup failed:', e.message);
     return followMessage('Something went wrong', 'We could not check that link just now. Your link is still good. Please try again shortly.', 503);
   }
 
-  if (!Array.isArray(rows) || rows.length === 0) {
+  if (!row) {
     return followMessage('Link not valid', 'That confirmation link is not recognised. It may have already been used.', 404);
   }
 
-  const row  = rows[0];
   const name = row.card_name || row.card_slug;
 
   if (row.confirmed) {
@@ -529,19 +516,16 @@ ${imageUrl ? `<img class="card" src="${esc(imageUrl)}" alt="${esc(name)}">` : ''
   }
 
   // POST: the only path that writes.
-  const res = await supabasePatch(`card_price_alerts?id=eq.${row.id}`, {
-    confirmed: true,
-    confirmed_at: new Date().toISOString(),
-    confirm_token: null            // single use
-  });
+  const ok = await confirmFollow(row.id);
 
-  if (!res.ok) {
-    console.error('[confirm-follow] patch failed', res.status);
+  if (!ok) {
+    console.error('[confirm-follow] confirm failed for follow', row.id);
     return followMessage('Something went wrong', 'We could not confirm your alerts just now. Please try the link again shortly.', 500);
   }
 
   return followPage('You are all set', `
 <p>We will email you when <strong>${esc(name)}</strong> moves significantly in price.</p>
+<p class="small">Manage all your follows any time at <a href="/account">your C3 account</a>.</p>
 <p class="small">Changed your mind? <a href="/api/unsubscribe-follow?token=${encodeURIComponent(row.unsubscribe_token || '')}">Unsubscribe from this card</a>.</p>`);
 }
 
@@ -556,18 +540,18 @@ async function handleUnsubscribeFollow(req) {
     return followMessage('Link not valid', 'That unsubscribe link is missing its token.', 400);
   }
 
-  const rows = await supabaseGet(
-    `card_price_alerts?select=id,email,card_name,card_slug&unsubscribe_token=eq.${encodeURIComponent(token)}&limit=1`,
-    true
-  ).catch(() => []);
+  const row = await findFollowByUnsubToken(token).catch(() => null);
 
-  if (!Array.isArray(rows) || rows.length === 0) {
+  if (!row) {
     // Already gone is the outcome the user wanted, so say that rather than erroring.
     return followMessage('Already unsubscribed', 'That follow is no longer active, so there is nothing to unsubscribe from.');
   }
 
-  const row  = rows[0];
   const name = row.card_name || row.card_slug;
+
+  if (row.unsubscribed_at) {
+    return followMessage('Already unsubscribed', `You are not getting alerts for ${name}.`);
+  }
 
   if (req.method !== 'POST') {
     return followPage('Unsubscribe', `
@@ -576,17 +560,21 @@ async function handleUnsubscribeFollow(req) {
   <input type="hidden" name="token" value="${esc(token)}">
   <button type="submit">Yes, unsubscribe me</button>
 </form>
-<p class="small">Nothing changes until you press the button.</p>`);
+<p class="small">Nothing changes until you press the button. The card stays in your followed list, we just stop emailing you about it.</p>`);
   }
 
-  const res = await supabaseDelete('card_price_alerts', `id=eq.${row.id}`);
-  if (!res.ok) {
-    console.error('[unsubscribe-follow] delete failed', res.status);
+  // SOFT delete (task-109). This used to DELETE the row outright, which destroyed the
+  // relationship on what the user only ever asked to be an email preference ("Don't want
+  // alerts for this card any more?"). The row is kept and simply excluded from sends.
+  // A genuine hard delete is a separate, explicitly-labelled action on the my-follows page.
+  const ok = await unsubscribeFollow(row.id);
+  if (!ok) {
+    console.error('[unsubscribe-follow] soft delete failed for follow', row.id);
     return followMessage('Something went wrong', 'We could not unsubscribe you just now. Please try the link again shortly.', 500);
   }
 
   await logEmail(row.email, 'follow_unsubscribe', row.id, true, null);
-  return followMessage('You have been unsubscribed', `You have been unsubscribed from alerts for ${name}.`);
+  return followMessage('You have been unsubscribed', `You have been unsubscribed from alerts for ${name}. It is still in your followed cards if you want to turn alerts back on later.`);
 }
 
 // --- PART C: lightweight "my follows", magic link, no accounts ---
@@ -608,34 +596,44 @@ async function handleMyFollowsRequest(req) {
 
   const GENERIC = 'If that email has any followed cards, we have sent it a link to manage them. Check your inbox.';
 
-  if (isValidEmail(email)) {
-    const follows = await supabaseGet(
-      `card_price_alerts?select=id&email=eq.${encodeURIComponent(email)}&alert_type=eq.follow&limit=1`,
+  const normalised = normaliseEmail(email);
+
+  if (normalised) {
+    // Look the account up, do NOT create one. This is an unverified entry point: anyone can
+    // type any address into the form. Creating an account here would let a stranger populate
+    // the accounts table with addresses that never confirmed ownership, which is exactly the
+    // failure the reference doc's Section 8 warns about. Accounts are only ever created by a
+    // real follow action (applyFollow).
+    const found = await supabaseGet(
+      `accounts?select=id&email=eq.${encodeURIComponent(normalised)}&limit=1`,
       true
     ).catch(() => []);
 
-    // Only actually send if there is something to show. The response never changes.
-    if (Array.isArray(follows) && follows.length > 0) {
-      const token = crypto.randomUUID();
-      const expiresAt = new Date(Date.now() + MAGIC_LINK_TTL_HOURS * 3600 * 1000).toISOString();
+    const account = Array.isArray(found) && found.length ? found[0] : null;
 
-      const ins = await supabasePost('follow_magic_links', { email, token, expires_at: expiresAt });
-      if (ins && ins.ok) {
-        const link = `${SITE_ORIGIN}/api/my-follows?token=${encodeURIComponent(token)}`;
-        await sendFollowEmail({
-          to: email,
-          emailType: 'follow_magic_link',
-          alertId: null,
-          subject: 'Manage your followed cards',
-          html: `<p>Hi,</p>
+    if (account) {
+      const follows = await listFollows(account.id).catch(() => []);
+
+      // Only actually send if there is something to show. The response never changes.
+      if (follows.length > 0) {
+        const token = await createMagicLink(account.id);
+        if (token) {
+          const link = `${SITE_ORIGIN}/api/my-follows?token=${encodeURIComponent(token)}`;
+          await sendFollowEmail({
+            to: normalised,
+            emailType: 'follow_magic_link',
+            alertId: null,
+            subject: 'Manage your followed cards',
+            html: `<p>Hi,</p>
 <p>Here is your link to view and manage the cards you follow on Cards on Cards on Cards.</p>
 <p><a href="${link}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">View my followed cards</a></p>
 <p>This link works for ${MAGIC_LINK_TTL_HOURS} hours, then it expires.</p>
 <p>If you did not request this, you can ignore this email.</p>
 <p>The C3 Team</p>`
-        });
-      } else {
-        console.error('[my-follows] magic link insert failed');
+          });
+        } else {
+          console.error('[my-follows] magic link insert failed');
+        }
       }
     }
   }
@@ -658,44 +656,80 @@ async function handleMyFollows(req) {
 <p class="small">No account needed. The link expires after ${MAGIC_LINK_TTL_HOURS} hours.</p>`);
   }
 
-  const links = await supabaseGet(
-    `follow_magic_links?select=email,expires_at&token=eq.${encodeURIComponent(token)}&limit=1`,
-    true
-  ).catch(() => []);
+  // Resolve the token to a real account rather than to a raw email string.
+  const resolved = await resolveMagicLink(token);
 
-  if (!Array.isArray(links) || links.length === 0) {
+  if (resolved.status === 'unknown') {
     return followMessage('Link not valid', 'That link is not recognised. Request a new one from the manage page.', 404);
   }
-
-  const link = links[0];
-  if (new Date(link.expires_at).getTime() < Date.now()) {
+  if (resolved.status === 'expired') {
     return followMessage('Link expired', `That link has expired. Links are valid for ${MAGIC_LINK_TTL_HOURS} hours. Request a new one.`, 410);
   }
 
-  const rows = await supabaseGet(
-    `card_price_alerts?select=game,card_name,card_slug,confirmed,created_at,unsubscribe_token&email=eq.${encodeURIComponent(link.email)}&alert_type=eq.follow&order=created_at.desc`,
-    true
-  ).catch(() => []);
+  const account = resolved.account;
 
-  if (!Array.isArray(rows) || rows.length === 0) {
+  // POST with an id is the HARD delete: "remove from my follows entirely". Deliberately a
+  // POST, and deliberately scoped to this account's own rows, so a prefetching mail scanner
+  // cannot destroy anything and a guessed id cannot delete someone else's follow.
+  if (req.method === 'POST') {
+    const form = await req.formData().catch(() => null);
+    const removeId = form && form.get('remove');
+    if (removeId) {
+      const ok = await deleteFollow(account.id, String(removeId));
+      if (!ok) {
+        return followMessage('Something went wrong', 'We could not remove that card just now. Please try again shortly.', 500);
+      }
+      // Fall through and re-render the list, so the user sees the result immediately.
+    }
+  }
+
+  const rows = await listFollows(account.id);
+
+  if (rows.length === 0) {
     return followMessage('No followed cards', 'You are not following any cards right now.');
   }
 
+  await touchAccount(account.id);
+
+  const tier = await getTier(account.email);
+  const cap  = capFor(tier);
+
+  // Two distinct actions, never conflated:
+  //   Turn off alerts  = soft delete, keeps the card in the list, stops the emails.
+  //   Remove           = hard delete, drops the row and frees a cap slot.
   const items = rows.map(r => {
     const name = r.card_name || r.card_slug;
     const when = (r.created_at || '').slice(0, 10);
+    const off  = !!r.unsubscribed_at;
+    const status = off
+      ? ' &middot; alerts off'
+      : (r.confirmed ? '' : ' &middot; not yet confirmed');
+    const alertAction = off
+      ? ''
+      : `<a href="/api/unsubscribe-follow?token=${encodeURIComponent(r.unsubscribe_token || '')}">Turn off alerts</a>`;
     return `<li>
   <span>
     <strong>${esc(name)}</strong><br>
-    <span class="meta">${esc(GAME_LABELS[r.game] || r.game)} &middot; followed ${esc(when)}${r.confirmed ? '' : ' &middot; not yet confirmed'}</span>
+    <span class="meta">${esc(GAME_LABELS[r.game] || r.game)} &middot; followed ${esc(when)}${status}</span>
   </span>
-  <a href="/api/unsubscribe-follow?token=${encodeURIComponent(r.unsubscribe_token || '')}">Remove</a>
+  <span>
+    ${alertAction}
+    <form method="POST" action="/api/my-follows?token=${encodeURIComponent(token)}" style="display:inline">
+      <input type="hidden" name="remove" value="${esc(String(r.id))}">
+      <button type="submit" style="background:none;border:none;color:#7a8099;text-decoration:underline;cursor:pointer;font-size:13px;padding:0 0 0 10px">Remove</button>
+    </form>
+  </span>
 </li>`;
   }).join('');
 
+  const capLine = cap === null
+    ? ''
+    : `<p class="small">${rows.length} of ${cap} followed.</p>`;
+
   return followPage('Your followed cards', `
 <ul class="follows">${items}</ul>
-<p class="small">${rows.length} card${rows.length === 1 ? '' : 's'} followed.</p>`);
+${capLine}
+<p class="small">Turning off alerts keeps the card here and stops the emails. Remove takes it off your list entirely.</p>`);
 }
 
 // --- Collection waitlist ---
@@ -1010,7 +1044,12 @@ export default async (req) => {
   if (path === '/api/confirm-follow')     return handleConfirmFollow(req);
   if (path === '/api/unsubscribe-follow') return handleUnsubscribeFollow(req);
   if (path === '/api/my-follows') {
-    return req.method === 'POST' ? handleMyFollowsRequest(req) : handleMyFollows(req);
+    // A POST WITHOUT a token is the "email me my follows" form (anti-enumeration, no account
+    // is created). A POST WITH a token is an authenticated action on the magic-link page,
+    // currently the hard delete. Both go to the handler that owns that surface.
+    const hasToken = !!url.searchParams.get('token');
+    if (req.method === 'POST' && !hasToken) return handleMyFollowsRequest(req);
+    return handleMyFollows(req);
   }
   if (path === '/api/newsletter') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
