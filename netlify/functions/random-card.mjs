@@ -2,13 +2,17 @@
 // Returns random cards from any supported TCG game
 // Query params: ?game=pokemon&limit=3&sort=price&min_price=10
 // min_price is interpreted in AUD (converted to USD internally for non-MTG market_price)
-// Supported games: mtg, pokemon, yugioh, lorcana, onepiece, riftbound, starwars, dragonball, weissschwarz
+// Supported games: mtg, pokemon, yugioh, lorcana, onepiece, riftbound, starwars, dbsfusionworld,
+//                  dragonball, weissschwarz
 // Optional &property=<slug> narrows Weiss Schwarz to one licensed property (via weissschwarz_sets).
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 
+// GAME_TABLES membership is a CAPABILITY gate: an unlisted game gets a 400 from this endpoint.
+// task-118 adds dbsfusionworld (the Core Dragon Ball game), which was missing and so could never
+// be rolled. dragonball is KEPT: Extended, but removing it would 400 a game that works today.
 const GAME_TABLES = {
   mtg:        'mtg_cards',
   pokemon:    'pokemon_cards',
@@ -17,20 +21,25 @@ const GAME_TABLES = {
   onepiece:   'onepiece_cards',
   riftbound:  'riftbound_cards',
   starwars:   'starwars_cards',
+  dbsfusionworld: 'dbsfusionworld_cards',
   dragonball: 'dragonball_cards',
   weissschwarz: 'weissschwarz_cards',
 };
 
+// Used only to pick a random offset, so every value here must UNDER-count the rows that actually
+// pass the image + rarity filters, or an offset can overshoot and return nothing.
 const GAME_COUNTS = {
   mtg: 96480, pokemon: 31642, yugioh: 46588, lorcana: 2000,  // conservative: not all have images
   onepiece: 6289, riftbound: 1159, starwars: 6113, dragonball: 6261,
+  dbsfusionworld: 3400,  // 3,573 have an image and rarity != None; conservative
   weissschwarz: 29000,  // 30,484 total (all imaged); ~29,832 with rarity != None; conservative
 };
 
 const GAME_PATHS = {
   mtg: '/cards/mtg', pokemon: '/cards/pokemon', yugioh: '/cards/yugioh',
   lorcana: '/cards/lorcana', onepiece: '/cards/onepiece', riftbound: '/cards/riftbound',
-  starwars: '/cards/starwars', dragonball: '/cards/dragonball',
+  starwars: '/cards/starwars', dbsfusionworld: '/cards/dbsfusionworld',
+  dragonball: '/cards/dragonball',
   weissschwarz: '/cards/weissschwarz',
 };
 

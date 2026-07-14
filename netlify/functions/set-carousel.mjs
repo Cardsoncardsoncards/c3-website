@@ -45,8 +45,15 @@ function json(data, status = 200) {
 //                 served per slug, so an undeduped top-20 shows the same card several times,
 //                 each tile linking to the same page. Collapse by slug keeping the
 //                 highest-priced printing, the same rule generate-sitemap-cards.mjs uses.
+// Membership in this object is a CAPABILITY gate, not a display list: an unlisted game gets a
+// 400 "Invalid game parameter" from this endpoint (see the cfg check below). So games are added
+// here, never removed. task-118 adds dbsfusionworld (the Core Dragon Ball game), which was
+// simply missing and therefore un-carouselable. dragonball is KEPT: it is Extended now, but
+// removing it would 400 any caller still asking for it. There is nothing Core-specific in here
+// to demote, this object carries no labels, colours or ordering.
 const GAME_CONFIG = {
   riftbound:  { table: 'riftbound_cards',  path: '/cards/riftbound',  setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
+  dbsfusionworld: { table: 'dbsfusionworld_cards', path: '/cards/dbsfusionworld', setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
   lorcana:    { table: 'lorcana_cards',    path: '/cards/lorcana',    setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
   pokemon:    { table: 'pokemon_cards',    path: '/cards/pokemon',    setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },
   yugioh:     { table: 'yugioh_cards',     path: '/cards/yugioh',     setCol: 'set_id', imageCol: 'image_url', priceCol: 'market_price', numberCol: 'number', priceIsAud: false },

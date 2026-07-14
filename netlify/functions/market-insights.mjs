@@ -36,12 +36,18 @@ const GAME_CONFIG = {
   wixoss:            { label: 'Wixoss',             color: '#F43F5E' },
   wow:               { label: 'WoW TCG',            color: '#B45309' },
   warhammer:         { label: 'Warhammer',          color: '#DC2626' },
-  dbsfusionworld:    { label: 'DBS Fusion World',   color: '#F97316' },
+  // task-117: was #F97316, which is identical to One Piece. Both are primary tabs now, so the
+  // two tints sat side by side. #FF6B35 is the colour dbsfusionworld already carries in
+  // compare-search.mjs, so this also makes it consistent sitewide.
+  dbsfusionworld:    { label: 'DBS Fusion World',   color: '#FF6B35' },
   dragonballz:       { label: 'Dragon Ball Z',      color: '#EAB308' },
 };
 
 // Top 8 shown as tabs. Rest go in dropdown.
-const PRIMARY_GAMES = ['mtg','pokemon','yugioh','lorcana','onepiece','dragonball','starwars','riftbound'];
+// task-117: the Core Dragon Ball game is dbsfusionworld (Fusion World), not dragonball (the
+// older CCG). dragonball is not removed, it drops to the dropdown with the other Extended
+// games, exactly like every other non-primary game. Nothing disappears from this page.
+const PRIMARY_GAMES = ['mtg','pokemon','yugioh','lorcana','onepiece','dbsfusionworld','starwars','riftbound'];
 
 function esc(s) {
   return String(s == null ? '' : s)

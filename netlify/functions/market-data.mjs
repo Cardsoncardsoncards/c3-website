@@ -46,9 +46,17 @@ const GAME_CONFIG = {
   dragonballz:       { label: 'Dragon Ball Z',      color: '#EAB308', path: '/cards/dragonballz' },
 };
 
-// Games included in the "all" fanout. Keep to well-populated games.
+// Games included in the "all" fanout. Keep to well-populated games. (MTG is fetched separately
+// by fetchMTGMovers, so it is deliberately not in this list.)
+//
+// task-117: this is NOT a Core-games list, the criterion is coverage, so it is not swapped when
+// the Core designation changes. dbsfusionworld was missing and is added: it clears the same
+// filters this fanout actually applies (439 gainers and 340 losers at 7d, against a limit of
+// 40). dragonball is KEPT, not removed: it clears them too (617 and 426), so it qualifies on
+// this list's own stated criterion regardless of being Extended. Dropping it would have cut
+// 1,000+ movers out of the All tab for no reason.
 const ALL_FANOUT = [
-  'pokemon','yugioh','lorcana','onepiece','dragonball','digimon',
+  'pokemon','yugioh','lorcana','onepiece','dbsfusionworld','dragonball','digimon',
   'finalfantasy','grandarchive','starwars','riftbound','sorcery',
   'unionarena','weissschwarz','vanguard','hololive','gundam','universus','shadowverse'
 ];

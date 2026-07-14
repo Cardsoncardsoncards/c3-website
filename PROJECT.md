@@ -1,6 +1,7 @@
 # C3 MASTER PROJECT DOCUMENT
 **Cards on Cards on Cards — cardsoncardsoncards.com.au**
-*Single source of truth. Replaces PROJECT.md, CLAUDE.md, C3_Master_Handover_28June2026.md, C3_Project_Handover_June2026.md and all prior handover documents.*
+*Single source of truth for strategy, status, history and commercial decisions. Supersedes C3_Master_Handover_28June2026.md, C3_Project_Handover_June2026.md and all prior handover documents.*
+*It does NOT supersede CLAUDE.md. That file exists at the repo root (created task-115) and holds the build rules Claude Code applies when changing code. The split: PROJECT.md is what the project is and why. CLAUDE.md is how to change the code. Both are current, keep both current. This line previously claimed to replace CLAUDE.md, which contradicted the CLAUDE.md references further down this same file.*
 *Generated: 2 July 2026. Next update after Week 1 build sprint completes.*
 
 ---

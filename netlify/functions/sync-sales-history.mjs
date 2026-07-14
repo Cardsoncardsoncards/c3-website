@@ -12,6 +12,21 @@ const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 
+// This list is NOT a Core-games list. It is gated on one hard prerequisite: the card table must
+// carry a resolved tcgapi_id, because that is the only key this sync can call tcgapi.dev with
+// (see the query below, which filters tcgapi_id=not.is.null&tcgapi_id=neq.-1). tcgapi_id is
+// populated by the per-game sync-ids-<game>-background.mjs jobs.
+//
+// task-118: dbsfusionworld is the Core Dragon Ball game but is deliberately NOT in this list.
+// dbsfusionworld_cards has NO tcgapi_id column at all (it has id, tcgplayer_id, set_id only),
+// and there is no sync-ids-dbsfusionworld-background.mjs to populate one. Adding it here would
+// not sync anything: the select would reference a column that does not exist, PostgREST would
+// 400, and the catch below would log "Supabase read error" on every tier of every run forever.
+// Enabling sales history for Fusion World is a schema + new-sync-job task, not a list edit.
+//
+// dragonball stays. It is Extended now, but it HAS a resolved tcgapi_id (3,158 cards, 1,004 in
+// tier 1) and is actively accruing sales history. Removing it would delete working coverage and
+// gain nothing, since this list is gated on tcgapi_id, not on Core status.
 const GAMES = [
   { game: 'mtg',        table: 'mtg_cards',        priceCol: 'price_usd'    },
   { game: 'pokemon',    table: 'pokemon_cards',     priceCol: 'market_price' },

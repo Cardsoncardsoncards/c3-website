@@ -32,19 +32,29 @@ const SUPPORT_EMAIL = 'ccc.squadhelp@gmail.com';
 // rather than the string "undefined". It is deliberately neither list's wording.
 const LIST_UNSUBSCRIBE = `<mailto:${SUPPORT_EMAIL}?subject=Unsubscribe%20C3>`;
 
+// The Core 8. task-116: the Core Dragon Ball game is Fusion World (dbsfusionworld), NOT the
+// older CCG (dragonball), which is Extended. This now agrees with the rest of the codebase:
+// dbsfusionworld is one of the 7 followable card pages (task-111) and is what the apitcg Card
+// Details work targets. dragonball is deliberately absent from this map, it is Extended and the
+// weekly email does not cover Extended games.
 const GAME_CONFIG = {
-  mtg:        { label: 'MTG',         path: '/cards/mtg' },
-  pokemon:    { label: 'Pokemon',     path: '/cards/pokemon' },
-  yugioh:     { label: 'Yu-Gi-Oh',    path: '/cards/yugioh' },
-  lorcana:    { label: 'Lorcana',     path: '/cards/lorcana' },
-  onepiece:   { label: 'One Piece',   path: '/cards/onepiece' },
-  dragonball: { label: 'Dragon Ball', path: '/cards/dragonball' },
-  starwars:   { label: 'Star Wars',   path: '/cards/starwars' },
-  riftbound:  { label: 'Riftbound',   path: '/cards/riftbound' },
+  mtg:            { label: 'MTG',                     path: '/cards/mtg' },
+  pokemon:        { label: 'Pokemon',                 path: '/cards/pokemon' },
+  yugioh:         { label: 'Yu-Gi-Oh',                path: '/cards/yugioh' },
+  lorcana:        { label: 'Lorcana',                 path: '/cards/lorcana' },
+  onepiece:       { label: 'One Piece',               path: '/cards/onepiece' },
+  dbsfusionworld: { label: 'Dragon Ball Fusion World',path: '/cards/dbsfusionworld' },
+  starwars:       { label: 'Star Wars',               path: '/cards/starwars' },
+  riftbound:      { label: 'Riftbound',               path: '/cards/riftbound' },
 };
+// Upstream tcgapi.dev game slugs. These are NOT guesses: each is copied from the sync job that
+// already pulls that game in production, which is the only place they are known to be correct.
+// dbsfusionworld -> 'dragon-ball-super-fusion-world' (sync-dbsfusionworld-background.mjs).
+// The previous value here was 'dragon-ball-super', which matches NEITHER real slug (the CCG is
+// 'dragon-ball-super-ccg', per sync-dragonball-background.mjs). It was dead, and wrong.
 const TCG_API_GAME_MAP = {
   pokemon: 'pokemon', yugioh: 'yugioh', lorcana: 'disney-lorcana',
-  onepiece: 'one-piece-card-game', dragonball: 'dragon-ball-super',
+  onepiece: 'one-piece-card-game', dbsfusionworld: 'dragon-ball-super-fusion-world',
   starwars: 'star-wars-unlimited', riftbound: 'riftbound-league-of-legends-trading-card-game',
 };
 

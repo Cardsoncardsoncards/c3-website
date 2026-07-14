@@ -14,15 +14,25 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
 const AMAZON_TAG        = 'blasdigital-22';
 
+// GAME_CONFIG does two jobs at once, and they are NOT the same job:
+//   1. `primary: true` decides which games get a Core chip in the filter row (see gameChips).
+//   2. Membership in this object AT ALL decides which games fetchCard() can load. A game that
+//      is absent returns null from fetchCard() and cannot be compared.
+// task-117: the Core Dragon Ball game is dbsfusionworld, so it takes the Core chip. dragonball
+// is demoted to Extended, which means it loses the chip, NOT that it is removed. It stays in
+// this object so its cards remain fully comparable. Deleting it would have silently broken
+// comparison for all 11,852 Dragon Ball cards.
 const GAME_CONFIG = {
-  mtg:        { label: 'MTG',         color: '#C9A84C', table: 'mtg_cards',       hubPath: '/cards/mtg'        },
-  pokemon:    { label: 'Pokemon',     color: '#EF4444', table: 'pokemon_cards',    hubPath: '/cards/pokemon'    },
-  yugioh:     { label: 'Yu-Gi-Oh',   color: '#8B5CF6', table: 'yugioh_cards',     hubPath: '/cards/yugioh'     },
-  lorcana:    { label: 'Lorcana',     color: '#3B82F6', table: 'lorcana_cards',    hubPath: '/cards/lorcana'    },
-  onepiece:   { label: 'One Piece',   color: '#F97316', table: 'onepiece_cards',   hubPath: '/cards/onepiece'   },
-  dragonball: { label: 'Dragon Ball', color: '#EAB308', table: 'dragonball_cards', hubPath: '/cards/dragonball' },
-  starwars:   { label: 'Star Wars',   color: '#FFE81F', table: 'starwars_cards',   hubPath: '/cards/starwars'   },
-  riftbound:  { label: 'Riftbound',   color: '#10B981', table: 'riftbound_cards',  hubPath: '/cards/riftbound'  },
+  mtg:            { label: 'MTG',              color: '#C9A84C', table: 'mtg_cards',            hubPath: '/cards/mtg',            primary: true  },
+  pokemon:        { label: 'Pokemon',          color: '#EF4444', table: 'pokemon_cards',        hubPath: '/cards/pokemon',        primary: true  },
+  yugioh:         { label: 'Yu-Gi-Oh',        color: '#8B5CF6', table: 'yugioh_cards',         hubPath: '/cards/yugioh',         primary: true  },
+  lorcana:        { label: 'Lorcana',          color: '#3B82F6', table: 'lorcana_cards',        hubPath: '/cards/lorcana',        primary: true  },
+  onepiece:       { label: 'One Piece',        color: '#F97316', table: 'onepiece_cards',       hubPath: '/cards/onepiece',       primary: true  },
+  dbsfusionworld: { label: 'DBS Fusion World', color: '#FF6B35', table: 'dbsfusionworld_cards', hubPath: '/cards/dbsfusionworld', primary: true  },
+  starwars:       { label: 'Star Wars',        color: '#FFE81F', table: 'starwars_cards',       hubPath: '/cards/starwars',       primary: true  },
+  riftbound:      { label: 'Riftbound',        color: '#10B981', table: 'riftbound_cards',      hubPath: '/cards/riftbound',      primary: true  },
+  // Extended: comparable, but no Core chip.
+  dragonball:     { label: 'Dragon Ball',      color: '#EAB308', table: 'dragonball_cards',     hubPath: '/cards/dragonball',     primary: false },
 };
 
 const MTG_FORMATS = ['standard','pioneer','modern','legacy','vintage','commander'];
@@ -800,9 +810,13 @@ function renderPage({ cards, allTokens, usdToAud }) {
   const valueBars   = isSameCard ? buildValueBars(cards) : '';
   const metricBars  = (!isSameCard && cards.length >= 2) ? buildMetricBars(cards, allMtg) : '';
 
-  const gameChips = Object.entries(GAME_CONFIG).map(([g, cfg]) =>
-    `<button class="game-chip" data-game="${g}" style="--gc:${cfg.color}">${cfg.label}</button>`
-  ).join('');
+  // Core games only. Extended games (dragonball) stay comparable via fetchCard, they just do
+  // not get a filter chip, which is the same treatment every other Extended game gets.
+  const gameChips = Object.entries(GAME_CONFIG)
+    .filter(([, cfg]) => cfg.primary)
+    .map(([g, cfg]) =>
+      `<button class="game-chip" data-game="${g}" style="--gc:${cfg.color}">${cfg.label}</button>`
+    ).join('');
 
   const verdictHtml = verdict ? `
   <div class="verdict-banner">
@@ -1328,13 +1342,15 @@ function setGameFilter(game) {
     }
   } else {
     activeGameFilter = game;
+    // Core 8 only: these style the active chip, and only Core games have a chip. Both lookups
+    // already fall back safely (cfg[game] || accent, labels[game] || game) if that ever changes.
     var cfg = {
       mtg:'#C9A84C',pokemon:'#EF4444',yugioh:'#8B5CF6',lorcana:'#3B82F6',
-      onepiece:'#F97316',dragonball:'#EAB308',starwars:'#FFE81F',riftbound:'#10B981'
+      onepiece:'#F97316',dbsfusionworld:'#FF6B35',starwars:'#FFE81F',riftbound:'#10B981'
     };
     var labels = {
       mtg:'MTG',pokemon:'Pokemon',yugioh:'Yu-Gi-Oh',lorcana:'Lorcana',
-      onepiece:'One Piece',dragonball:'Dragon Ball',starwars:'Star Wars',riftbound:'Riftbound'
+      onepiece:'One Piece',dbsfusionworld:'DBS Fusion World',starwars:'Star Wars',riftbound:'Riftbound'
     };
     chips.forEach(function(c) { c.classList.toggle('active', c.dataset.game === game); });
     if (input) {

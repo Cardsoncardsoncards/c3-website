@@ -3,7 +3,7 @@
 // GET /api/compare-search?q=lightning+bolt&limit=8&game=mtg
 // GET /api/compare-search?q=lightning+bolt&game=mtg&printings=1
 // Supports all 32 TCGs with data in Supabase
-// Updated: 20 May 2026 -- added 19 additional games
+// Updated: 20 May 2026 -- added the Extended games (24 of them, for 32 total)
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -17,10 +17,13 @@ const GAME_TABLES = [
   { game: 'yugioh',           table: 'yugioh_cards',           nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Yu-Gi-Oh',           color: '#c8a332', isAud: false },
   { game: 'lorcana',          table: 'lorcana_cards',          nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Lorcana',            color: '#38BDF8', isAud: false },
   { game: 'onepiece',         table: 'onepiece_cards',         nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'One Piece',          color: '#EF4444', isAud: false },
-  { game: 'dragonball',       table: 'dragonball_cards',       nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Dragon Ball',        color: '#F97316', isAud: false },
+  { game: 'dbsfusionworld',   table: 'dbsfusionworld_cards',   nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'DBS Fusion World',   color: '#FF6B35', isAud: false },
   { game: 'starwars',         table: 'starwars_cards',         nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Star Wars',          color: '#FFE81F', isAud: false },
   { game: 'riftbound',        table: 'riftbound_cards',        nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Riftbound',          color: '#7C6AF5', isAud: false },
-  // --- 19 additional games ---
+  // --- Extended 24 ---
+  // Note: dragonball (Dragon Ball Super CCG) is Extended. The Core Dragon Ball game is
+  // dbsfusionworld (Fusion World), listed above. They are separate games, separate tables.
+  { game: 'dragonball',       table: 'dragonball_cards',       nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Dragon Ball',        color: '#F97316', isAud: false },
   { game: 'digimon',          table: 'digimon_cards',          nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Digimon',            color: '#3B82F6', isAud: false },
   { game: 'vanguard',         table: 'vanguard_cards',         nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Vanguard',           color: '#DC2626', isAud: false },
   { game: 'weissschwarz',     table: 'weissschwarz_cards',     nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Weiss Schwarz',      color: '#EC4899', isAud: false },
@@ -28,7 +31,6 @@ const GAME_TABLES = [
   { game: 'forceofwill',      table: 'forceofwill_cards',      nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Force of Will',      color: '#0EA5E9', isAud: false },
   { game: 'buddyfight',       table: 'buddyfight_cards',       nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Buddyfight',         color: '#F59E0B', isAud: false },
   { game: 'shadowverse',      table: 'shadowverse_cards',      nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Shadowverse Evolve', color: '#8B5CF6', isAud: false },
-  { game: 'dbsfusionworld',   table: 'dbsfusionworld_cards',   nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'DBS Fusion World',   color: '#FF6B35', isAud: false },
   { game: 'wow',              table: 'wow_cards',              nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'WoW TCG',            color: '#C9A84C', isAud: false },
   { game: 'unionarena',       table: 'unionarena_cards',       nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'Union Arena',        color: '#10B981', isAud: false },
   { game: 'universus',        table: 'universus_cards',        nameCol: 'name', slugCol: 'slug', priceCol: 'market_price', imgCol: 'image_url',       setCol: 'set_name', label: 'UniVersus',          color: '#6366F1', isAud: false },
