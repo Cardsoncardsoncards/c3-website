@@ -255,6 +255,45 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     .nav-links .nav-link{width:100%;justify-content:flex-start;white-space:normal;font-size:13px;padding:12px 14px}
   }
 </style>
+<style>
+  /* Account link (task-113). Copied from netlify/functions/shared/nav.mjs so static pages
+     match the dynamic function pages exactly. Sits outside .nav-links, so it stays visible
+     at every width; collapses to icon-only under 768px. */
+  .nav-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    padding: 5px 10px;
+    margin-left: 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(160,168,192,.3);
+    color: #A0A8C0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .2s;
+  }
+  .nav-account:hover {
+    color: #F0F2FF;
+    border-color: #C9A84C;
+    background: rgba(201,168,76,.08);
+    text-decoration: none;
+  }
+  @media (max-width: 768px) {
+    .nav-account { padding: 5px 8px; margin-left: 2px; }
+    .nav-account-text { display: none; }
+    /* These static pages keep .nav-links on screen at mobile (there is no burger/drawer here,
+       unlike nav.mjs, where .nav-links is display:none). It is flex-shrink:0, so the pill row
+       runs ~370px past a 375px viewport and body{overflow-x:hidden} clips the tail, which is
+       where Account sits. Allowing it to shrink turns on the horizontal scroll .nav-links
+       already asks for (overflow-x:auto) and keeps Account visible. Desktop is untouched. */
+    .nav-links { flex-shrink: 1; min-width: 0; }
+  }
+</style>
 </head>
 <body>
 
@@ -279,6 +318,9 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="/pricing" class="nav-link nav-link--pricing" style="color:#C9A84C;border-color:rgba(201,168,76,.35)">Pricing</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
     </div>
+    <a href="/account" class="nav-account" title="Your C3 account">
+      &#128100;<span class="nav-account-text">Account</span>
+    </a>
   </div>
 </nav>
 

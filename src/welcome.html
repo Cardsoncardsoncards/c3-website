@@ -73,12 +73,17 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .carousel-section::after{right:0;background:linear-gradient(to left,var(--ink),transparent)}
 .carousel-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;padding:0 24px}
 .carousel-heading{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:16px;padding:0 24px}
-.carousel-track{display:flex;gap:14px;padding:4px 24px 12px;animation:scrollTrack 30s linear infinite}
+/* task-113: speed and size matched to the set-carousel pattern (.carousel-scroll, used by both
+   the Riftbound and Marvel carousels on this page). width:max-content is the actual speed fix:
+   without it the track was parent-width, so translateX(-50%) moved a different distance per
+   cycle than the set carousels do. Horizontal padding is dropped for the same reason, it would
+   be counted in max-content and offset the -50% seam. Edge fade comes from .carousel-section. */
+.carousel-track{display:flex;gap:12px;padding:4px 0 12px;animation:scrollTrack 30s linear infinite;will-change:transform;width:max-content}
 .carousel-track:hover{animation-play-state:paused}
 @keyframes scrollTrack{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.c-card{flex-shrink:0;width:160px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .22s;display:block}
+.c-card{flex:0 0 150px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .22s;display:block}
 .c-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 20px rgba(201,168,76,.15);text-decoration:none}
-.c-card img{width:100%;border-radius:6px;max-height:140px;object-fit:contain;margin-bottom:6px}
+.c-card img{width:100%;border-radius:6px;display:block;margin-bottom:6px}
 .c-card-name{font-size:11px;color:var(--white);font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .c-card-price{font-size:12px;color:var(--gold);font-weight:700;margin-top:2px}
 
@@ -132,6 +137,46 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
 }
 @media(max-width:600px){[class*="carousel"]:before,[class*="carousel"]:after{width:20px!important}[class*="track"]{gap:8px!important}}
 </style>
+<style>
+  /* Account link (task-113). Copied from netlify/functions/shared/nav.mjs so static pages
+     match the dynamic function pages exactly. Sits outside .nav-links, so it stays visible
+     at every width; collapses to icon-only under 768px. */
+  .nav-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    padding: 5px 10px;
+    margin-left: 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(160,168,192,.3);
+    color: #A0A8C0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .2s;
+  }
+  .nav-account:hover {
+    color: #F0F2FF;
+    border-color: #C9A84C;
+    background: rgba(201,168,76,.08);
+    text-decoration: none;
+  }
+  @media (max-width: 768px) {
+    .nav-account { padding: 5px 8px; margin-left: 2px; }
+    .nav-account-text { display: none; }
+    /* These static pages keep .nav-links on screen at mobile (there is no burger/drawer
+       here, unlike nav.mjs, where .nav-links is display:none). It is flex-shrink:0, so the
+       pill row runs ~370px past a 375px viewport and body{overflow-x:hidden} clips the tail,
+       which is where Account sits. Allowing it to shrink turns on the horizontal scroll
+       .nav-links already asks for (overflow-x:auto) and keeps Account visible. Desktop is
+       untouched. */
+    .nav-links { flex-shrink: 1; min-width: 0; }
+  }
+</style>
 </head>
 <body>
 
@@ -151,6 +196,9 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
       <a href="/pricing" class="nav-link nav-link--pricing">Pricing</a>
     </div>
+    <a href="/account" class="nav-account" title="Your C3 account">
+      &#128100;<span class="nav-account-text">Account</span>
+    </a>
   </div>
 </nav>
 
@@ -159,28 +207,28 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
 <div class="release-ticker">
   <span class="ticker-label">Releases</span>
   <div class="ticker-track" id="relTicker">
-    <span class="ticker-item"><a href="/cards/lorcana/sets/4500014" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Wilds Unknown</strong> &middot; May 2026</a></span>
-    <span class="ticker-item"><a href="/cards/riftbound/sets/unleashed" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Unleashed</strong> &middot; May 2026</a></span>
-    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> &middot; May 2026</a></span>
-    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> &middot; May 2026</a></span>
-    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Final Fantasy</strong> &middot; Jun 2026</a></span>
-    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>OP-12</strong> &middot; Jun 2026</a></span>
-    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Twilight of the Republic</strong> &middot; Jun 2026</a></span>
-    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> &middot; Jul 2026</a></span>
-    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> &middot; Aug 2026</a></span>
-    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Late 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg/sets/marvel-super-heroes" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Marvel Super Heroes</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/yugioh" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C084FC26;color:#C084FC">Yu-Gi-Oh</span><strong>Chaos Origins</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>ME05: Pitch Black</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/lorcana" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Attack of the Vine!</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Ashes of the Empire</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>The Hobbit</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>The World's Strongest Warriors</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/yugioh" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C084FC26;color:#C084FC">Yu-Gi-Oh</span><strong>Magnificent Monsters</strong> &middot; Sep 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>ME: 30th Celebration</strong> &middot; Sep 2026</a></span>
     <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
     <!-- duplicate for loop -->
-    <span class="ticker-item"><a href="/cards/lorcana/sets/4500014" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Wilds Unknown</strong> &middot; May 2026</a></span>
-    <span class="ticker-item"><a href="/cards/riftbound/sets/unleashed" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Unleashed</strong> &middot; May 2026</a></span>
-    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Tarkir: Dragonstorm</strong> &middot; May 2026</a></span>
-    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Destined Rivals</strong> &middot; May 2026</a></span>
-    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Final Fantasy</strong> &middot; Jun 2026</a></span>
-    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>OP-12</strong> &middot; Jun 2026</a></span>
-    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Twilight of the Republic</strong> &middot; Jun 2026</a></span>
-    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>Z-A TCG</strong> &middot; Jul 2026</a></span>
-    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Edge of Eternities</strong> &middot; Aug 2026</a></span>
-    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Late 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg/sets/marvel-super-heroes" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>Marvel Super Heroes</strong> &middot; Jun 2026</a></span>
+    <span class="ticker-item"><a href="/cards/yugioh" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:rgba(74,222,128,.12);color:#4ADE80;border:1px solid rgba(74,222,128,.25)">NEW</span><span class="ticker-game" style="background:#C084FC26;color:#C084FC">Yu-Gi-Oh</span><strong>Chaos Origins</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>ME05: Pitch Black</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/lorcana" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#38BDF826;color:#38BDF8">Lorcana</span><strong>Attack of the Vine!</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/starwars" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFE81F26;color:#FFE81F">Star Wars</span><strong>Ashes of the Empire</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/riftbound" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#818CF826;color:#818CF8">Riftbound</span><strong>Vendetta</strong> &middot; Jul 2026</a></span>
+    <span class="ticker-item"><a href="/cards/mtg" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C9A84C26;color:#C9A84C">MTG</span><strong>The Hobbit</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/onepiece" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#F9731626;color:#F97316">One Piece</span><strong>The World's Strongest Warriors</strong> &middot; Aug 2026</a></span>
+    <span class="ticker-item"><a href="/cards/yugioh" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#C084FC26;color:#C084FC">Yu-Gi-Oh</span><strong>Magnificent Monsters</strong> &middot; Sep 2026</a></span>
+    <span class="ticker-item"><a href="/cards/pokemon" style="text-decoration:none;display:contents"><span class="ticker-game" style="background:#FFCC0026;color:#FFCC00">Pokemon</span><strong>ME: 30th Celebration</strong> &middot; Sep 2026</a></span>
     <span class="ticker-item"><a href="/calendar" style="color:var(--gold);text-decoration:none;font-weight:600">View full release calendar &rarr;</a></span>
   </div>
 </div></div>
