@@ -405,15 +405,144 @@
     <button class="state-btn" onclick="filterState('ACT',this)">ACT</button>
   </div>
 
-  <!-- COMMUNITY POLL -->
-<div class="poll-embed fade-up" style="margin:16px 0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-  <div>
-    <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Community Poll</div>
-    <div style="font-size:14px;font-weight:700;color:var(--text)">Which 2026 TCG Release Are You Most Hyped For?</div>
-    <div style="font-size:12px;color:var(--text2);margin-top:2px">Cast your vote and see live results from the AU community.</div>
-  </div>
-  <a href="https://form.jotform.com/261402870260045" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;background:var(--gold);color:#000;white-space:nowrap;flex-shrink:0">Vote Now &#8599;</a>
+  <!-- COMMUNITY POLL (automated: top 6 upcoming releases from tcg_releases via /api/poll-data) -->
+<div id="poll-embed" class="poll-embed fade-up" style="margin:16px 0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 20px">
+  <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Community Poll</div>
+  <div id="poll-heading" style="font-size:14px;font-weight:700;color:var(--text)">Which Upcoming TCG Release Are You Most Hyped For?</div>
+  <div id="poll-sub" style="font-size:12px;color:var(--text2);margin-top:2px">Cast your vote and see live results from the AU community.</div>
+  <div id="poll-body" style="margin-top:12px"></div>
 </div>
+<script>
+(function(){
+  var SESSION_KEY = 'c3_session';
+  var VOTED_KEY   = 'c3_poll_voted';
+  // Same session helper pattern as card-page.mjs.
+  function getSession(){
+    var s = localStorage.getItem(SESSION_KEY);
+    if(!s){ s = Math.random().toString(36).slice(2); localStorage.setItem(SESSION_KEY, s); }
+    return s;
+  }
+  // Game filter comes from the URL, so /calendar renders the overall poll while a future
+  // /calendar?game=pokemon (or a standalone page hitting the same endpoint) renders a
+  // single-game poll. The cycle signature includes it so the two are tracked separately.
+  var params = new URLSearchParams(location.search);
+  var game   = (params.get('game') || '').trim();
+  var apiUrl = '/api/poll-data' + (game ? '?game=' + encodeURIComponent(game) : '');
+
+  var embed   = document.getElementById('poll-embed');
+  var body    = document.getElementById('poll-body');
+  var heading = document.getElementById('poll-heading');
+  var sub     = document.getElementById('poll-sub');
+
+  function signature(list){
+    var ids = list.map(function(o){ return o.tcg_release_id; }).sort(function(a,b){ return a-b; });
+    return (game || 'all') + ':' + ids.join(',');
+  }
+  function fmtDate(d){
+    if(!d) return '';
+    var p = String(d).split('-');
+    if(p.length !== 3) return d;
+    var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return parseInt(p[2],10) + ' ' + m[parseInt(p[1],10)-1] + ' ' + p[0];
+  }
+  function fetchJson(url, opts){
+    var ctrl = new AbortController();
+    var timer = setTimeout(function(){ ctrl.abort(); }, 8000);
+    opts = opts || {};
+    opts.signal = ctrl.signal;
+    return fetch(url, opts).then(function(r){
+      clearTimeout(timer);
+      if(!r.ok) throw new Error('http_' + r.status);
+      return r.json();
+    }).catch(function(e){ clearTimeout(timer); throw e; });
+  }
+
+  // Simple CSS bar chart (no library): bar width = share of total votes.
+  function renderResults(list){
+    heading.textContent = 'Most Hyped Upcoming Release';
+    sub.textContent = 'Live results from the AU community.';
+    body.innerHTML = '';
+    body.style.color = '';
+    var total = list.reduce(function(s,o){ return s + (o.vote_count||0); }, 0);
+    list.forEach(function(o){
+      var pct = total > 0 ? Math.round((o.vote_count||0) * 100 / total) : 0;
+      var row = document.createElement('div');
+      row.style.cssText = 'margin:8px 0';
+      var label = document.createElement('div');
+      label.style.cssText = 'display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--text);margin-bottom:3px';
+      var name = document.createElement('span');
+      name.textContent = o.game + ' - ' + o.set_name;
+      var meta = document.createElement('span');
+      meta.style.cssText = 'color:var(--text2);white-space:nowrap';
+      meta.textContent = pct + '% (' + (o.vote_count||0) + ')';
+      label.appendChild(name); label.appendChild(meta);
+      var track = document.createElement('div');
+      track.style.cssText = 'background:var(--bg3);border-radius:5px;overflow:hidden;height:10px';
+      var bar = document.createElement('div');
+      bar.style.cssText = 'height:10px;border-radius:5px;background:var(--gold);width:' + pct + '%;transition:width .4s ease';
+      track.appendChild(bar);
+      row.appendChild(label); row.appendChild(track);
+      body.appendChild(row);
+    });
+  }
+
+  function renderQuestion(list){
+    heading.textContent = 'Which Upcoming TCG Release Are You Most Hyped For?';
+    sub.textContent = 'Cast your vote and see live results from the AU community.';
+    body.innerHTML = '';
+    body.style.color = '';
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:8px';
+    list.forEach(function(o){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.style.cssText = 'text-align:left;cursor:pointer;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-weight:600';
+      btn.onmouseover = function(){ btn.style.borderColor = 'var(--gold)'; };
+      btn.onmouseout  = function(){ btn.style.borderColor = 'var(--border)'; };
+      var top = document.createElement('div');
+      top.textContent = o.game + ' - ' + o.set_name;
+      var dt = document.createElement('div');
+      dt.style.cssText = 'font-size:11px;color:var(--text2);font-weight:500;margin-top:2px';
+      dt.textContent = fmtDate(o.release_date);
+      btn.appendChild(top); btn.appendChild(dt);
+      btn.addEventListener('click', function(){ vote(o.tcg_release_id, list); });
+      wrap.appendChild(btn);
+    });
+    body.appendChild(wrap);
+  }
+
+  function vote(id, list){
+    var sig = signature(list);
+    body.style.opacity = '0.6';
+    fetchJson(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tcg_release_id: id, session_id: getSession() })
+    }).then(function(updated){
+      body.style.opacity = '';
+      try { localStorage.setItem(VOTED_KEY, sig); } catch(e){}
+      renderResults(Array.isArray(updated) && updated.length ? updated : list);
+    }).catch(function(){
+      // Network hiccup: still mark voted locally and show the tally we already have.
+      body.style.opacity = '';
+      try { localStorage.setItem(VOTED_KEY, sig); } catch(e){}
+      renderResults(list);
+    });
+  }
+
+  body.textContent = 'Loading poll...';
+  body.style.color = 'var(--text2)';
+  body.style.fontSize = '12px';
+  fetchJson(apiUrl).then(function(list){
+    if(!Array.isArray(list) || !list.length){ embed.style.display = 'none'; return; }
+    var sig = signature(list);
+    var voted = null;
+    try { voted = localStorage.getItem(VOTED_KEY); } catch(e){}
+    if(voted === sig) renderResults(list);   // already voted this cycle -> show chart
+    else renderQuestion(list);               // new cycle -> show question
+  }).catch(function(){ embed.style.display = 'none'; });
+})();
+</script>
 
   <!-- CALENDAR CONTENT -->
   <div id="calendar-content"></div>
