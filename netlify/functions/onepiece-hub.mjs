@@ -69,7 +69,7 @@ export default async (req) => {
     const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent((c.name||'one piece card')+' one piece tcg')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<a href="/cards/onepiece/${esc(c.slug)}" class="carousel-card">
       <div class="carousel-img-wrap">
-        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">
+        <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.src='/card-placeholder.svg';this.style.opacity='1'">
       </div>
       <div class="carousel-name">${esc(c.name)}</div>
       ${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}

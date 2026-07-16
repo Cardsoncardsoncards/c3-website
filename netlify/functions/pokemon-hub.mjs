@@ -257,7 +257,7 @@ export default async (req) => {
     return `<div class="carousel-card">
       <a href="/cards/pokemon/${c.slug}" style="display:block;text-decoration:none">
         <div class="carousel-img-wrap">
-          <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">
+          <img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.src='/card-placeholder.svg';this.style.opacity='1'">
         </div>
         <div class="carousel-name">${esc(c.name)}</div>
         ${c.rarity ? `<div class="carousel-rarity">${esc(c.rarity)}</div>` : ''}
@@ -278,7 +278,7 @@ export default async (req) => {
     return `<div class="carousel-card">
       <a href="/cards/pokemon/${c.slug}" style="display:block;text-decoration:none">
         <div class="carousel-img-wrap">
-          <img src="${esc(c.image_url)}#c2" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.style.opacity=0.3">
+          <img src="${esc(c.image_url)}#c2" alt="${esc(c.name)}" loading="eager" onerror="this.onerror=null;this.src='/card-placeholder.svg';this.style.opacity='1'">
         </div>
         <div class="carousel-name">${esc(c.name)}</div>
         ${c.rarity ? `<div class="carousel-rarity">${esc(c.rarity)}</div>` : ''}
