@@ -256,6 +256,9 @@ h1{font-family:'Cinzel',serif;font-size:28px;font-weight:700;margin-bottom:8px}
 .whoami strong{color:var(--white)}
 .signout{font-size:12px;color:var(--text2);text-decoration:underline}
 .capline{font-size:13px;color:var(--silver);margin:18px 0 14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.sortbar{display:flex;align-items:center;gap:8px;margin:0 0 14px}
+.sortbar label{color:var(--text2)}
+#follow-sort{background:#0d1117;border:1px solid #242840;color:#e8eaf0;border-radius:8px;padding:7px 10px;font-size:13px;font-family:inherit;cursor:pointer}
 
 .follow{display:flex;gap:14px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px}
 .follow img.art{width:64px;height:90px;object-fit:contain;border-radius:6px;background:#0d0f1a;flex-shrink:0}
@@ -536,6 +539,14 @@ async function dashboard(account, { cookie = null } = {}) {
 
       const off = !!f.unsubscribed_at;
 
+      // task-132 Part 6: per-row sort keys for the client-side sort control. Missing values are
+      // rendered as '' and always sort last. All of these come from enrichFollows already, so no
+      // extra query is needed.
+      const sName  = (f.card_name || (c && c.name) || f.card_slug || '').toLowerCase();
+      const sPrice = (c && c.price_aud != null && parseFloat(c.price_aud) > 0) ? parseFloat(c.price_aud) : '';
+      const s7     = (c && c.price_change_7d  != null && Number.isFinite(parseFloat(c.price_change_7d)))  ? parseFloat(c.price_change_7d)  : '';
+      const s30    = (c && c.price_change_30d != null && Number.isFinite(parseFloat(c.price_change_30d))) ? parseFloat(c.price_change_30d) : '';
+
       // Two clearly labelled buttons, both always visible, never a menu or an icon. They do
       // genuinely different things and the labels say which.
       const stopBtn = off
@@ -547,7 +558,7 @@ async function dashboard(account, { cookie = null } = {}) {
            </form>`;
 
       return `
-<div class="follow">
+<div class="follow" data-name="${esc(sName)}" data-price="${sPrice}" data-ch7="${s7}" data-ch30="${s30}">
   ${art}
   <div class="fmeta">
     <a href="/cards/${esc(f.game)}/${esc(f.card_slug)}" class="fname">${name}</a>
@@ -572,7 +583,44 @@ async function dashboard(account, { cookie = null } = {}) {
 <p class="whoami">Signed in as <strong>${esc(account.email)}</strong> &middot;
   <a class="signout" href="/account?signout=1">Not you? Sign in with a different email</a></p>
 ${capLine}
-${listHtml}
+${rows.length > 1 ? `
+<div class="sortbar">
+  <label for="follow-sort" class="small">Sort</label>
+  <select id="follow-sort">
+    <option value="added">Recently added</option>
+    <option value="az">Name A to Z</option>
+    <option value="price-hi">Price high to low</option>
+    <option value="price-lo">Price low to high</option>
+    <option value="mv7-up">Biggest 7d gainers</option>
+    <option value="mv7-dn">Biggest 7d fallers</option>
+    <option value="mv30-up">Biggest 30d gainers</option>
+    <option value="mv30-dn">Biggest 30d fallers</option>
+  </select>
+</div>` : ''}
+<div id="follow-list">${listHtml}</div>
+${rows.length > 1 ? `
+<script>
+(function(){
+  var sel=document.getElementById('follow-sort'), list=document.getElementById('follow-list');
+  if(!sel||!list) return;
+  var orig=[].slice.call(list.querySelectorAll('.follow'));
+  function num(el,a){ var v=el.getAttribute(a); return (v===''||v==null)?NaN:parseFloat(v); }
+  function byNum(attr,up){ return function(a,b){ var x=num(a,attr),y=num(b,attr);
+    if(isNaN(x)&&isNaN(y))return 0; if(isNaN(x))return 1; if(isNaN(y))return -1; return up?(y-x):(x-y); }; }
+  sel.addEventListener('change', function(){
+    var v=sel.value, arr=orig.slice();
+    if(v==='az') arr.sort(function(a,b){ return (a.getAttribute('data-name')||'').localeCompare(b.getAttribute('data-name')||''); });
+    else if(v==='price-hi') arr.sort(byNum('data-price',true));
+    else if(v==='price-lo') arr.sort(byNum('data-price',false));
+    else if(v==='mv7-up')  arr.sort(byNum('data-ch7',true));
+    else if(v==='mv7-dn')  arr.sort(byNum('data-ch7',false));
+    else if(v==='mv30-up') arr.sort(byNum('data-ch30',true));
+    else if(v==='mv30-dn') arr.sort(byNum('data-ch30',false));
+    // 'added' keeps the original (created_at desc) order.
+    arr.forEach(function(el){ list.appendChild(el); });
+  });
+})();
+</script>` : ''}
 
 <div class="explore">
   <a href="/compare"  class="pill pill--compare">Compare</a>
