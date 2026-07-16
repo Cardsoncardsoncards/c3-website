@@ -165,6 +165,20 @@
     .nav-links { flex-shrink: 1; min-width: 0; }
   }
 </style>
+<style>
+  /* task-121: hamburger/drawer nav (System 1) defined LAST so no earlier base
+     .nav-links{display:flex} rule can override it at mobile. All static pages now
+     match shop.html's nav behaviour: burger toggles .nav-links via the .open class. */
+  .hamburger{display:none;background:transparent;border:1px solid #1e2235;color:#A0A8C0;padding:6px 11px;border-radius:6px;cursor:pointer;font-size:18px;line-height:1;flex-shrink:0}
+  .hamburger:focus{outline:none;border-color:#C9A84C}
+  @media(max-width:768px){
+    .hamburger{display:block}
+    .nav-inner{position:relative;flex-wrap:nowrap}
+    .nav-links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;flex-wrap:nowrap;gap:6px;background:rgba(8,11,18,.98);border:1px solid #1e2235;border-radius:10px;padding:12px;max-height:78vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 12px 32px rgba(0,0,0,.5)}
+    .nav-links.open{display:flex}
+    .nav-links .nav-link{width:100%;justify-content:flex-start;white-space:normal;font-size:13px;padding:12px 14px}
+  }
+</style>
 </head>
 <body>
 
@@ -184,6 +198,7 @@
         &#128269;
       </button>
     </div>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
     <div class="nav-links">
       <a href="/cards"   class="nav-link nav-link--vault">Card Vault</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>

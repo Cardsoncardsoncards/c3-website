@@ -432,13 +432,26 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   @media (max-width: 768px) {
     .nav-account { padding: 5px 8px; margin-left: 2px; }
     .nav-account-text { display: none; }
-    /* These static pages keep .nav-links on screen at mobile (there is no burger/drawer
-       here, unlike nav.mjs, where .nav-links is display:none). It is flex-shrink:0, so the
-       pill row runs ~370px past a 375px viewport and body{overflow-x:hidden} clips the tail,
-       which is where Account sits. Allowing it to shrink turns on the horizontal scroll
-       .nav-links already asks for (overflow-x:auto) and keeps Account visible. Desktop is
-       untouched. */
+    /* task-121: static pages now use shop.html's hamburger/drawer nav, so at <=768px
+       .nav-links is hidden by System 1 (defined last) and opened via the burger, not a
+       scrolling pill row. Account sits outside .nav-links and stays visible next to the
+       burger. This flex-shrink override is now a harmless no-op at mobile; kept so desktop
+       is untouched. */
     .nav-links { flex-shrink: 1; min-width: 0; }
+  }
+</style>
+<style>
+  /* task-121: hamburger/drawer nav (System 1) defined LAST so no earlier base
+     .nav-links{display:flex} rule can override it at mobile. All static pages now
+     match shop.html's nav behaviour: burger toggles .nav-links via the .open class. */
+  .hamburger{display:none;background:transparent;border:1px solid #1e2235;color:#A0A8C0;padding:6px 11px;border-radius:6px;cursor:pointer;font-size:18px;line-height:1;flex-shrink:0}
+  .hamburger:focus{outline:none;border-color:#C9A84C}
+  @media(max-width:768px){
+    .hamburger{display:block}
+    .nav-inner{position:relative;flex-wrap:nowrap}
+    .nav-links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;flex-wrap:nowrap;gap:6px;background:rgba(8,11,18,.98);border:1px solid #1e2235;border-radius:10px;padding:12px;max-height:78vh;overflow-y:auto;overflow-x:hidden;box-shadow:0 12px 32px rgba(0,0,0,.5)}
+    .nav-links.open{display:flex}
+    .nav-links .nav-link{width:100%;justify-content:flex-start;white-space:normal;font-size:13px;padding:12px 14px}
   }
 </style>
 </head>
@@ -460,6 +473,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
         &#128269;
       </button>
     </div>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
     <div class="nav-links">
       <a href="/cards"   class="nav-link nav-link--vault">Card Vault</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>

@@ -119,8 +119,17 @@ across both worlds. There are two:
    This duplication is the deliberate, established convention here. Do NOT "fix" it by
    extracting a shared component. When the nav changes, it changes in 23 places: nav.mjs
    plus the 22 static pages.
-   Static pages have NO burger and NO drawer. At <=768px they keep .nav-links visible as a
-   horizontally scrolling pill row.
+   Static pages use the SAME hamburger/drawer pattern as shop.html: a <button class="hamburger">
+   inside .nav-inner, and at <=768px .nav-links is display:none and is opened/closed by toggling
+   the .open class on it (.nav-links.open{display:flex}). There is NO horizontally scrolling pill
+   row. The System 1 CSS (.hamburger styles plus the @media(max-width:768px){.nav-links{display:none}}
+   block) must be the LAST-defined .nav-links display rule on the page, otherwise a later base
+   .nav-links{display:flex} rule silently defeats the burger. That later-rule conflict was the
+   index.html / pricing.html / subscribe.html bug fixed in task-121.
+
+   CORRECTED 16 Jul 2026 (task-121): an earlier version of this file said static pages have "NO
+   burger and NO drawer" and keep a scrolling pill row. That contradicted shop.html's actual,
+   working hamburger implementation. All static pages should now match shop.html's nav behaviour.
 
 ### Nav routes (all verified live)
 - /cards, /calendar, /welcome, /subscribe, /tools, /play, /blog, /shop -> static pages in src/
@@ -135,13 +144,12 @@ across both worlds. There are two:
 - /account is ONE endpoint serving BOTH states: no session renders the sign-in page, a valid
   session renders the dashboard. So a plain static link to /account is correct signed in or out.
   Do not build a separate "sign in" route.
-- STATIC PAGES ONLY, and this is load-bearing: they also carry
+- Some static pages still carry, harmlessly,
       @media (max-width: 768px) { .nav-links { flex-shrink: 1; min-width: 0; } }
-  Without it, .nav-links is flex-shrink:0, the pill row runs ~370px past a 375px viewport, and
-  body{overflow-x:hidden} silently CLIPS the tail of the row -- which is exactly where the
-  Account link sits. The override lets the row use the horizontal scroll it already declares
-  (overflow-x:auto). Do not remove it, and do not copy it into nav.mjs (dynamic pages hide
-  .nav-links on mobile, so they neither need it nor want it).
+  Since task-121 this is a no-op at mobile: .nav-links is display:none there (System 1) and the
+  hamburger drawer takes over, so there is no pill row to shrink or clip. It only mattered under
+  the old scrolling-row design, which no longer exists. Leave it or delete it, either is fine; do
+  not copy it into nav.mjs (dynamic pages also hide .nav-links on mobile).
 
 ### No em dashes in content or code
 - Never use the em dash character in any code, content, or copy file
