@@ -376,7 +376,7 @@ export default async (req) => {
     const faqSchema = {
       "@context": "https://schema.org", "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": `What is ${card.name} worth in Australia?`, "acceptedAnswer": { "@type": "Answer", "text": priceAud ? `${card.name} from ${card.set_name} is currently worth approximately AU$${priceAud.toFixed(2)} based on recent eBay AU sales.` : `${card.name} pricing varies. Check eBay AU for the most current Australian prices.` }},
+        { "@type": "Question", "name": `What is ${card.name} worth in Australia?`, "acceptedAnswer": { "@type": "Answer", "text": priceAud ? `As of ${new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})}, ${card.name} from ${card.set_name} has a market price of approximately AU$${priceAud.toFixed(2)}, based on recent eBay AU sales.` : `${card.name} pricing varies. Check eBay AU for the most current Australian prices.` }},
         { "@type": "Question", "name": `Is ${card.name} rare?`, "acceptedAnswer": { "@type": "Answer", "text": card.rarity ? `${card.name} is a ${card.rarity} card from ${card.set_name}.` : `Check the card details for rarity information.` }},
         { "@type": "Question", "name": `What set is ${card.name} from?`, "acceptedAnswer": { "@type": "Answer", "text": `${card.name} is from the ${card.set_name} set${card.series ? `, part of the ${card.series} series` : ''}.${card.number ? ` It is card number ${card.number}.` : ''}` }}
       ]

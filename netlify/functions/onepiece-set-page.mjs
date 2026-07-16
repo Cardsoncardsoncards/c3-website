@@ -143,6 +143,8 @@ export default async (req) => {
     .wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
     @media(max-width:600px){.cards-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}}
   </style>
+  <script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"CollectionPage","name":set.name+" One Piece Card Prices Australia","description":"Browse all "+set.name+" One Piece cards with live AUD prices and eBay AU buy links.","url":"https://cardsoncardsoncards.com.au/cards/onepiece/sets/"+set.slug})}</script>
+  <script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cardsoncardsoncards.com.au"},{"@type":"ListItem","position":2,"name":"One Piece Cards","item":"https://cardsoncardsoncards.com.au/cards/onepiece"},{"@type":"ListItem","position":3,"name":set.name,"item":"https://cardsoncardsoncards.com.au/cards/onepiece/sets/"+set.slug}]})}</script>
 </head>
 <body>
 <style>${NAV_CSS}</style>${navHtml({ gameLabel: 'One Piece', gameHref: '/cards/onepiece' })}
