@@ -200,6 +200,7 @@ export default async (req) => {
   <meta property="og:image" content="${card.image_url ? esc(card.image_url) : 'https://cardsoncardsoncards.com.au/c3-og-banner.png'}">
   <meta property="og:url" content="https://cardsoncardsoncards.com.au/cards/unionarena/${esc(slug)}">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cardsoncardsoncards.com.au"},{"@type":"ListItem","position":2,"name":"Union Arena","item":"https://cardsoncardsoncards.com.au/cards/unionarena"},{"@type":"ListItem","position":3,"name":"${(card.name||'').replace(/"/g,'&quot;')}","item":"https://cardsoncardsoncards.com.au/cards/unionarena/${esc(slug)}"}]}</script>
+  ${priceAud ? `<script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"Product","name":card.name,"image":card.image_url||"","offers":{"@type":"Offer","priceCurrency":"AUD","price":priceAud.toFixed(2),"availability":"https://schema.org/InStock","url":"https://cardsoncardsoncards.com.au/cards/unionarena/"+slug}})}</script>` : ''}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>

@@ -18,6 +18,7 @@ module.exports = function(eleventyConfig) {
   // Per-game sitemaps (pokemon/yugioh/lorcana/onepiece/riftbound/dragonball/starwars)
   // are served at runtime by /api/sitemap-* Functions, no static passthrough needed.
   eleventyConfig.addPassthroughCopy({"robots.txt": "robots.txt"});
+  eleventyConfig.addPassthroughCopy({"llms.txt": "llms.txt"});
 
   // IndexNow ownership key. IndexNow verifies the caller owns the host by fetching this file
   // at https://cardsoncardsoncards.com.au/<key>.txt and matching its contents to the key sent

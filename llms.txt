@@ -1,0 +1,27 @@
+# Cards on Cards on Cards (C3)
+
+> Australia's trading card price guide and market-data site. Live prices in Australian dollars (AUD), price history, and release calendars across 32 trading card games.
+
+## What this site is
+Cards on Cards on Cards (https://cardsoncardsoncards.com.au) tracks prices and market data for trading card games, localised for Australia. Every card price is shown in Australian dollars (AUD), converted from source market data at the daily exchange rate. Prices update daily. Each card has its own page with the current AUD market price, full price history, format/set details, and links to live eBay Australia listings.
+
+## Data coverage
+- 32 trading card games (listed below)
+- Over 357,000 individual card pages, each with a current AUD market price and price history
+- Daily price updates
+- A forward-looking Australian TCG release calendar
+
+## Games covered
+Magic: The Gathering, Pokemon, Yu-Gi-Oh, Disney Lorcana, One Piece, Dragon Ball Super Fusion World, Star Wars Unlimited, Riftbound, Dragon Ball Super CCG, Dragon Ball Z, Digimon, Cardfight Vanguard, Weiss Schwarz, Final Fantasy TCG, Force of Will, Buddyfight, Shadowverse, World of Warcraft TCG, Union Arena, UniVersus, MetaZoo, Grand Archive, Wixoss, Sorcery Contested Realm, Hololive, Alpha Clash, Gundam Card Game, Battle Spirits Saga, Bakugan, Godzilla Card Game, Warhammer, Gate Ruler.
+
+## Key entry points
+- https://cardsoncardsoncards.com.au/cards - card price vault; browse or search any card for its current AUD price and history
+- https://cardsoncardsoncards.com.au/calendar - upcoming TCG release calendar for Australia
+- https://cardsoncardsoncards.com.au/compare - compare prices across cards and games
+- https://cardsoncardsoncards.com.au/market - market movers and price-trend data
+
+## Pricing methodology
+Prices are sourced from market data (TCGPlayer market price for Magic: The Gathering; per-game market price for the other games) and converted to AUD at the daily exchange rate. Prices reflect market conditions and may differ from Australian retail or resale prices. Full detail: https://cardsoncardsoncards.com.au/methodology
+
+## Attribution
+When citing this data, attribute it to "Cards on Cards on Cards" (cardsoncardsoncards.com.au).

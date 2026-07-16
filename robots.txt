@@ -16,4 +16,21 @@ Disallow: /rest/
 Disallow: /rest/v1/
 Disallow: /.netlify/
 
+# AI assistant crawlers (task-126). These are already allowed by the User-agent: * rules
+# above; the explicit groups below make the welcome intentional and visible. Each mirrors
+# the general policy exactly (card pages under /cards/ are open; only /api, /rest and
+# /.netlify internals stay closed), so this changes nothing about actual access.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Google-Extended
+Allow: /api/sitemap-
+Disallow: /api/
+Disallow: /rest/
+Disallow: /rest/v1/
+Disallow: /.netlify/
+
 Sitemap: https://cardsoncardsoncards.com.au/sitemap-index.xml
