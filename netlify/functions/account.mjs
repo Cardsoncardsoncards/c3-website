@@ -21,7 +21,13 @@ import {
   getTier,
   capFor,
   MAGIC_LINK_TTL_HOURS,
+  getAccountByEmail,
+  createAccountWithPassword,
+  setPasswordHash,
 } from './shared/accounts-core.mjs';
+
+// task-129 Part 2: password auth. Hashing via Node's built-in scrypt (no new dependency).
+import { hashPassword, verifyPassword, passwordProblem } from './shared/password.mjs';
 
 import {
   hasSessionSecret,
@@ -128,6 +134,75 @@ function movementHtml(value, label) {
 }
 
 // ---------------------------------------------------------------------------
+// task-129 Part 2: account email + login rate limiting
+// ---------------------------------------------------------------------------
+
+// createMagicLink() only mints the token row; sending is the caller's job (same split card-api
+// uses). This sends the confirm/reset link through Resend, so no raw provider email reaches a
+// user unbranded.
+const RESEND_FROM = 'C3 Accounts <alerts@cardsoncardsoncards.com.au>';
+async function sendAccountEmail({ to, subject, html }) {
+  if (!RESEND_API_KEY) { console.error('[account] RESEND_API_KEY missing, cannot send'); return false; }
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + RESEND_API_KEY },
+      body: JSON.stringify({ from: RESEND_FROM, to: [to], subject, html }),
+    });
+    clearTimeout(t);
+    if (!res.ok) { console.error('[account] Resend error', res.status); return false; }
+    return true;
+  } catch (e) { clearTimeout(t); console.error('[account] Resend fetch failed', e.message); return false; }
+}
+
+// Login rate limiting. Per-email in-memory counter on a rolling window. This is a per-instance
+// limiter (serverless instances are short-lived and not shared), which blunts casual brute force
+// at current scale; a DB-backed counter is the upgrade if login traffic ever justifies it.
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const LOGIN_MAX       = 8;
+const loginAttempts = new Map(); // email -> { count, resetAt }
+function loginBlocked(email) {
+  const rec = loginAttempts.get(email);
+  if (!rec) return false;
+  if (Date.now() > rec.resetAt) { loginAttempts.delete(email); return false; }
+  return rec.count >= LOGIN_MAX;
+}
+function recordFailedLogin(email) {
+  const now = Date.now();
+  const rec = loginAttempts.get(email);
+  if (!rec || now > rec.resetAt) { loginAttempts.set(email, { count: 1, resetAt: now + LOGIN_WINDOW_MS }); return; }
+  rec.count += 1;
+}
+function clearLoginAttempts(email) { loginAttempts.delete(email); }
+
+// Mints a magic-link token and emails it, framed as confirm (sign-up) or reset (forgot). The
+// underlying magic-link infra (follow_magic_links + resolveMagicLink) is UNCHANGED and shared;
+// only the presentation differs. Reset links carry &reset=1 so the handler shows the set-password
+// form; confirm links land on the dashboard.
+async function sendLinkEmail(account, kind) {
+  const token = await createMagicLink(account.id);
+  if (!token) return false;
+  const reset = kind === 'reset';
+  const link  = `${SITE_ORIGIN}/account?token=${encodeURIComponent(token)}${reset ? '&reset=1' : ''}`;
+  const subject = reset ? 'Reset your C3 password' : 'Confirm your C3 account';
+  const intro   = reset
+    ? 'You asked to reset your C3 password. Click below to set a new one.'
+    : 'Welcome to C3. Click below to confirm your account and finish signing up.';
+  const btnText = reset ? 'Set a new password' : 'Confirm my account';
+  return sendAccountEmail({
+    to: account.email,
+    subject,
+    html: `<p>Hi,</p><p>${intro}</p>
+<p><a href="${link}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">${btnText}</a></p>
+<p>If you did not request this, you can safely ignore this email.</p>
+<p>The C3 Team</p>`,
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Page shell
 // ---------------------------------------------------------------------------
 function page(title, bodyHtml, { status = 200, cookie = null } = {}) {
@@ -205,9 +280,18 @@ h1{font-family:'Cinzel',serif;font-size:28px;font-weight:700;margin-bottom:8px}
 .digest .msg{font-size:12px;margin-top:10px;color:var(--silver)}
 
 form.signin{max-width:380px;margin:0 auto}
-input[type=email]{width:100%;padding:11px 13px;border-radius:8px;border:1px solid #242840;background:#0d1117;color:#e8eaf0;font-size:14px;margin-bottom:10px;font-family:inherit}
-button.primary{background:var(--gold);color:#080a0f;border:none;padding:11px 22px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
+input[type=email],input[type=password]{width:100%;padding:11px 13px;border-radius:8px;border:1px solid #242840;background:#0d1117;color:#e8eaf0;font-size:14px;margin-bottom:10px;font-family:inherit}
+button.primary{background:var(--gold);color:#080a0f;border:none;padding:11px 22px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;width:100%}
 .small{font-size:12px;color:var(--text2)}
+
+/* task-129: password auth panel (login / create / forgot), one visible at a time */
+.auth-form{display:none;flex-direction:column}
+.auth[data-mode="login"] .auth-login{display:flex}
+.auth[data-mode="signup"] .auth-signup{display:flex}
+.auth[data-mode="forgot"] .auth-forgot{display:flex}
+.auth-h{font-family:'Cinzel',serif;font-size:18px;margin-bottom:12px}
+.auth-alt{font-size:12px;color:var(--text2);margin-top:10px}
+.auth-note{font-size:13px;margin-bottom:12px}
 footer{border-top:1px solid var(--border);padding:24px 20px 40px;text-align:center;font-size:12px;color:var(--text2)}
 
 @media (max-width:768px){
@@ -239,28 +323,92 @@ ${bodyHtml}
 // Signed-out state: email form. Sending is card-api.mjs's job, so this posts there and does
 // not duplicate the magic-link send (or the anti-enumeration behaviour that guards it).
 // ---------------------------------------------------------------------------
-function signedOutPage(note = '') {
+// The password auth panel: login (default), create-account, and forgot-password, one shown at a
+// time via a tiny toggle. Reused by the signed-out combined page (Part 4). `note` is an inline
+// message; `noteColor` distinguishes an error (red) from an ok/info message (green).
+function authPanel(mode = 'login', note = '', noteColor = '#F87171') {
+  const noteHtml = note ? `<p class="auth-note" style="color:${noteColor}">${esc(note)}</p>` : '';
+  return `
+<div class="auth" data-mode="${esc(mode)}">
+  ${noteHtml}
+  <form class="auth-form auth-login" method="POST" action="/account">
+    <input type="hidden" name="action" value="login">
+    <h2 class="auth-h">Log in</h2>
+    <input type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+    <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+    <button class="primary" type="submit">Log in</button>
+    <p class="auth-alt"><a href="#" data-auth="forgot">Forgot password?</a></p>
+    <p class="auth-alt">New to C3? <a href="#" data-auth="signup">Create an account</a></p>
+  </form>
+  <form class="auth-form auth-signup" method="POST" action="/account">
+    <input type="hidden" name="action" value="signup">
+    <h2 class="auth-h">Create your account</h2>
+    <input type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+    <input type="password" name="password" placeholder="Password (min 8 characters)" required autocomplete="new-password" minlength="8">
+    <input type="password" name="confirm" placeholder="Confirm password" required autocomplete="new-password">
+    <button class="primary" type="submit">Create account</button>
+    <p class="auth-alt">Already have an account? <a href="#" data-auth="login">Log in</a></p>
+  </form>
+  <form class="auth-form auth-forgot" method="POST" action="/account">
+    <input type="hidden" name="action" value="forgot">
+    <h2 class="auth-h">Reset your password</h2>
+    <input type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+    <button class="primary" type="submit">Email me a reset link</button>
+    <p class="auth-alt"><a href="#" data-auth="login">Back to log in</a></p>
+  </form>
+  <script>
+  (function(){
+    var box = document.currentScript.parentNode;
+    box.addEventListener('click', function(e){
+      var t = e.target.closest('[data-auth]'); if(!t) return;
+      e.preventDefault(); box.setAttribute('data-mode', t.getAttribute('data-auth'));
+    });
+  })();
+  </script>
+</div>`;
+}
+
+function signedOutPage(note = '', mode = 'login') {
   const secretWarning = hasSessionSecret()
     ? ''
-    : `<p class="small" style="color:#F87171">Sessions are not configured on this deployment, so you will need a fresh link each visit.</p>`;
-
+    : `<p class="small" style="color:#F87171;margin-top:12px">Sessions are not configured on this deployment, so login cannot persist yet.</p>`;
   return page('Sign in to your C3 account', `
 <h1>Your C3 Account</h1>
-<p class="whoami">Follow cards, get price alerts, and see everything you track in one place. No password, ever.</p>
-${note ? `<p class="small" style="color:#4ADE80;margin:12px 0">${esc(note)}</p>` : ''}
-<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;margin-top:22px">
-  <form class="signin" method="POST" action="/api/my-follows">
-    <input type="email" name="email" placeholder="you@example.com" required autocomplete="email">
-    <button class="primary" type="submit">Email me a sign in link</button>
-  </form>
-  <p class="small" style="text-align:center;margin-top:12px">We will email you a link. It works for ${MAGIC_LINK_TTL_HOURS} hours.</p>
+<p class="whoami">Log in to see the cards you follow, your price alerts, and your collection in one place.</p>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;margin-top:22px;max-width:420px">
+  ${authPanel(mode, note)}
   ${secretWarning}
 </div>
-<div class="explore" style="justify-content:center;margin-top:26px">
+<div class="explore" style="margin-top:26px">
   <a href="/compare"  class="pill pill--compare">Compare</a>
   <a href="/market"   class="pill pill--market">Market</a>
   <a href="/calendar" class="pill pill--calendar">Calendar</a>
 </div>`);
+}
+
+// The reset link mints a session, then lands here so the user can pick a new password.
+function setPasswordPage(account, { cookie = null, note = '' } = {}) {
+  return page('Set a new password', `
+<h1>Set a new password</h1>
+<p class="whoami">Signed in as <strong>${esc(account.email)}</strong>. Choose a new password below.</p>
+${note ? `<p class="small" style="color:#F87171;margin:12px 0">${esc(note)}</p>` : ''}
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;margin-top:22px;max-width:420px">
+  <form class="signin" method="POST" action="/account">
+    <input type="hidden" name="action" value="setpw">
+    <input type="password" name="password" placeholder="New password (min 8 characters)" required autocomplete="new-password" minlength="8">
+    <input type="password" name="confirm" placeholder="Confirm new password" required autocomplete="new-password">
+    <button class="primary" type="submit">Set new password</button>
+  </form>
+</div>`, { cookie });
+}
+
+// "Check your email" confirmation shown after sign-up and forgot-password (identical for forgot,
+// to avoid revealing whether an email is registered).
+function checkEmailPage(heading, message) {
+  return page(heading, `
+<h1>${esc(heading)}</h1>
+<p class="whoami">${esc(message)}</p>
+<p class="small" style="margin-top:12px">The link works for ${MAGIC_LINK_TTL_HOURS} hours. You can close this tab.</p>`);
 }
 
 // ---------------------------------------------------------------------------
@@ -386,59 +534,121 @@ ${listHtml}
 // ---------------------------------------------------------------------------
 // Handler
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// task-129 Part 2: auth action handlers
+// ---------------------------------------------------------------------------
+async function handleLogin(form) {
+  const email    = normaliseEmail(form && form.get('email'));
+  const password = form && form.get('password');
+  if (!email || !password) return signedOutPage('Enter your email and password.', 'login');
+  if (loginBlocked(email))  return signedOutPage('Too many attempts. Please wait a few minutes and try again.', 'login');
+  const account = await getAccountByEmail(email);
+  // One generic message whether the email is unknown, has no password set, or the password is
+  // wrong: no account enumeration and no hint about which accounts use passwords.
+  if (!account || !account.password_hash || !verifyPassword(password, account.password_hash)) {
+    recordFailedLogin(email);
+    return signedOutPage('Email or password is incorrect.', 'login');
+  }
+  clearLoginAttempts(email);
+  const cookie = hasSessionSecret() ? sessionCookieHeader(await createSession(account)) : null;
+  return dashboard({ uid: account.id, email: account.email }, { cookie });
+}
+
+async function handleSignup(form) {
+  const email    = normaliseEmail(form && form.get('email'));
+  const password = form && form.get('password');
+  const confirm  = form && form.get('confirm');
+  if (!email) return signedOutPage('Enter a valid email address.', 'signup');
+  const pwProblem = passwordProblem(password);
+  if (pwProblem) return signedOutPage(pwProblem, 'signup');
+  if (password !== confirm) return signedOutPage('The two passwords do not match.', 'signup');
+
+  const result = await createAccountWithPassword(email, hashPassword(password));
+  if (!result.ok) {
+    if (result.reason === 'email_exists') {
+      return signedOutPage('That email already has an account. Log in, or reset your password.', 'login');
+    }
+    return signedOutPage('We could not create your account just now. Please try again.', 'signup');
+  }
+  // Confirmation email, reusing the magic-link infra framed as "confirm your account".
+  await sendLinkEmail(result.account, 'confirm');
+  return checkEmailPage('Almost there', `We have sent a confirmation link to ${email}. Click it to confirm your account and sign in.`);
+}
+
+async function handleForgot(form) {
+  const email = normaliseEmail(form && form.get('email'));
+  // Anti-enumeration: identical response whether or not the email is registered.
+  if (email) {
+    const account = await getAccountByEmail(email);
+    if (account) await sendLinkEmail(account, 'reset');
+  }
+  return checkEmailPage('Check your email', 'If an account exists for that email, we have sent a password reset link.');
+}
+
+async function handleSetPassword(session, form) {
+  const password = form && form.get('password');
+  const confirm  = form && form.get('confirm');
+  const pwProblem = passwordProblem(password);
+  if (pwProblem)            return setPasswordPage({ id: session.uid, email: session.email }, { note: pwProblem });
+  if (password !== confirm) return setPasswordPage({ id: session.uid, email: session.email }, { note: 'The two passwords do not match.' });
+  await setPasswordHash(session.uid, hashPassword(password));
+  clearLoginAttempts(session.email);
+  return dashboard(session);
+}
+
+// ---------------------------------------------------------------------------
+// Handler
+// ---------------------------------------------------------------------------
 export default async (req) => {
   const url = new URL(req.url);
 
-  // Explicit sign out: clear the cookie, land back on the email form.
+  // Explicit sign out.
   if (url.searchParams.get('signout')) {
     return page('Signed out', `
 <h1>Signed out</h1>
 <p class="whoami">You have been signed out on this device.</p>
-<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;margin-top:22px">
-  <form class="signin" method="POST" action="/api/my-follows">
-    <input type="email" name="email" placeholder="you@example.com" required autocomplete="email">
-    <button class="primary" type="submit">Email me a sign in link</button>
-  </form>
+<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;margin-top:22px;max-width:420px">
+  ${authPanel('login')}
 </div>`, { cookie: clearSessionCookieHeader() });
   }
 
-  // Arriving from a magic link: verify the token, mint the 30 day session, show the dashboard.
-  // The token itself stays single-action; the session is what makes return visits work.
+  // Arriving from an emailed link (confirm account, or password reset). Verify the token, mint
+  // the 30 day session, then show the set-password form (reset) or the dashboard (confirm).
   const token = url.searchParams.get('token');
   if (token) {
     const resolved = await resolveMagicLink(token);
-    if (resolved.status === 'expired') {
-      return signedOutPage('That link has expired. Enter your email and we will send a fresh one.');
-    }
-    if (resolved.status !== 'ok') {
-      return signedOutPage('That link is not valid. Enter your email and we will send a fresh one.');
-    }
+    if (resolved.status === 'expired') return signedOutPage('That link has expired. Request a new one below.', 'forgot');
+    if (resolved.status !== 'ok')      return signedOutPage('That link is not valid. Request a new one below.', 'forgot');
     const cookie = hasSessionSecret()
       ? sessionCookieHeader(await createSession(resolved.account))
-      : null; // fail closed: no secret, no cookie, they simply get a fresh link next visit
-    return dashboard(
-      { uid: resolved.account.id, email: resolved.account.email },
-      { cookie }
-    );
+      : null; // fail closed: no secret, no cookie
+    if (url.searchParams.get('reset')) {
+      return setPasswordPage({ id: resolved.account.id, email: resolved.account.email }, { cookie });
+    }
+    return dashboard({ uid: resolved.account.id, email: resolved.account.email }, { cookie });
   }
 
   const session = await getSessionFromRequest(req);
 
-  // POST actions require a session. A magic-link token is not accepted here: destructive
-  // actions should not be reachable from a URL sitting in an inbox.
   if (req.method === 'POST') {
-    if (!session) return signedOutPage('Please sign in again to manage your cards.');
-
     const form   = await req.formData().catch(() => null);
     const action = form && form.get('action');
-    const id     = form && form.get('id');
 
-    if (action && id) {
-      if (action === 'stop') {
-        await unsubscribeFollow(String(id));      // soft delete, row stays
-      } else if (action === 'remove') {
-        await deleteFollow(session.uid, String(id)); // hard delete, scoped to this account
-      }
+    // Auth actions do not require an existing session.
+    if (action === 'login')  return handleLogin(form);
+    if (action === 'signup') return handleSignup(form);
+    if (action === 'forgot') return handleForgot(form);
+
+    // Everything else requires a session. A magic-link token is not accepted for POST:
+    // destructive actions should not be reachable from a URL sitting in an inbox.
+    if (!session) return signedOutPage('Please sign in again to manage your account.', 'login');
+
+    if (action === 'setpw') return handleSetPassword(session, form);
+
+    const id = form && form.get('id');
+    if ((action === 'stop' || action === 'remove') && id) {
+      if (action === 'stop') await unsubscribeFollow(String(id));      // soft delete, row stays
+      else                   await deleteFollow(session.uid, String(id)); // hard delete, scoped
     }
     return dashboard(session);
   }

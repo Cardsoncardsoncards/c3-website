@@ -140,6 +140,53 @@ export async function touchAccount(userId) {
 }
 
 // ---------------------------------------------------------------------------
+// task-129: password auth helpers. The hashing itself lives in shared/password.mjs; these
+// three functions are the ONLY reads/writes of accounts.password_hash, keeping all account
+// writes in this one module (see the header note).
+// ---------------------------------------------------------------------------
+
+// Full account row by email, INCLUDING password_hash. Used by login and password reset.
+// Returns null for unknown/invalid email.
+export async function getAccountByEmail(email) {
+  const normalised = normaliseEmail(email);
+  if (!normalised) return null;
+  const rows = await sbJson(
+    `accounts?select=id,email,password_hash&email=eq.${encodeURIComponent(normalised)}&limit=1`
+  ).catch(() => null);
+  return Array.isArray(rows) && rows.length ? rows[0] : null;
+}
+
+// Create an account that carries a password hash from the start. Mirrors resolveOrCreateAccount's
+// race handling. Returns { ok, account } or { ok:false, reason }.
+export async function createAccountWithPassword(email, passwordHash) {
+  const normalised = normaliseEmail(email);
+  if (!normalised) return { ok: false, reason: 'invalid_email' };
+  const res = await sb('accounts', {
+    method: 'POST',
+    body: { email: normalised, password_hash: passwordHash },
+    prefer: 'return=representation',
+  });
+  if (res.ok) {
+    const rows = await res.json().catch(() => null);
+    if (Array.isArray(rows) && rows.length) return { ok: true, account: rows[0] };
+    return { ok: false, reason: 'insert_failed' };
+  }
+  // UNIQUE(email) rejected a duplicate: the email is already registered.
+  if (res.status === 409) return { ok: false, reason: 'email_exists' };
+  console.error('[accounts] createAccountWithPassword failed', res.status);
+  return { ok: false, reason: 'insert_failed' };
+}
+
+// Set or replace an account's password hash (used by the reset flow). Returns boolean.
+export async function setPasswordHash(userId, passwordHash) {
+  const res = await sb(`accounts?id=eq.${encodeURIComponent(userId)}`, {
+    method: 'PATCH',
+    body: { password_hash: passwordHash },
+  });
+  return res.ok;
+}
+
+// ---------------------------------------------------------------------------
 // Section 3: send-time eligibility
 //
 // subscribers already exists (id, email, stripe_customer_id, stripe_sub_id, plan, status,
