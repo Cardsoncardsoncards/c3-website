@@ -47,6 +47,19 @@ const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const RESEND_API_KEY       = Netlify.env.get('RESEND_API_KEY');
 const SITE_ORIGIN          = 'https://cardsoncardsoncards.com.au';
 
+// task-129 Part 5: master admin allowlist. ADMIN_EMAILS is a comma-separated env var read
+// SERVER-SIDE ONLY (this file is a serverless function, never shipped to the browser). It
+// defaults to the owner address when the env var is unset, so admin works out of the box and
+// can be widened without a code change. Access is gated by matching the SESSION email against
+// this set on the server (see the /account/admin branch); there is no client-side hiding.
+const ADMIN_EMAILS = new Set(
+  (Netlify.env.get('ADMIN_EMAILS') || 'ccc.squadhelp@gmail.com')
+    .split(',').map(e => e.trim().toLowerCase()).filter(Boolean)
+);
+function isAdmin(email) {
+  return typeof email === 'string' && ADMIN_EMAILS.has(email.trim().toLowerCase());
+}
+
 // Per-game card table + column map. Confirmed against the live schema (task-110 Part 0):
 // every followable game has price_change_7d and price_change_30d. Only MTG differs on the
 // image column, which is image_uri, not image_url. Movement coverage is per CARD, not per
@@ -308,6 +321,11 @@ input[type=text]{width:100%;padding:11px 13px;border-radius:8px;border:1px solid
 .support-c3 a{background:var(--gold);color:#080a0f;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block}
 .support-c3 a:hover{background:var(--gold-lit)}
 @media (max-width:768px){ .combined{grid-template-columns:1fr} }
+
+/* task-129 Part 5: admin tables */
+.admin-t{width:100%;border-collapse:collapse;font-size:13px}
+.admin-t th,.admin-t td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+.admin-t th{color:var(--text2);font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
 footer{border-top:1px solid var(--border);padding:24px 20px 40px;text-align:center;font-size:12px;color:var(--text2)}
 
 @media (max-width:768px){
@@ -597,6 +615,49 @@ ${listHtml}
 // Handler
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
+// task-129 Part 5: master admin view.
+//
+// SECURITY: this renders REAL USER PII, every account email and every follow. It MUST stay
+// gated by the server-side session-email check against ADMIN_EMAILS (see the /account/admin
+// branch in the handler). It must NEVER be linked from a public page, the nav, or a sitemap,
+// and the gate must remain a server refusal, not a hidden client-side link. Do not add a
+// "you must be admin" hint to non-admins either: they get a plain 404.
+// ---------------------------------------------------------------------------
+async function adminView(session) {
+  const accounts = await sbGet('accounts?select=id,email,created_at,last_seen_at&order=created_at.desc&limit=1000');
+  const follows  = await sbGet('follows?select=user_id,game,card_slug,card_name,alert_types,confirmed,created_at&order=created_at.desc&limit=2000');
+  const acc = Array.isArray(accounts) ? accounts : [];
+  const fol = Array.isArray(follows)  ? follows  : [];
+
+  const acctRows = acc.map(a =>
+    `<tr><td>${esc(a.email)}</td><td>${esc((a.created_at || '').slice(0, 10))}</td><td>${esc((a.last_seen_at || '').slice(0, 10))}</td></tr>`
+  ).join('');
+
+  const emailById = new Map(acc.map(a => [a.id, a.email]));
+  const followRows = fol.map(f => {
+    const alerts = Array.isArray(f.alert_types) ? f.alert_types.join(', ') : (f.alert_types || '');
+    return `<tr><td>${esc(emailById.get(f.user_id) || f.user_id)}</td><td>${esc(f.game)}</td><td>${esc(f.card_name || f.card_slug)}</td><td>${esc(alerts)}</td><td>${f.confirmed ? 'yes' : 'no'}</td></tr>`;
+  }).join('');
+
+  return page('Admin', `
+<h1>Admin</h1>
+<p class="whoami">Signed in as <strong>${esc(session.email)}</strong> (admin) &middot; <a class="signout" href="/account">Back to your account</a></p>
+<p class="small" style="color:#F87171;margin:10px 0 22px">Contains real user data. Do not share this page.</p>
+
+<h2 class="auth-h">Accounts (${acc.length})</h2>
+<div style="overflow-x:auto"><table class="admin-t">
+<thead><tr><th>Email</th><th>Created</th><th>Last seen</th></tr></thead>
+<tbody>${acctRows || '<tr><td colspan="3">No accounts yet.</td></tr>'}</tbody>
+</table></div>
+
+<h2 class="auth-h" style="margin-top:28px">Follows (${fol.length})</h2>
+<div style="overflow-x:auto"><table class="admin-t">
+<thead><tr><th>User</th><th>Game</th><th>Card</th><th>Alert types</th><th>Confirmed</th></tr></thead>
+<tbody>${followRows || '<tr><td colspan="5">No follows yet.</td></tr>'}</tbody>
+</table></div>`);
+}
+
+// ---------------------------------------------------------------------------
 // task-129 Part 2: auth action handlers
 // ---------------------------------------------------------------------------
 async function handleLogin(form) {
@@ -664,6 +725,17 @@ async function handleSetPassword(session, form) {
 export default async (req) => {
   const url = new URL(req.url);
 
+  // task-129 Part 5: admin view at /account/admin. Gated SERVER-SIDE by matching the session
+  // email against ADMIN_EMAILS. A signed-out or non-admin request gets a plain 404, never a hint
+  // that an admin view exists. This is the only gate; there is no client-side hiding.
+  if (url.pathname.replace(/\/$/, '') === '/account/admin') {
+    const session = await getSessionFromRequest(req);
+    if (!session || !isAdmin(session.email)) {
+      return page('Not found', `<h1>Not found</h1><p class="whoami">That page does not exist.</p>`, { status: 404 });
+    }
+    return adminView(session);
+  }
+
   // Explicit sign out.
   if (url.searchParams.get('signout')) {
     return page('Signed out', `
@@ -720,4 +792,4 @@ export default async (req) => {
   return dashboard(session);
 };
 
-export const config = { path: '/account' };
+export const config = { path: ['/account', '/account/admin'] };
