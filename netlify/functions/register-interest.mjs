@@ -108,6 +108,39 @@ export default async (req) => {
     console.error('Resend fetch failed:', e.message);
   }
 
+  // 3. task-132 Part 8: welcome/confirmation email to the SUBMITTER (in addition to the owner
+  // notification above, not replacing it). Fire-and-forget: a Resend hiccup must not fail signup.
+  if (RESEND_KEY) {
+    const safeName = (name || '').replace(/[<>&"]/g, '').trim();
+    const wantsList = Array.isArray(interests) && interests.length
+      ? ', including updates on ' + interests.map(i => String(i).replace(/[<>&"]/g, '')).join(' and ')
+      : '';
+    const wcController = new AbortController();
+    const wcTimer = setTimeout(() => wcController.abort(), 8000);
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        signal: wcController.signal,
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + RESEND_KEY },
+        body: JSON.stringify({
+          from: 'Cards on Cards on Cards <alerts@cardsoncardsoncards.com.au>',
+          to: [email],
+          subject: 'Thanks for joining Cards on Cards on Cards',
+          html: `<p>Hi${safeName ? ' ' + safeName : ''},</p>`
+            + `<p>Thanks for joining Cards on Cards on Cards. You are on the list and we will email you as C3 grows${wantsList}.</p>`
+            + `<p>Everything on C3 is free today: live AUD prices and price history across 32 trading card games, a release calendar, and free tools. Start at the <a href="https://cardsoncardsoncards.com.au/cards">Card Vault</a>.</p>`
+            + `<p>You can follow any card for free price alerts and manage everything from <a href="https://cardsoncardsoncards.com.au/account">your C3 account</a>.</p>`
+            + `<p>The C3 Team</p>`
+            + `<p style="font-size:11px;color:#999">You are receiving this because you signed up at cardsoncardsoncards.com.au. Reply to this email to unsubscribe.</p>`
+        })
+      });
+      clearTimeout(wcTimer);
+    } catch (e) {
+      clearTimeout(wcTimer);
+      console.error('Welcome email failed:', e.message);
+    }
+  }
+
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
     headers: {
