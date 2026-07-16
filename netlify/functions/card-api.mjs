@@ -25,6 +25,9 @@ import {
   MAGIC_LINK_TTL_HOURS,
 } from './shared/accounts-core.mjs';
 
+// task-132: read the session cookie so a signed-in follow is one click (no email double opt-in).
+import { getSessionFromRequest } from './shared/session.mjs';
+
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -226,36 +229,53 @@ async function handlePriceAlert(req) {
 // sent, with nobody clicking. A bare GET is therefore inert.
 const SITE_ORIGIN = 'https://cardsoncardsoncards.com.au';
 
-const FOLLOW_GAMES = new Set([
-  'mtg', 'pokemon', 'lorcana', 'onepiece', 'yugioh', 'dbsfusionworld', 'starwars'
-]);
+// task-132 Part 11: the full 32-game roster. Follow validation, the confirm-email image lookup,
+// and the game label all derive from this ONE map, so adding a game is a single edit. Every game
+// uses {game}_cards with an image_url column, except MTG (mtg_cards + image_uri_normal).
+// Previously only the 7 Core games were listed; the follow system now covers all 32.
+const GAME_META = {
+  mtg:               ['mtg_cards',               'image_uri_normal', 'Magic: The Gathering'],
+  pokemon:           ['pokemon_cards',           'image_url',        'Pokemon'],
+  yugioh:            ['yugioh_cards',            'image_url',        'Yu-Gi-Oh'],
+  lorcana:           ['lorcana_cards',           'image_url',        'Lorcana'],
+  onepiece:          ['onepiece_cards',          'image_url',        'One Piece'],
+  dbsfusionworld:    ['dbsfusionworld_cards',    'image_url',        'Dragon Ball Fusion World'],
+  starwars:          ['starwars_cards',          'image_url',        'Star Wars Unlimited'],
+  alphaclash:        ['alphaclash_cards',        'image_url',        'Alpha Clash'],
+  bakugan:           ['bakugan_cards',           'image_url',        'Bakugan'],
+  battlespiritssaga: ['battlespiritssaga_cards', 'image_url',        'Battle Spirits Saga'],
+  buddyfight:        ['buddyfight_cards',        'image_url',        'Buddyfight'],
+  digimon:           ['digimon_cards',           'image_url',        'Digimon'],
+  dragonball:        ['dragonball_cards',        'image_url',        'Dragon Ball Super'],
+  dragonballz:       ['dragonballz_cards',       'image_url',        'Dragon Ball Z'],
+  finalfantasy:      ['finalfantasy_cards',      'image_url',        'Final Fantasy TCG'],
+  forceofwill:       ['forceofwill_cards',       'image_url',        'Force of Will'],
+  gateruler:         ['gateruler_cards',         'image_url',        'Gate Ruler'],
+  godzilla:          ['godzilla_cards',          'image_url',        'Godzilla'],
+  grandarchive:      ['grandarchive_cards',      'image_url',        'Grand Archive'],
+  gundam:            ['gundam_cards',            'image_url',        'Gundam'],
+  hololive:          ['hololive_cards',          'image_url',        'Hololive'],
+  metazoo:           ['metazoo_cards',           'image_url',        'MetaZoo'],
+  riftbound:         ['riftbound_cards',         'image_url',        'Riftbound'],
+  shadowverse:       ['shadowverse_cards',       'image_url',        'Shadowverse'],
+  sorcery:           ['sorcery_cards',           'image_url',        'Sorcery Contested Realm'],
+  unionarena:        ['unionarena_cards',        'image_url',        'Union Arena'],
+  universus:         ['universus_cards',         'image_url',        'UniVersus'],
+  vanguard:          ['vanguard_cards',          'image_url',        'Cardfight Vanguard'],
+  warhammer:         ['warhammer_cards',         'image_url',        'Warhammer'],
+  weissschwarz:      ['weissschwarz_cards',      'image_url',        'Weiss Schwarz'],
+  wixoss:            ['wixoss_cards',            'image_url',        'Wixoss'],
+  wow:               ['wow_cards',               'image_url',        'World of Warcraft'],
+};
+const FOLLOW_GAMES   = new Set(Object.keys(GAME_META));
+const GAME_TABLES    = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[0]]));
+const GAME_IMAGE_COL = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[1]]));
+const GAME_LABELS    = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[2]]));
 
 // PART E: generous, observational cap. Existing rows are NEVER touched when it is reached,
 // only new inserts are checked, so lowering it later cannot force anyone's follows away.
-//
-// The cap and the magic-link TTL now live in shared/accounts-core.mjs as FREE_FOLLOW_CAP and
-// MAGIC_LINK_TTL_HOURS, imported at the top of this file. They are deliberately NOT redeclared
-// here: a second copy is exactly how a cap drifts out of sync once a second surface appears.
-// The value itself is unchanged at 100.
-
-const GAME_TABLES = {
-  mtg: 'mtg_cards', pokemon: 'pokemon_cards', lorcana: 'lorcana_cards',
-  onepiece: 'onepiece_cards', yugioh: 'yugioh_cards',
-  dbsfusionworld: 'dbsfusionworld_cards', starwars: 'starwars_cards'
-};
-
-// MTG stores art as image_uri_*; every other Core game uses a single image_url.
-const GAME_IMAGE_COL = {
-  mtg: 'image_uri_normal', pokemon: 'image_url', lorcana: 'image_url',
-  onepiece: 'image_url', yugioh: 'image_url',
-  dbsfusionworld: 'image_url', starwars: 'image_url'
-};
-
-const GAME_LABELS = {
-  mtg: 'Magic: The Gathering', pokemon: 'Pokemon', lorcana: 'Lorcana',
-  onepiece: 'One Piece', yugioh: 'Yu-Gi-Oh',
-  dbsfusionworld: 'Dragon Ball Fusion World', starwars: 'Star Wars Unlimited'
-};
+// The cap and the magic-link TTL live in shared/accounts-core.mjs (FREE_FOLLOW_CAP,
+// MAGIC_LINK_TTL_HOURS), imported at the top of this file, deliberately not redeclared here.
 
 function isValidEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
@@ -358,9 +378,28 @@ async function handleCardFollow(req) {
 
   const { email, game, cardSlug, cardName } = body || {};
 
-  if (!normaliseEmail(email))      return json({ error: 'A valid email is required' }, 400);
   if (!FOLLOW_GAMES.has(game))     return json({ error: 'Unsupported game' }, 400);
   if (!cardSlug || typeof cardSlug !== 'string') return json({ error: 'Card is required' }, 400);
+
+  // task-132 auth-aware path. No email in the body means "try the signed-in one-click follow".
+  // A valid session cookie -> follow directly, auto-confirmed, no email. No session -> tell the
+  // client to reveal the email-capture input. The branch happens HERE, not in the card-page HTML,
+  // so the card page stays identically cacheable for everyone.
+  if (!email) {
+    const session = await getSessionFromRequest(req).catch(() => null);
+    if (!session) return json({ ok: true, needEmail: true });
+    const r = await applyFollow({ email: session.email, game, cardSlug, cardName, autoConfirm: true });
+    if (!r.ok) {
+      if (r.reason === 'cap_reached') {
+        return json({ error: `You have reached the maximum number of followed cards (${r.cap}). Remove one to add another.`, capReached: true }, 429);
+      }
+      console.error('[card-follow] signed-in applyFollow failed:', r.reason);
+      return json({ error: 'Could not save your follow. Please try again.' }, 500);
+    }
+    return json({ ok: true, followed: !r.alreadyFollowing, alreadyFollowing: !!r.alreadyFollowing });
+  }
+
+  if (!normaliseEmail(email))      return json({ error: 'A valid email is required' }, 400);
 
   // The ONE follow write path. It normalises the email, silently resolves or creates the
   // account (sending nothing), resolves the tier, applies the right cap, and writes. The cap

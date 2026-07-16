@@ -2,7 +2,10 @@
 // Serves dynamic MTG card pages at /cards/mtg/[slug]
 // Server-renders full HTML with all card data, price history, and interlinking
 
-import { MANAGE_FOLLOWS_LINK } from './shared/follow-links.mjs';
+// task-132: unified follow block replaces MTG's legacy localStorage watch toggle and the old
+// bespoke "Follow price" box. MANAGE_FOLLOWS_LINK is no longer needed here (the block carries its
+// own manage-follows link).
+import { followBlockHtml } from './shared/follow-block.mjs';
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
@@ -749,51 +752,12 @@ ${contextPara}
       <a href="${ebayAllListings[0]?.itemAffiliateWebUrl || ebayAllUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">${ebayAllListings[0]?.itemAffiliateWebUrl ? '🔍 Cheapest on eBay AU' : '🔍 Find on eBay AU'}</a>
       ${card.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${card.amazon_asin}?tag=${AMAZON_TAG}" class="cta-btn cta-amazon" target="_blank" rel="noopener">📦 Buy Sealed on Amazon AU</a>` : ''}
       ${hasEVCalc ? `<a href="/ev-calculator.html#${card.set_code}" class="cta-btn cta-ev">📊 ${card.set_name} EV Calculator</a>` : ''}
-      <button class="cta-btn cta-watch" id="watch-btn" onclick="toggleWatch('${card.scryfall_id}','${card.name.replace(/'/g,"\'")}')">
-        <span id="watch-icon">☆</span> <span id="watch-label">Watch this card</span>
-      </button>
+      <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
       <button class="cta-btn cta-compare" id="compare-btn" onclick="addToCompare('${card.scryfall_id}','${card.name.replace(/'/g,"\\'")}','${(card.image_uri_small || card.image_uri_normal || '').replace(/'/g,"\\'")}','${priceAud ? formatAUD(priceAud) : 'N/A'}')">
         <span id="compare-icon">⚖️</span> <span id="compare-label">Add to Compare</span>
       </button>
-      <button class="cta-btn cta-follow" id="follow-btn" onclick="openFollow()">📈 Follow price</button>
     </div>
-    <div id="follow-box" style="display:none;margin-top:12px;padding:14px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.25);border-radius:8px">
-      <div style="font-size:13px;color:#e8eaf0;margin-bottom:8px">Email me when this card's price moves significantly.</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <input id="follow-email" type="email" placeholder="you@example.com" style="flex:1;min-width:200px;padding:9px 12px;border-radius:6px;border:1px solid #242840;background:#0d1117;color:#e8eaf0;font-size:13px">
-        <button id="follow-submit" onclick="submitFollow()" style="padding:9px 16px;border-radius:6px;border:none;background:#C9A84C;color:#0A0C14;font-weight:700;font-size:13px;cursor:pointer">Follow</button>
-      </div>
-      <div id="follow-msg" style="font-size:12px;color:#9ba3c4;margin-top:8px"></div>
-      <div style="font-size:11px;color:rgba(160,168,192,.5);margin-top:6px">One confirmation email, then alerts on significant moves. Prices are estimates, see our <a href="/methodology" style="color:#C9A84C">methodology</a>.</div>
-      ${MANAGE_FOLLOWS_LINK}
-    </div>
-    <script>
-      var FOLLOW_SLUG = ${JSON.stringify(card.slug)};
-      var FOLLOW_NAME = ${JSON.stringify(card.name)};
-      function openFollow(){ var b=document.getElementById('follow-box'); if(b) b.style.display = (b.style.display==='none' ? 'block' : 'none'); }
-      function submitFollow(){
-        var emailEl=document.getElementById('follow-email');
-        var msg=document.getElementById('follow-msg');
-        var btn=document.getElementById('follow-submit');
-        var email=(emailEl.value||'').trim();
-        var at=email.indexOf('@');
-        if(at<1 || email.lastIndexOf('.')<at){ msg.textContent='Please enter a valid email address.'; return; }
-        btn.disabled=true; btn.textContent='Saving...';
-        fetch('/api/card-follow',{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({email:email,game:'mtg',cardSlug:FOLLOW_SLUG,cardName:FOLLOW_NAME})
-        }).then(function(r){ return r.json(); }).then(function(d){
-          if(d && d.ok){
-            msg.textContent = d.alreadyFollowing ? 'You are already following this card.' : 'Check your inbox to confirm.';
-            emailEl.style.display='none'; btn.style.display='none';
-          } else {
-            msg.textContent = (d && d.error) || 'Something went wrong. Please try again.';
-            btn.disabled=false; btn.textContent='Follow';
-          }
-        }).catch(function(){ msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; btn.textContent='Follow'; });
-      }
-    </script>
+    ${followBlockHtml({ game: 'mtg', slug: card.slug, cardName: card.name })}
     <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. <a href="/methodology" style="color:inherit;text-decoration:underline">Updated daily</a>. eBay and Amazon links may earn affiliate commission.</p>
     ${shareBar}
   </div><!-- end .card-info -->
@@ -1140,35 +1104,8 @@ async function toggleLike(scryfallId) {
 
 
 // Watch this card
-const watchedCards = JSON.parse(localStorage.getItem('c3_watched') || '{}');
-function toggleWatch(scryfallId, cardName) {
-  const btn = document.getElementById('watch-btn');
-  const icon = document.getElementById('watch-icon');
-  const label = document.getElementById('watch-label');
-  if (watchedCards[scryfallId]) {
-    delete watchedCards[scryfallId];
-    btn.classList.remove('watching');
-    icon.textContent = '☆';
-    label.textContent = 'Watch this card';
-  } else {
-    watchedCards[scryfallId] = { name: cardName, addedAt: Date.now() };
-    btn.classList.add('watching');
-    icon.textContent = '★';
-    label.textContent = 'Watching';
-    if(typeof gtag !== 'undefined') gtag('event','card_watch',{card_name: cardName});
-  }
-  localStorage.setItem('c3_watched', JSON.stringify(watchedCards));
-}
-function initWatch() {
-  const btn = document.getElementById('watch-btn');
-  const icon = document.getElementById('watch-icon');
-  const label = document.getElementById('watch-label');
-  if (watchedCards['${card.scryfall_id}']) {
-    btn.classList.add('watching');
-    icon.textContent = '★';
-    label.textContent = 'Watching';
-  }
-}
+// task-132: the legacy localStorage "Watch this card" toggle was removed in favour of the unified
+// follow system (shared/follow-block.mjs + the follows table). No client-side watch state remains.
 
 
 // Helpful vote
@@ -1339,8 +1276,6 @@ function goToCompare() {
   window.location.href = '/compare?cards=' + tokens.join(',');
 }
 renderCompareTray();
-
-initWatch();
 
 // Drag scroll for related cards carousel
 document.querySelectorAll('.card-carousel').forEach(el => {

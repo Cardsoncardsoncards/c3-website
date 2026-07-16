@@ -1,4 +1,6 @@
-import { MANAGE_FOLLOWS_LINK } from './shared/follow-links.mjs';
+// task-132: unified follow block replaces the old MailerLite "Watch This Card" popup and the
+// bespoke follow box. The buylist-waitlist button (webform mIFDGb) is unaffected.
+import { followBlockHtml } from './shared/follow-block.mjs';
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
@@ -589,48 +591,9 @@ export default async (req) => {
       <button id="c3-compare-btn" class="cta-btn cta-secondary" style="cursor:pointer;border-color:rgba(124,106,245,.4);color:#7c6af5" data-action="add-to-compare" data-slug="${card.slug}" data-name="${card.name.replace(/"/g,'&quot;')}" data-img="${(card.image_url||'').replace(/"/g,'&quot;')}" data-price="${card.price_aud > 0 ? 'AU$'+parseFloat(card.price_aud).toFixed(2) : 'N/A'}" data-game="pokemon">
         <span id="c3-compare-lbl">⚖️ Add to Compare</span>
       </button>
-      <button class="cta-btn cta-secondary" style="cursor:pointer;border-color:rgba(77,189,95,.4);color:#4dbd5f" data-action="watch-card" data-card-name="${card.name.replace(/"/g,'&quot;')}" data-card-game="pokemon">
-        🔔 Watch This Card
-      </button>
-      <button class="cta-btn cta-follow" id="follow-btn" onclick="openFollow()">📈 Follow price</button>
+      <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
     </div>
-    <div id="follow-box" style="display:none;margin-top:12px;padding:14px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.25);border-radius:8px">
-      <div style="font-size:13px;color:#e8eaf0;margin-bottom:8px">Email me when this card's price moves significantly.</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <input id="follow-email" type="email" placeholder="you@example.com" style="flex:1;min-width:200px;padding:9px 12px;border-radius:6px;border:1px solid #242840;background:#0d1117;color:#e8eaf0;font-size:13px">
-        <button id="follow-submit" onclick="submitFollow()" style="padding:9px 16px;border-radius:6px;border:none;background:#C9A84C;color:#0A0C14;font-weight:700;font-size:13px;cursor:pointer">Follow</button>
-      </div>
-      <div id="follow-msg" style="font-size:12px;color:#9ba3c4;margin-top:8px"></div>
-      <div style="font-size:11px;color:rgba(160,168,192,.5);margin-top:6px">One confirmation email, then alerts on significant moves. Prices are estimates, see our <a href="/methodology" style="color:#C9A84C">methodology</a>.</div>
-      ${MANAGE_FOLLOWS_LINK}
-    </div>
-    <script>
-      var FOLLOW_SLUG = ${JSON.stringify(card.slug)};
-      var FOLLOW_NAME = ${JSON.stringify(card.name)};
-      function openFollow(){ var b=document.getElementById('follow-box'); if(b) b.style.display = (b.style.display==='none' ? 'block' : 'none'); }
-      function submitFollow(){
-        var emailEl=document.getElementById('follow-email');
-        var msg=document.getElementById('follow-msg');
-        var btn=document.getElementById('follow-submit');
-        var email=(emailEl.value||'').trim();
-        var at=email.indexOf('@');
-        if(at<1 || email.lastIndexOf('.')<at){ msg.textContent='Please enter a valid email address.'; return; }
-        btn.disabled=true; btn.textContent='Saving...';
-        fetch('/api/card-follow',{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({email:email,game:'pokemon',cardSlug:FOLLOW_SLUG,cardName:FOLLOW_NAME})
-        }).then(function(r){ return r.json(); }).then(function(d){
-          if(d && d.ok){
-            msg.textContent = d.alreadyFollowing ? 'You are already following this card.' : 'Check your inbox to confirm.';
-            emailEl.style.display='none'; btn.style.display='none';
-          } else {
-            msg.textContent = (d && d.error) || 'Something went wrong. Please try again.';
-            btn.disabled=false; btn.textContent='Follow';
-          }
-        }).catch(function(){ msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; btn.textContent='Follow'; });
-      }
-    </script>
+    ${followBlockHtml({ game: 'pokemon', slug: card.slug, cardName: card.name })}
     <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. <a href="/methodology" style="color:inherit;text-decoration:underline">Updated daily</a>. eBay and Amazon links may earn affiliate commission.</p>
 
     <div class="share-bar">
@@ -808,21 +771,8 @@ document.addEventListener('click', function(e) {
     });
   }
 
-  // Watch this card -- open MailerLite modal
-  if (e.target.closest('[data-action="watch-card"]')) {
-    const btn = e.target.closest('[data-action="watch-card"]');
-    const cardName = btn.dataset.cardName;
-    const threshold = document.getElementById('watch-threshold-input')?.value || '10';
-    document.getElementById('watch-modal').style.display = 'flex';
-    document.getElementById('watch-card-name').textContent = cardName;
-    document.getElementById('watch-card-input').value = cardName;
-    document.getElementById('watch-threshold-input').value = threshold;
-  }
-
-  // Close watch modal
-  if (e.target.closest('[data-action="close-watch-modal"]') || e.target.id === 'watch-modal') {
-    document.getElementById('watch-modal').style.display = 'none';
-  }
+  // task-132: the old "Watch This Card" MailerLite popup was removed. Following is now handled by
+  // the unified follow block (shared/follow-block.mjs), the same as every other game.
 
   // eBay click GA4
   const ebayBtn = e.target.closest('[data-gtag-event]');
@@ -832,34 +782,6 @@ document.addEventListener('click', function(e) {
 });
 </script>
 
-<!-- Watch This Card Modal -->
-<div id="watch-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.75);align-items:center;justify-content:center;padding:24px">
-  <div style="background:#1a1d2e;border:1px solid #2d3254;border-radius:16px;padding:32px;max-width:440px;width:100%;position:relative">
-    <button data-action="close-watch-modal" style="position:absolute;top:14px;right:16px;background:none;border:none;color:#9ba3c4;font-size:20px;cursor:pointer">×</button>
-    <div style="font-size:20px;margin-bottom:8px">🔔 Watch This Card</div>
-    <div style="font-size:15px;font-weight:700;color:#e8eaf0;margin-bottom:4px" id="watch-card-name"></div>
-    <p style="font-size:13px;color:#9ba3c4;margin-bottom:20px;line-height:1.6">Get an email alert when this card's price changes by your chosen amount. Free, no spam.</p>
-    <form action="https://landing.mailerlite.com/webforms/submit/mIFDGb" method="POST" target="_blank" style="display:flex;flex-direction:column;gap:12px">
-      <input type="hidden" name="fields[watched_card]" id="watch-card-input" value="">
-      <input type="hidden" name="ml-submit" value="1">
-      <div>
-        <label style="font-size:12px;color:#9ba3c4;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em">Your Email</label>
-        <input type="email" name="fields[email]" required placeholder="you@email.com" style="width:100%;background:#0f1117;border:1px solid #2d3254;color:#e8eaf0;padding:10px 14px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif">
-      </div>
-      <div>
-        <label style="font-size:12px;color:#9ba3c4;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em">Alert me when price changes by</label>
-        <select name="fields[alert_threshold]" id="watch-threshold-input" style="width:100%;background:#0f1117;border:1px solid #2d3254;color:#e8eaf0;padding:10px 14px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif">
-          <option value="5%">5% or more</option>
-          <option value="10%" selected>10% or more</option>
-          <option value="20%">20% or more</option>
-          <option value="50%">50% or more (major moves only)</option>
-        </select>
-      </div>
-      <button type="submit" style="background:#4dbd5f;color:#000;border:none;padding:12px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif">Set Price Alert →</button>
-    </form>
-    <p style="font-size:11px;color:#6b7494;margin-top:12px;text-align:center">Unsubscribe any time. We never sell your data.</p>
-  </div>
-</div>
 <!-- REPORT BUG WIDGET -->
 <style>.bug-float{position:fixed;bottom:20px;right:20px;z-index:9999}.bug-btn{display:flex;align-items:center;gap:6px;background:rgba(15,17,25,.95);border:1px solid rgba(201,168,76,.3);color:#C9A84C;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:sans-serif;backdrop-filter:blur(12px);transition:all .2s;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.4)}.bug-btn:hover{border-color:#C9A84C;background:rgba(201,168,76,.12);color:#E8C86A;text-decoration:none;transform:translateY(-2px)}.bug-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}.bug-modal.open{display:flex}.bug-box{background:#111420;border:1px solid #252840;border-radius:14px;padding:28px;width:100%;max-width:420px;margin:0 16px;position:relative}.bug-close{position:absolute;top:12px;right:14px;background:none;border:none;color:#9ba3c4;font-size:18px;cursor:pointer}.bug-form select,.bug-form textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid #252840;border-radius:8px;color:#F0F2FF;font-family:sans-serif;font-size:13px;padding:9px 12px;margin-bottom:12px;outline:none}.bug-form select option{background:#e8eaf0;color:#111420}.bug-form select{background:#e8eaf0;color:#111420}.bug-hidden{display:none}.bug-submit{width:100%;padding:10px;background:#C9A84C;color:#0A0C14;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}.bug-thanks{display:none;text-align:center;padding:12px 0}.bug-thanks p{color:#4ADE80;font-size:14px}</style>
 <div class="bug-float"><a class="bug-btn" onclick="document.getElementById('bugModal').classList.add('open');return false" href="#">&#x1F41B; Report a Bug</a></div>

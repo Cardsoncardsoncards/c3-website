@@ -243,7 +243,10 @@ export async function listFollows(userId) {
 // The single entry point for creating a follow. Resolves/creates the account, resolves the
 // tier, applies the correct cap, then writes. Returns a discriminated result rather than
 // throwing, so callers can map it onto their own responses.
-export async function applyFollow({ email, game, cardSlug, cardName }) {
+// task-132: autoConfirm skips the email double-opt-in. It is used ONLY for a signed-in follow,
+// where the session cookie already proves the person owns the account and its email, so a second
+// confirmation email would be pointless friction. The signed-out path leaves autoConfirm false.
+export async function applyFollow({ email, game, cardSlug, cardName, autoConfirm = false }) {
   const normalised = normaliseEmail(email);
   if (!normalised) return { ok: false, reason: 'invalid_email' };
 
@@ -275,7 +278,7 @@ export async function applyFollow({ email, game, cardSlug, cardName }) {
     }
   }
 
-  const confirmToken = crypto.randomUUID();
+  const confirmToken = autoConfirm ? null : crypto.randomUUID();
 
   const res = await sb('follows', {
     method: 'POST',
@@ -285,8 +288,9 @@ export async function applyFollow({ email, game, cardSlug, cardName }) {
       card_slug:     cardSlug,
       card_name:     cardName || null,
       alert_types:   ['price_move'],
-      confirmed:     false,
+      confirmed:     autoConfirm,
       confirm_token: confirmToken,
+      ...(autoConfirm ? { confirmed_at: new Date().toISOString() } : {}),
     },
     prefer: 'return=representation',
   });
@@ -305,7 +309,7 @@ export async function applyFollow({ email, game, cardSlug, cardName }) {
   const rows = await res.json().catch(() => null);
   const follow = Array.isArray(rows) && rows.length ? rows[0] : null;
 
-  return { ok: true, created: true, account, follow, confirmToken, tier };
+  return { ok: true, created: true, account, follow, confirmToken, tier, confirmed: autoConfirm };
 }
 
 // Soft delete. "Stop emailing me about this." The relationship is preserved.
