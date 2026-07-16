@@ -19,6 +19,15 @@
 [functions."sitemap-pokemon"]
   timeout = 30
 
+# task-122: yugioh (16,102 rows) and weissschwarz (9,138 rows) are the other two
+# sitemaps large enough that a cold cache-miss regeneration can approach the 10s
+# default (pokemon's own cold run measured 9.76s). Give them the same 30s headroom.
+[functions."sitemap-yugioh"]
+  timeout = 30
+
+[functions."sitemap-weissschwarz"]
+  timeout = 30
+
 [functions."market-insights"]
   timeout = 26
 
