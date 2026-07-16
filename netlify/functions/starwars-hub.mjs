@@ -212,7 +212,7 @@ export default async (req) => {
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Star Wars Card Prices Australia | AUD Prices Updated Daily | C3</title>
-  <meta name="description" content="Browse ${sets.length||'10'}+ Star Wars: Unlimited sets. Live AUD card prices, eBay AU buy links. Australia's most complete Lorcana price guide, updated daily.">
+  <meta name="description" content="Browse ${sets.length||'10'}+ Star Wars: Unlimited sets. Live AUD card prices, eBay AU buy links. Australia's most complete Star Wars Unlimited price guide, updated daily.">
   <link rel="canonical" href="${CANONICAL}">
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="Star Wars Card Prices Australia | Cards on Cards on Cards">
@@ -256,7 +256,7 @@ ${tickerHTML}
 
 ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
   <div class="carousel-label">Most Valuable</div>
-  <div class="carousel-title">Top Lorcana Cards by Price (AUD)</div>
+  <div class="carousel-title">Top Star Wars Unlimited Cards by Price (AUD)</div>
   <div class="carousel-track-wrap"><div class="carousel-track">${carouselHTML}${carouselHTML2}</div></div>
 </section>
 <p style="text-align:center;color:var(--text2);font-size:11px;margin-top:-12px;margin-bottom:16px">Prices sourced from TCGPlayer (USD), converted to AUD. Updated daily.</p>` : ''}
@@ -294,7 +294,7 @@ ${hasMovers ? `<div style="margin-bottom:28px">
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
       <a href="/blog/best-star-wars-unlimited-booster-boxes-australia/" class="guide-card"><div class="guide-title">Best Star Wars Unlimited Booster Boxes in Australia</div><div class="guide-desc">Which Star Wars Unlimited boxes are worth opening and where to buy in Australia.</div></a>
       <a href="/blog/is-star-wars-unlimited-worth-it-australia/" class="guide-card"><div class="guide-title">Is Star Wars Unlimited Worth It?</div><div class="guide-desc">An honest look at Star Wars Unlimited collecting from an Australian perspective.</div></a>
-      <a href="/ev-calculator.html" class="guide-card"><div class="guide-title">Booster Box EV Calculator</div><div class="guide-desc">Is your Lorcana box worth opening? Calculate expected value before you crack it.</div></a>
+      <a href="/ev-calculator.html" class="guide-card"><div class="guide-title">Booster Box EV Calculator</div><div class="guide-desc">Is your Star Wars Unlimited box worth opening? Calculate expected value before you crack it.</div></a>
       <a href="/quizzes/which-tcg-extended" class="guide-card"><div class="guide-title">&#127919; Which TCG Should I Play?</div><div class="guide-desc">Not sure which TCG is right for you? Take the quiz in 2 minutes.</div></a>
     </div>
   </div>
