@@ -504,6 +504,11 @@ async function dashboard(account, { cookie = null } = {}) {
   const tier = await getTier(account.email);
   const cap  = capFor(tier);
 
+  // task-132 Part 7: has this account already subscribed to the weekly digest? If so, the CTA is
+  // replaced by a confirmation, so it stops re-prompting every visit.
+  const digestRows = await sbGet(`accounts?select=digest_subscribed&id=eq.${encodeURIComponent(account.uid || account.id)}&limit=1`);
+  const digestSubscribed = Array.isArray(digestRows) && digestRows[0] ? !!digestRows[0].digest_subscribed : false;
+
   const capLine = cap === null
     ? `<p class="capline">${rows.length} card${rows.length === 1 ? '' : 's'} followed.</p>`
     : `<p class="capline">${rows.length} of ${cap} cards followed.</p>`;
@@ -628,6 +633,11 @@ ${rows.length > 1 ? `
   <a href="/calendar" class="pill pill--calendar">Calendar</a>
 </div>
 
+${digestSubscribed ? `
+<div class="digest">
+  <h2>You are getting the weekly digest</h2>
+  <p>Buy and sell signals across every game you track land in your inbox on Sunday mornings.</p>
+</div>` : `
 <div class="digest">
   <h2>Want the bigger picture too?</h2>
   <p>Get the free weekly digest of buy and sell signals across every game you track.</p>
@@ -654,7 +664,7 @@ ${rows.length > 1 ? `
     });
   });
 })();
-</script>`;
+</script>`}`;
 
   return page('Your C3 Account', body, { cookie });
 }
