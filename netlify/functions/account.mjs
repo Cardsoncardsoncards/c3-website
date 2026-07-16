@@ -31,6 +31,11 @@ import {
   clearSessionCookieHeader,
 } from './shared/session.mjs';
 
+// task-129: /account now uses the shared nav like every other dynamic page, instead of the
+// old bespoke two-item .acct header. NAV_CSS is raw CSS (goes in <style>); navHtml() returns
+// the full nav markup plus its own drawer script (goes right after <body>).
+import { NAV_CSS, navHtml } from './shared/nav.mjs';
+
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const RESEND_API_KEY       = Netlify.env.get('RESEND_API_KEY');
@@ -157,10 +162,6 @@ function page(title, bodyHtml, { status = 200, cookie = null } = {}) {
 body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;line-height:1.7}
 a{color:var(--gold);text-decoration:none}
 a:hover{color:var(--gold-lit)}
-header.acct{border-bottom:1px solid var(--border);padding:16px 0;background:rgba(10,12,20,.97)}
-.acct-inner{display:flex;align-items:center;justify-content:space-between;max-width:960px;margin:0 auto;padding:0 20px;gap:12px}
-.acct-logo{display:flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
-.acct-logo img{height:36px;width:36px;border-radius:8px;flex-shrink:0}
 main{max-width:960px;margin:0 auto;padding:40px 20px 24px}
 h1{font-family:'Cinzel',serif;font-size:28px;font-weight:700;margin-bottom:8px}
 .whoami{font-size:14px;color:var(--silver);margin-bottom:4px}
@@ -216,15 +217,13 @@ footer{border-top:1px solid var(--border);padding:24px 20px 40px;text-align:cent
   .factions{flex-direction:row;width:100%}
   .btn{flex:1;text-align:center}
 }
+
+/* Shared nav (single source of truth: netlify/functions/shared/nav.mjs) */
+${NAV_CSS}
 </style>
 </head>
 <body>
-<header class="acct">
-  <div class="acct-inner">
-    <a href="/" class="acct-logo"><img src="/c3logo.png" alt="C3">Cards on Cards on Cards</a>
-    <a href="/cards" class="small">Card Vault</a>
-  </div>
-</header>
+${navHtml()}
 <main>
 ${bodyHtml}
 </main>
