@@ -292,6 +292,22 @@ button.primary{background:var(--gold);color:#080a0f;border:none;padding:11px 22p
 .auth-h{font-family:'Cinzel',serif;font-size:18px;margin-bottom:12px}
 .auth-alt{font-size:12px;color:var(--text2);margin-top:10px}
 .auth-note{font-size:13px;margin-bottom:12px}
+
+/* task-129 Part 4: combined page (subscribe left / auth right) */
+.combined{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px}
+.benefits{list-style:none;margin:0 0 18px;padding:0}
+.benefits li{font-size:13px;color:var(--silver);padding:5px 0 5px 22px;position:relative}
+.benefits li::before{content:"\\2713";color:var(--gold);position:absolute;left:0;font-weight:700}
+.ck{display:block;font-size:13px;color:var(--white);margin:10px 0;cursor:pointer}
+.ck input{margin-right:8px}
+.ck-d{display:block;font-size:11px;color:var(--text2);margin:2px 0 0 24px}
+input[type=text]{width:100%;padding:11px 13px;border-radius:8px;border:1px solid #242840;background:#0d1117;color:#e8eaf0;font-size:14px;margin-bottom:10px;font-family:inherit}
+.form-msg{font-size:12px;margin-top:10px;min-height:16px;color:var(--silver)}
+.support-c3{margin:0 0 16px}
+.support-c3 a{background:var(--gold);color:#080a0f;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block}
+.support-c3 a:hover{background:var(--gold-lit)}
+@media (max-width:768px){ .combined{grid-template-columns:1fr} }
 footer{border-top:1px solid var(--border);padding:24px 20px 40px;text-align:center;font-size:12px;color:var(--text2)}
 
 @media (max-width:768px){
@@ -312,6 +328,7 @@ ${navHtml()}
 ${bodyHtml}
 </main>
 <footer>
+  <div class="support-c3"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener">&#10084;&#65039; Support C3</a></div>
   Cards on Cards on Cards, Australian TCG prices and intelligence.<br>
   Prices are indicative AUD estimates and move constantly. See our <a href="/methodology">methodology</a>.
 </footer>
@@ -368,16 +385,61 @@ function authPanel(mode = 'login', note = '', noteColor = '#F87171') {
 </div>`;
 }
 
+// task-129 Part 4: the combined signed-out page. LEFT = free email-updates subscribe block
+// (the old /subscribe content, folded in here); RIGHT = password auth (login / create / forgot).
+// Copy is deliberately governing-plan-safe: this is FREE updates, no paid tier is claimed or
+// implied (the paid tier is gated behind AU sold-data on 1,000+ Core cards, not yet live).
 function signedOutPage(note = '', mode = 'login') {
   const secretWarning = hasSessionSecret()
     ? ''
     : `<p class="small" style="color:#F87171;margin-top:12px">Sessions are not configured on this deployment, so login cannot persist yet.</p>`;
-  return page('Sign in to your C3 account', `
+  return page('Your C3 Account', `
 <h1>Your C3 Account</h1>
-<p class="whoami">Log in to see the cards you follow, your price alerts, and your collection in one place.</p>
-<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;margin-top:22px;max-width:420px">
-  ${authPanel(mode, note)}
-  ${secretWarning}
+<p class="whoami">Free to use. Create an account to follow cards and get price alerts, or subscribe for email updates as C3 grows.</p>
+<div class="combined">
+  <div class="panel">
+    <h2 class="auth-h">Free email updates</h2>
+    <p class="small" style="margin-bottom:14px">Everything on C3 is free today. Tell us what you want to hear about as it grows.</p>
+    <ul class="benefits">
+      <li>All prices and card pages, every game</li>
+      <li>14-day price history charts</li>
+      <li>3 active price alerts</li>
+      <li>Collection tracker for up to 100 cards</li>
+      <li>All tools and play features</li>
+      <li>Optional weekly digest email</li>
+    </ul>
+    <form id="sub-form" novalidate>
+      <input type="text" id="sub-name" name="name" placeholder="Your name" autocomplete="name" required>
+      <input type="email" id="sub-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      <label class="ck"><input type="checkbox" name="interest" value="Market Intelligence"> Market Intelligence<span class="ck-d">Weekly AU TCG market signals and movers.</span></label>
+      <label class="ck"><input type="checkbox" name="interest" value="Collection Tools"> Collection Tools<span class="ck-d">Advanced collection tracking and valuation.</span></label>
+      <button type="submit" class="primary" id="sub-submit">Subscribe for Free Updates</button>
+      <div class="form-msg" id="sub-msg"></div>
+    </form>
+    <script>
+    (function(){
+      var form = document.getElementById('sub-form'); if(!form) return;
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        var btn = document.getElementById('sub-submit'), msg = document.getElementById('sub-msg');
+        var name = document.getElementById('sub-name').value.trim();
+        var email = document.getElementById('sub-email').value.trim();
+        if(!name || !email){ msg.style.color='#F87171'; msg.textContent='Name and email are required.'; return; }
+        var interests = [].map.call(document.querySelectorAll('input[name="interest"]:checked'), function(c){ return c.value; });
+        btn.disabled = true; msg.style.color='var(--silver)'; msg.textContent='Signing you up...';
+        try {
+          var r = await fetch('/api/register-interest', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name: name, email: email, interests: interests }) });
+          if(r.ok){ msg.style.color='#4ADE80'; msg.textContent='Thanks! We will notify you as C3 grows.'; form.reset(); }
+          else { msg.style.color='#F87171'; msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; }
+        } catch(_){ msg.style.color='#F87171'; msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; }
+      });
+    })();
+    </script>
+  </div>
+  <div class="panel">
+    ${authPanel(mode, note)}
+    ${secretWarning}
+  </div>
 </div>
 <div class="explore" style="margin-top:26px">
   <a href="/compare"  class="pill pill--compare">Compare</a>

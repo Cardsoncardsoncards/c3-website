@@ -59,6 +59,18 @@
   to = "/cards/mtg"
   status = 302
 
+# ── task-129 Part 4: /subscribe merged into /account. Permanent redirect so existing inbound
+#    links (and the nav Subscribe link) still resolve. subscribe.html is no longer shipped.
+[[redirects]]
+  from = "/subscribe"
+  to = "/account"
+  status = 301
+
+[[redirects]]
+  from = "/subscribe.html"
+  to = "/account"
+  status = 301
+
 # ── Blog redirects (old URLs -> current slugs) ──────────────
 [[redirects]]
   from = "/blog/lorcana-booster-box-guide/"

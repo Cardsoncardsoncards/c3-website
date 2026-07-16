@@ -52,7 +52,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/tools.html": "tools.html"});
   eleventyConfig.addPassthroughCopy({"src/play.html": "play.html"});
   eleventyConfig.addPassthroughCopy({"src/pricing.html": "pricing.html"});
-  eleventyConfig.addPassthroughCopy({"src/subscribe.html": "subscribe.html"});
+  // task-129 Part 4: /subscribe is merged into /account. The static subscribe.html is no longer
+  // shipped; a Netlify redirect (netlify.toml) sends /subscribe and /subscribe.html to /account
+  // so existing inbound links still work. src/subscribe.html is kept in the repo for reference.
   // Landing page for the QR code on the parcel insert card. Direct-visit only, not in the nav.
   eleventyConfig.addPassthroughCopy({"src/welcome.html": "welcome.html"});
 
