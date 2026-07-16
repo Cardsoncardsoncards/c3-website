@@ -28,6 +28,10 @@ import {
 // task-132: read the session cookie so a signed-in follow is one click (no email double opt-in).
 import { getSessionFromRequest } from './shared/session.mjs';
 
+// task-135: the 32-game roster now lives in one shared module, imported by both the follow write
+// path (here) and the dashboard read path (account.mjs), so the two can never drift apart again.
+import { FOLLOW_GAMES, GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared/game-meta.mjs';
+
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -229,48 +233,9 @@ async function handlePriceAlert(req) {
 // sent, with nobody clicking. A bare GET is therefore inert.
 const SITE_ORIGIN = 'https://cardsoncardsoncards.com.au';
 
-// task-132 Part 11: the full 32-game roster. Follow validation, the confirm-email image lookup,
-// and the game label all derive from this ONE map, so adding a game is a single edit. Every game
-// uses {game}_cards with an image_url column, except MTG (mtg_cards + image_uri_normal).
-// Previously only the 7 Core games were listed; the follow system now covers all 32.
-const GAME_META = {
-  mtg:               ['mtg_cards',               'image_uri_normal', 'Magic: The Gathering'],
-  pokemon:           ['pokemon_cards',           'image_url',        'Pokemon'],
-  yugioh:            ['yugioh_cards',            'image_url',        'Yu-Gi-Oh'],
-  lorcana:           ['lorcana_cards',           'image_url',        'Lorcana'],
-  onepiece:          ['onepiece_cards',          'image_url',        'One Piece'],
-  dbsfusionworld:    ['dbsfusionworld_cards',    'image_url',        'Dragon Ball Fusion World'],
-  starwars:          ['starwars_cards',          'image_url',        'Star Wars Unlimited'],
-  alphaclash:        ['alphaclash_cards',        'image_url',        'Alpha Clash'],
-  bakugan:           ['bakugan_cards',           'image_url',        'Bakugan'],
-  battlespiritssaga: ['battlespiritssaga_cards', 'image_url',        'Battle Spirits Saga'],
-  buddyfight:        ['buddyfight_cards',        'image_url',        'Buddyfight'],
-  digimon:           ['digimon_cards',           'image_url',        'Digimon'],
-  dragonball:        ['dragonball_cards',        'image_url',        'Dragon Ball Super'],
-  dragonballz:       ['dragonballz_cards',       'image_url',        'Dragon Ball Z'],
-  finalfantasy:      ['finalfantasy_cards',      'image_url',        'Final Fantasy TCG'],
-  forceofwill:       ['forceofwill_cards',       'image_url',        'Force of Will'],
-  gateruler:         ['gateruler_cards',         'image_url',        'Gate Ruler'],
-  godzilla:          ['godzilla_cards',          'image_url',        'Godzilla'],
-  grandarchive:      ['grandarchive_cards',      'image_url',        'Grand Archive'],
-  gundam:            ['gundam_cards',            'image_url',        'Gundam'],
-  hololive:          ['hololive_cards',          'image_url',        'Hololive'],
-  metazoo:           ['metazoo_cards',           'image_url',        'MetaZoo'],
-  riftbound:         ['riftbound_cards',         'image_url',        'Riftbound'],
-  shadowverse:       ['shadowverse_cards',       'image_url',        'Shadowverse'],
-  sorcery:           ['sorcery_cards',           'image_url',        'Sorcery Contested Realm'],
-  unionarena:        ['unionarena_cards',        'image_url',        'Union Arena'],
-  universus:         ['universus_cards',         'image_url',        'UniVersus'],
-  vanguard:          ['vanguard_cards',          'image_url',        'Cardfight Vanguard'],
-  warhammer:         ['warhammer_cards',         'image_url',        'Warhammer'],
-  weissschwarz:      ['weissschwarz_cards',      'image_url',        'Weiss Schwarz'],
-  wixoss:            ['wixoss_cards',            'image_url',        'Wixoss'],
-  wow:               ['wow_cards',               'image_url',        'World of Warcraft'],
-};
-const FOLLOW_GAMES   = new Set(Object.keys(GAME_META));
-const GAME_TABLES    = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[0]]));
-const GAME_IMAGE_COL = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[1]]));
-const GAME_LABELS    = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[2]]));
+// task-135: GAME_META / FOLLOW_GAMES / GAME_TABLES / GAME_IMAGE_COL / GAME_LABELS now come from
+// shared/game-meta.mjs (imported at the top). They are no longer defined here, so the follow write
+// path and the dashboard read path share one source of truth.
 
 // PART E: generous, observational cap. Existing rows are NEVER touched when it is reached,
 // only new inserts are checked, so lowering it later cannot force anyone's follows away.

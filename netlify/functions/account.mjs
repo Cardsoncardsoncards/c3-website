@@ -42,6 +42,10 @@ import {
 // the full nav markup plus its own drawer script (goes right after <body>).
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 
+// task-135: the 32-game map, shared with card-api.mjs. Replaces account.mjs's old 7-game
+// GAME_CARDS so enrichFollows can render followed cards for every game, not just the original 7.
+import { GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared/game-meta.mjs';
+
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const RESEND_API_KEY       = Netlify.env.get('RESEND_API_KEY');
@@ -60,20 +64,11 @@ function isAdmin(email) {
   return typeof email === 'string' && ADMIN_EMAILS.has(email.trim().toLowerCase());
 }
 
-// Per-game card table + column map. Confirmed against the live schema (task-110 Part 0):
-// every followable game has price_change_7d and price_change_30d. Only MTG differs on the
-// image column, which is image_uri, not image_url. Movement coverage is per CARD, not per
-// game (Star Wars has 7d on 29% of rows, DBS Fusion World 37%), so a missing value is
-// rendered as "no data" rather than as a fabricated 0%.
-const GAME_CARDS = {
-  mtg:            { table: 'mtg_cards',            image: 'image_uri', label: 'MTG' },
-  pokemon:        { table: 'pokemon_cards',        image: 'image_url', label: 'Pokemon' },
-  lorcana:        { table: 'lorcana_cards',        image: 'image_url', label: 'Lorcana' },
-  onepiece:       { table: 'onepiece_cards',       image: 'image_url', label: 'One Piece' },
-  yugioh:         { table: 'yugioh_cards',         image: 'image_url', label: 'Yu-Gi-Oh' },
-  dbsfusionworld: { table: 'dbsfusionworld_cards', image: 'image_url', label: 'DBS Fusion World' },
-  starwars:       { table: 'starwars_cards',       image: 'image_url', label: 'Star Wars' },
-};
+// task-135: the per-game table/image/label map now comes from shared/game-meta.mjs (GAME_TABLES,
+// GAME_IMAGE_COL, GAME_LABELS), covering all 32 games. It replaced the old 7-game GAME_CARDS here.
+// Every game's table carries name, set_name, price_aud, price_change_7d, price_change_30d and its
+// image column (verified live), so the enrich SELECT below is valid for all of them. Movement
+// coverage is per CARD, so a missing value renders as "no data", never a fabricated 0%.
 
 function esc(s) {
   return String(s == null ? '' : s)
@@ -106,17 +101,18 @@ async function sbGet(path) {
 async function enrichFollows(follows) {
   const byGame = new Map();
   for (const f of follows) {
-    if (!GAME_CARDS[f.game]) continue;
+    if (!GAME_TABLES[f.game]) continue; // still guards a genuinely unknown game; all 32 are known
     if (!byGame.has(f.game)) byGame.set(f.game, []);
     byGame.get(f.game).push(f.card_slug);
   }
 
   const cardIndex = new Map(); // "game:slug" -> card
   await Promise.all([...byGame.entries()].map(async ([game, slugs]) => {
-    const cfg = GAME_CARDS[game];
+    const table    = GAME_TABLES[game];
+    const imageCol = GAME_IMAGE_COL[game];
     const list = slugs.map(s => `"${s}"`).join(',');
     const rows = await sbGet(
-      `${cfg.table}?select=slug,name,set_name,price_aud,price_change_7d,price_change_30d,${cfg.image}` +
+      `${table}?select=slug,name,set_name,price_aud,price_change_7d,price_change_30d,${imageCol}` +
       `&slug=in.(${encodeURIComponent(list)})`
     );
     for (const r of (Array.isArray(rows) ? rows : [])) {
@@ -125,7 +121,7 @@ async function enrichFollows(follows) {
       const key = `${game}:${r.slug}`;
       const prev = cardIndex.get(key);
       if (!prev || (parseFloat(r.price_aud) || 0) > (parseFloat(prev.price_aud) || 0)) {
-        cardIndex.set(key, { ...r, image: r[cfg.image] });
+        cardIndex.set(key, { ...r, image: r[imageCol] });
       }
     }
   }));
@@ -527,8 +523,7 @@ async function dashboard(account, { cookie = null } = {}) {
     listHtml = rows.map(f => {
       const c    = f.card;
       const name = esc(f.card_name || (c && c.name) || f.card_slug);
-      const cfg  = GAME_CARDS[f.game];
-      const label = cfg ? cfg.label : f.game;
+      const label = GAME_LABELS[f.game] || f.game;
       const setName = c && c.set_name ? esc(c.set_name) : '';
       const price = c && c.price_aud != null && parseFloat(c.price_aud) > 0
         ? `AU$${parseFloat(c.price_aud).toFixed(2)}`
