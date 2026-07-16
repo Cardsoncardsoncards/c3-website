@@ -1,5 +1,8 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
+// task-132 Part 10: Union Arena has live daily price snapshots, so it gets the price history
+// chart (matching the 23 games that already have one).
+import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 // netlify/functions/unionarena-card-page.mjs
 // Serves /cards/unionarena/:slug
 // Union Arena individual card pages with AUD pricing and affiliate links
@@ -152,6 +155,12 @@ export default async (req) => {
 
   const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * 1.45 : null;
 
+  // task-132 Part 10: price history (Union Arena snapshots are current, verified in Part 9).
+  const snapshots = card.id
+    ? await supabaseGet(`unionarena_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => [])
+    : [];
+  const priceChartHTML = priceChartHtml(snapshots);
+
   // Social share
   const pageUrl   = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/unionarena/${slug}`);
   const shareText = encodeURIComponent(`${card.name} -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards (Australia)`);
@@ -303,6 +312,8 @@ export default async (req) => {
           <a href="/compare?cards=unionarena:${esc(slug)}" class="btn btn-ghost">&#9878; Compare</a>
         </div>
       </div>
+
+      ${priceChartHTML ? `<div style="margin:16px 0"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:sans-serif">Price History (AUD)</div>${priceChartHTML}${PRICE_CHART_SCRIPT}</div>` : ''}
 
       <div class="section">
         <div class="section-title">Where to Buy ${esc(card.name)} in Australia</div>
