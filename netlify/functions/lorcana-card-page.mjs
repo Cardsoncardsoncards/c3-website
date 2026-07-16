@@ -291,6 +291,7 @@ export default async (req) => {
   <meta property="og:title" content="${card.name} | Disney Lorcana Price AU">
   <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
   ${productSchema ? `<script type="application/ld+json">${JSON.stringify(productSchema)}</script>` : ''}
+  <script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":`What is ${card.name} worth in Australia?`,"acceptedAnswer":{"@type":"Answer","text": priceAud ? `As of ${new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})}, ${card.name} has a market price of approximately AU$${priceAud.toFixed(2)}, based on daily-updated market pricing data.` : `${card.name} pricing varies. Check eBay AU for the most current Australian prices.`}},{"@type":"Question","name":`Where can I buy ${card.name} in Australia?`,"acceptedAnswer":{"@type":"Answer","text":`You can buy ${card.name} on eBay AU and from Australian TCG retailers. This page links to live eBay AU listings and shows the AUD price history.`}}]})}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
