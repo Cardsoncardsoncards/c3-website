@@ -131,10 +131,10 @@ async function supabaseUpsertSnapshots(table, rows) {
 //
 // The live sync_events schema is deliberately thin: event_type (required), game,
 // rows_affected, triggered_at (defaults to now()), webhook_fired (defaults false).
-// There is no status/started_at/finished_at/error_message column, so run status is
-// encoded in event_type and there is nowhere to persist an error string. The message
-// still goes to the function logs via console.error.
-async function logSyncEvent(eventType, rowsAffected = null) {
+// Run status is encoded in event_type. On a sync_error the caught error message is now
+// persisted to the sync_events.error_message column, so a failed run is diagnosable from
+// Supabase alone without relying on Netlify function logs. It still goes to console.error too.
+async function logSyncEvent(eventType, rowsAffected = null, errorMessage = null) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 8000);
   try {
@@ -149,7 +149,8 @@ async function logSyncEvent(eventType, rowsAffected = null) {
       body: JSON.stringify([{
         event_type:    eventType,
         game:          GAME_SLUG,
-        rows_affected: rowsAffected
+        rows_affected: rowsAffected,
+        error_message: errorMessage
       }]),
       signal: controller.signal
     });
@@ -350,7 +351,7 @@ export default async (req) => {
 
   } catch (err) {
     console.error('[sync-unionarena] FATAL:', err.message);
-    await logSyncEvent('sync_error');
+    await logSyncEvent('sync_error', null, err.message);
     return new Response(err.message, { status: 500 });
   }
 };
