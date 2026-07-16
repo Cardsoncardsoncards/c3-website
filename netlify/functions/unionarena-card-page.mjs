@@ -3,6 +3,8 @@ import { viewTrackingScript } from './shared/view-tracking.mjs';
 // task-132 Part 10: Union Arena has live daily price snapshots, so it gets the price history
 // chart (matching the 23 games that already have one).
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
+// task-132 Part 11: the unified follow block reaches Union Arena too.
+import { followBlockHtml } from './shared/follow-block.mjs';
 // netlify/functions/unionarena-card-page.mjs
 // Serves /cards/unionarena/:slug
 // Union Arena individual card pages with AUD pricing and affiliate links
@@ -311,6 +313,7 @@ export default async (req) => {
           <a href="${amazonUrl}" target="_blank" rel="noopener" class="btn btn-ebay">Amazon AU &#8599;</a>
           <a href="/compare?cards=unionarena:${esc(slug)}" class="btn btn-ghost">&#9878; Compare</a>
         </div>
+        ${followBlockHtml({ game: 'unionarena', slug: slug, cardName: card.name })}
       </div>
 
       ${priceChartHTML ? `<div style="margin:16px 0"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:sans-serif">Price History (AUD)</div>${priceChartHTML}${PRICE_CHART_SCRIPT}</div>` : ''}
