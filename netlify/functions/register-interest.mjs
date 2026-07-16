@@ -41,7 +41,15 @@ export default async (req) => {
   const interestList = Array.isArray(interests) && interests.length
     ? interests : ['unspecified'];
 
-  // 1. Add to MailerLite group with interest tags
+  // 1. Add to MailerLite group, storing the interest checkboxes as queryable fields.
+  // task-129 Part 3: previously the interests only appeared in the owner notification email
+  // below and were never stored segmentably. Now they land in per-interest custom fields so
+  // segmentation works. MailerLite has no boolean field type, so these are 1 (interested) / 0.
+  const mlFields = {
+    name,
+    market_intelligence: (Array.isArray(interests) && interests.includes('Market Intelligence')) ? 1 : 0,
+    collection_tools:     (Array.isArray(interests) && interests.includes('Collection Tools')) ? 1 : 0,
+  };
   const mlController = new AbortController();
   const mlTimer = setTimeout(() => mlController.abort(), 8000);
   try {
@@ -54,7 +62,7 @@ export default async (req) => {
       },
       body: JSON.stringify({
         email,
-        fields: { name },
+        fields: mlFields,
         groups: [GROUP_ID],
         status: 'active'
       })
