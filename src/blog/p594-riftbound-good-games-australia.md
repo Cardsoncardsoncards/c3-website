@@ -28,6 +28,7 @@ Riftbound's first truly global simultaneous release, no regional head start anyw
 Australian players get access to new cards at exactly the same moment as everyone else worldwide
 for the first time. Reveal season for Vendetta began 22 June 2026, and the set is confirmed to
 introduce nine Champion Legends, including Nasus, Renekton, Akali, Mel, Ambessa, Zed and Shen.
+
 Vendetta also debuts Riftbound's first two-player starter product, Showdown Decks, a Zed versus
 Shen matchup built specifically for jumping straight into games with a friend rather than needing
 to build a full competitive deck first. Set 5, "Radiance," is already confirmed for Q4 2026.
@@ -96,3 +97,25 @@ lands, that's usually where real price movement follows, not at the announcement
 This coverage is independent, C3 has no partnership or affiliate relationship with Good Games or
 Riot Games, we're simply tracking what's happening in the Australian Riftbound scene and what it
 might mean for the cards you're playing or collecting.
+
+## FAQ
+
+**When does Riftbound Set 4, Vendetta, release?**
+31 July 2026. It's Riftbound's first truly global simultaneous release, so Australian players get new cards at the same moment as everyone else worldwide.
+
+**Which Champion Legends are in Vendetta?**
+Nine, including Nasus, Renekton, Akali, Mel, Ambessa, Zed and Shen.
+
+**What is the Riftbound Showdown Decks product?**
+Vendetta's first two-player starter product, a Zed versus Shen matchup built for jumping straight into games with a friend rather than building a full deck first.
+
+**Where can I play Riftbound in Australia?**
+Good Games runs weekly Nexus Night constructed events across multiple stores, including a well-established Monday night at Good Games Belconnen.
+
+**Why do Riftbound Champion Legend prices sometimes not match competitive strength?**
+Because a fair number of collectors buy for the League of Legends character rather than the deck, so a champion's popularity can move a card's price independently of how strong it is in the current format.
+
+**Where can I check current Riftbound prices in Australia?**
+[Compare current Riftbound card prices](/compare) or check C3's [live Riftbound market](/cards/riftbound) across sellers before you buy.
+
+The C3 Team

@@ -11,7 +11,7 @@ affiliate_disclaimer: true
 ---
 The Gundam Card Game is one of the newer trading card games to build a real presence in
 Australian stores, and Good Games has kept pace with it, running weekly constructed events across
-several locations. If you haven't tried it yet, a weekly locals night is a straightforward,
+several locations. If you haven't tried it yet, a weekly locals night is an easy,
 low-pressure way to get a feel for the game before committing to anything bigger.
 
 ## A steady release cadence
@@ -89,3 +89,22 @@ rather than just riding an initial wave of interest.
 This coverage is independent, C3 has no partnership or affiliate relationship with Good Games or
 Bandai, we're simply tracking what's happening in the Australian Gundam Card Game scene and what
 it might mean for the cards you're playing or collecting.
+
+## FAQ
+
+**Is the Gundam Card Game good for beginners?**
+Yes. The card pool is still relatively small compared to older TCGs, so there is less to learn before you can compete, and a weekly locals night gives new players a low-pressure place to practise.
+
+**What is the current Gundam Card Game set?**
+GD04, Phantom Aria, released 24 April 2026, built around Victory Gundam and Turn A Gundam.
+
+**Where can I play Gundam Card Game in Australia?**
+Good Games runs weekly constructed nights across several locations, including a dedicated night at Good Games Newcastle alongside its other card game events.
+
+**Do I need to know the Gundam anime to enjoy the card game?**
+No, but a lot of players already come from the Gunpla model-building community and tend to connect faster with the cards if they know the source material.
+
+**How do I check what Gundam cards are worth in Australia?**
+C3's live [Gundam card pages](/cards/gundam) track AU pricing across recent sets, useful whether you're buying into GD04 or checking a card before you sell.
+
+The C3 Team

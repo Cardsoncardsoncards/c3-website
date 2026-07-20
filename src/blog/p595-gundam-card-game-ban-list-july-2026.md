@@ -58,4 +58,24 @@ Freedom Ascension lands the same day as the new list, so several of the newly re
 
 Check current [Gundam Card Game prices on C3](/cards/gundam), or follow any of these cards individually to get notified if the price moves.
 
+## FAQ
+
+**When does the Gundam Card Game ban list take effect?**
+24 July 2026, the same day the Freedom Ascension set releases.
+
+**What card was banned outright?**
+[GD01-020 Anksha](/cards/gundam/newtype-rising-anksha-gd01-020), after blue-purple decks running Anksha alongside purple's damage-to-Units effects posted a win rate well out of line with the rest of the field.
+
+**What is a banned pair?**
+Two specific cards that can't both be in the same deck, though either one can be run alone. Guntank and M1 Astray Shrike, and Amuro Ray and Mikazuki Augus, are the two named pairs in this update.
+
+**How many cards are affected by the new banned pair category?**
+Nineteen cards currently match the criteria, Lv.2, cost 1, 2 AP, 2 HP, no card text, and any future card matching that stat line is automatically included with no new announcement needed.
+
+**Is Corsica Base still restricted?**
+Yes. It has been Restricted (2) since 1 April 2026 and stays that way under the July update.
+
+**Do I need to update my registered tournament deck?**
+If your deck is affected and registered for a tournament on or after 31 July, it gets reset on 27 July, so re-register before you play.
+
 The C3 Team
