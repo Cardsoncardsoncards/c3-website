@@ -277,10 +277,7 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <div style="margin-bottom:10px">
-    <a href="/">Home</a><a href="/cards">Card Vault</a><a href="/cards/bakugan">Bakugan TCG</a>
-    <a href="/cards/pokemon">Pokemon</a><a href="/cards/mtg">MTG</a>
-    <a href="/cards/yugioh">Yu-Gi-Oh</a><a href="/cards/lorcana">Lorcana</a>
-    <a href="/blog">Blog</a><a href="/tracker.html">Tracker</a>
+    <a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/bakugan">Bakugan TCG</a><a href="/cards/pokemon">Pokemon</a><a href="/cards/mtg">MTG</a><a href="/cards/yugioh">Yu-Gi-Oh</a><a href="/cards/lorcana">Lorcana</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. USD prices converted to AUD at approximately 1.45.</p>

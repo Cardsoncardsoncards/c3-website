@@ -347,7 +347,7 @@ ${bodyHtml}
 <footer>
   <div class="support-c3"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener">&#10084;&#65039; Support C3</a></div>
   Cards on Cards on Cards, Australian TCG prices and intelligence.<br>
-  Prices are indicative AUD estimates and move constantly. See our <a href="/methodology">methodology</a>.
+  Prices are indicative AUD estimates and move constantly. See our <a href="/">Home</a> <a href="/shop">Shop</a> <a href="/blog">Blog</a> <a href="/tracker">Tracker</a> <a href="/cards">Card Prices</a> <a href="/compare">Compare</a> <a href="/market">Market</a> <a href="/tools">Tools</a> <a href="/play">Play</a> <a href="/contact">Contact</a> <a href="/legal">Legal</a> <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a> <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a>.
 </footer>
 </body>
 </html>`, { status, headers });

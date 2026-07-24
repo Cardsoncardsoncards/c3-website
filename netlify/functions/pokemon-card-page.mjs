@@ -270,7 +270,7 @@ async function handleSetPage(setSlug, headers) {
 </div>
 <footer style="border-top:1px solid #252840;padding:24px;text-align:center;color:#8892b0;font-size:12px;margin-top:20px">
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
-  <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/cards/pokemon" style="color:#8892b0;margin:0 8px">Pokemon</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker.html" style="color:#8892b0;margin:0 8px">Tracker</a></p>
+  <p><a href="/" style="color:#8892b0;margin:0 8px">Home</a><a href="/shop" style="color:#8892b0;margin:0 8px">Shop</a><a href="/blog" style="color:#8892b0;margin:0 8px">Blog</a><a href="/tracker" style="color:#8892b0;margin:0 8px">Tracker</a><a href="/cards" style="color:#8892b0;margin:0 8px">Card Prices</a><a href="/compare" style="color:#8892b0;margin:0 8px">Compare</a><a href="/market" style="color:#8892b0;margin:0 8px">Market</a><a href="/tools" style="color:#8892b0;margin:0 8px">Tools</a><a href="/play" style="color:#8892b0;margin:0 8px">Play</a><a href="/contact" style="color:#8892b0;margin:0 8px">Contact</a><a href="/legal" style="color:#8892b0;margin:0 8px">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="color:#8892b0;margin:0 8px">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="color:#8892b0;margin:0 8px">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/pokemon" style="color:#8892b0;margin:0 8px">Pokemon</a></p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
@@ -672,11 +672,20 @@ ${relatedHTML}
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <div style="margin-bottom:12px">
     <a href="/">Home</a>
+    <a href="/shop">Shop</a>
+    <a href="/blog">Blog</a>
+    <a href="/tracker">Tracker</a>
+    <a href="/cards">Card Prices</a>
+    <a href="/compare">Compare</a>
+    <a href="/market">Market</a>
+    <a href="/tools">Tools</a>
+    <a href="/play">Play</a>
+    <a href="/contact">Contact</a>
+    <a href="/legal">Legal</a>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a>
+    <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br>
     <a href="/cards/mtg">MTG Cards</a>
     <a href="/cards/pokemon">Pokemon Cards</a>
-    <a href="/blog">Blog</a>
-    <a href="/tracker.html">Free Tracker</a>
-    <a href="/contact.html">Contact</a>
   </div>
   <p>© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Prices are estimates based on USD Scryfall/TCGdex data converted at approximately 1.45 AUD. Check eBay AU for live Australian pricing.</p>
