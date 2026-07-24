@@ -52,6 +52,22 @@
 [functions."starwars-set-page"]
   timeout = 26
 
+# ── Security response headers ──
+# Applied site-wide. CSP is deliberately NOT set here: it needs its own scoped pass given the
+# inline onclick handlers (e.g. the eBay/GA4 gtag calls) and the several third-party script
+# origins already in use. X-Frame-Options: SAMEORIGIN is safe because the codebase contains no
+# <iframe> that embeds a c3 page, and no c3 page is designed to be framed by a third party (the
+# only embed is c3 hosting a MailerLite form, where c3 is the parent frame, which this does not
+# affect). Verify with a live fetch after deploy: netlify.toml header rules reliably reach static
+# CDN responses; confirm they also reach serverless function responses (the dynamic pages).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=()"
+
 # ── MTG set pages have no dedicated handler yet: send /cards/mtg/sets/* to the hub.
 #    Temporary (302) so it can be removed cleanly if an mtg-set-page function is added later.
 [[redirects]]
