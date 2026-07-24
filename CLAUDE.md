@@ -323,10 +323,15 @@ designation back on row count.
 - Write blog posts -- those go to claude.ai
 - Approve its own pushes -- always wait for explicit approval
 - Hardcode secret values in files (repo is public)
-- Fetch the live deployed site. The sandbox has NO network egress: curl returns HTTP 000 and
-  zero bytes. Verify a deploy through the Netlify API instead, by checking that the deploy's
-  commit_ref matches the commit that was just pushed. Say plainly that this is what was done.
-  Never imply a visual check happened when it did not.
+- Assume the sandbox cannot reach the internet. It CAN. Default `curl` returns HTTP 000 here,
+  but that is a Windows schannel certificate-revocation-check quirk (CRYPT_E_NO_REVOCATION_CHECK),
+  NOT a lack of egress. Node `fetch` (e.g. `node -e "fetch(url).then(...)"`) and
+  `curl --ssl-no-revoke` both reach the live site fine. So live verification IS possible and
+  encouraged: status codes, response headers, and rendered HTML can all be read directly. The
+  c3-crawler.mjs tool at the repo root does exactly this. For DEPLOY verification specifically,
+  still prefer matching the Netlify API deploy commit_ref to the pushed commit, since that proves
+  the exact commit is the one now live. And never imply a browser or visual check happened when
+  only a fetch or a header read did: say plainly which was done.
 
 ---
 

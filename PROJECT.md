@@ -597,9 +597,15 @@ YGO Oceanic WCQ recap post (p516): due within 48 hours of 12 July 2026 event end
 
 ---
 
-## SECURITY STATUS (CONFIRMED 19 MAY 2026)
+## SECURITY STATUS (last reviewed 24 July 2026)
 
-All tables have RLS enabled with correct anon SELECT + service_role ALL policies. mtg_card_likes and mtg_card_views correctly have 3 policies each (anon INSERT, anon SELECT, service_role ALL). This is intentional, not an anomaly.
+Supersedes the 19 May 2026 note, which predated the accounts table (task-109, mid-July) and no longer matched the live Supabase linter.
+
+Identity tables (accounts, follows, subscribers, follow_magic_links) are service_role ONLY, with no anon policy of any kind: signup and login happen only through the server-side functions, never via client-side table access. Every other table uses anon SELECT + service_role ALL; a few engagement tables (mtg_card_likes, mtg_card_views, and similar) also allow anon INSERT by design, which is intentional, not an anomaly.
+
+Fixes applied and deployed on 24 July 2026 (commit d72a5c8): a live follow-alert IDOR (unsubscribeFollow is now scoped to the owner user_id, not the client-supplied follow id) and abuse controls (honeypot plus per-IP and per-email throttle) on the anonymous email endpoints register-interest and email-subscribe.
+
+Still open from that audit, not yet done: revoke public EXECUTE from anon and authenticated on three SECURITY DEFINER functions (compute_mtg_signals_batch, update_mtg_signals_batched, update_usd_aud_rate); the npm audit findings are all build-time only (Eleventy toolchain), none reachable at function runtime; security response headers are largely unset (only HSTS is served, there is no netlify _headers file, so CSP, X-Frame-Options, Referrer-Policy and Permissions-Policy are all absent); and there is still no Terms or Privacy content even though /legal exists and returns 200.
 
 ---
 
