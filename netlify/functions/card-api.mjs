@@ -571,7 +571,9 @@ async function handleUnsubscribeFollow(req) {
   // relationship on what the user only ever asked to be an email preference ("Don't want
   // alerts for this card any more?"). The row is kept and simply excluded from sends.
   // A genuine hard delete is a separate, explicitly-labelled action on the my-follows page.
-  const ok = await unsubscribeFollow(row.id);
+  // Pass row.user_id so the soft delete is owner-scoped (unsubscribeFollow now requires it). The
+  // row was resolved from the unguessable unsubscribe_token, so user_id here is the true owner.
+  const ok = await unsubscribeFollow(row.id, row.user_id);
   if (!ok) {
     console.error('[unsubscribe-follow] soft delete failed for follow', row.id);
     return followMessage('Something went wrong', 'We could not unsubscribe you just now. Please try the link again shortly.', 500);

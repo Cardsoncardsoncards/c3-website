@@ -313,11 +313,22 @@ export async function applyFollow({ email, game, cardSlug, cardName, autoConfirm
 }
 
 // Soft delete. "Stop emailing me about this." The relationship is preserved.
-export async function unsubscribeFollow(followId) {
-  const res = await sb(`follows?id=eq.${encodeURIComponent(followId)}`, {
-    method: 'PATCH',
-    body: { unsubscribed_at: new Date().toISOString() },
-  });
+//
+// SECURITY (IDOR): scoped by user_id as well as the follow id, exactly like deleteFollow below.
+// The follow id is a sequential, enumerable bigint and every call here runs with the service
+// key, which bypasses RLS. Filtering on id alone let any authenticated caller switch OFF another
+// person's alerts by guessing an id. Requiring the owner's user_id closes that: a wrong or
+// missing userId narrows the filter to zero rows and fails closed, it never touches another
+// account's follow. Both callers already hold a trustworthy user_id (the signed session's uid
+// in account.mjs, and the token-resolved row.user_id in card-api.mjs).
+export async function unsubscribeFollow(followId, userId) {
+  const res = await sb(
+    `follows?id=eq.${encodeURIComponent(followId)}&user_id=eq.${encodeURIComponent(userId)}`,
+    {
+      method: 'PATCH',
+      body: { unsubscribed_at: new Date().toISOString() },
+    }
+  );
   return res.ok;
 }
 

@@ -2,6 +2,36 @@
 // Handles /api/register-interest POST from subscribe.html
 // Adds to MailerLite paid group + notifies owner via Resend
 
+// Escape user-supplied values before they go into any HTML email body. The owner notification
+// below interpolates the submitted name and email directly, so without this a submitter could
+// inject markup into the inbox that receives these alerts.
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Basic in-memory abuse throttle. Per serverless instance only (instances are short-lived and
+// not shared across the fleet), so this blunts a scripted flood rather than being a hard cap,
+// the same trade-off account.mjs makes for login. It matters more here than on most endpoints
+// because each accepted request sends a "welcome" email to the SUBMITTER-supplied address via
+// our verified domain, which is an email-bombing and sender-reputation surface if left open.
+const RL_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+const RL_MAX = 5;                    // requests per key (IP, and email) per window
+const rlHits = new Map();            // key -> { count, resetAt }
+function rlBlocked(key) {
+  const now = Date.now();
+  const rec = rlHits.get(key);
+  if (!rec || now > rec.resetAt) { rlHits.set(key, { count: 1, resetAt: now + RL_WINDOW_MS }); return false; }
+  rec.count += 1;
+  return rec.count > RL_MAX;
+}
+function clientIp(req) {
+  return req.headers.get('x-nf-client-connection-ip')
+    || (req.headers.get('x-forwarded-for') || '').split(',')[0].trim()
+    || 'unknown';
+}
+
 export default async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('', {
@@ -31,10 +61,27 @@ export default async (req) => {
     });
   }
 
-  const { name, email, interests } = body;
+  const { name, email, interests, company } = body;
+
+  // Honeypot: a hidden field a real person never sees or fills. A value here means a bot, so
+  // return an ordinary success (give the bot no signal) and do nothing.
+  if (company && String(company).trim() !== '') {
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+
   if (!email || !name) {
     return new Response(JSON.stringify({ ok: false, error: 'Name and email required' }), {
       status: 400, headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  // Throttle per IP and per email before any outbound work (MailerLite add, owner email, and the
+  // welcome email to the submitter-supplied address).
+  if (rlBlocked('ip:' + clientIp(req)) || rlBlocked('em:' + String(email).trim().toLowerCase())) {
+    return new Response(JSON.stringify({ ok: false, error: 'Too many requests. Please try again shortly.' }), {
+      status: 429, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
   }
 
@@ -92,9 +139,9 @@ export default async (req) => {
         from: 'C3 Alerts <alerts@cardsoncardsoncards.com.au>',
         to: ['ccc.squadhelp@gmail.com'],
         subject: 'New subscription interest: ' + interestList.join(', '),
-        html: '<p><strong>Name:</strong> ' + name + '</p>'
-          + '<p><strong>Email:</strong> ' + email + '</p>'
-          + '<p><strong>Interested in:</strong> ' + interestList.join(', ') + '</p>'
+        html: '<p><strong>Name:</strong> ' + esc(name) + '</p>'
+          + '<p><strong>Email:</strong> ' + esc(email) + '</p>'
+          + '<p><strong>Interested in:</strong> ' + esc(interestList.join(', ')) + '</p>'
           + '<p>Added to MailerLite group 188799131758626620.</p>'
       })
     });

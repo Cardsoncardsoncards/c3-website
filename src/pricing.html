@@ -370,6 +370,7 @@
     <h2>Be first when new plans launch</h2>
     <p>Join the list for market movers, plus early access to any optional paid features we add.</p>
     <form id="join-form">
+      <input type="text" id="join-company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
       <input type="email" id="join-email" placeholder="Your email address" required aria-label="Email address">
       <button type="submit">Join free</button>
     </form>
@@ -407,9 +408,10 @@
       var em=document.getElementById('join-email').value.trim();
       var msg=document.getElementById('join-msg');
       if(!em){msg.textContent='Please enter your email.';return;}
+      var hp=document.getElementById('join-company').value;
       msg.style.color='#A0A8C0';msg.textContent='Joining...';
       try{
-        var r=await fetch('/.netlify/functions/email-subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em})});
+        var r=await fetch('/.netlify/functions/email-subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,company:hp})});
         var d=await r.json();
         if(r.ok){msg.style.color='#22c55e';msg.textContent='You are in. Welcome to C3.';gtag('event','pricing_join_success');}
         else{msg.style.color='#ef4444';msg.textContent=d.error||'Something went wrong.';}

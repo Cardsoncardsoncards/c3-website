@@ -426,6 +426,7 @@ function signedOutPage(note = '', mode = 'login') {
       <li>Optional weekly digest email</li>
     </ul>
     <form id="sub-form" novalidate>
+      <input type="text" id="sub-company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
       <input type="text" id="sub-name" name="name" placeholder="Your name" autocomplete="name" required>
       <input type="email" id="sub-email" name="email" placeholder="you@example.com" autocomplete="email" required>
       <label class="ck"><input type="checkbox" name="interest" value="Market Intelligence"> Market Intelligence<span class="ck-d">Weekly AU TCG market signals and movers.</span></label>
@@ -441,11 +442,12 @@ function signedOutPage(note = '', mode = 'login') {
         var btn = document.getElementById('sub-submit'), msg = document.getElementById('sub-msg');
         var name = document.getElementById('sub-name').value.trim();
         var email = document.getElementById('sub-email').value.trim();
+        var company = document.getElementById('sub-company').value;
         if(!name || !email){ msg.style.color='#F87171'; msg.textContent='Name and email are required.'; return; }
         var interests = [].map.call(document.querySelectorAll('input[name="interest"]:checked'), function(c){ return c.value; });
         btn.disabled = true; msg.style.color='var(--silver)'; msg.textContent='Signing you up...';
         try {
-          var r = await fetch('/api/register-interest', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name: name, email: email, interests: interests }) });
+          var r = await fetch('/api/register-interest', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name: name, email: email, interests: interests, company: company }) });
           if(r.ok){ msg.style.color='#4ADE80'; msg.textContent='Thanks! We will notify you as C3 grows.'; form.reset(); }
           else { msg.style.color='#F87171'; msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; }
         } catch(_){ msg.style.color='#F87171'; msg.textContent='Something went wrong. Please try again.'; btn.disabled=false; }
@@ -834,8 +836,8 @@ export default async (req) => {
 
     const id = form && form.get('id');
     if ((action === 'stop' || action === 'remove') && id) {
-      if (action === 'stop') await unsubscribeFollow(String(id));      // soft delete, row stays
-      else                   await deleteFollow(session.uid, String(id)); // hard delete, scoped
+      if (action === 'stop') await unsubscribeFollow(String(id), session.uid); // soft delete, scoped to owner
+      else                   await deleteFollow(session.uid, String(id));       // hard delete, scoped
     }
     return dashboard(session);
   }
