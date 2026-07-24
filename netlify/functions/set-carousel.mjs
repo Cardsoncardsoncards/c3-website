@@ -145,6 +145,16 @@ export default async (req) => {
     // priceDisplay keeps the original precedence exactly: a real price_aud renders as AU$X,
     // and only when it is missing does the USD market_price get converted and marked with a
     // tilde as an estimate. MTG sets price_aud as its own priceCol, so it takes the first arm.
+    // task-149 Tier A: carousel images are thumbnails, so request the smaller TCGPlayer
+    // variant. The stored image_url bakes in TCGPlayer's resizer path (fit-in/400x400 at
+    // ~25.3KB); the same image at fit-in/200x200 is ~8.4KB, a 67% saving, and 200px is
+    // ample at the size the carousel renders. Measured on the homepage: ~111 carousel
+    // images, ~2,808KB -> ~932KB. Only the documented fit-in/WxH form is rewritten, so a
+    // URL from any other host (or an unexpected shape) is passed through untouched.
+    const thumb = (url) => typeof url === 'string'
+      ? url.replace(/(\/\/product-images\.tcgplayer\.com\/fit-in\/)\d+x\d+\//, '$1200x200/')
+      : url;
+
     const cards = rows.map(c => {
       const aud    = parseFloat(c.price_aud);
       const source = parseFloat(c[cfg.priceCol]);
@@ -160,7 +170,7 @@ export default async (req) => {
         rarity:       c.rarity,
         set_name:     c.set_name,
         number:       c[cfg.numberCol],
-        image_url:    c[cfg.imageCol],
+        image_url:    thumb(c[cfg.imageCol]),
         price_aud:    Number.isFinite(aud) ? aud.toFixed(2) : null,
         cardUrl:      `${cfg.path}/${c.slug}`,
         ebayUrl:      `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name)}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`,

@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
 // netlify/functions/yugioh-set-page.mjs
 // Serves /cards/yugioh/sets/:setCode
 
@@ -93,6 +94,15 @@ export default async (req) => {
   if (setsR.status === 'rejected') return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
   const sets = setsR.value;
   const ebayToken = ebayTokenR.status === 'fulfilled' ? ebayTokenR.value : null;
+
+  // task-146: only when the set was NOT found, offer the canonical URL for the two known legacy
+  // forms. Guarded on the miss so a request that already resolves is never redirected: this file
+  // lowercases setCode itself (see above), so a mixed-case set URL still serves 200 as before.
+  const legacy = (!sets || !sets[0])
+    ? (await numericSetRedirect(setCode, 'yugioh_sets', '/cards/yugioh/sets', supabaseGet)
+       || lowercaseRedirect(url.pathname, url.search))
+    : null;
+  if (legacy) return legacy;
 
   if (!sets || !sets[0]) return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
@@ -226,6 +236,7 @@ export default async (req) => {
 <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">${schemaLD}</script>
 <style>

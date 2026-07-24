@@ -192,6 +192,7 @@ export default async (req) => {
   <meta property="og:image" content="${SITE}/c3ogbanner.png">
   <meta property="og:url" content="${canonical}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>

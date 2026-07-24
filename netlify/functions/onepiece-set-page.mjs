@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
 // netlify/functions/onepiece-set-page.mjs
 // Serves /cards/onepiece/sets/:slug+
 
@@ -73,6 +74,10 @@ export default async (req) => {
     const setsVal = sets.value;
     const ebayTokenVal = ebayToken.status === 'fulfilled' ? ebayToken.value : null;
 
+    // task-146: before 404ing, offer the canonical URL for the two known legacy forms.
+    const legacy = await numericSetRedirect(setSlug, 'onepiece_sets', '/cards/onepiece/sets', supabaseGet)
+                || lowercaseRedirect(url.pathname, url.search);
+    if (legacy) return legacy;
     if (!setsVal || !setsVal[0]) return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
     const set = setsVal[0];

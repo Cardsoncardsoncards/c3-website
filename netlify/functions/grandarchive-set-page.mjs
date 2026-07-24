@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
 // netlify/functions/grandarchive-set-page.mjs
 // C3 set-page v4 -- full MVP rebuild
 // Serves /cards/grandarchive/sets/:slug+
@@ -89,6 +90,10 @@ export default async (req) => {
     const sets = setsR.value;
     const ebayToken = ebayTokenR.status === 'fulfilled' ? ebayTokenR.value : null;
 
+    // task-146: before 404ing, offer the canonical URL for the two known legacy forms.
+    const legacy = await numericSetRedirect(setSlug, 'grandarchive_sets', '/cards/grandarchive/sets', supabaseGet)
+                || lowercaseRedirect(url.pathname, url.search);
+    if (legacy) return legacy;
     if (!sets || !sets[0]) return new Response(graceful404(setSlug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
     const set = sets[0];

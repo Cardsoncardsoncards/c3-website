@@ -5,6 +5,7 @@ import { followBlockHtml } from './shared/follow-block.mjs';
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
+import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
 // netlify/functions/pokemon-card-page.mjs
 // Serves dynamic Pokemon card pages at /cards/pokemon/[slug]
 // Mirrors MTG card page structure, adapted for Pokemon TCG data from TCGdex
@@ -307,6 +308,9 @@ export default async (req) => {
     // Fetch card -- select all fields including price_change_7d, price_change_30d
     const cards = await supabaseGet(`pokemon_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`);
     if (!cards || cards.length === 0) {
+      // task-146: a mixed-case slug has a canonical lowercase form; redirect rather than 404.
+      const legacyCase = lowercaseRedirect(url.pathname, url.search);
+      if (legacyCase) return legacyCase;
       return new Response(notFoundPage(slug), { status: 404, headers });
     }
     const card = cards[0];
@@ -478,6 +482,7 @@ export default async (req) => {
   <meta property="og:image" content="${card.image_url || 'https://cardsoncardsoncards.com.au/c3-og-banner.png'}">
   <meta property="og:site_name" content="Cards on Cards on Cards">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>

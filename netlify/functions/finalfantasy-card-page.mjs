@@ -5,6 +5,7 @@ import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 // task-132 Part 11: the unified follow block reaches Final Fantasy too.
 import { followBlockHtml } from './shared/follow-block.mjs';
+import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
 // netlify/functions/finalfantasy-card-page.mjs
 // Serves /cards/finalfantasy/:slug
 // Final Fantasy TCG individual card pages with AUD pricing and affiliate links
@@ -110,6 +111,9 @@ export default async (req) => {
   const card    = cardArr[0];
 
   if (!card) {
+    // task-146: a mixed-case slug has a canonical lowercase form; redirect rather than 404.
+    const legacyCase = lowercaseRedirect(url.pathname, url.search);
+    if (legacyCase) return legacyCase;
     return new Response(graceful404(slug), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
   }
 
@@ -214,6 +218,7 @@ export default async (req) => {
   ${priceAud ? `<script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"Product","name":card.name,"image":card.image_url||"","offers":{"@type":"Offer","priceCurrency":"AUD","price":priceAud.toFixed(2),"availability":"https://schema.org/InStock","url":"https://cardsoncardsoncards.com.au/cards/finalfantasy/"+slug}})}</script>` : ''}
   <script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":`What is ${card.name} worth in Australia?`,"acceptedAnswer":{"@type":"Answer","text": priceAud ? `As of ${new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})}, ${card.name} has a market price of approximately AU$${priceAud.toFixed(2)}, based on daily-updated market pricing data.` : `${card.name} pricing varies. Check eBay AU for the most current Australian prices.`}},{"@type":"Question","name":`Where can I buy ${card.name} in Australia?`,"acceptedAnswer":{"@type":"Answer","text":`You can buy ${card.name} on eBay AU and from Australian TCG retailers. This page links to live eBay AU listings and shows the AUD price history.`}}]})}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>

@@ -213,6 +213,7 @@ export default async (req) => {
   <meta property="og:description" content="Browse Magic: The Gathering card prices in AUD. Live pricing, recent ranges, and eBay AU buy links. Updated daily.">
   <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3ogbanner.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root{--bg:#0f1117;--bg2:#1a1d2e;--bg3:#22263a;--accent:#C9A84C;--text:#e8eaf0;--text2:#9ba3c4;--border:#2d3254;--radius:12px;--gold:#C9A84C}

@@ -2,6 +2,7 @@ import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { followBlockHtml } from './shared/follow-block.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
+import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
 // netlify/functions/sorcery-card-page.mjs
 // Serves /cards/sorcery/:slug
 // If slug starts with sets/, renders the set page inline (routing fix)
@@ -211,6 +212,9 @@ export default async (req) => {
 
   try {
     const cards = await supabaseGet(`sorcery_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`);
+    // task-146: a mixed-case slug has a canonical lowercase form; redirect rather than 404.
+    const legacyCase = lowercaseRedirect(url.pathname, url.search);
+    if (legacyCase) return legacyCase;
     if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
     const card = cards[0];
 
@@ -293,6 +297,7 @@ export default async (req) => {
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root{--bg:#0A0C14;--bg2:#111420;--bg3:#181d2e;--accent:#C9A84C;--text:#F0F2FF;--text2:#A0A8C0;--border:#252840;--radius:12px}
