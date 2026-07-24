@@ -6,7 +6,7 @@
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
-const PRICE_THRESHOLD   = 1.00;
+const PRICE_THRESHOLD   = 5.00;
 const PAGE_SIZE         = 1000;
 // This was MAX_CARDS = 20000, used as a bare while-loop bound: on hitting it the loop simply
 // stopped and shipped whatever it had, silently dropping every card past the cap. Pokemon was

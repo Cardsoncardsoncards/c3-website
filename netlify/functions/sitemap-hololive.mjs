@@ -5,7 +5,7 @@
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SITE_URL          = 'https://cardsoncardsoncards.com.au';
-const PRICE_THRESHOLD   = 1.00;
+const PRICE_THRESHOLD   = 5.00;
 const PAGE_SIZE         = 1000;
 const MAX_CARDS         = 50000;
 

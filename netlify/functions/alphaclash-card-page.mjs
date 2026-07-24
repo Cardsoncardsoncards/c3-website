@@ -287,7 +287,7 @@ export default async (req) => {
   <meta name="description" content="${card.name} Alpha Clash TCG card${priceAud ? ` -- ~AU$${priceAud.toFixed(2)}` : ''}. ${card.rarity ? `${card.rarity}. ` : ''}View price and buy on eBay AU.">
   <meta property="og:site_name" content="Cards on Cards on Cards">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/alphaclash/${card.slug}">
-  ${(!priceAud || priceAud < 1.00) ? '<meta name="robots" content="noindex, follow">' : ''}
+  ${(!priceAud || priceAud < 5.00) ? '<meta name="robots" content="noindex, follow">' : ''}
   <link rel="icon" type="image/png" href="/c3logo.png">
   ${card.image_url ? `<meta property="og:image" content="${card.image_url}">` : ''}
   <meta property="og:title" content="${card.name} | Alpha Clash TCG Price AU">
