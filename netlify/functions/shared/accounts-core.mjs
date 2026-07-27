@@ -360,13 +360,25 @@ export async function findFollowByConfirmToken(token) {
   return Array.isArray(rows) && rows.length ? rows[0] : null;
 }
 
+// Single use is enforced by the `confirmed` flag, NOT by destroying confirm_token.
+//
+// This used to set confirm_token: null. Because confirm-follow finds the row BY that token,
+// nulling it destroyed the only key that could find the row again, so a second click fell
+// through to the not-found branch. A customer who confirmed, then re-opened the email and
+// clicked again, got "Link not valid" with an HTTP 404, identical to the response for a
+// completely forged token. It also made the "You are already getting price alerts" branch in
+// card-api.mjs unreachable dead code.
+//
+// Keeping the token means that branch is reached instead. The guard runs before the POST
+// write, so replaying the link is still a no-op and single use still holds. Retaining the
+// token is safe: it only ever permits confirming an already-confirmed follow, it reveals
+// nothing the email recipient does not already have, and unsubscribe uses a separate token.
 export async function confirmFollow(followId) {
   const res = await sb(`follows?id=eq.${encodeURIComponent(followId)}`, {
     method: 'PATCH',
     body: {
       confirmed:     true,
       confirmed_at:  new Date().toISOString(),
-      confirm_token: null, // single use
     },
   });
   return res.ok;
