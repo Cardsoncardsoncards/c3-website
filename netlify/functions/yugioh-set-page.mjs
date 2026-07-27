@@ -1,3 +1,5 @@
+import { decodeSlugSegment } from './shared/url-slug.mjs';
+
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
 // netlify/functions/yugioh-set-page.mjs
@@ -53,7 +55,7 @@ function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800', 'Netlify-CDN-Cache-Control': 'public, max-age=900, s-maxage=1800,durable' };
   const url = new URL(req.url);
-  const setCode = url.pathname.replace(/^\/cards\/yugioh\/sets\//, '').replace(/\/$/, '').toLowerCase();
+  const setCode = decodeSlugSegment(url.pathname.replace(/^\/cards\/yugioh\/sets\//, '').replace(/\/$/, '').toLowerCase());
   if (!setCode) return new Response(`<!DOCTYPE html>
 <html lang="en-AU">
 <head>

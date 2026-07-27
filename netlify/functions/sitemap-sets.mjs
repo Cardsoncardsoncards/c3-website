@@ -93,7 +93,13 @@ export default async () => {
         const batch = await fetchSets(game, lastId);
         for (const s of batch) {
           if (!s.slug || !String(s.slug).trim()) continue;
-          const loc = `${SITE_URL}/cards/${game}/sets/${s.slug}`;
+          // The sitemap protocol requires URLs in <loc> to be escaped. Six set slugs carry
+          // raw non-ASCII (smart quotes on 3 Vanguard and 1 One Piece set, en dashes on 2
+          // Weiss Schwarz sets) and were being published verbatim, which Google tolerates
+          // and Bing does not. encodeURI, not encodeURIComponent: this is a whole URL, so
+          // the scheme and path separators must survive. It is idempotent for the 2,376
+          // already-clean slugs, which contain nothing it would touch.
+          const loc = encodeURI(`${SITE_URL}/cards/${game}/sets/${s.slug}`);
           if (seen.has(loc)) continue;   // never submit the same URL twice
           seen.add(loc);
           const lastmod = s.updated_at ? s.updated_at.slice(0, 10) : today;

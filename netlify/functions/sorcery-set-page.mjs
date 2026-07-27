@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { decodeSlugSegment } from './shared/url-slug.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
 // netlify/functions/sorcery-set-page.mjs
 // C3 set-page v4 -- full MVP rebuild
@@ -77,7 +78,7 @@ function graceful404(setSlug) {
 export default async (req) => {
   const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800', 'Netlify-CDN-Cache-Control': 'public, max-age=900, s-maxage=1800,durable' };
   const url = new URL(req.url);
-  const setSlug = url.pathname.replace(/^\/cards\/sorcery\/sets\//, '').replace(/\/$/, '');
+  const setSlug = decodeSlugSegment(url.pathname.replace(/^\/cards\/sorcery\/sets\//, '').replace(/\/$/, ''));
 
   if (!setSlug) return new Response(graceful404(''), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
