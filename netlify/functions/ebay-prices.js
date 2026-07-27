@@ -31,7 +31,18 @@ const SCRYFALL_UA = 'CardsOnCardsOnCards/1.0 (https://cardsoncardsoncards.com.au
 const SET_QUERY = '(set:msh or set:msc)';
 const DISPLAY_NAME = 'Marvel Super Heroes';
 const SEARCH_TERM = 'marvel super heroes mtg';
-const FALLBACK_FX = 1.55; // Used if Frankfurter call fails
+// The site's own cached USD->AUD rate, read from public.site_config and refreshed daily by
+// sync-fx-rate. get-fx-rate.mjs exists precisely so functions do not each call an upstream FX
+// provider, and this one was doing exactly that with no cached fallback behind it.
+const FX_CACHE_URL = 'https://cardsoncardsoncards.com.au/api/fx-rate';
+
+// LAST RESORT ONLY, used when both the live provider and the cached rate are unreachable.
+// This was 1.55, roughly 8% above the real rate, so any Frankfurter outage silently
+// overstated every AUD price in the carousel. It is deliberately not refreshed to "today's"
+// number, because a fresh literal goes stale exactly the way 1.55 did. The live value now
+// comes from site_config at runtime. 1.45 matches the constant get-fx-rate.mjs already uses,
+// so there is one last-resort figure in the codebase rather than three.
+const FALLBACK_FX = 1.45;
 const TOP_N = 12;
 const FETCH_TIMEOUT_MS = 8000;
 
@@ -62,20 +73,45 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // Step 1: Live USD -> AUD rate (Frankfurter, free, no auth)
-    let fx = FALLBACK_FX;
+    // Step 1: USD -> AUD rate, in descending order of freshness.
+    //   1. Frankfurter, live.
+    //   2. The site's own site_config rate via /api/fx-rate, refreshed daily by sync-fx-rate.
+    //   3. FALLBACK_FX, a constant, only if both are unreachable.
+    // Step 2 is the one that matters here: it means a Frankfurter outage falls back to a real
+    // rate that stays current on its own, instead of to a literal that silently drifts.
+    let fx = null;
+    let fxSource = 'fallback_constant';
+
     try {
       const fxRes = await fetchWithTimeout('https://api.frankfurter.dev/v2/rate/USD/AUD');
       if (fxRes.ok) {
         const fxData = await fxRes.json();
-        if (fxData && fxData.rate && typeof fxData.rate === 'number') {
+        if (fxData && typeof fxData.rate === 'number' && fxData.rate > 0) {
           fx = fxData.rate;
+          fxSource = 'frankfurter';
         }
       }
     } catch (fxErr) {
-      console.log('FX fetch failed, using fallback:', fxErr.message);
+      console.log('FX provider fetch failed:', fxErr.message);
     }
-    console.log('USD->AUD rate:', fx);
+
+    if (fx === null) {
+      try {
+        const cachedRes = await fetchWithTimeout(FX_CACHE_URL);
+        if (cachedRes.ok) {
+          const cached = await cachedRes.json();
+          if (cached && typeof cached.rate === 'number' && cached.rate > 0) {
+            fx = cached.rate;
+            fxSource = 'site_config_cache';
+          }
+        }
+      } catch (cacheErr) {
+        console.log('Cached FX fetch failed:', cacheErr.message);
+      }
+    }
+
+    if (fx === null) fx = FALLBACK_FX;
+    console.log('USD->AUD rate:', fx, '(source:', fxSource + ')');
 
     // Step 2: Scryfall search (all sub-sets in one query, sorted by USD desc)
     const scryfallUrl = 'https://api.scryfall.com/cards/search'
