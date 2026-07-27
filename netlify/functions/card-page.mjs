@@ -1359,14 +1359,30 @@ export default async (req, context) => {
 
   try {
     // Fetch card data
-    // A slug can map to many printings (Sol Ring has 12). Without an ORDER BY, PostgREST
-    // returns an arbitrary row, so an unpriced printing could win: that nulls priceAud,
-    // which suppresses the Product schema and ships the page noindex. Order by price so any
-    // priced printing beats an unpriced one, and the highest value wins among those.
-    const cards = await supabaseGet(
-      `mtg_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*&order=price_aud.desc.nullslast`,
+    // A slug maps to many printings (Sol Ring has 123). Two rules decide which one the page
+    // shows, and they cannot both live in one flat ORDER BY, because "is priced" is a
+    // condition spanning two columns rather than a sortable column of its own:
+    //   1. a priced printing must always beat an unpriced one. An unpriced row leaves
+    //      priceAud null, which suppresses the Product schema and ships the page noindex.
+    //   2. among priced printings the most recently released one wins, so the headline price
+    //      reflects the printing a buyer is most likely to be looking at today rather than an
+    //      Alpha or Beta copy that happens to be the most valuable.
+    // So this filters to priced rows and takes the newest, and only falls back to the newest
+    // row of any kind when the card has no priced printing anywhere (963 slugs).
+    // The price_aud tiebreak matters: 14.7% of priced slugs have more than one printing on
+    // their newest release date, and without it those go back to an arbitrary row.
+    const PRICED_FILTER = 'or=(price_aud.gt.0,price_usd.not.is.null)';
+    const NEWEST_FIRST  = 'order=released_at.desc.nullslast,price_aud.desc.nullslast';
+    let cards = await supabaseGet(
+      `mtg_cards?slug=eq.${encodeURIComponent(slug)}&${PRICED_FILTER}&${NEWEST_FIRST}&limit=1&select=*`,
       false
     );
+    if (!cards.length) {
+      cards = await supabaseGet(
+        `mtg_cards?slug=eq.${encodeURIComponent(slug)}&${NEWEST_FIRST}&limit=1&select=*`,
+        false
+      );
+    }
 
     if (!cards || cards.length === 0) {
       // Card not found - show graceful not found page
