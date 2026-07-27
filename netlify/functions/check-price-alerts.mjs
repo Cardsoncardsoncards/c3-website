@@ -5,6 +5,8 @@
 //   - SELLER alerts: price rose above target (alert_type: 'above')
 // Runs at 9am AEST (11pm UTC) daily, after price syncs have completed
 
+import { ebaySearchUrl } from './shared/ebay-link.mjs';
+
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY') || Netlify.env.get('SUPABASE_ANON_KEY');
 const RESEND_API_KEY    = Netlify.env.get('RESEND_API_KEY');
@@ -75,7 +77,7 @@ async function addToMailerLite(email, group = 'price-alerts') {
 function buyerEmail(cardName, cardSlug, targetAud, currentAud) {
   const diff = (targetAud - currentAud).toFixed(2);
   const cardUrl = `https://cardsoncardsoncards.com.au/cards/mtg/${cardSlug}`;
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(cardName + ' mtg')}&_sacat=183454&campid=5339146789`;
+  const ebayUrl = ebaySearchUrl(cardName + ' mtg', { customId: 'PriceAlertEmail' });
   return {
     subject: `Price alert: ${cardName} is now AU$${currentAud.toFixed(2)} 🎉`,
     html: `
@@ -129,7 +131,7 @@ function buyerEmail(cardName, cardSlug, targetAud, currentAud) {
 function sellerEmail(cardName, cardSlug, targetAud, currentAud) {
   const gain = (currentAud - targetAud).toFixed(2);
   const cardUrl = `https://cardsoncardsoncards.com.au/cards/mtg/${cardSlug}`;
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(cardName + ' mtg')}&_sacat=183454&campid=5339146789`;
+  const ebayUrl = ebaySearchUrl(cardName + ' mtg', { customId: 'PriceAlertEmail' });
   return {
     subject: `Sell alert: ${cardName} has risen to AU$${currentAud.toFixed(2)} 📈`,
     html: `

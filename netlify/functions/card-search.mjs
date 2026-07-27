@@ -3,6 +3,8 @@
 // GET /api/card-search?q=lightning+bolt&limit=10
 // Only includes games that have card page functions built
 
+import { ebaySearchUrl } from './shared/ebay-link.mjs';
+
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = Netlify.env.get('EPN_CAMPID') || '5339146789';
@@ -49,7 +51,7 @@ async function searchGame(cfg, query, limit) {
         priceAud,
         priceDisplay: priceAud ? 'AU$' + priceAud.toFixed(0) : null,
         cardPath:     `/cards/${cfg.game}/${card.slug}`,
-        ebayPath:     `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' ' + cfg.label)}&_sacat=183454&campid=${EPN_CAMPID}&mkevt=1`
+        ebayPath:     ebaySearchUrl(card.name + ' ' + cfg.label)
       };
     });
   } catch {

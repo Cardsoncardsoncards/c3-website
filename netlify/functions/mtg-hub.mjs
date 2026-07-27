@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { ebaySearchUrl } from './shared/ebay-link.mjs';
 // netlify/functions/mtg-hub.mjs
 // Serves: /cards/mtg
 
@@ -366,7 +367,7 @@ export default async (req) => {
   <!-- Quick Access -->
 
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
-    <a href="https://www.ebay.com.au/sch/i.html?_nkw=mtg+magic+gathering+cards&campid=${EPN_CAMPID}&customid=C3MTGHub&mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'mtg-hub'})" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop MTG on eBay &#8599;</a>
+    <a href="${ebaySearchUrl('mtg magic gathering cards', { customId: 'C3MTGHub', sacat: false })}" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'mtg-hub'})" class="quick-link" style="background:var(--accent);color:#000">&#128722; Shop MTG on eBay &#8599;</a>
     <a href="/cards/mtg/random-commander" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#127922; Random Commander</a>
       <a href="/ev-calculator.html" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128202; EV Calculator</a>
     <a href="/compare" class="quick-link" style="background:var(--bg2);border-color:var(--border);color:var(--text)">&#128203; Compare Cards</a>

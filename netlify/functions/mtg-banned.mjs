@@ -1,4 +1,5 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
+import { ebaySearchUrl } from './shared/ebay-link.mjs';
 // netlify/functions/mtg-banned.mjs
 // Serves: /cards/mtg/banned and /cards/mtg/banned/:format
 
@@ -145,7 +146,7 @@ export default async (req) => {
     const img = imageMap[card.slug]
       ? `<img src="${imageMap[card.slug]}" alt="${card.name.replace(/"/g,'&quot;')}" loading="lazy">`
       : `<div class="card-no-img">&#128683;</div>`;
-    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sacat=183454&campid=${EPN_CAMPID}&mkevt=1`;
+    const ebayUrl = ebaySearchUrl(card.name + ' mtg');
     const legalBadge = card.legalIn ? `<div class="ban-legal-in">&#9989; Legal in: ${card.legalIn.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';
     return `<div class="ban-card">
       <div class="ban-card-img">${img}</div>

@@ -1,4 +1,5 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
+import { ebaySearchUrl } from './shared/ebay-link.mjs';
 // netlify/functions/card-compare.mjs
 // C3 Card Compare - v2 rebuild May 2026
 // Features: verdict banner, stat strips, radar chart, game-aware legality,
@@ -694,7 +695,7 @@ function renderCompareTable(cards) {
 
   const cheapRow = `<tr><th class="tbl-label">Cheapest Printing</th>${cards.map(c => {
     if (!c.cheapestPrinting) return `<td class="tbl-val tbl-dim">This is cheapest</td>`;
-    const eu = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name+' '+c.cheapestPrinting.setName+' '+c.label)}&_sacat=183454&campid=${EPN_CAMPID}&customid=cheapest&mkevt=1`;
+    const eu = ebaySearchUrl(c.name + ' ' + c.cheapestPrinting.setName + ' ' + c.label, { customId: 'cheapest' });
     return `<td class="tbl-val"><div class="cheapest-wrap"><span class="cheapest-price">${fmtAUD(c.cheapestPrinting.priceAud)}</span><span class="cheapest-set">${c.cheapestPrinting.setName || ''}</span><a href="${eu}" target="_blank" rel="noopener" class="cheapest-link">Buy cheapest →</a></div></td>`;
   }).join('')}</tr>`;
 

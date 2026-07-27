@@ -27,6 +27,7 @@ import {
 
 // task-132: read the session cookie so a signed-in follow is one click (no email double opt-in).
 import { getSessionFromRequest } from './shared/session.mjs';
+import { ebaySearchUrl, ebayStoreUrl } from './shared/ebay-link.mjs';
 
 // task-135: the 32-game roster now lives in one shared module, imported by both the follow write
 // path (here) and the dashboard read path (account.mjs), so the two can never drift apart again.
@@ -889,10 +890,9 @@ async function handleSellAlert(req) {
 // Returns C3 store search URL first, falls back to all AU sellers
 function getEbayUrls(cardName, game = 'mtg') {
   const gameKeyword = game === 'mtg' ? 'mtg' : game === 'pokemon' ? 'pokemon' : game === 'yugioh' ? 'yugioh' : game;
-  const q = encodeURIComponent(`${cardName} ${gameKeyword}`);
-  const campid = '5339146789';
-  const storeUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${q}&campid=${campid}&toolid=10001&mkevt=1`;
-  const allUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${q}&_sacat=183454&_sop=15&mkcid=1&mkrid=705-53470-19255-0&campid=${campid}&toolid=10001&mkevt=1`;
+  const query = `${cardName} ${gameKeyword}`;
+  const storeUrl = ebayStoreUrl(query);
+  const allUrl = ebaySearchUrl(query, { sop: 15 });
   return { storeUrl, allUrl };
 }
 

@@ -9,13 +9,13 @@ import { followBlockHtml } from './shared/follow-block.mjs';
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
+import { ebaySearchUrl, ebayStoreUrl, EPN_CAMPID } from './shared/ebay-link.mjs';
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const EBAY_CLIENT_ID = Netlify.env.get('EBAY_CLIENT_ID');
 const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
-const EPN_CAMPID = '5339146789';
 const AMAZON_TAG = 'blasdigital-22';
 const FX_FALLBACK = 1.45; // AUD/USD fallback rate - update periodically
 
@@ -276,8 +276,9 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const ebayStoreListings = ebayListings.store || [];
   const ebayAllListings = ebayListings.all || [];
 
-  const ebayStoreUrl = `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(card.name + ' mtg')}&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
-  const ebayAllUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sop=15&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  // sacat:false on both keeps the previous search scope, which was not category limited.
+  const ebayStoreUrlBuilt = ebayStoreUrl(card.name + ' mtg');
+  const ebayAllUrl = ebaySearchUrl(card.name + ' mtg', { sacat: false, sop: 15 });
 
   // Auto-generated context paragraph (defined after ebayAllUrl)
   const legalFormats = ['standard','pioneer','modern','legacy','vintage','commander'].filter(f => legalities[f] === 'legal');
@@ -748,7 +749,7 @@ ${contextPara}
     </div>
 
     <div class="cta-group">
-      ${ebayStoreListings.length ? `<a href="${ebayStoreListings[0].itemAffiliateWebUrl || ebayStoreUrl}" class="cta-btn cta-c3" target="_blank" rel="noopener">🛒 Buy from C3 on eBay</a>` : ''}
+      ${ebayStoreListings.length ? `<a href="${ebayStoreListings[0].itemAffiliateWebUrl || ebayStoreUrlBuilt}" class="cta-btn cta-c3" target="_blank" rel="noopener">🛒 Buy from C3 on eBay</a>` : ''}
       <a href="${ebayAllListings[0]?.itemAffiliateWebUrl || ebayAllUrl}" class="cta-btn cta-primary" target="_blank" rel="noopener">${ebayAllListings[0]?.itemAffiliateWebUrl ? '🔍 Cheapest on eBay AU' : '🔍 Find on eBay AU'}</a>
       ${card.amazon_asin ? `<a href="https://www.amazon.com.au/dp/${card.amazon_asin}?tag=${AMAZON_TAG}" class="cta-btn cta-amazon" target="_blank" rel="noopener">📦 Buy Sealed on Amazon AU</a>` : ''}
       ${hasEVCalc ? `<a href="/ev-calculator.html#${card.set_code}" class="cta-btn cta-ev">📊 ${card.set_name} EV Calculator</a>` : ''}
@@ -1455,7 +1456,7 @@ export default async (req, context) => {
 
 function renderNotFound(slug) {
   const cardName = slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(cardName + ' mtg')}&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
+  const ebayUrl = ebaySearchUrl(cardName + ' mtg', { sacat: false });
   return `<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>${cardName} | Cards on Cards on Cards</title>
   <meta name="description" content="We are building the full Australian MTG card database. In the meantime, search eBay AU for ${cardName}.">
   <style>body{background:#0f1117;color:#e8eaf0;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}a{color:#f5a623}</style>
@@ -1588,7 +1589,6 @@ async function renderBannedPage(slug) {
   let imageMap = {};
   if (format) imageMap = await getBannedImages(format.cards.map(c => c.slug));
 
-  const EPN = EPN_CAMPID;
   const formatTabs = Object.entries(BANNED_FORMATS).map(([key, f]) => {
     const active = key === formatKey;
     const st = active ? `border-color:${f.color};color:${f.color};background:${f.color}15` : '';
@@ -1612,7 +1612,7 @@ async function renderBannedPage(slug) {
     const img = imageMap[card.slug]
       ? `<a href="${cardUrl}" style="display:block;text-decoration:none"><img src="${imageMap[card.slug]}" alt="${safeAlt}" loading="lazy" style="width:60px;height:84px;object-fit:cover;border-radius:4px;display:block"></a>`
       : `<div style="width:60px;height:84px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:22px">&#128683;</div>`;
-    const ebayUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name + ' mtg')}&_sacat=183454&campid=${EPN}&toolid=10001&mkevt=1`;
+    const ebayUrl = ebaySearchUrl(card.name + ' mtg', { customId: 'MtgBanned' });
     const legalBadge = card.legalIn ? `<div style="font-size:10px;color:#4ADE80;font-weight:600">&#9989; Legal in: ${card.legalIn.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';
     return `<div style="background:#1a1d2e;border:1px solid #2d3254;border-radius:10px;overflow:hidden;display:flex;gap:12px;padding:12px">
       <div style="width:60px;flex-shrink:0">${img}</div>

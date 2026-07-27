@@ -202,7 +202,7 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
         <a href="/generators" class="footer-link">Generators</a>
         <a href="/ev-calculator.html" class="footer-link">EV Calc</a>
         <a href="/tracker.html" class="footer-link">Tracker</a>
-        <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" class="footer-link">eBay</a>
+        <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=PostFooter&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="footer-link">eBay</a>
       </div>
       <div class="footer-copy">&copy; 2026 Cards on Cards on Cards. All rights reserved.</div>
     </div>
@@ -231,7 +231,7 @@ document.addEventListener('click', function(e) {
       const data = await res.json();
       const wrap = document.getElementById('ebay-carousel-post');
       if(!data.listings || data.listings.length === 0){
-        wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store</a>.</p>';
+        wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">No listings found. <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=PostCarouselEmpty&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store</a>.</p>';
         return;
       }
       wrap.innerHTML = data.listings.map(item=>`
@@ -246,7 +246,7 @@ document.addEventListener('click', function(e) {
         </a>`).join('');
     } catch(e){
       const wrap = document.getElementById('ebay-carousel-post');
-      wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">Could not load listings. <a href="https://www.ebay.com.au/str/cardsoncardsoncards" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store directly</a>.</p>';
+      wrap.innerHTML='<p style="color:#A0A8C0;font-size:13px;padding:20px 0">Could not load listings. <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=PostCarouselError&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="color:#C9A84C">Visit our eBay store directly</a>.</p>';
     }
   }
   loadCarousel();

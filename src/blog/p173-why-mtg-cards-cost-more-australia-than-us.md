@@ -50,7 +50,7 @@ New sets release in Australia at the same time as the US (since 2022 Wizards sta
 
 ## What Australian Players Can Do
 
-**Shop eBay AU aggressively.** eBay AU is the most competitive Australian TCG marketplace. Sellers undercut each other and Buy It Now prices reflect market reality. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles, and you can search [all eBay AU listings here](https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&campid=5339146789).
+**Shop eBay AU aggressively.** eBay AU is the most competitive Australian TCG marketplace. Sellers undercut each other and Buy It Now prices reflect market reality. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles, and you can search [all eBay AU listings here](https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
 
 **Use the C3 Card Vault to track prices.** The [C3 MTG card hub](/cards/mtg) shows live AUD prices on over 96,000 cards sourced from eBay AU data. Check here before buying to confirm you're paying a fair Australian market rate.
 

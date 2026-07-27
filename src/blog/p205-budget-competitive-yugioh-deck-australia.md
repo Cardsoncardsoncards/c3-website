@@ -60,7 +60,7 @@ For most players, the difference in price between rarity tiers is not worth payi
 
 ## Where to Buy Budget Yu-Gi-Oh Singles in Australia
 
-eBay AU is the largest secondary market for Yu-Gi-Oh singles in Australia. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=yugioh&campid=5339146789) stocks Yu-Gi-Oh singles.
+eBay AU is the largest secondary market for Yu-Gi-Oh singles in Australia. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=yugioh&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks Yu-Gi-Oh singles.
 
 Search eBay AU sold listings before buying to confirm current market prices. especially important for Yu-Gi-Oh where banlist announcements can move prices rapidly.
 

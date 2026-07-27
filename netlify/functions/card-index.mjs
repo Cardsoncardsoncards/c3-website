@@ -1,4 +1,5 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
+import { EBAY_PARAM_SUFFIX } from './shared/ebay-link.mjs';
 // netlify/functions/card-index.mjs
 // Serves:
 // /cards/mtg - MTG card hub with search
@@ -262,7 +263,7 @@ async function searchCard() {
     const data = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&limit=8&select=slug,name,price_usd,image_uri_small&price_usd=gt.0&order=price_usd.desc', {
       headers: { 'apikey': '${SUPABASE_ANON_KEY}' }
     }).then(r => r.json());
-    if (!data.length) { res.innerHTML = '<p style="color:var(--text2)">No cards found. <a href="https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(q + ' mtg') + '&campid=5339146789" target="_blank">Search eBay AU →</a></p>'; return; }
+    if (!data.length) { res.innerHTML = '<p style="color:var(--text2)">No cards found. <a href="https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(q + ' mtg') + '&${EBAY_PARAM_SUFFIX}" target="_blank">Search eBay AU →</a></p>'; return; }
     res.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px">' +
       data.map(c => '<a href="/cards/mtg/' + c.slug + '" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block"><img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '"><div style="font-size:11px;margin-top:4px">' + c.name + '</div><div style="font-size:12px;color:var(--accent)">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.45).toFixed(0) : '') + '</div></a>').join('') + '</div>';
   } catch { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; }

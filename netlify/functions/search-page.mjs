@@ -1,4 +1,5 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
+import { ebaySearchUrl } from './shared/ebay-link.mjs';
 // netlify/functions/search-page.mjs
 // Serves: /search?q=lightning+bolt
 // Full search results page across all 32 games with card pages
@@ -162,7 +163,7 @@ export default async (req) => {
           <div style="font-size:40px;margin-bottom:16px">🔍</div>
           <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">No cards found for "${safeQuery}"</div>
           <div style="color:var(--text2);margin-bottom:24px">Try a different spelling or search on eBay AU directly.</div>
-          <a href="https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(query + ' card')}&_sacat=183454&campid=${EPN_CAMPID}&mkevt=1" target="_blank" rel="noopener" class="btn-ebay">Search eBay AU &rarr;</a>
+          <a href="${ebaySearchUrl(query + ' card')}" target="_blank" rel="noopener" class="btn-ebay">Search eBay AU &rarr;</a>
          </div>`
       : `<div class="no-results"><div style="font-size:40px;margin-bottom:16px">🃏</div><div style="color:var(--text2)">Type a card name above to search across all games.</div></div>`;
 
