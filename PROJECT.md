@@ -267,7 +267,17 @@ Checks for HTML files:
 14. Affiliate disclaimer in footer
 15. Canonical URL present
 16. Mobile media query present
-17. nav-links flex-shrink:0, no space-between on nav-inner
+17. Nav matches the shop.html reference: .nav-inner uses justify-content:space-between, and
+    the mobile @media(max-width:768px){.nav-links{display:none}} rule is the LAST-defined
+    .nav-links display rule on the page.
+    (Corrected 27 Jul 2026. The old wording, "nav-links flex-shrink:0, no space-between on
+    nav-inner", described the pre-task-121 scrolling pill row, which no longer exists. Both
+    halves of it now contradict the reference implementation: shop.html DOES set
+    space-between on .nav-inner, and its .nav-links carries no flex-shrink:0. Checked against
+    the repo, 19 of 24 src/*.html files use space-between and only 4 set flex-shrink:0, so the
+    old rule failed the majority of pages including the reference itself. What actually
+    matters post-task-121 is the last-rule ordering above: a later base .nav-links{display:flex}
+    silently defeats the hamburger drawer, which was the real index/pricing/subscribe bug.)
 18. Nav paths: /compare not /card-compare.html, /market not /market.html
 
 XSS checks:
