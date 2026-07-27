@@ -34,6 +34,10 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"netlify.toml": "netlify.toml"});
 
   // Passthrough src HTML files directly to _site root
+  // 404.html was missing from this list, so it never reached _site/ and Netlify served its
+  // own stock error page instead of the branded one. Netlify picks up _site/404.html
+  // automatically; netlify.toml carries no error-page config and no catch-all redirect.
+  eleventyConfig.addPassthroughCopy({"src/404.html": "404.html"});
   eleventyConfig.addPassthroughCopy({"src/index.html": "index.html"});
   eleventyConfig.addPassthroughCopy({"src/shop.html": "shop.html"});
   eleventyConfig.addPassthroughCopy({"src/contact.html": "contact.html"});
