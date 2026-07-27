@@ -1,5 +1,6 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
+import { resolveCardBySlug } from './shared/card-resolver.mjs';
 // netlify/functions/card-compare.mjs
 // C3 Card Compare - v2 rebuild May 2026
 // Features: verdict banner, stat strips, radar chart, game-aware legality,
@@ -74,15 +75,18 @@ async function getLiveRate() {
 async function fetchMTGCard(token, usdToAud) {
   // MTG slugs are shared across every printing of a card, so a slug alone cannot
   // identify a printing. New compare links pass a printing-unique scryfall_id;
-  // resolve by it exactly. Old (pre-fix) links pass a slug -> fall back to the
-  // legacy highest-priced-printing lookup so existing bookmarked/shared /compare
-  // URLs keep working unchanged.
+  // resolve by it exactly. Old (pre-fix) links pass a slug, which is ambiguous, so those go
+  // through the one shared rule in card-resolver.mjs. That used to be a highest-priced
+  // lookup here, which meant /compare could show a different printing than the card page.
   const SCRYFALL_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  const cards = SCRYFALL_UUID.test(token)
-    ? await supabaseGet(`mtg_cards?scryfall_id=eq.${encodeURIComponent(token)}&limit=1`)
-    : await supabaseGet(`mtg_cards?slug=eq.${encodeURIComponent(token)}&order=price_aud.desc.nullslast&limit=1`);
-  if (!cards || !cards[0]) return null;
-  const card = cards[0];
+  let card;
+  if (SCRYFALL_UUID.test(token)) {
+    const cards = await supabaseGet(`mtg_cards?scryfall_id=eq.${encodeURIComponent(token)}&limit=1&select=*`);
+    card = (cards && cards[0]) || null;
+  } else {
+    card = await resolveCardBySlug((path) => supabaseGet(path), 'mtg', token);
+  }
+  if (!card) return null;
 
   const [snapshots, cheapestPrinting] = await Promise.all([
     supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=14&select=snapshot_date,price_aud,price_usd,price_buy_ck_aud,price_buy_ck_usd`).catch(() => []),

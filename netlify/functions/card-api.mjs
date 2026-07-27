@@ -28,6 +28,7 @@ import {
 // task-132: read the session cookie so a signed-in follow is one click (no email double opt-in).
 import { getSessionFromRequest } from './shared/session.mjs';
 import { ebaySearchUrl, ebayStoreUrl } from './shared/ebay-link.mjs';
+import { resolveCardBySlug } from './shared/card-resolver.mjs';
 
 // task-135: the 32-game roster now lives in one shared module, imported by both the follow write
 // path (here) and the dashboard read path (account.mjs), so the two can never drift apart again.
@@ -313,11 +314,16 @@ async function getCardImage(game, cardSlug) {
   const col = GAME_IMAGE_COL[game];
   if (!table || !col) return null;
   try {
-    const rows = await supabaseGet(
-      `${table}?select=${col}&slug=eq.${encodeURIComponent(cardSlug)}&${col}=not.is.null&order=price_aud.desc.nullslast&limit=1`,
-      true
+    // Was order=price_aud.desc ("dearest"), which disagreed with the card page and put a
+    // different printing in the confirmation email and on the confirm page than the one the
+    // person was looking at when they clicked follow. One rule now, in card-resolver.mjs.
+    const row = await resolveCardBySlug(
+      (path) => supabaseGet(path, true),
+      game,
+      cardSlug,
+      { select: `slug,${col}` }
     );
-    return (Array.isArray(rows) && rows[0] && rows[0][col]) || null;
+    return (row && row[col]) || null;
   } catch {
     return null;
   }

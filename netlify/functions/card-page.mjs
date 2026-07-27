@@ -10,6 +10,7 @@ import { followBlockHtml } from './shared/follow-block.mjs';
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { ebaySearchUrl, ebayStoreUrl, EPN_CAMPID } from './shared/ebay-link.mjs';
+import { resolveCardBySlug } from './shared/card-resolver.mjs';
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -1358,31 +1359,15 @@ export default async (req, context) => {
   }
 
   try {
-    // Fetch card data
-    // A slug maps to many printings (Sol Ring has 123). Two rules decide which one the page
-    // shows, and they cannot both live in one flat ORDER BY, because "is priced" is a
-    // condition spanning two columns rather than a sortable column of its own:
-    //   1. a priced printing must always beat an unpriced one. An unpriced row leaves
-    //      priceAud null, which suppresses the Product schema and ships the page noindex.
-    //   2. among priced printings the most recently released one wins, so the headline price
-    //      reflects the printing a buyer is most likely to be looking at today rather than an
-    //      Alpha or Beta copy that happens to be the most valuable.
-    // So this filters to priced rows and takes the newest, and only falls back to the newest
-    // row of any kind when the card has no priced printing anywhere (963 slugs).
-    // The price_aud tiebreak matters: 14.7% of priced slugs have more than one printing on
-    // their newest release date, and without it those go back to an arbitrary row.
-    const PRICED_FILTER = 'or=(price_aud.gt.0,price_usd.not.is.null)';
-    const NEWEST_FIRST  = 'order=released_at.desc.nullslast,price_aud.desc.nullslast';
-    let cards = await supabaseGet(
-      `mtg_cards?slug=eq.${encodeURIComponent(slug)}&${PRICED_FILTER}&${NEWEST_FIRST}&limit=1&select=*`,
-      false
+    // Fetch card data. The "which printing" rule lives in shared/card-resolver.mjs and nowhere
+    // else, so the card page, the follow emails, the confirm page, the account page, /compare
+    // and the sitemap cannot drift apart again. This page used to carry its own inline copy.
+    const resolved = await resolveCardBySlug(
+      (path) => supabaseGet(path, false),
+      'mtg',
+      slug
     );
-    if (!cards.length) {
-      cards = await supabaseGet(
-        `mtg_cards?slug=eq.${encodeURIComponent(slug)}&${NEWEST_FIRST}&limit=1&select=*`,
-        false
-      );
-    }
+    const cards = resolved ? [resolved] : [];
 
     if (!cards || cards.length === 0) {
       // Card not found - show graceful not found page

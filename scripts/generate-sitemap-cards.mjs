@@ -5,9 +5,10 @@
 // This replaces the timing-out Netlify Function approach
 //
 // Price thresholds (balance SEO value vs crawl budget):
-//   MTG: split into two files to stay under Google's 50,000 URL per sitemap limit
-//     sitemap-cards.xml   = $2.00+ (~17,000 cards)
-//     sitemap-cards-2.xml = $0.25-$1.99 (~33,000 cards)
+//   MTG: one file, sitemap-cards.xml. A slug is submitted when its RESOLVED printing (see
+//        shared/card-resolver.mjs) is AU$5.00 or more, which is the same gate card-page.mjs
+//        uses for noindex since task-150. The old two-file $2.00 / $0.25-$1.99 split and
+//        sitemap-cards-2.xml were retired in task-82.
 //   Pokemon/Lorcana/YuGiOh: any card with an image
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -17,6 +18,10 @@ const PAGE_SIZE    = 1000;
 const OUT_DIR      = '.'; // write to repo root — passthrough to _site
 
 import { writeFileSync } from 'fs';
+
+// The one shared rule for resolving an ambiguous card slug to a single printing, so the
+// sitemap cannot disagree with the card page about which printing a URL represents.
+import { PRICED_FILTER, MTG_RULE_COLUMNS, pickNewestPriced } from '../netlify/functions/shared/card-resolver.mjs';
 
 // Retry-with-backoff for transient Supabase failures (5xx, 429, network errors).
 // Exponential backoff: 0.5s, 1s, 2s, 4s. Client errors (other 4xx) fail fast —
@@ -89,37 +94,58 @@ async function generateMtgSitemap() {
   console.log('Generating MTG card sitemap (single file)...');
 
   // The sitemap must submit exactly what the card page considers indexable, no more and no
-  // less. card-page.mjs noindexes any card where priceAud < 1.00, and every other game's
-  // card page applies the identical rule. So the sole filter here is price_aud >= 1.00, in
-  // AUD, matching the render-time rule exactly.
+  // less. Two things about that had drifted, and both are fixed here.
   //
-  // Previously this filtered on price_usd (>= 0.25, split into two files at the $2.00 line),
-  // which is a different column in a different currency. USD 0.25 is about AU$0.36, so the
-  // sitemap was submitting thousands of URLs the page itself then told Google not to index:
-  // 9,589 of MTG's 20,094 submitted URLs were noindexed (task-81).
+  // 1. THRESHOLD. task-150 raised the noindex gate from AU$1.00 to AU$5.00 in all 32
+  //    card-page functions but did not touch this script, which was still submitting from
+  //    AU$1.00. That put the site straight back into the task-81 failure it documents below:
+  //    10,554 MTG URLs submitted, 5,119 of them (48.5%) noindexed by the page itself.
   //
-  // Two files are no longer needed. The eligible set is ~10,500 URLs, comfortably inside
-  // Google's 50,000-per-sitemap limit, so sitemap-cards-2.xml is retired.
+  // 2. WHICH PRINTING. This used to keep the highest-priced printing per slug. The card page
+  //    resolves "newest priced, priced first" via shared/card-resolver.mjs, so the two
+  //    disagreed on 25.5% of priced slugs and the sitemap could submit a URL on the strength
+  //    of a printing the page never shows.
   //
-  // slug is NOT unique in mtg_cards: every printing is its own row while the card page is
-  // served per slug, so dedupe by slug, keeping the highest-priced printing (matching how
-  // the follow-alert checker resolves an ambiguous slug).
+  // ORDER OF OPERATIONS MATTERS. The price gate is applied AFTER resolving the printing, not
+  // as a query filter before it, because those are not equivalent. A slug whose newest priced
+  // printing is AU$3 but which also has an older AU$50 printing would survive a pre-filter of
+  // >= 5.00 (the AU$50 row passes), then get submitted, while the page resolves to the AU$3
+  // printing and noindexes it. Resolving first and gating second is what makes the two agree.
+  //
+  // Historical note kept for context: this originally filtered on price_usd (>= 0.25, split
+  // into two files at the $2.00 line), a different column in a different currency. USD 0.25 is
+  // about AU$0.36, so 9,589 of MTG's 20,094 submitted URLs were noindexed (task-81). One file
+  // is enough now: the eligible set is far inside Google's 50,000-per-sitemap limit.
+  const INDEX_THRESHOLD_AUD = 5.00; // must track the noindex gate in card-page.mjs
+
+  // Fetch only priced printings, which is the resolver's first pass. A slug with no priced
+  // printing anywhere resolves to a null price on the page and is noindexed, so it has no
+  // business in a sitemap.
   const all = await fetchAll(
     'mtg_cards',
-    'id,slug,price_aud,updated_at',
-    'price_aud=gte.1.00&slug=not.is.null'
+    `id,slug,updated_at,${MTG_RULE_COLUMNS}`,
+    `${PRICED_FILTER}&slug=not.is.null`
   );
 
-  const bySlug = new Map();
+  // Group by slug, then apply the one shared rule to pick each winner.
+  const grouped = new Map();
   for (const c of all) {
     if (!c.slug || !c.slug.trim()) continue;
-    const price = parseFloat(c.price_aud) || 0;
-    const existing = bySlug.get(c.slug);
-    if (!existing || price > existing.price) {
-      bySlug.set(c.slug, { slug: c.slug, price, updated_at: c.updated_at });
-    }
+    if (!grouped.has(c.slug)) grouped.set(c.slug, []);
+    grouped.get(c.slug).push(c);
   }
-  console.log(`  MTG: ${all.length} rows -> ${bySlug.size} distinct slugs (${all.length - bySlug.size} duplicate rows collapsed)`);
+
+  const bySlug = new Map();
+  let belowThreshold = 0;
+  for (const [slug, rows] of grouped) {
+    const winner = pickNewestPriced(rows);
+    if (!winner) continue;
+    const price = parseFloat(winner.price_aud) || 0;
+    // Gate on the resolved printing, exactly as the page does.
+    if (price < INDEX_THRESHOLD_AUD) { belowThreshold++; continue; }
+    bySlug.set(slug, { slug, price, updated_at: winner.updated_at });
+  }
+  console.log(`  MTG: ${all.length} priced rows -> ${grouped.size} distinct slugs -> ${bySlug.size} submitted (${belowThreshold} below AU$${INDEX_THRESHOLD_AUD.toFixed(2)}, would be noindexed)`);
 
   const urls = [...bySlug.values()].map(c => ({
     loc: `${SITE_URL}/cards/mtg/${c.slug}`,
@@ -131,7 +157,7 @@ async function generateMtgSitemap() {
   // the query silently returned nothing (e.g. a partial Supabase outage) — treat it as a hard
   // failure rather than shipping an empty sitemap that de-indexes every MTG card page.
   if (urls.length === 0) {
-    throw new Error('mtg_cards (AU$1.00+) returned 0 rows — refusing to write an empty sitemap-cards.xml');
+    throw new Error('mtg_cards (AU$5.00+ resolved) returned 0 rows, refusing to write an empty sitemap-cards.xml');
   }
 
   if (urls.length >= 50000) {

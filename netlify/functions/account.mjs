@@ -45,6 +45,7 @@ import { NAV_CSS, navHtml } from './shared/nav.mjs';
 // task-135: the 32-game map, shared with card-api.mjs. Replaces account.mjs's old 7-game
 // GAME_CARDS so enrichFollows can render followed cards for every game, not just the original 7.
 import { GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared/game-meta.mjs';
+import { resolveCardsBySlugs } from './shared/card-resolver.mjs';
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -108,21 +109,17 @@ async function enrichFollows(follows) {
 
   const cardIndex = new Map(); // "game:slug" -> card
   await Promise.all([...byGame.entries()].map(async ([game, slugs]) => {
-    const table    = GAME_TABLES[game];
     const imageCol = GAME_IMAGE_COL[game];
-    const list = slugs.map(s => `"${s}"`).join(',');
-    const rows = await sbGet(
-      `${table}?select=slug,name,set_name,price_aud,price_change_7d,price_change_30d,${imageCol}` +
-      `&slug=in.(${encodeURIComponent(list)})`
-    );
-    for (const r of (Array.isArray(rows) ? rows : [])) {
-      // MTG has many printings per slug. Keep the dearest, matching how the sitemap and the
-      // carousel already resolve an ambiguous MTG slug.
-      const key = `${game}:${r.slug}`;
-      const prev = cardIndex.get(key);
-      if (!prev || (parseFloat(r.price_aud) || 0) > (parseFloat(prev.price_aud) || 0)) {
-        cardIndex.set(key, { ...r, image: r[imageCol] });
-      }
+    // This used to keep the dearest printing, which disagreed with the card page: a follow on
+    // Ragavan showed the Final Fantasy printing on the page and Modern Horizons 2 (AU$86.79)
+    // here. resolveCardsBySlugs applies the one shared rule from card-resolver.mjs.
+    // The batch form is used deliberately: this is still ONE request per game for up to 100
+    // follows, with the rule applied locally. A per-slug resolve would be one request each.
+    const picked = await resolveCardsBySlugs(sbGet, game, slugs, {
+      select: `slug,name,set_name,price_aud,price_change_7d,price_change_30d,${imageCol}`
+    });
+    for (const [slug, r] of picked) {
+      if (r) cardIndex.set(`${game}:${slug}`, { ...r, image: r[imageCol] });
     }
   }));
 

@@ -16,6 +16,8 @@
 //
 // Supabase only, no external card APIs. Resend is used for the emails.
 
+import { resolveCardBySlug } from './shared/card-resolver.mjs';
+
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const RESEND_API_KEY       = Netlify.env.get('RESEND_API_KEY');
@@ -255,33 +257,36 @@ export default async (req) => {
 
       checked++;
 
-      let cards;
-      // slug is NOT unique in mtg_cards: 98,052 rows share only 33,799 distinct slugs, so
-      // roughly two thirds of MTG cards have several printings under one slug (Thundermare
-      // has four, from AU$0.00 to AU$15.35). The other six Core games have unique slugs.
+      let card;
+      // slug is NOT unique in mtg_cards: roughly two thirds of MTG cards have several
+      // printings under one slug. The other 31 games have unique slugs.
       //
       // Without an explicit order, limit=1 returns an ARBITRARY printing, so the alert was
       // silently evaluating a different card than the one followed: a real run skipped
       // Thundermare on the AU$5 price floor by reading a AU$1.32 printing while the one on
       // the page was AU$15.35 and up 934%.
       //
-      // Order by price deliberately, so a follow always tracks the most valuable printing
-      // of that card. That is both deterministic and the printing worth alerting on.
+      // This used to order by price, tracking the most valuable printing. That was
+      // deterministic but it disagreed with the card page, so an alert email could quote a
+      // different printing and price than the page the person followed from. The rule now
+      // lives in shared/card-resolver.mjs and is the same one every surface uses.
       //
       // The image column differs per game (MTG uses image_uri_normal, the rest image_url),
       // so it is aliased to a single image_url field for the email template.
       const imageCol = GAME_IMAGE_COL[row.game] || 'image_url';
       try {
-        cards = await supabaseGet(
-          `${table}?select=slug,name,price_aud,price_change_7d,price_change_30d,image_url:${imageCol}&slug=eq.${encodeURIComponent(row.card_slug)}&order=price_aud.desc.nullslast&limit=1`
+        card = await resolveCardBySlug(
+          (path) => supabaseGet(path),
+          row.game,
+          row.card_slug,
+          { select: `slug,name,price_aud,price_change_7d,price_change_30d,image_url:${imageCol}` }
         );
       } catch (e) {
         log.push(`${row.game}/${row.card_slug}: read error ${e.message}`);
         continue;
       }
 
-      if (!Array.isArray(cards) || cards.length === 0) { missingCard++; continue; }
-      const card = cards[0];
+      if (!card) { missingCard++; continue; }
 
       const priceAud = Number(card.price_aud);
       if (!Number.isFinite(priceAud) || priceAud < PRICE_FLOOR_AUD) { skippedFloor++; continue; }
