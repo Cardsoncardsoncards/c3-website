@@ -1358,8 +1358,12 @@ export default async (req, context) => {
 
   try {
     // Fetch card data
+    // A slug can map to many printings (Sol Ring has 12). Without an ORDER BY, PostgREST
+    // returns an arbitrary row, so an unpriced printing could win: that nulls priceAud,
+    // which suppresses the Product schema and ships the page noindex. Order by price so any
+    // priced printing beats an unpriced one, and the highest value wins among those.
     const cards = await supabaseGet(
-      `mtg_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*`,
+      `mtg_cards?slug=eq.${encodeURIComponent(slug)}&limit=1&select=*&order=price_aud.desc.nullslast`,
       false
     );
 
