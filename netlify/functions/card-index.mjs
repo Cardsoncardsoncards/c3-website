@@ -1,4 +1,5 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
+import { escAttr } from './shared/html-escape.mjs';
 import { EBAY_PARAM_SUFFIX } from './shared/ebay-link.mjs';
 // netlify/functions/card-index.mjs
 // Serves:
@@ -101,7 +102,7 @@ function renderCardHub(sets, topCards) {
         ${children.length ? `<button
           id="btn-${parent.set_code}"
           data-setcode="${parent.set_code}"
-          data-setname="${parent.set_name.replace(/"/g,'&quot;')}"
+          data-setname="${escAttr(parent.set_name)}"
           data-children="${JSON.stringify(children.map(c=>({url:'/cards/mtg/sets/'+c.set_slug,label:c.set_name,year:c.release_date?.slice(0,4)||''}))).replace(/"/g,'&quot;')}"
           onclick="handleToggle(this)"
           style="background:none;border:1px solid var(--border);color:var(--text2);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;flex-shrink:0"
@@ -112,7 +113,7 @@ function renderCardHub(sets, topCards) {
 
   const topCardHTML = topCards.map(c => `
     <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
-      ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" style="width:100%;border-radius:6px">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
+      ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${escAttr(c.name)}" style="width:100%;border-radius:6px">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text)">${c.name}</div>
       <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.45).toFixed(0)}` : ''}</div>
     </a>`).join('');
@@ -870,7 +871,7 @@ async function renderSetIndex(setSlug) {
     return `<a href="/cards/mtg/${c.slug}" class="spotlight-card">
       <div class="spotlight-rarity-dot" style="background:${rc}"></div>
       ${c.image_uri_small
-        ? `<img src="${c.image_uri_small}" alt="${c.name}" class="spotlight-img" loading="lazy">`
+        ? `<img src="${c.image_uri_small}" alt="${escAttr(c.name)}" class="spotlight-img" loading="lazy">`
         : `<div class="spotlight-img-ph">${c.name}</div>`}
       <div class="spotlight-name">${c.name}</div>
       <div class="spotlight-price">~AU$${aud.toFixed(0)}</div>
@@ -909,7 +910,7 @@ async function renderSetIndex(setSlug) {
       <div class="card-rarity-dot" style="background:${rc}"></div>
       <div class="card-colour-pips">${pipsHtml}</div>
       ${c.image_uri_small
-        ? `<img src="${c.image_uri_small}" alt="${c.name}" class="card-img" loading="lazy">`
+        ? `<img src="${c.image_uri_small}" alt="${escAttr(c.name)}" class="card-img" loading="lazy">`
         : `<div class="card-img-ph">${c.name}</div>`}
       <div class="card-name">${c.name}</div>
       <div class="card-price">${priceDisplay}</div>

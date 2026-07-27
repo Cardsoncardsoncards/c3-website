@@ -175,7 +175,7 @@ export default async (req) => {
       const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
       const epnUrl = item.itemAffiliateWebUrl || item.itemWebUrl || '#';
       return `<a href="${epnUrl}" target="_blank" rel="noopener" style="background:#0e1118;border:1px solid #1e2235;border-radius:8px;padding:12px;text-decoration:none;display:flex;gap:10px;align-items:center;transition:border-color .2s" onmouseover="this.style.borderColor='#10B981'" onmouseout="this.style.borderColor='#1e2235'">
-        ${item.image?.imageUrl ? `<img src="${item.image.imageUrl}" alt="${item.title}" style="width:50px;height:50px;object-fit:contain;border-radius:4px;flex-shrink:0">` : ''}
+        ${item.image?.imageUrl ? `<img src="${item.image.imageUrl}" alt="${escAttr(item.title)}" style="width:50px;height:50px;object-fit:contain;border-radius:4px;flex-shrink:0">` : ''}
         <div style="flex:1;min-width:0">
           <div style="font-size:12px;color:#e8eaf0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.title||''}</div>
           ${price ? `<div style="font-size:13px;color:#C9A84C;font-weight:700;margin-top:3px">${price}</div>` : ''}
@@ -287,7 +287,7 @@ export default async (req) => {
       const low = p.low_price ? `Low: ~AU$${(p.low_price*1.45).toFixed(2)}` : '';
       const nm = (p.name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       return `<a href="/cards/riftbound/${p.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#EF4444'" onmouseout="this.style.borderColor='#1e2235'">
-        ${p.image_url ? `<img src="${p.image_url.replace(/"/g,'&quot;')}" alt="${nm.replace(/"/g,'&quot;')}" style="width:100%;max-height:120px;object-fit:contain;border-radius:6px" loading="lazy">` : ''}
+        ${p.image_url ? `<img src="${p.image_url.replace(/"/g,'&quot;')}" alt="${escAttr(nm)}" style="width:100%;max-height:120px;object-fit:contain;border-radius:6px" loading="lazy">` : ''}
         <div style="font-size:12px;font-weight:700;color:#e8eaf0;line-height:1.3">${nm}</div>
         <div style="font-size:15px;font-weight:900;color:#EF4444;font-family:'Cinzel',serif">${price}</div>
         ${low ? `<div style="font-size:11px;color:#8892b0">${low}</div>` : ''}

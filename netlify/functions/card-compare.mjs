@@ -1,6 +1,7 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
 import { resolveCardBySlug } from './shared/card-resolver.mjs';
+import { escAttr } from './shared/html-escape.mjs';
 // netlify/functions/card-compare.mjs
 // C3 Card Compare - v2 rebuild May 2026
 // Features: verdict banner, stat strips, radar chart, game-aware legality,
@@ -544,7 +545,7 @@ function renderSlots(cards, allTokens, usdToAud) {
       <a href="${removeUrl}" class="slot-remove" data-gtag-game="${card.game}" data-gtag-card="${card.name.replace(/"/g,'&quot;')}" aria-label="Remove ${card.name}">×</a>
       ${card.isSpiked ? '<div class="spike-badge">📈 Spiked</div>' : ''}
       <div class="slot-img-wrap">
-        ${card.image ? `<img src="${card.image}" alt="${card.name}" loading="lazy" class="slot-img">` : '<div class="slot-img-placeholder">🃏</div>'}
+        ${card.image ? `<img src="${card.image}" alt="${escAttr(card.name)}" loading="lazy" class="slot-img">` : '<div class="slot-img-placeholder">🃏</div>'}
       </div>
       <div class="slot-game-badge" style="background:${card.color}22;color:${card.color};border-color:${card.color}55">${card.label}</div>
       <div class="slot-name"><a href="${card.cardPath}">${card.name}</a></div>
@@ -568,7 +569,7 @@ function renderSlots(cards, allTokens, usdToAud) {
       ${card.ckBuylistAud ? `<div class="ck-buylist-row help-item" title="Card Kingdom is a major US TCG retailer. This is what they pay YOU for this card - a sell price.">Sell to Card Kingdom: <strong>${fmtAUD(card.ckBuylistAud)}</strong> <span class="info-icon">?</span></div>` : ''}
       <a href="${ebayUrl}" target="_blank" rel="noopener" class="slot-buy-btn" style="background:${card.color}" data-gtag-game="${card.game}" data-gtag-card="${card.name.replace(/"/g,'&quot;')}" data-gtag-pos="${i}">Buy on eBay AU →</a>
       <div class="ebay-disclaimer help-item">eBay AU prices may vary from listed price</div>
-      <button class="slot-versions-btn" data-game="${card.game}" data-name="${card.name.replace(/"/g,'&quot;')}" data-slot="${i}" aria-label="View other versions">⇄ Other versions</button>
+      <button class="slot-versions-btn" data-game="${card.game}" data-name="${escAttr(card.name)}" data-slot="${i}" aria-label="View other versions">⇄ Other versions</button>
       <div class="slot-versions-panel" id="versions-${i}" style="display:none"></div>
     </div>`;
   }).join('');

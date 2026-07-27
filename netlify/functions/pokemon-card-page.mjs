@@ -3,6 +3,7 @@
 import { followBlockHtml } from './shared/follow-block.mjs';
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { escAttr } from './shared/html-escape.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
@@ -563,7 +564,7 @@ export default async (req) => {
   <div class="card-image-col">
     <div class="card-image-wrap">
       ${card.image_url
-        ? `<img src="${card.image_url}" alt="${card.name} -- ${card.set_name} Pokemon card" loading="eager">`
+        ? `<img src="${card.image_url}" alt="${escAttr(card.name)} -- ${escAttr(card.set_name)} Pokemon card" loading="eager">`
         : `<div class="card-image-placeholder"><span>No image available</span></div>`}
     </div>
     ${card.number && card.set_name ? `<p style="text-align:center;font-size:12px;color:var(--text2);margin-top:10px">${card.set_name} · #${card.number}</p>` : ''}

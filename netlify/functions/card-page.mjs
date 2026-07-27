@@ -11,6 +11,7 @@ import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { ebaySearchUrl, ebayStoreUrl, EPN_CAMPID } from './shared/ebay-link.mjs';
 import { resolveCardBySlug } from './shared/card-resolver.mjs';
+import { escAttr } from './shared/html-escape.mjs';
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -314,7 +315,7 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     <div class="card-carousel" id="related-carousel">
       ${relatedCards.map(c => `
         <a href="/cards/mtg/${c.slug}" class="mini-card">
-          ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${c.name}" loading="lazy">` : `<div class="mini-card-placeholder">${c.name}</div>`}
+          ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${escAttr(c.name)}" loading="lazy">` : `<div class="mini-card-placeholder">${c.name}</div>`}
           <div class="mini-card-name">${c.name}</div>
           <div class="mini-card-price">${c.price_usd ? formatAUD(c.price_usd * fxRate) : 'N/A'}</div>
         </a>`).join('')}
@@ -656,8 +657,8 @@ ${contextPara}
   <!-- Left: image, sticky -->
   <div class="card-image-col">
     <div class="card-image-wrap">
-      <img id="card-front" src="${card.image_uri_normal || card.image_uri_small || ''}" alt="${card.name}" width="300">
-      ${isDoubleFaced && card.card_faces?.[1]?.image_uris?.normal ? `<img id="card-back" class="card-image-back" src="${card.card_faces[1].image_uris.normal}" alt="${card.name} back face" width="300" style="display:none">` : ''}
+      <img id="card-front" src="${card.image_uri_normal || card.image_uri_small || ''}" alt="${escAttr(card.name)}" width="300">
+      ${isDoubleFaced && card.card_faces?.[1]?.image_uris?.normal ? `<img id="card-back" class="card-image-back" src="${card.card_faces[1].image_uris.normal}" alt="${escAttr(card.name)} back face" width="300" style="display:none">` : ''}
       ${isDoubleFaced ? `<button class="flip-btn" onclick="flipCard()">⟳ Flip Card</button>` : ''}
     </div>
   </div>
@@ -788,7 +789,7 @@ ${otherPrintings && otherPrintings.length > 1 ? `
             data-price-usd-foil="${p.price_usd_foil ? parseFloat(p.price_usd_foil).toFixed(2) : ''}"
             onclick="switchPrinting(this)"
             title="${p.set_name} #${p.collector_number}">
-            <img src="${p.image_uri_small || p.image_uri_normal || ''}" alt="${p.set_name} #${p.collector_number}" loading="lazy">
+            <img src="${p.image_uri_small || p.image_uri_normal || ''}" alt="${escAttr(p.set_name)} #${escAttr(p.collector_number)}" loading="lazy">
           </div>`;
         }).join('')}
       </div>
@@ -1608,8 +1609,8 @@ async function renderBannedPage(slug) {
 
   const cardGrid = format ? format.cards.map(card => {
     const cardUrl = `/cards/mtg/${card.slug}`;
-    const safeAlt = card.name.replace(/"/g,'&quot;');
-    const safeName = card.name.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const safeAlt = escAttr(card.name);
+    const safeName = escAttr(card.name);
     const img = imageMap[card.slug]
       ? `<a href="${cardUrl}" style="display:block;text-decoration:none"><img src="${imageMap[card.slug]}" alt="${safeAlt}" loading="lazy" style="width:60px;height:84px;object-fit:cover;border-radius:4px;display:block"></a>`
       : `<div style="width:60px;height:84px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:22px">&#128683;</div>`;

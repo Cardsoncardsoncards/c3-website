@@ -193,7 +193,7 @@ export default async (req) => {
           const price = item.price?.value ? `AU$${parseFloat(item.price.value).toFixed(2)}` : '';
           const epnUrl = `https://www.ebay.com.au/itm/${item.itemId}?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
           return `<a href="${epnUrl}" target="_blank" rel="noopener sponsored" style="flex:0 0 160px;background:#161929;border:1px solid #252840;border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:all .22s" onmouseover="this.style.borderColor='rgba(200,163,50,.4)'" onmouseout="this.style.borderColor='#252840'">
-            ${item.image?.imageUrl ? `<img src="${item.image.imageUrl}" alt="${(item.title||'').slice(0,40)}" style="width:100%;height:120px;object-fit:contain;background:#0d0f1a;padding:8px" loading="lazy">` : `<div style="height:120px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:24px">👁</div>`}
+            ${item.image?.imageUrl ? `<img src="${item.image.imageUrl}" alt="${escAttr((item.title||'').slice(0,40))}" style="width:100%;height:120px;object-fit:contain;background:#0d0f1a;padding:8px" loading="lazy">` : `<div style="height:120px;background:#0d0f1a;display:flex;align-items:center;justify-content:center;font-size:24px">👁</div>`}
             <div style="padding:9px 11px;flex:1;display:flex;flex-direction:column;gap:4px">
               <div style="font-size:11px;color:#F0F2FF;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1">${item.title||''}</div>
               <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#c8a332;margin-top:4px">${price}</div>
