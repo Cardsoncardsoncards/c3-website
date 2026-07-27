@@ -1,13 +1,18 @@
 // netlify/functions/sync-wow-background.mjs
 // Daily sync -- schedule: 0 7 * * * UTC
-// Fetches all world-of-warcraft-tcg sets + cards + prices from tcgapi.dev Pro
+// Fetches all wow (World of Warcraft TCG) sets + cards + prices from tcgapi.dev Pro
 // Upserts into wow_sets, wow_cards, wow_price_snapshots
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
-const GAME_SLUG            = 'world-of-warcraft-tcg';
+// Upstream renamed this game's slug. 'world-of-warcraft-tcg' now 404s as "Game not found",
+// which is why this sync has failed every day since 6 June and prices froze on that date.
+// Verified live against api.tcgapi.dev/v1/games on 27 July: the game is slug "wow", name
+// "WoW", 52 sets, 4,735 cards, which matches wow_sets and wow_cards exactly. The database
+// already stores game_slug = 'wow', so this also realigns the code with the stored data.
+const GAME_SLUG            = 'wow';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;

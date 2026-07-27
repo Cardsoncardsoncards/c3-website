@@ -205,16 +205,30 @@ export default async (req) => {
     console.log(`[sync-weissschwarz] Found ${allSets.length} sets`);
 
     // Step 2: Upsert sets
-    const setRows = allSets.map(s => ({
-      id:           s.id,
-      name:         s.name,
-      slug:         s.slug || slugify(s.name, null, null),
-      abbreviation: s.abbreviation || null,
-      release_date: s.release_date || null,
-      card_count:   s.card_count || 0,
-      game_slug:    GAME_SLUG,
-      updated_at:   new Date().toISOString()
-    }));
+    // weissschwarz_sets has a UNIQUE index on slug alone while the upsert conflict target is
+    // id, so two sets that slugify to the same value abort the whole batch with a 23505 and
+    // no prices are ever written. That is exactly what happened: "Kaguya-Sama: Love is War"
+    // and "Kaguya-Sama: Love is War?" both reduce to kaguya-sama-love-is-war once the "?" is
+    // stripped, and the sync had been failing on it daily since 6 June.
+    // This is the same guard the cards path below already uses: first occurrence keeps the
+    // bare slug, any later collision gets the set id appended. allSets arrives in a stable
+    // API order, so the winner does not change between runs.
+    const setSlugsSeen = new Set();
+    const setRows = allSets.map(s => {
+      let slug = s.slug || slugify(s.name, null, null);
+      if (setSlugsSeen.has(slug)) slug = slug + '-' + s.id;
+      setSlugsSeen.add(slug);
+      return {
+        id:           s.id,
+        name:         s.name,
+        slug:         slug,
+        abbreviation: s.abbreviation || null,
+        release_date: s.release_date || null,
+        card_count:   s.card_count || 0,
+        game_slug:    GAME_SLUG,
+        updated_at:   new Date().toISOString()
+      };
+    });
 
     for (let i = 0; i < setRows.length; i += 100) {
       await supabaseUpsert('weissschwarz_sets', setRows.slice(i, i + 100));
