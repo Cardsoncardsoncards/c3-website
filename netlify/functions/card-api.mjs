@@ -28,7 +28,7 @@ import {
 // task-132: read the session cookie so a signed-in follow is one click (no email double opt-in).
 import { getSessionFromRequest } from './shared/session.mjs';
 import { ebaySearchUrl, ebayStoreUrl } from './shared/ebay-link.mjs';
-import { resolveCardBySlug } from './shared/card-resolver.mjs';
+import { resolveFollowCard } from './shared/card-resolver.mjs';
 
 // task-135: the 32-game roster now lives in one shared module, imported by both the follow write
 // path (here) and the dashboard read path (account.mjs), so the two can never drift apart again.
@@ -309,18 +309,27 @@ async function sendFollowEmail({ to, subject, html, emailType, alertId }) {
 }
 
 // PART D: card art for the emails. Best-effort, an email still sends without it.
-async function getCardImage(game, cardSlug) {
+//
+// task-153: takes the follow's stored printing_id and shows THAT printing's art. Two of the
+// seven printing-resolving surfaces run through this one function, the confirmation email and
+// the confirm page, so both became printing-exact together.
+//
+// History of this line, because it has now been wrong twice in different ways. It was
+// order=price_aud.desc ("dearest"), which disagreed with the card page outright. task-152
+// replaced that with resolveCardBySlug, which made every surface agree with each other, but
+// agreeing on a rule is not the same as being right: the rule still picks a printing from a
+// NAME. Now, whenever the follow recorded which printing it meant, that recorded fact wins and
+// no rule runs at all. resolveFollowCard falls back to the old rule when it did not.
+async function getCardImage(game, cardSlug, printingId = null) {
   const table = GAME_TABLES[game];
   const col = GAME_IMAGE_COL[game];
   if (!table || !col) return null;
   try {
-    // Was order=price_aud.desc ("dearest"), which disagreed with the card page and put a
-    // different printing in the confirmation email and on the confirm page than the one the
-    // person was looking at when they clicked follow. One rule now, in card-resolver.mjs.
-    const row = await resolveCardBySlug(
+    const row = await resolveFollowCard(
       (path) => supabaseGet(path, true),
       game,
       cardSlug,
+      printingId,
       { select: `slug,${col}` }
     );
     return (row && row[col]) || null;
@@ -348,7 +357,16 @@ async function handleCardFollow(req) {
     return json({ error: 'Invalid JSON' }, 400);
   }
 
-  const { email, game, cardSlug, cardName } = body || {};
+  const { email, game, cardSlug, cardName, printingId } = body || {};
+
+  // task-153: the printing the person was actually looking at. Treated as an opaque string and
+  // never parsed here, because it is a scryfall_id (uuid text) for MTG and a tcgplayer_id
+  // (numeric) for the other 31 games. It is bounded and coerced, not validated against the card
+  // table: a bad value costs one failed lookup that falls back to the slug rule, whereas an
+  // extra round trip on every follow to pre-validate it would not change the outcome.
+  const printing = (typeof printingId === 'string' || typeof printingId === 'number')
+    ? String(printingId).trim().slice(0, 128) || null
+    : null;
 
   if (!FOLLOW_GAMES.has(game))     return json({ error: 'Unsupported game' }, 400);
   if (!cardSlug || typeof cardSlug !== 'string') return json({ error: 'Card is required' }, 400);
@@ -360,7 +378,7 @@ async function handleCardFollow(req) {
   if (!email) {
     const session = await getSessionFromRequest(req).catch(() => null);
     if (!session) return json({ ok: true, needEmail: true });
-    const r = await applyFollow({ email: session.email, game, cardSlug, cardName, autoConfirm: true });
+    const r = await applyFollow({ email: session.email, game, cardSlug, cardName, printingId: printing, autoConfirm: true });
     if (!r.ok) {
       if (r.reason === 'cap_reached') {
         return json({ error: `You have reached the maximum number of followed cards (${r.cap}). Remove one to add another.`, capReached: true }, 429);
@@ -377,7 +395,7 @@ async function handleCardFollow(req) {
   // account (sending nothing), resolves the tier, applies the right cap, and writes. The cap
   // check, the duplicate check and the insert used to be inline here; they are not any more,
   // because a second surface would have had to reimplement all three.
-  const result = await applyFollow({ email, game, cardSlug, cardName });
+  const result = await applyFollow({ email, game, cardSlug, cardName, printingId: printing });
 
   if (!result.ok) {
     if (result.reason === 'cap_reached') {
@@ -403,7 +421,7 @@ async function handleCardFollow(req) {
 
   const confirmUrl = `${SITE_ORIGIN}/api/confirm-follow?token=${encodeURIComponent(confirmToken)}`;
   const safeName   = esc(cardName || cardSlug);
-  const imageUrl   = await getCardImage(game, cardSlug);
+  const imageUrl   = await getCardImage(game, cardSlug, printing);
 
   await sendFollowEmail({
     to: result.account.email,   // the normalised address, not whatever casing was typed
@@ -515,7 +533,7 @@ async function handleConfirmFollow(req) {
 
   // GET: show the button. Deliberately no state change of any kind.
   if (req.method !== 'POST') {
-    const imageUrl = await getCardImage(row.game, row.card_slug);
+    const imageUrl = await getCardImage(row.game, row.card_slug, row.printing_id);
     return followPage('Confirm your price alerts', `
 <p>Confirm you want price alerts for <strong>${esc(name)}</strong> (${esc(GAME_LABELS[row.game] || row.game)}).</p>
 ${imageUrl ? `<img class="card" src="${esc(imageUrl)}" alt="${esc(name)}">` : ''}

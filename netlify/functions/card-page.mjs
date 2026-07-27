@@ -760,7 +760,7 @@ ${contextPara}
         <span id="compare-icon">⚖️</span> <span id="compare-label">Add to Compare</span>
       </button>
     </div>
-    ${followBlockHtml({ game: 'mtg', slug: card.slug, cardName: card.name })}
+    ${followBlockHtml({ game: 'mtg', slug: card.slug, cardName: card.name, printingId: card.scryfall_id })}
     <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. <a href="/methodology" style="color:inherit;text-decoration:underline">Updated daily</a>. eBay and Amazon links may earn affiliate commission.</p>
     ${shareBar}
   </div><!-- end .card-info -->
@@ -779,6 +779,7 @@ ${otherPrintings && otherPrintings.length > 1 ? `
           const audFoil = p.price_usd_foil ? '~AU$' + (p.price_usd_foil * fxRate).toFixed(2) : '';
           return `<div class="printing-thumb${p.scryfall_id === card.scryfall_id ? ' active' : ''}"
             data-idx="${i}"
+            data-printing-id="${escAttr(p.scryfall_id || '')}"
             data-img="${p.image_uri_normal || p.image_uri_small || ''}"
             data-set="${p.set_name.replace(/"/g,'&quot;')}"
             data-collector="${p.collector_number}"

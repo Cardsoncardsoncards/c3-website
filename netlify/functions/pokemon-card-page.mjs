@@ -599,7 +599,7 @@ export default async (req) => {
       </button>
       <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
     </div>
-    ${followBlockHtml({ game: 'pokemon', slug: card.slug, cardName: card.name })}
+    ${followBlockHtml({ game: 'pokemon', slug: card.slug, cardName: card.name, printingId: card.tcgplayer_id })}
     <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. <a href="/methodology" style="color:inherit;text-decoration:underline">Updated daily</a>. eBay and Amazon links may earn affiliate commission.</p>
 
     <div class="share-bar">

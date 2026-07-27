@@ -318,7 +318,7 @@ export default async (req) => {
           <a href="${amazonUrl}" target="_blank" rel="noopener" class="btn btn-ebay">Amazon AU &#8599;</a>
           <a href="/compare?cards=finalfantasy:${esc(slug)}" class="btn btn-ghost">&#9878; Compare</a>
         </div>
-        ${followBlockHtml({ game: 'finalfantasy', slug: slug, cardName: card.name })}
+        ${followBlockHtml({ game: 'finalfantasy', slug: slug, cardName: card.name, printingId: card.tcgplayer_id })}
       </div>
 
       ${priceChartHTML ? `<div style="margin:16px 0"><div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:sans-serif">Price History (AUD)</div>${priceChartHTML}${PRICE_CHART_SCRIPT}</div>` : ''}

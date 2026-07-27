@@ -234,7 +234,7 @@ export async function countFollows(userId) {
 
 export async function listFollows(userId) {
   const rows = await sbJson(
-    `follows?select=id,game,card_slug,card_name,confirmed,created_at,unsubscribed_at,unsubscribe_token` +
+    `follows?select=id,game,card_slug,card_name,printing_id,confirmed,created_at,unsubscribed_at,unsubscribe_token` +
     `&user_id=eq.${encodeURIComponent(userId)}&order=created_at.desc`
   ).catch(() => []);
   return Array.isArray(rows) ? rows : [];
@@ -246,7 +246,12 @@ export async function listFollows(userId) {
 // task-132: autoConfirm skips the email double-opt-in. It is used ONLY for a signed-in follow,
 // where the session cookie already proves the person owns the account and its email, so a second
 // confirmation email would be pointless friction. The signed-out path leaves autoConfirm false.
-export async function applyFollow({ email, game, cardSlug, cardName, autoConfirm = false }) {
+// task-153: printingId is the identifier of the printing that was actually on screen. It is
+// stored verbatim on the row and is what every follow-aware read path resolves from. It is
+// OPTIONAL: a missing or unknown printing writes null, and the read paths then fall back to
+// the shared slug rule, which is exactly how every follow behaved before this task. It is
+// never inferred here, because a guess stored in this column is indistinguishable from a fact.
+export async function applyFollow({ email, game, cardSlug, cardName, printingId = null, autoConfirm = false }) {
   const normalised = normaliseEmail(email);
   if (!normalised) return { ok: false, reason: 'invalid_email' };
 
@@ -287,6 +292,7 @@ export async function applyFollow({ email, game, cardSlug, cardName, autoConfirm
       game,
       card_slug:     cardSlug,
       card_name:     cardName || null,
+      printing_id:   printingId ? String(printingId) : null,
       alert_types:   ['price_move'],
       confirmed:     autoConfirm,
       confirm_token: confirmToken,
@@ -355,7 +361,7 @@ export async function findFollowByUnsubToken(token) {
 
 export async function findFollowByConfirmToken(token) {
   const rows = await sbJson(
-    `follows?select=id,user_id,game,card_slug,card_name,confirmed,unsubscribe_token&confirm_token=eq.${encodeURIComponent(token)}&limit=1`
+    `follows?select=id,user_id,game,card_slug,card_name,printing_id,confirmed,unsubscribe_token&confirm_token=eq.${encodeURIComponent(token)}&limit=1`
   ).catch(() => []);
   return Array.isArray(rows) && rows.length ? rows[0] : null;
 }

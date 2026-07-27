@@ -18,7 +18,13 @@ function esc(s) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-export function followBlockHtml({ game, slug, cardName }) {
+// task-153: `printingId` is the identifier of the printing the page SERVER-RENDERED, and is
+// what gets submitted unless the page offers a live printing switcher (see PRINTING_SELECTOR
+// below). Pass mtg_cards.scryfall_id for MTG and <game>_cards.tcgplayer_id for the other 31
+// games; shared/game-meta.mjs GAME_PRINTING_COL is the map, and follows.printing_id stores it.
+// Omitting it is not an error: the follow is still recorded, it just falls back to the shared
+// slug rule when read, exactly as every follow did before this task.
+export function followBlockHtml({ game, slug, cardName, printingId = null }) {
   const btnStyle = 'display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;border:1px solid rgba(201,168,76,.35);background:rgba(201,168,76,.12);color:#C9A84C;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit';
   return `
 <div class="c3-follow" style="margin-top:12px">
@@ -35,11 +41,29 @@ export function followBlockHtml({ game, slug, cardName }) {
   <script>
   (function(){
     var GAME=${JSON.stringify(String(game))}, SLUG=${JSON.stringify(String(slug))}, NAME=${JSON.stringify(String(cardName || ''))};
+    var PRINTING=${JSON.stringify(printingId == null ? '' : String(printingId))};
     var btn=document.getElementById('c3-follow-btn'), box=document.getElementById('c3-follow-box'),
         emailEl=document.getElementById('c3-follow-email'), sub=document.getElementById('c3-follow-submit'),
         msg=document.getElementById('c3-follow-msg');
     if(!btn) return;
+    // task-153: the printing on screen is not always the one the server rendered. The MTG card
+    // page's printings carousel swaps the hero image, the price block and the printing info in
+    // the browser, with no URL change and no reload, so by the time someone presses Follow the
+    // card in front of them can be a different printing at a different price. That is precisely
+    // how a customer followed the Final Fantasy Ragavan at AU$61.27 and got told about the
+    // Modern Horizons 2 one at AU$86.79. So read the ACTIVE thumb at click time and prefer it;
+    // fall back to the server-rendered PRINTING when a page has no switcher, which is all 31
+    // other games. Read at click time, never cached at load, or switching then following
+    // submits the stale one.
+    function currentPrinting(){
+      try{
+        var el=document.querySelector('.printing-thumb.active[data-printing-id]');
+        if(el && el.getAttribute('data-printing-id')) return el.getAttribute('data-printing-id');
+      }catch(e){}
+      return PRINTING;
+    }
     function post(body){
+      body.printingId=currentPrinting();
       return fetch('/api/card-follow',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(body)})
         .then(function(r){ return r.json(); });
     }

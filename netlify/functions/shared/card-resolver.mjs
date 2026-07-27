@@ -1,6 +1,22 @@
 // netlify/functions/shared/card-resolver.mjs
 // The ONE rule for turning an ambiguous card slug into a single card row.
 //
+// task-153 UPDATE, READ THIS BEFORE ADDING A CALLER. This module now answers two DIFFERENT
+// questions, and picking the wrong one reintroduces the bug below in a subtler form:
+//
+//   resolveCardBySlug()  "given only a name, which printing should we show?"  A RULE.
+//     Correct for surfaces that genuinely only ever hold a slug: the MTG card page itself
+//     (someone browsing, following nothing), /compare's legacy slug links, and the sitemap.
+//
+//   resolveFollowCard()  "which printing did this person actually follow?"    A STORED FACT.
+//     Correct for every surface holding a follow row: the confirmation email, the confirm
+//     page, the account dashboard and the alert emails. It falls back to the rule when a
+//     follow has no printing recorded, so it is never worse than resolveCardBySlug.
+//
+// If you are reading a follows row, call resolveFollowCard. The rule below is a fallback, not
+// a default. Making the surfaces agree with EACH OTHER (task-152) is not the same as making
+// them agree with WHAT THE PERSON CLICKED, which is what storing the printing achieves.
+//
 // Why this exists: slug is not unique in mtg_cards. Every printing is its own row while the
 // card page is served per slug, so something has to choose. Seven surfaces were each choosing
 // independently, and they disagreed. The card page picked one printing, while the confirmation
@@ -33,7 +49,7 @@
 // scripts/generate-sitemap-cards.mjs runs at build time where Netlify.env does not exist.
 // Owning the fetch would mean either duplicating auth or crashing on import in the build.
 
-import { GAME_TABLES } from './game-meta.mjs';
+import { GAME_TABLES, GAME_PRINTING_COL } from './game-meta.mjs';
 
 // A priced printing, expressed once for the query path and once for the in-memory path.
 export const PRICED_FILTER = 'or=(price_aud.gt.0,price_usd.not.is.null)';
@@ -103,6 +119,116 @@ export async function resolveCardBySlug(fetcher, game, slug, opts = {}) {
   // No priced printing anywhere (963 MTG slugs). Still render, just without a price.
   const any = await fetcher(`${base}&${NEWEST_FIRST}&limit=1`);
   return (Array.isArray(any) && any[0]) || null;
+}
+
+/**
+ * Resolve the card for a FOLLOW row: the exact printing it recorded, or the shared rule.
+ *
+ * task-153. resolveCardBySlug() above answers "which printing should we show for this slug",
+ * which is a rule, a best guess made from a name. This answers the different and better
+ * question "which printing did this person actually follow", which is a stored fact whenever
+ * one exists. Every surface that holds a follow row should call THIS, not resolveCardBySlug.
+ *
+ * The fallback is not defensive padding, it is reached by real rows:
+ *   - the follows that predate task-153 have printing_id null (the MTG one deliberately stays
+ *     null, because which printing it meant was never recorded and guessing it would be a
+ *     fabrication), and
+ *   - a printing can vanish from under a stored id when a sync drops or replaces a row.
+ * Both land on exactly the pre-task-153 behaviour rather than on an error or a blank card.
+ *
+ * @param {(path: string) => Promise<object[]>} fetcher caller's authenticated PostgREST getter
+ * @param {string} game        game key, e.g. 'mtg'
+ * @param {string} slug        card slug, used for the fallback
+ * @param {string|null} printingId  follows.printing_id, or null/'' when the row has none
+ * @param {object} [opts]
+ * @param {string} [opts.select='*']
+ * @returns {Promise<object|null>}
+ */
+export async function resolveFollowCard(fetcher, game, slug, printingId, opts = {}) {
+  const table = GAME_TABLES[game];
+  if (!table) return null;
+
+  const col = GAME_PRINTING_COL[game];
+  if (printingId && col) {
+    const select = opts.select || '*';
+    try {
+      const rows = await fetcher(
+        `${table}?${col}=eq.${encodeURIComponent(printingId)}&select=${select}&limit=1`
+      );
+      if (Array.isArray(rows) && rows[0]) return rows[0];
+    } catch {
+      // Fall through to the slug rule rather than failing the whole surface on one lookup.
+    }
+  }
+
+  return resolveCardBySlug(fetcher, game, slug, opts);
+}
+
+/**
+ * Batch form of resolveFollowCard for one game, for surfaces holding many follows at once.
+ *
+ * Splits the follows into those that recorded a printing and those that did not, then makes
+ * at most two requests per game: one `in.(...)` over the stored printing ids, and one
+ * resolveCardsBySlugs for the remainder. It stays proportional to the number of GAMES a
+ * person follows, not the number of CARDS, which is the property the account page needs.
+ *
+ * @param {(path: string) => Promise<object[]>} fetcher
+ * @param {string} game
+ * @param {Array<{card_slug: string, printing_id?: string|null}>} follows rows for this game
+ * @param {object} [opts]
+ * @param {string} [opts.select='*']
+ * @returns {Promise<{byPrinting: Map<string, object>, bySlug: Map<string, object>}>}
+ */
+export async function resolveFollowCards(fetcher, game, follows, opts = {}) {
+  const table = GAME_TABLES[game];
+  const col   = GAME_PRINTING_COL[game];
+  const byPrinting = new Map();
+  const bySlug     = new Map();
+  const rowsIn = Array.isArray(follows) ? follows : [];
+  if (!table || !rowsIn.length) return { byPrinting, bySlug };
+
+  let select = opts.select || '*';
+  const withPrinting = rowsIn.filter(f => f && f.printing_id);
+  const ids = [...new Set(withPrinting.map(f => String(f.printing_id)))];
+
+  // The returned rows must carry the key column, or they cannot be indexed back onto a follow.
+  if (ids.length && col && select !== '*' && !select.split(',').includes(col)) {
+    select += `,${col}`;
+  }
+
+  const jobs = [];
+
+  if (ids.length && col) {
+    const list = ids.map(v => `"${v}"`).join(',');
+    jobs.push(
+      fetcher(`${table}?select=${select}&${col}=in.(${encodeURIComponent(list)})`)
+        .then(rows => {
+          for (const r of (Array.isArray(rows) ? rows : [])) {
+            if (r && r[col] !== null && r[col] !== undefined) byPrinting.set(String(r[col]), r);
+          }
+        })
+        .catch(() => { /* the per-follow fallback below covers a failed batch */ })
+    );
+  }
+
+  // Anything with no stored printing, plus anything whose stored printing no longer exists,
+  // still needs the slug rule. The miss set can only be computed after the batch resolves.
+  const slugsAlways = rowsIn.filter(f => f && !f.printing_id).map(f => f.card_slug);
+
+  await Promise.all(jobs);
+
+  const slugsMissed = withPrinting
+    .filter(f => !byPrinting.has(String(f.printing_id)))
+    .map(f => f.card_slug);
+
+  const needSlug = [...new Set([...slugsAlways, ...slugsMissed].filter(Boolean))];
+  if (needSlug.length) {
+    const picked = await resolveCardsBySlugs(fetcher, game, needSlug, { select: opts.select || '*' })
+      .catch(() => new Map());
+    for (const [slug, r] of picked) if (r) bySlug.set(slug, r);
+  }
+
+  return { byPrinting, bySlug };
 }
 
 /**

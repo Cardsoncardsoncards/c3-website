@@ -346,7 +346,7 @@ export default async (req) => {
       <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary">🛒 Buy on eBay AU →</a>
       <a href="/tracker.html" class="cta-btn cta-secondary">📋 Track Collection</a>
     </div>
-${followBlockHtml({ game: 'onepiece', slug: card.slug, cardName: card.name })}
+${followBlockHtml({ game: 'onepiece', slug: card.slug, cardName: card.name, printingId: card.tcgplayer_id })}
     <p style="font-size:11px;color:rgba(160,168,192,.4);margin-top:12px">Prices in AUD. <a href="/methodology" style="color:inherit;text-decoration:underline">Updated daily</a>. eBay links may earn affiliate commission.</p>
     <style>
     .share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0;padding:16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-family:sans-serif}

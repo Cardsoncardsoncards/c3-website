@@ -16,7 +16,7 @@
 //
 // Supabase only, no external card APIs. Resend is used for the emails.
 
-import { resolveCardBySlug } from './shared/card-resolver.mjs';
+import { resolveFollowCard } from './shared/card-resolver.mjs';
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -235,7 +235,7 @@ export default async (req) => {
     // The email now lives on accounts, joined through, rather than being copied onto every
     // follow row. That is what stops the same person existing twice under different casings.
     const raw = await supabaseGet(
-      `follows?select=id,game,card_slug,card_name,unsubscribe_token,accounts(email)` +
+      `follows?select=id,game,card_slug,card_name,printing_id,unsubscribe_token,accounts(email)` +
       `&confirmed=is.true&triggered=is.false&unsubscribed_at=is.null&limit=${BATCH}`
     );
 
@@ -268,17 +268,25 @@ export default async (req) => {
       //
       // This used to order by price, tracking the most valuable printing. That was
       // deterministic but it disagreed with the card page, so an alert email could quote a
-      // different printing and price than the page the person followed from. The rule now
-      // lives in shared/card-resolver.mjs and is the same one every surface uses.
+      // different printing and price than the page the person followed from. task-152 put it
+      // on the one shared rule in shared/card-resolver.mjs.
+      //
+      // task-153: where the follow recorded which printing it meant, the alert is now evaluated
+      // against THAT printing. This is the surface where the difference is most material,
+      // because the printing does not merely decide the picture: it decides the price, so it
+      // decides both the AU$5 floor test and the percentage move that triggers the email at all.
+      // Ragavan's printings run from AU$0 to AU$86.79 under a single slug, so alerting on a
+      // rule-picked printing meant emailing people about a card they were not holding.
       //
       // The image column differs per game (MTG uses image_uri_normal, the rest image_url),
       // so it is aliased to a single image_url field for the email template.
       const imageCol = GAME_IMAGE_COL[row.game] || 'image_url';
       try {
-        card = await resolveCardBySlug(
+        card = await resolveFollowCard(
           (path) => supabaseGet(path),
           row.game,
           row.card_slug,
+          row.printing_id,
           { select: `slug,name,price_aud,price_change_7d,price_change_30d,image_url:${imageCol}` }
         );
       } catch (e) {

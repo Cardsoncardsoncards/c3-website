@@ -47,3 +47,22 @@ export const FOLLOW_GAMES   = new Set(Object.keys(GAME_META));
 export const GAME_TABLES    = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[0]]));
 export const GAME_IMAGE_COL = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[1]]));
 export const GAME_LABELS    = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[2]]));
+
+// task-153: which column identifies ONE PRINTING in each game's cards table.
+//
+// This is the second place MTG is the exception, and for the same underlying reason as the
+// image column above. Checked against the live schema before writing it, not assumed:
+//   - scryfall_id exists on mtg_cards and on NO other table. It is unique and non-null across
+//     all 98,370 rows.
+//   - tcgplayer_id exists on all 32 tables and is unique and non-null on every one of them.
+// So MTG keys printings by scryfall_id and the other 31 by tcgplayer_id. mtg_cards does carry
+// a tcgplayer_id too, but it is NOT used here: Scryfall's tcgplayer_id is per TCGplayer
+// product, so separate printings can share one, which is exactly the ambiguity being removed.
+//
+// Why this matters for only one game: MTG slugs are name-level (98,370 printings under 33,913
+// slugs), while all 31 other games have zero duplicate slugs, so for them the slug already
+// identifies the printing and printing_id is belt-and-braces. Storing it for every game
+// anyway keeps one read path instead of an MTG branch in every consumer.
+export const GAME_PRINTING_COL = Object.fromEntries(
+  Object.keys(GAME_META).map(g => [g, g === 'mtg' ? 'scryfall_id' : 'tcgplayer_id'])
+);

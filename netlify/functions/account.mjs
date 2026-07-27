@@ -45,7 +45,7 @@ import { NAV_CSS, navHtml } from './shared/nav.mjs';
 // task-135: the 32-game map, shared with card-api.mjs. Replaces account.mjs's old 7-game
 // GAME_CARDS so enrichFollows can render followed cards for every game, not just the original 7.
 import { GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared/game-meta.mjs';
-import { resolveCardsBySlugs } from './shared/card-resolver.mjs';
+import { resolveFollowCards } from './shared/card-resolver.mjs';
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -104,26 +104,34 @@ async function enrichFollows(follows) {
   for (const f of follows) {
     if (!GAME_TABLES[f.game]) continue; // still guards a genuinely unknown game; all 32 are known
     if (!byGame.has(f.game)) byGame.set(f.game, []);
-    byGame.get(f.game).push(f.card_slug);
+    byGame.get(f.game).push(f);
   }
 
-  const cardIndex = new Map(); // "game:slug" -> card
-  await Promise.all([...byGame.entries()].map(async ([game, slugs]) => {
+  // task-153: keyed by follow id, not by "game:slug". The dashboard now shows the printing each
+  // follow actually recorded, and two follows of the same card can differ in printing while
+  // sharing a slug, so a slug key would collapse them onto one card. Keying by the row removes
+  // that class of bug outright rather than relying on the UNIQUE (user_id, entity_id) constraint
+  // to keep slugs distinct within one person's list.
+  const cardByFollowId = new Map();
+  await Promise.all([...byGame.entries()].map(async ([game, rows]) => {
     const imageCol = GAME_IMAGE_COL[game];
+    // Still at most two requests per GAME for up to 100 follows, never one per card: one
+    // in.(...) over the stored printing ids and one slug batch for the rest.
+    //
     // This used to keep the dearest printing, which disagreed with the card page: a follow on
     // Ragavan showed the Final Fantasy printing on the page and Modern Horizons 2 (AU$86.79)
-    // here. resolveCardsBySlugs applies the one shared rule from card-resolver.mjs.
-    // The batch form is used deliberately: this is still ONE request per game for up to 100
-    // follows, with the rule applied locally. A per-slug resolve would be one request each.
-    const picked = await resolveCardsBySlugs(sbGet, game, slugs, {
+    // here. task-152 put every surface on one shared rule, and task-153 goes further: where the
+    // follow recorded a printing, that exact printing is shown and no rule is consulted.
+    const { byPrinting, bySlug } = await resolveFollowCards(sbGet, game, rows, {
       select: `slug,name,set_name,price_aud,price_change_7d,price_change_30d,${imageCol}`
     });
-    for (const [slug, r] of picked) {
-      if (r) cardIndex.set(`${game}:${slug}`, { ...r, image: r[imageCol] });
+    for (const f of rows) {
+      const r = (f.printing_id && byPrinting.get(String(f.printing_id))) || bySlug.get(f.card_slug) || null;
+      if (r) cardByFollowId.set(f.id, { ...r, image: r[imageCol] });
     }
   }));
 
-  return follows.map(f => ({ ...f, card: cardIndex.get(`${f.game}:${f.card_slug}`) || null }));
+  return follows.map(f => ({ ...f, card: cardByFollowId.get(f.id) || null }));
 }
 
 function movementHtml(value, label) {
