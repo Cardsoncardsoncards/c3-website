@@ -14,6 +14,7 @@
 const BASE = 'https://cardsoncardsoncards.com.au';
 const CONCURRENCY = 6;
 const DELAY_MS = 150; // politeness gap per worker
+const FETCH_TIMEOUT = 20000; // per request, so one hung URL cannot park a worker forever
 const FULL = process.argv.includes('--full');
 const capIdx = process.argv.indexOf('--cap');
 const CARD_CAP = capIdx > -1 ? parseInt(process.argv[capIdx + 1], 10) || 25 : 25;
@@ -62,14 +63,27 @@ function extractInternalLinks(html, fromUrl) {
 
 async function fetchUrl(url) {
   const t0 = Date.now();
+  // Audit point 5. There was no timeout here, so a single request that never resolved parked one
+  // of the six workers for good and the crawl silently lost a sixth of its throughput, or hung.
+  // A recorded timeout is more useful than a stall: it lands in the report as status 0.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
   try {
-    const res = await fetch(url, { redirect: 'follow', headers: { 'User-Agent': 'C3-owner-audit/1.0' } });
+    const res = await fetch(url, {
+      redirect: 'follow',
+      headers: { 'User-Agent': 'C3-owner-audit/1.0' },
+      signal: controller.signal
+    });
+    clearTimeout(timer);
     const ms = Date.now() - t0;
     const ct = res.headers.get('content-type') || '';
     let html = '';
+    // No res.ok gate here on purpose (audit point 6). Recording non-200 responses IS this tool's
+    // job, and nothing it reads is JSON, so there is no parse to guard.
     if (ct.includes('html') || ct.includes('xml')) html = await res.text();
     return { status: res.status, ms, html, finalUrl: res.url };
   } catch (e) {
+    clearTimeout(timer);
     return { status: 0, ms: Date.now() - t0, html: '', error: e.message };
   }
 }
@@ -95,6 +109,40 @@ async function getSitemapUrls() {
   return urls;
 }
 
+// How deep a URL sits in the site, counted in real path segments rather than in slashes.
+//
+// task-157 fix. The old test was u.split('/').length <= 6, applied to the WHOLE URL. A card page
+// like https://cardsoncardsoncards.com.au/cards/pokemon/some-card splits into exactly six parts
+// ('https:', '', host, 'cards', 'pokemon', 'some-card'), so every card page satisfied "<= 6" and
+// was classified shallow. Shallow URLs bypass the cap, so sample mode quietly included every
+// card page on the site: measured live at 53,774 URLs queued instead of a bounded sample, one
+// Netlify function invocation per uncached page. The scheme and host were being counted as
+// depth, which is what made an obviously deep URL look shallow.
+//
+// Counting path segments instead gives the depths the cap was always meant to describe:
+//   /                            0   static
+//   /market, /cards              1   static, hub
+//   /cards/pokemon               2   game hub
+//   /blog/some-post              2   static blog page
+//   /cards/pokemon/some-card     3   CARD PAGE, must be capped
+//   /cards/pokemon/sets/base     4   SET PAGE, must be capped
+function pathDepth(u) {
+  try {
+    return new URL(u).pathname.split('/').filter(Boolean).length;
+  } catch {
+    return Infinity;   // unparseable, treat as deep so it can never bypass the cap
+  }
+}
+
+// Hubs and static pages only. Anything three segments or deeper is an individual content page
+// (a card or a set) and is subject to the sample cap.
+const SHALLOW_MAX_DEPTH = 2;
+
+// Sample mode only: how many deep links a single structural page may contribute by discovery.
+// Enough to notice a hub linking to dead card pages, few enough that 32 game hubs cannot
+// between them re-import the whole card catalogue.
+const DEEP_LINKS_PER_PAGE = 5;
+
 function sampleUrls(urlMap) {
   if (FULL) return [...urlMap.keys()];
   // Group by sitemap source; card sitemaps get capped, everything else fully included.
@@ -104,15 +152,19 @@ function sampleUrls(urlMap) {
   for (const [src, list] of Object.entries(bySource)) {
     const isCardHeavy = list.length > 200; // heuristic: card sitemaps are huge
     if (!isCardHeavy) { out.push(...list); continue; }
-    // Keep all short URLs (hubs, set pages) and cap the deep card pages.
-    const shallow = list.filter(u => u.split('/').length <= 6); // /cards/game/sets/slug depth
-    const deep = list.filter(u => u.split('/').length > 6 || (u.split('/').length === 6 && !u.includes('/sets/')));
-    const cardPages = list.filter(u => !shallow.includes(u));
+
+    const shallow = [];
+    const deep = [];
+    for (const u of list) (pathDepth(u) <= SHALLOW_MAX_DEPTH ? shallow : deep).push(u);
     out.push(...shallow);
-    // Evenly spaced sample of card pages
-    const step = Math.max(1, Math.floor(cardPages.length / CARD_CAP));
-    for (let i = 0; i < cardPages.length && out.length < 100000; i += step) out.push(cardPages[i]);
-    console.log(`${src}: ${list.length} URLs, sampled ${shallow.length} shallow + ~${Math.min(CARD_CAP, cardPages.length)} card pages`);
+
+    // Evenly spaced sample of the deep pages, capped at exactly CARD_CAP. The old loop stepped
+    // by floor(len/CAP), which overshoots whenever the division leaves a remainder (11,131 URLs
+    // at a cap of 25 stepped 445 and yielded 26). Indexing the fraction directly cannot overrun.
+    const take = Math.min(CARD_CAP, deep.length);
+    for (let i = 0; i < take; i++) out.push(deep[Math.floor((i * deep.length) / take)]);
+
+    console.log(`${src}: ${list.length} URLs, sampled ${shallow.length} shallow + ${take} of ${deep.length} deep pages`);
   }
   return [...new Set(out)];
 }
@@ -126,10 +178,30 @@ async function worker(id) {
     const flags = r.status === 200 ? flagChecks(url, r.html) : [];
     results.push({ url, status: r.status, ms: r.ms, source, flags: flags.join('|'), error: r.error || '' });
     if (r.status !== 200) console.log(`  [${r.status}] ${url} (found on: ${source})`);
-    // Discover internal links from key structural pages only (avoid explosion)
-    if (r.html && (source === 'seed' || url.split('/').length <= 5)) {
+
+    // Discover internal links from key structural pages only (avoid explosion).
+    //
+    // task-157, second pass. Fixing the sitemap classifier bounded the sample to 1,954 URLs, but
+    // the first real run still tested 5,382, because this discovery step queued everything it
+    // found with no cap at all: 3,331 deep card and set pages walked in through here, 642 of them
+    // from /cards/yugioh alone. That is the same uncapped-deep-page problem as the classifier
+    // bug, just through the other door, so sample mode was still not actually bounded.
+    //
+    // Deep links are now sampled per parent rather than taken wholesale. Keeping a few preserves
+    // the point of crawling a hub (catching a hub that links to dead card pages) while keeping
+    // the total predictable. Shallow links stay uncapped: they are nav and structural pages,
+    // there are few of them, and they are what the link graph is really for.
+    // FULL mode is untouched, it is supposed to take everything.
+    if (r.html && (source === 'seed' || pathDepth(url) <= SHALLOW_MAX_DEPTH)) {
+      let deepTaken = 0;
       for (const link of extractInternalLinks(r.html, url)) {
-        if (!seen.has(link)) { seen.add(link); queue.push({ url: link, source: url }); }
+        if (seen.has(link)) continue;
+        if (!FULL && pathDepth(link) > SHALLOW_MAX_DEPTH) {
+          if (deepTaken >= DEEP_LINKS_PER_PAGE) continue;
+          deepTaken++;
+        }
+        seen.add(link);
+        queue.push({ url: link, source: url });
       }
     }
     await new Promise(res => setTimeout(res, DELAY_MS));
@@ -154,7 +226,10 @@ async function main() {
   }
   console.log(`URLs to test: ${queue.length}`);
 
-  await Promise.all(Array.from({ length: CONCURRENCY }, (_, i) => worker(i)));
+  // allSettled, not all (audit point 9). A worker already swallows its own errors inside
+  // fetchUrl, so this changes no behaviour today, but it means one unexpected throw cannot
+  // abandon the other five mid-crawl and lose every result collected so far.
+  await Promise.allSettled(Array.from({ length: CONCURRENCY }, (_, i) => worker(i)));
 
   // Reports
   const csvLines = ['url,status,ms,source,flags,error'];
