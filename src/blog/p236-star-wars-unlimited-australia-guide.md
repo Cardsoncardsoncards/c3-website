@@ -64,7 +64,7 @@ Third, competitive balance. Fantasy Flight has kept the meta diverse across mult
 
 ## Where to Buy in Australia
 
-Good Games, Gameology, Zing, and local game stores all stock Star Wars Unlimited. Amazon AU carries sealed product. Check our [Shop page](/shop) for affiliate links. For singles, [our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Star Wars Unlimited singles.
+Good Games, Gameology, Zing, and local game stores all stock Star Wars Unlimited. Amazon AU carries sealed product. Check our [Shop page](/shop) for affiliate links. For singles, [our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Star Wars Unlimited singles.
 
 ---
 
@@ -138,4 +138,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

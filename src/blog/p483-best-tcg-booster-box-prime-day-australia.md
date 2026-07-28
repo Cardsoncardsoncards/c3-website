@@ -87,7 +87,7 @@ Browse DBS Booster Boxes on Amazon AU
 - If a box is 10 percent or more below the price you noted, that is a real deal. If it is the same or higher, skip it.
 - Buy what you actually want to open or trade, not what looks like the biggest discount.
 
-Our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=boosterbox-primday&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) is also worth checking for sealed product and singles during Prime Day. Not every deal is on Amazon AU.
+Our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=boosterbox-primday&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) is also worth checking for sealed product and singles during Prime Day. Not every deal is on Amazon AU.
 
 > **Best Value Pick: Pokemon Booster Box from a 2025 Set**
 >

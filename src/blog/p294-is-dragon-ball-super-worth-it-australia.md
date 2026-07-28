@@ -22,7 +22,7 @@ A Dragon Ball Super starter deck in Australia typically costs AU$20 to AU$35 dep
 
 If you want to build a competitive deck, expect to spend AU$100 to AU$300 depending on the archetype. Budget decks using older sets are much cheaper. The Fusion World series has brought strong reprints, which has lowered the entry cost for several popular strategies.
 
-[Search Dragon Ball Super starter decks on eBay AU](https://www.ebay.com.au/sch/i.html?_nkw=dragon+ball+super+card+game+starter+deck&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1)
+[Search Dragon Ball Super starter decks on eBay AU](https://www.ebay.com.au/sch/i.html?_nkw=dragon+ball+super+card+game+starter+deck&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&toolid=10001&mkevt=1)
 
 ## Card Availability in Australia
 

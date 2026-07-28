@@ -111,7 +111,7 @@ Both are valid. The data we have from four boxes gives you an honest picture of 
 
 ## Where to Buy Wilds Unknown Singles in Australia
 
-Over 1,077 individual Wilds Unknown cards are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=BlogP250Lorcana&toolid=10001&mkevt=1). We have both regular and foil versions of most cards in the set, and the nine Epic cards we pulled are listed individually.
+Over 1,077 individual Wilds Unknown cards are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=BlogP250Lorcana&toolid=10001&mkevt=1). We have both regular and foil versions of most cards in the set, and the nine Epic cards we pulled are listed individually.
 
 For pull rate detail from our full four-box opening, see the companion post: [I Opened 4 Boxes of Lorcana Wilds Unknown](https://cardsoncardsoncards.com.au/blog/p252-lorcana-wilds-unknown-box-opening).
 
@@ -138,4 +138,4 @@ Based on our four-box opening, the set has strong EV driven by Enchanted and Epi
 Wilds Unknown introduced Epics as the first new rarity in Lorcana's history. They are Raised Foil variants numbered above 204 and appear at approximately one per ten packs. From our four-box opening we pulled nine Epics.
 
 ### Where can I buy Wilds Unknown singles in Australia?
-Singles including Enchanted and Epic variants are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=wilds-unknown&toolid=10001&mkevt=1). Check current AUD prices at the [C3 Lorcana Card Vault](/cards/lorcana).
+Singles including Enchanted and Epic variants are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=wilds-unknown&toolid=10001&mkevt=1). Check current AUD prices at the [C3 Lorcana Card Vault](/cards/lorcana).

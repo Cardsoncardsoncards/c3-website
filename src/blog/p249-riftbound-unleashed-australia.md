@@ -16,7 +16,7 @@ Riftbound is the trading card game based on League of Legends, published by Riot
 
 Riftbound is the trading card game based on League of Legends, published by Riot Games and released in Australia in 2026. The first set is called Unleashed and it covers a card pool of 219 base cards plus a set of alternate art, overnumbered, and signed variants that sit above the main set number.
 
-We have stocked Riftbound Unleashed at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) and opened four booster boxes to build our inventory. This is a real-world look at what you actually get, not a preview.
+We have stocked Riftbound Unleashed at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1) and opened four booster boxes to build our inventory. This is a real-world look at what you actually get, not a preview.
 
 ---
 
@@ -30,7 +30,7 @@ We have stocked Riftbound Unleashed at [Cards on Cards on Cards](https://www.eba
 
 **Total cards per box:** 336
 
-**Where to buy in Australia:** Local game stores and online. Cards from our stock are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
+**Where to buy in Australia:** Local game stores and online. Cards from our stock are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
 
 ---
 
@@ -73,7 +73,7 @@ If you play League of Legends you will recognise this roster immediately. If you
 
 ## Australian Availability
 
-Riftbound is stocked at local game stores across Australia. If you want singles rather than sealed product, the fastest way to build a collection from a specific champion is to buy singles directly. We have over 1,180 individual Riftbound Unleashed cards listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1), sorted by card number and finish.
+Riftbound is stocked at local game stores across Australia. If you want singles rather than sealed product, the fastest way to build a collection from a specific champion is to buy singles directly. We have over 1,180 individual Riftbound Unleashed cards listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1), sorted by card number and finish.
 
 For a full card-level breakdown of what we pulled from four booster boxes, including foil rates and alternate art counts, read our [box opening post](https://cardsoncardsoncards.com.au/blog/p251-riftbound-unleashed-box-opening).
 

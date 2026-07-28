@@ -84,7 +84,7 @@ The card vault covers over 96,000 cards and updates prices daily.
 
 ## If You Have Valuable Cards
 
-If you're sitting on expensive cards and wondering whether to sell, check prices first on [C3](/cards/mtg) and then compare against the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) for comparable sold pricing.
+If you're sitting on expensive cards and wondering whether to sell, check prices first on [C3](/cards/mtg) and then compare against the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) for comparable sold pricing.
 
 Track your valuable cards with the [free C3 collection tracker](/tracker). log what you have and monitor value changes over time.
 
@@ -112,4 +112,4 @@ The [C3 Card Vault](/cards) has live AUD pricing updated from eBay AU sold data 
 Australian prices reflect the local eBay AU market, import costs, and the AUD/USD exchange rate. Cards that are readily available in the US can be scarcer here, pushing prices higher. Cards with strong local demand can also trade above US market rates. See our guide on [why AU TCG prices differ from the US](/blog/why-mtg-cards-cost-more-australia-than-us).
 
 ### Where can I buy high-value singles in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles from all major TCGs with Australian shipping.
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles from all major TCGs with Australian shipping.

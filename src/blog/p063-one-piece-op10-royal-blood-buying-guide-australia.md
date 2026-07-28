@@ -64,7 +64,7 @@ OP-10 has maintained above-retail box expected value for over a year, which is a
 
 **Where to buy sealed product:** Amazon AU stocks OP-10 booster displays with Prime delivery available. Check current pricing and stock before buying as prices fluctuate with secondary market movements.
 
-**Where to buy singles:** The [Cards on Cards on Cards eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=p063&toolid=10001&mkevt=1) has a large selection of One Piece singles across all sets. Search directly for specific card names or browse the One Piece section.
+**Where to buy singles:** The [Cards on Cards on Cards eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=p063&toolid=10001&mkevt=1) has a large selection of One Piece singles across all sets. Search directly for specific card names or browse the One Piece section.
 
 **English vs Japanese product:** OP-10 exists in both English and Japanese versions with different card art in some cases. The Japanese Manga Rare version of Trafalgar Law has different market dynamics to the English version. Amazon AU stocks English product. Japanese cards must be imported separately.
 

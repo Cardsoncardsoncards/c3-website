@@ -60,7 +60,7 @@ Foundations was printed in large quantities as a beginner set, which kept prices
 Compare prices before buying. The [C3 Card Compare tool](/compare) lets you check Foundations versions of staples against other printings to find the best value.
 
 
-Singles are available in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=foundations-blog&toolid=10001&mkevt=1).
+Singles are available in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=foundations-blog&toolid=10001&mkevt=1).
 
 ## The C3 Take
 
@@ -82,4 +82,4 @@ For beginners who want the core cards with a consistent frame treatment, yes. Fo
 Lightning Bolt, Sol Ring, and the new legendary creatures Mabel and Loran are the most discussed. The set is broader than these flagship cards though. Check the [C3 MTG card hub](/cards/mtg) for a full price breakdown.
 
 ### Where to buy MTG Foundations singles in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=foundations-blog&toolid=10001&mkevt=1) has Foundations singles with Australian shipping.
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=foundations-blog&toolid=10001&mkevt=1) has Foundations singles with Australian shipping.

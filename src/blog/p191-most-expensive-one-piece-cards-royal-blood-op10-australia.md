@@ -67,7 +67,7 @@ This pattern is why One Piece TCG collectors often prefer buying the specific ve
 
 ## Where to Buy OP-10 Royal Blood Singles in Australia
 
-Singles from OP-10 Royal Blood are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=op10-blog&toolid=10001&mkevt=1) with Australian shipping.
+Singles from OP-10 Royal Blood are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=op10-blog&toolid=10001&mkevt=1) with Australian shipping.
 
 
 For sealed product EV, use the [C3 EV Calculator](/ev-calculator).

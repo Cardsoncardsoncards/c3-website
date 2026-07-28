@@ -90,7 +90,7 @@ If you are playing in Australian RCQs for the next Modern cycle, Standard card p
 
 The [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare) lets you check current AU pricing on any Standard card. You can compare cards side by side to see which has moved more in the past 14 days, which matters right now when you are deciding whether to buy now or wait.
 
-The [C3 MTG card hub](https://cardsoncardsoncards.com.au/cards) has individual card pages for Standard staples with current price data. Singles from Sydney's Top 8 archetypes are listed in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
+The [C3 MTG card hub](https://cardsoncardsoncards.com.au/cards) has individual card pages for Standard staples with current price data. Singles from Sydney's Top 8 archetypes are listed in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
 
 *Data sources: [MTGTop8](https://mtgtop8.com/event?e=81884&f=ST), [MTGDecks.net](https://mtgdecks.net/Standard), [Magic.gg](https://www.magic.gg/news/metagame-mentor-the-top-standard-decks-to-expect-at-pro-tour-secrets-of-strixhaven)*
 

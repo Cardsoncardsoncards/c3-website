@@ -63,7 +63,7 @@ Pitch Black will have key chase cards, almost certainly including Mega forms of 
 
 For Australian singles, the C3 eBay store will have Pitch Black pulls listed from launch weekend.
 
-[Browse Pokemon Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=pitchblack-pokemon&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001)
+[Browse Pokemon Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=pitchblack-pokemon&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001)
 
 > **Best value pick: Pokemon Mega Evolution Pitch Black Elite Trainer Box**
 >     If you want to experience Pitch Black without committing to a full booster box, an Elite Trainer Box at AU$75 to AU$90 is the right entry point. You get 9 booster packs, sleeves, dice, and a promo card, all with Mega Evolution theming. For casual players and collectors who want to crack some packs and see what they pull, an ETB is better value per pack than individual packs, and far less risk than a full booster box.

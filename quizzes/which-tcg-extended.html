@@ -142,7 +142,7 @@ footer a:hover{color:var(--white)}
       <a href="/tools" class="nav-link" style="color:#C084FC;border-color:rgba(192,132,252,.35)">Tools</a>
       <a href="/play" class="nav-link nav-link--active">Play</a>
       <a href="/quizzes" class="nav-link nav-link--active">Quizzes</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link" style="color:#60A5FA;border-color:rgba(96,165,250,.35)">Shop eBay &#8599;</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link" style="color:#60A5FA;border-color:rgba(96,165,250,.35)">Shop eBay &#8599;</a>
     </div>
   </div>
 </nav>
@@ -566,7 +566,7 @@ async function showResult() {
   document.getElementById('quiz-nav').style.display='none';
   document.getElementById('progress-bar').style.width='100%';
 
-  const ebayURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(r.ebayQuery)}&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1`;
+  const ebayURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(r.ebayQuery)}&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&toolid=10001&mkevt=1`;
 
   const resultSlug = gameKey;
   if (window.history && window.history.replaceState) {

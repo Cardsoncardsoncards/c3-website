@@ -122,7 +122,7 @@ Green's only flexible removal spell. Destroys any permanent, gives opponent a 3/
 
 Check live AUD prices on every card mentioned above at the [C3 MTG card hub](/cards/mtg). Prices change as sets reprint cards. some of the above may have recent reprints at lower prices.
 
-For singles in Australia, the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks many Commander staples with direct eBay AU pricing.
+For singles in Australia, the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks many Commander staples with direct eBay AU pricing.
 
 ---
 
@@ -147,4 +147,4 @@ Any Commander preconstructed deck from a recent set is a good starting point. Pi
 Commander preconstructed decks are legal for casual Commander play and official Commander events. The individual cards are legal in Commander, Legacy, and Vintage. The precon as a whole is not competitive at high-level play but works fine for regular Commander nights.
 
 ### Where can I find Commander singles in Australia?
-Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.
+Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.

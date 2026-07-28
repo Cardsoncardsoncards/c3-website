@@ -66,7 +66,7 @@ Commander staples from Duskmourn like Overlord of the Hauntwoods and Enduring In
 
 For sealed product EV on Duskmourn, use the [C3 EV Calculator](/ev-calculator).
 
-Singles from Duskmourn are available in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=duskmourn-blog&toolid=10001&mkevt=1).
+Singles from Duskmourn are available in the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=duskmourn-blog&toolid=10001&mkevt=1).
 
 ## The C3 Take
 
@@ -88,4 +88,4 @@ The top-value cards shift with format demand. Overlord of the Hauntwoods and sho
 Yes. The set was designed with Commander in mind. Eerie enchantment synergies, token generation, and the Manifest Dread mechanic all have Commander applications across multiple archetypes.
 
 ### Where to buy Duskmourn singles in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=duskmourn-blog&toolid=10001&mkevt=1) has MTG singles from Duskmourn with Australian shipping.
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=duskmourn-blog&toolid=10001&mkevt=1) has MTG singles from Duskmourn with Australian shipping.

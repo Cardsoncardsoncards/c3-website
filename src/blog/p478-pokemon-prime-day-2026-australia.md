@@ -37,7 +37,7 @@ Amazon AU typically has the strongest price movement on these product types duri
 
 The honest answer is: it depends on the product and the timing. Amazon AU is strong on RRP-priced product from major sets. For items like ETBs and booster bundles, Amazon AU regularly matches or beats RRP, and during Prime Day you may get 10 to 20 percent below that.
 
-Your local game store (LGS) is better for new releases on launch day, specialty products, and anything where condition matters for grading. Singles are almost never worth buying on Amazon AU versus checking our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=pokemon-primday&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) or a dedicated TCG marketplace.
+Your local game store (LGS) is better for new releases on launch day, specialty products, and anything where condition matters for grading. Singles are almost never worth buying on Amazon AU versus checking our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=pokemon-primday&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) or a dedicated TCG marketplace.
 
 Use Amazon AU for sealed product. Use eBay or specialist stores for singles and in-demand promos.
 
@@ -71,7 +71,7 @@ Pre-order links for Pitch Black will go live on Amazon AU in the weeks before re
 
 Prime Day is about sealed product. But if you need specific cards for your deck before a tournament or league event, check the current market prices using our [Pokemon card price tracker](/cards/pokemon) before buying. Prices on singles can move quickly when a new set drops and existing cards get a boost from new synergies.
 
-Our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=pokemon-singles&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) has over 28,000 singles listed, including Pokemon. Search by card name and compare to the price tracker to make sure you are paying a fair price.
+Our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=pokemon-singles&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) has over 28,000 singles listed, including Pokemon. Search by card name and compare to the price tracker to make sure you are paying a fair price.
 
 ## Quick Summary: Pokemon Prime Day 2026
 
@@ -79,7 +79,7 @@ Our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=53391467
 - Target booster bundles, ETBs, and booster boxes from sets released 6 to 12 months ago.
 - Pitch Black releases 17 July, four days after Prime Day ends. Buy it separately on launch day.
 - Use the [card price tracker](/cards/pokemon) to evaluate whether a sealed deal makes financial sense.
-- For singles, use the [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=pokemon-primday-sum&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) rather than Amazon AU.
+- For singles, use the [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=pokemon-primday-sum&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) rather than Amazon AU.
 - Full release calendar at [cardsoncardsoncards.com.au/calendar](/calendar).
 
 ## Related Posts

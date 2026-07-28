@@ -50,7 +50,7 @@ A turn goes: Beginning phase (ready cards, gain Runes), Main phase (play units, 
 
 ## Where to Find Riftbound in Australia
 
-Cherry Collectables, Gameology, Good Games, and Collectible Madness all stock Riftbound. For singles, [our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Riftbound singles with Australian shipping. See our [Shop page](/shop) for sealed product affiliate links.
+Cherry Collectables, Gameology, Good Games, and Collectible Madness all stock Riftbound. For singles, [our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Riftbound singles with Australian shipping. See our [Shop page](/shop) for sealed product affiliate links.
 
 ---
 

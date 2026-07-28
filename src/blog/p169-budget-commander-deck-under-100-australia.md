@@ -106,7 +106,7 @@ For Wilhelt: cheap Zombies plus sacrifice outlets plus recursion. Gravecrawler (
 
 ## Where to Buy Budget Cards in Australia
 
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles with flat AU$ pricing. For bulk commons and uncommons, local game stores often sell singles for AU$0.50 to AU$2.
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles with flat AU$ pricing. For bulk commons and uncommons, local game stores often sell singles for AU$0.50 to AU$2.
 
 Use the [C3 MTG card hub](/cards/mtg) to check live AUD prices before you buy. see exactly what each card costs in Australia without currency conversion.
 
@@ -144,4 +144,4 @@ Any Commander preconstructed deck from a recent set is a good starting point. Pi
 Commander preconstructed decks are legal for casual Commander play and official Commander events. The individual cards are legal in Commander, Legacy, and Vintage. The precon as a whole is not competitive at high-level play but works fine for regular Commander nights.
 
 ### Where can I find Commander singles in Australia?
-Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.
+Singles for Commander deck upgrades are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Use the [C3 Card Compare tool](/compare) to check prices across specific cards you want.

@@ -47,7 +47,7 @@ Three main channels for buying Chaos Origins product in Australia:
 
 - **Amazon AU:** Good for booster boxes and sealed product at or near RRP. Reliable delivery, Prime members get faster shipping. [Search Chaos Origins on Amazon AU.](https://www.amazon.com.au/s?k=yugioh+chaos+origins&tag=blasdigital-22)
 - **Local game store (LGS):** Best option for prerelease events, sealed product on launch day, and buying singles from other players. Your LGS also runs the OTS tournament events that feed into the organised play ecosystem.
-- **eBay:** For singles after the set has been opened and prices have settled. Our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=yugioh-chaos&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) stocks Yu-Gi-Oh singles. Check the [price tracker](/cards/yugioh) first to confirm you are paying a fair rate.
+- **eBay:** For singles after the set has been opened and prices have settled. Our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=yugioh-chaos&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) stocks Yu-Gi-Oh singles. Check the [price tracker](/cards/yugioh) first to confirm you are paying a fair rate.
 
 ## Is Prime Day Relevant for Yu-Gi-Oh?
 

@@ -70,7 +70,7 @@ Destined Rivals has shown sustained appreciation rather than the typical post-re
 
 **Import considerations:** Destined Rivals is an English-language release. Japanese Pokemon product with different card art exists separately. Make sure you are buying the English version unless you specifically want Japanese product.
 
-**eBay AU for singles:** The [Cards on Cards on Cards eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=p060&toolid=10001&mkevt=1) stocks Destined Rivals singles alongside sealed product. Search the eBay store for specific cards rather than opening sealed product to chase them.
+**eBay AU for singles:** The [Cards on Cards on Cards eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=p060&toolid=10001&mkevt=1) stocks Destined Rivals singles alongside sealed product. Search the eBay store for specific cards rather than opening sealed product to chase them.
 
 **GST:** All Amazon AU prices include GST. There are no additional import duties on Pokemon TCG product from Amazon AU's Australian fulfilment centres.
 

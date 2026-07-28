@@ -38,7 +38,7 @@ For singles, the right answer is usually neither Amazon AU nor your LGS. Amazon 
 
 The C3 eBay store has 28,000+ singles across all major games at competitive Australian prices.
 
-[Browse Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=amazon-vs-lgs&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001)
+[Browse Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=amazon-vs-lgs&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001)
 
 Use the [C3 Pokemon tracker](/cards/pokemon), [MTG tracker](/cards/mtg), [Yu-Gi-Oh tracker](/cards/yugioh), or [Lorcana tracker](/cards/lorcana) to get current market prices before buying any single above AU$20 from any source.
 

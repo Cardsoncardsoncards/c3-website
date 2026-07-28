@@ -63,7 +63,7 @@ The standard versions of most Bloomburrow cards sit below AU$20. The genuine hig
 
 ## How to Buy Bloomburrow Singles in Australia
 
-Specific named card singles from Bloomburrow are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=bloomburrow-blog&toolid=10001&mkevt=1) with Australian shipping. For live AU pricing, check the [C3 MTG card hub](/cards/mtg).
+Specific named card singles from Bloomburrow are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=bloomburrow-blog&toolid=10001&mkevt=1) with Australian shipping. For live AU pricing, check the [C3 MTG card hub](/cards/mtg).
 
 
 ## Is Bloomburrow Worth Opening in 2026?
@@ -91,4 +91,4 @@ The top-value pull is Maha, Its Feathers Night in borderless or foil treatment, 
 Yes. Bloomburrow produced multiple strong Commander legendaries including Maha, Glarb, Ygra, and Lumra. The all-creature-type theme also supports tribal Commander strategies across many colour combinations.
 
 ### Where to buy Bloomburrow singles in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=bloomburrow-blog&toolid=10001&mkevt=1) has Bloomburrow singles with Australian shipping.
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=bloomburrow-blog&toolid=10001&mkevt=1) has Bloomburrow singles with Australian shipping.

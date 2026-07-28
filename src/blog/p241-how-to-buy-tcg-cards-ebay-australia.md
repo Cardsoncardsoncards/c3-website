@@ -58,7 +58,7 @@ For high-value cards (AU$100+): buy from reputable sellers with strong feedback 
 
 ## Buying from Our eBay Store
 
-[Our store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) focuses on MTG and Riftbound singles sourced from boxes we open ourselves. Every card is from genuine sealed product. We photograph the actual card being sold, grade conservatively, and offer combined postage for multiple purchases.
+[Our store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) focuses on MTG and Riftbound singles sourced from boxes we open ourselves. Every card is from genuine sealed product. We photograph the actual card being sold, grade conservatively, and offer combined postage for multiple purchases.
 
 ## Combined Postage
 

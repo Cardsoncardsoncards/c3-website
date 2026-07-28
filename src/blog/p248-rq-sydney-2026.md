@@ -148,7 +148,7 @@ For the rest of the ANZ player base, the next Regional Championship cycle will s
 
 If you are building toward a future RCQ, the data from Sydney is clear: in a Standard field that skews green, your sideboard needs answers to Mightform Harmonizer and Sapling Nursery. If you are on green, your sideboard needs to handle Izzet graveyard strategies and mirror-match threats.
 
-For card singles from any of the archetypes featured at Sydney, check the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) where Standard staples are listed daily.
+For card singles from any of the archetypes featured at Sydney, check the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1) where Standard staples are listed daily.
 
 ---
 

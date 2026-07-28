@@ -54,7 +54,7 @@ If your verdict is Avoid, buying specific Final Fantasy singles on eBay AU is al
 
 <div style="margin:24px 0;padding:16px 20px;background:rgba(107,107,255,.07);border:1px solid rgba(107,107,255,.2);border-radius:9px;">
 <p style="font-size:13px;color:rgba(240,242,255,.75);margin-bottom:10px;">Looking for Final Fantasy singles? Browse the C3 eBay store for current MTG singles including Final Fantasy cards at AU market prices.</p>
-<a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=mtg-final-fantasyBlog&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(107,107,255,.15);border:1px solid rgba(107,107,255,.35);color:#9898FF;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Shop MTG Singles. C3 eBay Store ↗</a>
+<a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=mtg-final-fantasyBlog&toolid=10001&mkevt=1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(107,107,255,.15);border:1px solid rgba(107,107,255,.35);color:#9898FF;border-radius:7px;font-size:13px;font-weight:700;text-decoration:none;">Shop MTG Singles. C3 eBay Store ↗</a>
 </div>
 
 ## Buy the Box on Amazon AU

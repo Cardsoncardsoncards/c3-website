@@ -93,4 +93,4 @@ The legendary Dragon cycle leads the value table. Ojutai, Soul of Winter and Sil
 Yes. The set was designed with Commander in mind alongside competitive play. The Dragon legendaries are all Commander-viable, and several non-legendary cards from the set see broad Commander inclusion.
 
 ### Where can I buy specific Tarkir: Dragonstorm singles in Australia?
-Individual card singles from Tarkir: Dragonstorm are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=tarkir-blog&toolid=10001&mkevt=1) with Australian shipping.
+Individual card singles from Tarkir: Dragonstorm are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=tarkir-blog&toolid=10001&mkevt=1) with Australian shipping.

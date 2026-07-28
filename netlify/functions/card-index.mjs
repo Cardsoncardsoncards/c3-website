@@ -34,14 +34,25 @@ function manaPip(key, size = 16) {
 }
 function manaFilterPip(key) { return manaPip(key, 18); }
 
+// task-158: this had no timeout, so a Supabase call that never answered held the whole request
+// open until Netlify killed the function. Every other page file in the repo wraps its fetch in an
+// AbortController at 8 seconds; this now matches. The res.ok guard is the other half: without it
+// a 4xx or 5xx body was handed to .json(), which either threw into the catch or, worse, parsed a
+// PostgREST error object into a non-array and returned it as if it were rows.
 async function supabaseGet(path) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+      signal: controller.signal
     });
+    clearTimeout(timer);
+    if (!res.ok) return [];
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   } catch(e) {
+    clearTimeout(timer);
     return [];
   }
 }
@@ -247,7 +258,7 @@ ${NAV_HTML}
 
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
-  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG Cards</a></p>
+  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG Cards</a></p>
   <p style="font-size:10px;opacity:.4;margin-top:6px">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
@@ -260,14 +271,22 @@ async function searchCard() {
   if (!q) return;
   const res = document.getElementById('search-results');
   res.innerHTML = '<p style="color:var(--text2)">Searching...</p>';
+  // task-158: an unbounded browser fetch left "Searching..." on screen forever if the request
+  // hung. 8 seconds matches the server-side timeout used across the repo.
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 8000);
   try {
-    const data = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&limit=8&select=slug,name,price_usd,image_uri_small&price_usd=gt.0&order=price_usd.desc', {
-      headers: { 'apikey': '${SUPABASE_ANON_KEY}' }
-    }).then(r => r.json());
+    const resp = await fetch('${SUPABASE_URL}/rest/v1/mtg_cards?name=ilike.' + encodeURIComponent('%' + q + '%') + '&limit=8&select=slug,name,price_usd,image_uri_small&price_usd=gt.0&order=price_usd.desc', {
+      headers: { 'apikey': '${SUPABASE_ANON_KEY}' },
+      signal: ctrl.signal
+    });
+    clearTimeout(timer);
+    if (!resp.ok) { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; return; }
+    const data = await resp.json();
     if (!data.length) { res.innerHTML = '<p style="color:var(--text2)">No cards found. <a href="https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(q + ' mtg') + '&${EBAY_PARAM_SUFFIX}" target="_blank">Search eBay AU →</a></p>'; return; }
     res.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px">' +
       data.map(c => '<a href="/cards/mtg/' + c.slug + '" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block"><img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '"><div style="font-size:11px;margin-top:4px">' + c.name + '</div><div style="font-size:12px;color:var(--accent)">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.45).toFixed(0) : '') + '</div></a>').join('') + '</div>';
-  } catch { res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; }
+  } catch { clearTimeout(timer); res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; }
 }
 
 function filterSets(query) {
@@ -362,9 +381,14 @@ function closeDrawer() {
     const track=document.getElementById('cmd-mtg-carousel-track');
     const titleEl=document.getElementById('cmd-mtg-carousel-title');
     if(!track)return;
+    // task-158: bounded so a stalled carousel request cannot leave the skeleton in place forever.
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(),8000);
     try{
       // mode=top returns 40 commanders - shuffle client-side so each load feels fresh
-      const res=await fetch('/commander-carousel?mode=top');
+      const res=await fetch('/commander-carousel?mode=top',{signal:ctrl.signal});
+      clearTimeout(timer);
+      if(!res.ok){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">Could not load commanders.</p>';return;}
       const data=await res.json();
       if(!data.commanders||data.commanders.length===0){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">No commanders found.</p>';return;}
       // Fisher-Yates shuffle then take 20
@@ -375,7 +399,7 @@ function closeDrawer() {
       const html=twenty.map(buildCmdCard).join('');
       track.innerHTML=html+html;
       track.classList.add('loaded');
-    }catch(e){track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">Could not load commanders.</p>';}
+    }catch(e){clearTimeout(timer);track.innerHTML='<p style="color:#A0A8C0;font-size:12px;padding:12px">Could not load commanders.</p>';}
   }
   loadSetCommanders();
 })();
@@ -551,7 +575,7 @@ ${NAV_HTML}
 
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
-  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG Cards</a></p><p style="font-size:11px;opacity:.5;margin-top:8px">Affiliate links may earn a commission at no extra cost to you.</p>
+  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG Cards</a></p><p style="font-size:11px;opacity:.5;margin-top:8px">Affiliate links may earn a commission at no extra cost to you.</p>
   <p style="font-size:10px;opacity:.4;margin-top:6px">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
   <p style="margin-top:8px">© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
@@ -646,12 +670,18 @@ async function fetchOneCommander(exclude) {
   const queryString = filters.join('&');
   const url = window.C3_SUPA_URL + '/rest/v1/mtg_cards?' + queryString;
 
+  // task-158: the generator fires one of these per requested commander, so an unbounded request
+  // could leave the whole "Rolling..." state stuck on a single slow call.
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 8000);
   try {
     const res = await fetch(url, {
       headers: {
         'apikey': window.C3_SUPA_KEY
-      }
+      },
+      signal: ctrl.signal
     });
+    clearTimeout(timer);
     if (!res.ok) {
       console.error('Supabase request failed:', res.status, await res.text());
       return null;
@@ -660,6 +690,7 @@ async function fetchOneCommander(exclude) {
     if (!Array.isArray(cards) || cards.length === 0) return null;
     return cards[Math.floor(Math.random() * cards.length)];
   } catch (err) {
+    clearTimeout(timer);
     console.error('Random commander fetch error:', err);
     return null;
   }
@@ -703,10 +734,15 @@ async function generateAll() {
   ).join('');
   section.classList.add('visible');
   try {
-    const fetched = await Promise.all(
+    // task-158: allSettled, not all. fetchOneCommander swallows its own errors today, so this
+    // changes no behaviour, but with Promise.all a single unexpected rejection discarded every
+    // commander that had already come back and showed the generic failure panel instead.
+    const fetched = await Promise.allSettled(
       Array.from({length: selectedCount}, () => fetchOneCommander([]))
     );
-    const results = fetched.filter(Boolean);
+    const results = fetched
+      .filter(r => r.status === 'fulfilled' && r.value)
+      .map(r => r.value);
     currentSlugs = results.map(c => c.slug);
     if (results.length === 0) {
       grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text2)">No commanders found with these filters. Try widening colour or mana value.</div>';
@@ -796,7 +832,11 @@ async function renderSetIndex(setSlug) {
   // - Sub-sets of this set (this is a parent)
   // - Sibling sets (share the same parent_set_code)
   // - Parent set info (if this is a sub-set)
-  const [cards, subSets, siblingData] = await Promise.all([
+  // task-158: allSettled, not all. The card list is the page; the sub-set and sibling lists are
+  // only the related-sets nav. Under Promise.all a failure in either of those secondary queries
+  // rejected the whole thing and took the card grid down with it. Each result now degrades to an
+  // empty list on its own, matching the pattern in mtg-hub.mjs.
+  const [cardsResult, subSetsResult, siblingResult] = await Promise.allSettled([
     supabaseGet(
       `mtg_cards?set_code=eq.${set.set_code}&order=price_usd.desc.nullslast&limit=400` +
       `&select=slug,name,image_uri_small,price_usd,price_aud,rarity,collector_number,color_identity,type_line,cmc`
@@ -808,6 +848,9 @@ async function renderSetIndex(setSlug) {
       ? supabaseGet(`mtg_sets?or=(set_code.eq.${set.parent_set_code},parent_set_code.eq.${set.parent_set_code})&select=set_code,set_name,set_slug,release_date&order=set_name.asc`)
       : Promise.resolve([])
   ]);
+  const cards       = cardsResult.status   === 'fulfilled' ? cardsResult.value   : [];
+  const subSets     = subSetsResult.status === 'fulfilled' ? subSetsResult.value : [];
+  const siblingData = siblingResult.status === 'fulfilled' ? siblingResult.value : [];
 
   // Build related sets nav: parent + siblings + children
   const relatedSets = [];
@@ -1149,7 +1192,7 @@ ${NAV_HTML}
       <a href="/play" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Play</a>
       <a href="/contact" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact</a>
       <a href="/legal" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Legal</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">eBay</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">eBay</a>
       <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">D&amp;D Tools on Etsy &#8599;</a><br>
       <a href="/cards/mtg" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">MTG Cards</a>
     </div>
@@ -1288,9 +1331,14 @@ function clearFilters() {
     const track   = document.getElementById('set-cmd-track');
     const section = document.getElementById('set-cmd-section');
     if (!track) return;
+    // task-158: bounded, so a stalled request hides the section rather than leaving it half built.
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 8000);
     try {
       // mode=set with this set's code - shows commanders from THIS set specifically
-      const res  = await fetch('/commander-carousel?mode=set&setcode=${set.set_code}&limit=20');
+      const res  = await fetch('/commander-carousel?mode=set&setcode=${set.set_code}&limit=20', { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (!res.ok) { if (section) section.style.display = 'none'; return; }
       const data = await res.json();
       if (!data.commanders || data.commanders.length === 0) {
         // Hide the whole section - no legendary creatures in this set
@@ -1301,6 +1349,7 @@ function clearFilters() {
       track.innerHTML = html + html;
       track.classList.add('set-cmd-track-loaded');
     } catch(e) {
+      clearTimeout(timer);
       if (section) section.style.display = 'none';
     }
   }
@@ -1320,10 +1369,17 @@ export default async (req) => {
   const path = url.pathname;
 
   if (path === '/cards/mtg' || path === '/cards/mtg/') {
-    const [sets, topCards] = await Promise.all([
-      supabaseGet('mtg_sets?order=set_name.asc&limit=1000&digital=eq.false'),
+    // task-158: allSettled so the hub still renders its set list if the top-cards strip fails,
+    // and vice versa. The mtg_sets query also had no select= and was pulling every column of
+    // 1,000 rows, including icon_svg_uri and scryfall_uri, to read five fields. The columns
+    // listed are exactly what renderCardHub reads: it groups on parent_set_code and set_code,
+    // sorts and labels by set_name, links by set_slug, and shows the year from release_date.
+    const [setsResult, topCardsResult] = await Promise.allSettled([
+      supabaseGet('mtg_sets?order=set_name.asc&limit=1000&digital=eq.false&select=set_code,set_name,set_slug,release_date,parent_set_code'),
       supabaseGet('mtg_cards?order=price_usd.desc&limit=20&select=slug,name,image_uri_small,price_usd,price_aud&price_usd=gte.10')
     ]);
+    const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
+    const topCards = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
     return new Response(renderCardHub(sets, topCards), {
       headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=3600' }
     });

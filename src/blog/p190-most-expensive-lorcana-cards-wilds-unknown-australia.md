@@ -81,7 +81,7 @@ The Pixar debut was the key driver. The Incredibles in particular has a dedicate
 
 ## Buying Wilds Unknown Singles in Australia
 
-Singles from Wilds Unknown including Enchanted cards and Epic variants are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=wilds-unknown-blog&toolid=10001&mkevt=1) with Australian shipping.
+Singles from Wilds Unknown including Enchanted cards and Epic variants are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=wilds-unknown-blog&toolid=10001&mkevt=1) with Australian shipping.
 
 
 ## The C3 Take

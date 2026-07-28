@@ -72,7 +72,7 @@ The practical buying advice for competitive players:
 
 [Search Chaos Origins on Amazon AU](https://www.amazon.com.au/s?k=yugioh+chaos+origins+booster+box&tag=blasdigital-22)
 
-[Browse Yu-Gi-Oh Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=yugioh-wcq-2026&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001)
+[Browse Yu-Gi-Oh Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=yugioh-wcq-2026&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001)
 
 ## What Cards Are Relevant for States and Continentals?
 
@@ -86,7 +86,7 @@ The WCQ 2026 season has been running on the Advanced Constructed format with the
 > **Best value pick for competitive players: handtrap playset before Victoria States**
 >     If you are preparing for Victoria States or Continentals and you are missing format staples like Ash Blossom, Nibiru, or Infinite Impermanence, buying those playsets now is the highest-impact preparation you can make. Check current prices on the [C3 Yu-Gi-Oh tracker](/cards/yugioh) and buy through eBay or your local store. Singles from your local store or eBay beat buying sealed and hoping to pull what you need.
 >
->     [Browse Yu-Gi-Oh Staples on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=yugioh-wcq-staples&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001)
+>     [Browse Yu-Gi-Oh Staples on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=yugioh-wcq-staples&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001)
 
 ## YCS Sydney 2026: What Happened
 

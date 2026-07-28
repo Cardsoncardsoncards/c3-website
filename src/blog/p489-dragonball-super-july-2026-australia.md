@@ -59,7 +59,7 @@ Both DBS-B31 and FB10 will have early singles available from Australian sellers 
 
 For Australian DBS singles, the C3 eBay store stocks cards from both the Masters and Fusion World lines.
 
-[Browse Dragon Ball Super Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=primeday-dbs&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001)
+[Browse Dragon Ball Super Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=primeday-dbs&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001)
 
 > **Best value pick: Fusion World FB10 at a Prime Day discount**
 >     Of the two DBS products available during Prime Day, Fusion World FB10 has the better chance of a Prime Day deal on Amazon AU. It has been on shelves longer than B31 and sits at a more accessible price point. If you play Fusion World and have not picked up FB10, check Amazon AU when Prime Day opens on 7 July before buying at regular retail.

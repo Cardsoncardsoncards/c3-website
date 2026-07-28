@@ -56,7 +56,7 @@ Where Prime Day and Star Wars Unlimited do interact: if you have been holding of
 - **Amazon AU (10 July onwards):** Reliable for sealed product. Prime members get faster delivery. Check our [Star Wars shop tab](/shop.html#cat-starwars) for the direct link once it goes live.
 - **EB Games and JB Hi-Fi (17 July wide release):** Both stock Star Wars Unlimited in Australia. Wide release product is available from these retailers on 17 July.
 
-For singles from Ashes of the Empire after the set is opened, check our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=starwars-ashes&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) and use the [Star Wars card price tracker](/cards/starwars) to verify you are paying a fair price.
+For singles from Ashes of the Empire after the set is opened, check our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=starwars-ashes&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) and use the [Star Wars card price tracker](/cards/starwars) to verify you are paying a fair price.
 
 ## Homeworlds Is Coming November 2026
 

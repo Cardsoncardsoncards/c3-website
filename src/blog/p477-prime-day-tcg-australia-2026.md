@@ -52,7 +52,7 @@ The honest answer: it depends on the game and the product. Prime Day discounts o
 
 **Accessories and supplies:** Sleeves, deck boxes, playmats, and binders frequently get Amazon AU discounts during Prime Day. If you need supplies, this is the best time of year to stock up.
 
-**Singles:** Amazon AU does not really sell individual cards. For singles, our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=primday-hub&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) has over 28,000 listed. You can also check current card values by game using our [card price tracker](/cards).
+**Singles:** Amazon AU does not really sell individual cards. For singles, our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=primday-hub&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) has over 28,000 listed. You can also check current card values by game using our [card price tracker](/cards).
 
 > **Best Value Pick: Pokemon Booster Bundles and Trainer Boxes on Amazon AU**
 >

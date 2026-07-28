@@ -399,7 +399,7 @@ async function showResult() {
   const myCount = stats.count || 0;
   const mostCommon = stats.most_common;
   
-  const ebayUrl = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent((r.ebay || r.name + ' tcg australia')) + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1';
+  const ebayUrl = 'https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent((r.ebay || r.name + ' tcg australia')) + '&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&toolid=10001&mkevt=1';
 
   document.getElementById('result-inner').innerHTML =
     '<div class="result-badge">' + (r.tag || 'Your Result') + '</div>' +

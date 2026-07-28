@@ -34,7 +34,7 @@ Commander is the most popular format in Australia and has the most accessible bu
 
 The key insight: Commander doesn't require cards that compete with other Commanders. A AU$100 Commander deck wins games. It won't beat a AU$1,000 Commander deck reliably, but at a casual table of similar-budget players, it's completely functional.
 
-**How to start**: buy one preconstructed Commander deck (AU$60 to AU$80). Play it for a month. Upgrade with singles from the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) targeting the weakest parts of the deck first.
+**How to start**: buy one preconstructed Commander deck (AU$60 to AU$80). Play it for a month. Upgrade with singles from the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) targeting the weakest parts of the deck first.
 
 **Budget ceiling for a fun experience**: AU$100 to AU$150. Above that, you're improving rather than enjoying.
 
@@ -78,7 +78,7 @@ Talk to your local game store about their Commander nights and the typical power
 
 ## Where to Find Budget MTG Singles in Australia
 
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles. Use the [C3 MTG card hub](/cards/mtg) to check prices before buying anywhere. know what each card costs in Australia before committing.
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles. Use the [C3 MTG card hub](/cards/mtg) to check prices before buying anywhere. know what each card costs in Australia before committing.
 
 ---
 

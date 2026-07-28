@@ -57,7 +57,7 @@ Singles pricing around a new set release follows a predictable pattern. Cards th
 
 For MTG singles prices right now, check our [MTG card price tracker](/cards/mtg). The tracker pulls live pricing data and shows 7-day and 30-day price movement. If you are looking to buy or sell a specific card, the tracker tells you where the market is sitting.
 
-For singles you want to buy rather than crack out of packs, our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=mtg-primday&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) has a wide selection of MTG singles. Buying singles is almost always more efficient than cracking packs if you know what you want.
+For singles you want to buy rather than crack out of packs, our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=mtg-primday&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) has a wide selection of MTG singles. Buying singles is almost always more efficient than cracking packs if you know what you want.
 
 ## MTG Commander: Is Prime Day Worth It for EDH Players?
 
@@ -87,7 +87,7 @@ Full release schedule is updated regularly at [cardsoncardsoncards.com.au/calend
 - MTG Marvel Super Heroes is out now. Buy it now, not after Prime Day.
 - MTG The Hobbit comes August 2026. Pre-order when available rather than waiting for a sale.
 - Prime Day best buys: Commander precons, older Play Booster Boxes, Collector Boosters from 2025 sets.
-- For MTG singles, use the [card price tracker](/cards/mtg) and our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=mtg-summary&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001).
+- For MTG singles, use the [card price tracker](/cards/mtg) and our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=mtg-summary&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 - Full [MTG shop tab](/shop.html#cat-mtg) for live Amazon AU links.
 
 ## Related Posts

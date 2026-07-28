@@ -48,7 +48,7 @@ Each player starts with a Security Stack of 5 face-down cards. When an opponent 
 
 ## Where to Buy in Australia
 
-Digimon is stocked at Good Games, Gameology, and most major Australian game stores. For singles, eBay AU has the widest selection. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Digimon singles. For Amazon AU sealed product, see our [Shop page](/shop).
+Digimon is stocked at Good Games, Gameology, and most major Australian game stores. For singles, eBay AU has the widest selection. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Digimon singles. For Amazon AU sealed product, see our [Shop page](/shop).
 
 ## Is the Digimon Card Game Worth Starting?
 

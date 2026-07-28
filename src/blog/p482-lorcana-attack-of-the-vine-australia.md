@@ -81,7 +81,7 @@ Lorcana singles prices tend to spike in the first week after a set release as th
 
 For collectors, enchanted rarity cards are the main chase in Lorcana sets. These are alternate-art versions of regular cards with foil treatment. They are pulled at low rates from booster packs and often hold or increase in value after release. If collecting enchanteds is your goal, sealed product at launch is the main path.
 
-Use our [Lorcana price tracker](/cards/lorcana) to monitor card values across all sets. For singles, our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=lorcana-vine&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001) has a wide selection of Lorcana cards.
+Use our [Lorcana price tracker](/cards/lorcana) to monitor card values across all sets. For singles, our [eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=lorcana-vine&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001) has a wide selection of Lorcana cards.
 
 ## Quick Summary: Lorcana Attack of the Vine Australia
 

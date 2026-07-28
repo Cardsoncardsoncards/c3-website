@@ -119,7 +119,7 @@ footer a{color:var(--text2);margin:0 8px}footer a:hover{color:var(--white)}
       <a href="/play" class="nav-link nav-link--active">Quizzes</a>
       <a href="/tools" class="nav-link">EV Calc</a>
       <a href="/tracker" class="nav-link">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link" style="color:#60A5FA;border-color:rgba(96,165,250,.35)">eBay &#8599;</a>
+      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link" style="color:#60A5FA;border-color:rgba(96,165,250,.35)">eBay &#8599;</a>
     </div>
   </div>
 </nav>
@@ -240,7 +240,7 @@ async function showResult(){
   document.getElementById('progress-bar').style.width='100%';
   const stats=await loadStats(resultKey);
   const myCount=stats.count||0;const mostCommon=stats.most_common;
-  const ebayUrl='https://www.ebay.com.au/sch/i.html?_nkw='+encodeURIComponent((r.ebay||r.name+' tcg australia'))+'&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&toolid=10001&mkevt=1';
+  const ebayUrl='https://www.ebay.com.au/sch/i.html?_nkw='+encodeURIComponent((r.ebay||r.name+' tcg australia'))+'&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&toolid=10001&mkevt=1';
   document.getElementById('result-inner').innerHTML=
     '<div class="result-badge">'+(r.tag||'Your Result')+'</div>'+
     '<div class="result-name">'+r.name+'</div>'+
@@ -250,7 +250,7 @@ async function showResult(){
     '<div class="result-actions">'+
       (r.cardLink?'<a href="'+r.cardLink+'" class="result-cta" style="background:#F8717122;border:1px solid #F8717155;color:#F87171">🃏 Browse One Piece Cards →</a>':'')+
       '<a href="'+ebayUrl+'" target="_blank" rel="noopener sponsored" class="result-cta" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.3);color:#60A5FA">🏪 Buy on eBay AU ↗</a>'+
-      '<a href="/blog/one-piece-tcg-beginners-guide-australia" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 One Piece Beginners Guide →</a>'+
+      '<a href="/blog/one-piece-card-game-australia-beginners-guide/" class="result-cta" style="background:rgba(126,203,161,.08);border:1px solid rgba(126,203,161,.25);color:#7ECBA1">📖 One Piece Beginners Guide →</a>'+
     '</div>'+
     '<div class="result-share"><div class="share-title">Share your result</div><div class="share-btns">'+
       '<button class="share-btn" style="background:#1DA1F2;color:#fff" onclick="openSharePopup()">𝕏 Share</button>'+

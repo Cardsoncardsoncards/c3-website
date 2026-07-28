@@ -64,7 +64,7 @@ Vendetta releases on 31 July, 18 days after Prime Day ends. Prime Day is not rel
 - **Local Game Stores:** Riftbound allocation is growing in Australian LGS stores. Check with your local store for Vendetta stock and any launch events.
 - **eBay AU:** Singles and sealed available through Australian sellers. Check the [C3 Riftbound tracker](/cards/riftbound) for current card prices.
 
-[Browse Riftbound on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=riftbound-vendetta&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001)
+[Browse Riftbound on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=riftbound-vendetta&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001)
 
 ## Staying Up to Date on Riftbound in Australia
 

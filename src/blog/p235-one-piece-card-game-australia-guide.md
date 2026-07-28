@@ -60,7 +60,7 @@ Australian prices are typically 10-20% above US prices after exchange rate conve
 
 ## Where to Buy in Australia
 
-Cherry Collectables, Gameology, Good Games, Zing, and most major Australian TCG retailers stock One Piece. For singles, eBay AU is your best option. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries One Piece singles. For Amazon AU sealed product, check our [Shop page](/shop).
+Cherry Collectables, Gameology, Good Games, Zing, and most major Australian TCG retailers stock One Piece. For singles, eBay AU is your best option. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries One Piece singles. For Amazon AU sealed product, check our [Shop page](/shop).
 
 ## Is One Piece Worth Starting in 2026?
 

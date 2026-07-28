@@ -50,7 +50,7 @@ New sets release in Australia at the same time as the US (since 2022 Wizards sta
 
 ## What Australian Players Can Do
 
-**Shop eBay AU aggressively.** eBay AU is the most competitive Australian TCG marketplace. Sellers undercut each other and Buy It Now prices reflect market reality. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles, and you can search [all eBay AU listings here](https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
+**Shop eBay AU aggressively.** eBay AU is the most competitive Australian TCG marketplace. Sellers undercut each other and Buy It Now prices reflect market reality. The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) stocks MTG singles, and you can search [all eBay AU listings here](https://www.ebay.com.au/sch/i.html?_nkw=mtg+singles+australia&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1).
 
 **Use the C3 Card Vault to track prices.** The [C3 MTG card hub](/cards/mtg) shows live AUD prices on over 96,000 cards sourced from eBay AU data. Check here before buying to confirm you're paying a fair Australian market rate.
 
@@ -88,4 +88,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

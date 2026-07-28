@@ -63,7 +63,7 @@ The gold card version of Team Rocket's Mewtwo ex sits below the SIR in value but
 
 ## How to Buy Destined Rivals Singles in Australia
 
-Singles from Destined Rivals are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=destined-rivals-blog&toolid=10001&mkevt=1) with Australian shipping.
+Singles from Destined Rivals are available at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=destined-rivals-blog&toolid=10001&mkevt=1) with Australian shipping.
 
 
 For sealed product EV analysis, use the [C3 EV Calculator](/ev-calculator).

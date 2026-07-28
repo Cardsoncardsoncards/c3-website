@@ -77,7 +77,7 @@ For the complete July 2026 TCG release picture across all 32 games we cover, see
 
 For Australian anime TCG singles, the C3 eBay store has listings across Digimon, Weiss Schwarz, and other games.
 
-[Browse Anime TCG Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=anime-tcg-july&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001)
+[Browse Anime TCG Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=anime-tcg-july&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001)
 
 ## Related Posts
 

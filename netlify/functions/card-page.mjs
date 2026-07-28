@@ -920,7 +920,7 @@ ${sealedHTML}
     <a href="/play">Play</a>
     <a href="/contact">Contact</a>
     <a href="/legal">Legal</a>
-    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a>
+    <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a>
     <a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br>
     <a href="/cards/mtg">MTG Cards</a>
   </p>
@@ -1387,10 +1387,14 @@ export default async (req, context) => {
 
     // Parallel fetches for all supporting data
     const [snapshots, relatedData, prevNextData, likeData, printingsData, fxData, signalsData] = await Promise.allSettled([
-      supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=90`, false),
-      supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
+      // task-158: explicit columns. mtg_price_snapshots is 19 columns wide and this pulls 90 rows
+      // per card view; buildPriceChart and the 7-day sparkline read only these three.
+      supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&select=snapshot_date,price_aud,price_aud_foil&order=snapshot_date.asc&limit=90`, false),
+      // Related cards render as slug link, name, thumbnail and converted price, nothing else.
+      supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,image_uri_small,price_usd&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,collector_number&order=collector_number.asc`, false),
-      supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}`, false),
+      // Only the count is read, via likeData.value[0]?.total_likes.
+      supabaseGet(`mtg_card_like_counts?scryfall_id=eq.${card.scryfall_id}&select=total_likes`, false),
       // Other printings -- same card name, different sets/variants. scryfall_id is unique per printing.
       supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=scryfall_id,slug,set_name,released_at,rarity,collector_number,image_uri_normal,image_uri_small,price_usd,price_aud,price_usd_foil&order=released_at.desc&limit=80`, false),
       getFxRate(),
@@ -1413,7 +1417,8 @@ export default async (req, context) => {
     const relatedCards = [...topFive, ...shuffled];
 
     // Sealed products for this set (use set's amazon_asin if available)
-    const setData = await supabaseGet(`mtg_sets?set_code=eq.${card.set_code}&limit=1`, false).catch(() => []);
+    // task-158: only amazon_asin and set_slug are read from this row, on the two lines below.
+    const setData = await supabaseGet(`mtg_sets?set_code=eq.${card.set_code}&select=amazon_asin,set_slug&limit=1`, false).catch(() => []);
     const sealedProducts = setData[0]?.amazon_asin ? [{ asin: setData[0].amazon_asin, name: `${card.set_name} Booster Box` }] : [];
     const setSlugResolved = setData[0]?.set_slug || card.set_code;
 
@@ -1679,7 +1684,7 @@ ${navHtml({ gameLabel: 'MTG', gameHref: '/cards/mtg' })}
 </div>
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
-  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;siteid=15&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG</a></p>
+  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG</a></p>
   <p style="margin-top:8px;font-size:12px">Ban lists current as of May 2026. &copy; 2026 Cards on Cards on Cards &middot; Affiliate links may earn a small commission.</p>
   <p style="margin-top:6px;font-size:10px;opacity:.4">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
 </footer>

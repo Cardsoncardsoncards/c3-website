@@ -10,11 +10,11 @@ layout: post
 affiliate_disclaimer: true
 ---## Quick Answer
 
-We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Before listing anything, we tracked the data. See current prices at [C3 Riftbound card prices](/cards/riftbound).
+We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Before listing anything, we tracked the data. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
 
 
-We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Before listing anything, we tracked the data.
+We sourced four booster boxes of Riftbound Unleashed from Dice Arcade Miranda and opened every pack to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Before listing anything, we tracked the data.
 
 This post is the raw result. Not estimates, not averages from other people's box openings. Our four boxes, counted card by card.
 
@@ -115,7 +115,7 @@ The 160-card gap from expected to listed is entirely art cards and inserts. We c
 
 If you are considering opening Riftbound for the singles market: four boxes gives you complete coverage of the base set with strong foil counts. The ROI depends entirely on what the Riftbound market does in Australia over the next six to twelve months.
 
-All 1,184 singles from our opening are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). If you want to compare Riftbound singles prices against each other, use the [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare).
+All 1,184 singles from our opening are listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1). If you want to compare Riftbound singles prices against each other, use the [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare).
 
 For the broader question of whether Riftbound is worth getting into as a game, read our [Riftbound Unleashed set review](https://cardsoncardsoncards.com.au/blog/p249-riftbound-unleashed-australia).
 

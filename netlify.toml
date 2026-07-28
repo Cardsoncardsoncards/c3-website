@@ -210,6 +210,46 @@
   status = 301
   force = true
 
+# task-159: four more legacy pNNN URLs, found by the task-157 crawler. Unlike the ones above,
+# these are not only Google-cached: each is still linked from a LIVE post, so every visitor
+# following that link was hitting a 404. All four posts exist and are published, the URLs are
+# simply the pre-permalink form (Eleventy strips the pNNN- prefix via eleventyComputed).
+#   p249 <- linked from /blog/riftbound-box-opening/
+#   p250 <- linked from /blog/lorcana-wilds-unknown-box-opening/
+#   p251 <- linked from /blog/riftbound-unleashed-australia/
+#   p252 <- linked from /blog/lorcana-wilds-unknown-review/
+# Note p251: the legacy URL says "riftbound-unleashed-box-opening" but the post it refers to is
+# p251-riftbound-box-opening.md, which publishes at /blog/riftbound-box-opening/. The legacy URL
+# carries an "unleashed-" segment the filename never had, so this one is not a pure prefix strip.
+#
+# These targets keep the trailing slash, which the four redirects above do not. Without it
+# Netlify answers the target with its own 301 to the slashed form, so a visitor took two hops.
+# Verified live: /blog/riftbound-unleashed-australia 301s to /blog/riftbound-unleashed-australia/.
+# One hop is better for crawlers and for the reader, and nothing else about the pattern changes.
+[[redirects]]
+  from = "/blog/p249-riftbound-unleashed-australia"
+  to = "/blog/riftbound-unleashed-australia/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/p250-lorcana-wilds-unknown-review"
+  to = "/blog/lorcana-wilds-unknown-review/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/p251-riftbound-unleashed-box-opening"
+  to = "/blog/riftbound-box-opening/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/p252-lorcana-wilds-unknown-box-opening"
+  to = "/blog/lorcana-wilds-unknown-box-opening/"
+  status = 301
+  force = true
+
 # ── Deleted/renamed blog posts -> closest current page ──
 [[redirects]]
   from = "/blog/best-star-wars-unlimited-booster-boxes-australia/"

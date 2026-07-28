@@ -101,7 +101,7 @@ The [C3 shop](/shop) has Amazon AU links for every game we cover, organised by t
 
 For Australian singles as gifts, the C3 eBay store has 28,000+ listings across all major games.
 
-[Browse Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=primeday-gifts&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&siteid=15&toolid=10001)
+[Browse Singles on the C3 eBay Store](https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=primeday-gifts&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001)
 
 ## Related Posts
 

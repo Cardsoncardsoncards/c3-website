@@ -48,7 +48,7 @@ Australian eBay prices typically run 10-25% above the converted US price due to 
 
 ## Where to Buy Riftbound Singles in Australia
 
-eBay AU is the primary Australian singles market right now. [Our store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) will have Unleashed singles listed after we open our boxes following RQ Sydney.
+eBay AU is the primary Australian singles market right now. [Our store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) will have Unleashed singles listed after we open our boxes following RQ Sydney.
 
 ## Is Now the Right Time to Buy?
 

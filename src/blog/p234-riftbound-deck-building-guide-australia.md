@@ -58,7 +58,7 @@ Battlefields are colourless so any Legend can use any Battlefield. Each has a pa
 
 If you know which 40 cards you want, buy them individually as singles. Opening booster boxes to find specific cards is expensive and unreliable.
 
-For Australian players, eBay AU is the primary singles market. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Riftbound singles with Australian shipping.
+For Australian players, eBay AU is the primary singles market. [Our eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) carries Riftbound singles with Australian shipping.
 
 Realistic budget for a first competitive deck in AUD: Budget Annie or Draven list (no Overnumbers) AU$60-80, competitive Fiora or Irelia (no Overnumbers) AU$100-130, full LeBlanc with key Unleashed includes AU$130-180. You do not need Overnumber cards to be competitive.
 
@@ -130,4 +130,4 @@ The [C3 Card Vault](/cards) shows live AUD pricing from eBay AU sold data across
 The [C3 Card Compare tool](/compare) lets you put up to four cards side by side and see current AUD buy prices, sell prices, and 14-day price trends simultaneously.
 
 ### Where can I buy singles and sealed TCG products in Australia?
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1) stocks singles across all 8 TCGs with Australian shipping. Sealed products are linked from the [C3 shop](/shop).

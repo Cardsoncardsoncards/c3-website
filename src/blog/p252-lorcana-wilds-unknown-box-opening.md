@@ -10,11 +10,11 @@ layout: post
 affiliate_disclaimer: true
 ---## Quick Answer
 
-We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly. See current prices at [C3 Lorcana card prices](/cards/lorcana).
+We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly. See current prices at [C3 Lorcana card prices](/cards/lorcana).
 
 
 
-We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly.
+We opened four booster boxes of Lorcana Wilds Unknown to build the singles inventory at [Cards on Cards on Cards](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1). Same approach as our Riftbound opening: track everything, count it properly, report the result honestly.
 
 ---
 
@@ -89,7 +89,7 @@ Four boxes of Lorcana Wilds Unknown delivered the full base set in good depth, 9
 
 If you are opening Wilds Unknown for the singles market in Australia: four boxes gives you coverage across the full 204-card base set with strong foil representation. The Epic rate is the wildcard. We got 9, which is above-average luck across 96 packs.
 
-If you are buying singles: everything we pulled is listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=blog&toolid=10001&mkevt=1). The nine Epics are listed individually. Use the [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare) to check current AU pricing across Lorcana cards.
+If you are buying singles: everything we pulled is listed at the [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=blog&toolid=10001&mkevt=1). The nine Epics are listed individually. Use the [C3 Card Compare tool](https://cardsoncardsoncards.com.au/compare) to check current AU pricing across Lorcana cards.
 
 For our broader view on whether the set is worth opening, read the [Lorcana Wilds Unknown set review](https://cardsoncardsoncards.com.au/blog/p250-lorcana-wilds-unknown-review).
 

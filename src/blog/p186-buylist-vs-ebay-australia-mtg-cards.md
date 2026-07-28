@@ -93,7 +93,7 @@ For cards in perfect condition, the difference is smaller. For played cards, eBa
 
 ## The C3 Approach
 
-The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&siteid=15&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) focuses on singles in the AU$15 to AU$200+ range where eBay fees are most justified. Cards in this range net 80%+ of market price after costs, making individual listing worthwhile.
+The [C3 eBay store](https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=c3blog&toolid=10001&mkevt=1) focuses on singles in the AU$15 to AU$200+ range where eBay fees are most justified. Cards in this range net 80%+ of market price after costs, making individual listing worthwhile.
 
 For cards under AU$5, bulk lots are more efficient.
 
