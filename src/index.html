@@ -289,7 +289,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
 .c-card{flex:0 0 150px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;text-decoration:none;transition:all .22s;display:block}
 .c-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 20px rgba(201,168,76,.15);text-decoration:none}
 .c-card img{width:100%;border-radius:6px;display:block;margin-bottom:6px}
-.c-card-name{font-size:11px;color:var(--white);font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* task-155: was a single nowrap line with an ellipsis, which cut a double-faced commander name
+   mid-word ("Bala Ged Recovery // Bala..."). Two clamped lines with a reserved height show both
+   faces on most cards and keep every tile the same height. */
+.c-card-name{font-size:11px;color:var(--white);font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:29px;overflow-wrap:break-word}
 .c-card-sub{font-size:10px;color:rgba(160,168,192,.6)}
 .c-card-price{font-size:12px;color:var(--gold);font-weight:700;margin-top:2px}
 /* RELEASE TICKER */
@@ -622,16 +625,18 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <a href="/quizzes/which-tcg" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;background:linear-gradient(135deg,#F472B6,#A78BFA);color:#0A0C14;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0">Take the Quiz &rarr;</a>
   </div>
 
-  <!-- Riftbound Unleashed carousel -->
+  <!-- Riftbound Vendetta carousel (task-155). Replaces the Unleashed carousel: Vendetta is set
+       500008, released 31 July 2026, and supersedes Unleashed (500006, 8 May) as the latest
+       Riftbound set. Same markup and same loader as before, only the set and labels change. -->
   <div style="margin-bottom:48px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <div>
         <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#818CF8;display:block;margin-bottom:4px">Riftbound &middot; Latest Set</span>
-        <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">Unleashed: Top Cards</span>
+        <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">Vendetta: Top Cards</span>
       </div>
-      <a href="/cards/riftbound/sets/unleashed" style="font-size:12px;color:#818CF8;text-decoration:none;font-weight:600">View all &rarr;</a>
+      <a href="/cards/riftbound/sets/vendetta" style="font-size:12px;color:#818CF8;text-decoration:none;font-weight:600">View all &rarr;</a>
     </div>
-    <div class="carousel-viewport"><div id="unleashed-carousel" class="carousel-scroll"></div></div>
+    <div class="carousel-viewport"><div id="vendetta-carousel" class="carousel-scroll"></div></div>
   </div>
 
   <!-- MTG Marvel Super Heroes carousel -->
@@ -644,6 +649,23 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
       <a href="/cards/mtg/sets/marvel-super-heroes" style="font-size:12px;color:#A78BFA;text-decoration:none;font-weight:600">View all &rarr;</a>
     </div>
     <div class="carousel-viewport"><div id="marvel-carousel" class="carousel-scroll carousel-scroll--right"></div></div>
+  </div>
+
+  <!-- MTG The Hobbit carousel (task-155). Added alongside Marvel rather than replacing it:
+       Marvel (msh, 26 June) is still the latest RELEASED MTG set, and The Hobbit does not come
+       out until 14 August, so it is labelled as upcoming instead of "Latest Set".
+       Set code hob only, not hoc. This mirrors the Marvel carousel above, which deliberately
+       uses the flagship code and not its Commander set, and the data agrees: hob has 53 priced
+       and imaged cards, hoc has 3, which would render an almost empty carousel. -->
+  <div style="margin-bottom:48px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#5EEAD4;display:block;margin-bottom:4px">Magic: The Gathering &middot; Releasing 14 August</span>
+        <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">The Hobbit: Top Cards</span>
+      </div>
+      <a href="/cards/mtg/sets/the-hobbit" style="font-size:12px;color:#5EEAD4;text-decoration:none;font-weight:600">View all &rarr;</a>
+    </div>
+    <div class="carousel-viewport"><div id="hobbit-carousel" class="carousel-scroll"></div></div>
   </div>
 
   <!-- Free-account growth banner (task-110). Compact strip, deliberately placed AFTER both
@@ -805,11 +827,21 @@ function buildCardEl(c, colour) {
   a.style.cssText = 'flex:0 0 150px;background:#111420;border:1px solid #252840;border-radius:10px;padding:10px;text-decoration:none;display:block;transition:border-color .2s';
   a.onmouseover = function(){this.style.borderColor=colour;};
   a.onmouseout  = function(){this.style.borderColor='#252840';};
-  var name = (c.name||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  // Escape for both the alt attribute and the innerHTML text node. The old version handled only
+  // & and ", which left < and > raw inside an innerHTML div (audit points 19 and 20).
+  var name = (c.name||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  // task-155 MDFC fix. A double-faced card carries both faces in one name, e.g.
+  // "Bala Ged Recovery // Bala Ged Sanctuary", up to 56 characters in the current set range.
+  // Unclamped that wrapped to three or four lines and made this tile taller than its
+  // neighbours, which is what broke the carousel row. Clamp to 2 lines and reserve that height
+  // on every tile so short and long names produce identically sized cards.
+  var nameStyle = 'font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600;'
+    + 'display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;'
+    + 'min-height:26px;overflow-wrap:break-word';
   a.innerHTML = (c.image_url
     ? '<img src="'+c.image_url+'" alt="'+name+'" style="width:100%;border-radius:6px;display:block" loading="lazy">'
     : '<div style="height:120px;background:#0d0f1a;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px">&#128228;</div>') +
-    '<div style="font-size:10px;color:#F0F2FF;margin-top:6px;line-height:1.3;font-weight:600">'+name+'</div>'+
+    '<div title="'+name+'" style="'+nameStyle+'">'+name+'</div>'+
     '<div style="font-size:11px;color:'+colour+';font-weight:700;margin-top:3px">'+(c.priceDisplay||'')+'</div>';
   return a;
 }
@@ -835,10 +867,13 @@ async function loadSetCarousel(game, setKey, containerId, colour, limit, setPara
   } catch(e) { if(el.parentElement) el.parentElement.style.display='none'; }
 }
 
-loadSetCarousel('riftbound', 500006, 'unleashed-carousel', '#818CF8');
+// task-155: Vendetta (set_id 500008, released 31 Jul 2026) replaces Unleashed (500006).
+loadSetCarousel('riftbound', 500008, 'vendetta-carousel', '#818CF8');
 // MTG Marvel Super Heroes (set_code msh, the flagship set, not the Commander, Spider-Man or
 // Universe sets). Top 20 by price_aud, deduped by slug server-side so no card repeats.
 loadSetCarousel('mtg', 'msh', 'marvel-carousel', '#A78BFA', 20, 'set_code');
+// task-155: MTG The Hobbit (set_code hob, flagship only, same rule as msh above).
+loadSetCarousel('mtg', 'hob', 'hobbit-carousel', '#5EEAD4', 20, 'set_code');
 
 var cpause=document.getElementById('cpause');if(cpause){cpause.addEventListener('click',function(){var paused=this.dataset.p==='1';document.querySelectorAll('[class*="track"]').forEach(function(t){t.style.animationPlayState=paused?'running':'paused'});this.dataset.p=paused?'0':'1';this.textContent=paused?'Pause':'Play';});}
 

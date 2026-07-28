@@ -340,16 +340,23 @@ function closeDrawer() {
 .cmd-card:hover{transform:translateY(-3px);border-color:rgba(107,107,255,.5);box-shadow:0 8px 24px rgba(107,107,255,.15)}
 .cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
 .cmd-card-body{padding:7px 9px 9px;display:flex;flex-direction:column;gap:2px}
-.cmd-card-name{font-family:Cinzel,serif;font-size:9.5px;font-weight:700;color:#C0C0FF;line-height:1.3}
+/* task-155: no clamp at all here, so a double-faced commander name ("Bala Ged Recovery //
+   Bala Ged Sanctuary") wrapped to four lines and made its tile taller than the rest of the row.
+   Clamp to 2 lines and reserve that height so every tile matches. */
+.cmd-card-name{font-family:Cinzel,serif;font-size:9.5px;font-weight:700;color:#C0C0FF;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:25px;overflow-wrap:break-word}
 .cmd-card-identity{font-size:9px;color:rgba(160,168,192,.5)}
 .cmd-card-cta{font-size:8.5px;font-weight:600;color:#9898FF;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
 </style>
 <script>
 (function(){
+  // Escape once, use for both the alt attribute and the innerHTML text. The old code escaped
+  // only " for the alt and dropped the raw name straight into the div (audit points 19 and 20).
+  function esc(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function buildCmdCard(c){
-    return '<a href="'+c.cardVaultUrl+'" class="cmd-card">'
-      +(c.image?'<img src="'+c.image+'" alt="'+c.name.replace(/"/g,'&quot;')+'" loading="lazy">':'<div style="aspect-ratio:745/1040;background:rgba(107,107,255,.1);display:flex;align-items:center;justify-content:center;font-size:28px">🎲</div>')
-      +'<div class="cmd-card-body"><div class="cmd-card-name">'+c.name+'</div><div class="cmd-card-identity">'+c.identityName+'</div><div class="cmd-card-cta">View Card →</div></div></a>';
+    var name=esc(c.name);
+    return '<a href="'+esc(c.cardVaultUrl)+'" class="cmd-card">'
+      +(c.image?'<img src="'+esc(c.image)+'" alt="'+name+'" loading="lazy">':'<div style="aspect-ratio:745/1040;background:rgba(107,107,255,.1);display:flex;align-items:center;justify-content:center;font-size:28px">🎲</div>')
+      +'<div class="cmd-card-body"><div class="cmd-card-name" title="'+name+'">'+name+'</div><div class="cmd-card-identity">'+esc(c.identityName)+'</div><div class="cmd-card-cta">View Card →</div></div></a>';
   }
   async function loadSetCommanders(){
     const track=document.getElementById('cmd-mtg-carousel-track');
@@ -1032,7 +1039,8 @@ ${NAV_HTML}
   .set-cmd-card:hover{border-color:rgba(107,107,255,.5);transform:translateY(-2px)}
   .set-cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
   .set-cmd-card-body{padding:5px 7px 7px;display:flex;flex-direction:column;gap:2px}
-  .set-cmd-card-name{font-size:9px;font-weight:700;color:#C0C0FF;line-height:1.2}
+  /* task-155: same MDFC clamp as .cmd-card-name above, at this carousel's smaller type size. */
+  .set-cmd-card-name{font-size:9px;font-weight:700;color:#C0C0FF;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:22px;overflow-wrap:break-word}
   .set-cmd-card-id{font-size:8px;color:rgba(160,168,192,.5)}
   </style>
 
@@ -1267,11 +1275,14 @@ function clearFilters() {
 
 // ── Set commander carousel ───────────────────────────────────────────
 (function() {
+  // Same escape rule as buildCmdCard: the raw name was going straight into innerHTML.
+  function escSet(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function buildSetCmdCard(c) {
-    return '<a href="' + c.cardVaultUrl + '" class="set-cmd-card">'
-      + (c.image ? '<img src="' + c.image + '" alt="' + c.name.replace(/"/g,'&quot;') + '" loading="lazy">'
+    var name = escSet(c.name);
+    return '<a href="' + escSet(c.cardVaultUrl) + '" class="set-cmd-card">'
+      + (c.image ? '<img src="' + escSet(c.image) + '" alt="' + name + '" loading="lazy">'
                  : '<div style="aspect-ratio:745/1040;background:rgba(107,107,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px">🎲</div>')
-      + '<div class="set-cmd-card-body"><div class="set-cmd-card-name">' + c.name + '</div><div class="set-cmd-card-id">' + c.identityName + '</div></div></a>';
+      + '<div class="set-cmd-card-body"><div class="set-cmd-card-name" title="' + name + '">' + name + '</div><div class="set-cmd-card-id">' + escSet(c.identityName) + '</div></div></a>';
   }
   async function loadSetCommanders() {
     const track   = document.getElementById('set-cmd-track');

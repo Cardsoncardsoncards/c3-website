@@ -11,7 +11,7 @@ import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { ebaySearchUrl, ebayStoreUrl, EPN_CAMPID } from './shared/ebay-link.mjs';
 import { resolveCardBySlug } from './shared/card-resolver.mjs';
-import { escAttr } from './shared/html-escape.mjs';
+import { escAttr, CLIENT_ESCAPE_FN } from './shared/html-escape.mjs';
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -1225,6 +1225,10 @@ async function submitFeedback() {
 })();
 
 // Compare tray
+// task-155: the tray rebuilds its own innerHTML from localStorage in the browser, so the
+// server-side escAttr pass from task-151 never reached it. c3Esc is the client-side twin,
+// defined once in shared/html-escape.mjs.
+${CLIENT_ESCAPE_FN}
 const COMPARE_KEY = 'c3_compare_tray';
 function getCompareTray() {
   try { return JSON.parse(localStorage.getItem(COMPARE_KEY) || '[]'); } catch { return []; }
@@ -1242,8 +1246,8 @@ function renderCompareTray() {
   el.classList.add('visible');
   countEl.textContent = tray.length + ' of 5 cards';
   cardsEl.innerHTML = tray.map(c => \`<div class="compare-tray-card">
-    \${c.img ? \`<img src="\${c.img}" alt="\${c.name}">\` : ''}
-    <span class="compare-tray-card-name">\${c.name}</span>
+    \${c.img ? \`<img src="\${c3Esc(c.img)}" alt="\${c3Esc(c.name)}">\` : ''}
+    <span class="compare-tray-card-name">\${c3Esc(c.name)}</span>
     <button class="compare-tray-card-remove" onclick="removeFromCompare('\${c.slug}')" title="Remove">×</button>
   </div>\`).join('');
   // Update compare button on current card

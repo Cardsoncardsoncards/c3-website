@@ -55,4 +55,34 @@ export function escAttr(value) {
 // Kept as an alias rather than a second implementation, so the two cannot drift.
 export const escHtml = escAttr;
 
+// task-155: the client-side twin of escAttr.
+//
+// task-151 escaped every card name the SERVER writes into markup, and deliberately stopped
+// there. It could not reach the compare tray, which is rendered in the browser: the tray reads
+// its entries back out of localStorage and rebuilds its own innerHTML long after the server has
+// finished. So the same card names that are correctly escaped everywhere else on the page were
+// still going in raw there, and a name like Henzie "Toolbox" Torre broke out of the alt
+// attribute exactly as it used to server-side.
+//
+// This is a STRING containing a function definition, not a function, because it has to be
+// interpolated into an inline <script> block. Emitting one shared definition is what stops the
+// card pages from growing their own slightly different copies, which is how the server-side
+// escaping drifted in the first place.
+//
+// Deliberately contains no backtick and no dollar-brace, so it is safe to interpolate into the
+// server-side template literals the card pages are built from.
+//
+// Scope note: this is for HTML contexts (attribute values and element text). It is NOT correct
+// for a value going into a JS string literal inside an attribute, e.g. onclick="f('VALUE')",
+// because the HTML parser decodes the entity before JS sees it and &#39; would turn back into a
+// quote. Those call sites pass slugs, which are already normalised to lowercase alphanumerics
+// and hyphens, so they are left as they are rather than given a false sense of safety here.
+export const CLIENT_ESCAPE_FN = [
+  'function c3Esc(v){',
+  "  return (v===null||v===undefined?'':String(v))",
+  "    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')",
+  "    .replace(/\"/g,'&quot;').replace(/'/g,'&#39;');",
+  '}'
+].join('\n');
+
 export default escAttr;

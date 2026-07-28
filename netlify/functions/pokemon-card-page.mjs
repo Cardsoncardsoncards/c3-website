@@ -3,7 +3,7 @@
 import { followBlockHtml } from './shared/follow-block.mjs';
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
-import { escAttr } from './shared/html-escape.mjs';
+import { escAttr, CLIENT_ESCAPE_FN } from './shared/html-escape.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
@@ -715,6 +715,10 @@ function voteHelpful(val, btn) {
   setTimeout(() => { const bar = document.getElementById('helpful-bar'); if (bar) bar.innerHTML = '<span style="color:var(--text2);font-size:13px;font-family:sans-serif">Thanks for the feedback!</span>'; }, 800);
 }
 
+// task-155: the tray rebuilds its own innerHTML from localStorage in the browser, so the
+// server-side escAttr pass from task-151 never reached it. c3Esc is the client-side twin,
+// defined once in shared/html-escape.mjs.
+${CLIENT_ESCAPE_FN}
 function getCompareTray(){try{return JSON.parse(localStorage.getItem(COMPARE_KEY)||'[]');}catch{return[];}}
 function saveCompareTray(t){localStorage.setItem(COMPARE_KEY,JSON.stringify(t));}
 function renderCompareTray(currentSlug,currentName){
@@ -727,8 +731,8 @@ function renderCompareTray(currentSlug,currentName){
   el.style.transform='translateY(0)';
   countEl.textContent=tray.length+' of 5';
   cardsEl.innerHTML=tray.map(c=>\`<div style="display:flex;align-items:center;gap:6px;background:#22263a;border:1px solid #2d3254;border-radius:8px;padding:6px 10px">
-    \${c.img?\`<img src="\${c.img}" style="width:28px;border-radius:3px" alt="\${c.name}">\`:''}
-    <span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">\${c.name}</span>
+    \${c.img?\`<img src="\${c3Esc(c.img)}" style="width:28px;border-radius:3px" alt="\${c3Esc(c.name)}">\`:''}
+    <span style="font-size:12px;color:#e8eaf0;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">\${c3Esc(c.name)}</span>
     <button onclick="removeFromCompare('\${c.slug}')" style="background:none;border:none;color:#9ba3c4;cursor:pointer;font-size:14px;padding:0 2px;line-height:1">×</button>
   </div>\`).join('');
   const btn=document.getElementById('c3-compare-btn');

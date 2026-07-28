@@ -1,22 +1,52 @@
 // commander-carousel.mjs
-// Returns top commanders for the carousel on the homepage and set pages
+// Returns commanders for the carousel on the homepage and set pages
 // Uses Scryfall API (free, no auth required)
 // Netlify v2 function format (default async req handler returning a Response)
 //
 // Query params:
-//   ?mode=top        - top commanders by EDHREC rank (homepage default)
+//   ?mode=top        - 2 random commanders from each of the last 10 released sets
 //   ?mode=set&setcode=sos - commanders from a specific set, sorted by EDHREC rank
 //   ?limit=20        - number of commanders to return (default 20, max 40)
 //
-// Rotation: update SET_QUERY and SET_DISPLAY_NAME below when new sets release
+// task-155 rebuild (mode=top only). It used to be a flat "top 40 by EDHREC rank", which is
+// dominated by the same handful of perennial staples and barely changes month to month. It now
+// returns 2 random commanders from each of the last 10 RELEASED sets, so the carousel spreads
+// across recent Magic instead of the all-time list, and the pick rotates on its own.
+//
+// Three sources of rotation, deliberately layered:
+//   1. The set list is derived live from Scryfall, so a new set enters and the tenth drops out
+//      with no code change. This is what SET_QUERY/SET_DISPLAY_NAME used to need a manual edit
+//      for, and that manual step is now gone for mode=top.
+//   2. The 2-per-set pick is random per cache period.
+//   3. The homepage shuffles again client-side on every load.
+//
+// mode=set is UNCHANGED. card-index.mjs calls it per set page and expects the old behaviour.
 
 const SET_QUERY = '(set:sos or set:soa or set:soc)';
 const SET_DISPLAY_NAME = 'Secrets of Strixhaven';
 const CACHE_SECONDS = 3600; // 1 hour - client shuffles for per-load variety
 
+// mode=top shape: 10 sets x 2 commanders = the 20 the homepage renders.
+// Verified against Scryfall on 28 Jul 2026: the thinnest of the last 10 sets (Edge of
+// Eternities) still carries 15 legendary creatures, so 2 per set is never short.
+const RECENT_SET_COUNT   = 10;
+const COMMANDERS_PER_SET = 2;
+
+// Only these count as "released MTG sets". Promos, tokens, masterpieces, Alchemy and the rest
+// of Scryfall's 24 set_type values are not sets a player would name, and digital-only sets have
+// no paper singles to sell.
+const SET_TYPES = ['expansion', 'core'];
+
+// Scryfall pages search results at 175. The last 10 sets hold ~548 legendary creatures, so all
+// 10 sets are only guaranteed to appear after 4 pages. Cold, that measured 7.6s, which is why
+// netlify.toml gives this function a raised timeout. PAGE_BUDGET_MS stops paging and uses
+// whatever arrived rather than letting a slow Scryfall run the whole function out of time.
+const MAX_PAGES      = 4;
+const PAGE_BUDGET_MS = 12000;
+const FETCH_TIMEOUT  = 8000;
+
 const EPN_CAMPID = '5339146789';
 const EBAY_MKRID = '705-53470-19255-0';
-const EBAY_SITEID = '15';
 
 // Colour identity symbol map for display
 const COLOUR_SYMBOLS = {
@@ -67,7 +97,11 @@ function getIdentityName(colours) {
 }
 
 function buildEbayLink(cardName, customId = 'C3CmdCarousel') {
-  return `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(cardName)}&mkcid=1&mkrid=${EBAY_MKRID}&siteid=${EBAY_SITEID}&campid=${EPN_CAMPID}&customid=${customId}&toolid=10001&mkevt=1`;
+  // The eBay site id param is deliberately absent: pinning it breaks worldwide routing and is a
+  // standing audit failure (audit point 10). mkrid already carries the AU routing.
+  // The literal is not written out even in a comment, so a content scan cannot false-positive
+  // on this file the way task-154 found blog pages tripping on a script string.
+  return `https://www.ebay.com.au/str/cardsoncardsoncards?_nkw=${encodeURIComponent(cardName)}&mkcid=1&mkrid=${EBAY_MKRID}&campid=${EPN_CAMPID}&customid=${customId}&toolid=10001&mkevt=1`;
 }
 
 function buildCardSlug(card) {
@@ -109,6 +143,73 @@ function formatCard(card, customId) {
   };
 }
 
+const SCRYFALL_HEADERS = {
+  'User-Agent': 'CardsOnCardsOnCards/1.0 (https://cardsoncardsoncards.com.au)',
+  'Accept': 'application/json'
+};
+
+// Every Scryfall call goes through here so the AbortController timeout is never forgotten.
+async function scryfallGet(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+  try {
+    const res = await fetch(url, { signal: controller.signal, headers: SCRYFALL_HEADERS });
+    clearTimeout(timer);
+    if (!res.ok) {
+      console.error('Scryfall error:', res.status, url);
+      return null;
+    }
+    return await res.json();
+  } catch (e) {
+    clearTimeout(timer);
+    console.error('Scryfall fetch failed:', e.message);
+    return null;
+  }
+}
+
+// Fisher-Yates. Used for the per-set pick, so the 2 chosen commanders vary per cache period.
+function shuffle(list) {
+  const out = [...list];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+// The last RECENT_SET_COUNT sets that have actually come out, newest first.
+// released_at is compared as a plain YYYY-MM-DD string, which is what Scryfall returns and what
+// sorts correctly lexicographically, so no Date parsing is needed.
+async function getRecentSetCodes() {
+  const data = await scryfallGet('https://api.scryfall.com/sets');
+  if (!data || !Array.isArray(data.data)) return [];
+  const today = new Date().toISOString().slice(0, 10);
+  return data.data
+    .filter(s => SET_TYPES.includes(s.set_type) && !s.digital && s.released_at && s.released_at <= today)
+    .sort((a, b) => b.released_at.localeCompare(a.released_at))
+    .slice(0, RECENT_SET_COUNT)
+    .map(s => s.code);
+}
+
+// Walk the paged search result, stopping at MAX_PAGES or when the time budget runs out.
+// Returns whatever was collected, which is always usable even if a page was missed.
+async function fetchAllPages(query) {
+  const started = Date.now();
+  let url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=set&dir=asc&unique=cards`;
+  const cards = [];
+  for (let page = 0; page < MAX_PAGES && url; page++) {
+    if (Date.now() - started > PAGE_BUDGET_MS) {
+      console.warn(`Commander carousel: page budget spent after ${page} pages`);
+      break;
+    }
+    const data = await scryfallGet(url);
+    if (!data || !Array.isArray(data.data)) break;
+    cards.push(...data.data);
+    url = data.has_more ? data.next_page : null;
+  }
+  return cards;
+}
+
 export default async (req) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -123,19 +224,23 @@ export default async (req) => {
   const url = new URL(req.url);
   const params = url.searchParams;
   const mode = params.get('mode') || 'top';
-  // For top mode: fetch 40 so client can shuffle and show 20 unique each load
-  // For set mode: fetch 20 (set has limited legendary creatures anyway)
+  // top mode builds exactly RECENT_SET_COUNT x COMMANDERS_PER_SET (20) and the 40 here is only
+  // a ceiling, so the existing ?limit=40 callers keep every card they are already given.
+  // For set mode: 20 (a single set has limited legendary creatures anyway)
   const limit = mode === 'top' ? 40 : Math.min(parseInt(params.get('limit') || '20', 10), 40);
 
+  // A commander tile is an image tile. No image, no tile.
+  const hasImage = c => c.image_uris || (c.card_faces && c.card_faces[0] && c.card_faces[0].image_uris);
+
   try {
-    let query;
+    let commanders;
     let displayTitle;
-    let customId;
 
     if (mode === 'set') {
-      // Use dynamic setcode param if provided (e.g. ?mode=set&setcode=2xm)
-      // Falls back to the hardcoded spotlight set if no setcode given
+      // UNCHANGED from the pre-task-155 behaviour. One set, ordered by EDHREC rank.
+      const customId = 'C3SetCmdCarousel';
       const setcode = params.get('setcode') ? params.get('setcode').trim().toLowerCase() : null;
+      let query;
       if (setcode) {
         // Single set code - show all legendary creatures from this set
         query = `set:${setcode} t:legendary t:creature`;
@@ -145,53 +250,53 @@ export default async (req) => {
         query = `${SET_QUERY} t:legendary t:creature`;
         displayTitle = `Commanders from ${SET_DISPLAY_NAME}`;
       }
-      customId = 'C3SetCmdCarousel';
+
+      const scryfallUrl = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=edhrec&dir=asc&unique=cards`;
+      const data = await scryfallGet(scryfallUrl);
+      if (!data || !Array.isArray(data.data) || data.data.length === 0) {
+        return new Response(
+          JSON.stringify({ commanders: [], title: displayTitle }),
+          { status: 200, headers }
+        );
+      }
+      commanders = data.data.filter(hasImage).slice(0, limit).map(c => formatCard(c, customId));
+
     } else {
-      // Top commanders globally - fetch 40, client shuffles to show 20 different each load
-      query = 't:legendary t:creature f:commander';
+      // task-155: 2 random commanders from each of the last 10 released sets.
+      const customId = 'C3TopCmdCarousel';
       displayTitle = 'Your Next Commander Awaits';
-      customId = 'C3TopCmdCarousel';
+
+      const setCodes = await getRecentSetCodes();
+      if (setCodes.length === 0) {
+        return new Response(
+          JSON.stringify({ commanders: [], title: displayTitle, error: 'no_recent_sets' }),
+          { status: 200, headers }
+        );
+      }
+
+      const query = `(${setCodes.map(c => `set:${c}`).join(' or ')}) t:legendary t:creature`;
+      const all = await fetchAllPages(query);
+
+      // Bucket by set, then take COMMANDERS_PER_SET at random from each. Iterating setCodes
+      // (not the buckets) keeps the output in newest-set-first order and silently tolerates a
+      // set that returned nothing because a page was dropped on the time budget.
+      const bySet = new Map();
+      for (const card of all) {
+        if (!hasImage(card)) continue;
+        if (!bySet.has(card.set)) bySet.set(card.set, []);
+        bySet.get(card.set).push(card);
+      }
+
+      const picked = [];
+      for (const code of setCodes) {
+        const pool = bySet.get(code);
+        if (!pool || pool.length === 0) continue;
+        picked.push(...shuffle(pool).slice(0, COMMANDERS_PER_SET));
+      }
+
+      console.log(`Commander carousel [top]: ${setCodes.length} sets, ${all.length} legendary creatures, ${bySet.size} sets represented`);
+      commanders = picked.slice(0, limit).map(c => formatCard(c, customId));
     }
-
-    const scryfallUrl = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=edhrec&dir=asc&unique=cards`;
-
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 8000);
-    let res;
-    try {
-      res = await fetch(scryfallUrl, {
-        signal: controller.signal,
-        headers: {
-          'User-Agent': 'CardsOnCardsOnCards/1.0 (https://cardsoncardsoncards.com.au)',
-          'Accept': 'application/json'
-        }
-      });
-      clearTimeout(timer);
-    } catch (e) {
-      clearTimeout(timer);
-      throw e;
-    }
-
-    if (!res.ok) {
-      console.error('Scryfall error:', res.status);
-      return new Response(
-        JSON.stringify({ commanders: [], title: displayTitle, error: 'scryfall_' + res.status }),
-        { status: 200, headers }
-      );
-    }
-
-    const data = await res.json();
-    if (!data.data || data.data.length === 0) {
-      return new Response(
-        JSON.stringify({ commanders: [], title: displayTitle }),
-        { status: 200, headers }
-      );
-    }
-
-    const commanders = data.data
-      .filter(c => c.image_uris || (c.card_faces && c.card_faces[0] && c.card_faces[0].image_uris))
-      .slice(0, limit)
-      .map(c => formatCard(c, customId));
 
     console.log(`Commander carousel [${mode}]: returning ${commanders.length} commanders`);
 

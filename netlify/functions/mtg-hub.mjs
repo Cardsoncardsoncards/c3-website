@@ -315,7 +315,10 @@ export default async (req) => {
     .cmd-card:hover{transform:translateY(-3px);border-color:rgba(107,107,255,.5);box-shadow:0 8px 24px rgba(107,107,255,.15);text-decoration:none}
     .cmd-card img{width:100%;aspect-ratio:745/1040;object-fit:cover;display:block}
     .cmd-card-body{padding:7px 9px 9px;display:flex;flex-direction:column;gap:2px}
-    .cmd-card-name{font-family:Cinzel,serif;font-size:9.5px;font-weight:700;color:#C0C0FF;line-height:1.3}
+    /* task-155: no clamp here, so a double-faced commander name ("Bala Ged Recovery // Bala Ged
+       Sanctuary") wrapped to four lines and made its tile taller than the rest of the row.
+       Clamp to 2 lines and reserve that height so every tile matches. */
+    .cmd-card-name{font-family:Cinzel,serif;font-size:9.5px;font-weight:700;color:#C0C0FF;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:25px;overflow-wrap:break-word}
     .cmd-card-identity{font-size:9px;color:rgba(160,168,192,.5)}
     .cmd-card-cta{font-size:8.5px;font-weight:600;color:#9898FF;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
     /* MOBILE */
@@ -592,14 +595,19 @@ function filterSets(query) {
 <script>
 (function() {
   function buildCmdCard(c) {
+    // One escape covering &, <, > and ", used for attributes and innerHTML text alike. The old
+    // code escaped only " for the alt and only < > for the name, so an ampersand in a card name
+    // round-tripped wrong in one place and a quote was unescaped in the other.
+    var esc = function(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); };
+    var name = esc(c.name);
     var img = c.image
-      ? '<img src="' + c.image + '" alt="' + c.name.replace(/"/g, '&quot;') + '" loading="lazy">'
+      ? '<img src="' + esc(c.image) + '" alt="' + name + '" loading="lazy">'
       : '<div style="aspect-ratio:745/1040;background:rgba(107,107,255,.1);display:flex;align-items:center;justify-content:center;font-size:28px">&#127922;</div>';
-    return '<a href="' + c.cardVaultUrl + '" class="cmd-card">'
+    return '<a href="' + esc(c.cardVaultUrl) + '" class="cmd-card">'
       + img
       + '<div class="cmd-card-body">'
-      + '<div class="cmd-card-name">' + c.name.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
-      + '<div class="cmd-card-identity">' + (c.identityName||'').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>'
+      + '<div class="cmd-card-name" title="' + name + '">' + name + '</div>'
+      + '<div class="cmd-card-identity">' + esc(c.identityName) + '</div>'
       + '<div class="cmd-card-cta">View Card &rarr;</div>'
       + '</div></a>';
   }

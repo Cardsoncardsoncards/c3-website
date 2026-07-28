@@ -43,6 +43,14 @@
 [functions."card-compare"]
   timeout = 20
 
+# task-155: mode=top now walks up to 4 pages of Scryfall search results (the last 10 released
+# sets hold ~548 legendary creatures, and all 10 sets are only guaranteed to appear after the
+# 4th page) plus one /sets call. Warm that is under 1s, but a cold run measured 7.6s + 1.4s,
+# which the 10s default does not clear. The function also self-limits with PAGE_BUDGET_MS, so
+# this headroom is the backstop, not the plan.
+[functions."commander-carousel"]
+  timeout = 26
+
 [functions."compare-search"]
   timeout = 10
 
