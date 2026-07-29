@@ -212,15 +212,16 @@
   status = 301
   force = true
 
-# p248b is deliberately NOT given a trailing slash, and is NOT part of the single-hop fix above.
-# /blog is canonical UNSLASHED here: verified live, /blog returns 200 and /blog/ 301s to /blog,
-# the opposite direction to a blog post. Adding a slash to this target would create the very
-# double hop the change above removes.
-[[redirects]]
-  from = "/blog/p248b-rq-sydney-card-spikes"
-  to = "/blog"
-  status = 301
-  force = true
+# A "/blog/p248b-rq-sydney-card-spikes" -> "/blog" force redirect used to sit here. Removed as a
+# task-159 follow-up. Do NOT re-add it: p248b-rq-sydney-card-spikes.md is a LIVE post. It builds
+# to /blog/p248b-rq-sydney-card-spikes/ and is listed in sitemap-blog.xml, but force = true makes
+# a redirect win over an existing built page, so the post was unreachable and Google was being
+# handed a sitemap URL that 301d straight to the blog index.
+# It keeps its pNNN prefix because the permalink rule in .eleventy.js strips /^p\d+-/, and the
+# "b" in "p248b-" stops that pattern matching. It is the only one of 591 files in src/blog/ that
+# does not match, so nothing else is affected.
+# With no rule here the unslashed form gets Netlify's own single 301 to the slashed form, exactly
+# like every other post.
 
 # task-159: four more legacy pNNN URLs, found by the task-157 crawler. Unlike the ones above,
 # these are not only Google-cached: each is still linked from a LIVE post, so every visitor
