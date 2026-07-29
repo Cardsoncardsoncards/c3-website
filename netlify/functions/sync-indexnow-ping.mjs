@@ -355,5 +355,5 @@ export default async (req) => {
 // No `path` key here. Netlify rejects a custom path on a scheduled function, so this is
 // reachable only at its default URL, /.netlify/functions/sync-indexnow-ping.
 export const config = {
-  schedule: '10 8 * * *'   // DIAGNOSTIC ONLY, temporarily moved from '0 3 * * *' to test dispatch
+  schedule: '0 3 * * *'   // daily 03:00 UTC, after the 02:30 UTC tcg_releases sync
 };
