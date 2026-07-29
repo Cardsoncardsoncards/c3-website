@@ -186,24 +186,36 @@
   force = true
 
 # ── Legacy pNNN blog URLs (Google-cached) -> current slug-only URLs ──
+# These three now carry the trailing slash, matching the task-159 block below. Without it
+# Netlify answered the target with its own 301 to the slashed form, so a visitor took two hops.
+# Verified live before the change: each unslashed target 301d to its own slashed form.
+# The pNNN number in each "from" is the legacy URL and does NOT match the current source file
+# (p312 is really p287-warhammer-tcg-beginners-guide-australia.md, p150 is really
+# p227-riftbound-rq-sydney-2026-guide.md). The numbers were left as found: they are the URLs
+# Google still holds, so changing them would break the very inbound links these exist to catch.
+# Each target was checked against the real filename in src/blog/ rather than assumed.
 [[redirects]]
   from = "/blog/p273-digimon-card-game-australia-beginners-guide"
-  to = "/blog/digimon-card-game-australia-beginners-guide"
+  to = "/blog/digimon-card-game-australia-beginners-guide/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/blog/p312-warhammer-tcg-beginners-guide-australia"
-  to = "/blog/warhammer-tcg-beginners-guide-australia"
+  to = "/blog/warhammer-tcg-beginners-guide-australia/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/blog/p150-riftbound-rq-sydney-2026-guide"
-  to = "/blog/riftbound-rq-sydney-2026-guide"
+  to = "/blog/riftbound-rq-sydney-2026-guide/"
   status = 301
   force = true
 
+# p248b is deliberately NOT given a trailing slash, and is NOT part of the single-hop fix above.
+# /blog is canonical UNSLASHED here: verified live, /blog returns 200 and /blog/ 301s to /blog,
+# the opposite direction to a blog post. Adding a slash to this target would create the very
+# double hop the change above removes.
 [[redirects]]
   from = "/blog/p248b-rq-sydney-card-spikes"
   to = "/blog"
@@ -222,7 +234,8 @@
 # p251-riftbound-box-opening.md, which publishes at /blog/riftbound-box-opening/. The legacy URL
 # carries an "unleashed-" segment the filename never had, so this one is not a pure prefix strip.
 #
-# These targets keep the trailing slash, which the four redirects above do not. Without it
+# These targets keep the trailing slash. The three post redirects above now do too, having been
+# brought onto this same single-hop pattern. Without it
 # Netlify answers the target with its own 301 to the slashed form, so a visitor took two hops.
 # Verified live: /blog/riftbound-unleashed-australia 301s to /blog/riftbound-unleashed-australia/.
 # One hop is better for crawlers and for the reader, and nothing else about the pattern changes.
