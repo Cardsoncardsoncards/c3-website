@@ -66,7 +66,7 @@ compress old rows once this file has real history.)*
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-25)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-26)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -124,6 +124,8 @@ running the exact new parse pipeline against the real 77MB file: 739 distinct
 sets, 97,074 cards with images and 83,115 with USD prices parsed cleanly into
 the same record shape the sync consumes. Rollback is a plain `git revert` of
 the fix commit, no migration and no schema change was involved.
+
+| C3L-26 | The Netlify production deploy for commit `2d0404b`, the MTG sync fix pushed earlier the same day, FAILED, and nothing surfaced it. Netlify records it as `state: error`, "Failed during stage 'building site': Build script returned non-zero exit code: 2", with `deploy_time: null`, so it never completed. The site was never actually broken, because the previous deploy stayed published and the next commit 19 minutes later built cleanly, but for those 19 minutes `origin/main` and the live site were different code and nothing said so. Had that been the last commit of the day, the site would have served the older build indefinitely while git reported main as current | Netlify API `listSiteDeploys` and `getDeploy` for deploy `6a71c22e930fbd0008930a79`. The build log itself is not exposed through the API (`log_access_attributes` is empty), so the specific failing step is NOT established. The build script is `node scripts/generate-sitemap-cards.mjs && eleventy && node scripts/generate-blog-sitemap.js`, and the first step queries Supabase while the 85,000-row MTG sync was running concurrently, which is a plausible but unconfirmed cause. Read the Netlify UI build log to settle it | High. This is the same class as C3L-10, a failure that only a human happening to look would catch, and it was found only because this task verified the deploy record rather than assuming a push means a deploy. Two things to fix: notification on failed deploy, and a check that the published `commit_ref` matches `origin/main`. Do not treat the transient-contention theory as established, it is a hypothesis |
 
 **Resolution evidence for C3L-12 and C3L-08, 4 August 2026, task
 `c3-audit-urgent-c3l12`.** The fix has two parts. Both comparison windows now
@@ -346,9 +348,9 @@ here immediately, whether or not that was its assigned scope.
 Updated whenever a task changes the counts below, not left to go stale.
 Same discipline as Voxsanity's own Section 5.
 
-- **Live-investigation findings (C3L-):** 25 total. 7 resolved with evidence
-  (C3L-01, C3L-02, C3L-04, C3L-05, C3L-07, C3L-08, C3L-12). 5 high and still
-  open (C3L-03, C3L-10, C3L-11, C3L-15, C3L-16), of which C3L-11 is
+- **Live-investigation findings (C3L-):** 26 total. 7 resolved with evidence
+  (C3L-01, C3L-02, C3L-04, C3L-05, C3L-07, C3L-08, C3L-12). 6 high and still
+  open (C3L-03, C3L-10, C3L-11, C3L-15, C3L-16, C3L-26), of which C3L-11 is
   permanently unfixable rather than merely outstanding, C3L-15 is wrong on
   live MTG card pages today, and C3L-16 triggers around 10 August 2026.
   10 medium and still open (C3L-09, and C3L-17 to C3L-25). 3 informational
@@ -366,7 +368,7 @@ Same discipline as Voxsanity's own Section 5.
   closing first, none actionable standalone yet.
 - **Resolved this file's lifetime:** 7 (C3L-01, C3L-02, C3L-04, C3L-05,
   C3L-07, C3L-08, C3L-12).
-- **Total rows this file currently tracks:** 66, across 4 ID ranges, out of
+- **Total rows this file currently tracks:** 67, across 4 ID ranges, out of
   a much larger universe (at minimum the full 164 in the external docx,
   plus whatever the 13-wave programme surfaces once it starts). This
   number is expected to grow quickly once Wave 1 runs, that growth is the
@@ -405,11 +407,22 @@ Priority order for the next session:
    items in this file: C3L-15, which is wrong today, and C3L-16, which
    freezes every MTG price chart around 10 August.** Neither is touched by
    the C3L-12 fix and both need their own task.
-3. **C3L-10, no sync alerting**, which is why a one-line upstream change
-   cost seven days. A sync that writes zero snapshots should exit non-zero,
-   and a failure should surface somewhere other than an email nobody is
-   obliged to read.
-4. Protocol Section 4's RLS/BOLA test, the **two-account object-level access
+3. **C3L-15 and C3L-16, both on the MTG card page, both found by Task 01 and
+   deliberately left unfixed by it.** C3L-15 is presenting a 12 calendar day
+   movement as "7d" on live card pages right now, today. C3L-16 will freeze
+   every MTG price chart and 7d badge permanently once any card exceeds 90
+   snapshots, which happens around 10 August 2026 at the current maximum of
+   84 and one per day. Both live in `card-page.mjs`, both concern the same
+   query result, and they should be fixed in one task.
+4. **C3L-10 and C3L-26 together, no alerting on either side of the deploy.**
+   C3L-10 is why a one-line upstream change cost seven days. C3L-26 is the
+   same shape on the Netlify side: the 4 August deploy of `2d0404b` failed
+   outright and nothing said so, found only because Task 01 checked the
+   deploy record rather than assuming a push means a deploy. A sync that
+   writes zero snapshots should exit non-zero, a failed deploy should
+   notify, and something should compare the published `commit_ref` against
+   `origin/main`.
+5. Protocol Section 4's RLS/BOLA test, the **two-account object-level access
    test specifically, which still has not run.** What did run this session
    is the code-level and anon-exposure half: object-level authorisation
    confirmed present on the follow mutation path and the admin view
@@ -417,10 +430,10 @@ Priority order for the next session:
    substitutes for two real synthetic accounts exercising the live
    endpoints, which is the actual method Section 4 specifies. Run it as
    `c3-audit-0-rls` in its own worktree.
-5. Wave 1 slugs (`1-claims`, `3-pricing`, `4-links`), each in its own
+6. Wave 1 slugs (`1-claims`, `3-pricing`, `4-links`), each in its own
    worktree per Part 0. `3-pricing` should inherit C3L-11 and C3L-12 as
    known context rather than rediscovering them.
-6. Housekeeping carried from this session: `c3-master-audit-findings-and-actions-v1.md`
+7. Housekeeping carried from this session: `c3-master-audit-findings-and-actions-v1.md`
    is not present anywhere on the laptop and so was never seeded into the
    repo, only the protocol and this register were. Protocol Section 0 marks
    it historical seed content superseded by this file, so nothing is
@@ -428,7 +441,7 @@ Priority order for the next session:
    record. `C3_SESSION_RULES.md`, named in the kickoff task file, does not
    exist in the repo either, and no file of that name was found on the
    machine.
-7. This section becomes a pointer to whichever wave or slug is currently
+8. This section becomes a pointer to whichever wave or slug is currently
    active, updated by whoever picks up the next task, every time, not just
    at convenient checkpoints.
 
