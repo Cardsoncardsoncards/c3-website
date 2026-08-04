@@ -38,7 +38,7 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
 | Date | Task or slug | What happened | Six-line report (condensed) |
 |---|---|---|---|
-| 2026-08-04 | Claude Code, laptop, kickoff session, no slug | Environment confirmed (`C:\Users\sammy\Projects\c3-website`, branch `main`, clean, 0 behind origin). Protocol and register seeded into the repo and pushed (`a02a9cc`), confirmed live via the GitHub commit API, not local log. MTG sync root cause found and confirmed from the real Actions log: Scryfall dropped `download_uri` from its bulk index in favour of `jsonl_download_uri`, and changed the payload from a JSON array to gzipped JSONL. Fix written and verified against the real 77MB file before pushing. C3L-01 to C3L-04 resolved, C3L-07 to C3L-10 opened | Compliance: Scryfall attribution and Fan Content Policy wording untouched by this change, no privacy, ACCC, or EPN surface touched. Removal: none, this was a first repair of this job, not a third patch. Suggestions: declare `stream-chain` as a direct dependency (C3L-08), and add a freshness assertion so a sync that writes no new snapshot fails loudly rather than reporting green (C3L-03's general fix). Blind spots: this session read the MTG job only, the other 31 games' sync jobs were not checked for the same or any other silent failure, and no non-MTG Actions workflow run history was reviewed. Opportunities: none new. Fragility: `stream-chain` imported but undeclared (C3L-08), Node 20 deprecation will force-break both sync workflows (C3L-09), and no alerting exists that would have caught 7 days of failure without an email happening to be noticed |
+| 2026-08-04 | Claude Code, laptop, kickoff session, no slug | Environment confirmed (`C:\Users\sammy\Projects\c3-website`, branch `main`, clean, 0 behind origin). Protocol and register seeded and pushed (`a02a9cc`), confirmed live via the GitHub commit API, not local log. MTG sync root cause found from the real Actions log: Scryfall dropped `download_uri` in favour of `jsonl_download_uri` and changed the payload from a JSON array to gzipped JSONL. Fixed (`2d0404b`), verified against the real 77MB file before push, then a manual run went green in 10m47s and wrote 52,623 snapshots for 2026-08-04, confirmed in the database. C3L-01, C3L-02, C3L-04, C3L-07 resolved. Investigating the recovered data surfaced two further findings the sync fix does not address (C3L-11, C3L-12). Partial progress on protocol Section 4: the anon-exposure and object-level-authorisation code checks passed, the two-account live test did NOT run | Compliance: Scryfall attribution and Fan Content Policy wording untouched, no privacy, ACCC, EPN, or Amazon surface touched by this change. C3L-12 is a live misleading-pricing-claim risk and does sit inside the ACCC priority named in protocol Section 7, logged not fixed. Removal: none, this was a first repair of this job, not a third patch. Suggestions: declare `stream-chain` directly (C3L-08), make a sync that writes zero snapshots exit non-zero (C3L-10), and require the price-change functions to assert their window rather than take the nearest available snapshot (C3L-12). Blind spots: this session read the MTG job only. The other 31 games' sync jobs and `daily-tcg-sync.yml`'s run history were never checked for the same or any other silent failure, and the seven non-MTG price-change functions were not read even though they are near-certain copies of the one carrying C3L-12. Opportunities: none new. Fragility: `stream-chain` imported but undeclared (C3L-08), Node 20 deprecation will force-break both sync workflows (C3L-09), and the whole incident was caught only because a failure email happened to be read (C3L-10) |
 | 2026-08-04 | Kickoff, laptop, no slug yet | Sammy gave the go-ahead to start. Combined prompt written: environment check, git pull, seed this file plus the protocol plus the historical companion file into the repo, then begin with the MTG fix, the live RLS/BOLA test, and Wave 1 as session time allows. Programme status flipped from on hold to started in Section 10 | Compliance: none new, planning only. Removal: none. Suggestions: none new. Blind spots: none, pure planning. Opportunities: none new. Fragility: none new |
 | 2026-08-04 | Claude.ai, planning only, no slug | Sammy confirmed the programme is on hold pending other work (Voxsanity) finishing, not to start yet. Restated the anchor priorities in his own words (site works functionally, numbers correct and consistent, backend captures what will matter later, no accidental public exposure, correct legal terms, no breakage for live visitors), cross-checked against the existing plan in protocol Section 16, one gap closed (explicit check for silently-discarded source fields added to Category 1), one new standing rule added (live-site safety, protocol Section 16.2, load testing must never hit production directly) | Compliance: none new. Removal: none. Suggestions: none new. Blind spots: none identified this pass, pure planning. Opportunities: none new. Fragility: none new, this pass added a safety rule rather than finding a fragility |
 | 2026-08-04 | Claude.ai, live investigation, no slug, pre-Wave 0, triggered by a GitHub Actions failure email | MTG price sync confirmed 7 days stale, not just failed today (C3L-01 to C3L-04). `collection_waitlist` public-read PII exposure found and fixed directly (C3L-05). RLS confirmed enabled schema-wide, no `authenticated` role used anywhere, account and follow data has no anon path at all (C3L-06) | Compliance: privacy conflict found and closed (C3L-05). Removal: none. Suggestions: cron jobs should check input freshness before computing derived signals. Blind spots: application code, GitHub Actions logs, and two Supabase log-service fetches were all unreachable this session. Opportunities: none new. Fragility: cron jobs reported `succeeded` for a week while operating on frozen input, nothing downstream noticed, worth a general fix |
@@ -65,7 +65,7 @@ compress old rows once this file has real history.)*
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-10)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-14)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -84,6 +84,11 @@ being re-verified.
 | C3L-08 | `scripts/sync-mtg-daily.mjs` imports `stream-chain` directly, but `stream-chain` is not declared in `package.json`. It resolves today only because `stream-json` depends on it and `package-lock.json` pins it, so `npm ci` happens to install it. A `stream-json` major bump that drops or renames that dependency would break the MTG sync with no change to C3's own code | Confirmed via `package.json` dependencies (only `@supabase/supabase-js` and `stream-json`), `stream-json`'s own dependency on `stream-chain ^2.2.4`, and the lock file pinning it | Medium. Not fixed in this change deliberately, since regenerating the lock file mid-incident-fix widens the blast radius of a repair that needed to land cleanly. One-line fix, should be its own commit |
 | C3L-09 | Both sync workflows pin `node-version: '20'` and use `actions/checkout@v4` and `actions/setup-node@v4`. GitHub is deprecating Node 20 on runners and is already force-running these actions on Node 24, emitting a deprecation warning on every run. This is a scheduled future breakage of the same job that just failed for seven days, not a hypothetical | Read directly from the 4 August run log's own post-job warning, and from `.github/workflows/daily-mtg-sync.yml:31` and `daily-tcg-sync.yml` | Medium, but time-boxed by GitHub's own removal date, not by C3's priorities. Applies to `daily-tcg-sync.yml` too, so it is not MTG-specific |
 | C3L-10 | Nothing anywhere alerts on sync failure. Seven consecutive daily failures produced no page, no dashboard state, and no `sync_events` row, and were noticed only because a GitHub Actions failure email happened to be read. The two downstream pg_cron jobs meanwhile reported `succeeded` daily on frozen input (C3L-03), so every automated signal available said the system was healthy while the highest-revenue game served week-old prices | Confirmed by the seven-day failure run history against C3L-03's `succeeded` cron records and C3L-04's absence of any `sync_events` row for the failing job | High. This is the finding that made a one-line upstream change cost a week. The freshness assertion suggested under C3L-03 belongs here, a sync that writes zero new snapshots should exit non-zero |
+
+| C3L-11 | The seven-day outage left a permanent, unbackfillable six-day hole in `mtg_price_snapshots`: 29 July to 3 August 2026 inclusive have zero rows, while 28 July has 52,445 and 4 August has 52,623. Scryfall's bulk data is point-in-time and carries no history, so those six days cannot be recovered from the source. This is the durable cost of the outage and it does not go away now that the sync works | Direct query, `generate_series` over 25 July to 4 August left-joined against `mtg_price_snapshots`, six days returning 0 | High, and permanently unfixable rather than merely open. Matters because it is the input to every derived signal, see C3L-12. Should be recorded as a known history gap wherever price history is presented or exported |
+| C3L-12 | `update_mtg_price_changes()` takes `MAX(snapshot_date) <= CURRENT_DATE - 7` (and `- 30`), meaning it silently falls back to the nearest older snapshot rather than requiring an actual seven-day-old one. Because of C3L-11's gap it will therefore publish windows of 8, 9, 10, 11, 12 and 13 days as `price_change_7d` on 5 to 10 August, self-healing on 11 August, and windows of 31 to 36 days as `price_change_30d` from 28 August to 2 September, self-healing on 3 September. The same defect already produced a wrong number during the outage: on 3 August it compared 28 July against 27 July, publishing a one-day movement as a seven-day change. The value is never NULL and never flagged, so a card page shows a confident "7 day change" that is not one | Confirmed by reading `pg_get_functiondef` for the live function, then by a date-arithmetic simulation over the real snapshot dates plus projected daily snapshots, run for both the 7d and 30d windows. Two structurally different methods, the function body and the data | High, and time-critical rather than merely open. The next `update-mtg-price-changes-daily` run (20:00 UTC daily) is correct tonight, 4 August, because 28 July happens to be exactly seven days back. It first publishes a mislabelled window at 20:00 UTC on 5 August. Not fixed this session: the remedy is a product decision about whether an unavailable window should show NULL, or a widened window with a visible low-confidence flag, which protocol Section 5 point 5 already calls for and which is Claude.ai's call, not Claude Code's |
+| C3L-13 | Positive finding, object-level authorisation is genuinely present on the follow mutation path, not merely authentication. `deleteFollow()` and `unsubscribeFollow()` both filter on `id=eq.<followId>&user_id=eq.<userId>` together, so a caller supplying another user's follow id changes nothing. The `/account/admin` view, which renders every account email and every follow, is gated server-side by `!session || !isAdmin(session.email)` returning a plain 404, with the email taken from the HMAC-signed session cookie rather than from client input | Read directly from `netlify/functions/shared/accounts-core.mjs:330-349` and `netlify/functions/account.mjs:789-797`, then confirmed live: `/account/admin` and `/account/admin/` both return 404 unauthenticated, `/account` returns the 200 sign-in page as designed | Informational, positive. This is the specific authentication-without-authorisation pattern protocol Section 12 names, checked and not found on this path. It does not close protocol Section 4, whose two-account live test still has not run, see Section 10 |
+| C3L-14 | Positive finding, no Supabase key of any kind reaches the browser. Eleven live pages (`/`, `/cards`, `/compare`, `/market`, `/search`, `/account`, `/tools`, `/subscribe`, `/pricing`, `/shop`, `/calendar`) contain zero JWT-shaped strings and zero references to a service, secret, or anon key variable, and link zero JavaScript asset files, because the site is server-rendered through Netlify functions. C3 therefore does not have the shipped-anon-key surface that protocol Section 4's cited vulnerability class assumes | Live fetch of all eleven pages, regex sweep for JWT-shaped strings and for key variable names, plus a follow-up sweep of every linked `.js` asset, of which there were none | Informational, positive, and it narrows real risk rather than removing it. With no anon key in the browser, the PostgREST-with-anon-key half of Section 4 is largely moot and the genuine exposure surface is the Netlify function code, exactly as C3L-06 concluded from the other direction |
 
 **Resolution evidence for C3L-01 to C3L-04, 4 August 2026.** Root cause, read
 from the real Actions log rather than inferred: Scryfall removed
@@ -106,6 +111,18 @@ running the exact new parse pipeline against the real 77MB file: 739 distinct
 sets, 97,074 cards with images and 83,115 with USD prices parsed cleanly into
 the same record shape the sync consumes. Rollback is a plain `git revert` of
 the fix commit, no migration and no schema change was involved.
+
+**Verified fixed, not merely deployed.** A manual `workflow_dispatch` run on
+the fixed commit (`2d0404b`, run 30901800725) completed green in 10m47s,
+logging `Bulk file format detected: gzip-jsonl`, 85,294 cards upserted,
+52,623 snapshots upserted, 739 sets upserted, and zero failures of any kind.
+The database was then checked independently of the CI log, per Part 0's
+verify-twice rule and because C3L-03 is precisely the trap of believing a
+green status: `mtg_price_snapshots` now holds 52,623 rows dated 2026-08-04,
+a number that matches the run log exactly. C3L-01 and C3L-02 are therefore
+resolved on real evidence, the false "updated daily" claim on MTG card pages
+is true again, and the seven-day stall is over. The same query is what
+surfaced C3L-11 and C3L-12, which the sync fix does not address.
 
 **What Claude.ai's tools could not reach, 4 August session:** the GitHub
 Actions workflow file and run logs (no GitHub connector, repo is private),
@@ -152,7 +169,11 @@ assuming it is covered by proximity to one that already is.
 See protocol Section 7 for the reasoning. Update as each lens closes.
 
 **Tier 0, take down or correct now:** Section 4 above, once each row is
-confirmed live, plus C3L-01/02 (Section 3), already confirmed.
+confirmed live. C3L-01/02 were here and are now resolved, 4 August 2026.
+C3L-12 replaces them in this tier: it is a live wrong number on the highest
+revenue game, it starts publishing at 20:00 UTC on 5 August 2026, and it
+sits inside the ACCC misleading-pricing priority named in protocol
+Section 7.
 
 **Tier 1, critical, launch-blocking:**
 - RLS and BOLA verification, the two-account object-level access test
@@ -176,7 +197,10 @@ confirmed live, plus C3L-01/02 (Section 3), already confirmed.
 - Affiliate link integrity sweep, all 32 games.
 - Card and printing identity stability across pages.
 - Follow and alert email-abuse controls (C3-115).
-- The MTG sync fix itself (C3L-01 to C3L-04), root cause and repair.
+- ~~The MTG sync fix itself (C3L-01 to C3L-04), root cause and repair.~~
+  Done and verified 4 August 2026, commit `2d0404b`, run 30901800725. Left
+  in place per the never-delete-a-row rule. Its unresolved consequences
+  moved to C3L-11 and C3L-12, they are not covered by this closed item.
 
 **Tier 3, medium:** content and SEO items, legacy template coexistence,
 structured-data accuracy, third-party integration health.
@@ -256,11 +280,12 @@ here immediately, whether or not that was its assigned scope.
 Updated whenever a task changes the counts below, not left to go stale.
 Same discipline as Voxsanity's own Section 5.
 
-- **Live-investigation findings (C3L-):** 10 total. 3 resolved (C3L-05,
-  C3L-04, C3L-07). 2 fixed with the fix pushed but the first green scheduled
-  or manual run not yet observed, so not yet counted as resolved (C3L-01,
-  C3L-02). 2 high and still open (C3L-03, C3L-10). 2 medium and still open
-  (C3L-08, C3L-09). 1 informational (C3L-06).
+- **Live-investigation findings (C3L-):** 14 total. 5 resolved with evidence
+  (C3L-01, C3L-02, C3L-04, C3L-05, C3L-07). 4 high and still open (C3L-03,
+  C3L-10, C3L-11, C3L-12), of which C3L-11 is permanently unfixable rather
+  than merely outstanding, and C3L-12 is time-critical, first publishing a
+  wrong number at 20:00 UTC on 5 August 2026. 2 medium and still open
+  (C3L-08, C3L-09). 3 informational and positive (C3L-06, C3L-13, C3L-14).
 - **Reported findings tracked here (C3- subset):** 19 individual IDs across
   12 rows, all still unconfirmed live. This is a curated subset of the full
   external 164, not the whole set, see the note under Section 4.
@@ -268,8 +293,9 @@ Same discipline as Voxsanity's own Section 5.
   high (C3X-01, C3X-05, C3X-12, C3X-13, C3X-15), 8 medium, 2 low or process.
 - **Opportunities (OPP-):** 6 total, all still gated behind other work
   closing first, none actionable standalone yet.
-- **Resolved this file's lifetime:** 3 (C3L-05, C3L-04, C3L-07).
-- **Total rows this file currently tracks:** 51, across 4 ID ranges, out of
+- **Resolved this file's lifetime:** 5 (C3L-01, C3L-02, C3L-04, C3L-05,
+  C3L-07).
+- **Total rows this file currently tracks:** 55, across 4 ID ranges, out of
   a much larger universe (at minimum the full 164 in the external docx,
   plus whatever the 13-wave programme surfaces once it starts). This
   number is expected to grow quickly once Wave 1 runs, that growth is the
@@ -279,27 +305,55 @@ Same discipline as Voxsanity's own Section 5.
 
 ## 10. Current state, what to pick up next
 
-**Programme status: started, 4 August 2026.** Sammy gave the go-ahead to
-begin on the laptop. The earlier hold (this section, prior entry) is
-lifted. The MTG sync fix question is resolved by this, it is now Tier 0
-inside the started programme, not a separate decision.
+**Programme status: started, 4 August 2026. First Claude Code session
+complete, stopped at a clean checkpoint after the MTG fix was verified, with
+no wave slug yet opened.**
 
-Priority order for this and following sessions:
+The MTG sync failure (C3L-01 to C3L-04) is closed on real evidence. Wave 1
+has not started: no worktree was created and none of `1-claims`, `3-pricing`
+or `4-links` was touched, because the MTG investigation ran long once the
+recovered data surfaced C3L-11 and C3L-12, per Section 13's rule that an
+anomaly is resolved before moving on rather than noted and deferred.
+
+Priority order for the next session:
 
 1. **Environment check first**, per the standing addendum, before any of
    the below.
-2. **The MTG sync failure** (Section 3, C3L-01 to C3L-04). Needs the actual
-   GitHub Actions workflow file, its recent run history and error output,
-   and whatever script or function it calls. A credential expiry, a
-   changed Scryfall endpoint, or a workflow file edit around 28 July are
-   plausible given the fifteen-second failure time, but unconfirmed, treat
-   as inference only until the real log is read.
-3. Protocol Section 4's RLS/BOLA test, the two-account object-level access
-   test specifically. The database layer is confirmed closed (C3L-06), the
-   live application-level test has not run yet.
-4. Wave 1 slugs (`1-claims`, `3-pricing`, `4-links`) as session time allows,
-   each in its own worktree per Part 0.
-5. This section becomes a pointer to whichever wave or slug is currently
+2. **C3L-12, the price-change window mislabelling. This is the most
+   time-critical item in the file.** It publishes its first wrong number at
+   20:00 UTC on 5 August 2026 and stays wrong for six days, then again for
+   six days from 28 August on the 30-day window. It needs a decision, not
+   just an implementation: should an unavailable window publish NULL, or a
+   widened window carrying a visible low-confidence flag, per protocol
+   Section 5 point 5. Claude.ai's call. Note also that the seven other
+   per-game price-change functions (`update_pokemon_price_changes` and
+   siblings, cron jobs 4 to 10) were not read this session and are very
+   likely the same code shape, so the same defect probably exists across
+   all eight Core games and would bite any of them after any future outage.
+3. **C3L-10, no sync alerting**, which is why a one-line upstream change
+   cost seven days. A sync that writes zero snapshots should exit non-zero,
+   and a failure should surface somewhere other than an email nobody is
+   obliged to read.
+4. Protocol Section 4's RLS/BOLA test, the **two-account object-level access
+   test specifically, which still has not run.** What did run this session
+   is the code-level and anon-exposure half: object-level authorisation
+   confirmed present on the follow mutation path and the admin view
+   (C3L-13), and no key of any kind reaching the browser (C3L-14). Neither
+   substitutes for two real synthetic accounts exercising the live
+   endpoints, which is the actual method Section 4 specifies. Run it as
+   `c3-audit-0-rls` in its own worktree.
+5. Wave 1 slugs (`1-claims`, `3-pricing`, `4-links`), each in its own
+   worktree per Part 0. `3-pricing` should inherit C3L-11 and C3L-12 as
+   known context rather than rediscovering them.
+6. Housekeeping carried from this session: `c3-master-audit-findings-and-actions-v1.md`
+   is not present anywhere on the laptop and so was never seeded into the
+   repo, only the protocol and this register were. Protocol Section 0 marks
+   it historical seed content superseded by this file, so nothing is
+   blocked, but if a copy exists elsewhere it should be added for the
+   record. `C3_SESSION_RULES.md`, named in the kickoff task file, does not
+   exist in the repo either, and no file of that name was found on the
+   machine.
+7. This section becomes a pointer to whichever wave or slug is currently
    active, updated by whoever picks up the next task, every time, not just
    at convenient checkpoints.
 
