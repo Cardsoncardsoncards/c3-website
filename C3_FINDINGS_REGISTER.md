@@ -38,6 +38,7 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
 | Date | Task or slug | What happened | Six-line report (condensed) |
 |---|---|---|---|
+| 2026-08-04 | `c3-audit-urgent-c3l12`, Claude Code, laptop, own worktree | Task 01. C3L-12 fixed and applied to the live database with 12 hours to spare against the 20:00 UTC 5 August deadline: both windows now anchor on the newest snapshot actually held and return NULL when the real window is more than 1 day from nominal. C3L-08 fixed, including the `package-lock.json` update without which `npm ci` would have failed and broken the MTG sync that was repaired earlier today. All 7 sibling functions read individually and logged as their own rows (C3L-17 to C3L-23): all 7 share the defect but none is currently wrong, because only MTG has a snapshot gap. Investigating where the value is displayed found two further live defects on the MTG card page that are a different mechanism entirely (C3L-15, C3L-16), one of them already wrong today and one that will freeze every MTG price chart around 10 August | Compliance: no privacy, EPN, Amazon, Scryfall attribution or `/legal` surface touched. This work reduces a live ACCC misleading-pricing exposure rather than creating one. Removal: none, first repair of this function. Suggestions: apply the same tolerance to the 7 siblings before their next outage rather than after (C3L-17 to C3L-23), and give `update_price_stats` a minimum-sample guard (C3L-25). Blind spots: the fix was verified by checksum against an independently computed expectation and by date simulation, but no test exercises the NULL path end to end against real production data, because doing so would have required faking snapshot rows. C3L-15 and C3L-16 were found by reading, not by any test, and nothing in this pass would have caught them if the task had not required checking the display path. Opportunities: none new. Fragility: the 5 August run will publish an 8 day window as "7d", which is the chosen tolerance working as designed rather than a residual bug, stated here so it is not mistaken for one later |
 | 2026-08-04 | Claude Code, laptop, kickoff session, no slug | Environment confirmed (`C:\Users\sammy\Projects\c3-website`, branch `main`, clean, 0 behind origin). Protocol and register seeded and pushed (`a02a9cc`), confirmed live via the GitHub commit API, not local log. MTG sync root cause found from the real Actions log: Scryfall dropped `download_uri` in favour of `jsonl_download_uri` and changed the payload from a JSON array to gzipped JSONL. Fixed (`2d0404b`), verified against the real 77MB file before push, then a manual run went green in 10m47s and wrote 52,623 snapshots for 2026-08-04, confirmed in the database. C3L-01, C3L-02, C3L-04, C3L-07 resolved. Investigating the recovered data surfaced two further findings the sync fix does not address (C3L-11, C3L-12). Partial progress on protocol Section 4: the anon-exposure and object-level-authorisation code checks passed, the two-account live test did NOT run | Compliance: Scryfall attribution and Fan Content Policy wording untouched, no privacy, ACCC, EPN, or Amazon surface touched by this change. C3L-12 is a live misleading-pricing-claim risk and does sit inside the ACCC priority named in protocol Section 7, logged not fixed. Removal: none, this was a first repair of this job, not a third patch. Suggestions: declare `stream-chain` directly (C3L-08), make a sync that writes zero snapshots exit non-zero (C3L-10), and require the price-change functions to assert their window rather than take the nearest available snapshot (C3L-12). Blind spots: this session read the MTG job only. The other 31 games' sync jobs and `daily-tcg-sync.yml`'s run history were never checked for the same or any other silent failure, and the seven non-MTG price-change functions were not read even though they are near-certain copies of the one carrying C3L-12. Opportunities: none new. Fragility: `stream-chain` imported but undeclared (C3L-08), Node 20 deprecation will force-break both sync workflows (C3L-09), and the whole incident was caught only because a failure email happened to be read (C3L-10) |
 | 2026-08-04 | Kickoff, laptop, no slug yet | Sammy gave the go-ahead to start. Combined prompt written: environment check, git pull, seed this file plus the protocol plus the historical companion file into the repo, then begin with the MTG fix, the live RLS/BOLA test, and Wave 1 as session time allows. Programme status flipped from on hold to started in Section 10 | Compliance: none new, planning only. Removal: none. Suggestions: none new. Blind spots: none, pure planning. Opportunities: none new. Fragility: none new |
 | 2026-08-04 | Claude.ai, planning only, no slug | Sammy confirmed the programme is on hold pending other work (Voxsanity) finishing, not to start yet. Restated the anchor priorities in his own words (site works functionally, numbers correct and consistent, backend captures what will matter later, no accidental public exposure, correct legal terms, no breakage for live visitors), cross-checked against the existing plan in protocol Section 16, one gap closed (explicit check for silently-discarded source fields added to Category 1), one new standing rule added (live-site safety, protocol Section 16.2, load testing must never hit production directly) | Compliance: none new. Removal: none. Suggestions: none new. Blind spots: none identified this pass, pure planning. Opportunities: none new. Fragility: none new, this pass added a safety rule rather than finding a fragility |
@@ -65,7 +66,7 @@ compress old rows once this file has real history.)*
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-14)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-25)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -81,14 +82,26 @@ being re-verified.
 | C3L-06 | No table in the public schema uses the `authenticated` role in any policy, `rowsecurity` is `true` on all roughly 140 tables checked. Account, follow, and follow-magic-link data has no `anon` policy at all beyond `service_role`, the browser cannot touch those tables directly under any circumstance | Confirmed via `pg_tables.rowsecurity` and `pg_policies` across the full schema | Informational, positive finding, but shifts real risk to Netlify function code, which this session could not read. Section 12's authentication-without-authorisation pattern still needs checking there specifically |
 
 | C3L-07 | `downloadBulkFile()` called `bulkRes.json()` without ever checking `bulkRes.ok`, in direct breach of CLAUDE.md's own "ALWAYS check res.ok before calling res.json()" rule. This is why the failure presented as "Could not find default_cards bulk URL", a message that pointed at the wrong cause: any non-200 from Scryfall would have produced the identical misleading error, and the entry was in fact present the whole time, only its URL field had been renamed | Read directly from `scripts/sync-mtg-daily.mjs:105-112` at the failing commit, cross-checked against the live endpoint returning HTTP 200 with a healthy `default_cards` entry, which ruled out the message's literal claim | Was high, now resolved. Fixed in the same change as C3L-01. A wrong error message cost real diagnostic time across seven days of failures |
-| C3L-08 | `scripts/sync-mtg-daily.mjs` imports `stream-chain` directly, but `stream-chain` is not declared in `package.json`. It resolves today only because `stream-json` depends on it and `package-lock.json` pins it, so `npm ci` happens to install it. A `stream-json` major bump that drops or renames that dependency would break the MTG sync with no change to C3's own code | Confirmed via `package.json` dependencies (only `@supabase/supabase-js` and `stream-json`), `stream-json`'s own dependency on `stream-chain ^2.2.4`, and the lock file pinning it | Medium. Not fixed in this change deliberately, since regenerating the lock file mid-incident-fix widens the blast radius of a repair that needed to land cleanly. One-line fix, should be its own commit |
+| C3L-08, resolved 2026-08-04 | `scripts/sync-mtg-daily.mjs` imports `stream-chain` directly, but `stream-chain` is not declared in `package.json`. It resolves today only because `stream-json` depends on it and `package-lock.json` pins it, so `npm ci` happens to install it. A `stream-json` major bump that drops or renames that dependency would break the MTG sync with no change to C3's own code | Confirmed via `package.json` dependencies (only `@supabase/supabase-js` and `stream-json`), `stream-json`'s own dependency on `stream-chain ^2.2.4`, and the lock file pinning it | Medium. Not fixed in this change deliberately, since regenerating the lock file mid-incident-fix widens the blast radius of a repair that needed to land cleanly. One-line fix, should be its own commit |
 | C3L-09 | Both sync workflows pin `node-version: '20'` and use `actions/checkout@v4` and `actions/setup-node@v4`. GitHub is deprecating Node 20 on runners and is already force-running these actions on Node 24, emitting a deprecation warning on every run. This is a scheduled future breakage of the same job that just failed for seven days, not a hypothetical | Read directly from the 4 August run log's own post-job warning, and from `.github/workflows/daily-mtg-sync.yml:31` and `daily-tcg-sync.yml` | Medium, but time-boxed by GitHub's own removal date, not by C3's priorities. Applies to `daily-tcg-sync.yml` too, so it is not MTG-specific |
 | C3L-10 | Nothing anywhere alerts on sync failure. Seven consecutive daily failures produced no page, no dashboard state, and no `sync_events` row, and were noticed only because a GitHub Actions failure email happened to be read. The two downstream pg_cron jobs meanwhile reported `succeeded` daily on frozen input (C3L-03), so every automated signal available said the system was healthy while the highest-revenue game served week-old prices | Confirmed by the seven-day failure run history against C3L-03's `succeeded` cron records and C3L-04's absence of any `sync_events` row for the failing job | High. This is the finding that made a one-line upstream change cost a week. The freshness assertion suggested under C3L-03 belongs here, a sync that writes zero new snapshots should exit non-zero |
 
 | C3L-11 | The seven-day outage left a permanent, unbackfillable six-day hole in `mtg_price_snapshots`: 29 July to 3 August 2026 inclusive have zero rows, while 28 July has 52,445 and 4 August has 52,623. Scryfall's bulk data is point-in-time and carries no history, so those six days cannot be recovered from the source. This is the durable cost of the outage and it does not go away now that the sync works | Direct query, `generate_series` over 25 July to 4 August left-joined against `mtg_price_snapshots`, six days returning 0 | High, and permanently unfixable rather than merely open. Matters because it is the input to every derived signal, see C3L-12. Should be recorded as a known history gap wherever price history is presented or exported |
-| C3L-12 | `update_mtg_price_changes()` takes `MAX(snapshot_date) <= CURRENT_DATE - 7` (and `- 30`), meaning it silently falls back to the nearest older snapshot rather than requiring an actual seven-day-old one. Because of C3L-11's gap it will therefore publish windows of 8, 9, 10, 11, 12 and 13 days as `price_change_7d` on 5 to 10 August, self-healing on 11 August, and windows of 31 to 36 days as `price_change_30d` from 28 August to 2 September, self-healing on 3 September. The same defect already produced a wrong number during the outage: on 3 August it compared 28 July against 27 July, publishing a one-day movement as a seven-day change. The value is never NULL and never flagged, so a card page shows a confident "7 day change" that is not one | Confirmed by reading `pg_get_functiondef` for the live function, then by a date-arithmetic simulation over the real snapshot dates plus projected daily snapshots, run for both the 7d and 30d windows. Two structurally different methods, the function body and the data | High, and time-critical rather than merely open. The next `update-mtg-price-changes-daily` run (20:00 UTC daily) is correct tonight, 4 August, because 28 July happens to be exactly seven days back. It first publishes a mislabelled window at 20:00 UTC on 5 August. Not fixed this session: the remedy is a product decision about whether an unavailable window should show NULL, or a widened window with a visible low-confidence flag, which protocol Section 5 point 5 already calls for and which is Claude.ai's call, not Claude Code's |
+| C3L-12, resolved 2026-08-04, live in the database, see the resolution note below | `update_mtg_price_changes()` takes `MAX(snapshot_date) <= CURRENT_DATE - 7` (and `- 30`), meaning it silently falls back to the nearest older snapshot rather than requiring an actual seven-day-old one. Because of C3L-11's gap it will therefore publish windows of 8, 9, 10, 11, 12 and 13 days as `price_change_7d` on 5 to 10 August, self-healing on 11 August, and windows of 31 to 36 days as `price_change_30d` from 28 August to 2 September, self-healing on 3 September. The same defect already produced a wrong number during the outage: on 3 August it compared 28 July against 27 July, publishing a one-day movement as a seven-day change. The value is never NULL and never flagged, so a card page shows a confident "7 day change" that is not one | Confirmed by reading `pg_get_functiondef` for the live function, then by a date-arithmetic simulation over the real snapshot dates plus projected daily snapshots, run for both the 7d and 30d windows. Two structurally different methods, the function body and the data | High, and time-critical rather than merely open. The next `update-mtg-price-changes-daily` run (20:00 UTC daily) is correct tonight, 4 August, because 28 July happens to be exactly seven days back. It first publishes a mislabelled window at 20:00 UTC on 5 August. Not fixed this session: the remedy is a product decision about whether an unavailable window should show NULL, or a widened window with a visible low-confidence flag, which protocol Section 5 point 5 already calls for and which is Claude.ai's call, not Claude Code's |
 | C3L-13 | Positive finding, object-level authorisation is genuinely present on the follow mutation path, not merely authentication. `deleteFollow()` and `unsubscribeFollow()` both filter on `id=eq.<followId>&user_id=eq.<userId>` together, so a caller supplying another user's follow id changes nothing. The `/account/admin` view, which renders every account email and every follow, is gated server-side by `!session || !isAdmin(session.email)` returning a plain 404, with the email taken from the HMAC-signed session cookie rather than from client input | Read directly from `netlify/functions/shared/accounts-core.mjs:330-349` and `netlify/functions/account.mjs:789-797`, then confirmed live: `/account/admin` and `/account/admin/` both return 404 unauthenticated, `/account` returns the 200 sign-in page as designed | Informational, positive. This is the specific authentication-without-authorisation pattern protocol Section 12 names, checked and not found on this path. It does not close protocol Section 4, whose two-account live test still has not run, see Section 10 |
 | C3L-14 | Positive finding, no Supabase key of any kind reaches the browser. Eleven live pages (`/`, `/cards`, `/compare`, `/market`, `/search`, `/account`, `/tools`, `/subscribe`, `/pricing`, `/shop`, `/calendar`) contain zero JWT-shaped strings and zero references to a service, secret, or anon key variable, and link zero JavaScript asset files, because the site is server-rendered through Netlify functions. C3 therefore does not have the shipped-anon-key surface that protocol Section 4's cited vulnerability class assumes | Live fetch of all eleven pages, regex sweep for JWT-shaped strings and for key variable names, plus a follow-up sweep of every linked `.js` asset, of which there were none | Informational, positive, and it narrows real risk rather than removing it. With no anon key in the browser, the PostgREST-with-anon-key half of Section 4 is largely moot and the genuine exposure surface is the Netlify function code, exactly as C3L-06 concluded from the other direction |
+
+| C3L-15 | The MTG card page does not use `price_change_7d` at all. It computes its own "7d" badge from `snapshots.slice(-7)`, the last seven snapshot ROWS, with no reference to dates. Because of C3L-11's six-day hole those seven rows currently span 23 July to 4 August, so the badge on every MTG card page is presenting a **12 calendar day** movement as "7d". Unlike C3L-12 this is wrong right now, today, not from 5 August, and fixing C3L-12 does not touch it because it is a completely separate mechanism | Read from `netlify/functions/card-page.mjs:240-249` (`snapshots.slice(-7)`) and `:1392` (the query that fills `snapshots`), then confirmed by querying the seven most recent snapshot dates for the most-snapshotted card, which span 2026-07-23 to 2026-08-04, 12 days | High, and live now. Not fixed in this task: Task 01's Step 5 requires the diff to address exactly C3L-12 and nothing broader, and this is a different defect in a different file. It self-heals around 11 August as fresh dailies push the gap out of the last seven rows, but it is wrong every day until then. Needs its own task, and the fix is to select by date window rather than by row count |
+| C3L-16 | Same file, latent and separate: `card-page.mjs:1392` queries `mtg_price_snapshots?...&order=snapshot_date.asc&limit=90`, which returns the OLDEST 90 rows, not the newest. It is harmless today only because the most-snapshotted MTG card currently has 84 snapshots. Once any card exceeds 90, its price chart and its 7d badge silently freeze on the oldest 90 days and never advance again, while continuing to render as current | Confirmed by reading the query, then by `select max(cnt)` over per-card snapshot counts, which returns 84 against a limit of 90, growing by one per day | High, with a near-term trigger. At one snapshot per day from a current maximum of 84, the first cards cross 90 around 10 August 2026. Not fixed here for the same scope reason as C3L-15, and it should be fixed in the same task, since both live in the same function and both concern the same query result |
+| C3L-17 | `update_pokemon_price_changes()` does NOT share C3L-12's code shape. It uses four temp tables and a per-card `DISTINCT ON (card_id) ... WHERE snapshot_date <= day7_date ORDER BY card_id, snapshot_date DESC`, resolving a nearest-older snapshot per card rather than one global anchor date, and it also maintains `price_change_24h`, which MTG does not. It does however share the underlying defect: there is no tolerance check anywhere, so a card whose nearest snapshot is far from the target silently yields a mislabelled window | Full function body read via `pg_get_functiondef`, plus a structural comparison across all 8 functions confirming `has_any_tolerance_check` is false for every one | Medium, not currently wrong. Pokemon has 0 missing snapshot days in the last 31, so no window is mislabelled today. This is a latent defect that activates on that game's first sync outage |
+| C3L-18 | `update_yugioh_price_changes()`. Same per-card `DISTINCT ON` temp-table shape as C3L-17, same absent tolerance check, same `price_change_24h` handling. Structurally different from MTG, logically the same defect | Function body read individually via `pg_get_functiondef` | Medium, not currently wrong, 0 missing snapshot days in the last 31 |
+| C3L-19 | `update_lorcana_price_changes()`. Same per-card `DISTINCT ON` temp-table shape, no tolerance check. Differs slightly from the Pokemon and Yu-Gi-Oh variants in using `CREATE TEMP TABLE IF NOT EXISTS` plus `TRUNCATE` rather than a plain `CREATE TEMP TABLE`, and it sets no `statement_timeout`, but the window logic is identical | Function body read individually via `pg_get_functiondef` | Medium, not currently wrong, 0 missing snapshot days in the last 31 |
+| C3L-20 | `update_onepiece_price_changes()`. Same shape and same absent tolerance check as C3L-19, including the `IF NOT EXISTS` plus `TRUNCATE` variant | Function body read individually via `pg_get_functiondef` | Medium, not currently wrong, 0 missing snapshot days in the last 31 |
+| C3L-21 | `update_starwars_price_changes()`. Same per-card `DISTINCT ON` shape, no tolerance check. Separately worth noting: Star Wars Unlimited is the only Core game whose latest snapshot is 2026-08-03 rather than 2026-08-04, so it is one day behind at the time of checking. That is not necessarily a fault, its sync may simply not have run yet today, but it was not chased down in this task and is unconfirmed either way | Function body read individually via `pg_get_functiondef`, staleness from a per-game latest-snapshot query | Medium for the tolerance defect. The one-day lag is unconfirmed and should be checked rather than assumed benign |
+| C3L-22 | `update_riftbound_price_changes()`. Same per-card `DISTINCT ON` shape, no tolerance check | Function body read individually via `pg_get_functiondef` | Medium, not currently wrong, 0 missing snapshot days in the last 31 |
+| C3L-23 | `update_dragonball_price_changes()`. Same per-card `DISTINCT ON` shape, no tolerance check. Note this function is for `dragonball`, the EXTENDED game, not for `dbsfusionworld`, the Core one. There are 8 `update_<game>_price_changes` functions and 8 matching cron jobs, but the set they cover is the Core 8 with `dbsfusionworld` swapped out for `dragonball`. This is a fourth instance of the known Core/Extended Dragon Ball confusion already documented in CLAUDE.md, which lists three others | Function body read individually, plus `cron.job` showing `update-dragonball-price-changes-daily` exists and no `dbsfusionworld` job exists at all | Medium for the tolerance defect, and the Core/Extended mismatch is worth folding into whichever task closes CLAUDE.md's existing three-place inconsistency rather than fixing in isolation |
+| C3L-24 | `dbsfusionworld`, the Core 8 Dragon Ball game, is the only Core game with no price-change function and no cron job. Its `price_change_24h/7d/30d` values are not computed from C3's own snapshots at all, they are written straight through from the upstream tcgapi.dev response by `sync-dbsfusionworld-background.mjs`. So it is neither affected by C3L-12 nor verifiable against C3's own snapshot history, and the window those upstream percentages actually represent is unknown and undocumented | Confirmed by the absence of any `update_dbsfusionworld_price_changes` function, zero matching `cron.job` rows, and by reading `sync-dbsfusionworld-background.mjs:293-313` where the values are assigned from `price.price_change_*` | Medium, informational rather than broken. Logged because an earlier hypothesis in this same session, that these values were simply stale, was wrong: they have different provenance, not no provenance. Worth confirming what window the upstream figure represents before any page presents it beside a C3-computed one |
+| C3L-25 | `update_price_stats()` is a third window mechanism, different again from C3L-12 and C3L-15. It averages over a date RANGE (`snapshot_date >= CURRENT_DATE - INTERVAL '7 days'`) rather than anchoring on a single snapshot, so C3L-11's hole makes `price_7d_avg_aud` and `price_30d_avg_aud` averages over fewer samples rather than wrong windows, and it writes only where `snapshot_date = CURRENT_DATE`, so it silently did nothing at all for the whole outage. It has no minimum-sample guard, which is exactly protocol Section 5 point 5 | Function body read via `pg_get_functiondef` | Medium. A materially smaller error than C3L-12, logged separately rather than folded in because it is a different failure mode and a different fix |
 
 **Resolution evidence for C3L-01 to C3L-04, 4 August 2026.** Root cause, read
 from the real Actions log rather than inferred: Scryfall removed
@@ -111,6 +124,56 @@ running the exact new parse pipeline against the real 77MB file: 739 distinct
 sets, 97,074 cards with images and 83,115 with USD prices parsed cleanly into
 the same record shape the sync consumes. Rollback is a plain `git revert` of
 the fix commit, no migration and no schema change was involved.
+
+**Resolution evidence for C3L-12 and C3L-08, 4 August 2026, task
+`c3-audit-urgent-c3l12`.** The fix has two parts. Both comparison windows now
+anchor on `snap_today`, the newest snapshot actually held, rather than on
+`CURRENT_DATE`, so the window measured is the one between the two rows
+actually being compared and a stale sync reads as stale data rather than as a
+broken window. On top of that, each window must be within `TOLERANCE_DAYS` of
+its nominal length or the value is NULL rather than a confident wrong number.
+Tolerance is 1 day, chosen for the daily sync cadence: a healthy system has an
+exact match, one day absorbs a single missed run, and 2 or more would start
+presenting a nine-day movement as a weekly one, which is the defect being
+fixed. Applied as migration `c3l12_price_window_tolerance`, source kept at
+`netlify/functions/migrations/c3l12-price-window-tolerance.sql`.
+
+Verified three ways. First, the live function body was re-read with
+`pg_get_functiondef` after applying, confirming the tolerance constant and both
+`snap_today` anchors are present and the old `CURRENT_DATE - 7` anchor is gone,
+rather than trusting that the migration reported success. Second, a regression
+check: the old logic's output for today was computed independently into a
+checksum BEFORE the change (`bb5282275ec2d072893d06c677929878`, 41,628 rows),
+the new function was then run, and the values it actually stored checksum
+identically, with 0 mismatched rows on both the 7d and the 30d column. Old and
+new must agree today because both anchors resolve to 28 July, and they do
+exactly, so the case that was already correct is provably unbroken. Third, the
+tolerance expressions were exercised against real snapshot dates for each
+future run day: 5 August publishes an 8 day window, 6 to 10 August publish
+NULL, and 11 August onward returns to a true 7 days. Note honestly what that
+third check is and is not: it evaluates the same expressions the function uses
+against real data, but it is not an end-to-end run of the NULL path, which
+would have required inserting fake snapshot rows into a production table. That
+gap is recorded in this task's blind-spot line rather than left implied.
+
+One consequence stated plainly so it is not later mistaken for a residual bug:
+the 5 August run publishes an 8 day window as `price_change_7d`. That is the
+chosen 1 day tolerance working as designed. Tightening to 0 would make it
+exact but would blank the movers lists on any single missed sync.
+
+A side effect worth recording: running the fixed function immediately also
+overwrote the values left by the 3 August cron run, which had compared 28 July
+against 27 July and published a one-day movement as a seven-day change. The
+stored 7d figures are now a true 28 July to 4 August movement, so the live site
+stopped showing that particular wrong number several hours before the nightly
+cron would have corrected it anyway.
+
+C3L-08 was fixed in the same task by declaring `stream-chain` at `^2.2.5`,
+matching the installed and lock-pinned version. `package-lock.json` was
+regenerated with `npm install --package-lock-only` in the same commit. Without
+that, `npm ci` fails on a package.json and lock file that disagree, which would
+have broken the MTG sync repaired earlier the same day. `npm ci --dry-run`
+was run afterwards and resolves 144 packages cleanly.
 
 **Verified fixed, not merely deployed.** A manual `workflow_dispatch` run on
 the fixed commit (`2d0404b`, run 30901800725) completed green in 10m47s,
@@ -170,10 +233,13 @@ See protocol Section 7 for the reasoning. Update as each lens closes.
 
 **Tier 0, take down or correct now:** Section 4 above, once each row is
 confirmed live. C3L-01/02 were here and are now resolved, 4 August 2026.
-C3L-12 replaces them in this tier: it is a live wrong number on the highest
-revenue game, it starts publishing at 20:00 UTC on 5 August 2026, and it
-sits inside the ACCC misleading-pricing priority named in protocol
-Section 7.
+C3L-12 replaced them in this tier and is itself resolved as of 4 August 2026,
+ahead of its 20:00 UTC 5 August deadline. **C3L-15 now holds this tier**: it
+is the same class of wrong number on the same highest-revenue game, on the
+MTG card page rather than in the database, and unlike C3L-12 it is already
+wrong today rather than from a future date. C3L-16 sits beside it, triggering
+around 10 August 2026. Both sit inside the ACCC misleading-pricing priority
+named in protocol Section 7 for the same reason C3L-12 did.
 
 **Tier 1, critical, launch-blocking:**
 - RLS and BOLA verification, the two-account object-level access test
@@ -280,12 +346,17 @@ here immediately, whether or not that was its assigned scope.
 Updated whenever a task changes the counts below, not left to go stale.
 Same discipline as Voxsanity's own Section 5.
 
-- **Live-investigation findings (C3L-):** 14 total. 5 resolved with evidence
-  (C3L-01, C3L-02, C3L-04, C3L-05, C3L-07). 4 high and still open (C3L-03,
-  C3L-10, C3L-11, C3L-12), of which C3L-11 is permanently unfixable rather
-  than merely outstanding, and C3L-12 is time-critical, first publishing a
-  wrong number at 20:00 UTC on 5 August 2026. 2 medium and still open
-  (C3L-08, C3L-09). 3 informational and positive (C3L-06, C3L-13, C3L-14).
+- **Live-investigation findings (C3L-):** 25 total. 7 resolved with evidence
+  (C3L-01, C3L-02, C3L-04, C3L-05, C3L-07, C3L-08, C3L-12). 5 high and still
+  open (C3L-03, C3L-10, C3L-11, C3L-15, C3L-16), of which C3L-11 is
+  permanently unfixable rather than merely outstanding, C3L-15 is wrong on
+  live MTG card pages today, and C3L-16 triggers around 10 August 2026.
+  10 medium and still open (C3L-09, and C3L-17 to C3L-25). 3 informational
+  and positive (C3L-06, C3L-13, C3L-14).
+- **Note on the ID range:** Task 01 asked for sibling rows to continue from
+  C3L-13, but C3L-13 and C3L-14 were already taken by the kickoff session
+  earlier the same day. New IDs therefore run from C3L-15, per the
+  append-only rule. The task file was written before those two existed.
 - **Reported findings tracked here (C3- subset):** 19 individual IDs across
   12 rows, all still unconfirmed live. This is a curated subset of the full
   external 164, not the whole set, see the note under Section 4.
@@ -293,9 +364,9 @@ Same discipline as Voxsanity's own Section 5.
   high (C3X-01, C3X-05, C3X-12, C3X-13, C3X-15), 8 medium, 2 low or process.
 - **Opportunities (OPP-):** 6 total, all still gated behind other work
   closing first, none actionable standalone yet.
-- **Resolved this file's lifetime:** 5 (C3L-01, C3L-02, C3L-04, C3L-05,
-  C3L-07).
-- **Total rows this file currently tracks:** 55, across 4 ID ranges, out of
+- **Resolved this file's lifetime:** 7 (C3L-01, C3L-02, C3L-04, C3L-05,
+  C3L-07, C3L-08, C3L-12).
+- **Total rows this file currently tracks:** 66, across 4 ID ranges, out of
   a much larger universe (at minimum the full 164 in the external docx,
   plus whatever the 13-wave programme surfaces once it starts). This
   number is expected to grow quickly once Wave 1 runs, that growth is the
@@ -319,17 +390,21 @@ Priority order for the next session:
 
 1. **Environment check first**, per the standing addendum, before any of
    the below.
-2. **C3L-12, the price-change window mislabelling. This is the most
-   time-critical item in the file.** It publishes its first wrong number at
-   20:00 UTC on 5 August 2026 and stays wrong for six days, then again for
-   six days from 28 August on the 30-day window. It needs a decision, not
-   just an implementation: should an unavailable window publish NULL, or a
-   widened window carrying a visible low-confidence flag, per protocol
-   Section 5 point 5. Claude.ai's call. Note also that the seven other
-   per-game price-change functions (`update_pokemon_price_changes` and
-   siblings, cron jobs 4 to 10) were not read this session and are very
-   likely the same code shape, so the same defect probably exists across
-   all eight Core games and would bite any of them after any future outage.
+2. ~~**C3L-12, the price-change window mislabelling.**~~ **Done, 4 August
+   2026, task `c3-audit-urgent-c3l12`, applied to the live database roughly
+   12 hours before the 20:00 UTC 5 August deadline.** The decision it needed
+   was taken as NULL rather than a flagged wider window, on the grounds that
+   the display path already handles NULL everywhere it surfaces and a
+   low-confidence flag would have required frontend work across 94 files.
+   The seven sibling functions were read individually and are logged as
+   C3L-17 to C3L-23: all seven share the defect, none is currently
+   publishing a wrong number, because MTG is the only game with a snapshot
+   gap. They should be fixed before their first outage, not after.
+   **Two genuinely separate defects on the MTG card page were found while
+   checking where this value is displayed, and are now the most urgent open
+   items in this file: C3L-15, which is wrong today, and C3L-16, which
+   freezes every MTG price chart around 10 August.** Neither is touched by
+   the C3L-12 fix and both need their own task.
 3. **C3L-10, no sync alerting**, which is why a one-line upstream change
    cost seven days. A sync that writes zero snapshots should exit non-zero,
    and a failure should surface somewhere other than an email nobody is
