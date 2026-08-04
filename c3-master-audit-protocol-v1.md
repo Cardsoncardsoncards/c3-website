@@ -447,7 +447,7 @@ recommendation, reorder freely.
 | `c3-audit-1-claims` | Lens 1, claims re-verification | Claude Code | none |
 | `c3-audit-2-crosssystem` | Lens 2, cross-system interaction | Claude Code | none |
 | `c3-audit-3-pricing` | Lens 3 and Section 5, every displayed number | Claude Code (data) plus Cowork (cross-page visual) | none |
-| `c3-audit-4-links` | Lens 4, links, affiliate tracking, full crawler run | Cowork | none |
+| `c3-audit-4-links` | Lens 4, full scope: link functionality, internal link architecture, backlink profile, affiliate tracking, full crawler run, see the breakdown below the wave grouping | Cowork | none |
 | `c3-audit-5-datasync` | Lens 5, backend data sync, all 32 games | Claude Code | none |
 | `c3-audit-6-adversarial` | Lens 6, test validity, adversarial red-team, everything not already covered by `c3-audit-0-rls` | Claude Code | benefits from `c3-audit-0-rls` closing first, not strictly blocked |
 | `c3-audit-7-abuse` | Category 3, abuse and bot traffic | Claude Code | none |
@@ -464,6 +464,64 @@ reasonable, not a dependency chain:
   the four least likely to collide on the same files.
 - Wave 2: `5-datasync`, `2-crosssystem`, `6-adversarial`, `7-abuse`.
 - Wave 3: `8-perf`, `9-mobile`, `10-alerts`, `11-integration`, `12-redundancy`.
+
+**`4-links`, confirmed 4 August 2026 as four distinct sub-scopes, not
+one, revised same day after Sammy caught a second gap.** Raised by Sammy
+directly both times, worth being honest about that rather than presenting
+this as if it were caught internally: the first pass (link functionality,
+internal architecture, backlinks) still missed links and interactive
+elements sitting *inside* content, not just the site's own navigation and
+hub structure.
+
+1. **Link functionality.** Every internal link and every external link
+   (affiliate or otherwise) actually resolves, no 404s, no redirect loops,
+   no chains longer than one hop, canonical tags match the actual served
+   URL. The full-scale crawler run (`c3-crawler.mjs`, not sample mode) and
+   affiliate destination verification, already the slug's original scope.
+2. **Internal link architecture.** A different question from "does the
+   link work": is the internal linking structure itself sound. Orphan
+   pages, anything live and indexed with zero internal links pointing to
+   it, cannot be found by a visitor browsing normally even though it
+   exists. Click depth from the homepage to any given page. Whether new
+   content actually links back to the relevant hub or game page, the
+   29 July blog-post hub-link bug (`/cards/<game>` versus a bare `/<game>`
+   path) was one instance of this, worth treating as a standing check
+   across all content going forward, not a closed one-off fix. Whether
+   high-value pages (Card Details, EV calculators, hub pages) get
+   meaningful internal link equity rather than being buried several clicks
+   deep.
+3. **Backlink profile.** External sites linking in, not previously named
+   anywhere in this document. Pull Google Search Console's own Links
+   report (top linking sites, top linked pages), check for anything that
+   looks toxic or spammy, confirm any known or expected inbound links
+   (partnerships, directory listings, press mentions) actually resolve to
+   the correct current page rather than a stale or redirected one. This
+   does not need a paid third-party tool to start, GSC's own data is free
+   and sufficient for a first pass.
+4. **In-content and interactive links, added 4 August, the gap Sammy
+   caught.** Everything sitting inside a page's actual content, not its
+   navigation shell. Social share buttons on blog posts, do they actually
+   share the current page's real URL and a sensible title, not a stale or
+   generic one. Links inside blog post body text, do they point at the
+   card, set, or game they reference, not a dead or renamed page. "Buy on
+   eBay" and similar in-content calls to action on Card Details and EV
+   pages specifically, distinct from the affiliate destination check in
+   point 1, this is about whether the button exists and is clickable in
+   the first place on every layout, not just whether its destination is
+   correctly tagged. Anything a user can click that lives inside a card,
+   a quiz, a comparison table, or an embedded widget, not just the links a
+   sitemap or crawler would naturally enumerate from page-level `<a>` tags.
+
+**Process note, not just a content note.** This is the second time in a
+row a real, material gap in scope was caught by Sammy asking rather than
+by this document's own round-table or blind-spot process. Section 14's
+five-panel review did not catch either the backlink gap or this one.
+Section 15's six-line report requires a blind-spot line on every task, but
+a lens that has not run yet cannot self-check a scope it has not yet
+defined, which is exactly what happened twice here. The fix is Section 12
+below (the four-roundtable framework), made a standing part of how every
+lens actually runs, not an additional document review pass that happens
+once and is trusted afterward.
 
 Every slug still follows Part 0 in full: `git fetch origin` before starting
 and before pushing, rebase not merge, confirm deploy via the platform's own
@@ -503,7 +561,7 @@ not a ceiling, stated plainly rather than hidden in fine print:
 | `0-rls` | RLS and BOLA check | 2 to 3 hours | 1 |
 | `1-claims` | Claims re-verification | 2 to 4 hours | 1 |
 | `3-pricing` | Every displayed number, EV catalogue rebuild-validation | 6 to 10 hours, real candidate to split, see above | 1 |
-| `4-links` | Links, affiliate tracking, full crawler run | 3 to 5 hours | 1 |
+| `4-links` | Link functionality, internal link architecture, backlink profile, affiliate tracking, full crawler run | 4 to 6 hours, up from 3 to 5, scope confirmed wider 4 August | 1 |
 | `5-datasync` | Backend data sync, all 32 games | 4 to 6 hours | 2 |
 | `2-crosssystem` | Cross-system interaction | 2 to 3 hours | 2 |
 | `6-adversarial` | Test validity, adversarial red-team, Stripe event-order | 3 to 5 hours | 2 |
@@ -516,10 +574,10 @@ not a ceiling, stated plainly rather than hidden in fine print:
 
 | Wave | Wall-clock if run in parallel (bounded by the longest item) | Cumulative effort if run one at a time |
 |---|---|---|
-| Wave 1 | 6 to 10 hours | 13 to 22 hours |
+| Wave 1 | 6 to 10 hours, unchanged, still bounded by `3-pricing` | 14 to 23 hours, up from 13 to 22 |
 | Wave 2 | 4 to 6 hours | 11 to 17 hours |
 | Wave 3 | 3 to 5 hours | 13 to 19 hours |
-| **Programme total** | **13 to 21 hours across three sequential waves, less if two waves are run in parallel and Supabase and Netlify load tolerates it** | **37 to 58 hours** |
+| **Programme total** | **13 to 21 hours across three sequential waves, less if two waves are run in parallel and Supabase and Netlify load tolerates it** | **38 to 59 hours, up from 37 to 58** |
 
 ---
 
@@ -918,7 +976,128 @@ programme follows these rules, in addition to Part 0's existing discipline:
 
 ---
 
-## 17. Revision log
+## 18. The four-roundtable framework, standing requirement for every lens
+
+Confirmed 4 August 2026, in response to the `4-links` gap above happening
+twice. This section is the actual fix, not just an acknowledgement that a
+fix was needed.
+
+### 18.1 What this replaces
+
+Section 6's round-table review already existed, one generic panel, run
+after a lens's findings come back. That was too thin to catch what it just
+missed twice. This section replaces the single panel with four named
+lenses, applied to every one of the sixteen remaining items in the master
+order, not as a separate pass that happens once before work starts, but as
+part of how each item's own findings get reviewed once real investigation
+has actually happened.
+
+**Why grounded, not blind.** Running four roundtables of ten personas each
+*before* any investigation, purely as speculation about a lens that hasn't
+run yet, produces generic content: real but ungrounded worry, not a
+specific, checkable finding. The far more valuable version runs the four
+roundtables *against real findings*, real code, real data already pulled,
+the same discipline Section 6 already established, just wider. The
+demonstration in this session's response, run against C3L-15 and C3L-16
+because they were fresh and concrete, is the worked example this section
+is built from, not a hypothetical one.
+
+### 18.2 The four lenses, roughly ten personas each
+
+**A. Design and visual.** UI and visual design, typography and legibility,
+information design and data visualisation specifically, brand and style
+consistency across pages, colour contrast and visual accessibility, motion
+and interaction design, print or export view rendering, dark mode or
+theming if it exists, Australian English and tone consistency in visible
+copy, and a genuinely cold first-time-visitor read with no prior context.
+Asks: is this element visually correct, consistently styled, legible, on
+brand, placed where a visitor would actually look for it, not just present
+somewhere on the page.
+
+**B. Real user and usage.** A casual visitor comparing two prices, a
+serious high-volume collector making a real buy or sell decision from
+what's shown, a mobile visitor on a slow connection, a screen-reader or
+assistive-technology user, a non-Australian visitor, a first-time visitor
+with zero context, a returning user checking the same page daily, someone
+unfamiliar with TCG jargon (a gift buyer, a parent), a seller
+cross-referencing before listing, and someone arriving from a shared link
+rather than site navigation. Asks: does this actually work for a real
+person doing a real thing under real conditions, not an idealised session.
+
+**C. Adversarial and hypothetical scale.** An attacker asking "how would I
+break this," a scraper or bot operator, an SRE thinking about what happens
+at 10x or 100x today's load, a fraud analyst, a competitor doing
+reconnaissance, a user submitting deliberately malformed input, a user
+repeating the same action a thousand times, a sudden traffic spike from a
+viral share, an automated monitoring script misreading the page, and a
+future maintainer six months from now with none of today's context. Asks:
+not does this work now, but what happens at scale, under attack, retried,
+or out of order, exactly Section 11's four generator patterns applied
+concretely to this specific element rather than in the abstract.
+
+**D. Mixed and cross-functional.** A data engineer tracing where a number
+actually comes from, an accountant checking unit economics, a lawyer
+checking compliance exposure, a support agent who has to answer a real
+complaint about this exact element, an SEO specialist, someone fact-
+checking a claim on the page as if writing about it, an affiliate-network
+auditor, a future Sammy debugging this at 2am with no memory of today,
+someone doing investor-style due diligence, and a competitor's engineer
+assessing build quality from the outside. Asks: everything that does not
+fit neatly into design, user, or adversarial, provenance, business, legal,
+and outside-in credibility.
+
+### 18.3 The worked method, using "look at this price chart" as the
+standing example
+
+Sammy's own framing, kept verbatim as the standard to hold every element
+to: where does the data come from, how is it calculated, is the
+calculation correct, is the right data being shown, is it sitting in the
+right place on the page. Applied concretely, not abstractly, to any
+element under review:
+
+1. Trace the data to its actual source, not the source it's assumed to
+   have. For a price chart, is it reading the fixed database table or
+   independently recomputing from raw rows, and if two mechanisms exist
+   for what looks like one statistic, that divergence is itself a finding
+   (this is exactly what C3L-15 turned out to be).
+2. Confirm the calculation against the source by hand, at least once, not
+   by trusting the code's own description of what it does.
+3. Confirm the same fact reads the same way everywhere it's shown, the
+   invariant Section 5 already states for numbers, extended here to mean
+   visually too, not just numerically, two pages showing "the same" chart
+   should not use different colours for up and down, different rounding,
+   or different placement conventions.
+4. Confirm where it sits on the page and whether that placement makes
+   sense for how a real visitor actually reads the page, not just that the
+   element renders somewhere.
+5. Ask all four roundtable lenses against the specific element, not the
+   page in general. "Review the price chart" is checkable. "Review the
+   card page" produces generic notes.
+
+### 18.4 How this actually gets executed, not promised all at once
+
+Doing this with genuine quality for all sixteen remaining items, four
+roundtables and roughly ten personas each, is real, substantial work,
+honestly closer to being folded into each item's own execution than a
+separate pass that could be produced in one sitting. Two things follow
+from that directly:
+
+1. **Every remaining task file, from this point forward, includes the
+   four-roundtable pass as part of that item's own findings review,** not
+   as a separate step to schedule later. When `3-pricing` runs, its
+   findings get this treatment as they come back, the same session, not a
+   follow-up.
+2. **Claude.ai does not run all sixteen items' worth of this unprompted
+   between messages.** There is no mechanism in this interface for
+   continuing to work after a response ends and reporting back later
+   unprompted, that is a real operational limit, not a reluctance to do
+   the work. What happens instead: each item, as it's worked, gets this
+   treatment as part of its own six-line report, and the findings land in
+   `C3_FINDINGS_REGISTER.md` the same way everything else does.
+
+---
+
+## 19. Revision log
 
 - 1 August 2026: initial version. Six-lens reconciliation, ten-category
   coverage map, Section 4 RLS priority check, tri-tool split.
@@ -946,3 +1125,11 @@ programme follows these rules, in addition to Part 0's existing discipline:
   and the live-site safety rule added given the site carries real traffic
   today. Programme confirmed on hold pending other work finishing, not yet
   started, see `C3_FINDINGS_REGISTER.md` Section 10 for current status.
+- 4 August 2026, later the same day: `4-links` expanded a second time to
+  add in-content and interactive links (social share buttons, in-content
+  article links, embedded-widget links), caught by Sammy a second time,
+  not by this document's own process. Section 18 added, the four-roundtable
+  framework (design, real user, adversarial and scale, mixed
+  cross-functional, roughly ten personas each), made a standing part of
+  every remaining lens's own execution rather than a separate pass,
+  demonstrated against C3L-15 and C3L-16 in the session this was written.

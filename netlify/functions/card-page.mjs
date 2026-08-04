@@ -21,6 +21,36 @@ const EBAY_CLIENT_SECRET = Netlify.env.get('EBAY_CLIENT_SECRET');
 const AMAZON_TAG = 'blasdigital-22';
 const FX_FALLBACK = 1.45; // AUD/USD fallback rate - update periodically
 
+// How much price history the chart shows, in days. C3L-16: this is a DATE window, not a row
+// count, so history growing past any fixed number of rows cannot silently freeze the chart.
+const CHART_WINDOW_DAYS = 90;
+
+// Draw a visible break in the chart line when consecutive snapshots are more than this many days
+// apart. C3L-28: the x axis is positioned by date, so a gap leaves real horizontal space, and
+// breaking the line stops it implying continuous data across days that were never collected.
+// Two days matches the 1 day tolerance used by update_mtg_price_changes (C3L-12): a single
+// missed sync is bridged, two or more consecutive missing days show as a gap.
+const CHART_GAP_BREAK_DAYS = 2;
+
+// ---------------------------------------------------------------------------
+// C3L-31, support note. If someone reports that a recent-change figure on a card page "looks
+// wrong" shortly after a sync outage, check this before treating it as a new bug.
+//
+// A gap in <game>_price_snapshots makes any recent-change figure either unavailable or measured
+// over a longer window than its label says. This is a known, dated, self-healing pattern, not a
+// new defect each time:
+//   - update_mtg_price_changes (C3L-12) now returns NULL rather than a mislabelled window, so
+//     the badge simply disappears for affected cards until enough fresh dailies accumulate.
+//   - It heals on its own once the gap falls outside the window, roughly 7 days for the 7 day
+//     figure and 30 for the 30 day one, counting from the last day of the gap.
+//   - The worked example is the 29 July to 3 August 2026 MTG outage (C3L-01, C3L-11), whose six
+//     missing days are permanent and cannot be backfilled, because Scryfall bulk data is
+//     point-in-time.
+// So: a missing badge shortly after a known outage is correct behaviour. A badge showing a
+// confident number that disagrees with the chart is not, and is worth investigating.
+// C3_FINDINGS_REGISTER.md carries the full history under the C3L- range.
+// ---------------------------------------------------------------------------
+
 // --- Helpers ---
 
 async function supabaseGet(path, useService = false) {
@@ -163,13 +193,39 @@ function buildPriceChart(snapshots) {
   const chartH = h - pad.t - pad.b;
   const n = points.length;
 
-  function toX(i) { return pad.l + (i / (n - 1)) * chartW; }
+  // C3L-28: x is positioned by DATE, not by array index. Index positioning spaced every snapshot
+  // equally, so the six missing days of the 29 July to 3 August 2026 outage rendered as an
+  // ordinary one day step, making a gap in the data visually indistinguishable from continuous
+  // collection. Date positioning leaves real horizontal space where days are missing.
+  const dates = points.map(p => new Date(p.snapshot_date));
+  const tMin = dates[0].getTime();
+  const tMax = dates[n - 1].getTime();
+  const tSpan = tMax - tMin;
+
+  function toX(i) {
+    if (!tSpan) return pad.l + (n > 1 ? (i / (n - 1)) * chartW : 0);
+    return pad.l + ((dates[i].getTime() - tMin) / tSpan) * chartW;
+  }
   function toY(val) { return pad.t + chartH - ((val - minPrice) / (maxPrice - minPrice)) * chartH; }
 
-  const nonFoilPath = prices.map((p, i) => (p > 0 ? `${i === 0 ? 'M' : 'L'}${toX(i)},${toY(p)}` : '')).filter(Boolean).join(' ');
-  const foilPath = pricesFoil.map((p, i) => (p > 0 ? `${i === 0 ? 'M' : 'L'}${toX(i)},${toY(p)}` : '')).filter(Boolean).join(' ');
+  // C3L-28: start a new subpath instead of drawing through a gap, so the line is broken rather
+  // than implying a value on days that were never collected.
+  function buildPath(series) {
+    let d = '', open = false;
+    for (let i = 0; i < series.length; i++) {
+      const v = series[i];
+      if (!(v > 0)) { open = false; continue; }
+      const gapDays = i > 0 ? (dates[i].getTime() - dates[i - 1].getTime()) / 86400000 : 0;
+      const breakHere = i > 0 && gapDays > CHART_GAP_BREAK_DAYS;
+      if (!open || breakHere) { d += `${d ? ' ' : ''}M${toX(i)},${toY(v)}`; open = true; }
+      else { d += ` L${toX(i)},${toY(v)}`; }
+    }
+    return d;
+  }
 
-  const dates = points.map(p => new Date(p.snapshot_date));
+  const nonFoilPath = buildPath(prices);
+  const foilPath = buildPath(pricesFoil);
+
   const labelIdxs = [0, Math.floor(n / 3), Math.floor(2 * n / 3), n - 1];
   const dateLabels = labelIdxs.map(i => {
     const d = dates[i];
@@ -182,11 +238,14 @@ function buildPriceChart(snapshots) {
             <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" stroke="#333" stroke-width="0.5" stroke-dasharray="4"/>`;
   }).join('');
 
-  // Embed price data for JS tooltip
-  const priceData = JSON.stringify(points.map(p => ({
+  // Embed price data for JS tooltip. C3L-28: x is emitted per point, because with date based
+  // positioning the tooltip can no longer recover a point's position from its index. Emitting it
+  // keeps the client and this function from drifting apart the way two copies of a formula would.
+  const priceData = JSON.stringify(points.map((p, i) => ({
     d: p.snapshot_date ? p.snapshot_date.slice(0,10) : '',
     nf: parseFloat(p.price_aud || 0),
-    foil: parseFloat(p.price_aud_foil || 0)
+    foil: parseFloat(p.price_aud_foil || 0),
+    x: Number(toX(i).toFixed(2))
   })));
 
   return `
@@ -237,14 +296,25 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const verdict = getSignalVerdict(signals);
   const edhrecLabel = getEdhrecLabel(card.edhrec_rank);
 
-  // 7-day % change
+  // 7-day % change.
+  //
+  // C3L-27, C3L-15: this used to recompute the figure here from snapshots.slice(-7), the last
+  // seven snapshot ROWS with no reference to dates. After the 29 July to 3 August 2026 gap those
+  // seven rows spanned 12 calendar days and were still labelled "7d". Rather than give this copy
+  // its own tolerance check, which would leave two mechanisms computing the same statistic and
+  // free to diverge again, it now reads the single already-corrected value that
+  // update_mtg_price_changes writes. That function anchors on real dates and returns NULL when
+  // the window is not genuinely about seven days (C3L-12), so a NULL here means "not currently
+  // knowable", and the badge correctly renders nothing at all.
+  //
+  // One deliberate consequence: the stored column is computed from price_usd, whereas the old
+  // local version used price_aud, so the percentage is now a USD-denominated movement shown
+  // beside an AUD price. Measured across a 3,000 card sample this shifts the figure by 0.26
+  // percentage points on average, though up to 16.7 on very cheap cards where AUD rounding to
+  // two decimals dominates. Logged as C3L-33.
   const sevenDayChange = (() => {
-    if (!snapshots || snapshots.length < 7) return null;
-    const recent = snapshots.slice(-7);
-    const first = parseFloat(recent[0]?.price_aud || 0);
-    const last = parseFloat(recent[recent.length - 1]?.price_aud || 0);
-    if (!first || !last) return null;
-    const pct = ((last - first) / first) * 100;
+    const pct = card.price_change_7d != null ? parseFloat(card.price_change_7d) : null;
+    if (pct == null || !Number.isFinite(pct)) return null;
     if (Math.abs(pct) < 0.5) return null;
     return { pct: pct.toFixed(1), up: pct > 0 };
   })();
@@ -285,12 +355,16 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   // Auto-generated context paragraph (defined after ebayAllUrl)
   const legalFormats = ['standard','pioneer','modern','legacy','vintage','commander'].filter(f => legalities[f] === 'legal');
   const legalStr = legalFormats.length ? legalFormats.slice(0,3).map(f=>f.charAt(0).toUpperCase()+f.slice(1)).join(', ') + (legalFormats.length > 3 ? ' and more' : '') : 'no major formats';
+  // C3L-27: this prose sentence was a THIRD implementation of the same seven-day statistic, with
+  // the same slice(-7) row-count flaw as the badge, and it could disagree with the badge sitting
+  // directly above it. It now derives from the same single source. When the value is unavailable
+  // it says nothing rather than asserting the price has been "stable", which was the old
+  // behaviour and would have been a claim made from no evidence.
   const trendStr = (() => {
-    if (snapshots.length < 7) return '';
-    const recent = snapshots.slice(-7).map(s => parseFloat(s.price_aud || 0));
-    const first = recent[0], last = recent[recent.length-1];
-    if (last > first * 1.05) return ' The price has been trending up over the last week.';
-    if (last < first * 0.95) return ' The price has dipped recently -- potentially a good buying window.';
+    const pct = card.price_change_7d != null ? parseFloat(card.price_change_7d) : null;
+    if (pct == null || !Number.isFinite(pct)) return '';
+    if (pct > 5) return ' The price has been trending up over the last week.';
+    if (pct < -5) return ' The price has dipped recently -- potentially a good buying window.';
     return ' The price has been stable recently.';
   })();
   const edhStr = card.edhrec_rank ? (card.edhrec_rank <= 200 ? ' It is a Commander format staple.' : card.edhrec_rank <= 1000 ? ' It sees regular play in Commander.' : '') : '';
@@ -688,7 +762,7 @@ ${contextPara}
         <div class="price-row price-row--nf">
           <span class="price-row-label">Non-Foil</span>
           <span class="price-row-aud">${priceAud ? formatAUD(priceAud) : 'N/A'}</span>
-          ${sevenDayChange ? `<span class="price-7d ${sevenDayChange.up ? 'price-7d-up' : 'price-7d-down'}">${sevenDayChange.up ? '▲' : '▼'} ${Math.abs(sevenDayChange.pct)}% 7d</span>` : ''}
+          ${sevenDayChange ? `<span class="price-7d ${sevenDayChange.up ? 'price-7d-up' : 'price-7d-down'}" role="img" aria-label="${sevenDayChange.up ? 'Up' : 'Down'} ${Math.abs(sevenDayChange.pct)} per cent over the last 7 days"><span aria-hidden="true">${sevenDayChange.up ? '▲' : '▼'} ${Math.abs(sevenDayChange.pct)}% 7d</span></span>` : ''}
           ${card.price_usd ? `<button class="price-row-toggle" onclick="toggleRowCurrency(this,'${parseFloat(card.price_usd).toFixed(2)}','${priceAud ? priceAud.toFixed(2) : ''}')">show USD</button>
           <span class="price-row-usd">$${parseFloat(card.price_usd).toFixed(2)}<span class="price-row-usd-label">USD</span></span>` : ''}
         </div>
@@ -1167,23 +1241,33 @@ async function submitFeedback() {
   const priceData = JSON.parse(svg.dataset.prices || '[]');
   const padL = parseFloat(svg.dataset.padl), padT = parseFloat(svg.dataset.padt);
   const chartW = parseFloat(svg.dataset.chartw), chartH = parseFloat(svg.dataset.charth);
-  const n = parseFloat(svg.dataset.n);
   const minP = parseFloat(svg.dataset.min), maxP = parseFloat(svg.dataset.max);
   const svgW = parseFloat(svg.dataset.w), svgH = parseFloat(svg.dataset.h);
 
-  function toX(i) { return padL + (i / (n - 1)) * chartW; }
+  // C3L-28: points are positioned by date, so the nearest point is found by comparing against
+  // each point's own emitted x rather than by inverting an even index spacing that no longer
+  // holds. Recomputing the mapping here instead would reintroduce exactly the kind of duplicated
+  // logic C3L-27 removed elsewhere on this page.
   function toY(val) { return padT + chartH - ((val - minP) / (maxP - minP)) * chartH; }
+
+  function nearestIndex(mouseX) {
+    let best = 0, bestDist = Infinity;
+    for (let i = 0; i < priceData.length; i++) {
+      const dx = Math.abs((priceData[i].x != null ? priceData[i].x : padL) - mouseX);
+      if (dx < bestDist) { bestDist = dx; best = i; }
+    }
+    return best;
+  }
 
   overlay.addEventListener('mousemove', function(e) {
     const rect = svg.getBoundingClientRect();
     const scaleX = svgW / rect.width;
     const mouseX = (e.clientX - rect.left) * scaleX;
-    const relX = mouseX - padL;
-    const idx = Math.max(0, Math.min(n - 1, Math.round((relX / chartW) * (n - 1))));
+    const idx = nearestIndex(mouseX);
     const pt = priceData[idx];
     if (!pt) return;
 
-    const cx = toX(idx);
+    const cx = pt.x != null ? pt.x : padL;
     const cyNF = pt.nf > 0 ? toY(pt.nf) : null;
 
     tooltipLine.setAttribute('x1', cx);
@@ -1385,11 +1469,24 @@ export default async (req, context) => {
 
     const card = cards[0];
 
+    // C3L-16: the rolling chart window, 90 days back from today, computed as a date so the
+    // query below cannot be bounded by row count.
+    const chartWindowStart = new Date(Date.now() - CHART_WINDOW_DAYS * 86400000)
+      .toISOString().slice(0, 10);
+
     // Parallel fetches for all supporting data
     const [snapshots, relatedData, prevNextData, likeData, printingsData, fxData, signalsData] = await Promise.allSettled([
-      // task-158: explicit columns. mtg_price_snapshots is 19 columns wide and this pulls 90 rows
-      // per card view; buildPriceChart and the 7-day sparkline read only these three.
-      supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&select=snapshot_date,price_aud,price_aud_foil&order=snapshot_date.asc&limit=90`, false),
+      // task-158: explicit columns. mtg_price_snapshots is 19 columns wide and this pulls roughly
+      // 90 rows per card view; buildPriceChart reads only these three.
+      //
+      // C3L-16: this used to be a bare `order=snapshot_date.asc&limit=90`, which takes the OLDEST
+      // 90 rows, not the newest. That was harmless only while every card had fewer than 90
+      // snapshots. The moment a card passed 90 its chart would have frozen on its first 90 days
+      // and never advanced again, while still rendering as current. The window is now bounded by
+      // DATE rather than by row count, so it stays a true rolling 90 days however long history
+      // grows. The limit is kept purely as a safety cap well above the roughly 90 rows a daily
+      // cadence produces, so it can no longer be the thing that decides the window.
+      supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&select=snapshot_date,price_aud,price_aud_foil&snapshot_date=gte.${chartWindowStart}&order=snapshot_date.asc&limit=400`, false),
       // Related cards render as slug link, name, thumbnail and converted price, nothing else.
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,image_uri_small,price_usd&price_usd=gte.0.5&order=price_usd.desc&limit=20&scryfall_id=neq.${card.scryfall_id}`, false),
       supabaseGet(`mtg_cards?set_code=eq.${card.set_code}&select=slug,name,collector_number&order=collector_number.asc`, false),
