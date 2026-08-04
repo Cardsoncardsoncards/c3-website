@@ -6,16 +6,20 @@
 // Card Kingdom buylist prices added 13 May 2026.
 
 import { createClient } from '@supabase/supabase-js';
-import { createWriteStream, existsSync, unlinkSync, createReadStream } from 'fs';
+import { createWriteStream, existsSync, unlinkSync, createReadStream, openSync, readSync, closeSync } from 'fs';
 import { pipeline as streamPipeline } from 'stream/promises';
 import { createHash } from 'crypto';
+
+import { createGunzip } from 'zlib';
 
 import streamChainPkg from 'stream-chain';
 import streamJsonPkg from 'stream-json';
 import streamArrayPkg from 'stream-json/streamers/StreamArray.js';
+import jsonlParserPkg from 'stream-json/jsonl/Parser.js';
 const { chain } = streamChainPkg;
 const { parser } = streamJsonPkg;
 const { streamArray } = streamArrayPkg;
+const { parser: jsonlParser } = jsonlParserPkg;
 
 // --- Config ---
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -30,7 +34,9 @@ const BATCH_PAUSE_MS = 250;
 const HASH_FETCH_PAUSE_MS = 100;
 const MIN_SNAPSHOT_USD = 0.50;
 const MAX_RETRIES = 3;
-const TEMP_FILE = 'scryfall-bulk.json';
+// Scryfall now publishes gzipped JSONL, not a plain JSON array, so the temp
+// file keeps its real extension rather than pretending to be .json.
+const TEMP_FILE = 'scryfall-bulk.jsonl.gz';
 
 const CK_PRICELIST_URL = 'https://api.cardkingdom.com/api/v2/pricelist';
 
@@ -107,18 +113,70 @@ async function downloadBulkFile() {
   const bulkRes = await fetch('https://api.scryfall.com/bulk-data', {
     headers: { 'User-Agent': 'CardsonCardsonCards/1.0 (cardsoncardsoncards.com.au)' }
   });
+  // Check the response before parsing it. Without this, a 4xx or 5xx from
+  // Scryfall surfaced as the misleading "could not find default_cards" error
+  // below, because bulkData.data was undefined rather than the entry missing.
+  if (!bulkRes.ok) {
+    throw new Error(`Scryfall bulk-data index returned HTTP ${bulkRes.status}`);
+  }
   const bulkData = await bulkRes.json();
   const defaultCards = bulkData.data?.find(d => d.type === 'default_cards');
-  if (!defaultCards?.download_uri) throw new Error('Could not find default_cards bulk URL');
+  if (!defaultCards) {
+    const seen = (bulkData.data || []).map(d => d.type).join(', ') || 'none';
+    throw new Error(`No default_cards entry in Scryfall bulk index. Types present: ${seen}`);
+  }
 
-  console.log('Downloading:', defaultCards.download_uri);
-  const fileRes = await fetch(defaultCards.download_uri, {
+  // Scryfall replaced the plain-JSON download_uri with a gzipped JSONL file
+  // under jsonl_download_uri. The old field was dropped entirely, which is
+  // what broke this sync from 29 July 2026. Prefer the new field, fall back to
+  // the old one so a Scryfall rollback does not break the sync a second time.
+  const downloadUri = defaultCards.jsonl_download_uri || defaultCards.download_uri;
+  const isJsonl = Boolean(defaultCards.jsonl_download_uri);
+  if (!downloadUri) {
+    throw new Error(
+      'default_cards entry has neither jsonl_download_uri nor download_uri. ' +
+      `Fields present: ${Object.keys(defaultCards).join(', ')}`
+    );
+  }
+
+  console.log(`Downloading (${isJsonl ? 'gzipped JSONL' : 'legacy JSON array'}):`, downloadUri);
+  const fileRes = await fetch(downloadUri, {
     headers: { 'User-Agent': 'CardsonCardsonCards/1.0 (cardsoncardsoncards.com.au)' }
   });
   if (!fileRes.ok) throw new Error('Bulk download failed: ' + fileRes.status);
 
   await streamPipeline(fileRes.body, createWriteStream(TEMP_FILE));
   console.log('Bulk file saved.');
+}
+
+// Work out what is actually on disk rather than trusting the file name or the
+// index's field names. Covers the gzipped JSONL Scryfall serves now, a plain
+// JSONL file, and the legacy JSON array, so the reuse-existing-file path and
+// the legacy fallback in downloadBulkFile both stay correct.
+function detectBulkFormat(path) {
+  const fd = openSync(path, 'r');
+  try {
+    const head = Buffer.alloc(64);
+    const bytesRead = readSync(fd, head, 0, 64, 0);
+    if (bytesRead >= 2 && head[0] === 0x1f && head[1] === 0x8b) return 'gzip-jsonl';
+    const firstChar = head.slice(0, bytesRead).toString('utf8').trimStart()[0];
+    return firstChar === '[' ? 'json-array' : 'jsonl';
+  } finally {
+    closeSync(fd);
+  }
+}
+
+// Every branch emits {key, value} objects, so the consumer below is unchanged.
+function buildCardStream(path) {
+  const format = detectBulkFormat(path);
+  console.log('Bulk file format detected:', format);
+  if (format === 'gzip-jsonl') {
+    return chain([createReadStream(path), createGunzip(), jsonlParser()]);
+  }
+  if (format === 'jsonl') {
+    return chain([createReadStream(path), jsonlParser()]);
+  }
+  return chain([createReadStream(path), parser(), streamArray()]);
 }
 
 function computeCardHash(card) {
@@ -460,11 +518,7 @@ async function main() {
   console.log('Streaming cards...');
 
   await new Promise((resolve, reject) => {
-    const cardStream = chain([
-      createReadStream(TEMP_FILE),
-      parser(),
-      streamArray()
-    ]);
+    const cardStream = buildCardStream(TEMP_FILE);
 
     cardStream.on('data', async ({ value: card }) => {
       totalProcessed++;

@@ -5,6 +5,7 @@ _site/
 .env.local
 .claude/
 scryfall-bulk.json
+scryfall-bulk.jsonl.gz
 !_site/cards.html  
 !_site/legal.html  
 
