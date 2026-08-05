@@ -3,6 +3,8 @@
 // Fetches all weiss-schwarz sets + cards + prices from tcgapi.dev Pro
 // Upserts into weissschwarz_sets, weissschwarz_cards, weissschwarz_price_snapshots
 
+import { assignStableSlugs } from './shared/slug-assign.mjs';
+
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
@@ -25,34 +27,6 @@ function slugify(name, number, setAbbr) {
   return prefix ? `${prefix}-${withNumber}` : withNumber;
 }
 
-// Deterministic slug assignment for rows that collide on the same base slug.
-// Among a colliding group the LOWEST id keeps the bare slug and every other row gets its own id
-// appended. Returns a Map of id -> final slug.
-//
-// The previous guard walked the array in arrival order and gave the bare slug to whichever row
-// happened to come first. That is not stable: these tables carry a UNIQUE index on slug alone
-// while the upsert conflict target is id, so as soon as the upstream API returned the colliding
-// rows in the other order, the run tried to move an already-taken bare slug onto a different id
-// and Postgres aborted the whole batch with a 23505. That is why this sync succeeded once on
-// 28 July and then failed every night after it.
-// Lowest-id-wins cannot flip between runs, and it reproduces the assignment already stored in
-// weissschwarz_sets, so no live set or card URL changes as a result of this fix.
-function assignUniqueSlugs(items, baseSlugFor) {
-  const byBase = new Map();
-  for (const item of items) {
-    const base = baseSlugFor(item);
-    if (!byBase.has(base)) byBase.set(base, []);
-    byBase.get(base).push(item);
-  }
-  const slugById = new Map();
-  for (const [base, group] of byBase) {
-    const ordered = group.slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
-    ordered.forEach((item, idx) => {
-      slugById.set(item.id, idx === 0 ? base : `${base}-${item.id}`);
-    });
-  }
-  return slugById;
-}
 
 async function getExchangeRate() {
   const base = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
@@ -239,9 +213,15 @@ export default async (req) => {
     // no prices are ever written. That is exactly what happened: "Kaguya-Sama: Love is War"
     // and "Kaguya-Sama: Love is War?" both reduce to kaguya-sama-love-is-war once the "?" is
     // stripped, and the sync had been failing on it daily since 6 June.
-    // Collisions are resolved by assignUniqueSlugs, which is order-independent. See the note
-    // on that function for why the earlier arrival-order guard only held for a single run.
-    const setSlugs = assignUniqueSlugs(allSets, s => s.slug || slugify(s.name, null, null));
+    // Collisions are resolved by assignStableSlugs, which keeps whatever slug is already
+    // stored on the record and only invents an assignment for a genuinely new colliding pair.
+    const setSlugs = await assignStableSlugs({
+      items: allSets,
+      baseSlugFor: s => s.slug || slugify(s.name, null, null),
+      table: 'weissschwarz_sets',
+      supabaseUrl: SUPABASE_URL,
+      serviceKey: SUPABASE_SERVICE_KEY
+    });
     const setRows = allSets.map(s => {
       return {
         id:           s.id,
@@ -352,20 +332,22 @@ export default async (req) => {
       const cardRows = [];
       const snapRows = [];
       const setAbbr = set.abbreviation || set.slug || String(set.id);
-      // CORRECTION, 5 August 2026 (C3L-49). Task 10 applied assignUniqueSlugs here as well as to
-      // the sets above, on the assumption that what was verified for the sets held for the cards.
-      // It does not. Checked against the rows actually stored: weissschwarz_cards has 2 colliding
-      // pairs and lowest-id-wins reproduces only 1 of them. On the other, id 962780
-      // "Kaguya-sama Love is War? Booster Box" currently holds the bare slug and id 961867 is the
-      // lower, so the rule would have taken the slug off the live row and moved a card URL on the
-      // next successful run. The sets fix is unaffected and stays: it was verified against the
-      // stored rows and reproduces them exactly.
-      // So the cards path is deliberately left on the original arrival-order guard. That leaves
-      // the latent 23505 risk here open, which is logged rather than traded for a live URL change,
-      // and it is the same call made for gundam, pokemon, unionarena and yugioh. Closing it
-      // properly means seeding the assignment from the slugs already stored, which is the real
-      // fix for all five and is its own task.
-      const slugsSeen = new Set();
+      // C3L-55, 5 August 2026. This path is now on the same stored-slug rule as everything else.
+      // History worth keeping, because it is why the rule looks like this: Task 10 put
+      // lowest-id-wins here on the strength of having verified it for the SETS, which was an
+      // extrapolation. weissschwarz_cards has 2 colliding pairs and lowest-id-wins reproduces
+      // only 1. On the other, id 962780 "Kaguya-sama Love is War? Booster Box" holds the bare
+      // slug while 961867 is lower, so the rule would have moved a live card URL. Task 11
+      // reverted it to the arrival-order guard, which protected the URL but left the 23505 risk.
+      // assignStableSlugs closes both: 962780 keeps the slug it already owns because it owns it,
+      // not because of how its id compares to anything.
+      const cardSlugs = await assignStableSlugs({
+        items: setCards,
+        baseSlugFor: card => slugify(card.clean_name || card.name, card.number, setAbbr),
+        table: 'weissschwarz_cards',
+        supabaseUrl: SUPABASE_URL,
+        serviceKey: SUPABASE_SERVICE_KEY
+      });
 
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
@@ -373,9 +355,7 @@ export default async (req) => {
         const lowPrice    = price.low_price || null;
         const foilPrice   = price.foil_market_price || null;
 
-        let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
-        if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
-        slugsSeen.add(slug);
+        const slug = cardSlugs.get(card.id);
 
         cardRows.push({
           id:                card.id,

@@ -41,7 +41,14 @@ jobs:
           done < <(find netlify/functions scripts -type f -name '*.mjs' | sort)
           echo "Checked $count .mjs file(s)."
           if [ "$fail" -ne 0 ]; then
-            echo "::error::Syntax check failed — see annotations above."
+            echo "::error::Syntax check failed, see annotations above."
             exit 1
           fi
           echo "All .mjs files passed syntax check."
+
+      # The slug rule used to be inline in 31 sync functions and is now one shared module,
+      # so a mistake in it breaks every game at once instead of one. This runs the real
+      # module against real stored rows, including the five cases where the previous rule
+      # would have moved a live URL. See C3L-55.
+      - name: Slug assignment regression test
+        run: node scripts/test-slug-assign.mjs

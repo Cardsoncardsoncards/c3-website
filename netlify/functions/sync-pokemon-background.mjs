@@ -6,6 +6,8 @@
 // Snapshot decoupling: card data writes gated on sync progress,
 //   snapshot writes run for ALL sets every day regardless
 
+import { assignStableSlugs } from './shared/slug-assign.mjs';
+
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
@@ -459,7 +461,13 @@ export default async (req) => {
       const setAbbr   = set.abbreviation || set.slug || String(set.id);
       const cardRows  = [];
       const snapRows  = [];
-      const slugsSeen = new Set();
+      const cardSlugs = await assignStableSlugs({
+        items: setCards,
+        baseSlugFor: card => slugify(card.clean_name || card.name, card.number, setAbbr),
+        table: 'pokemon_cards',
+        supabaseUrl: SUPABASE_URL,
+        serviceKey: SUPABASE_SERVICE_KEY
+      });
 
       for (const card of setCards) {
         const price       = priceMap.get(card.id) || {};
@@ -467,9 +475,7 @@ export default async (req) => {
         const lowPrice    = price.low_price || null;
         const foilPrice   = price.foil_market_price || null;
 
-        let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
-        if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
-        slugsSeen.add(slug);
+        const slug = cardSlugs.get(card.id);
 
         // pokemontcg.io stats + prices, joined on name|number (same key used for snapshots below)
         const key  = `${(card.clean_name || card.name).toLowerCase().trim()}|${(card.number || '').toLowerCase().trim()}`;

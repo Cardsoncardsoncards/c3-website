@@ -3,6 +3,8 @@
 // Fetches all gundam-card-game sets + cards + prices from tcgapi.dev Pro
 // Upserts into gundam_sets, gundam_cards, gundam_price_snapshots
 
+import { assignStableSlugs } from './shared/slug-assign.mjs';
+
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
@@ -255,8 +257,14 @@ export default async (req) => {
 
       const cardRows = [];
       const snapRows = [];
-      const slugsSeen = new Set();
       const setAbbr = set.abbreviation || set.slug || String(set.id);
+      const cardSlugs = await assignStableSlugs({
+        items: setCards,
+        baseSlugFor: card => slugify(card.clean_name || card.name, card.number, setAbbr),
+        table: 'gundam_cards',
+        supabaseUrl: SUPABASE_URL,
+        serviceKey: SUPABASE_SERVICE_KEY
+      });
 
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
@@ -264,9 +272,7 @@ export default async (req) => {
         const lowPrice    = price.low_price || null;
         const foilPrice   = price.foil_market_price || null;
 
-        let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
-        if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
-        slugsSeen.add(slug);
+        const slug = cardSlugs.get(card.id);
 
         cardRows.push({
           id:                card.id,
