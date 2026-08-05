@@ -974,6 +974,15 @@ Priority order for the next session:
    writes zero snapshots should exit non-zero, a failed deploy should
    notify, and something should compare the published `commit_ref` against
    `origin/main`.
+   **Both now done, but note WHEN and how long they sat: C3L-26 in Task 09,
+   C3L-10 not until Task 10, 5 August 2026 (C3L-50).** C3L-10 had been
+   carried as an open suggestion since the kickoff session while nothing
+   had actually been implemented, on all 4 script syncs, for the entire
+   programme. It was closed only because Task 10 measured each job rather
+   than trusting the register's own status. **What it does NOT cover is the
+   31 background syncs: those do log and do return non-2xx, so their
+   problem is not dishonest exit codes, it is that nothing reads what they
+   log, which is C3L-51 and is still open.**
 5. ~~Protocol Section 4's RLS/BOLA test.~~ **DONE and PASSED, 5 August 2026,
    task `c3-audit-0rls-c3l43`. This closes the question that had been open
    since the first session.** Two synthetic accounts, real sessions through
@@ -1001,10 +1010,33 @@ Priority order for the next session:
    recorded under C3L-06. The Task 07 blind spot that it had never been
    executed end to end is now closed: it has, it works, and it took 32
    seconds.**
-6. Wave 1 slugs (`1-claims`, `3-pricing`, `4-links`), each in its own
+6. **The two open items Task 10 deliberately did not close, 5 August 2026,
+   task `c3-audit-5-datasync`. Both are High and both were left open on
+   purpose rather than half-done.**
+   **C3L-49 is the one to do first, and it wants its own task.** The
+   arrival-order slug guard that froze weissschwarz for 8 days
+   (C3L-48) is still present in 30 other sync functions, and 56
+   unique-on-slug indexes across the `_cards` and `_sets` tables make it
+   fatal in every one of them the moment two names collide. It is not a
+   find-and-replace: lowest-id-wins happened to match what weissschwarz had
+   stored, but if any other game currently has a collision resolved the
+   other way, applying the rule blind would **change live card URLs**. The
+   task is to check each game's existing suffixed slugs against the rule
+   first, then sweep only where the assignment is unchanged, and handle any
+   game where it differs as its own decision with a redirect.
+   **C3L-51 needs a decision from Sammy before any code.** Nothing reads
+   `sync_events`, and pg_cron job 2 marks `webhook_fired = true` without
+   firing anything, so the evidence that no alert went out is erased every
+   6 hours. 14 games logged errors in the last 30 days and not one of them
+   reached a human. The open question is where an alert should go, the
+   `ccc.squadhelp@gmail.com` inbox, Resend, or a GitHub Actions job that
+   reads the table and fails loudly, and that is a choice, not a patch.
+   Also carried: `source` is still populated by only `sync-mtg-daily.mjs`,
+   so 31 games have the column and no writer (C3L-52).
+7. Wave 1 slugs (`1-claims`, `3-pricing`, `4-links`), each in its own
    worktree per Part 0. `3-pricing` should inherit C3L-11 and C3L-12 as
    known context rather than rediscovering them.
-7. Housekeeping carried from this session: `c3-master-audit-findings-and-actions-v1.md`
+8. Housekeeping carried from this session: `c3-master-audit-findings-and-actions-v1.md`
    is not present anywhere on the laptop and so was never seeded into the
    repo, only the protocol and this register were. Protocol Section 0 marks
    it historical seed content superseded by this file, so nothing is
@@ -1012,7 +1044,7 @@ Priority order for the next session:
    record. `C3_SESSION_RULES.md`, named in the kickoff task file, does not
    exist in the repo either, and no file of that name was found on the
    machine.
-8. This section becomes a pointer to whichever wave or slug is currently
+9. This section becomes a pointer to whichever wave or slug is currently
    active, updated by whoever picks up the next task, every time, not just
    at convenient checkpoints.
 
