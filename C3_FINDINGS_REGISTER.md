@@ -38,6 +38,7 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
 | Date | Task or slug | What happened | Six-line report (condensed) |
 |---|---|---|---|
+| 2026-08-05 | `c3-audit-0rls-c3l43`, Claude Code, laptop, own worktree | Task 06, two pieces. **Piece 1 closes protocol Section 4 and C3L-06, open since the first session, and it passes.** Two synthetic accounts, real sessions through the live endpoint, and eight object-level attacks by Account A against Account B's follow row: read, soft delete, hard delete, token-authenticated hard delete, bogus token, unauthenticated delete, and token substitution on two surfaces. **All eight rejected, B's row verified intact in the database after each.** Anon-key sweep of all 13 sensitive tables returned 0 rows, and that is meaningful for the 4 that actually hold data, including `accounts` with 138 real rows and `follow_magic_links` with 139 live tokens. All synthetic data removed, counts back to baseline exactly. One real finding, C3L-44, account enumeration through signup, which is information disclosure not an authorisation gap, so it did not halt the work. **Piece 2, C3L-43**: the breakdown the task asked for is 1,871 genuinely stale and **0** falling through a function gap, so the fix is an expiry not a repair; 798 stale verdicts expired, 0 current cards affected | Compliance: this was authorised security testing of the owner's own site under protocol Section 4, non-destructive, and all synthetic data was removed with counts verified back to baseline. One email was sent to a synthetic `example.com` address as an unavoidable part of exercising the real signup path; Account B was created directly to avoid a second. C3L-44 touches the Privacy Policy's implicit position on account confidentiality. Removal: none new. Suggestions: decide whether signup should be made generic (C3L-44), and consider a recurring scheduled version of this RLS test per Section 4's closing line rather than leaving it a one-time pass. Blind spots: the two-account test covered follows, which is the only user-owned row type that currently exists, so "collection rows" and "alert rows" in Section 4's wording were vacuous rather than tested, `card_price_alerts` and `collection_waitlist` are both empty tables; and the 1,042 stale cards above the price floor were explained as churn by rate analysis, not per-card. Opportunities: none new. Fragility: `update_mtg_signals_batched` exits its batch loop on the first empty batch, which is not firing today but would silently truncate processing if a 500-card window ever yielded zero upserts |
 | 2026-08-05 | `c3-audit-c3l39-c3l41-c3l42`, Claude Code, laptop, own worktree | Task 05, **three separate pieces, kept separate in three migrations, three register entries and a structured commit**. Piece 1, C3L-39: minimum-history guard at 30 distinct days, implemented at source so all three consuming surfaces inherit it, **measured effect 424 verdicts withheld** (buy 4,634 to 4,522, sell 8,693 to 8,381) with 0 sub-threshold cards still verdicted, plus the "Mid-range price" conflation fixed on the card page with a distinct not-enough-history state. Piece 2, C3L-41: exactly 8 rows flagged by primary key, values preserved not deleted, **Ornithopter's low moved $0.07 to $715 and its ratio 10,357 to 1.0**, and honestly, 2 of the 8 did not change because their signal rows are stale. Piece 3, C3L-42: `written_at` and `source` added to `mtg_price_snapshots` with the default attached separately to avoid a full rewrite of a 1,559 MB live table, and the other 7 Core games confirmed still lacking both. C3L-38's question answered definitively (not the same bug, one root cause, the old fix silenced it). C3L-43 opened | Compliance: nothing touched on privacy, EPN, Amazon, Scryfall attribution or `/legal`. C3L-39 reduces an unfounded-advice exposure rather than creating one, since a buy or sell call is the most actionable thing this site says. Removal: `update_price_stats` (C3L-35) and `updateSnapshotVerdicts` (C3L-38) remain removal candidates and C3L-38's answer strengthens the case, it is a step that runs daily and provably does nothing. Suggestions: expire stale `mtg_signals` rows (C3L-43), and either create `exec_sql` or delete `updateSnapshotVerdicts` rather than leaving a daily no-op. Blind spots: `/market` and the weekly email were NOT updated for the stale-row case and still surface all 798, only the card page is covered; the other 7 Core games have no equivalent guard and were not given one; and the display change is verified by reading and by node syntax check, not by a rendered browser. Opportunities: none new. Fragility: `compute_mtg_signals_batch` has now been replaced twice in one session, and its final body carries changes from two different findings, so anyone reverting one piece must read both migrations rather than assuming the file they are holding is the whole story |
 | 2026-08-05 | `c3-audit-c3l40-confirmation`, Claude Code, laptop, own worktree, **investigation only, nothing shipped** | Task 04. No fix, no guard, no data correction, no migration. C3L-40's "almost certainly a bad snapshot" is replaced with measured rates: of the 242 outliers, **189 (78.1 per cent) are genuine market data**, the three Marvel sets released 26 June whose preorder highs collapsed after release, **8 (3.3 per cent) are ingestion-suspect** and all trace to one anomalous batch, and **45 (18.6 per cent) are unclear**. So the original finding overstated the problem by roughly an order of magnitude. For Ornithopter specifically, three candidate mechanisms were tested and ruled out (decimal or FX shift, wrong printing matched, foil mix-up), leaving the 6 June batch as the mechanism, and it is stated plainly that what Scryfall actually reported that day cannot be proven because neither Scryfall nor C3 keeps the history. The systemic cause is logged as C3L-41, a one-off 39,515 row write on a single date that has never recurred and whose writer could not be identified, and C3L-42 explains why it could not be: the table has no ingestion timestamp or source column at all | Compliance: nothing touched, no privacy, EPN, Amazon, Scryfall or `/legal` surface involved. Scryfall API use stayed within its terms, 7 single-card requests with the project User-Agent and a delay between them. Removal: none new. Suggestions: any cleanup should target only the 6 June batch rows and must not touch the Marvel cards, whose extreme ranges are real price history; and add a `written_at` plus source or batch marker to the snapshot tables (C3L-42) before the next time this question is asked. Blind spots: 45 of 242 are unresolved and I could not resolve them, the 6 June writer is unidentified, and only 7 cards were individually confirmed against the source, so the 78 per cent genuine figure rests on set-release timing and price-collapse shape rather than on 189 individual source checks. The other 31 games were not examined for the same 6 June anomaly. Opportunities: none new. Fragility: a finding written from one card's appearance became a 242 card claim in the register for a day, the second time in three tasks that a finding generalised further than its evidence |
 | 2026-08-05 | `c3-audit-c3l34-investigation`, Claude Code, laptop, own worktree, **investigation only, nothing shipped** | Task 03. No migration, no code change, no displayed figure or verdict altered. The headline result is a correction to my own C3L-34 from Task 02: its central claim was wrong. The card page says "Recent High/Low", not "52 week", and that wording was a deliberate decision documented independently in two places in the codebase. A true 365 day filter changes **no value today**, 0 of 5,000 cards differ, so C3L-34 is a naming problem now and a value problem only from 4 May 2027. The single real exposure is one marketing sentence at `src/cards.html:708`. Downgraded High to Medium. Full before-and-after for 12 real cards under both candidate approaches is in `C3L34_INVESTIGATION_2026-08-05.md`. Approach (a) flips zero verdicts and is already implemented everywhere except that one sentence; approach (b) would remove all 13,327 verdicts and all 43,507 figures for roughly nine months. Three new findings opened, one of them (C3L-40) a genuinely wrong displayed number that neither candidate approach would fix | Compliance: the `src/cards.html` sentence is a misleading-precision claim of the kind protocol Section 7 flags under the ACCC priority, identified and left for the fix task per this task's own no-ship rule. Nothing else touched. Removal: `update_price_stats` (C3L-35) and `updateSnapshotVerdicts` (C3L-38) are both removal candidates, being two writers of the same columns with no working one between them. Suggestions: correct the one marketing sentence, and consider a minimum-history and outlier guard on the verdict, which is the third option the data argues for and which neither (a) nor (b) covers. Blind spots: this pass read the MTG signals path only, the other seven Core games have their own signal or verdict surfaces that were not looked at, and no rendered-browser check was done, all label claims come from reading source and one live HTML fetch. Opportunities: none new. Fragility: C3L-34 stood in the register for a day as a High severity claim that was wrong on its central point, which is a caution about findings written from reading one function rather than tracing to the display layer |
@@ -70,7 +71,7 @@ compress old rows once this file has real history.)*
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-43)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-44)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -83,7 +84,7 @@ being re-verified.
 | C3L-03 | Two downstream pg_cron jobs (`update-mtg-price-changes-daily`, `update-mtg-signals-daily`) report `status: succeeded` every day this week, while silently computing output from data that has not changed, because their input has been frozen since 07-28. A green cron status does not mean the output is meaningful | Direct query against `cron.job_run_details` for jobs 1, 11, 15, all show `succeeded` through 08-04 | High, the real-world version of protocol Section 13, success reported is not the same as the thing the business needs being true |
 | C3L-04, resolved 2026-08-04 | `sync_events` has no record of the job that actually failed, it only logs `ids_sync_start`/`ids_sync_success` for MTG (a different, card-ID sync, which ran fine today). "Failed in 15 seconds" suggests an early-stage failure (auth, missing secret, connection, changed Scryfall endpoint) rather than a mid-sync data error, but this is inference, not confirmed | Direct query against `sync_events` filtered on `game ilike '%mtg%'`, only two event types present, neither for the failing job | High, needs Claude Code, GitHub Actions logs and the workflow file are not reachable from Claude.ai |
 | C3L-05, resolved 2026-08-04 | `collection_waitlist` (raw emails: id, email, joined_at, source_card_id, source_card_name) had an `anon_read_collection_waitlist` policy with `qual: true`, any anonymous request could read every row. Every comparable table in the schema is anon-insert-only with no anon read policy, this was the one inconsistent with that pattern | Confirmed via `pg_policies`, table was empty (0 rows) at the time, nothing was actually exposed. Fixed via `apply_migration`, dropping the policy, insert confirmed still working after | Was critical, now resolved |
-| C3L-06 | No table in the public schema uses the `authenticated` role in any policy, `rowsecurity` is `true` on all roughly 140 tables checked. Account, follow, and follow-magic-link data has no `anon` policy at all beyond `service_role`, the browser cannot touch those tables directly under any circumstance | Confirmed via `pg_tables.rowsecurity` and `pg_policies` across the full schema | Informational, positive finding, but shifts real risk to Netlify function code, which this session could not read. Section 12's authentication-without-authorisation pattern still needs checking there specifically |
+| C3L-06, **RESOLVED 2026-08-05 by live two-account test, piece 1 of task `c3-audit-0rls-c3l43`. Protocol Section 4 is now closed, the question that has been open since the first session.** | **The live test that C3L-06 could never do has now run, and everything holds.** Two synthetic accounts were created, sessions established through the real `/account?token=` endpoint, and Account B created a real follow through `/api/card-follow`. Account A then attempted eight attacks against it through the same endpoints the app itself uses: read B's rows via its own dashboard, soft-delete B's follow (`action=stop`), hard-delete it (`action=remove`), read B's rows via `/api/my-follows` with A's own magic token, hard-delete B's follow via that token-authenticated path, the same with a bogus token, an unauthenticated delete, and a GET on `/api/unsubscribe-follow` with B's token. **All eight were rejected. B's follow row was verified intact in the database after every single one**, still owned by B, `unsubscribed_at` still NULL, never deleted. The bogus-token attempt returned 404. Separately, the anon-key PostgREST sweep was run against all 13 tables holding email, token, password or Stripe columns, and every one returned 0 rows. **That result is only meaningful for the 4 tables that actually contain data**, and it is: `accounts` (138 real rows including emails and password hashes), `follow_magic_links` (139 live tokens), `follows` and `email_log` all returned 0 to anon despite holding real data. The other 9 are empty, so their 0-row result proves nothing and rests on policy definition alone, 6 being INSERT-only and `retailer_placements` carrying a deliberate `active = true` anon SELECT | Live HTTP against `cardsoncardsoncards.com.au` for the object-level tests, direct `mtg_price_snapshots`-style verification queries after each attack, live PostgREST against the project URL with the legacy anon key for the table sweep, and row counts via service role to distinguish "blocked" from "empty" | Informational, positive, and now **evidenced rather than inferred**. All synthetic data was removed afterwards and the counts confirmed back to baseline exactly: accounts 138, follows 4, magic links 139, 0 leftovers. Original text follows. | No table in the public schema uses the `authenticated` role in any policy, `rowsecurity` is `true` on all roughly 140 tables checked. Account, follow, and follow-magic-link data has no `anon` policy at all beyond `service_role`, the browser cannot touch those tables directly under any circumstance | Confirmed via `pg_tables.rowsecurity` and `pg_policies` across the full schema | Informational, positive finding, but shifts real risk to Netlify function code, which this session could not read. Section 12's authentication-without-authorisation pattern still needs checking there specifically |
 
 | C3L-07 | `downloadBulkFile()` called `bulkRes.json()` without ever checking `bulkRes.ok`, in direct breach of CLAUDE.md's own "ALWAYS check res.ok before calling res.json()" rule. This is why the failure presented as "Could not find default_cards bulk URL", a message that pointed at the wrong cause: any non-200 from Scryfall would have produced the identical misleading error, and the entry was in fact present the whole time, only its URL field had been renamed | Read directly from `scripts/sync-mtg-daily.mjs:105-112` at the failing commit, cross-checked against the live endpoint returning HTTP 200 with a healthy `default_cards` entry, which ruled out the message's literal claim | Was high, now resolved. Fixed in the same change as C3L-01. A wrong error message cost real diagnostic time across seven days of failures |
 | C3L-08, resolved 2026-08-04 | `scripts/sync-mtg-daily.mjs` imports `stream-chain` directly, but `stream-chain` is not declared in `package.json`. It resolves today only because `stream-json` depends on it and `package-lock.json` pins it, so `npm ci` happens to install it. A `stream-json` major bump that drops or renames that dependency would break the MTG sync with no change to C3's own code | Confirmed via `package.json` dependencies (only `@supabase/supabase-js` and `stream-json`), `stream-json`'s own dependency on `stream-chain ^2.2.4`, and the lock file pinning it | Medium. Not fixed in this change deliberately, since regenerating the lock file mid-incident-fix widens the blast radius of a repair that needed to land cleanly. One-line fix, should be its own commit |
@@ -150,7 +151,60 @@ the fix commit, no migration and no schema change was involved.
 
 | C3L-37, resolved 2026-08-05 | Found while rewriting the chart path builder for C3L-28, not looked for. The old builder emitted a `moveto` only at array index 0 (`i === 0 ? 'M' : 'L'`) and dropped empty entries afterwards, so any series whose FIRST point had no price produced a path beginning with `L`. An SVG path that does not begin with a moveto is invalid and renders nothing at all. This hit the foil line specifically, since a card commonly has no foil price on the earliest snapshot in the window and gains one later: those cards silently showed no foil line while the legend still advertised one | Reproduced in isolation: input `[0,0,5,6,7]` produced `L20,95 L30,94 L40,93` under the old builder, with no leading moveto, against `M20,95 L30,94 L40,93` under the new one. Incidence measured directly, 43 of 2,000 sampled cards (about 2.2 per cent, so roughly 900 across the charted catalogue) have a missing first-point foil price and a later real one | Medium. Resolved as a side effect of C3L-28's fix, because the new builder always opens a subpath with a moveto. Recorded rather than absorbed silently, since it was a real user-visible defect that no finding had identified and no test would have caught |
 
-| C3L-43 | Found while measuring C3L-39's effect, not looked for. `mtg_signals` holds **1,871 rows that are never recomputed**, because `compute_mtg_signals_batch` only processes cards present on the latest snapshot date and nothing ever ages out or removes a row for a card that stops appearing. **798 of those stale rows still display a buy or sell verdict**, computed from data as old as 27 June, with `latest_date` values up to five weeks behind the rest of the site. A visitor sees a confident "Near recent low" with no indication it was last true a month ago | Measured directly after the C3L-39 recompute: 41,636 of 43,507 rows were processed, leaving 1,871 with a NULL `days_of_history`, of which 798 carry a verdict, `latest_date` ranging 2026-06-27 to 2026-07-28 | Medium. Partially mitigated already, not by design but as a side effect: C3L-39's display guard treats a NULL `days_of_history` as not-confident, so the MTG card page now shows "Not enough price history yet" for these rather than a stale verdict. `/market` and the weekly email read the columns directly and are NOT covered, so those two surfaces still surface all 798. The real fix is for the signal computation to expire or delete rows whose card has left the daily set, which is its own task |
+| C3L-44 | **Account enumeration through the signup endpoint.** `POST /account` with `action=signup` returns a materially different response depending on whether the email is already registered: a fresh address returns "Almost there / We have sent a confirmation link" while a registered one returns "That email already has an account. Log in, or reset your password." Both are HTTP 200, but the body differs (25,341 bytes against 30,721) and so does the timing (1,930 ms against 716 ms, because the fresh path sends an email and the existing path returns before it). Either signal is enough to test an address list against the site and learn who has an account. What makes this worth logging rather than shrugging at is the inconsistency: `handleForgot` right next to it is **deliberately** anti-enumeration, with an explicit comment saying so and an identical response either way, so the property was clearly understood and simply not carried across to signup | Measured live against the production endpoint during the piece 1 test, using a synthetic address for the fresh case and that same address once registered for the existing case, so no real user's address was submitted and only one email was sent | Medium. It is information disclosure, not an authorisation gap, and the authorisation test it was found alongside passed cleanly, which is why it did not stop that piece. Not fixed here: making signup generic is a real UX tradeoff (the user must somehow learn their address is taken) and the usual resolution, sending "you already have an account" to the address instead of showing it on screen, is a product decision. Note C3-101/102 in Section 4 covers this ground and can now be marked confirmed on the signup path and refuted on the reset path |
+| C3L-43, **resolved 2026-08-05, piece 2 of task `c3-audit-0rls-c3l43`** | Found while measuring C3L-39's effect, not looked for. `mtg_signals` holds **1,871 rows that are never recomputed**, because `compute_mtg_signals_batch` only processes cards present on the latest snapshot date and nothing ever ages out or removes a row for a card that stops appearing. **798 of those stale rows still display a buy or sell verdict**, computed from data as old as 27 June, with `latest_date` values up to five weeks behind the rest of the site. A visitor sees a confident "Near recent low" with no indication it was last true a month ago | Measured directly after the C3L-39 recompute: 41,636 of 43,507 rows were processed, leaving 1,871 with a NULL `days_of_history`, of which 798 carry a verdict, `latest_date` ranging 2026-06-27 to 2026-07-28 | Medium. Partially mitigated already, not by design but as a side effect: C3L-39's display guard treats a NULL `days_of_history` as not-confident, so the MTG card page now shows "Not enough price history yet" for these rather than a stale verdict. `/market` and the weekly email read the columns directly and are NOT covered, so those two surfaces still surface all 798. The real fix is for the signal computation to expire or delete rows whose card has left the daily set, which is its own task |
+
+**Resolution evidence for C3L-43, 5 August 2026, piece 2 of task
+`c3-audit-0rls-c3l43`.**
+
+*Measured before deciding the fix, per the task's own instruction.* The two
+categories it asked to separate are **1,871 and 0**. All 1,871 stale rows are
+absent from the newest snapshot date. **Zero** are cards still syncing normally
+that fall through a gap inside `compute_mtg_signals_batch`: that was checked
+directly and every card present on the newest snapshot date with a usable price
+has a signal row, 0 missed. So this was purely staleness and the fix is an
+expiry, not a repair to the function.
+
+*Why they stopped appearing.* 829 of the 1,871 last traded below the sync's
+`MIN_SNAPSHOT_USD` floor of 0.50 USD, so they stop being snapshotted by design.
+The other 1,042 were still above the floor when last seen. Checked specifically
+for a cliff at the gzipped-JSONL migration, since a regression there would have
+been mine from Task 01, and **there is none**: attrition runs at a steady 50 to
+150 cards per day across the whole period with no step change, so this is
+ordinary catalogue churn.
+
+*The fix, and where it was put.* Verdicts are cleared at source in
+`update_mtg_signals_batched` rather than filtered in each consumer, because
+there are three consuming surfaces and adding a filter to each is three chances
+to forget one, which is the C3L-27 lesson. Confirmed first that both consumers
+needed it: `market-data.mjs` and `weekly-report-core.mjs` each read
+`buy_verdict`/`sell_verdict` and **neither filters on `latest_date`**, so both
+`/market` and the weekly seller email were publishing stale calls. Also
+confirmed, because the task asked specifically, that the weekly email has **no
+caching or pre-generation step**, it queries live at send time, so clearing the
+stored value covers it with no second change.
+
+*The staleness rule is deliberately outage-safe.* A row is stale when its card
+is absent from the newest snapshot date **that exists**, never when it is old
+relative to today's calendar date. During the 29 July to 3 August outage the
+newest date stayed at 28 July, so every card present on it stayed current. A
+calendar-based rule would have blanked the entire catalogue's verdicts during
+that outage. Both the verdicts and `days_of_history` are cleared, so all three
+surfaces including the card page's C3L-39 guard treat a stale row as "cannot
+say" rather than one of them still asserting "Mid-range price".
+
+*Measured effect.* The job now reports its own expiry count: **798 stale rows
+expired**, exactly matching the 798 measured beforehand. Buy verdicts 4,522 to
+4,144 and sell 8,381 to 7,961, a drop of 798 in total. Verified afterwards:
+**0 stale rows still carry a verdict**, and **0 current cards were wrongly
+blanked**. `/market` and an MTG card page were both fetched live and still
+render correctly, with buy/sell badges still present on `/market`, so the
+feature works and only the stale entries are gone. Self-healing by
+construction: if a card reappears in a snapshot the next run recomputes it.
+
+*Rollback.* Re-apply the previous `update_mtg_signals_batched` body, which is
+identical minus the expiry block and its counter. Every cleared value is
+recomputable by definition, so a single run of the job restores anything.
 
 **Resolution evidence for C3L-39, C3L-41 and C3L-42, 5 August 2026, task
 `c3-audit-c3l39-c3l41-c3l42`. Three separate pieces, recorded separately
@@ -397,9 +451,14 @@ around 10 August 2026. Both sit inside the ACCC misleading-pricing priority
 named in protocol Section 7 for the same reason C3L-12 did.
 
 **Tier 1, critical, launch-blocking:**
-- RLS and BOLA verification, the two-account object-level access test
-  specifically (protocol Section 4). Section 3's C3L-06 confirms the
-  database layer, this test has not yet run.
+- ~~RLS and BOLA verification, the two-account object-level access test
+  specifically (protocol Section 4).~~ **DONE and PASSED, 5 August 2026,
+  task `c3-audit-0rls-c3l43`.** Eight object-level attacks by one real
+  account against another's row, all rejected, target row verified intact in
+  the database after each. Anon-key sweep of all 13 sensitive tables
+  returned 0 rows, meaningfully so for the 4 that hold real data. See C3L-06.
+  Protocol Section 4's closing line asks for this to become a recurring
+  scheduled check rather than a one-time pass, which has NOT been set up.
 - Stripe checkout idempotency key usage, confirmed present on every charge
   and subscription-creation call, not assumed from webhook-side signature
   checking alone.
@@ -501,20 +560,24 @@ here immediately, whether or not that was its assigned scope.
 Updated whenever a task changes the counts below, not left to go stale.
 Same discipline as Voxsanity's own Section 5.
 
-- **Live-investigation findings (C3L-):** 43 total. 19 resolved with evidence
-  (C3L-01, C3L-02, C3L-04, C3L-05, C3L-07, C3L-08, C3L-12, C3L-15, C3L-16,
-  C3L-25, C3L-27, C3L-28, C3L-29, C3L-30, C3L-31, C3L-37, C3L-39, C3L-41,
-  C3L-42). 7 high and still open (C3L-03, C3L-10, C3L-11, C3L-26, C3L-32,
+- **Live-investigation findings (C3L-):** 44 total. 21 resolved with evidence
+  (C3L-01, C3L-02, C3L-04, C3L-05, **C3L-06**, C3L-07, C3L-08, C3L-12,
+  C3L-15, C3L-16, C3L-25, C3L-27, C3L-28, C3L-29, C3L-30, C3L-31, C3L-37,
+  C3L-39, C3L-41, C3L-42, **C3L-43**). **C3L-06 is the significant one: the
+  live two-account object-level test finally ran on 5 August and passed, so
+  protocol Section 4 is closed on evidence rather than on policy reading.**
+  7 high and still open (C3L-03, C3L-10, C3L-11, C3L-26, C3L-32,
   C3L-36, C3L-40), of which C3L-11 is permanently unfixable rather than
   merely outstanding. **C3L-40 stays High but only its unresolved tail
   remains**: Task 04 measured it at 8 ingestion-suspect and 45 unclear out of
   242, the other 189 being genuine Marvel new-set price collapse, and Task 05
   then handled the 8, so what is left open is the 45 nobody could classify.
   14 medium and still open (C3L-09, C3L-17 to C3L-24, C3L-33, C3L-34,
-  C3L-35, C3L-38, C3L-43). **C3L-34 was downgraded from High to Medium on
+  C3L-35, C3L-38, **C3L-44**). **C3L-34 was downgraded from High to Medium on
   5 August** after Task 03's investigation showed its central claim was
-  wrong, see its corrected entry. 3 informational and positive (C3L-06,
-  C3L-13, C3L-14).
+  wrong, see its corrected entry. C3L-44 is the account enumeration found
+  during the Section 4 test, information disclosure rather than an
+  authorisation gap. 2 informational and positive (C3L-13, C3L-14).
 - **Note on the ID range:** Task 01 asked for sibling rows to continue from
   C3L-13, but C3L-13 and C3L-14 were already taken by the kickoff session
   earlier the same day. New IDs therefore run from C3L-15, per the
@@ -529,7 +592,7 @@ Same discipline as Voxsanity's own Section 5.
 - **Resolved this file's lifetime:** 16 (C3L-01, C3L-02, C3L-04, C3L-05,
   C3L-07, C3L-08, C3L-12, C3L-15, C3L-16, C3L-25, C3L-27, C3L-28, C3L-29,
   C3L-30, C3L-31, C3L-37).
-- **Total rows this file currently tracks:** 84, across 4 ID ranges, out of
+- **Total rows this file currently tracks:** 85, across 4 ID ranges, out of
   a much larger universe (at minimum the full 164 in the external docx,
   plus whatever the 13-wave programme surfaces once it starts). This
   number is expected to grow quickly once Wave 1 runs, that growth is the
@@ -617,14 +680,20 @@ Priority order for the next session:
    writes zero snapshots should exit non-zero, a failed deploy should
    notify, and something should compare the published `commit_ref` against
    `origin/main`.
-5. Protocol Section 4's RLS/BOLA test, the **two-account object-level access
-   test specifically, which still has not run.** What did run this session
-   is the code-level and anon-exposure half: object-level authorisation
-   confirmed present on the follow mutation path and the admin view
-   (C3L-13), and no key of any kind reaching the browser (C3L-14). Neither
-   substitutes for two real synthetic accounts exercising the live
-   endpoints, which is the actual method Section 4 specifies. Run it as
-   `c3-audit-0-rls` in its own worktree.
+5. ~~Protocol Section 4's RLS/BOLA test.~~ **DONE and PASSED, 5 August 2026,
+   task `c3-audit-0rls-c3l43`. This closes the question that had been open
+   since the first session.** Two synthetic accounts, real sessions through
+   the live endpoint, eight object-level attacks, all rejected, target row
+   verified intact after each. Synthetic data removed and counts confirmed
+   back to baseline. One finding came out of it, C3L-44, account enumeration
+   via the signup endpoint, which is information disclosure rather than an
+   authorisation gap. **Two things NOT done that belong to a follow-up:**
+   Section 4's closing instruction to make this a recurring scheduled check
+   rather than a one-time pass, and the fact that "collection rows" and
+   "alert rows" in Section 4's wording could not be tested because no such
+   user-owned rows exist yet, `card_price_alerts` and `collection_waitlist`
+   are both empty. When either feature gains real rows, this test needs
+   re-running against it rather than being treated as already covered.
 6. Wave 1 slugs (`1-claims`, `3-pricing`, `4-links`), each in its own
    worktree per Part 0. `3-pricing` should inherit C3L-11 and C3L-12 as
    known context rather than rediscovering them.
