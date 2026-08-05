@@ -816,9 +816,20 @@ async function handleSignup(form) {
 async function handleForgot(form) {
   const email = normaliseEmail(form && form.get('email'));
   // Anti-enumeration: identical response whether or not the email is registered.
+  //
+  // C3L-46: the send is now throttled per address, the same maySendLink used by handleSignup
+  // and keyed the same way, on the SUBMITTED address and never on whether an account exists.
+  // Without it this endpoint would mail a known address once per request indefinitely, which is
+  // the exposure C3L-44's fix closed on signup and which was flagged in Task 07's own
+  // suggestions as still open here. Reusing the proven helper rather than a second mechanism is
+  // deliberate: two throttles with separate state would drift, and this one is already live.
+  //
+  // Note the throttle is SHARED with signup, not a second counter. That is correct rather than
+  // incidental: both endpoints mail the same address off the same magic-link infrastructure, so
+  // an attacker alternating between them should not get double the budget.
   if (email) {
     const account = await getAccountByEmail(email);
-    if (account) await sendLinkEmail(account, 'reset');
+    if (account && maySendLink(email)) await sendLinkEmail(account, 'reset');
   }
   return checkEmailPage('Check your email', 'If an account exists for that email, we have sent a password reset link.');
 }
