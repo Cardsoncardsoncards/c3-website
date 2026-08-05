@@ -75,6 +75,7 @@ async function syncSets() {
 async function syncCards(sets) {
   let totalInserted = 0;
   let totalSkipped = 0;
+  let setsFailed = 0;
 
   // Fetch existing hashes
   console.log('Fetching existing Lorcana card hashes...');
@@ -150,11 +151,13 @@ async function syncCards(sets) {
 
       console.log(`  ${set.name}: ${batch.length} upserted, ${cards.length - batch.length} skipped`);
     } catch (err) {
+      setsFailed++;
       console.error(`  Set ${set.code} error: ${err.message}`);
     }
   }
 
-  console.log(`Lorcana sync complete. Upserted: ${totalInserted}, Skipped: ${totalSkipped}`);
+  console.log(`Lorcana sync complete. Upserted: ${totalInserted}, Skipped: ${totalSkipped}, Sets failed: ${setsFailed}`);
+  return { totalInserted, totalSkipped, setsFailed };
 }
 
 async function main() {
@@ -162,7 +165,24 @@ async function main() {
   if (!SUPABASE_URL || !SUPABASE_KEY) throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
 
   const sets = await syncSets();
-  await syncCards(sets);
+  const { totalInserted, totalSkipped, setsFailed } = await syncCards(sets);
+
+  // Zero-row guard (C3L-10). Per-set errors are caught and logged so one bad set cannot abort
+  // the run, which also means every set could fail and this job would still exit 0.
+  // totalInserted alone is not a safe signal: it counts only rows that actually changed, so a
+  // quiet day can legitimately be 0. totalInserted + totalSkipped is the number of cards seen.
+  if (!sets.length) {
+    console.error('ZERO SETS: the upstream set list came back empty. Treating as a failure.');
+    process.exit(1);
+  }
+  if (totalInserted + totalSkipped === 0) {
+    console.error('ZERO CARDS: no cards were seen across any set. Treating as a failure.');
+    process.exit(1);
+  }
+  if (setsFailed > 0) {
+    console.error(`${setsFailed} set fetches failed. Treating as a failure so the run is not silently green.`);
+    process.exit(1);
+  }
 
   console.log('=== Lorcana Daily Sync Complete ===', new Date().toISOString());
 }

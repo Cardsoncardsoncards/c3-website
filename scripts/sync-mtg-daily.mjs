@@ -562,6 +562,23 @@ async function main() {
     console.error('Some batches failed permanently. See log above.');
     process.exit(1);
   }
+
+  // Zero-row guard (C3L-10). Failing batches were the only thing that could make this job exit
+  // non-zero, so a run that reached the end having written nothing at all still reported
+  // success. That is precisely how the original MTG outage stayed invisible: the workflow was
+  // green every morning while the price data underneath it went stale.
+  // Neither of these can happen on a healthy run. A snapshot row is built for every card at
+  // line 463, BEFORE the unchanged-hash check, so "nothing changed upstream" still produces a
+  // full set of snapshots. Zero means the feed or the write path is broken, not that the day
+  // was quiet.
+  if (totalProcessed === 0) {
+    console.error('ZERO ROWS: the bulk feed yielded no usable cards. Treating as a failure.');
+    process.exit(1);
+  }
+  if (totalSnapshotsUpserted === 0) {
+    console.error(`ZERO SNAPSHOTS: processed ${totalProcessed} cards but wrote no price snapshots. Treating as a failure.`);
+    process.exit(1);
+  }
 }
 
 main().catch(err => {

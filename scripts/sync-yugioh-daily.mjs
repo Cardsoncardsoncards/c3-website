@@ -205,6 +205,7 @@ async function syncSnapshots(cards, audRate) {
     await supabaseUpsertSnapshots(snapRows.slice(i, i + 500));
   }
   console.log(`Yu-Gi-Oh snapshots complete: ${snapRows.length} rows written.`);
+  return snapRows.length;
 }
 
 async function main() {
@@ -214,7 +215,21 @@ async function main() {
   await syncSets();
   const cards = await syncCards();
   const audRate = await getExchangeRate();
-  await syncSnapshots(cards, audRate);
+  const snapshotsWritten = await syncSnapshots(cards, audRate);
+
+  // Zero-row guard (C3L-10). This job only exited non-zero when something threw, so a run that
+  // fetched nothing and wrote nothing still reported success.
+  // A snapshot row is written for every card priced at or above 0.25, independent of whether
+  // the card changed, so zero snapshots means the feed or the write path is broken rather than
+  // that the day was quiet.
+  if (!cards.length) {
+    console.error('ZERO CARDS: the upstream card feed came back empty. Treating as a failure.');
+    process.exit(1);
+  }
+  if (snapshotsWritten === 0) {
+    console.error(`ZERO SNAPSHOTS: saw ${cards.length} cards but wrote no price snapshots. Treating as a failure.`);
+    process.exit(1);
+  }
 
   console.log('=== Yu-Gi-Oh Daily Sync Complete ===', new Date().toISOString());
 }

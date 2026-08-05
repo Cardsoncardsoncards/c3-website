@@ -87,6 +87,7 @@ async function syncSets() {
 async function syncAllLanguages(sets) {
   let grandTotal = 0;
   let grandSkipped = 0;
+  let setsFailed = 0;
 
   // Load all existing hashes once — avoids repeated Supabase calls
   console.log('Loading existing card hashes...');
@@ -166,6 +167,7 @@ async function syncAllLanguages(sets) {
           }
         }
       } catch (err) {
+        setsFailed++;
         console.error(`  [${lang}/${setMeta.id}] ${err.message}`);
       }
     }
@@ -181,14 +183,35 @@ async function syncAllLanguages(sets) {
     grandSkipped += langSkipped;
   }
 
-  console.log(`\nPokemon sync complete. Upserted: ${grandTotal}, Unchanged: ${grandSkipped}`);
+  console.log(`\nPokemon sync complete. Upserted: ${grandTotal}, Unchanged: ${grandSkipped}, Sets failed: ${setsFailed}`);
+  return { grandTotal, grandSkipped, setsFailed };
 }
 
 async function main() {
   console.log('=== Pokemon Daily Sync Start ===', new Date().toISOString());
   if (!SUPABASE_URL || !SUPABASE_KEY) throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
   const sets = await syncSets();
-  await syncAllLanguages(sets);
+  const { grandTotal, grandSkipped, setsFailed } = await syncAllLanguages(sets);
+
+  // Zero-row guard (C3L-10). Per-set errors are caught and logged so one bad set cannot abort
+  // the run, which also means every set could fail and this job would still exit 0. These
+  // guards make that state visible instead.
+  // Note the counter used: grandTotal only counts cards whose hash CHANGED, so on a genuinely
+  // quiet day it can legitimately be 0. grandTotal + grandSkipped is the number of cards
+  // actually seen upstream, and that cannot be 0 on a healthy run.
+  if (!sets.length) {
+    console.error('ZERO SETS: the upstream set list came back empty. Treating as a failure.');
+    process.exit(1);
+  }
+  if (grandTotal + grandSkipped === 0) {
+    console.error('ZERO CARDS: no cards were seen across any language. Treating as a failure.');
+    process.exit(1);
+  }
+  if (setsFailed > 0) {
+    console.error(`${setsFailed} set fetches failed. Treating as a failure so the run is not silently green.`);
+    process.exit(1);
+  }
+
   console.log('=== Pokemon Daily Sync Complete ===', new Date().toISOString());
 }
 
