@@ -103,6 +103,35 @@ what was an open decision in the first draft of this document).
    update, and report produced by Claude.ai, Claude Code, or Claude Cowork may
    be created without asking permission first, provided it lands in the
    Downloads task-file location or the project's audit files.
+3. **Merge into the register, never overwrite it, added 4 August 2026
+   after C3L-32.** Before any task writes to `C3_FINDINGS_REGISTER.md`,
+   read the repo's actual current copy first. If a Downloads copy also
+   exists and looks newer, treat it as a source of new entries to merge
+   in, never as a wholesale replacement for the repo's copy, which is
+   authoritative for anything already in it. A Downloads copy from
+   Claude.ai is a reconstruction from narrated summaries and can be
+   smaller or less exact than what a prior Claude Code task actually
+   wrote, looking newer is not the same as being more complete.
+4. **No more full-file handoffs for the register, added 8 August 2026.**
+   Claude.ai does not regenerate `C3_FINDINGS_REGISTER.md` in full each
+   turn for Sammy to download and feed back in, that redundant copy is
+   exactly what created point 3's problem in the first place. Changes
+   Claude.ai needs made (counts, ordering, a correction) arrive as
+   precise instructions inside the next task file instead, applied
+   directly to the repo's copy in the same commit as everything else
+   that task does.
+5. **This document is the opposite case, corrected 9 August 2026 after
+   it broke three task files.** Only Claude.ai writes to this protocol,
+   Claude Code only reads it, so nothing in the repo's copy updates on
+   its own the way the register does. Point 4 does not apply here. When
+   this document changes, Claude.ai hands over the full file and Sammy
+   feeds it to Claude Code as an explicit sync, the same shape as the
+   original seed. A task file citing a section number without the repo
+   actually holding that section is a broken reference, not a shortcut,
+   and it already happened three times before this rule existed. Until a
+   sync is confirmed to have landed, a task file quotes the actual rule
+   text it depends on rather than only citing a number, so the
+   instruction still holds even if the sync is stale.
 
 ---
 
@@ -182,6 +211,15 @@ and reports in its own terminal, Sammy brings the updated register back to
 Claude.ai, Claude.ai reconciles it and writes the next batch. Repeat. This
 is the same three-way loop the rest of this document already assumes, made
 explicit here because it is the part most likely to get asked about again.
+
+**Default is collect, not interrupt, confirmed 7 August 2026.** Findings
+from a lens get reconciled into the register and reprioritised in batches,
+not acted on one at a time as they surface, mid-investigation. The
+exception is anything genuinely time-critical or actively live and wrong,
+the same bar C3L-12 and C3L-16 already met, that still jumps the queue
+immediately, per Section 7's tiers. Everything else waits for the batch.
+This is a deliberate choice to avoid constant context-switching, not a
+lower priority placed on what gets found.
 
 ---
 
@@ -764,6 +802,55 @@ not keep going to protect throughput against the other slugs running
 alongside it. It resolves the anomaly first, even if that means it
 finishes its wave later than the rest.
 
+### 13.1 Scope claims must be measured, not extrapolated
+
+Added 6 August 2026, after this happened twice in three tasks
+(C3L-34, then C3L-40) and was named directly, in Claude Code's own words,
+as a pattern worth watching rather than a one-off.
+
+**The failure shape:** a check finds one clear example of something wrong
+(one card with a mislabelled statistic, one card with an implausible
+price), correctly identifies the pattern that example represents, and then
+states a count of how many other items share it, 242 cards, 92 days,
+without having actually measured the other items, only having noticed the
+shape and assumed it generalises. The individual observation is often
+right. The count attached to it is a guess wearing the clothes of a
+finding.
+
+**The rule:** a finding that states a number of affected items must have
+counted them, by an actual query or check across the real population, not
+estimated from noticing one instance and assuming the same shape applies
+broadly. If a full count is not feasible inside the current task's scope,
+the finding says so explicitly, "one instance confirmed, full extent not
+yet measured", rather than presenting an extrapolated guess as if it were
+a census. C3L-40 is the concrete lesson: "almost certainly a bad
+snapshot" and "242 cards" was corrected, on measurement, to 189 of those
+242 being entirely genuine data that a blind fix would have destroyed.
+The gap between a spot-check and a measurement is not pedantry here, it is
+the difference between a fix that helps and one that deletes real history.
+
+This does not slow down flagging something as worth investigating,
+suspecting a pattern from one example is exactly what a good investigator
+does next. It slows down stating a specific number before that number has
+actually been counted.
+
+**A related but distinct lesson, added 8 August 2026:** an aggregate
+"not currently wrong" claim can be true and still hide a granular
+problem, C3L-17 to C3L-23 each said their sibling function was fine at
+the game level, and 3,050 individually mislabelled figures existed
+underneath that true-sounding statement, unfound until someone measured
+per card rather than per game. Check the claim at the same granularity
+the finding will actually be acted on at, not the granularity that was
+easiest to check.
+
+**And a before-and-after specifically needs an isolated baseline.** A
+baseline captured from a scheduled job that keeps running is not a clean
+baseline for a code change, since it mixes the change with whatever else
+moved in the same window and can make a real, small effect look like a
+large regression. Replay the old logic against the same data the new
+logic runs against, don't compare across two different points in time
+and assume the only thing that changed was the code.
+
 ---
 
 ## 14. Five-panel meta-review of this protocol and register
@@ -1095,9 +1182,81 @@ from that directly:
    treatment as part of its own six-line report, and the findings land in
    `C3_FINDINGS_REGISTER.md` the same way everything else does.
 
+### 18.5 Two applications, not one, confirmed 7 August 2026
+
+The four lenses run twice for every remaining item, not once, both
+standing requirements from here forward.
+
+**Before the task file is written, a scope review.** The question is not
+"what does this finding mean," nothing has been found yet, it is "does
+this task's planned scope actually cover every angle, or only the obvious
+one." This is exactly what `4-links` needed and did not get on its first
+pass, functionality was the obvious scope, backlinks and in-content links
+were not, and both had to be caught after the task was already written
+instead of before. Applied concretely: for "every displayed number," the
+scope review checks whether the drafted task actually asks where each
+number comes from, how it is calculated, whether that calculation is
+correct, and where and how it is displayed, not only whether the number
+that renders matches some other number on another page. Sammy's own
+framing, kept as the standing test: "if I'm looking at numbers, we're not
+just looking at display, where do they come from, how do they link." A
+scope review that only checks the obvious angle has not done its job, the
+same way `4-links`' first draft had not.
+
+**After the findings come back, per Sections 18.1 to 18.4 as already
+built,** grounded in real findings, not speculation, unchanged.
+
+**Standing rule:** every remaining task file gets the scope review before
+Claude.ai finalises and hands it over, not only `4-links` retroactively.
+This is Claude.ai's own drafting discipline, not something Claude Code
+runs, the review happens here, before the file exists as something to
+execute. Applied as each item actually comes up, per Section 2's
+collect-and-batch cadence, not run speculatively on all sixteen at once.
+
 ---
 
-## 19. Revision log
+## 19. Severity-scaled root-cause discipline, confirmed 9 August 2026
+
+For a finding that already caused real, measurable cost, weissschwarz's
+3.5-week outage is the reference case, the standard rises above the
+default and three things become mandatory, not optional, before the fix
+is considered complete:
+
+1. **Root cause, not pattern application.** A fix that worked in the
+   originating case does not get copied to every structurally similar
+   case on the assumption it will hold everywhere. Verify per instance
+   whether the underlying rule is actually principled, not merely
+   consistent with what happened to already be stored. Weissschwarz's
+   fix, lowest-id-wins, was validated by matching the data already on
+   file, which proves the fix didn't break anything, it does not prove
+   lowest-id-wins is the objectively correct tiebreak rather than an
+   arbitrary historical accident from whichever run happened to succeed
+   first. Both readings are worth stating plainly when applying the same
+   fix elsewhere.
+2. **The full four-roundtable scope review, not the default light pass.**
+   Design, real user, adversarial and hypothetical scale, and mixed
+   cross-functional, run deliberately against this specific incident
+   before writing the fix, not just the routine version every item
+   already gets.
+3. **The detection question, asked explicitly, separate from the code
+   question.** A root-cause fix that closes the bug but leaves the
+   surrounding detection gap unaddressed has fixed this instance and left
+   the next, different, unanticipated instance exactly as invisible as
+   this one was for 3.5 weeks. If a detection or alerting item already
+   exists in the register covering the same gap, the fix task states the
+   dependency explicitly rather than treating the code fix as sufficient
+   on its own.
+
+This does not apply to every finding, most are appropriately handled at
+the default standard already built into Sections 13.1, 15, and 18. It
+applies when the real, already-realised cost of getting it wrong again is
+high enough that the extra rigour is worth the extra time, judged the same
+way Tier 0 through 4 in Section 7 already judges severity, not as a new
+separate scale.
+
+---
+
+## 20. Revision log
 
 - 1 August 2026: initial version. Six-lens reconciliation, ten-category
   coverage map, Section 4 RLS priority check, tri-tool split.
@@ -1133,3 +1292,33 @@ from that directly:
   cross-functional, roughly ten personas each), made a standing part of
   every remaining lens's own execution rather than a separate pass,
   demonstrated against C3L-15 and C3L-16 in the session this was written.
+- 6 August 2026: Section 13.1 added, scope claims must be measured, not
+  extrapolated, after two of the last three Claude Code sessions produced
+  a finding (C3L-34, then C3L-40) that generalised a real observation into
+  an unmeasured count, both caught and corrected by the task immediately
+  following the one that wrote them. Named directly by Claude Code as a
+  pattern, not treated as two unrelated incidents.
+- 7 August 2026: Section 2's check-in cadence confirmed as collect-and-
+  batch by default, findings reconciled and reprioritised together rather
+  than acted on one at a time, with the same urgency exception Section 7
+  already sets. Section 18.5 added, the four-roundtable framework now
+  runs twice per remaining item, a scope review before the task file is
+  written (does the plan cover every angle, not only the obvious one,
+  the exact gap `4-links` had twice) and the findings review after, as
+  already built.
+- 9 August 2026: Section 19 added, severity-scaled root-cause discipline,
+  triggered by C3L-49, the weissschwarz sync collision sitting in 30
+  other functions after the original cost 3.5 weeks of undetected
+  downtime. For findings at this cost level, root cause over pattern
+  application, the full four-roundtable review not the default light
+  pass, and the detection question asked explicitly and separately from
+  the code question, all become mandatory rather than optional.
+- 9 August 2026, same day: Section 1's no-full-file-handoff rule
+  corrected to apply to the register only. This document is the opposite
+  case, only Claude.ai writes to it, so it does not stay current on its
+  own the way the register does. Section 19 itself was cited in Task 11
+  before this file had actually been synced, the third task file to cite
+  something the repo's copy didn't hold. This file is handed over in
+  full as a genuine sync from this point, and a task file quotes the
+  rule text it depends on, not just a section number, until a sync is
+  confirmed landed.
