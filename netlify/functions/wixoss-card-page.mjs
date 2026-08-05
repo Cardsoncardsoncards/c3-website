@@ -218,7 +218,10 @@ export default async (req) => {
     if (!cards || cards.length === 0) return new Response(notFoundPage(slug), { status: 404, headers });
     const card = cards[0];
 
-    const snapshots = await supabaseGet(`wixoss_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => []);
+    // C3L-36: bounded by DATE, not row count. A bare limit=90 with asc ordering returns the
+    // OLDEST 90 rows, so once a card passed 90 snapshots its chart froze on its first 90 days
+    // and never advanced while still rendering as current. Same fix already proven on MTG.
+    const snapshots = await supabaseGet(`wixoss_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&snapshot_date=gte.${new Date(Date.now()-90*86400000).toISOString().slice(0,10)}&order=snapshot_date.asc&limit=400&select=snapshot_date,price_aud,market_price`).catch(() => []);
     const priceChartHTML = priceChartHtml(snapshots);
     const _setRows = card.set_id ? await supabaseGet(`wixoss_sets?id=eq.${card.set_id}&limit=1&select=slug`).catch(() => []) : [];
     const setUrl = (Array.isArray(_setRows) && _setRows[0] && _setRows[0].slug) ? `/cards/wixoss/sets/${_setRows[0].slug}` : `/cards/wixoss`;

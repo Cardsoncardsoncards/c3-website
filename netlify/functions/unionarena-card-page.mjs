@@ -162,8 +162,11 @@ export default async (req) => {
   const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * 1.45 : null;
 
   // task-132 Part 10: price history (Union Arena snapshots are current, verified in Part 9).
+  // C3L-36: bounded by DATE, not row count. A bare limit=90 with asc ordering returns the
+  // OLDEST 90 rows, so once a card passed 90 snapshots its chart froze on its first 90 days
+  // and never advanced while still rendering as current. Same fix already proven on MTG.
   const snapshots = card.id
-    ? await supabaseGet(`unionarena_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&order=snapshot_date.asc&limit=90&select=snapshot_date,price_aud,market_price`).catch(() => [])
+    ? await supabaseGet(`unionarena_price_snapshots?card_id=eq.${encodeURIComponent(card.id)}&snapshot_date=gte.${new Date(Date.now()-90*86400000).toISOString().slice(0,10)}&order=snapshot_date.asc&limit=400&select=snapshot_date,price_aud,market_price`).catch(() => [])
     : [];
   const priceChartHTML = priceChartHtml(snapshots);
 
