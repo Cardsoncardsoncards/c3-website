@@ -25,6 +25,12 @@ const FX_FALLBACK = 1.45; // AUD/USD fallback rate - update periodically
 // count, so history growing past any fixed number of rows cannot silently freeze the chart.
 const CHART_WINDOW_DAYS = 90;
 
+// C3L-39: how many distinct days of price history a card needs before this page will show a
+// confident buy or sell verdict. Must match MIN_HISTORY_DAYS in compute_mtg_signals_batch,
+// which withholds the verdict itself at source; this constant only governs which of the two
+// no-verdict states is displayed.
+const SIGNAL_MIN_HISTORY_DAYS = 30;
+
 // Draw a visible break in the chart line when consecutive snapshots are more than this many days
 // apart. C3L-28: the x axis is positioned by date, so a gap leaves real horizontal space, and
 // breaking the line stops it implying continuous data across days that were never collected.
@@ -166,6 +172,31 @@ function formatManaSymbols(manaCost) {
 // sell_verdict are 'buy' / 'sell' / null). A row with neither set is mid-range.
 function getSignalVerdict(signals) {
   if (!signals) return null;
+  // C3L-39, the display half. Two things were wrong here.
+  //
+  // First, a card with almost no price history got the same confident verdict as a card
+  // with months of it. That is now withheld at source: compute_mtg_signals_batch only
+  // writes a buy or sell verdict once a card has at least SIGNAL_MIN_HISTORY_DAYS distinct
+  // days of price data.
+  //
+  // Second, and only fixable here, the final return conflated two different states. A card
+  // with a genuine mid-range price and a card with too little data to say anything both
+  // rendered "Mid-range price. Price is within normal range", which asserts a conclusion
+  // where there was none. They are now distinct.
+  //
+  // days_of_history NULL is treated as not-enough rather than as enough. NULL means the row
+  // has not been recomputed since C3L-39 shipped, which currently applies to 1,871 stale
+  // rows whose cards have dropped out of the daily snapshot set, 798 of them still carrying
+  // a verdict computed as long ago as 27 June (C3L-43). A confident call from a row of
+  // unknown provenance is exactly what this finding is about, so unknown fails closed.
+  const days = signals.days_of_history != null ? Number(signals.days_of_history) : null;
+  if (days == null || !Number.isFinite(days) || days < SIGNAL_MIN_HISTORY_DAYS) {
+    return {
+      label: 'Not enough price history yet',
+      advice: `We need at least ${SIGNAL_MIN_HISTORY_DAYS} days of prices before calling this one`,
+      class: 'verdict-unknown'
+    };
+  }
   if (signals.sell_verdict === 'sell') return { label: 'Near recent high', advice: 'Potentially good time to sell', class: 'verdict-sell' };
   if (signals.buy_verdict === 'buy') return { label: 'Near recent low', advice: 'Consider holding or buying', class: 'verdict-buy' };
   return { label: 'Mid-range price', advice: 'Price is within normal range', class: 'verdict-neutral' };
@@ -537,6 +568,9 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .verdict-sell { background: rgba(76,175,80,0.15); border: 1px solid rgba(76,175,80,0.4); color: #81c784; }
     .verdict-buy { background: rgba(100,100,245,0.15); border: 1px solid rgba(100,100,245,0.4); color: #9fa8da; }
     .verdict-neutral { background: rgba(100,100,100,0.15); border: 1px solid #444; color: var(--text2); }
+    /* C3L-39: visually distinct from verdict-neutral, because "we cannot say" is a different
+       statement from "this is mid-range", and they used to look identical. */
+    .verdict-unknown { background: rgba(120,110,90,0.12); border: 1px dashed #6b6350; color: var(--text2); }
     .condition-guide { margin-top: 10px; font-size: 12px; color: var(--text2); font-family: sans-serif; }
 
     /* CTAs */
@@ -1496,7 +1530,10 @@ export default async (req, context) => {
       supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=scryfall_id,slug,set_name,released_at,rarity,collector_number,image_uri_normal,image_uri_small,price_usd,price_aud,price_usd_foil&order=released_at.desc&limit=80`, false),
       getFxRate(),
       // 52-week high/low and buy/sell verdict come from the precomputed mtg_signals table.
-      supabaseGet(`mtg_signals?scryfall_id=eq.${card.scryfall_id}&select=price_52w_low_aud,price_52w_high_aud,buy_verdict,sell_verdict&limit=1`, false)
+      // C3L-39: days_of_history added to the select, without it getSignalVerdict cannot tell
+      // an insufficient-data card from a genuine mid-range one and would fail closed on every
+      // card. Selecting it is what makes the guard actually work on this page.
+      supabaseGet(`mtg_signals?scryfall_id=eq.${card.scryfall_id}&select=price_52w_low_aud,price_52w_high_aud,buy_verdict,sell_verdict,days_of_history&limit=1`, false)
     ]);
 
     const snapshotData = snapshots.status === 'fulfilled' ? snapshots.value : [];

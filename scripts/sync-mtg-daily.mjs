@@ -361,6 +361,12 @@ function buildSnapshotRow(card, audRate, today, ckMap) {
     price_buy_ck_usd: priceBuyCkUsd,
     price_buy_ck_aud: priceBuyCkAud,
     aud_usd_rate: audRate,
+    // C3L-42: stamp what wrote this row. written_at fills from its column default, but
+    // source has to be set by the writer. Task 04 could not identify what wrote the 39,515
+    // anomalous rows of 6 June 2026 precisely because neither column existed then. Any
+    // future writer of this table should set this too, and a row with a NULL source after
+    // 5 August 2026 is itself a signal that something outside the sync wrote it.
+    source: 'sync-mtg-daily',
     snapshot_date: today
   };
 }
