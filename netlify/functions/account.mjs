@@ -205,6 +205,38 @@ function clearLoginAttempts(email) { loginAttempts.delete(email); }
 // become a second enumeration channel itself. Same in-memory caveat as loginAttempts above: per
 // serverless instance, not shared, which blunts casual abuse at current scale rather than
 // stopping a determined distributed attempt.
+// C3L-47: constant-time floor for the password-reset handler.
+//
+// handleForgot's RESPONSE was already identical either way, but the time taken was not, because
+// only a registered address has an account to mail. Measured live on 5 August 2026, before this
+// change: registered a 799ms median against 494ms unregistered, and critically the ranges did not
+// overlap at all, 764 to 2,617 against 478 to 553. A single request was enough to tell whether an
+// address was registered, which made the endpoint an enumeration channel despite its careful
+// wording.
+//
+// Unlike C3L-44 on signup, this one cannot be fixed by making both branches do the same work:
+// there is no reset link to send to an address that has no account. So the gap is closed by
+// waiting on the fast path rather than by cutting anything from the slow path. The value is taken
+// from the slow path's own measured distribution, not guessed: its typical cluster ran 764 to
+// 859ms, so 900ms sits just above it. Both paths therefore land on the floor in the normal case,
+// rather than the fast path being padded to somewhere in the middle of the slow path's spread.
+//
+// It is applied to the WHOLE handler, not only the not-found branch. That is strictly stronger:
+// it also absorbs slow-path runs that come in under the floor, so the two converge on the same
+// number instead of merely getting closer. Only genuine network outliers on the slow path exceed
+// it, and those are noise that affects the fast path's own network leg too.
+//
+// Chosen with the two cautions in mind. 900ms does not materially harm the user, who is waiting
+// on a form submit that already took about 800ms. And the floor is a fixed constant, not derived
+// from anything that varies, so it cannot itself become a load-dependent signal. The cost is
+// roughly 400ms of extra function duration per not-found reset request, on a low-traffic endpoint.
+const FORGOT_MIN_MS = 900;
+const sleepMs = (ms) => new Promise((r) => setTimeout(r, ms));
+async function padToFloor(startedAt, floorMs) {
+  const elapsed = Date.now() - startedAt;
+  if (elapsed < floorMs) await sleepMs(floorMs - elapsed);
+}
+
 const LINK_SEND_WINDOW_MS = 15 * 60 * 1000;
 const LINK_SEND_MAX       = 3;
 const linkSendAttempts = new Map(); // email -> { count, resetAt }
@@ -827,10 +859,14 @@ async function handleForgot(form) {
   // Note the throttle is SHARED with signup, not a second counter. That is correct rather than
   // incidental: both endpoints mail the same address off the same magic-link infrastructure, so
   // an attacker alternating between them should not get double the budget.
+  // C3L-47: stamped before any work so the floor covers the whole handler, including the
+  // getAccountByEmail lookup, not just the branch that skips the send.
+  const startedAt = Date.now();
   if (email) {
     const account = await getAccountByEmail(email);
     if (account && maySendLink(email)) await sendLinkEmail(account, 'reset');
   }
+  await padToFloor(startedAt, FORGOT_MIN_MS);
   return checkEmailPage('Check your email', 'If an account exists for that email, we have sent a password reset link.');
 }
 
