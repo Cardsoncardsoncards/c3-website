@@ -25,11 +25,11 @@ jobs:
       github.event.inputs.tcg == 'pokemon'
     timeout-minutes: 360
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Run Pokemon sync
         continue-on-error: true
@@ -48,11 +48,11 @@ jobs:
       github.event.inputs.tcg == 'lorcana'
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Run Lorcana sync
         continue-on-error: true
@@ -70,11 +70,11 @@ jobs:
       github.event.inputs.tcg == 'yugioh'
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Run Yu-Gi-Oh sync
         continue-on-error: true

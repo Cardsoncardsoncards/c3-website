@@ -405,87 +405,6 @@ async function upsertBatchWithRetry(table, rows, conflictKey, label = '') {
   return { upserted: 0, failed: rows.length };
 }
 
-// DEAD CODE, kept for reference only. Do not rely on anything below this line.
-//
-// The exec_sql RPC this calls does not exist in the database (confirmed absent from
-// pg_proc), so both the supabase.rpc() path and the REST fallback fail on every run and
-// this function has silently done nothing since 18 June 2026. The catch blocks swallow
-// the failure and the sync reports success, which is why it went unnoticed.
-//
-// Nothing depends on it any more. The 52w stats and buy/sell verdicts are now built by the
-// update-mtg-signals-daily pg_cron job, which writes mtg_signals, and every reader
-// (market-data.mjs, card-page.mjs, generate-weekly-report.mjs, shared/weekly-report-core.mjs)
-// reads its verdicts from there. The mtg_price_snapshots.price_52w_* columns this UPDATE
-// targets are themselves dead, see DATA_SOURCES.md.
-//
-// Left in place rather than deleted because it is harmless and documents the old approach.
-// If you revive it, note the "52w" window is really all history C3 holds, roughly ten weeks.
-async function updateSnapshotVerdicts() {
-  console.log('\nUpdating snapshot verdicts and 52w stats...');
-  const today = new Date().toISOString().slice(0, 10);
-
-  const sql = `
-    WITH card_history AS (
-      SELECT
-        scryfall_id,
-        MAX(price_aud) FILTER (WHERE price_aud > 0) AS high_aud,
-        MIN(price_aud) FILTER (WHERE price_aud > 0 AND snapshot_date < '${today}') AS low_aud
-      FROM mtg_price_snapshots
-      WHERE price_aud IS NOT NULL
-      GROUP BY scryfall_id
-    )
-    UPDATE mtg_price_snapshots s
-    SET
-      price_52w_high_aud = h.high_aud,
-      price_52w_low_aud  = h.low_aud,
-      buy_verdict  = CASE
-        WHEN s.price_aud > 0 AND h.low_aud > 0 AND s.price_aud <= h.low_aud * 1.10 THEN 'buy'
-        ELSE NULL
-      END,
-      sell_verdict = CASE
-        WHEN s.price_aud > 0 AND h.high_aud > 0 AND s.price_aud >= h.high_aud * 0.90 THEN 'sell'
-        ELSE NULL
-      END
-    FROM card_history h
-    WHERE s.scryfall_id = h.scryfall_id
-    AND s.snapshot_date = '${today}';
-  `;
-
-  // supabase.rpc() returns a thenable query builder, NOT a native Promise, so
-  // chaining .catch() directly on it throws "catch is not a function" and crashed
-  // the whole sync after the data had already synced. Await it (SQL errors surface
-  // in the returned { error }) and catch any thrown error around the await instead.
-  let error = null;
-  try {
-    ({ error } = await supabase.rpc('exec_sql', { query: sql }));
-  } catch (e) {
-    error = { message: e && e.message ? e.message : 'rpc not available' };
-  }
-
-  if (error) {
-    try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/exec_sql`, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_SECRET_KEY,
-          'Authorization': `Bearer ${SUPABASE_SECRET_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ query: sql })
-      });
-      if (!res.ok) {
-        console.warn('Verdict update via RPC failed:', await res.text());
-        console.log('Verdict update skipped, will retry on next sync (see dead code note above).');
-      } else {
-        console.log('Snapshot verdicts updated successfully.');
-      }
-    } catch (e) {
-      console.warn('Verdict update error:', e.message);
-    }
-  } else {
-    console.log('Snapshot verdicts updated successfully.');
-  }
-}
 
 async function main() {
   const startTime = Date.now();
@@ -624,7 +543,6 @@ async function main() {
   try { unlinkSync(TEMP_FILE); } catch {}
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-  await updateSnapshotVerdicts();
 
   console.log('\n=== Sync complete ===');
   console.log(`Mode:                ${FORCE_FULL_SYNC ? 'FULL' : 'INCREMENTAL'}`);

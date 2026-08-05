@@ -1,0 +1,40 @@
+name: Deploy health check
+
+# C3L-26. A production deploy failed silently on 4 August 2026 and was found by accident, because
+# a later task happened to check the deploy record instead of assuming a push means a deploy. This
+# catches both halves of that automatically: a deploy in state "error", and a published commit that
+# does not match origin/main.
+#
+# CADENCE: hourly. A deploy takes a couple of minutes, so hourly catches a failure within an hour
+# rather than whenever somebody next looks, while staying quiet enough to be worth reading. It is
+# deliberately tolerant of a deploy in flight, so an ordinary push does not trip it.
+#
+# SETUP NOTE: this needs NETLIFY_AUTH_TOKEN as a repository secret, which no existing workflow
+# uses. Until it exists the workflow fails on its first run with an explicit message, which is the
+# intended fail-closed behaviour rather than a silent skip. NETLIFY_SITE_ID is optional, the site
+# id is already public in CLAUDE.md and is defaulted in the script.
+
+on:
+  schedule:
+    - cron: '25 * * * *'   # hourly, offset off the hour so it does not pile up with other jobs
+  workflow_dispatch:
+
+jobs:
+  deploy-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with: { node-version: '22' }
+
+      - name: Check deploy health
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          EXPECTED_SHA: ${{ github.sha }}
+        run: node scripts/deploy-health-check.mjs

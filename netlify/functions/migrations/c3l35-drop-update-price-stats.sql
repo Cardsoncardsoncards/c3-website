@@ -1,0 +1,32 @@
+-- C3L-35: remove update_price_stats.
+--
+-- The decision the task asked for, stated plainly: REMOVE, not repair.
+--
+-- Re-confirmed immediately before dropping, rather than inherited from the earlier finding:
+-- 0 cron.job entries reference it, 0 other database functions reference it, and 0 files in the
+-- repo reference it. It has never been scheduled and nothing has ever called it.
+--
+-- It also writes columns nothing reads. Its targets, mtg_price_snapshots.price_52w_high_aud,
+-- price_52w_low_aud, price_7d_avg_aud, price_30d_avg_aud and the snapshot-level buy/sell
+-- verdicts, were abandoned on 18 June 2026 when mtg_signals took over. Every live reader
+-- (card-page.mjs, market-data.mjs, weekly-report-core.mjs) reads its figures from mtg_signals.
+-- Verified by grep: the only remaining reference to those snapshot columns anywhere in the repo
+-- was updateSnapshotVerdicts, which is deleted in the same commit as this migration (C3L-38).
+--
+-- Why removal rather than wiring it up: a maintained-looking function that nothing calls invites
+-- a future reader to assume it is the live path. That is not hypothetical here, it is exactly the
+-- wrong turn Task 03 nearly took while investigating C3L-34, and the only thing that prevented it
+-- was checking the caller list. Deleting it removes the trap.
+--
+-- Note on wasted work, recorded honestly: Task 05 added a minimum-sample guard to this function
+-- under C3L-25. That guard was correct and was recorded at the time as inert, because nothing
+-- called the function. Dropping the function discards it. The reasoning behind the thresholds is
+-- preserved in C3L-25's entry and in c3l25-price-stats-minimum-sample.sql, so if these columns
+-- are ever revived the thinking is not lost with the code.
+--
+-- ROLLBACK: re-apply c3l25-price-stats-minimum-sample.sql, which contains the full function body
+-- as it stood immediately before this drop, guard included. No data is touched by this migration:
+-- the columns and their existing rows remain exactly as they are, only the unused function that
+-- would have written them is removed.
+
+DROP FUNCTION IF EXISTS public.update_price_stats();
