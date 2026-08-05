@@ -93,6 +93,54 @@ try {
   problems.push(`check threw before completing: ${e.message}`);
 }
 
+// C3L-51, the mutual half. The sync health check runs once a day and would go silent without
+// anyone noticing if its schedule stopped firing, which GitHub does to cron workflows on
+// inactive repos. A detector that can die quietly has moved the blind spot rather than closed
+// it. So this job, which runs hourly, asserts that the daily one actually ran. The daily one
+// asserts the same about its own previous run. Two independent schedules watching each other,
+// so killing detection now takes both of them failing at once rather than either.
+//
+// Skipped rather than failed when Supabase credentials are absent, because this is a secondary
+// assertion inside a check whose primary job is deploys, and refusing to report on deploys
+// because a different subsystem is unconfigured would be the wrong trade. The absence is
+// printed loudly instead.
+const SB_URL = process.env.SUPABASE_URL;
+const SB_KEY = process.env.SUPABASE_SERVICE_KEY;
+const HEARTBEAT_GAME = '__sync_health_check__';
+const HEARTBEAT_MAX_AGE_HOURS = 36;
+
+console.log('\n=== Sync health check heartbeat (C3L-51 mutual monitoring) ===');
+if (!SB_URL || !SB_KEY) {
+  console.log('SKIPPED: SUPABASE_URL / SUPABASE_SERVICE_KEY not set for this workflow, so the');
+  console.log('sync health check is NOT being watched by anything right now.');
+} else {
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15000);
+    const res = await fetch(
+      `${SB_URL}/rest/v1/sync_events?select=triggered_at&game=eq.${HEARTBEAT_GAME}&order=triggered_at.desc&limit=1`,
+      { headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }, signal: controller.signal }
+    );
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`${res.status} ${(await res.text()).slice(0, 150)}`);
+    const rows = await res.json();
+    if (!rows.length) {
+      console.log('no heartbeat recorded yet. Expected until the sync health check has run once.');
+    } else {
+      const ageH = (Date.now() - new Date(rows[0].triggered_at).getTime()) / 3600000;
+      console.log(`last sync health check ran ${ageH.toFixed(1)}h ago (${rows[0].triggered_at})`);
+      if (ageH > HEARTBEAT_MAX_AGE_HOURS) {
+        problems.push(
+          `the sync health check has not run for ${ageH.toFixed(1)}h, against a daily schedule. ` +
+          'Nothing is currently watching the 32 game syncs.'
+        );
+      }
+    }
+  } catch (e) {
+    console.log(`heartbeat lookup failed: ${e.message}. Not failing the deploy check on this.`);
+  }
+}
+
 console.log('\n=== RESULT ===');
 if (problems.length) {
   console.error(`DEPLOY HEALTH CHECK FAILED with ${problems.length} problem(s):`);

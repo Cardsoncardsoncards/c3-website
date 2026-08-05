@@ -1,0 +1,42 @@
+-- C3L-51: remove the pg_cron job that marked notifications as fired without firing any.
+-- Applied to the live database on 6 August 2026 (Task 14, step 4).
+--
+-- WHAT IT WAS
+-- jobid 2, named `sitemap-staleness-check`, schedule `0 */6 * * *`. The name describes something
+-- it does not do. Its entire body was:
+--
+--     UPDATE public.sync_events
+--     SET webhook_fired = true
+--     WHERE webhook_fired = false
+--       AND triggered_at < NOW() - INTERVAL '30 minutes';
+--
+-- Every six hours it took every sync event where no webhook had fired and recorded that one had.
+-- It sent nothing. Its only effect was to destroy the evidence that no notification had gone out,
+-- which is the exact opposite of what its name promises. While weissschwarz was failing nightly
+-- for 24 nights, this job was busy marking each of those failures as notified.
+--
+-- THE DECISION: REMOVE, not repair. Stated because the task required the choice be argued.
+--   1. Nothing reads the column. Verified across the repo: 31 matches for `webhook_fired`, all
+--      of them the same explanatory comment in a sync function, zero reads in any code path.
+--   2. Repairing it would mean building a second alerting path on pg_cron, which has no failure
+--      notification of its own. A detector nobody is told about when it breaks is the problem
+--      this task exists to solve, so solving it by adding another one would be circular.
+--   3. The replacement is `.github/workflows/sync-health-check.yml`, which runs daily and alerts
+--      through GitHub's failure email, a channel already proven to reach a human three times in
+--      this programme.
+--   4. Leaving it while adding the new check would be actively harmful, not merely redundant:
+--      `webhook_fired = true` on a row where nothing fired is false data, and the new check
+--      writes its heartbeat into this same table.
+--
+-- The `webhook_fired` column is left in place. It is now honest, since nothing writes true to it
+-- any more, and dropping a column from a live table is a bigger change than this task needs.
+
+SELECT cron.unschedule(2);
+
+-- VERIFIED AFTER RUNNING: jobid 2 no longer present in cron.job. Jobs 1, 4 through 11, 14 and 15
+-- were untouched and remain active.
+--
+-- ROLLBACK, if it is ever wanted, which it should not be:
+--   SELECT cron.schedule('sitemap-staleness-check', '0 */6 * * *',
+--     $$UPDATE public.sync_events SET webhook_fired = true
+--       WHERE webhook_fired = false AND triggered_at < NOW() - INTERVAL '30 minutes';$$);

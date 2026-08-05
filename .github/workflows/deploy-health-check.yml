@@ -36,5 +36,9 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          # C3L-51 mutual monitoring: this hourly job also asserts the daily sync health check
+          # is still running, so a detector that stops firing does not do so unnoticed.
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           EXPECTED_SHA: ${{ github.sha }}
         run: node scripts/deploy-health-check.mjs
