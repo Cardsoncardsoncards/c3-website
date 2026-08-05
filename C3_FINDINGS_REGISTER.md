@@ -38,6 +38,7 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
 | Date | Task or slug | What happened | Six-line report (condensed) |
 |---|---|---|---|
+| 2026-08-05 | `c3-audit-c3l44-c3l45-recurring-rls`, Claude Code, laptop, own worktree | Task 07, three pieces. **C3L-44**: signup no longer discloses whether an address is registered. It took two attempts and that is the finding worth carrying: the first fix equalised body content and length, read as correct, and still leaked through **timing**, a 491ms median separation caused by one extra database round trip on the registered branch. Fixed by making the lookup unconditional; re-measured live at a **19ms** median delta with fully interleaved ranges, against 1,214ms in the original finding. A per-address send throttle was added so equalising timing did not create an email-bomb vector. **C3L-45**: an empty batch is normal termination and stays; what changed is that a truncated run is now distinguishable from a finished one, verified live reporting `expected 41628, complete`. **Recurring RLS check**: Task 06's method automated, weekly, labelling each table meaningful or vacuous so the empty tables start being genuinely tested once they hold rows, with targets discovered from column shape rather than hardcoded | Compliance: no privacy, EPN, Amazon, Scryfall or `/legal` surface touched. C3L-44 strengthens the Privacy Policy's implicit position that account existence is not public. Test accounts created during verification were all removed, production verified at 0 `@example.com` and 0 orphaned magic links. Removal: none new. Suggestions: add `SUPABASE_ANON_KEY` as a repository secret and dispatch the workflow manually once before trusting the schedule; consider whether `handleForgot` should carry the same send throttle, since it has the same unthrottled send exposure and only signup was in scope here. Blind spots: **the recurring check has not been run end to end**, only its fail-closed path, its RPC's shape, and that anon cannot call it, because the service key is not retrievable from this machine; and the throttle is per serverless instance in memory, so it blunts casual abuse rather than a distributed attempt, the same caveat the existing login limiter carries. Opportunities: none new. Fragility: the C3L-44 fix was verified correct at a point where it was still leaking, which is a caution that reading a security fix is not evidence it works, and this one only failed the measurement, not the review |
 | 2026-08-05 | `c3-audit-0rls-c3l43`, Claude Code, laptop, own worktree | Task 06, two pieces. **Piece 1 closes protocol Section 4 and C3L-06, open since the first session, and it passes.** Two synthetic accounts, real sessions through the live endpoint, and eight object-level attacks by Account A against Account B's follow row: read, soft delete, hard delete, token-authenticated hard delete, bogus token, unauthenticated delete, and token substitution on two surfaces. **All eight rejected, B's row verified intact in the database after each.** Anon-key sweep of all 13 sensitive tables returned 0 rows, and that is meaningful for the 4 that actually hold data, including `accounts` with 138 real rows and `follow_magic_links` with 139 live tokens. All synthetic data removed, counts back to baseline exactly. One real finding, C3L-44, account enumeration through signup, which is information disclosure not an authorisation gap, so it did not halt the work. **Piece 2, C3L-43**: the breakdown the task asked for is 1,871 genuinely stale and **0** falling through a function gap, so the fix is an expiry not a repair; 798 stale verdicts expired, 0 current cards affected | Compliance: this was authorised security testing of the owner's own site under protocol Section 4, non-destructive, and all synthetic data was removed with counts verified back to baseline. One email was sent to a synthetic `example.com` address as an unavoidable part of exercising the real signup path; Account B was created directly to avoid a second. C3L-44 touches the Privacy Policy's implicit position on account confidentiality. Removal: none new. Suggestions: decide whether signup should be made generic (C3L-44), and consider a recurring scheduled version of this RLS test per Section 4's closing line rather than leaving it a one-time pass. Blind spots: the two-account test covered follows, which is the only user-owned row type that currently exists, so "collection rows" and "alert rows" in Section 4's wording were vacuous rather than tested, `card_price_alerts` and `collection_waitlist` are both empty tables; and the 1,042 stale cards above the price floor were explained as churn by rate analysis, not per-card. Opportunities: none new. Fragility: `update_mtg_signals_batched` exits its batch loop on the first empty batch, which is not firing today but would silently truncate processing if a 500-card window ever yielded zero upserts |
 | 2026-08-05 | `c3-audit-c3l39-c3l41-c3l42`, Claude Code, laptop, own worktree | Task 05, **three separate pieces, kept separate in three migrations, three register entries and a structured commit**. Piece 1, C3L-39: minimum-history guard at 30 distinct days, implemented at source so all three consuming surfaces inherit it, **measured effect 424 verdicts withheld** (buy 4,634 to 4,522, sell 8,693 to 8,381) with 0 sub-threshold cards still verdicted, plus the "Mid-range price" conflation fixed on the card page with a distinct not-enough-history state. Piece 2, C3L-41: exactly 8 rows flagged by primary key, values preserved not deleted, **Ornithopter's low moved $0.07 to $715 and its ratio 10,357 to 1.0**, and honestly, 2 of the 8 did not change because their signal rows are stale. Piece 3, C3L-42: `written_at` and `source` added to `mtg_price_snapshots` with the default attached separately to avoid a full rewrite of a 1,559 MB live table, and the other 7 Core games confirmed still lacking both. C3L-38's question answered definitively (not the same bug, one root cause, the old fix silenced it). C3L-43 opened | Compliance: nothing touched on privacy, EPN, Amazon, Scryfall attribution or `/legal`. C3L-39 reduces an unfounded-advice exposure rather than creating one, since a buy or sell call is the most actionable thing this site says. Removal: `update_price_stats` (C3L-35) and `updateSnapshotVerdicts` (C3L-38) remain removal candidates and C3L-38's answer strengthens the case, it is a step that runs daily and provably does nothing. Suggestions: expire stale `mtg_signals` rows (C3L-43), and either create `exec_sql` or delete `updateSnapshotVerdicts` rather than leaving a daily no-op. Blind spots: `/market` and the weekly email were NOT updated for the stale-row case and still surface all 798, only the card page is covered; the other 7 Core games have no equivalent guard and were not given one; and the display change is verified by reading and by node syntax check, not by a rendered browser. Opportunities: none new. Fragility: `compute_mtg_signals_batch` has now been replaced twice in one session, and its final body carries changes from two different findings, so anyone reverting one piece must read both migrations rather than assuming the file they are holding is the whole story |
 | 2026-08-05 | `c3-audit-c3l40-confirmation`, Claude Code, laptop, own worktree, **investigation only, nothing shipped** | Task 04. No fix, no guard, no data correction, no migration. C3L-40's "almost certainly a bad snapshot" is replaced with measured rates: of the 242 outliers, **189 (78.1 per cent) are genuine market data**, the three Marvel sets released 26 June whose preorder highs collapsed after release, **8 (3.3 per cent) are ingestion-suspect** and all trace to one anomalous batch, and **45 (18.6 per cent) are unclear**. So the original finding overstated the problem by roughly an order of magnitude. For Ornithopter specifically, three candidate mechanisms were tested and ruled out (decimal or FX shift, wrong printing matched, foil mix-up), leaving the 6 June batch as the mechanism, and it is stated plainly that what Scryfall actually reported that day cannot be proven because neither Scryfall nor C3 keeps the history. The systemic cause is logged as C3L-41, a one-off 39,515 row write on a single date that has never recurred and whose writer could not be identified, and C3L-42 explains why it could not be: the table has no ingestion timestamp or source column at all | Compliance: nothing touched, no privacy, EPN, Amazon, Scryfall or `/legal` surface involved. Scryfall API use stayed within its terms, 7 single-card requests with the project User-Agent and a delay between them. Removal: none new. Suggestions: any cleanup should target only the 6 June batch rows and must not touch the Marvel cards, whose extreme ranges are real price history; and add a `written_at` plus source or batch marker to the snapshot tables (C3L-42) before the next time this question is asked. Blind spots: 45 of 242 are unresolved and I could not resolve them, the 6 June writer is unidentified, and only 7 cards were individually confirmed against the source, so the 78 per cent genuine figure rests on set-release timing and price-collapse shape rather than on 189 individual source checks. The other 31 games were not examined for the same 6 June anomaly. Opportunities: none new. Fragility: a finding written from one card's appearance became a 242 card claim in the register for a day, the second time in three tasks that a finding generalised further than its evidence |
@@ -71,7 +72,7 @@ compress old rows once this file has real history.)*
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-44)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-45)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -154,6 +155,75 @@ the fix commit, no migration and no schema change was involved.
 | C3L-45, resolved 2026-08-05, **piece 2 of task `c3-audit-c3l44-c3l45-recurring-rls`** | `update_mtg_signals_batched` exits its batch loop the moment a batch returns 0 processed rows, and a genuine early truncation is indistinguishable from a normal finish because both simply return a count. **Note on provenance: this was raised as a fragility line in Task 05's six-line report and never had a register row of its own; Task 07's file referenced C3L-45 as though it existed. This row is that entry, created now.** The question the fix had to answer first is whether an empty batch is normal or abnormal, and the answer is **normal**: `compute_mtg_signals_batch` pages by OFFSET, so an empty window is exactly how end-of-data is signalled and exiting on it must stay. The abnormal case is real but not currently reachable, a 500-wide window entirely made of filtered rows would also return 0 and silently skip everything after it; measured, 10,995 of 52,623 cards on the newest date have a NULL `price_aud` (20.9 per cent) but `card_batch` orders by `scryfall_id`, a UUID, so they are scattered rather than clustered and 500 consecutive is negligible | Function body read directly before deciding, per the task's instruction not to assume; NULL-price distribution measured against the live catalogue | Medium. Resolved by making the two outcomes distinguishable rather than by changing when the loop stops: the run now counts how many cards it should cover before starting, compares afterwards, and on a short run raises a WARNING and returns "TRUNCATED" instead of a clean count. Verified live, the run reports `41636 cards processed in 107 batches, expected 41628, complete`, the 8-card overshoot being the excluded-from-signals rows that still upsert from other dates |
 | C3L-44, resolved 2026-08-05, **piece 1 of task `c3-audit-c3l44-c3l45-recurring-rls`** | **Account enumeration through the signup endpoint.** `POST /account` with `action=signup` returns a materially different response depending on whether the email is already registered: a fresh address returns "Almost there / We have sent a confirmation link" while a registered one returns "That email already has an account. Log in, or reset your password." Both are HTTP 200, but the body differs (25,341 bytes against 30,721) and so does the timing (1,930 ms against 716 ms, because the fresh path sends an email and the existing path returns before it). Either signal is enough to test an address list against the site and learn who has an account. What makes this worth logging rather than shrugging at is the inconsistency: `handleForgot` right next to it is **deliberately** anti-enumeration, with an explicit comment saying so and an identical response either way, so the property was clearly understood and simply not carried across to signup | Measured live against the production endpoint during the piece 1 test, using a synthetic address for the fresh case and that same address once registered for the existing case, so no real user's address was submitted and only one email was sent | Medium. It is information disclosure, not an authorisation gap, and the authorisation test it was found alongside passed cleanly, which is why it did not stop that piece. Not fixed here: making signup generic is a real UX tradeoff (the user must somehow learn their address is taken) and the usual resolution, sending "you already have an account" to the address instead of showing it on screen, is a product decision. Note C3-101/102 in Section 4 covers this ground and can now be marked confirmed on the signup path and refuted on the reset path |
 | C3L-43, **resolved 2026-08-05, piece 2 of task `c3-audit-0rls-c3l43`** | Found while measuring C3L-39's effect, not looked for. `mtg_signals` holds **1,871 rows that are never recomputed**, because `compute_mtg_signals_batch` only processes cards present on the latest snapshot date and nothing ever ages out or removes a row for a card that stops appearing. **798 of those stale rows still display a buy or sell verdict**, computed from data as old as 27 June, with `latest_date` values up to five weeks behind the rest of the site. A visitor sees a confident "Near recent low" with no indication it was last true a month ago | Measured directly after the C3L-39 recompute: 41,636 of 43,507 rows were processed, leaving 1,871 with a NULL `days_of_history`, of which 798 carry a verdict, `latest_date` ranging 2026-06-27 to 2026-07-28 | Medium. Partially mitigated already, not by design but as a side effect: C3L-39's display guard treats a NULL `days_of_history` as not-confident, so the MTG card page now shows "Not enough price history yet" for these rather than a stale verdict. `/market` and the weekly email read the columns directly and are NOT covered, so those two surfaces still surface all 798. The real fix is for the signal computation to expire or delete rows whose card has left the daily set, which is its own task |
+
+**Resolution evidence for C3L-44, C3L-45 and the recurring RLS check,
+5 August 2026, task `c3-audit-c3l44-c3l45-recurring-rls`. Three pieces,
+recorded separately.**
+
+*Piece 1, C3L-44.* Signup now matches `handleForgot`'s pattern rather than a
+new one: both branches send mail and both fall through to one response that is
+true either way. A per-address send throttle was added at the same time,
+because equalising timing means the registered branch now sends mail and
+without a throttle that would hand anyone a way to mail a known address by
+replaying the form. The throttle is keyed on the submitted address and never
+on whether an account exists, so it cannot become a second enumeration channel.
+
+**This took two attempts, and the second one is the point.** The first fix
+made body content and length identical, 25,386 bytes either way, and removed
+the "already has an account" text, and reading the code it looked done. Live
+measurement said otherwise: five paired samples gave the registered path a
+median of **1,512ms against 1,021ms**, a 491ms separation. Single samples
+overlapped so it was not obvious, but medians over repeated requests separate
+cleanly and that is all an attacker needs. The cause was an asymmetry
+introduced by the fix itself: the registered branch called `getAccountByEmail`
+lazily inside its own branch, so it made one more database round trip than the
+unregistered one. The response was generic but the work behind it was not. The
+lookup now runs unconditionally before the branch, so both paths perform
+exactly one lookup, one insert attempt and one send.
+
+Re-measured after that change, on the live site, same paired method:
+unregistered median **1,171ms**, registered median **1,152ms**, a **19ms**
+delta against 491ms before and 1,214ms in the original finding, with the two
+ranges fully interleaved (1,126 to 1,356 against 1,096 to 1,177). Body lengths
+identical at 25,387. No leaking text. **The lesson worth keeping: the code read
+as correct at the halfway point, and only measurement caught it.** All
+synthetic accounts were removed afterwards and production verified clean, 0
+`@example.com` and 0 orphaned magic links.
+
+*Piece 2, C3L-45.* Covered in its own row above. The short version: an empty
+batch is normal termination and stays, what changed is that a truncated run is
+now distinguishable from a finished one. Live: `41636 cards processed in 107
+batches, expected 41628, complete`.
+
+*Piece 3, the recurring RLS check.* Logged as an update to C3L-06 rather than
+a new ID, deliberately: it is not a new finding, it is the standing mechanism
+that keeps C3L-06's result true, and splitting it off would leave C3L-06
+reading as a one-time pass again. It lives at
+`scripts/rls-recurring-check.mjs` and `.github/workflows/weekly-rls-check.yml`,
+runs Sundays 04:00 UTC (clear of the 03:00 sync), and is Task 06's method
+automated rather than redesigned.
+
+Two things it does that a naive repeat would not. It reads each table's true
+row count through a service-role RPC and labels every result **meaningful** or
+**vacuous**, so `collection_waitlist` and `card_price_alerts` begin being
+genuinely tested the moment they hold a row instead of reporting the same empty
+pass forever, which is C3L-06's own recorded caveat. And it discovers its
+targets from column shape at run time rather than a hardcoded list, so a new
+table with an email or `user_id` column is covered without anyone remembering,
+which is Section 4 point 4. Discovery needed a database-side source because
+PostgREST's OpenAPI root returns 401 to the anon key; the supporting RPC is
+SECURITY DEFINER, revoked from PUBLIC **and** from `anon` and `authenticated`
+by name, and anon calling it was confirmed to get `42501 permission denied`.
+
+**Two honest gaps on this piece.** The workflow needs `SUPABASE_ANON_KEY` as a
+repository secret, which no existing workflow uses; I did not add it, that is a
+credential-store change to the repo that was not asked for, so until it exists
+the workflow fails loudly on its first run, which is the intended fail-closed
+behaviour rather than a silent skip. And **the script has not been run end to
+end**, because the service key is not retrievable from this machine. What was
+verified is the fail-closed path (no secrets set gives exit 1 with an explicit
+message), the RPC's output shape, and that anon cannot call it. Run it once by
+manual dispatch after adding the secret, before trusting the schedule.
 
 **Resolution evidence for C3L-43, 5 August 2026, piece 2 of task
 `c3-audit-0rls-c3l43`.**
@@ -561,10 +631,10 @@ here immediately, whether or not that was its assigned scope.
 Updated whenever a task changes the counts below, not left to go stale.
 Same discipline as Voxsanity's own Section 5.
 
-- **Live-investigation findings (C3L-):** 44 total. 21 resolved with evidence
+- **Live-investigation findings (C3L-):** 45 total. 23 resolved with evidence
   (C3L-01, C3L-02, C3L-04, C3L-05, **C3L-06**, C3L-07, C3L-08, C3L-12,
   C3L-15, C3L-16, C3L-25, C3L-27, C3L-28, C3L-29, C3L-30, C3L-31, C3L-37,
-  C3L-39, C3L-41, C3L-42, **C3L-43**). **C3L-06 is the significant one: the
+  C3L-39, C3L-41, C3L-42, **C3L-43**, **C3L-44**, **C3L-45**). **C3L-06 is the significant one: the
   live two-account object-level test finally ran on 5 August and passed, so
   protocol Section 4 is closed on evidence rather than on policy reading.**
   7 high and still open (C3L-03, C3L-10, C3L-11, C3L-26, C3L-32,
@@ -573,12 +643,11 @@ Same discipline as Voxsanity's own Section 5.
   remains**: Task 04 measured it at 8 ingestion-suspect and 45 unclear out of
   242, the other 189 being genuine Marvel new-set price collapse, and Task 05
   then handled the 8, so what is left open is the 45 nobody could classify.
-  14 medium and still open (C3L-09, C3L-17 to C3L-24, C3L-33, C3L-34,
-  C3L-35, C3L-38, **C3L-44**). **C3L-34 was downgraded from High to Medium on
+  13 medium and still open (C3L-09, C3L-17 to C3L-24, C3L-33, C3L-34,
+  C3L-35, C3L-38). **C3L-34 was downgraded from High to Medium on
   5 August** after Task 03's investigation showed its central claim was
-  wrong, see its corrected entry. C3L-44 is the account enumeration found
-  during the Section 4 test, information disclosure rather than an
-  authorisation gap. 2 informational and positive (C3L-13, C3L-14).
+  wrong, see its corrected entry. 2 informational and positive (C3L-13,
+  C3L-14). Tally: 23 + 7 + 13 + 2 = 45.
 - **Note on the ID range:** Task 01 asked for sibling rows to continue from
   C3L-13, but C3L-13 and C3L-14 were already taken by the kickoff session
   earlier the same day. New IDs therefore run from C3L-15, per the
@@ -593,7 +662,7 @@ Same discipline as Voxsanity's own Section 5.
 - **Resolved this file's lifetime:** 16 (C3L-01, C3L-02, C3L-04, C3L-05,
   C3L-07, C3L-08, C3L-12, C3L-15, C3L-16, C3L-25, C3L-27, C3L-28, C3L-29,
   C3L-30, C3L-31, C3L-37).
-- **Total rows this file currently tracks:** 85, across 4 ID ranges, out of
+- **Total rows this file currently tracks:** 86, across 4 ID ranges, out of
   a much larger universe (at minimum the full 164 in the external docx,
   plus whatever the 13-wave programme surfaces once it starts). This
   number is expected to grow quickly once Wave 1 runs, that growth is the
@@ -695,6 +764,16 @@ Priority order for the next session:
    user-owned rows exist yet, `card_price_alerts` and `collection_waitlist`
    are both empty. When either feature gains real rows, this test needs
    re-running against it rather than being treated as already covered.
+   **Both of those are now handled, 5 August 2026, task
+   `c3-audit-c3l44-c3l45-recurring-rls`.** The recurring version exists at
+   `scripts/rls-recurring-check.mjs` and `.github/workflows/weekly-rls-check.yml`,
+   and it labels each table meaningful or vacuous from its true row count, so
+   the two empty tables start being genuinely tested the moment they hold a
+   row rather than repeating the same empty pass. **It needs one thing from
+   Sammy before it can run: `SUPABASE_ANON_KEY` as a repository secret, which
+   no existing workflow uses. Until then it fails loudly on first run, which
+   is intended. It has also not been executed end to end, so dispatch it
+   manually once after adding the secret before trusting the schedule.**
 6. Wave 1 slugs (`1-claims`, `3-pricing`, `4-links`), each in its own
    worktree per Part 0. `3-pricing` should inherit C3L-11 and C3L-12 as
    known context rather than rediscovering them.
