@@ -1,0 +1,48 @@
+name: Weekly RLS and BOLA check
+
+# Protocol Section 4's closing instruction: once the two-account object-level test is closed,
+# "add it as a recurring scheduled check, per Part 0's any-recurring-check-must-fail-gracefully
+# rule, not a one-time sweep". Task 06 ran it once by hand and it passed. This keeps it true.
+#
+# CADENCE: weekly, not daily. The thing it guards against is a schema or policy change, which
+# happens on the timescale of deploys rather than hours, and the check creates and deletes real
+# rows in the production accounts table each run, so there is a reason not to run it more often
+# than the risk justifies. Sunday 04:00 UTC is well clear of the 03:00 UTC MTG sync so the two
+# do not contend.
+#
+# FAILURE IS THE POINT. Any real failure exits non-zero and fails this workflow, which sends the
+# same GitHub notification that surfaced the July MTG sync outage. A missing secret or an
+# unreachable database also fails rather than passing quietly, because a check that could not run
+# is not a check that passed.
+#
+# SETUP NOTE: this needs SUPABASE_ANON_KEY as a repository secret, which the other workflows do
+# not use. That is deliberate and unavoidable: the whole point of Part A is to test the site with
+# the key that actually ships to browsers, and the service key cannot stand in for it. Until that
+# secret exists the workflow will fail on its first run with an explicit message saying so, which
+# is the intended behaviour rather than a silent skip.
+
+on:
+  schedule:
+    - cron: '0 4 * * 0'   # Sundays, 04:00 UTC
+  workflow_dispatch:
+
+jobs:
+  rls-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Run RLS and BOLA check
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SITE_ORIGIN: https://cardsoncardsoncards.com.au
+        run: node scripts/rls-recurring-check.mjs

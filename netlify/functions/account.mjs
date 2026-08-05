@@ -192,6 +192,34 @@ function recordFailedLogin(email) {
 }
 function clearLoginAttempts(email) { loginAttempts.delete(email); }
 
+// C3L-44: per-address throttle on outbound account-link emails.
+//
+// Making signup's response identical for a registered and an unregistered address means signup
+// has to SEND an email in both cases, otherwise the missing send is itself the tell: Task 06
+// measured the registered path at 716ms against 1,930ms for the unregistered one, purely because
+// only the latter sent mail. Sending in both branches removes that signal, but naively it would
+// also hand anyone a way to mail a known address repeatedly by replaying the signup form.
+//
+// This throttle is keyed on the SUBMITTED address and nothing else. It never consults whether an
+// account exists, so it behaves identically for registered and unregistered addresses and cannot
+// become a second enumeration channel itself. Same in-memory caveat as loginAttempts above: per
+// serverless instance, not shared, which blunts casual abuse at current scale rather than
+// stopping a determined distributed attempt.
+const LINK_SEND_WINDOW_MS = 15 * 60 * 1000;
+const LINK_SEND_MAX       = 3;
+const linkSendAttempts = new Map(); // email -> { count, resetAt }
+function maySendLink(email) {
+  const now = Date.now();
+  const rec = linkSendAttempts.get(email);
+  if (!rec || now > rec.resetAt) {
+    linkSendAttempts.set(email, { count: 1, resetAt: now + LINK_SEND_WINDOW_MS });
+    return true;
+  }
+  if (rec.count >= LINK_SEND_MAX) return false;
+  rec.count += 1;
+  return true;
+}
+
 // Mints a magic-link token and emails it, framed as confirm (sign-up) or reset (forgot). The
 // underlying magic-link infra (follow_magic_links + resolveMagicLink) is UNCHANGED and shared;
 // only the presentation differs. Reset links carry &reset=1 so the handler shows the set-password
@@ -747,16 +775,35 @@ async function handleSignup(form) {
   if (pwProblem) return signedOutPage(pwProblem, 'signup');
   if (password !== confirm) return signedOutPage('The two passwords do not match.', 'signup');
 
+  // C3L-44: this used to answer "That email already has an account" on screen, which told any
+  // caller whether an address was registered. handleForgot immediately below already solved this
+  // the right way and its pattern is matched here rather than a new one invented: do the work
+  // quietly, tell the user by email, and return one response that is true either way.
+  //
+  // Both branches now send mail and both fall through to the SAME return, so body content, body
+  // length and timing are all independent of whether the account existed. The password hash is
+  // computed before this line in both cases too, so even that cost is symmetric.
   const result = await createAccountWithPassword(email, hashPassword(password));
-  if (!result.ok) {
-    if (result.reason === 'email_exists') {
-      return signedOutPage('That email already has an account. Log in, or reset your password.', 'login');
-    }
+
+  if (result.ok) {
+    // New account: the usual confirm link.
+    if (maySendLink(email)) await sendLinkEmail(result.account, 'confirm');
+  } else if (result.reason === 'email_exists') {
+    // Already registered: send a sign-in link to the address instead of saying so on screen.
+    // This is the useful thing for the real owner of the address (they get a way in) and tells
+    // whoever submitted the form nothing at all.
+    const existing = await getAccountByEmail(email);
+    if (existing && maySendLink(email)) await sendLinkEmail(existing, 'reset');
+  } else {
+    // A genuine server-side failure. Distinct on purpose: it is not conditioned on whether the
+    // address exists, so it leaks nothing, and hiding a real fault behind a success page would
+    // leave the user waiting for mail that is never coming.
     return signedOutPage('We could not create your account just now. Please try again.', 'signup');
   }
-  // Confirmation email, reusing the magic-link infra framed as "confirm your account".
-  await sendLinkEmail(result.account, 'confirm');
-  return checkEmailPage('Almost there', `We have sent a confirmation link to ${email}. Click it to confirm your account and sign in.`);
+
+  // One response, identical in both reachable branches above. The wording is deliberately true
+  // in both cases rather than claiming a confirmation link specifically.
+  return checkEmailPage('Check your email', `We have sent a link to ${email}. If you already have an account it will sign you in, otherwise it will confirm your new account.`);
 }
 
 async function handleForgot(form) {
