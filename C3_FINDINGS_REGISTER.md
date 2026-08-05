@@ -79,7 +79,7 @@ compress old rows once this file has real history.)*
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-54)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-55)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -176,8 +176,45 @@ the fix commit, no migration and no schema change was involved.
 | C3L-53, **open and serious, found 2026-08-05 while checking C3L-49's race-condition question, task `c3-audit-c3l49-rootcause`** | **All three daily sync scripts in `daily-tcg-sync.yml` are completely dead and have been reporting success every morning.** Each fails at its FIRST step against a real schema mismatch: pokemon `Could not find the 'logo_uri' column of 'pokemon_sets'`, lorcana `Could not find the 'code' column of 'lorcana_sets'`, yugioh `Could not find the 'num_of_cards' column of 'yugioh_sets'`, all PGRST204 from PostgREST. They throw at `syncSets`, exit 1, and **`continue-on-error: true` on all three steps threw the exit code away**, so the workflow has reported `success` every day at least back to 31 July. The games still hold current data only because their separate BACKGROUND syncs work, which is what hid this. **Two corrections to my own recent work follow from it.** Task 10 credited these 4 script syncs with "a real failure signal, which is why the MTG outage was eventually noticed"; that is true of `daily-mtg-sync.yml` but flatly false of these three. And the C3L-50 zero-row guards Task 10 added to exactly these scripts were **inert on arrival**: they call `process.exit(1)`, which `continue-on-error` discarded, and in any case the scripts die before ever reaching them | Read from the real Actions log of run `30980768499` (5 August, 06:15 UTC), confirmed against the workflow file's three `continue-on-error: true` lines and against `information_schema`, where `pokemon_cards` has no `data_hash` column and integer `id` and `set_id` while the script writes a text `id` and selects `data_hash`. The run history shows `success` for 6 consecutive days | High. **Half closed here**: `continue-on-error` removed from all three steps, so the failures become visible and the C3L-50 guards can actually fire. The schema mismatches themselves are NOT fixed, that is a separate task per game. **Expect this workflow to go red on its next run, and that is the fix working, not a new breakage** |
 | C3L-54, **open, found 2026-08-05, this is the answer to C3L-49's step 3 race-condition question** | Two runs of the SAME sync cannot overlap: the schedules are daily, staggered 15 to 45 minutes apart, and Netlify background functions cap at 15 minutes, so a job cannot still be running when its next scheduled firing arrives. **But a genuine concurrent-writer path does exist, and it is a different mechanism from C3L-49's arrival-order bug rather than the same one counted twice.** `sync-pokemon-background.mjs` is scheduled `0 4 * * *` and `daily-tcg-sync.yml` is cron `0 4 * * *`, the same minute, and both target `pokemon_cards`. They do not even agree on what a row looks like: the background writer uses numeric upstream ids and `slugify(clean_name, number, setAbbr)`, the script writer uses text ids shaped `lang-setid-localId` and `slugify(name, cardId)`. Determinism fixes ordering within one run; it does nothing about two writers disagreeing about the same table at the same instant | Schedules read from `sync-pokemon-background.mjs` and `.github/workflows/daily-tcg-sync.yml` directly; the two slug algorithms and the two id shapes read from the two scripts | Medium today, and only because C3L-53 means the script writer currently fails before writing anything, so the collision is masked. **Fixing C3L-53 without also resolving this will un-mask it.** The decision needed is which writer owns `pokemon_cards`, not a code patch, and the same question applies to lorcana and yugioh, whose two writers happen not to share a start minute |
 
-**The detection half of C3L-49, and the explicit C3L-51 dependency,
-5 August 2026, task `c3-audit-c3l49-rootcause`.**
+| C3L-55, **open, found 2026-08-05 by re-running Task 11's step 5 against Section 19's actual text once the protocol was synced** | **The C3L-49 fix is weaker than its own register entry claims, and the gap is the one Section 19 point 2 exists to catch.** `assignUniqueSlugs` gives the bare slug to the lowest id in a colliding group. That is stable only while the population is fixed. It assumes any future colliding row arrives with a HIGHER id, and **that assumption is false**: upstream ids are not monotonic with release date. Measured on onepiece, the set released 2026-09-18 holds card ids from 2153581 while sets released 2026-07-31 and 2026-08-22 hold ids from 2163005 and 2164207, so a newer product carries LOWER ids. When a future card lands with an id below the current bare-slug holder in its group, the rule hands it the bare slug, **changes a live URL, and can raise the same 23505 by moving an already-taken slug onto a different id**, which is the exact failure C3L-48 was fixed to stop | Not modelled, measured: `min(card id)` per set against `release_date` for the 6 most recent onepiece sets. onepiece is one of the 26 games the fix WAS applied to | Medium now, High whenever an upstream backfill lands. **This does not make the fix wrong, it makes it partial**: it removed run-to-run flapping over a fixed population, which was the live outage, and left growth unaddressed. It also confirms the shape of the original bug rather than escaping it, an ordering assumption about data the sync does not control. **The seed-from-stored-slugs approach already named as the correct fix for the 5 unfixed games is also the fix for this, and it closes both at once**, because a row that already owns a slug keeps it no matter what id arrives later |
+
+**The detection half of C3L-49, re-run against Section 19's real text,
+5 August 2026. Supersedes the version written before the protocol sync.**
+
+*Task 11 executed step 5 against a guess at Section 19, because the repo's copy
+did not have it. Re-run against the text now in `1f7aa10`, two of the three
+mandatory points hold and one does not.*
+
+**Point 1, root cause not pattern application: met.** Section 19 asks for both
+readings to be stated plainly, that matching stored data proves the fix broke
+nothing and does NOT prove the tiebreak is objectively correct. That is exactly
+what C3L-49's entry says, and it is why 5 games were left alone.
+
+**Point 2, the full four-roundtable scope review before writing the fix: NOT
+met. Task 11 never ran it, and running it late found C3L-55 within minutes**,
+a residual defect in the 26 games already shipped. That is the strongest
+possible evidence for the requirement, and it is recorded as a failure to
+follow the standard rather than smoothed over.
+
+**Point 3, the detection question asked separately: met, and now sharper than
+Task 11 stated it.** Task 11 wrote that the detection posture was "unchanged".
+That was too blunt in one direction and too generous in the other:
+- It improved for exactly 3 jobs. Removing `continue-on-error` restores a real
+  Actions failure email for the pokemon, lorcana and yugioh SCRIPT syncs.
+- It is untouched for all 31 BACKGROUND syncs. Verified by reading every
+  workflow: the 5 that exist cover 4 script syncs, one deploy check and one RLS
+  check, and **no workflow or script anywhere references `sync_events`**.
+- **All 26 games fixed under C3L-49 are background syncs. Not one of them
+  gained any detection whatsoever. The fix landed entirely inside the blind
+  spot**, including weissschwarz, the reference case Section 19 is written
+  around.
+
+So the dependency, stated as point 3 requires rather than as a general caution:
+**C3L-51 covers this exact gap and is open. A repeat of weissschwarz on any of
+the 31 background syncs today would be found the same way the original was,
+by a person happening to look.** C3L-53 already proved it inside this
+programme: three syncs dead for a week, found by accident during an unrelated
+step, not by anything watching.
 
 *This task asked directly whether the fix closes the risk on its own. It does
 not, and the register should not be read as if it does.*
@@ -881,7 +918,7 @@ here immediately, whether or not that was its assigned scope.
 Updated whenever a task changes the counts below, not left to go stale.
 Same discipline as Voxsanity's own Section 5.
 
-- **Live-investigation findings (C3L-):** 54 total. 40 resolved with evidence
+- **Live-investigation findings (C3L-):** 55 total. 40 resolved with evidence
   (C3L-01, C3L-02, C3L-04, C3L-05, **C3L-06**, C3L-07, C3L-08, **C3L-10**, C3L-12,
   C3L-15, C3L-16, **C3L-17 to C3L-23**, C3L-25, C3L-27, C3L-28, C3L-29,
   C3L-30, C3L-31, **C3L-36**, C3L-37, C3L-39, C3L-41, C3L-42, C3L-43,
@@ -920,13 +957,16 @@ Same discipline as Voxsanity's own Section 5.
   central claim was wrong. **C3L-47, the password-reset timing enumeration
   and the last live security finding, was closed on 5 August and verified by
   measurement at a 4ms median delta with fully overlapping ranges.**
-  1 medium and open from Task 11 (**C3L-54**, the pokemon dual-writer race,
-  masked today only because C3L-53 means one of the two writers never gets
-  as far as writing).
+  2 medium and open from Task 11 and its Section 19 re-run (**C3L-54**, the
+  pokemon dual-writer race, masked today only because C3L-53 means one of the
+  two writers never gets as far as writing; **C3L-55**, the C3L-49 fix assumes
+  future colliding rows arrive with higher ids and upstream ids are provably
+  not monotonic, so the 26 shipped games still face a URL change and a 23505
+  when an upstream backfill lands).
   2 informational and positive (C3L-13, C3L-14).
   Tally: 40 resolved + 3 partly resolved + 5 high open (C3L-03, C3L-11,
-  C3L-32, C3L-40, C3L-51) + 4 medium open (C3L-24, C3L-33, C3L-34, C3L-54)
-  + 2 informational = 54.
+  C3L-32, C3L-40, C3L-51) + 5 medium open (C3L-24, C3L-33, C3L-34, C3L-54, C3L-55)
+  + 2 informational = 55.
 - **Note on the ID range:** Task 01 asked for sibling rows to continue from
   C3L-13, but C3L-13 and C3L-14 were already taken by the kickoff session
   earlier the same day. New IDs therefore run from C3L-15, per the
