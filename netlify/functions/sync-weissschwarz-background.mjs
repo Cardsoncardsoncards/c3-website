@@ -352,12 +352,20 @@ export default async (req) => {
       const cardRows = [];
       const snapRows = [];
       const setAbbr = set.abbreviation || set.slug || String(set.id);
-      // Same order-independent rule as the sets above. weissschwarz_cards also carries a
-      // UNIQUE index on slug alone, so an arrival-order winner would fail here the same way.
-      const cardSlugs = assignUniqueSlugs(
-        setCards,
-        card => slugify(card.clean_name || card.name, card.number, setAbbr)
-      );
+      // CORRECTION, 5 August 2026 (C3L-49). Task 10 applied assignUniqueSlugs here as well as to
+      // the sets above, on the assumption that what was verified for the sets held for the cards.
+      // It does not. Checked against the rows actually stored: weissschwarz_cards has 2 colliding
+      // pairs and lowest-id-wins reproduces only 1 of them. On the other, id 962780
+      // "Kaguya-sama Love is War? Booster Box" currently holds the bare slug and id 961867 is the
+      // lower, so the rule would have taken the slug off the live row and moved a card URL on the
+      // next successful run. The sets fix is unaffected and stays: it was verified against the
+      // stored rows and reproduces them exactly.
+      // So the cards path is deliberately left on the original arrival-order guard. That leaves
+      // the latent 23505 risk here open, which is logged rather than traded for a live URL change,
+      // and it is the same call made for gundam, pokemon, unionarena and yugioh. Closing it
+      // properly means seeding the assignment from the slugs already stored, which is the real
+      // fix for all five and is its own task.
+      const slugsSeen = new Set();
 
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
@@ -365,7 +373,9 @@ export default async (req) => {
         const lowPrice    = price.low_price || null;
         const foilPrice   = price.foil_market_price || null;
 
-        const slug = cardSlugs.get(card.id);
+        let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
+        if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
+        slugsSeen.add(slug);
 
         cardRows.push({
           id:                card.id,

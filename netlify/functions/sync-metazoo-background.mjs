@@ -25,6 +25,36 @@ function slugify(name, number, setAbbr) {
   return prefix ? `${prefix}-${withNumber}` : withNumber;
 }
 
+// Deterministic slug assignment for rows that collide on the same base slug.
+// Within a colliding group the LOWEST id keeps the bare slug and every other row gets its id
+// appended. Returns a Map of id to final slug.
+//
+// The guard this replaces walked the array in arrival order, so which row won the bare slug
+// depended on the order the upstream API happened to return them. That is not stable, and these
+// tables carry a UNIQUE index on slug alone while the upsert conflict target is the primary key,
+// so a flipped order makes the run try to move an already-taken slug onto a different id and
+// Postgres aborts the whole batch with a 23505. That is what froze the weissschwarz sync for
+// 8 days (C3L-48).
+// Lowest-id-wins is applied here ONLY because it was verified against the data already stored
+// for this game and reproduces it exactly, so no live URL changes. Games where it does NOT
+// reproduce what is stored are deliberately left alone and logged under C3L-49.
+function assignUniqueSlugs(items, baseSlugFor) {
+  const byBase = new Map();
+  for (const item of items) {
+    const base = baseSlugFor(item);
+    if (!byBase.has(base)) byBase.set(base, []);
+    byBase.get(base).push(item);
+  }
+  const slugById = new Map();
+  for (const [base, group] of byBase) {
+    const ordered = group.slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+    ordered.forEach((item, idx) => {
+      slugById.set(item.id, idx === 0 ? base : base + "-" + item.id);
+    });
+  }
+  return slugById;
+}
+
 async function getExchangeRate() {
   const base = Netlify.env.get('URL') || 'https://cardsoncardsoncards.com.au';
   const controller = new AbortController();
@@ -255,8 +285,8 @@ export default async (req) => {
 
       const cardRows = [];
       const snapRows = [];
-      const slugsSeen = new Set();
       const setAbbr = set.abbreviation || set.slug || String(set.id);
+      const cardSlugs = assignUniqueSlugs(setCards, card => slugify(card.clean_name || card.name, card.number, setAbbr));
 
       for (const card of setCards) {
         const price = priceMap.get(card.id) || {};
@@ -264,9 +294,7 @@ export default async (req) => {
         const lowPrice    = price.low_price || null;
         const foilPrice   = price.foil_market_price || null;
 
-        let slug = slugify(card.clean_name || card.name, card.number, setAbbr);
-        if (slugsSeen.has(slug)) slug = slug + '-' + card.id;
-        slugsSeen.add(slug);
+        const slug = cardSlugs.get(card.id);
 
         cardRows.push({
           id:                card.id,

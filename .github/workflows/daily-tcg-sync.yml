@@ -1,3 +1,11 @@
+# continue-on-error was removed from all three sync steps on 5 August 2026 (C3L-53).
+# It made every run report success no matter what happened inside it, which is the same
+# dishonest-green pattern as C3L-10 but one level up, at the workflow rather than the script.
+# It was also silently defeating the zero-row guards added in Task 10 under C3L-50: those call
+# process.exit(1), and continue-on-error threw that exit code away.
+# EXPECT THIS WORKFLOW TO GO RED IMMEDIATELY, and that is the point. All three scripts are
+# currently failing at their first step against real schema mismatches (C3L-53), and have been
+# for at least a week while reporting success every morning.
 name: Daily TCG Sync (Pokemon + Lorcana + Yu-Gi-Oh)
 
 on:
@@ -32,7 +40,6 @@ jobs:
           node-version: '22'
 
       - name: Run Pokemon sync
-        continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
@@ -55,7 +62,6 @@ jobs:
           node-version: '22'
 
       - name: Run Lorcana sync
-        continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
@@ -77,7 +83,6 @@ jobs:
           node-version: '22'
 
       - name: Run Yu-Gi-Oh sync
-        continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
