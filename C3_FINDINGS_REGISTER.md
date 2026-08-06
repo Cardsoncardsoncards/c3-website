@@ -6,20 +6,29 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
 ## START HERE, updated every task, read this first
 
-**As of:** 6 August 2026, 08:35 UTC, `0ac5d62` published and live. **Correcting the previous entry, which said 02:05 UTC: that was estimated rather than read from a clock, and the real time was closer to 06:50.** It is re-derived here, per this section's own rule.
+**As of:** 6 August 2026, 09:37 UTC, read from the clock, not estimated. `84b83de` was the published head when this lens started.
 **Note that `9661b52` is not mine**: another session committed to `main`
-between my last two updates, fixing p619's em dashes, word count and duplicate
+between two earlier updates, fixing p619's em dashes, word count and duplicate
 H1. Worth knowing that this repo currently has more than one session writing
 to `main`, using the same `C3 Team` git identity, so authorship in the log does
 not distinguish them.
 
-**One-line state:** 16 numbered task files executed, findings run C3L-01 to
-C3L-60 with **45 resolved, 2 partly resolved, 4 High open, 5 Medium, 1 Low,
-3 informational**. Stated plainly because the example format assumes a master
-order and the reality does not match it: **the programme has run entirely on
-ad-hoc numbered task files, not on the Wave 1 plan.** None of `1-claims`,
-`3-pricing` or `4-links` has been started, and Section 10 has carried that as
-item 7 since the beginning.
+**Two counts in the previous version of this section were stale and are
+corrected here rather than carried forward**, which is exactly what this
+section's re-derive rule exists to catch: it said "16 numbered task files
+executed" when the task log's own newest row is **Task 21**, and it said
+findings "run C3L-01 to C3L-60" when the highest ID already written is
+**C3L-64**.
+
+**One-line state:** 21 numbered task files executed, findings run C3L-01 to
+C3L-67. **Task 22 is now running: a ten-lens overnight batch, investigation
+first, one worktree and one commit per lens.** Stated plainly because the
+example format assumes a master order and the reality does not match it:
+**the programme has run mostly on ad-hoc numbered task files, not on the Wave 1
+plan.** Task 22 is the first to work the Section 10 lens list directly.
+**Lens progress: 1 of 10 done** (`076-legacy-html`). `1-claims`, `4-links`,
+`2-crosssystem`, `7-abuse`, `8-perf`, `9-mobile`, `10-alerts`, `11-integration`
+and `12-redundancy` are queued behind it in that order.
 
 **Currently in flight:** none of mine. Every worktree from tasks 10 to 16 is
 removed and `main` is clean at 0 ahead, 0 behind. **One worktree that is NOT
@@ -35,10 +44,13 @@ recorded as proven:**
    stale with a 2026-08-06 snapshot, its first success since 28 July.** That is
    C3L-48, C3L-49 and C3L-55 all confirmed working against live data rather
    than by simulation, and it ends a 9 day outage. Nothing further needed.
-2. **`daily-tcg-sync.yml`, roughly 04:00 UTC today.** `continue-on-error` was
-   removed in `f810c2f`, so this workflow should go **RED** on its next run.
-   Its last run, 5 August 06:15 UTC, still reported success because it predates
-   the fix. **A red result there is the fix working, not a new breakage.**
+2. ~~**`daily-tcg-sync.yml`, roughly 04:00 UTC today.** `continue-on-error` was
+   removed in `f810c2f`, so this workflow should go **RED** on its next run.~~
+   **WITHDRAWN as stale, 6 August 09:37 UTC. This checkpoint can never happen:
+   Task 19 DELETED `daily-tcg-sync.yml` outright.** Verified by listing
+   `.github/workflows/`, which now holds exactly five files and none of them is
+   that one. It was carried forward from a version of this section written
+   before the deletion landed. Nothing is pending here, red or green.
 
 **Open decisions awaiting Sammy:**
 - ~~C3-122, whether the paid subscription actually exists~~ **ANSWERED and FIXED 6 August.** Sammy
@@ -48,8 +60,13 @@ recorded as proven:**
 - **The EV catalogue rebuild, 45 pages.** Task 17 confirmed 5 of 5 audited EV pages carry real defects
   and left all of them unpatched on purpose. **One is an affiliate buy link for a product that has
   never existed** (Warhammer 40K "Play Booster Box"). Scope is in Section 4's Task 17 evidence block.
-- **C3-076/077, whether legacy `.html` routes should 301.** Three still serve 200 alongside their
-  clean routes. A URL decision with SEO consequences given tasks 84 to 107.
+- **C3-076/077, whether legacy `.html` routes should 301. STILL OPEN, and re-scoped by Task 22's
+  first lens: it is 20 routes, not three.** Every static page except `subscribe` (already 301s),
+  `quiz` and `dashboard` (both 404) serves 200 at BOTH its `.html` and its clean form.
+  **The blanket 301 is NOT a contained fix and was deliberately not attempted**, for a concrete
+  reason found by reading `netlify.toml`: `/tracker`, `/contact`, `/methodology` and `/welcome`
+  are 200 REWRITES to their own `.html` files, so adding a `.html` to clean 301 on those four
+  risks a redirect loop on live pages. It needs its own supervised task. See C3L-66.
 - **C3L-54, which writer owns `pokemon_cards`.** The background sync and
   `daily-tcg-sync.yml` both fire at `0 4 * * *` onto the same table with
   different id and slug schemes. This has to be settled before C3L-53 is fixed,
@@ -92,6 +109,13 @@ recorded as proven:**
 - **All three daily sync scripts fail at their first step every day** (C3L-53).
   Those games stay current only because a second writer keeps them so.
 - ~~p619 renders a duplicate H1~~, fixed 6 August, see above.
+- **46 live pages are submitted to Google with no `<link rel="canonical">` at all**, and 44 of
+  them are the EV calculator pages (C3L-67). Untouched here because the EV catalogue is excluded
+  from Task 22. `/mtg-strixhaven.html` and `/vip.html` are the two non-EV cases.
+- ~~The static sitemap submits `/tracker.html` and `/shop.html` while both pages canonical to the
+  clean route~~ **FIXED in this lens (C3L-65).** The same conflict remains live on
+  **`/legal.html` and `/ev-calculator.html`**, both deliberately untouched because Task 22
+  excludes `/legal` and everything EV-adjacent.
 
 **Full detail:** Section 9 for counts, Section 10 for the full ordered list of
 what to pick up next, Section 3 for every individual finding.
@@ -141,6 +165,7 @@ what to pick up next, Section 3 for every individual finding.
 
 | Date | Task or slug | What happened | Six-line report (condensed) |
 |---|---|---|---|
+| 2026-08-06 | `c3-audit-076-legacy-html`, Claude Code, laptop, own worktree | **Task 22, lens 1 of 10.** C3-076/077 checked against the live site rather than against this register's summary of it, and **the register's own scope was wrong in both directions**. Wrong on size: not three legacy `.html` routes but **20**, every static page bar `subscribe`, `quiz` and `dashboard`. Wrong on severity: the external report's "different content, Tarkir: Dragonstorm" premise **does not reproduce**, all 20 pairs are byte-identical by SHA1, because the clean route is the same file under a second name. And 15 of the 20 already canonical to the clean route, so the duplicate-content exposure is mostly handled already by the right mechanism (C3L-66). **The real defect was somewhere the finding never looked: the sitemap.** `/api/sitemap-static` submits `/tracker.html`, `/shop.html`, `/legal.html` and `/ev-calculator.html` while all four pages canonical to their CLEAN route, so Google is handed URLs the pages immediately disclaim (C3L-65). **Fixed for `/tracker` and `/shop`, one file, and deliberately not for `/legal` or `/ev-calculator`**, which are Section 0 exclusions. **The blanket 301 was NOT attempted and the reason is concrete, not cautious**: `/tracker`, `/contact`, `/methodology` and `/welcome` are 200 rewrites TO their own `.html` files in `netlify.toml`, so a reverse 301 risks a live redirect loop. Also found 46 sitemap-submitted pages with no canonical at all, 44 of them EV (C3L-67) | Compliance: nothing in the ACCC, privacy, EPN, Amazon or Scryfall surface touched. `/legal` and `/pricing` were **read but not modified**, deliberately, and the two live defects found on `/legal.html` are logged rather than fixed. Removal: none. Suggestions: give C3-076/077 its own supervised task covering all 20 routes plus the four rewrite-loop cases together, since they cannot safely be done piecemeal; and fold C3L-67's two static canonicals into it rather than guessing the URL form separately. Blind spots: **the canonical sweep read 3 of 44 EV pages, not all 44**, so "44 missing canonicals" is 3 of 3 observed extrapolated across a set built from one template, which is exactly the extrapolation Task 17 was burned by and is flagged rather than presented as counted; the redirect-loop risk on the four rewrite pages is **reasoned from `netlify.toml`, NOT tested**, because testing it means shipping the loop; and the sitemap fix is verified by syntax check, an Eleventy build and reading the served canonicals pre-change, with post-deploy confirmation still pending. Opportunities: none new. Fragility: **a finding sat in this register for days at High severity describing three routes with differing content, and the reality was 20 routes with identical content and a mostly-correct canonical already in place.** The one thing it did not describe, the sitemap contradicting the pages, was the only part actually worth fixing | **Section 19 self-check. Point 1, root cause not pattern application: MET. The obvious pattern was "add 301s", and it was declined on measured grounds; the root cause is that the sitemap's page list is hand-maintained and nothing cross-checks it against the canonicals the pages serve. Point 2, four-roundtable: run in the lightweight form Task 22 Section 4 permits, recorded in full below this table. It changed the outcome once, the adversarial and scale angle is what put the 44 uncanonicalised EV pages on the record rather than leaving the lens at the 20 static routes. Point 3, the detection question: ASKED and NOT closed, stated plainly. Nothing detects a sitemap entry whose page disclaims it. A cheap check exists (fetch each `sitemap-static` URL, compare to its own canonical, fail on mismatch) and would have caught all four cases; it is recommended, not built, because building it belongs with C3-076/077's supervised task where the correct URL form is actually decided.** |
 | 2026-08-06 | `c3-audit-c3-122-subscription-wording`, Claude Code, laptop, own worktree | Task 21. **C3-122 resolved.** `/legal` described a subscription that has never been sold, in present tense and in detail: "currently provides", "billed monthly", "renews automatically", and a founding-member rate of **AU$14.95/month locked in for life**. Rewritten to say no paid subscription exists and the tier is planned. The refund policy, which governed only that subscription, is rewritten around the one payment that is real. **The donations clause the site never had now exists**, stating mainly what the payment is not: not a purchase, not a subscription, not recurring, buying access to nothing. Billing portal link removed from `/legal` and `/pricing`. **The donation link is untouched and stays on all 19 pages, verified by the diff containing zero references to it.** The investigation that preceded this mattered as much as the fix: rendering the payment link in a browser showed it is "Support C3, A$5.00, Change amount", a voluntary contribution, **not** the subscription, which is why disabling it would have been the wrong move | Compliance: **this is the ACCC 2026-27 enforcement priority named on the row itself**, and it is the reason the fix went beyond the task's own list to catch two further places implying subscribers exist. Nothing else touched. Removal: the billing portal link from two pages, and a cancel FAQ for a thing that cannot be bought. Suggestions: if a paid tier ever launches, the real terms must land BEFORE any charge, which section 3 now commits to in writing. Blind spots: **whether anyone was ever subscribed could not be verified from this side at all**, because the Stripe MCP connection is to a different account, Voxsanity, with zero payment links, so that fact rests entirely on Sammy's confirmation rather than on a query; the rewrite is my own legal wording and has not been reviewed by anyone qualified; and the check for residual subscription language was a grep over two files, so a page not named in the task could still imply a paid tier. Opportunities: none new. Fragility: **the false terms were specific enough to name a price and a locked-in founding-member rate, which is far more credible to a reader than vague language would have been**, and they sat next to a pricing page saying the opposite | **Section 19 self-check. Point 1: MET, the browser check found the payment link is a donation rather than the subscription, which changed the fix from disabling a live payment path to correcting text. Point 2, four-roundtable: NOT run, and reasonable here, this is a wording change on two static pages with no mechanism behind it. Point 3, detection: NOT addressed and worth naming, nothing detects legal text drifting out of line with what is actually sold, and the only reason this was caught is that an external audit flagged it and a task went looking.** |
 | 2026-08-06 | `c3-audit-3pricing-ev-confirm`, Claude Code, laptop, own worktree | Task 17, the confirmation slice of 3-pricing, **the last Critical item**. Every claim was checked against the live site rather than this register's summary. **Six EV defects confirmed live and deliberately left unpatched**, because they share one root cause, the EV pages carry no immutable product record. Two are worse than reported: **Warhammer 40,000 contradicts itself on the same page**, prose saying Collector Booster box and the buy block saying "Play Booster Box (12 Packs), 14 MTG cards each" for a product that shipped in 2022 as four Commander decks, when Play Boosters did not exist until 2024; and **Commander Legends is modelled as 14-card Play Boosters when it shipped 20-card Draft Boosters**. Final Fantasy and MH3 both count a **Collector-exclusive serialised card** in a Play Booster box EV. Zendikar's Expeditions row is contradictory on both quantity and mechanic. Jeweled Lotus is present-tense "staple" 11 months after its ban. **And every EV page renders a verdict from a pre-filled `value="320.00"` rather than a real box cost.** Two contained fixes shipped: the tracked-game count (31 to 32 on `/legal` and `/pricing`) and `/tracker`'s "exact AUD number" claim. C3-075 and C3-059 closed as resolved and not reproducible | Compliance: this is the ACCC misleading-pricing surface named in protocol Section 7, and two of the three items touched are squarely in it. **The affiliate buy link on a product that has never existed is the sharpest one and it is still live**, deliberately, because patching the label without the product record would leave the EV maths equally wrong and less visibly so. Removal: none. Suggestions: scope the EV rebuild against verified per-product records, 45 pages; and decide C3-122, which is a business fact rather than a code change. Blind spots: **only 5 of 45 EV pages were opened**, the ones the original audit named, so the other 40 are unaudited and the confirmed defect rate among those checked is 5 of 5; product facts were checked against my own knowledge of MTG release history rather than against Wizards' published product pages, which the original row asked for and which I could not fetch; and the three wording fixes are verified by grep and by the live site pre-change, with post-change confirmation pending the deploy. Opportunities: none new. Fragility: **a first pass in this task concluded the game-count conflict was resolved because the grep pattern did not match the phrasing the pages actually use.** A negative grep result is a statement about the pattern, not about the site, and it nearly closed a live finding as fixed | **Section 19 self-check. Point 1, root cause not pattern application: MET, and it is the whole shape of the outcome, six defects were traced to one missing product record rather than patched individually. Point 2, four-roundtable before shipping: NOT run, and defensible only because what shipped was three words across three files; it is mandatory before the EV rebuild, which is a high-visibility rewrite of 45 commercial pages. Point 3, the detection question: NOT addressed, and stated rather than skipped, nothing currently detects an EV page drifting from its product's real structure, and the rebuild should carry that detector with it the way C3L-61 carried Signal C.** |
 | 2026-08-06 | `c3-audit-c3l61-pokemon-backfill`, Claude Code, laptop, own worktree | Task 20. **C3L-61 built: `sync-pokemon-enrichment-background.mjs`, `pokemon_enrichment_progress`, and Signal C in the health check.** The batch size was measured rather than guessed, and the measurement's real result was that **per-set cost cannot be isolated from production data**, since zero-write runs vary 2.06 to 11.93 minutes while the one 16-set write run took 11.96. **So the bound is wall clock, not a set count**: 5 minutes against a 15 minute ceiling, a 3x margin, checked before each set starts, with a 10-set cap as an independent second bound. Converges in ~6 days at 4 runs a day, then rotates oldest-first forever so the gap cannot silently reopen. **Signal C was verified against the real stale condition, not assumed**: dispatched run `31077901399` flagged `pokemon 8d 2026-07-29 STALE METADATA` and nothing else, while Signal A passed pokemon on price freshness in the same run, which is the two-questions distinction working exactly as intended. Threshold of 4 days is measured, 31 of 32 games sit at 0 to 1 days and pokemon was the sole outlier at 8. **Two corrections of my own work this session: the function shipped with no auth guard, and the comment I then wrote about the shared guard being weak was itself wrong (C3L-63)** | Compliance: no privacy, EPN, Amazon, Scryfall or `/legal` surface touched. The new function writes only `pokemon_cards` enrichment columns, `pokemon_enrichment_progress` and `sync_events`, and deliberately ignores the price fields the same upstream endpoint returns, so it cannot become a second price writer and repeat C3L-54. Removal: none. Suggestions: after 06:40 UTC confirm the first run (C3L-64); and the same enrichment data is ALREADY fetched daily by the price sync's skip path and discarded, so if the backfill's cost proves high there is a cheaper option available once that job has headroom. Blind spots: **the backfill has never run, and could not be made to run, because Netlify returns 403 for direct invocation of scheduled functions**, so every claim about its runtime, its convergence and its interruption behaviour is by construction rather than observation; the 5 minute budget is a conservative choice, NOT a measured fit, precisely because the measurement was inconclusive; and set-to-pokemontcg.io matching reuses the price sync's name and ptcgoCode map, so any set that map already fails to resolve will be recorded as done with 0 cards rather than enriched. Opportunities: none new. Fragility: **I shipped a security assertion about 31 functions that was false, and only found it because I needed to dispatch the function and got a 403.** Had dispatch not been required, that claim would have entered this register as a finding | **Section 19 self-check. Point 1: MET, the batch bound was derived from real production timings and the honest conclusion was that the data could not support the number the task asked for, which is why the design changed shape rather than the number being invented. Point 2, four-roundtable before shipping: NOT run as a formal pass, and it should have been, since this ships a new scheduled writer to a Core 8 game's table; the adversarial angle was covered ad hoc (isolation from the price sync, interruption behaviour, auth) and the design and scale lenses were not. Point 3: MET and unusually directly, the detector was built in the same task as the fix and verified against the real condition before being trusted.** |
@@ -171,6 +196,37 @@ what to pick up next, Section 3 for every individual finding.
 *(Future rows go above this line, newest first. Do not overwrite or
 compress old rows once this file has real history.)*
 
+### Task 22 four-roundtable passes, lightweight form
+
+Task 22 Section 4 allows a brief version given ten lenses in one batch, but
+requires all four angles to be stated rather than the step skipped. Recorded
+per lens as each one closes.
+
+**Lens 1, `076-legacy-html`.**
+- **A, design and visual.** Nothing renders differently, the two URL forms
+  serve identical bytes. The only design-adjacent point: a `.html` suffix in a
+  shared or copied link reads as dated on a site whose product is current price
+  intelligence, which is an argument for the clean form winning C3L-66, not a
+  defect in itself.
+- **B, real user.** No visitor is broken today. Someone landing on
+  `/tracker.html` from Google gets the right page. The cost is indirect and
+  deferred: split signals across two URLs mean the page may rank below where it
+  should, which a user never sees as a fault.
+- **C, adversarial and hypothetical scale.** This is the angle that earned its
+  place. It asked what a crawler sees rather than what a visitor sees, and the
+  answer moved the lens: 20 duplicate pairs are cheap crawl waste, but **44 EV
+  pages submitted with no canonical at all** are genuinely unmanaged
+  duplication, and they were only in view because the question was asked at
+  crawler scale. A third party can also link the non-canonical form deliberately
+  to split equity, which the existing canonicals mostly defend against and the
+  46 uncanonicalised pages do not.
+- **D, mixed and cross-functional.** An SEO specialist would say the sitemap
+  and canonical disagreeing is the real defect and the bare 200 is close to
+  harmless, which is the conclusion this lens reached. A future maintainer would
+  ask why `/contact` canonicals to `.html` while 18 peers do not, and there is
+  no recorded answer, so it is logged in C3L-67 rather than assumed deliberate.
+  No legal or compliance exposure.
+
 ---
 
 ## 2. ID ranges in use
@@ -190,7 +246,7 @@ compress old rows once this file has real history.)*
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-64)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-67)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -326,6 +382,9 @@ those tables would light up the collision instead of the silence.
 
 | C3L-63, **RESOLVED 2026-08-06 as part of C3L-61's verification, and it is a correction of my own code comment shipped an hour earlier** | While looking for a way to dispatch the new backfill, I found it had shipped with **no auth guard at all**, unlike the 31 other background syncs which check `x-sync-secret`. Adding the standard guard, I wrote a comment asserting that the shared pattern was weak, because treating a header-less request as "scheduled" appeared to accept any unauthenticated POST. **That assertion was wrong and is now corrected in the file.** | Measured rather than reasoned: a direct POST to a scheduled function returns **403 Forbidden from Netlify itself, before any function code runs**, verified against both the new function and `sync-vanguard-background`. Netlify does not expose scheduled functions as public endpoints at all | Resolved. The guard stays as defence in depth, and the comment now says why: it earns its place only for the case where someone later adds a `path` to the config, which WOULD route the function publicly and silently remove the barrier Netlify currently provides. **Worth recording as a near miss: a false security claim about 31 functions was one commit away from entering this register as a finding.** |
 | C3L-64, **still open 2026-08-06, checked after the 06:40 UTC slot and the answer was NEITHER of the two expected outcomes.** It did not succeed, and it did not produce the C3L-57 start-without-terminal shape. **It did not run at all**: 0 rows in `sync_events` under `pokemon-enrichment`, 0 rows in `pokemon_enrichment_progress`, 0 `pokemon_cards` with `hp`. **The cause is a deploy race, not a defect in the function.** `0883779`, the commit that first created it, went live at **06:36:38 UTC, 3.4 minutes before its own 06:40 slot**, and two further deploys landed at 06:43:44 and 06:50:39, either side of it. The scheduler had no live registration to fire at 06:40. **Explicitly NOT evidence about the time budget**: nothing ran, so nothing was measured, and the instruction to cut the budget on a C3L-57 shape does not apply because that shape did not occur. Next slot is **12:40 UTC**, which is 22:40 AEST, and at the time of this note it has NOT yet passed. **A diagnosis is pre-registered here so that check is decisive rather than re-derived: this function is the ONLY one in the repo using a cron STEP expression, `40 */6 * * *`. All 31 syncs that provably fire use a fixed single hour** (`0 6 * * *`, `30 6 * * *`, `0 7 * * *` and so on), so the step form is untested here while the fixed form is proven 31 times over. If 12:40 also produces nothing, the step expression is the prime suspect and the fix is to move to a fixed hour, accepting the slower convergence that brings: one run a day at 10 sets is roughly 24 days for 235 sets rather than 6. **It is deliberately being left as-is for that slot rather than pre-emptively changed, because changing it now would destroy the only clean test of whether the step form works, and 4 runs a day is worth one more slot to find out.** Original entry follows. ~~open, low, noted 2026-08-06 | The C3L-61 backfill has not yet run, so its real behaviour is unobserved. It could not be dispatched manually because Netlify returns 403 for direct invocation of scheduled functions (C3L-63), so the first execution will be the schedule itself at **06:40 UTC on 6 August**. Everything about it is therefore verified by construction, syntax check and isolation testing, and nothing about it is verified by a run | Baseline captured immediately before, for comparison against that first run: `pokemon_enrichment_progress` 0 rows, `pokemon_cards` 0 with `hp`, 0 with `types`, newest `updated_at` 2026-07-29, and 0 `sync_events` rows under game `pokemon-enrichment` | Low, and it closes itself. After 06:40 UTC, check that `sync_events` shows `pokemon-enrichment` `sync_start` followed by `sync_success`, that `pokemon_enrichment_progress` has up to 10 rows, and that `pokemon_cards` has non-zero `hp`. **If it instead shows a start with no terminal event, that is the C3L-57 shape and the time budget needs cutting, not extending.** The health check's Signal B will flag exactly that automatically.~~ **Deployment itself is confirmed sound, so the 12:40 slot should fire**: a POST to the function returns 403 (scheduler-only, same as the working `sync-vanguard-background`) while a non-existent function name returns 400, so it is deployed and registered like the syncs that do fire, and other scheduled syncs fired normally through the same window (union-arena 06:00, wixoss 06:30, wow 07:00) |
+| C3L-65, **RESOLVED IN PART 2026-08-06, task `c3-audit-076-legacy-html`. The two non-excluded cases are fixed; two more are confirmed live and deliberately left alone.** | **The static sitemap submits URLs that the pages themselves disclaim.** `/api/sitemap-static` listed four non-EV pages in their `.html` form while each page carries a `<link rel="canonical">` pointing at the CLEAN route: `/tracker.html` (canonical `/tracker`), `/shop.html` (canonical `/shop`), `/legal.html` (canonical `/legal`) and `/ev-calculator.html` (canonical `/ev-calculator`). Google is handed a URL that immediately points somewhere else. This is the same class as the task-159 defect already recorded in `netlify.toml`, a sitemap URL that does not survive contact with the page it names, and it was invisible because the sitemap is generated from a hand-maintained array that nothing cross-checks against the pages | Live fetch of `https://cardsoncardsoncards.com.au/api/sitemap-static`, 124 `<loc>` entries, 50 of them `.html`. Each `.html` entry then fetched directly and its canonical read from the served HTML. **`/tracker.html` 200 canonical=`/tracker`; `/shop.html` 200 canonical=`/shop`; `/legal.html` 200 canonical=`/legal`; `/ev-calculator.html` 200 canonical=`/ev-calculator`.** Both clean targets independently verified 200 and self-canonical before the change (`/tracker` via the `netlify.toml` 200 rewrite, `/shop` via Netlify's pretty-URL default) | **Fixed for `/tracker` and `/shop` only, one file, `sitemap-static.mjs`.** The fix is deliberately NOT a new URL strategy: it brings the sitemap onto the canonical each page had already declared for itself, which is principled rather than a coin toss, per Section 19 point 1. **`/legal.html` and `/ev-calculator.html` are NOT fixed and that is a scope decision, not an oversight**: Task 22 Section 0 excludes `/legal` and everything EV-adjacent, so both are logged here for a task that is scoped to say so. The remaining 44 `.html` entries are all `/ev-calculator/*`, same exclusion |
+| C3L-66, **open, Medium, confirmed live 2026-08-06, and it CORRECTS the scope C3-076/077 has carried** | **C3-076/077 is understated by a factor of nearly seven, and one of its stated premises does not reproduce.** The register recorded "three" legacy `.html` routes serving 200. The real figure is **20**: every static page except `subscribe` (301s to `/account`), `quiz` (404) and `dashboard` (404) answers 200 at both its `.html` and its clean form. **The external report's claim that the two forms serve DIFFERENT content (it cited Tarkir: Dragonstorm) does not reproduce and cannot**: all 20 pairs are byte-identical, because the clean route is the same file served under a second name, not a second build | Both forms fetched for all 24 candidate page names and compared by SHA1 over the full response body. 20 pairs identical, 0 differing. Canonicals read in the same pass: 15 of 20 already canonical to the CLEAN route, so the duplicate-content exposure the finding describes is **already largely handled by the correct mechanism**, which the original row does not mention | **Medium, and the fix is NOT contained, which is why nothing was shipped for it.** Three reasons, all measured: (1) `/tracker`, `/contact`, `/methodology` and `/welcome` are 200 REWRITES to their own `.html` files in `netlify.toml`, so a `.html` to clean 301 on those four risks a redirect loop on live pages and would need the rewrite removed in the same change; (2) three of the routes (`/legal.html`, `/pricing.html`, `/ev-calculator.html`) sit inside Task 22's excluded categories; (3) it is a URL-strategy decision across 20 live pages with SEO consequences given tasks 84 to 107. **Needs its own supervised task.** Note for whoever takes it: the 200s are largely benign today given the canonicals, so this is lower urgency than the raw "20 duplicate URLs" figure suggests |
+| C3L-67, **open, Low to Medium, confirmed live 2026-08-06** | **46 live, indexable, sitemap-submitted pages carry no `<link rel="canonical">` at all**, against CLAUDE.md's standing rule that a canonical is required on every page. 44 are the EV calculator pages (`/ev-calculator/mtg-*.html`), sampled at 3 of 44 with 3 of 3 missing. The other two are `/mtg-strixhaven.html` and `/vip.html`, both user-facing pages carrying the site nav. Separately and more narrowly, **`/contact.html` canonicals to itself** while 18 of its 19 peers canonical to the clean route, so contact is the single page whose URL strategy points the other way | Canonical extracted from the served HTML of every static page and of 3 EV pages. `NONE` for `mtg-strixhaven`, `vip`, `content-engine`, `404` and all 3 EV pages sampled. `content-engine` and `404` are correctly excluded from the rule, being an internal tool and an error page, so the real count of user-facing gaps is 2 static plus 44 EV | **Not fixed here.** The EV 44 are excluded from Task 22 outright. The two static pages look trivially fixable but are not, quite: `/mtg-strixhaven.html` is submitted to the sitemap in its `.html` form, so adding a canonical means first choosing which form wins, which is C3L-66's decision and not a separate one. **Deliberately not pre-empted here**, since guessing it in a one-line edit is how a URL strategy gets decided by accident. Fold into C3L-66's task |
 
 **Should C3L-51's sync health check be extended to catch enrichment gaps?
 Answered explicitly, 6 August 2026, because Task 19 asked rather than leaving
@@ -1036,7 +1095,7 @@ assuming it is covered by proximity to one that already is.
 | C3-031, **CONFIRMED LIVE 2026-08-06, NOT fixed, needs the rebuild** | Jeweled Lotus described as a current Commander staple after its ban | High | Fetch live page, check current banlist | Not yet confirmed live |
 | EV verdict | EV pages can show a purchase verdict before an actual box cost is entered, and can show contradictory verdicts simultaneously | High | Load a sampled EV page pre-input, capture initial state | Not yet confirmed live |
 | C3-075, **RESOLVED 2026-08-06, not reproducible** | WWW and apex hostnames may serve different site generations | High | Fetch both hostnames, diff. Note: 12 July Netlify duplicate-project issue was separately closed, this may already be resolved | Likely resolved, confirm to close formally |
-| C3-076/077, **CONFIRMED LIVE 2026-08-06, NOT fixed, needs a redirect decision** | Legacy `.html` routes remain live alongside clean routes, with different content (Tarkir: Dragonstorm cited) | High | Fetch both route forms for a sample, diff, check for a 301 | Not yet confirmed live |
+| C3-076/077, **RE-SCOPED 2026-08-06 by Task 22 lens 1. Still not fixed, still needs a redirect decision, but the row as written was wrong on both size and mechanism. See C3L-66** | ~~Legacy `.html` routes remain live alongside clean routes, with different content (Tarkir: Dragonstorm cited)~~ **It is 20 routes, not three, and the "different content" premise DOES NOT REPRODUCE: all 20 pairs are byte-identical by SHA1, because the clean route serves the same file under a second name rather than a second build.** 15 of the 20 already canonical to the clean route | Downgraded from High to **Medium**. The canonicals already handle most of the exposure the row describes | Done, live, 2026-08-06: both forms fetched for 24 page names, bodies SHA1-compared, canonicals read in the same pass | **Confirmed live, and corrected.** Fix is NOT contained (four pages are 200 rewrites to their own `.html`, so a reverse 301 risks a live loop; three routes sit in Task 22's exclusions). Needs its own supervised task |
 | C3-122, **RESOLVED 2026-08-06, task `c3-audit-c3-122-subscription-wording`, once Sammy confirmed the two business facts: the AU$14.95/month tier has never been sold to anyone, and the donation link is real revenue that stays** | Pricing page describes paid tiers as planned; `/legal` describes an existing, billed subscription | High, now a named 2026-27 ACCC enforcement priority | Fetch pricing page and `/legal` together, diff subscription language | Not yet confirmed live |
 | C3-001/003, **CONFIRMED LIVE and FIXED 2026-08-06** | "Exact AUD," "local price," used where the value is a converted or modelled estimate | High | Grep all copy for these phrases, cross-check actual data source | Not yet confirmed live |
 | C3-012/013, **CONFIRMED LIVE, was NOT resolved, and FIXED 2026-08-06** | Tracked-game count still conflicts (31 vs 32) somewhere live, despite the 11 July fix | Medium | Grep for hard-coded game counts sitewide | Not yet confirmed live |
@@ -1111,10 +1170,15 @@ index at `src/ev-calculator.html` links to 43 of them.
   Stripe payment link and a billing portal link both exist. **Which of those is
   true is a business fact I do not have**, and the ACCC priority named in this
   row makes guessing the wrong move. Needs Sammy.
-- **C3-076/077.** `/ev-calculator.html`, `/pricing.html` and `/tools.html` all
-  return **200** alongside their clean routes, with no redirect. `/quiz.html`
-  returns 404. Whether to 301 the legacy forms is a URL-strategy decision with
-  SEO consequences given the sitemap work in tasks 84 to 107.
+- **C3-076/077. RE-MEASURED 2026-08-06, Task 22 lens 1, and the figure below was a
+  three-page sample presented as the whole.** `/ev-calculator.html`, `/pricing.html`
+  and `/tools.html` do all return **200** alongside their clean routes with no
+  redirect, and `/quiz.html` does return 404, both correct as far as they go.
+  **But the full sweep is 20 pages, not three**, and all 20 pairs are
+  byte-identical rather than divergent. Whether to 301 the legacy forms is still
+  a URL-strategy decision with SEO consequences given the sitemap work in tasks
+  84 to 107, and it is now known to be entangled with four `netlify.toml` 200
+  rewrites that point the other way. Full detail in C3L-66.
 
 *Closed on evidence.*
 
@@ -1320,6 +1384,15 @@ here immediately, whether or not that was its assigned scope.
 Updated whenever a task changes the counts below, not left to go stale.
 Same discipline as Voxsanity's own Section 5.
 
+- **Task 22 additions, 6 August 2026, kept as their own line so the tally below stays
+  readable while the batch runs.** Lens 1 added **C3L-65** (partly resolved: the two
+  non-excluded sitemap-versus-canonical conflicts fixed, two more confirmed live and
+  left alone as Section 0 exclusions), **C3L-66** (open, Medium, C3-076/077 re-scoped
+  from 3 routes to 20 and its "different content" premise retired) and **C3L-67**
+  (open, Low to Medium, 46 sitemap-submitted pages with no canonical, 44 of them EV).
+  **Running total after lens 1: 67 C3L- findings.** The per-status tally immediately
+  below has NOT been re-cut for these three and still describes the 60 that preceded
+  them; it is corrected in one pass at the end of the batch rather than ten times.
 - **Live-investigation findings (C3L-):** 60 total. 45 resolved with evidence
   (C3L-01, C3L-02, C3L-04, C3L-05, **C3L-06**, C3L-07, C3L-08, **C3L-10**, C3L-12,
   C3L-15, C3L-16, **C3L-17 to C3L-23**, C3L-25, C3L-27, C3L-28, C3L-29,

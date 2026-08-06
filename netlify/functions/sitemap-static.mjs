@@ -54,10 +54,19 @@ const STATIC_PAGES = [
   { path: '/generators',          priority: '0.8', changefreq: 'weekly'  },
   { path: '/quizzes',             priority: '0.8', changefreq: 'weekly'  },
   { path: '/blog',                priority: '0.8', changefreq: 'daily'   },
-  { path: '/tracker.html',        priority: '0.8', changefreq: 'weekly'  },
+  // task-22 (C3L-65): /tracker and /shop were submitted here in their .html form while the
+  // pages themselves carry <link rel="canonical"> pointing at the CLEAN route. Verified live
+  // before the change: /tracker.html 200 canonical=/tracker, /shop.html 200 canonical=/shop.
+  // Submitting a URL that the page then disclaims is a conflicting signal, so the sitemap was
+  // brought onto the canonical each page already declares rather than a new URL strategy being
+  // chosen here. Both clean routes verified 200 and self-canonical live. /tracker resolves via
+  // the netlify.toml 200 rewrite, /shop via Netlify's pretty-URL default.
+  { path: '/tracker',             priority: '0.8', changefreq: 'weekly'  },
+  // /ev-calculator.html has the SAME conflict (canonical=/ev-calculator) and is deliberately
+  // left alone: this batch excludes the EV pages and anything EV-adjacent. Logged as C3L-65.
   { path: '/ev-calculator.html',  priority: '0.7', changefreq: 'weekly'  },
   { path: '/calendar',            priority: '0.7', changefreq: 'weekly'  },
-  { path: '/shop.html',           priority: '0.6', changefreq: 'weekly'  },
+  { path: '/shop',                priority: '0.6', changefreq: 'weekly'  },
 
   // Section hubs and key pages. All were live, indexable and in NO sitemap at all until
   // task-84, including /tools and /play, the hub pages for the entire tools and quizzes
