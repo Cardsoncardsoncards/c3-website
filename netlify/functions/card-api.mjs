@@ -205,9 +205,12 @@ async function handlePriceAlert(req) {
         body: JSON.stringify({
           from: 'C3 Price Alerts <alerts@cardsoncardsoncards.com.au>',
           to: [email],
+          // task-22 (C3L-84): the SUBJECT is deliberately left unescaped. It is plain text, not
+          // HTML, so esc() here would render "&amp;" literally in the mail client. Header
+          // injection is not a concern because this goes to Resend as JSON, not raw SMTP.
           subject: `Price alert set for ${cardName}`,
           html: `<p>Hi,</p>
-<p>You will be notified when <strong>${cardName}</strong> drops below <strong>AU$${targetPriceAud}</strong>.</p>
+<p>You will be notified when <strong>${esc(cardName)}</strong> drops below <strong>AU$${esc(targetPriceAud)}</strong>.</p>
 <p>We check prices daily. When the price drops we will email you straight away.</p>
 <p>You can browse more cards at <a href="https://cardsoncardsoncards.com.au/cards/mtg">cardsoncardsoncards.com.au</a></p>
 <p>The C3 Team</p>
@@ -830,11 +833,11 @@ async function handleFeedback(req) {
           subject: `C3 Feedback${rating ? ' (' + '★'.repeat(rating) + ')' : ''} - ${page || 'unknown page'}`,
           html: `
             <h2>New C3 Feedback</h2>
-            <p><strong>Page:</strong> ${page || 'N/A'}</p>
-            ${cardName ? `<p><strong>Card:</strong> ${cardName}</p>` : ''}
+            <p><strong>Page:</strong> ${esc(page) || 'N/A'}</p>
+            ${cardName ? `<p><strong>Card:</strong> ${esc(cardName)}</p>` : ''}
             ${rating ? `<p><strong>Rating:</strong> ${'★'.repeat(rating)}${'☆'.repeat(5-rating)} (${rating}/5)</p>` : ''}
-            ${text ? `<p><strong>Message:</strong><br>${text}</p>` : ''}
-            ${email ? `<p><strong>Reply to:</strong> <a href="mailto:${email}">${email}</a></p>` : '<p><em>No email provided</em></p>'}
+            ${text ? `<p><strong>Message:</strong><br>${esc(text)}</p>` : ''}
+            ${email ? `<p><strong>Reply to:</strong> <a href="mailto:${esc(email)}">${esc(email)}</a></p>` : '<p><em>No email provided</em></p>'}
           `
         })
       });
