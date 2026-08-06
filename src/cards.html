@@ -377,6 +377,15 @@ function discoToggle(){
     <h2 class="section-title">Choose Your Game</h2>
     <p class="section-sub">All prices in AUD, converted daily at the live exchange rate. eBay AU buy links on every card.</p>
 
+    <!-- task-22 (C3L-68): five of these eight tiles stated an EXACT card count and all five were
+         stale and understated against the live tables (lorcana 3,153 vs 3,403; onepiece 6,664 vs
+         7,019; riftbound 1,162 vs 1,295; dragonball 11,590 vs 11,852; starwars 6,913 vs 7,879).
+         They are now rounded-down "N+" figures, matching the convention the mtg, pokemon and
+         yugioh tiles already used, so the claim stays true as the tables grow instead of going
+         stale the moment a set lands. Counts verified by direct count(*) on 6 August 2026.
+         These are VAULT counts (whole table), which is the right source for this page. Do NOT
+         copy them to /generators: that page needs the drawable pool, which is a different and
+         smaller number. See C3L-69. -->
     <div class="tcg-grid">
       <a href="/cards/mtg" class="tcg-card" style="--card-accent:#C9A84C">
         <span class="tcg-icon">&#129497;</span>
@@ -402,35 +411,35 @@ function discoToggle(){
       <a href="/cards/lorcana" class="tcg-card" style="--card-accent:#38BDF8">
         <span class="tcg-icon">&#127984;</span>
         <div class="tcg-name">Disney Lorcana</div>
-        <div class="tcg-tagline">3,153 cards &middot; 18+ sets</div>
+        <div class="tcg-tagline">3,400+ cards &middot; 18+ sets</div>
         <div class="tcg-count">AU$ Live Pricing</div>
         <span class="tcg-badge badge-live">&#9889; Live</span>
       </a>
       <a href="/cards/onepiece" class="tcg-card" style="--card-accent:#F97316">
         <span class="tcg-icon">&#128082;</span>
         <div class="tcg-name">One Piece TCG</div>
-        <div class="tcg-tagline">6,664 cards &middot; 73+ sets</div>
+        <div class="tcg-tagline">7,000+ cards &middot; 73+ sets</div>
         <div class="tcg-count">AU$ Live Pricing</div>
         <span class="tcg-badge badge-live">&#9889; Live</span>
       </a>
       <a href="/cards/riftbound" class="tcg-card" style="--card-accent:#818CF8">
         <span class="tcg-icon">&#9876;&#65039;</span>
         <div class="tcg-name">Riftbound</div>
-        <div class="tcg-tagline">1,162 cards &middot; 7+ sets</div>
+        <div class="tcg-tagline">1,250+ cards &middot; 7+ sets</div>
         <div class="tcg-count">League of Legends TCG</div>
         <span class="tcg-badge badge-live">&#9889; Live</span>
       </a>
       <a href="/cards/dragonball" class="tcg-card" style="--card-accent:#F97316">
         <span class="tcg-icon">&#128009;</span>
         <div class="tcg-name">Dragon Ball Super</div>
-        <div class="tcg-tagline">11,590 cards &middot; 102+ sets</div>
+        <div class="tcg-tagline">11,800+ cards &middot; 102+ sets</div>
         <div class="tcg-count">AU$ Live Pricing</div>
         <span class="tcg-badge badge-live">&#9889; Live</span>
       </a>
       <a href="/cards/starwars" class="tcg-card" style="--card-accent:#FFE81F">
         <span class="tcg-icon">&#128640;</span>
         <div class="tcg-name">Star Wars: Unlimited</div>
-        <div class="tcg-tagline">6,913 cards &middot; 26+ sets</div>
+        <div class="tcg-tagline">7,800+ cards &middot; 26+ sets</div>
         <div class="tcg-count">AU$ Live Pricing</div>
         <span class="tcg-badge badge-live">&#9889; Live</span>
       </a>
