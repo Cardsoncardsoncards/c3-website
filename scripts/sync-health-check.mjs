@@ -51,6 +51,19 @@ const STALE_DAYS = 3;
 // beyond any legitimate run.
 const INCOMPLETE_HOURS = 2;
 
+// SIGNAL C threshold (C3L-61). Card METADATA staleness, which is a different question from
+// price freshness and deliberately gets its own number rather than reusing STALE_DAYS.
+// Pokemon is the case that proves the two are not the same: it scored `0d ok` on Signal A every
+// single run, correctly, while its card metadata sat nine days stale and all six enrichment
+// columns were empty across all 31,833 rows. Signal A was not wrong, it was answering a
+// different question.
+// The threshold is measured, not chosen for roundness. Across the 32 games, 31 have card
+// metadata 0 or 1 days old, because their background syncs write card rows on every run.
+// Pokemon was the sole outlier at 8 days. 4 days is therefore 4x the observed normal and still
+// catches the only real case comfortably, which is the same "do not cry wolf" reasoning behind
+// Signal A's 3 days.
+const CARD_STALE_DAYS = 4;
+
 // The check writes a heartbeat every run, and checks its own previous one. If the schedule
 // stops firing (GitHub disables cron on inactive repos, someone edits the workflow, a secret
 // is rotated), the next run that does happen reports the gap loudly instead of quietly
@@ -146,6 +159,34 @@ const run = async () => {
     console.log(`  ${game.padEnd(20)} ${String(age).padStart(2)}d  ${rows[0].snapshot_date}  ${flag}`);
   }
 
+  // ---- SIGNAL C: card metadata staleness, distinct from price freshness ----
+  // Deliberately a separate signal with its own threshold rather than a widening of Signal A.
+  // Conflating them would either make the price signal noisy or make this one useless, since
+  // metadata legitimately changes far less often than prices do.
+  const staleMeta = [];
+  console.log('\n=== Signal C, card metadata freshness ===');
+  for (const game of games) {
+    let rows;
+    try {
+      rows = await rest(`${game}_cards?select=updated_at&order=updated_at.desc.nullslast&limit=1`);
+    } catch (err) {
+      // Not fatal on its own: Signal A already fails loudly if a game's data is unreachable.
+      console.log(`  ${game.padEnd(20)} metadata unreadable, ${err.message}`);
+      continue;
+    }
+    if (!rows.length || !rows[0].updated_at) {
+      console.log(`  ${game.padEnd(20)} no updated_at recorded`);
+      continue;
+    }
+    const last = new Date(rows[0].updated_at);
+    const age = Math.floor((Date.now() - last.getTime()) / 86400000);
+    if (age >= CARD_STALE_DAYS) {
+      staleMeta.push({ game, age, last: rows[0].updated_at.slice(0, 10) });
+      console.log(`  ${game.padEnd(20)} ${String(age).padStart(2)}d  ${rows[0].updated_at.slice(0,10)}  STALE METADATA`);
+    }
+  }
+  if (!staleMeta.length) console.log(`  none, every game's card rows written within ${CARD_STALE_DAYS} days`);
+
   // ---- SIGNAL B: runs that started and never finished ----
   // Deliberately key-agnostic. It never needs to know which `game` string maps to which table,
   // it only pairs a start against a later terminal event within the same stream.
@@ -225,6 +266,8 @@ const run = async () => {
     incomplete.map(i => `${i.key} (${i.hours}h)`).join(', '));
   if (heartbeatGap) problems.push(`this check did not run for ${heartbeatGap}h, longer than the ${HEARTBEAT_MAX_AGE_HOURS}h it is scheduled for`);
   if (!events.length) problems.push('sync_events recorded nothing in 3 days, so either the syncs stopped firing or their logging broke');
+  if (staleMeta.length) problems.push(`${staleMeta.length} game(s) with card metadata stale by ${CARD_STALE_DAYS}+ days, prices may still be current: ` +
+    staleMeta.map(m => `${m.game} (${m.age}d, last ${m.last})`).join(', '));
 
   if (problems.length) {
     for (const p of problems) console.error(`FAIL: ${p}`);
