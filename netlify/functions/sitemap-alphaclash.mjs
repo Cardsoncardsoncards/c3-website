@@ -31,7 +31,7 @@ async function supabaseFetch(url, extraHeaders = {}) {
 
 async function fetchSlugs(afterId) {
   const url = SUPABASE_URL + '/rest/v1/alphaclash_cards'
-    + '?select=id,slug,price_aud,updated_at'
+    + '?select=id,slug,price_aud,updated_at,last_price_update'
     + '&price_aud=gte.' + PRICE_THRESHOLD
     + '&slug=not.is.null'
     + '&order=id.asc'
@@ -83,10 +83,10 @@ export default async (req) => {
     const urlItems = allCards
       .filter(function(c) { return c.slug && c.slug.trim() !== ''; })
       .map(function(c) {
-        const lastmod = c.updated_at ? c.updated_at.slice(0, 10) : today;
+        const lastmod = (c.last_price_update || c.updated_at || '').slice(0, 10) || today;
         const price = parseFloat(c.price_aud) || 0;
         const priority = price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7';
-        return '  <url>\n    <loc>' + SITE_URL + '/cards/alphaclash/' + c.slug + '</loc>\n    <lastmod>' + lastmod + '</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>' + priority + '</priority>\n  </url>';
+        return '  <url>\n    <loc>' + SITE_URL + '/cards/alphaclash/' + c.slug + '</loc>\n    <lastmod>' + lastmod + '</lastmod>\n    <priority>' + priority + '</priority>\n  </url>';
       })
       .join('\n');
 
