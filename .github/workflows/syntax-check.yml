@@ -61,6 +61,12 @@ jobs:
       - name: Stripe webhook regression test
         run: node scripts/test-stripe-webhook.mjs
 
+      # The enrichment backfill's per-set decision, using the exact inputs from the run that
+      # burned five sets on 6 August. Under the pre-fix logic all four failure cases would be
+      # marked done having enriched nothing. See C3L-66.
+      - name: Enrichment outcome regression test
+        run: node scripts/test-enrichment-outcome.mjs
+
       # The signup defences added for C3L-90, after 181 accounts were created and exactly one
       # of them ever followed a card. Runs the REAL handler with Netlify.env and fetch stubbed,
       # so no email is sent and no database is touched. Asserts the four things that matter and

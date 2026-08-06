@@ -29,6 +29,8 @@
 // Every set's real duration is logged, so after a few runs the actual per-set cost is known
 // from data rather than estimated, and these numbers can be revisited on evidence.
 
+import { classifySetOutcome, orderQueue, MAX_ATTEMPTS } from './shared/enrichment-outcome.mjs';
+
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const POKEMONTCG_API_KEY   = Netlify.env.get('POKEMONTCG_API_KEY');
@@ -180,6 +182,7 @@ export default async (req) => {
   await logSyncEvent('sync_start');
   let setsDone = 0;
   let cardsUpdated = 0;
+  let setsNeedingRetry = 0;
 
   try {
     // Least-recently-backfilled first, and never-backfilled sorts first because the left join
@@ -190,20 +193,13 @@ export default async (req) => {
     if (!setsRes.ok) throw new Error(`pokemon_sets read failed ${setsRes.status}`);
     const allSets = await setsRes.json();
 
-    const progRes = await sbFetch('pokemon_enrichment_progress?select=set_id,backfilled_at&limit=1000');
+    const progRes = await sbFetch('pokemon_enrichment_progress?select=set_id,backfilled_at,needs_retry,attempts&limit=1000');
     if (!progRes.ok) throw new Error(`progress read failed ${progRes.status}`);
-    const progress = new Map((await progRes.json()).map(r => [r.set_id, r.backfilled_at]));
+    const progress = new Map((await progRes.json()).map(r => [r.set_id, r]));
 
-    const queue = allSets
-      .map(s => ({ ...s, done: progress.get(s.id) || null }))
-      .sort((a, b) => {
-        if (a.done === null && b.done !== null) return -1;
-        if (b.done === null && a.done !== null) return 1;
-        if (a.done === null && b.done === null) return a.id - b.id;
-        return a.done < b.done ? -1 : a.done > b.done ? 1 : 0;
-      });
+    const queue = orderQueue(allSets.map(x => ({ ...x, progress: progress.get(x.id) || null })));
 
-    const remaining = queue.filter(s => s.done === null).length;
+    const remaining = queue.filter(x => !x.progress).length;
     console.log(`[${GAME_SLUG}] ${allSets.length} sets total, ${remaining} never backfilled`);
 
     const setMap = await buildPokemonTCGSetMap();
@@ -219,75 +215,92 @@ export default async (req) => {
       }
 
       const setStart = Date.now();
-      const ptcgSetId = setMap.get((set.name || '').toLowerCase().trim())
-        || setMap.get((set.abbreviation || '').toLowerCase().trim())
-        || null;
+      let ptcgSetId = null;
+      let cardsInSet = 0;
+      let cardsEnriched = 0;
+      let thrown = null;
 
-      if (!ptcgSetId) {
-        // Recorded as done so the queue advances. A set with no pokemontcg.io counterpart will
-        // never gain stats, and retrying it forever would starve sets that can.
-        await sbFetch('pokemon_enrichment_progress', {
-          method: 'POST',
-          headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
-          body: JSON.stringify([{ set_id: set.id, cards_updated: 0, ptcg_set_id: null,
-            backfilled_at: new Date().toISOString() }])
-        });
-        setsDone++;
-        console.log(`[${GAME_SLUG}] set ${set.id} "${set.name}": no pokemontcg.io match, skipped`);
-        continue;
+      // C3L-66. Every set is attempted inside its own try. An upstream failure now costs that
+      // one set, not the rest of the run. The first real run died on a single pokemontcg.io 500
+      // twelve seconds in, taking every remaining set with it.
+      try {
+        ptcgSetId = setMap.get((set.name || '').toLowerCase().trim())
+          || setMap.get((set.abbreviation || '').toLowerCase().trim())
+          || null;
+
+        const cardsRes = await sbFetch(
+          `pokemon_cards?set_id=eq.${set.id}&select=id,name,clean_name,number&limit=2000`);
+        if (!cardsRes.ok) throw new Error(`cards read failed ${cardsRes.status}`);
+        const cards = await cardsRes.json();
+        cardsInSet = cards.length;
+
+        if (ptcgSetId && cardsInSet > 0) {
+          const stats = await fetchStatsForSet(ptcgSetId);
+          const rows = [];
+          for (const card of cards) {
+            const key = `${(card.clean_name || card.name || '').toLowerCase().trim()}|${(card.number || '').toLowerCase().trim()}`;
+            const st = stats.get(key);
+            if (!st) continue;
+            rows.push({
+              id: card.id,
+              name: card.name,
+              hp: st.hp, stage: st.stage, types: st.types,
+              attacks: st.attacks, weaknesses: st.weaknesses, retreat_cost: st.retreat_cost,
+              updated_at: new Date().toISOString()
+            });
+          }
+          for (let i = 0; i < rows.length; i += 200) {
+            const up = await sbFetch('pokemon_cards', {
+              method: 'POST',
+              headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+              body: JSON.stringify(rows.slice(i, i + 200))
+            });
+            if (!up.ok) throw new Error(`card upsert failed ${up.status}: ${(await up.text()).slice(0,200)}`);
+          }
+          cardsEnriched = rows.length;
+        }
+      } catch (err) {
+        thrown = err.message;
       }
 
-      const stats = await fetchStatsForSet(ptcgSetId);
+      const outcome = classifySetOutcome({ ptcgSetId, cardsInSet, cardsEnriched, error: thrown });
+      const prior = (progress.get(set.id) || {}).attempts || 0;
 
-      const cardsRes = await sbFetch(
-        `pokemon_cards?set_id=eq.${set.id}&select=id,name,clean_name,number&limit=2000`);
-      if (!cardsRes.ok) throw new Error(`cards read failed ${cardsRes.status} for set ${set.id}`);
-      const cards = await cardsRes.json();
-
-      const rows = [];
-      for (const card of cards) {
-        const key = `${(card.clean_name || card.name || '').toLowerCase().trim()}|${(card.number || '').toLowerCase().trim()}`;
-        const st = stats.get(key);
-        if (!st) continue;
-        // id and name are the only NOT NULL columns, so a partial upsert is safe and touches
-        // nothing the price sync owns. Prices, slugs and set linkage are all left alone.
-        rows.push({
-          id: card.id,
-          name: card.name,
-          hp: st.hp, stage: st.stage, types: st.types,
-          attacks: st.attacks, weaknesses: st.weaknesses, retreat_cost: st.retreat_cost,
-          updated_at: new Date().toISOString()
-        });
-      }
-
-      for (let i = 0; i < rows.length; i += 200) {
-        const up = await sbFetch('pokemon_cards', {
-          method: 'POST',
-          headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
-          body: JSON.stringify(rows.slice(i, i + 200))
-        });
-        if (!up.ok) throw new Error(`card upsert failed ${up.status}: ${(await up.text()).slice(0,200)}`);
-      }
-
-      // Progress is recorded only AFTER the writes land. An interrupted run therefore loses at
-      // most the set in flight, which is simply picked up again next time, and the upserts are
-      // keyed on the primary key so redoing one duplicates nothing.
       await sbFetch('pokemon_enrichment_progress', {
         method: 'POST',
         headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
-        body: JSON.stringify([{ set_id: set.id, cards_updated: rows.length,
-          ptcg_set_id: ptcgSetId, backfilled_at: new Date().toISOString() }])
+        body: JSON.stringify([{
+          set_id: set.id,
+          cards_updated: outcome.cardsUpdated,
+          cards_in_set: cardsInSet,
+          ptcg_set_id: ptcgSetId,
+          needs_retry: outcome.needsRetry,
+          last_error: outcome.lastError,
+          attempts: outcome.needsRetry ? prior + 1 : 0,
+          backfilled_at: new Date().toISOString()
+        }])
       });
 
       setsDone++;
-      cardsUpdated += rows.length;
-      console.log(`[${GAME_SLUG}] set ${set.id} "${set.name}": ${rows.length}/${cards.length} cards enriched in ${((Date.now()-setStart)/1000).toFixed(1)}s`);
+      cardsUpdated += outcome.cardsUpdated;
+      if (outcome.needsRetry) setsNeedingRetry++;
+      console.log(`[${GAME_SLUG}] set ${set.id} "${set.name}": ${outcome.reason}` +
+        ` (${outcome.cardsUpdated}/${cardsInSet} cards, ${((Date.now()-setStart)/1000).toFixed(1)}s)` +
+        (outcome.lastError ? ` [${outcome.lastError}]` : ''));
     }
 
     const elapsed = ((Date.now() - startedAt) / 1000).toFixed(1);
-    console.log(`[${GAME_SLUG}] done: ${setsDone} sets, ${cardsUpdated} cards, ${elapsed}s`);
-    await logSyncEvent('sync_success', cardsUpdated);
-    return new Response(JSON.stringify({ sets: setsDone, cards: cardsUpdated, seconds: elapsed }), {
+    console.log(`[${GAME_SLUG}] done: ${setsDone} sets attempted, ${cardsUpdated} cards enriched, ${setsNeedingRetry} needing retry, ${elapsed}s`);
+    // A run where every set attempted came back needing a retry is not a success, whatever the
+    // absence of a thrown error suggests. Logging it as an error is what makes it visible to the
+    // C3L-51 health check rather than looking like quiet progress.
+    if (setsDone > 0 && setsNeedingRetry === setsDone) {
+      await logSyncEvent('sync_error', 0,
+        `all ${setsDone} sets attempted needed a retry, 0 cards enriched`);
+    } else {
+      await logSyncEvent('sync_success', cardsUpdated);
+    }
+    return new Response(JSON.stringify({ sets: setsDone, cards: cardsUpdated, needingRetry: setsNeedingRetry, seconds: elapsed }), {
       status: 200, headers: { 'Content-Type': 'application/json' }
     });
   } catch (err) {
