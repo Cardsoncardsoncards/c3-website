@@ -154,9 +154,82 @@ function movementHtml(value, label) {
 // createMagicLink() only mints the token row; sending is the caller's job (same split card-api
 // uses). This sends the confirm/reset link through Resend, so no raw provider email reaches a
 // user unbranded.
+// ---------------------------------------------------------------------------
+// C3L-90 STEP A: TEMPORARY signup-email kill switch. THIS IS NOT PERMANENT.
+//
+// Why: the signup form is being farmed by bots. 181 accounts existed and exactly ONE had ever
+// followed a card, with 180 of them created in the eight days from 30 July. Every one of those
+// signups made this file send a confirmation from alerts@cardsoncardsoncards.com.au to an
+// address that never asked for it, which damages the sending reputation that the follow alerts
+// and the weekly digest both depend on. Flipping this to false stops the bleeding while the
+// real defences (honeypot, IP rate limit) are built.
+//
+// STEP E, DONE: this is back to TRUE. The switch stays in the file on purpose, as the fastest
+// lever if this ever recurs, but its normal state is ON. If you find it false, that is a bug
+// unless someone is mid-incident: real users cannot confirm a new account while it is off.
+//
+// WHY IT GATES BOTH BRANCHES OF handleSignup, not just the confirm path. C3L-44 closed an
+// account-enumeration channel by making signup send mail whether or not the address was already
+// registered, so that response body, length and timing are identical either way. Disabling only
+// the new-account confirm send would have reopened exactly that channel: the registered branch
+// would still make an outbound Resend call and the unregistered one would not, which is the same
+// 491ms separation C3L-44 measured and fixed. So the switch suppresses BOTH sends in
+// handleSignup and the two paths stay symmetric.
+//
+// handleForgot is deliberately NOT gated by this. It is a separate endpoint, it is not the path
+// being farmed, and it is the route a real user needs if they are locked out while this is off.
+const SIGNUP_CONFIRM_EMAIL_ENABLED = true;
+
 const RESEND_FROM = 'C3 Accounts <alerts@cardsoncardsoncards.com.au>';
-async function sendAccountEmail({ to, subject, html }) {
-  if (!RESEND_API_KEY) { console.error('[account] RESEND_API_KEY missing, cannot send'); return false; }
+// C3L-92 Step D: permanent record of every account email this file attempts.
+//
+// Why this file needed it at all: email_log already had three writers (card-api.mjs,
+// check-card-follows.mjs and shared/accounts-core.mjs) and account.mjs, which sends EVERY magic
+// link, confirmation and password reset, was not one of them. The table held 3 rows, all from
+// 27 July, while roughly 180 signup confirmations went out in the eight days from 30 July and
+// were recorded nowhere. That is why C3L-90 needed a manual audit to surface after eight days
+// instead of being visible the same morning.
+//
+// Fire-and-forget on purpose: a logging failure must never turn a delivered email into a
+// reported failure. It logs FAILURES as well as successes, which is the half that matters here,
+// because sendAccountEmail returns false on error and its only caller discards the return value,
+// so before this a failed send left no trace anywhere at all.
+async function logAccountEmail(recipient, emailType, success, errorMessage) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/email_log`, {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      // id is GENERATED ALWAYS AS IDENTITY and must not be supplied. related_card_alert_id is
+      // nullable and genuinely does not apply to an account email, so it is left out.
+      body: JSON.stringify([{
+        recipient,
+        email_type: emailType,
+        success: !!success,
+        error_message: errorMessage ? String(errorMessage).slice(0, 500) : null,
+      }]),
+    });
+    clearTimeout(t);
+    if (!res.ok) console.warn(`[email_log] insert failed ${res.status}`);
+  } catch (e) {
+    clearTimeout(t);
+    console.warn(`[email_log] insert error: ${e.message}`);
+  }
+}
+
+async function sendAccountEmail({ to, subject, html, type = 'account_link' }) {
+  if (!RESEND_API_KEY) {
+    console.error('[account] RESEND_API_KEY missing, cannot send');
+    await logAccountEmail(to, type, false, 'RESEND_API_KEY missing');
+    return false;
+  }
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), 8000);
   try {
@@ -167,9 +240,19 @@ async function sendAccountEmail({ to, subject, html }) {
       body: JSON.stringify({ from: RESEND_FROM, to: [to], subject, html }),
     });
     clearTimeout(t);
-    if (!res.ok) { console.error('[account] Resend error', res.status); return false; }
+    if (!res.ok) {
+      console.error('[account] Resend error', res.status);
+      await logAccountEmail(to, type, false, `Resend HTTP ${res.status}`);
+      return false;
+    }
+    await logAccountEmail(to, type, true, null);
     return true;
-  } catch (e) { clearTimeout(t); console.error('[account] Resend fetch failed', e.message); return false; }
+  } catch (e) {
+    clearTimeout(t);
+    console.error('[account] Resend fetch failed', e.message);
+    await logAccountEmail(to, type, false, e.message);
+    return false;
+  }
 }
 
 // Login rate limiting. Per-email in-memory counter on a rolling window. This is a per-instance
@@ -240,6 +323,55 @@ async function padToFloor(startedAt, floorMs) {
 const LINK_SEND_WINDOW_MS = 15 * 60 * 1000;
 const LINK_SEND_MAX       = 3;
 const linkSendAttempts = new Map(); // email -> { count, resetAt }
+
+// ---------------------------------------------------------------------------
+// C3L-90 Step C: per-IP signup limit. A SECOND axis, deliberately, not a replacement.
+//
+// maySendLink above is keyed on the submitted ADDRESS. That is the right defence against someone
+// bombing one victim, and it is what C3L-46 added. It is the wrong axis for what actually
+// happened: 180 signups in eight days, each on a DIFFERENT address, so the per-address counter
+// was reset every single time and never once fired. Same origin, many addresses, walks straight
+// past it. This closes that axis.
+//
+// Five per hour is chosen to sit far above a real person and far below a farm. A household or a
+// small shop behind one NAT might legitimately create two or three accounts in a day; five in a
+// single hour from one address is not that.
+//
+// Same honest limitation as every other limiter in this file: the Map is per serverless instance
+// and in memory, so it blunts a burst from one origin and does NOT stop a distributed attempt
+// spread across many IPs. A shared counter needs a database or a KV store, which is the upgrade
+// if this proves insufficient. Stated rather than implied so nobody reads this as airtight.
+const SIGNUP_IP_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const SIGNUP_IP_MAX       = 5;
+const signupIpAttempts = new Map(); // ip -> { count, resetAt }
+
+// Netlify sets x-nf-client-connection-ip to the real client address. x-forwarded-for is the
+// fallback and its FIRST entry is the client, the rest being proxies, so anything after the first
+// comma is discarded rather than trusted.
+function clientIp(req) {
+  const direct = req.headers.get('x-nf-client-connection-ip');
+  if (direct) return direct.trim();
+  const fwd = req.headers.get('x-forwarded-for');
+  if (fwd) return fwd.split(',')[0].trim();
+  return null;
+}
+
+// Returns true when this IP has room for another signup, and consumes one slot when it does.
+// An unknown IP is ALLOWED rather than blocked: keying every anonymous caller to one shared
+// bucket would let a single bot lock every genuine visitor out of signing up, which trades a
+// spam problem for an outage.
+function maySignupFromIp(ip) {
+  if (!ip) return true;
+  const now = Date.now();
+  const rec = signupIpAttempts.get(ip);
+  if (!rec || now > rec.resetAt) {
+    signupIpAttempts.set(ip, { count: 1, resetAt: now + SIGNUP_IP_WINDOW_MS });
+    return true;
+  }
+  if (rec.count >= SIGNUP_IP_MAX) return false;
+  rec.count += 1;
+  return true;
+}
 function maySendLink(email) {
   const now = Date.now();
   const rec = linkSendAttempts.get(email);
@@ -268,6 +400,9 @@ async function sendLinkEmail(account, kind) {
   const btnText = reset ? 'Set a new password' : 'Confirm my account';
   return sendAccountEmail({
     to: account.email,
+    // Distinguishes a new-account confirmation from a sign-in or password reset in email_log,
+    // which is what makes a signup spike visible on its own rather than buried in all account mail.
+    type: reset ? 'account_reset' : 'account_confirm',
     subject,
     html: `<p>Hi,</p><p>${intro}</p>
 <p><a href="${link}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">${btnText}</a></p>
@@ -446,6 +581,18 @@ function authPanel(mode = 'login', note = '', noteColor = '#F87171') {
     <input type="email" name="email" placeholder="you@example.com" required autocomplete="email">
     <input type="password" name="password" placeholder="Password (min 8 characters)" required autocomplete="new-password" minlength="8">
     <input type="password" name="confirm" placeholder="Confirm password" required autocomplete="new-password">
+    <!-- C3L-90 Step B: honeypot. A real browser never fills this in, because a sighted user
+         cannot see it and a screen-reader user is told to skip it. A naive bot fills every input
+         it finds and gives itself away for free.
+         Positioned off-screen rather than display:none on purpose: display:none is the first
+         thing a scraper checks for, and some fill-everything bots deliberately skip it.
+         aria-hidden plus tabindex="-1" keep it away from assistive tech and keyboard tabbing,
+         so this costs a real user nothing. autocomplete="off" stops a password manager
+         helpfully populating it, which would lock out a genuine visitor. -->
+    <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+      <label for="signup-website">Leave this field empty</label>
+      <input type="text" id="signup-website" name="website" tabindex="-1" autocomplete="off" value="">
+    </div>
     <button class="primary" type="submit">Create account</button>
     <p class="auth-alt">Already have an account? <a href="#" data-auth="login">Log in</a></p>
   </form>
@@ -798,7 +945,7 @@ async function handleLogin(form) {
   return dashboard({ uid: account.id, email: account.email }, { cookie });
 }
 
-async function handleSignup(form) {
+async function handleSignup(form, req) {
   const email    = normaliseEmail(form && form.get('email'));
   const password = form && form.get('password');
   const confirm  = form && form.get('confirm');
@@ -806,6 +953,34 @@ async function handleSignup(form) {
   const pwProblem = passwordProblem(password);
   if (pwProblem) return signedOutPage(pwProblem, 'signup');
   if (password !== confirm) return signedOutPage('The two passwords do not match.', 'signup');
+
+  // C3L-90 Step B: honeypot. The paired hidden input is in the signup form above; a real browser
+  // submits it empty. Anything in it means the submitter filled a field it could not see.
+  //
+  // The response is DELIBERATELY the same checkEmailPage the success path returns, built from the
+  // same address, so it is byte-identical to a genuine signup. A distinct error, a different
+  // status, or even a faster reply would tell an operator the trap exists and is trivial to
+  // adapt around. Silent means silent.
+  //
+  // Placed after validation and before the account lookup so a caught submission does no database
+  // work at all: no row, no magic-link token, no send.
+  if (String(form.get('website') || '').trim() !== '') {
+    console.warn('[account] signup rejected by honeypot');
+    return checkEmailPage('Check your email', `We have sent a link to ${email}. If you already have an account it will sign you in, otherwise it will confirm your new account.`);
+  }
+
+  // C3L-90 Step C: per-IP limit, checked after validation and the honeypot so a mistyped password
+  // or a caught bot never burns a real person's quota, and before any database work so a blocked
+  // caller costs nothing.
+  //
+  // Unlike the honeypot this message is DELIBERATELY visible and honest. A honeypot hit is always
+  // a bot and gets told nothing; an IP limit can catch a real household behind one NAT, and that
+  // person needs to know why they were stopped and that waiting fixes it. Silently showing them a
+  // success page that never produces an email would be the worse failure.
+  if (!maySignupFromIp(clientIp(req))) {
+    console.warn('[account] signup rate limited by IP');
+    return signedOutPage('Too many sign-ups from this network in the past hour. Please wait and try again.', 'signup');
+  }
 
   // C3L-44: this used to answer "That email already has an account" on screen, which told any
   // caller whether an address was registered. handleForgot immediately below already solved this
@@ -827,12 +1002,15 @@ async function handleSignup(form) {
 
   if (result.ok) {
     // New account: the usual confirm link.
-    if (maySendLink(email)) await sendLinkEmail(result.account, 'confirm');
+    // C3L-90 Step A: SIGNUP_CONFIRM_EMAIL_ENABLED gates this temporarily. See the constant.
+    if (SIGNUP_CONFIRM_EMAIL_ENABLED && maySendLink(email)) await sendLinkEmail(result.account, 'confirm');
   } else if (result.reason === 'email_exists') {
     // Already registered: send a sign-in link to the address instead of saying so on screen.
     // This is the useful thing for the real owner of the address (they get a way in) and tells
     // whoever submitted the form nothing at all.
-    if (existing && maySendLink(email)) await sendLinkEmail(existing, 'reset');
+    // C3L-90 Step A: gated by the SAME switch as the branch above, deliberately. Suppressing one
+    // send and not the other would reopen the C3L-44 timing channel. Both off, or both on.
+    if (SIGNUP_CONFIRM_EMAIL_ENABLED && existing && maySendLink(email)) await sendLinkEmail(existing, 'reset');
   } else {
     // A genuine server-side failure. Distinct on purpose: it is not conditioned on whether the
     // address exists, so it leaks nothing, and hiding a real fault behind a success page would
@@ -932,7 +1110,7 @@ export default async (req) => {
 
     // Auth actions do not require an existing session.
     if (action === 'login')  return handleLogin(form);
-    if (action === 'signup') return handleSignup(form);
+    if (action === 'signup') return handleSignup(form, req);
     if (action === 'forgot') return handleForgot(form);
 
     // Everything else requires a session. A magic-link token is not accepted for POST:

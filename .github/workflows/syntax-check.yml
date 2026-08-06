@@ -60,3 +60,14 @@ jobs:
       # access twice and a failed grant answering Stripe with 200. See C3L-58 and C3L-59.
       - name: Stripe webhook regression test
         run: node scripts/test-stripe-webhook.mjs
+
+      # The signup defences added for C3L-90, after 181 accounts were created and exactly one
+      # of them ever followed a card. Runs the REAL handler with Netlify.env and fetch stubbed,
+      # so no email is sent and no database is touched. Asserts the four things that matter and
+      # are easy to break silently: a real signup still works, the honeypot rejects without
+      # telling the bot, the per-IP limit fires, and email_log gains a row on send. It also
+      # guards C3L-44, checking that a registered and an unregistered address still produce
+      # identical responses, since suppressing one send and not the other would reopen the
+      # enumeration channel that finding closed.
+      - name: Signup abuse defences regression test
+        run: node scripts/test-signup-defences.mjs
