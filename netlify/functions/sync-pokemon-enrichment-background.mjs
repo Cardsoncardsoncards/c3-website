@@ -150,12 +150,15 @@ async function fetchStatsForSet(ptcgSetId) {
 export default async (req) => {
   // Same guard shape every other background sync uses: a request carrying x-sync-secret must
   // match, and a request with no header at all is treated as the scheduler.
-  // Stated plainly rather than copied silently, because the pattern is weaker than it looks:
-  // treating "no header" as scheduled means an unauthenticated POST is accepted by every sync
-  // in this repo, this one included. That is pre-existing and shared by 31 functions, so it is
-  // logged as its own finding rather than diverged from here, where a lone different guard
-  // would be surprising without fixing anything. The blast radius is bounded in this case by
-  // the same limits the schedule relies on: 5 minutes, 10 sets, and idempotent upserts.
+  //
+  // CORRECTED after testing, because the first version of this comment claimed that treating
+  // "no header" as scheduled left every sync open to an unauthenticated POST. That is wrong.
+  // Measured against production: a direct POST to a scheduled function returns 403 from
+  // Netlify itself, before any function code runs, verified on both this function and
+  // sync-vanguard-background. Netlify does not expose scheduled functions as public endpoints.
+  // So this check is defence in depth rather than the primary control. It still earns its place
+  // for the case where someone later adds a `path` to the config, which WOULD route the
+  // function publicly and would otherwise silently remove the only barrier.
   const secret = req && req.headers ? req.headers.get('x-sync-secret') : null;
   if (secret && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
     console.error(`[${GAME_SLUG}] Unauthorised`);
