@@ -144,6 +144,10 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     <button class="share-btn share-discord" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='Discord',1500)})">Discord</button>
     <a id="share-reddit-b" href="#" target="_blank" rel="noopener" class="share-btn share-reddit">Reddit</a>
     <a id="share-twitter-b" href="#" target="_blank" rel="noopener" class="share-btn share-twitter">Twitter</a>
+    <!-- task-22 (C3L-73): this Facebook button was missing from the bottom share row while the
+         top row had it, on all 591 posts. The script below has always populated
+         'share-facebook-b', so the id was expected and only the anchor was absent. -->
+    <a id="share-facebook-b" href="#" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
     <a id="share-whatsapp-b" href="#" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
     <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
   </div>
