@@ -6,8 +6,12 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
 ## START HERE, updated every task, read this first
 
-**As of:** 6 August 2026, `6587872` at the time of writing, which is the commit
-immediately before the one adding this section.
+**As of:** 6 August 2026, 00:23 UTC, `9661b52` at the time of writing.
+**Note that `9661b52` is not mine**: another session committed to `main`
+between my last two updates, fixing p619's em dashes, word count and duplicate
+H1. Worth knowing that this repo currently has more than one session writing
+to `main`, using the same `C3 Team` git identity, so authorship in the log does
+not distinguish them.
 
 **One-line state:** 16 numbered task files executed, findings run C3L-01 to
 C3L-60 with **45 resolved, 2 partly resolved, 4 High open, 5 Medium, 1 Low,
@@ -26,10 +30,13 @@ presumed to belong to another session.
 **Immediate next action:** no task file is pending. **Two dated checkpoints
 fall due within hours and neither has happened yet, so neither should be
 recorded as proven:**
-1. **weissschwarz, 00:30 UTC today.** Its sync has now had the C3L-48, C3L-49
-   and C3L-55 fixes deployed but has NOT yet run with them. At the time of
-   writing it is **9 days stale**, last snapshot 2026-07-28, and UTC is 00:12.
-   The next run is the first real proof any of that work succeeded.
+1. **weissschwarz, 00:30 UTC today, roughly 7 minutes after this was written.**
+   Its sync has the C3L-48, C3L-49 and C3L-55 fixes deployed but has still NOT
+   run with them. Re-checked at 00:23 UTC: **9 days stale**, last snapshot
+   2026-07-28, no sync event in the last 3 hours, and the most recent error is
+   still the original `23505` on `Key (slug)=(kaguya-sama-love-is-war)`. That
+   run is the first real proof any of that work succeeded, and until it happens
+   none of those three findings should be read as verified in production.
 2. **`daily-tcg-sync.yml`, roughly 04:00 UTC today.** `continue-on-error` was
    removed in `f810c2f`, so this workflow should go **RED** on its next run.
    Its last run, 5 August 06:15 UTC, still reported success because it predates
@@ -47,14 +54,13 @@ recorded as proven:**
   piece of work. So this is unassigned, not in progress.**
 - **C3L-56**, whether the 5 orphan slugs get redirects or whether slug
   preservation is extended to non-colliding rows.
-- **Blog post p619**, shipped in `2be5d05`, renders its title twice: the layout
-  emits `<h1 class="post-h1">{{ title }}</h1>` and the content also opens with
-  an identical `# H1`. p616 to p618 have no content H1. Left exactly as
-  instructed, awaiting a decision, one line to remove.
-- **Three duplicate task files remain in Downloads**,
-  `task-12-c3l55-slug-seed (1).md`, `(2).md` and
-  `task-13-c3l55-slug-seed (1).md`. The two named originals were deleted on
-  6 August. These copies were not, because they were not named.
+- ~~Blog post p619's duplicate H1~~ **RESOLVED 6 August by `9661b52`, which was
+  another session's commit, not this one.** Verified in the built output: the
+  rendered page now carries exactly one `<h1>`, the layout's, and the file has
+  no em or en dashes. Recorded because the fix arrived from outside this
+  session's own work.
+- ~~Duplicate task files in Downloads~~ **RESOLVED 6 August.** All five copies
+  of the C3L-55 slug-seed task are now deleted.
 
 **Anything live and wrong on the site right now:**
 - **weissschwarz prices are 9 days old**, and its card pages carry the same
@@ -66,7 +72,7 @@ recorded as proven:**
   written incrementally on the way down, so the site looks fine.
 - **All three daily sync scripts fail at their first step every day** (C3L-53).
   Those games stay current only because a second writer keeps them so.
-- **p619 renders a duplicate H1**, above.
+- ~~p619 renders a duplicate H1~~, fixed 6 August, see above.
 
 **Full detail:** Section 9 for counts, Section 10 for the full ordered list of
 what to pick up next, Section 3 for every individual finding.
