@@ -29,6 +29,11 @@ import {
 // task-129 Part 2: password auth. Hashing via Node's built-in scrypt (no new dependency).
 import { hashPassword, verifyPassword, passwordProblem } from './shared/password.mjs';
 
+// One shared definition of what we record about the incoming request. clientIp was previously
+// hand-rolled here, and again in email-subscribe.mjs, and again in register-interest.mjs; it now
+// has one definition that this file and card-api.mjs both call.
+import { clientIp, requestFingerprint } from './shared/request-fingerprint.mjs';
+
 import {
   hasSessionSecret,
   createSession,
@@ -224,6 +229,56 @@ async function logAccountEmail(recipient, emailType, success, errorMessage) {
   }
 }
 
+// The fixed vocabulary for signup_attempts.outcome. It lives here, in one place, rather than as
+// a database CHECK constraint: a constraint violation would reject the insert and throw away the
+// record of an attempt nobody anticipated, which is precisely the attempt worth keeping.
+const SIGNUP_OUTCOME = {
+  CREATED:      'created',        // new account row written
+  EXISTING:     'existing_address',// address already registered; sign-in link sent instead
+  HONEYPOT:     'rejected_honeypot',
+  RATE_LIMITED: 'rejected_rate_limit',
+  INVALID:      'rejected_validation',
+  ERROR:        'error',          // genuine server-side failure creating the account
+};
+
+// One row per signup attempt, whatever the outcome. Before this there was NO durable record of a
+// signup attempt anywhere: the per-IP limiter's counters live in an in-memory Map inside a single
+// serverless instance and vanish on cold start, so the ~180 attempts the bot farm made in eight
+// days left no request-level trace at all. That is why it took a manual audit to find.
+//
+// TIMING NOTE, and the reason every call site awaits this rather than firing and forgetting:
+// handleSignup deliberately does identical work on the "new address" and "already registered"
+// branches so the two cannot be told apart by response time (C3L-44). One awaited insert on both
+// branches keeps that symmetric. An insert on only one branch, or an awaited one on one and a
+// fire-and-forget on the other, would hand the enumeration channel straight back.
+async function logSignupAttempt(email, outcome, req, context) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/signup_attempts`, {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      // id is GENERATED ALWAYS AS IDENTITY and must not be supplied; attempted_at defaults to now().
+      body: JSON.stringify([{
+        email: email || null,
+        outcome,
+        ...requestFingerprint(req, context),
+      }]),
+    });
+    clearTimeout(t);
+    if (!res.ok) console.warn(`[signup_attempts] insert failed ${res.status}`);
+  } catch (e) {
+    clearTimeout(t);
+    console.warn(`[signup_attempts] insert error: ${e.message}`);
+  }
+}
+
 async function sendAccountEmail({ to, subject, html, type = 'account_link' }) {
   if (!RESEND_API_KEY) {
     console.error('[account] RESEND_API_KEY missing, cannot send');
@@ -345,16 +400,11 @@ const SIGNUP_IP_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 const SIGNUP_IP_MAX       = 5;
 const signupIpAttempts = new Map(); // ip -> { count, resetAt }
 
-// Netlify sets x-nf-client-connection-ip to the real client address. x-forwarded-for is the
-// fallback and its FIRST entry is the client, the rest being proxies, so anything after the first
-// comma is discarded rather than trusted.
-function clientIp(req) {
-  const direct = req.headers.get('x-nf-client-connection-ip');
-  if (direct) return direct.trim();
-  const fwd = req.headers.get('x-forwarded-for');
-  if (fwd) return fwd.split(',')[0].trim();
-  return null;
-}
+// clientIp now comes from shared/request-fingerprint.mjs (imported at the top of this file).
+// The local copy that used to live here was byte-for-byte one of three, which is exactly the
+// drift this consolidation exists to stop. Behaviour is unchanged: the limiter below still keys
+// on the FULL address. Only what gets PERSISTED is truncated, and that happens in the shared
+// module, not here.
 
 // Returns true when this IP has room for another signup, and consumes one slot when it does.
 // An unknown IP is ALLOWED rather than blocked: keying every anonymous caller to one shared
@@ -945,14 +995,27 @@ async function handleLogin(form) {
   return dashboard({ uid: account.id, email: account.email }, { cookie });
 }
 
-async function handleSignup(form, req) {
+async function handleSignup(form, req, context) {
   const email    = normaliseEmail(form && form.get('email'));
   const password = form && form.get('password');
   const confirm  = form && form.get('confirm');
-  if (!email) return signedOutPage('Enter a valid email address.', 'signup');
+  // The validation rejects below log the RAW submitted address rather than the normalised one
+  // when normalisation failed, because "what did they actually send" is the useful thing when
+  // reading these rows back. It is capped: an unbounded form field must not size a row.
+  const rawEmail = String((form && form.get('email')) || '').trim().slice(0, 320) || null;
+  if (!email) {
+    await logSignupAttempt(rawEmail, SIGNUP_OUTCOME.INVALID, req, context);
+    return signedOutPage('Enter a valid email address.', 'signup');
+  }
   const pwProblem = passwordProblem(password);
-  if (pwProblem) return signedOutPage(pwProblem, 'signup');
-  if (password !== confirm) return signedOutPage('The two passwords do not match.', 'signup');
+  if (pwProblem) {
+    await logSignupAttempt(email, SIGNUP_OUTCOME.INVALID, req, context);
+    return signedOutPage(pwProblem, 'signup');
+  }
+  if (password !== confirm) {
+    await logSignupAttempt(email, SIGNUP_OUTCOME.INVALID, req, context);
+    return signedOutPage('The two passwords do not match.', 'signup');
+  }
 
   // C3L-90 Step B: honeypot. The paired hidden input is in the signup form above; a real browser
   // submits it empty. Anything in it means the submitter filled a field it could not see.
@@ -966,6 +1029,10 @@ async function handleSignup(form, req) {
   // work at all: no row, no magic-link token, no send.
   if (String(form.get('website') || '').trim() !== '') {
     console.warn('[account] signup rejected by honeypot');
+    // Logged, and this is the row that makes the trap worth having: a honeypot hit is a
+    // confirmed bot, so its user agent and network are ground truth for identifying the rest of
+    // the farm's traffic. The RESPONSE is unchanged and still byte-identical to the success page.
+    await logSignupAttempt(email, SIGNUP_OUTCOME.HONEYPOT, req, context);
     return checkEmailPage('Check your email', `We have sent a link to ${email}. If you already have an account it will sign you in, otherwise it will confirm your new account.`);
   }
 
@@ -979,6 +1046,7 @@ async function handleSignup(form, req) {
   // success page that never produces an email would be the worse failure.
   if (!maySignupFromIp(clientIp(req))) {
     console.warn('[account] signup rate limited by IP');
+    await logSignupAttempt(email, SIGNUP_OUTCOME.RATE_LIMITED, req, context);
     return signedOutPage('Too many sign-ups from this network in the past hour. Please wait and try again.', 'signup');
   }
 
@@ -1000,11 +1068,17 @@ async function handleSignup(form, req) {
   const existing = await getAccountByEmail(email);
   const result   = await createAccountWithPassword(email, hashPassword(password));
 
+  // Each of the three branches below performs exactly ONE awaited logSignupAttempt, so the
+  // insert costs the same on all of them and the C3L-44 timing symmetry between "new address"
+  // and "already registered" survives. Only the outcome string differs, which costs nothing
+  // measurable. Do not make any of these conditional or fire-and-forget.
   if (result.ok) {
+    await logSignupAttempt(email, SIGNUP_OUTCOME.CREATED, req, context);
     // New account: the usual confirm link.
     // C3L-90 Step A: SIGNUP_CONFIRM_EMAIL_ENABLED gates this temporarily. See the constant.
     if (SIGNUP_CONFIRM_EMAIL_ENABLED && maySendLink(email)) await sendLinkEmail(result.account, 'confirm');
   } else if (result.reason === 'email_exists') {
+    await logSignupAttempt(email, SIGNUP_OUTCOME.EXISTING, req, context);
     // Already registered: send a sign-in link to the address instead of saying so on screen.
     // This is the useful thing for the real owner of the address (they get a way in) and tells
     // whoever submitted the form nothing at all.
@@ -1015,6 +1089,7 @@ async function handleSignup(form, req) {
     // A genuine server-side failure. Distinct on purpose: it is not conditioned on whether the
     // address exists, so it leaks nothing, and hiding a real fault behind a success page would
     // leave the user waiting for mail that is never coming.
+    await logSignupAttempt(email, SIGNUP_OUTCOME.ERROR, req, context);
     return signedOutPage('We could not create your account just now. Please try again.', 'signup');
   }
 
@@ -1062,7 +1137,10 @@ async function handleSetPassword(session, form) {
 // ---------------------------------------------------------------------------
 // Handler
 // ---------------------------------------------------------------------------
-export default async (req) => {
+// The second argument is Netlify's Functions v2 context, carrying the parsed geo object. The
+// repo rule is "export default async (req)"; taking context alongside it keeps that shape and is
+// what makes geo available at all (a handler that ignores it records no geo).
+export default async (req, context) => {
   const url = new URL(req.url);
 
   // task-129 Part 5: admin view at /account/admin. Gated SERVER-SIDE by matching the session
@@ -1110,7 +1188,7 @@ export default async (req) => {
 
     // Auth actions do not require an existing session.
     if (action === 'login')  return handleLogin(form);
-    if (action === 'signup') return handleSignup(form, req);
+    if (action === 'signup') return handleSignup(form, req, context);
     if (action === 'forgot') return handleForgot(form);
 
     // Everything else requires a session. A magic-link token is not accepted for POST:

@@ -1,4 +1,5 @@
 import { getSessionFromRequest } from './shared/session.mjs';
+import { clientIp } from './shared/request-fingerprint.mjs';
 
 const MAILERLITE_API_KEY = Netlify.env.get('MAILERLITE_API_KEY');
 const GROUP_ID = '182892277158381312';
@@ -17,10 +18,13 @@ function rlBlocked(key) {
   rec.count += 1;
   return rec.count > RL_MAX;
 }
-function clientIp(req) {
-  return req.headers.get('x-nf-client-connection-ip')
-    || (req.headers.get('x-forwarded-for') || '').split(',')[0].trim()
-    || 'unknown';
+// clientIp is imported from shared/request-fingerprint.mjs; the local copy that used to sit here
+// was one of three identical hand-rolled versions. The 'unknown' fallback is kept and is NOT
+// cosmetic: the shared helper returns null for an unresolvable address, and passing null to
+// rlBlocked would put every unidentifiable caller into one shared bucket, letting a single
+// scripted client rate-limit everyone else out. A named key keeps that grouping explicit.
+function rlKeyForIp(req) {
+  return clientIp(req) || 'unknown';
 }
 
 // task-132 Part 7: persist "already subscribed to the weekly digest" against the account, so the
@@ -61,7 +65,7 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: 'Valid email required' }), { status: 400, headers });
 
   // Throttle per IP and per email before doing any outbound work.
-  if (rlBlocked('ip:' + clientIp(req)) || rlBlocked('em:' + email))
+  if (rlBlocked('ip:' + rlKeyForIp(req)) || rlBlocked('em:' + email))
     return new Response(JSON.stringify({ error: 'Too many requests. Please try again shortly.' }), { status: 429, headers });
 
   if (!MAILERLITE_API_KEY)

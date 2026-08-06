@@ -2,6 +2,8 @@
 // Handles /api/register-interest POST from subscribe.html
 // Adds to MailerLite paid group + notifies owner via Resend
 
+import { clientIp } from './shared/request-fingerprint.mjs';
+
 // Escape user-supplied values before they go into any HTML email body. The owner notification
 // below interpolates the submitted name and email directly, so without this a submitter could
 // inject markup into the inbox that receives these alerts.
@@ -26,10 +28,13 @@ function rlBlocked(key) {
   rec.count += 1;
   return rec.count > RL_MAX;
 }
-function clientIp(req) {
-  return req.headers.get('x-nf-client-connection-ip')
-    || (req.headers.get('x-forwarded-for') || '').split(',')[0].trim()
-    || 'unknown';
+// clientIp is imported from shared/request-fingerprint.mjs; the local copy that used to sit here
+// was one of three identical hand-rolled versions. The 'unknown' fallback is kept and is NOT
+// cosmetic: the shared helper returns null for an unresolvable address, and passing null to
+// rlBlocked would put every unidentifiable caller into one shared bucket, letting a single
+// scripted client rate-limit everyone else out. A named key keeps that grouping explicit.
+function rlKeyForIp(req) {
+  return clientIp(req) || 'unknown';
 }
 
 export default async (req) => {
@@ -79,7 +84,7 @@ export default async (req) => {
 
   // Throttle per IP and per email before any outbound work (MailerLite add, owner email, and the
   // welcome email to the submitter-supplied address).
-  if (rlBlocked('ip:' + clientIp(req)) || rlBlocked('em:' + String(email).trim().toLowerCase())) {
+  if (rlBlocked('ip:' + rlKeyForIp(req)) || rlBlocked('em:' + String(email).trim().toLowerCase())) {
     return new Response(JSON.stringify({ ok: false, error: 'Too many requests. Please try again shortly.' }), {
       status: 429, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });

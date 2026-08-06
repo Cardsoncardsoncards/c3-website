@@ -34,6 +34,10 @@ import { resolveFollowCard } from './shared/card-resolver.mjs';
 // path (here) and the dashboard read path (account.mjs), so the two can never drift apart again.
 import { FOLLOW_GAMES, GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared/game-meta.mjs';
 
+// One shared definition of what we record about the incoming request, so this file and
+// account.mjs capture the same fields the same way instead of each inventing its own.
+import { requestFingerprint } from './shared/request-fingerprint.mjs';
+
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -160,7 +164,7 @@ async function handleLike(req) {
 // Generic sitewide view logging: writes to card_views keyed by (game, card_ref).
 // card_ref is scryfall_id for MTG (ambiguous slugs) and the unique slug for the
 // other 31 games. Best-effort analytics: never fail the request.
-async function handleView(req) {
+async function handleView(req, context) {
   const body = await req.json();
   let { game, cardRef, sessionId, scryfallId } = body;
   // Backward-compat: the old MTG-only client shape sent { scryfallId } with no
@@ -173,7 +177,11 @@ async function handleView(req) {
       card_ref: cardRef,
       session_id: sessionId || null,
       viewed_at: new Date().toISOString(),
-      country_code: 'AU'
+      // country_code is NO LONGER WRITTEN. It was hardcoded to 'AU' on every row, for every
+      // visitor on earth, which is why all 20,422 rows to date carry exactly one value. It is
+      // left NULL from here on rather than being fed real data, so the fabricated rows stay
+      // distinguishable from anything collected afterwards. Real geo goes to geo_country.
+      ...requestFingerprint(req, context)
     });
   } catch { /* analytics is best-effort; do not fail the request */ }
   return json({ ok: true });
@@ -1040,7 +1048,10 @@ async function handleQuizStats(req) {
 }
 
 // --- Main router ---
-export default async (req) => {
+// The second argument is Netlify's Functions v2 context, which carries the parsed geo object.
+// The repo rule is "export default async (req)"; taking the context alongside it keeps that
+// shape and is what makes geo available at all (a handler that ignores it records no geo).
+export default async (req, context) => {
   const url = new URL(req.url);
   const path = url.pathname;
   const noindexHeaders = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'X-Robots-Tag': 'noindex' };
@@ -1048,7 +1059,7 @@ export default async (req) => {
   if (path === '/api/card-like') return handleLike(req);
   if (path === '/api/card-view') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
-    return handleView(req);
+    return handleView(req, context);
   }
   if (path === '/api/price-alert') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
