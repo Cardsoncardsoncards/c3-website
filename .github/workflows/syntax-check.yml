@@ -52,3 +52,11 @@ jobs:
       # would have moved a live URL. See C3L-55.
       - name: Slug assignment regression test
         run: node scripts/test-slug-assign.mjs
+
+      # The Stripe webhook is the only code path between a customer paying and being given
+      # what they paid for, so it gets a real test rather than a code read. Everything is
+      # stubbed, no live key and no payment infrastructure is touched. Run against the
+      # pre-fix handler this suite failed 6 times, including a duplicate delivery granting
+      # access twice and a failed grant answering Stripe with 200. See C3L-58 and C3L-59.
+      - name: Stripe webhook regression test
+        run: node scripts/test-stripe-webhook.mjs
