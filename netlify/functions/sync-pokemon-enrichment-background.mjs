@@ -32,6 +32,7 @@
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const POKEMONTCG_API_KEY   = Netlify.env.get('POKEMONTCG_API_KEY');
+const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const GAME_SLUG            = 'pokemon-enrichment';
 
 // 5 minutes of work against a 15 minute ceiling, so a 3x margin rather than a tight fit.
@@ -146,7 +147,21 @@ async function fetchStatsForSet(ptcgSetId) {
   return stats;
 }
 
-export default async () => {
+export default async (req) => {
+  // Same guard shape every other background sync uses: a request carrying x-sync-secret must
+  // match, and a request with no header at all is treated as the scheduler.
+  // Stated plainly rather than copied silently, because the pattern is weaker than it looks:
+  // treating "no header" as scheduled means an unauthenticated POST is accepted by every sync
+  // in this repo, this one included. That is pre-existing and shared by 31 functions, so it is
+  // logged as its own finding rather than diverged from here, where a lone different guard
+  // would be surprising without fixing anything. The blast radius is bounded in this case by
+  // the same limits the schedule relies on: 5 minutes, 10 sets, and idempotent upserts.
+  const secret = req && req.headers ? req.headers.get('x-sync-secret') : null;
+  if (secret && (!SYNC_SECRET || secret !== SYNC_SECRET)) {
+    console.error(`[${GAME_SLUG}] Unauthorised`);
+    return new Response('Unauthorised', { status: 401 });
+  }
+
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     console.error('FATAL: SUPABASE_URL and SUPABASE_SERVICE_KEY are required.');
     return new Response('missing supabase config', { status: 500 });
