@@ -63,7 +63,7 @@ jobs:
 
       # The enrichment backfill's per-set decision, using the exact inputs from the run that
       # burned five sets on 6 August. Under the pre-fix logic all four failure cases would be
-      # marked done having enriched nothing. See C3L-66.
+      # marked done having enriched nothing. See C3L-102.
       - name: Enrichment outcome regression test
         run: node scripts/test-enrichment-outcome.mjs
 

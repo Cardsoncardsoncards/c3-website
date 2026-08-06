@@ -220,7 +220,7 @@ export default async (req) => {
       let cardsEnriched = 0;
       let thrown = null;
 
-      // C3L-66. Every set is attempted inside its own try. An upstream failure now costs that
+      // C3L-102. Every set is attempted inside its own try. An upstream failure now costs that
       // one set, not the rest of the run. The first real run died on a single pokemontcg.io 500
       // twelve seconds in, taking every remaining set with it.
       try {

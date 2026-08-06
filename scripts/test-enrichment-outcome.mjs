@@ -1,4 +1,4 @@
-// Regression test for the pokemon enrichment backfill's per-set decision (C3L-66).
+// Regression test for the pokemon enrichment backfill's per-set decision (C3L-102).
 //
 // Every case below is taken from the first real run on 6 August, which burned five sets by
 // recording them as done having enriched nothing. The point of the test is that those exact

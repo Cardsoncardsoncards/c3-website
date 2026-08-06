@@ -1,4 +1,4 @@
-// C3L-66. The per-set decision for the pokemon enrichment backfill, pulled out as a pure
+// C3L-102. The per-set decision for the pokemon enrichment backfill, pulled out as a pure
 // function so it can be tested rather than read.
 //
 // WHY THIS EXISTS SEPARATELY
@@ -22,7 +22,7 @@
 //
 // MAX_ATTEMPTS bounds the retrying: after this many unsuccessful attempts a set stops being
 // prioritised and falls back into the ordinary oldest-first rotation. It still gets retried,
-// just not ahead of everything else. That matters for the set-matching gap logged as C3L-67,
+// just not ahead of everything else. That matters for the set-matching gap logged as C3L-103,
 // where some sets will fail every time until their names are mapped properly.
 export const MAX_ATTEMPTS = 3;
 

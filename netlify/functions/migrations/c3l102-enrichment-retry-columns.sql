@@ -1,4 +1,4 @@
--- C3L-66: distinguish "attempted" from "done" in the pokemon enrichment backfill.
+-- C3L-102: distinguish "attempted" from "done" in the pokemon enrichment backfill.
 -- Applied to the live database on 6 August 2026 as `c3l61_enrichment_progress_retry_columns`,
 -- plus an `attempts` column added immediately after. This file is the repo's record.
 --
@@ -24,7 +24,7 @@ alter table public.pokemon_enrichment_progress
   add column if not exists attempts     integer not null default 0;
 
 -- Reset the five burned sets. Deleting the rows returns them to the front of the queue as
--- never-attempted. This does NOT fix why two of them failed to match upstream, which is C3L-67
+-- never-attempted. This does NOT fix why two of them failed to match upstream, which is C3L-103
 -- and a separate piece of work.
 delete from public.pokemon_enrichment_progress;
 
