@@ -44,6 +44,45 @@ const CALL_DELAY_MS = 120;
 
 let apitcgRequests = 0;
 
+// task-24 (C3L-93): audit trail into sync_events, the table C3L-51's health check reads.
+//
+// Before this, the function wrote NOTHING anywhere. That is how it managed to never run in
+// production for weeks without anyone noticing: no schedule to fire it, and no trace if it had.
+// Giving it a schedule without giving it a voice would have fixed half the problem and left the
+// detection gap exactly as it was.
+//
+// game is 'apitcg-enrichment', deliberately one stream for all five games rather than five. This
+// job either runs as a unit or does not run at all, and the health check's Signal B pairs starts
+// against terminal events, so one start and one terminal event per run is the shape it expects.
+// Fire-and-forget: a logging failure must never break the run it is describing.
+async function logSyncEvent(eventType, rowsAffected = null, errorMessage = null) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/sync_events`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify([{
+        event_type:    eventType,
+        game:          'apitcg-enrichment',
+        rows_affected: rowsAffected,
+        error_message: errorMessage ? String(errorMessage).slice(0, 500) : null
+      }]),
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    if (!res.ok) console.warn(`[enrich-apitcg] sync_events insert failed ${res.status}`);
+  } catch (e) {
+    clearTimeout(timer);
+    console.warn(`[enrich-apitcg] sync_events insert error: ${e.message}`);
+  }
+}
+
 function normaliseCode(value) {
   return String(value == null ? '' : value).trim().toUpperCase();
 }
@@ -215,10 +254,23 @@ export default async (req) => {
   // This is a Netlify background function: it returns 202 with an empty body
   // immediately and the Response below is discarded. Logs are therefore the ONLY
   // channel for results, so every line is console.log'd as well as collected.
-  const secret = req.headers.get('x-sync-secret');
-  if (secret !== SYNC_SECRET) {
-    console.warn('[enrich-apitcg] Unauthorized: bad or missing x-sync-secret');
-    return new Response('Unauthorized', { status: 401 });
+  // task-24 (C3L-93): accept a SCHEDULED invocation as well as an authenticated manual one.
+  //
+  // This is not a loosening, it is the reason the schedule added below can work at all. Netlify's
+  // scheduler invokes the function directly and sends no custom headers, so the previous guard,
+  // which required x-sync-secret unconditionally, would have answered every scheduled run with a
+  // 401. Giving this function a schedule without this change would have swapped one silent no-op
+  // for another. The shape is copied from the 31 background syncs that provably fire, not invented
+  // here: a request carrying no x-sync-secret, no origin and no referer is the scheduler.
+  const isScheduled = !req.headers.get('x-sync-secret') &&
+                      !req.headers.get('origin') &&
+                      !req.headers.get('referer');
+  if (!isScheduled) {
+    const secret = req.headers.get('x-sync-secret');
+    if (secret !== SYNC_SECRET) {
+      console.warn('[enrich-apitcg] Unauthorized: bad or missing x-sync-secret');
+      return new Response('Unauthorized', { status: 401 });
+    }
   }
   if (!APITCG_API_KEY) {
     console.error('[enrich-apitcg] APITCG_API_KEY not configured');
@@ -249,6 +301,10 @@ export default async (req) => {
   }
 
   log.push(dryRun ? 'DRY RUN: matching only, no writes' : 'LIVE RUN: writing custom_attributes');
+
+  // Start event first, so a run that dies mid-flight leaves a start with no terminal, which is
+  // exactly the shape C3L-51's Signal B is built to catch.
+  await logSyncEvent('sync_start');
 
   let quotaExhausted = false;
 
@@ -283,9 +339,45 @@ export default async (req) => {
 
   console.log(`[enrich-apitcg] SUMMARY ${JSON.stringify(summary)}`);
 
+  // Exactly one terminal event per start. Quota exhaustion is an ERROR rather than a success:
+  // the run stopped early and the enrichment is incomplete, and reporting that as success is the
+  // silent-green failure this programme keeps finding. A per-game failure that did not abort the
+  // run is also surfaced, since a run that enriched 3 of 5 games is not a clean run either.
+  const failedGames = results.filter(r => r.error).map(r => r.game);
+  if (quotaExhausted) {
+    await logSyncEvent('sync_error', summary.totalWritten,
+      `apitcg monthly quota exhausted after ${apitcgRequests} requests; games completed: ${results.length - failedGames.length}/${gamesToProcess.length}`);
+  } else if (failedGames.length) {
+    await logSyncEvent('sync_error', summary.totalWritten,
+      `${failedGames.length} game(s) failed: ${failedGames.join(', ')}`);
+  } else {
+    await logSyncEvent('sync_success', summary.totalWritten);
+  }
+
   return new Response(JSON.stringify(summary, null, 2), {
     headers: { 'Content-Type': 'application/json' }
   });
 };
 
-export const config = {};
+// task-24 (C3L-93): this was `{}`, meaning no schedule and no path, so the function could not be
+// invoked in production at all and had enriched 0 of 22,856 cards.
+//
+// WEEKLY, and the cadence is the quota talking rather than a preference. A full five-game pass
+// costs roughly 219 apitcg requests against a free-plan allowance of 1,000 per month, per
+// account, resetting monthly. Daily would need about 6,570 and blow it six times over. Weekly
+// costs 876 in a four-Sunday month, which fits with room to spare.
+//
+// The honest edge, stated rather than discovered later: a month with FIVE Sundays costs about
+// 1,095 and exceeds the allowance by roughly 95 requests. That is accepted rather than designed
+// around, for two reasons. The overrun lands on the last Sunday of such a month, days before the
+// quota resets, and the function already handles it properly: QuotaExhaustedError aborts the run,
+// logs that the quota is gone, and now writes a sync_error rather than reporting success. A
+// day-of-month form like `1,8,15,22` would guarantee four runs, but C3L-64 is an open finding
+// about an unusual cron expression in this repo silently not firing, and a plain weekly is the
+// form least likely to repeat that.
+//
+// Sunday 13:00 UTC is chosen because 13:00 is the only hour carrying no other scheduled function
+// in this repo, so this cannot contend with a price sync for the 15 minute background budget.
+export const config = {
+  schedule: '0 13 * * 0'
+};
