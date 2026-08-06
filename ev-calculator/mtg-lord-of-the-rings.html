@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MTG Lord of the Rings EV Calculator Australia: Is It Worth Opening? | Cards on Cards on Cards</title>
+<meta name="robots" content="noindex,follow">
 <meta name="description" content="Is the MTG Lord of the Rings booster box worth opening in Australia? Free expected value calculator in AUD using official pull rates and current Australian market prices.">
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
@@ -218,10 +219,10 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:24px;positio
   </div>
 
   <div class="results-panel" id="results-panel">
-    <div class="verdict-banner" id="verdict-banner">
-      <div class="verdict-label" id="verdict-label">Verdict</div>
-      <div class="verdict-text" id="verdict-text"></div>
-      <div class="verdict-sub" id="verdict-sub"></div>
+    <div style="border-radius:10px;padding:18px 22px;margin-bottom:24px;background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.45)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#F59E0B;margin-bottom:8px">Under review</div>
+      <div style="font-size:15px;font-weight:700;line-height:1.35;margin-bottom:6px">Do not rely on the numbers on this page.</div>
+      <div style="font-size:13px;opacity:.85;line-height:1.5">This calculator's product data, meaning its pack structure, slot contents and which chase cards can actually appear, has not been verified against the publisher's official product record. The buy or avoid verdict this page used to show has been removed for that reason. Card prices elsewhere on C3 are unaffected.</div>
     </div>
     <div class="stats-grid">
       <div class="stat-box"><div class="stat-label">Total Expected Value</div><div class="stat-value" id="stat-ev">&#8212;</div></div>
@@ -489,11 +490,9 @@ function runCalculator() {
   }
 
   const panel = document.getElementById('results-panel');
-  const banner = document.getElementById('verdict-banner');
-  banner.className = 'verdict-banner ' + verdictClass;
-  document.getElementById('verdict-label').textContent = 'Verdict for ' + packs + ' pack' + (packs > 1 ? 's' : '');
-  document.getElementById('verdict-text').innerHTML = verdict;
-  document.getElementById('verdict-sub').textContent = verdictSub;
+  // task-24: the verdict block was REMOVED from this page, not hidden, so there is nothing to
+  // write into here. verdictClass and verdictSub are still computed above and deliberately left
+  // in place, so restoring the verdict after the catalogue rebuild is a revert of this hunk.
   document.getElementById('stat-ev').textContent = fmt(totalEV);
   document.getElementById('stat-ev').className = 'stat-value';
   document.getElementById('stat-cost').textContent = fmt(cost);
@@ -502,8 +501,12 @@ function runCalculator() {
   document.getElementById('stat-ev-pack').className = 'stat-value ' + (evPerPack >= costPerPack ? 'positive' : 'neutral');
   document.getElementById('stat-cost-pack').textContent = fmt(costPerPack);
   document.getElementById('stat-cost-pack').className = 'stat-value';
-  document.getElementById('cta-worth').style.display = (verdictClass === 'worth') ? 'block' : 'none';
-  document.getElementById('cta-avoid').style.display = (verdictClass !== 'worth') ? 'block' : 'none';
+  // task-24: both call-to-action blocks are verdict-driven, so they are suppressed with it. The
+  // "worth opening, grab it on Amazon" block is the verdict's actionable form and leaving it live
+  // while disclaiming the verdict would have been the halfway fix. Markup and affiliate URLs are
+  // untouched, so nothing is lost, they simply never display while the page is under review.
+  document.getElementById('cta-worth').style.display = 'none';
+  document.getElementById('cta-avoid').style.display = 'none';
   panel.classList.add('visible');
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   gtag('event', 'ev_calculator_run', { event_category: 'EV Calculator', event_label: 'Lord of the Rings', value: Math.round(totalEV) });
