@@ -6,7 +6,7 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
 ## START HERE, updated every task, read this first
 
-**As of:** 6 August 2026, 07:05 UTC, `5b29e87` published and live. **Correcting the previous entry, which said 02:05 UTC: that was estimated rather than read from a clock, and the real time was closer to 06:50.** It is re-derived here, per this section's own rule.
+**As of:** 6 August 2026, 07:55 UTC, `5050910` published and live. **Correcting the previous entry, which said 02:05 UTC: that was estimated rather than read from a clock, and the real time was closer to 06:50.** It is re-derived here, per this section's own rule.
 **Note that `9661b52` is not mine**: another session committed to `main`
 between my last two updates, fixing p619's em dashes, word count and duplicate
 H1. Worth knowing that this repo currently has more than one session writing
@@ -41,6 +41,15 @@ recorded as proven:**
    the fix. **A red result there is the fix working, not a new breakage.**
 
 **Open decisions awaiting Sammy:**
+- **C3-122, whether the paid subscription actually exists.** `/pricing` says all features are free and
+  paid plans are planned; `/legal` carries Subscription Terms describing what the product "currently
+  provides"; a live Stripe payment link and billing portal both exist. **This is a business fact, not
+  a code change**, and the row is flagged as an ACCC enforcement priority, so it should not be guessed.
+- **The EV catalogue rebuild, 45 pages.** Task 17 confirmed 5 of 5 audited EV pages carry real defects
+  and left all of them unpatched on purpose. **One is an affiliate buy link for a product that has
+  never existed** (Warhammer 40K "Play Booster Box"). Scope is in Section 4's Task 17 evidence block.
+- **C3-076/077, whether legacy `.html` routes should 301.** Three still serve 200 alongside their
+  clean routes. A URL decision with SEO consequences given tasks 84 to 107.
 - **C3L-54, which writer owns `pokemon_cards`.** The background sync and
   `daily-tcg-sync.yml` both fire at `0 4 * * *` onto the same table with
   different id and slug schemes. This has to be settled before C3L-53 is fixed,
@@ -62,6 +71,12 @@ recorded as proven:**
   of the C3L-55 slug-seed task are now deleted.
 
 **Anything live and wrong on the site right now:**
+- **The MTG Warhammer 40,000 EV page sells a product that has never existed**, describing a "Play
+  Booster Box (12 Packs), 14 MTG cards each" under an affiliate link, for a 2022 release that shipped
+  as four Commander decks when Play Boosters did not exist until 2024. Five of the five EV pages
+  audited in Task 17 are wrong; the other 40 are unaudited.
+- **Every EV page prints a buy or avoid verdict from a pre-filled `value="320.00"`**, not from a box
+  cost the visitor entered.
 - ~~weissschwarz prices are 9 days old~~ **FIXED and verified in production
   6 August 00:37 UTC, first successful sync since 28 July.**
 - **Pokemon card pages are still missing their HP, Weakness and Retreat Cost
@@ -126,6 +141,7 @@ what to pick up next, Section 3 for every individual finding.
 
 | Date | Task or slug | What happened | Six-line report (condensed) |
 |---|---|---|---|
+| 2026-08-06 | `c3-audit-3pricing-ev-confirm`, Claude Code, laptop, own worktree | Task 17, the confirmation slice of 3-pricing, **the last Critical item**. Every claim was checked against the live site rather than this register's summary. **Six EV defects confirmed live and deliberately left unpatched**, because they share one root cause, the EV pages carry no immutable product record. Two are worse than reported: **Warhammer 40,000 contradicts itself on the same page**, prose saying Collector Booster box and the buy block saying "Play Booster Box (12 Packs), 14 MTG cards each" for a product that shipped in 2022 as four Commander decks, when Play Boosters did not exist until 2024; and **Commander Legends is modelled as 14-card Play Boosters when it shipped 20-card Draft Boosters**. Final Fantasy and MH3 both count a **Collector-exclusive serialised card** in a Play Booster box EV. Zendikar's Expeditions row is contradictory on both quantity and mechanic. Jeweled Lotus is present-tense "staple" 11 months after its ban. **And every EV page renders a verdict from a pre-filled `value="320.00"` rather than a real box cost.** Two contained fixes shipped: the tracked-game count (31 to 32 on `/legal` and `/pricing`) and `/tracker`'s "exact AUD number" claim. C3-075 and C3-059 closed as resolved and not reproducible | Compliance: this is the ACCC misleading-pricing surface named in protocol Section 7, and two of the three items touched are squarely in it. **The affiliate buy link on a product that has never existed is the sharpest one and it is still live**, deliberately, because patching the label without the product record would leave the EV maths equally wrong and less visibly so. Removal: none. Suggestions: scope the EV rebuild against verified per-product records, 45 pages; and decide C3-122, which is a business fact rather than a code change. Blind spots: **only 5 of 45 EV pages were opened**, the ones the original audit named, so the other 40 are unaudited and the confirmed defect rate among those checked is 5 of 5; product facts were checked against my own knowledge of MTG release history rather than against Wizards' published product pages, which the original row asked for and which I could not fetch; and the three wording fixes are verified by grep and by the live site pre-change, with post-change confirmation pending the deploy. Opportunities: none new. Fragility: **a first pass in this task concluded the game-count conflict was resolved because the grep pattern did not match the phrasing the pages actually use.** A negative grep result is a statement about the pattern, not about the site, and it nearly closed a live finding as fixed | **Section 19 self-check. Point 1, root cause not pattern application: MET, and it is the whole shape of the outcome, six defects were traced to one missing product record rather than patched individually. Point 2, four-roundtable before shipping: NOT run, and defensible only because what shipped was three words across three files; it is mandatory before the EV rebuild, which is a high-visibility rewrite of 45 commercial pages. Point 3, the detection question: NOT addressed, and stated rather than skipped, nothing currently detects an EV page drifting from its product's real structure, and the rebuild should carry that detector with it the way C3L-61 carried Signal C.** |
 | 2026-08-06 | `c3-audit-c3l61-pokemon-backfill`, Claude Code, laptop, own worktree | Task 20. **C3L-61 built: `sync-pokemon-enrichment-background.mjs`, `pokemon_enrichment_progress`, and Signal C in the health check.** The batch size was measured rather than guessed, and the measurement's real result was that **per-set cost cannot be isolated from production data**, since zero-write runs vary 2.06 to 11.93 minutes while the one 16-set write run took 11.96. **So the bound is wall clock, not a set count**: 5 minutes against a 15 minute ceiling, a 3x margin, checked before each set starts, with a 10-set cap as an independent second bound. Converges in ~6 days at 4 runs a day, then rotates oldest-first forever so the gap cannot silently reopen. **Signal C was verified against the real stale condition, not assumed**: dispatched run `31077901399` flagged `pokemon 8d 2026-07-29 STALE METADATA` and nothing else, while Signal A passed pokemon on price freshness in the same run, which is the two-questions distinction working exactly as intended. Threshold of 4 days is measured, 31 of 32 games sit at 0 to 1 days and pokemon was the sole outlier at 8. **Two corrections of my own work this session: the function shipped with no auth guard, and the comment I then wrote about the shared guard being weak was itself wrong (C3L-63)** | Compliance: no privacy, EPN, Amazon, Scryfall or `/legal` surface touched. The new function writes only `pokemon_cards` enrichment columns, `pokemon_enrichment_progress` and `sync_events`, and deliberately ignores the price fields the same upstream endpoint returns, so it cannot become a second price writer and repeat C3L-54. Removal: none. Suggestions: after 06:40 UTC confirm the first run (C3L-64); and the same enrichment data is ALREADY fetched daily by the price sync's skip path and discarded, so if the backfill's cost proves high there is a cheaper option available once that job has headroom. Blind spots: **the backfill has never run, and could not be made to run, because Netlify returns 403 for direct invocation of scheduled functions**, so every claim about its runtime, its convergence and its interruption behaviour is by construction rather than observation; the 5 minute budget is a conservative choice, NOT a measured fit, precisely because the measurement was inconclusive; and set-to-pokemontcg.io matching reuses the price sync's name and ptcgoCode map, so any set that map already fails to resolve will be recorded as done with 0 cards rather than enriched. Opportunities: none new. Fragility: **I shipped a security assertion about 31 functions that was false, and only found it because I needed to dispatch the function and got a 403.** Had dispatch not been required, that claim would have entered this register as a finding | **Section 19 self-check. Point 1: MET, the batch bound was derived from real production timings and the honest conclusion was that the data could not support the number the task asked for, which is why the design changed shape rather than the number being invented. Point 2, four-roundtable before shipping: NOT run as a formal pass, and it should have been, since this ships a new scheduled writer to a Core 8 game's table; the adversarial angle was covered ad hoc (isolation from the price sync, interruption behaviour, auth) and the design and scale lenses were not. Point 3: MET and unusually directly, the detector was built in the same task as the fix and verified against the real condition before being trusted.** |
 | 2026-08-06 | `c3-audit-retire-and-enrich`, Claude Code, laptop, own worktree | Task 19, two pieces. **Piece 1, approved retirement executed: `sync-pokemon-daily.mjs`, `sync-lorcana-daily.mjs`, `sync-yugioh-daily.mjs` and `daily-tcg-sync.yml` deleted, 734 lines.** Retired not disabled, confirmed first that the workflow held exactly those three jobs and that nothing else referenced the scripts. `daily-mtg-sync.yml` verified untouched. **That closes C3L-53 and closes C3L-54 outright**, since one writer per table means the two-id-space collision cannot occur. **Piece 2 was re-measured rather than trusting Task 18, and Task 18 undercounted: all SIX enrichment columns are empty across all 31,833 pokemon rows, not the three named, with 0 rows updated in 3 days.** Root cause found precisely: card writes are gated on `isNewSet` and **`pokemon_sync_progress` holds 235 rows against 235 sets**, so the path is closed for every set. **It is also user-visible**, `pokemon-card-page.mjs` renders HP, Weakness and Retreat Cost blocks that are silently absent on every card page. **Not fixed here, on measured grounds**: pokemon's runs take 2.0 to 11.9 minutes against a 15 minute cap, so roughly 3 minutes of headroom while writing zero cards, and backfilling 31,833 cards into that is how yugioh became C3L-57. Logged as C3L-61 with the concrete shape of what is needed. C3L-62 closes lorcana's two fields as not worth doing, nothing has ever rendered them | Compliance: no privacy, EPN, Amazon, Scryfall or `/legal` surface touched. Removal: four files, 734 lines, the largest single removal in this programme, and it also removes three of the four C3L-50 zero-row guards along with the scripts that carried them, a simplification rather than a loss since those scripts no longer exist. mtg keeps its guard. Suggestions: build C3L-61's bounded backfill as its own scheduled function; and **on the task's question about extending C3L-51's health check to catch enrichment gaps, the answer is yes but as a distinct signal, not by widening the existing one**, see the note below this row. Blind spots: **the retirement is verified by deletion, syntax checks and both regression suites passing, NOT by observing a day pass without the workflow**, so the first real confirmation is tomorrow's absence of a run; the pokemon runtime figures are `sync_events` start-to-success deltas, which measure the whole function including parts a backfill would not touch, so 3 minutes of headroom is an estimate of the ceiling rather than of the backfill's cost; and C3L-62's "nothing references them" is a grep across `.mjs`, `.html` and `.njk`, so a reference built at runtime from a variable field name would not have been seen. Opportunities: none new. Fragility: **a deliberate performance gate silently became a permanent one.** Nothing was wrong with gating card writes on new sets, but once every set was marked synced the gate closed forever, and no alert exists for a table whose prices are current while its metadata ages, which is exactly the blind spot C3L-61 now names | **Section 19 self-check. Point 1: MET, Piece 2's figure was re-derived rather than inherited and the inherited one was wrong. Point 2, four-roundtable before shipping: NOT run, and stated rather than glossed, Piece 1 was a pre-approved deletion of already-dead code and Piece 2 shipped no code at all, but a backfill under C3L-61 WILL need it before it goes near that 15 minute ceiling. Point 3: answered explicitly in the note below, the detection gap this exposes is real and is recommended as a new signal rather than assumed covered.** |
 | 2026-08-06 | `c3-audit-c3l53-c3l54-investigation`, Claude Code, laptop, own worktree, **investigation only, nothing shipped** | Task 18. No code change, no migration, no fix, by instruction. **C3L-53 turns out to be understated: these are not three schema mismatches, they are three scripts written against a data model the database no longer has.** The reported errors named one column each only because PostgREST reports the first it hits. Measured field by field: all three `_sets` tables share one canonical shape and none of the three scripts writes it, with **7, 16 and 12 nonexistent columns respectively on the cards side**, plus text-into-integer on `id` and `set_id`, and **yugioh omitting the primary key entirely**. **C3L-54 is narrower than recorded**: there is no live collision and cannot be one, because the script writer dies before reaching the cards table and its ids are the wrong type anyway. **It also answers the task's C3L-55 question directly, and the answer is no**: seed-from-stored-slugs coordinates slugs, not primary keys, and these writers do not share an id space. **The decider for all three tables: the background syncs already hold the gameplay data in `custom_attributes`**, `atk, attribute, def, level, race, type` for yugioh and `cost, ink, inkwell, lore, strength, willpower` for lorcana, exactly the sets the scripts build as columns. Recommendation is RETIRE for all three, for three different reasons, and therefore retire `daily-tcg-sync.yml`, leaving `daily-mtg-sync.yml` alone | Compliance: nothing touched, no privacy, EPN, Amazon, Scryfall or `/legal` surface involved, and no code shipped. Removal: the recommendation IS a removal, three scripts and one workflow, brought back for confirmation rather than executed. Suggestions: confirm or reject the retirement; and **treat pokemon separately, because retiring its dead script does not fix it**. Blind spots: **the field-by-field comparison is from reading both writers and querying `information_schema`, NOT from running either script against the canonical schema**, so "would fail" is inferred from column names and types rather than observed, though the live PGRST204 errors corroborate it; `custom_attributes` coverage was sampled by key name, not audited value by value, so "already covered" means the field exists rather than that every card has it, and coverage is partial at 41 per cent for yugioh and 17 per cent for lorcana; and the unique-field list assumes nothing else writes those tables, which was checked by grep rather than exhaustively. Opportunities: none new. Fragility: **`pokemon_cards` has had no row updated since 29 July while its prices stayed current**, which means a table can look healthy at the price layer while its metadata quietly ages, and nothing in the new sync health check would catch that because freshness is measured on snapshots | **Section 19 self-check. Point 1, root cause not pattern application: MET, and it is the substance of the task, the reported finding was taken apart rather than actioned, and it was wrong. Point 2, four-roundtable before shipping: NOT APPLICABLE, nothing shipped, and it should be run before any retirement is executed. Point 3, the detection question: raised and answered negatively, the sync health check would NOT have caught pokemon's stale card metadata, which is logged above as the fragility rather than left implicit.** |
@@ -1012,20 +1028,120 @@ assuming it is covered by proximity to one that already is.
 
 | ID | Finding | Reported severity | Confirm how | Status |
 |---|---|---|---|---|
-| C3-024/025 | Warhammer 40,000 booster box EV calculator models a fictitious product (12-pack Collector Booster, 14-card Play Boosters, serialised chase cards); real release is four Commander decks | Critical | Fetch the live EV page, compare against Wizards' own product documentation | Not yet confirmed live |
-| C3-027/028 | Zendikar Expeditions EV model internally contradictory on expected quantity and acquisition mechanic | Critical | Fetch the live EV page, check stated pack odds against the actual Expeditions insertion mechanic | Not yet confirmed live |
-| C3-032/033 | Final Fantasy and Modern Horizons 3 EV models include a serialised or Collector-only card as if pullable from a standard Play Booster | Critical | Fetch both live pages, check slot eligibility against Wizards' own product pages | Not yet confirmed live |
-| C3-026/029/030 | Zendikar Rising and Commander Legends EV models use the current Play Booster structure on products that predate it or use a different structure | High | Fetch live pages, cross-check release-year product structure | Not yet confirmed live |
-| C3-031 | Jeweled Lotus described as a current Commander staple after its ban | High | Fetch live page, check current banlist | Not yet confirmed live |
+| C3-024/025, **CONFIRMED LIVE 2026-08-06 and worse than reported, NOT fixed, needs the rebuild** | Warhammer 40,000 booster box EV calculator models a fictitious product (12-pack Collector Booster, 14-card Play Boosters, serialised chase cards); real release is four Commander decks | Critical | Fetch the live EV page, compare against Wizards' own product documentation | Not yet confirmed live |
+| C3-027/028, **CONFIRMED LIVE 2026-08-06, NOT fixed, needs the rebuild** | Zendikar Expeditions EV model internally contradictory on expected quantity and acquisition mechanic | Critical | Fetch the live EV page, check stated pack odds against the actual Expeditions insertion mechanic | Not yet confirmed live |
+| C3-032/033, **CONFIRMED LIVE 2026-08-06, NOT fixed, needs the rebuild** | Final Fantasy and Modern Horizons 3 EV models include a serialised or Collector-only card as if pullable from a standard Play Booster | Critical | Fetch both live pages, check slot eligibility against Wizards' own product pages | Not yet confirmed live |
+| C3-026/029/030, **CONFIRMED LIVE 2026-08-06 and worse than reported, NOT fixed, needs the rebuild** | Zendikar Rising and Commander Legends EV models use the current Play Booster structure on products that predate it or use a different structure | High | Fetch live pages, cross-check release-year product structure | Not yet confirmed live |
+| C3-031, **CONFIRMED LIVE 2026-08-06, NOT fixed, needs the rebuild** | Jeweled Lotus described as a current Commander staple after its ban | High | Fetch live page, check current banlist | Not yet confirmed live |
 | EV verdict | EV pages can show a purchase verdict before an actual box cost is entered, and can show contradictory verdicts simultaneously | High | Load a sampled EV page pre-input, capture initial state | Not yet confirmed live |
-| C3-075 | WWW and apex hostnames may serve different site generations | High | Fetch both hostnames, diff. Note: 12 July Netlify duplicate-project issue was separately closed, this may already be resolved | Likely resolved, confirm to close formally |
-| C3-076/077 | Legacy `.html` routes remain live alongside clean routes, with different content (Tarkir: Dragonstorm cited) | High | Fetch both route forms for a sample, diff, check for a 301 | Not yet confirmed live |
-| C3-122 | Pricing page describes paid tiers as planned; `/legal` describes an existing, billed subscription | High, now a named 2026-27 ACCC enforcement priority | Fetch pricing page and `/legal` together, diff subscription language | Not yet confirmed live |
-| C3-001/003 | "Exact AUD," "local price," used where the value is a converted or modelled estimate | High | Grep all copy for these phrases, cross-check actual data source | Not yet confirmed live |
-| C3-012/013 | Tracked-game count still conflicts (31 vs 32) somewhere live, despite the 11 July fix | Medium | Grep for hard-coded game counts sitewide | Not yet confirmed live |
-| C3-059 | Quiz count conflicts (29 vs an older figure) somewhere live | Low | Confirm the 12 July fix reached every page stating a quiz count | Not yet confirmed live |
+| C3-075, **RESOLVED 2026-08-06, not reproducible** | WWW and apex hostnames may serve different site generations | High | Fetch both hostnames, diff. Note: 12 July Netlify duplicate-project issue was separately closed, this may already be resolved | Likely resolved, confirm to close formally |
+| C3-076/077, **CONFIRMED LIVE 2026-08-06, NOT fixed, needs a redirect decision** | Legacy `.html` routes remain live alongside clean routes, with different content (Tarkir: Dragonstorm cited) | High | Fetch both route forms for a sample, diff, check for a 301 | Not yet confirmed live |
+| C3-122, **CONFIRMED LIVE 2026-08-06, NOT fixed, needs a business decision not a code change** | Pricing page describes paid tiers as planned; `/legal` describes an existing, billed subscription | High, now a named 2026-27 ACCC enforcement priority | Fetch pricing page and `/legal` together, diff subscription language | Not yet confirmed live |
+| C3-001/003, **CONFIRMED LIVE and FIXED 2026-08-06** | "Exact AUD," "local price," used where the value is a converted or modelled estimate | High | Grep all copy for these phrases, cross-check actual data source | Not yet confirmed live |
+| C3-012/013, **CONFIRMED LIVE, was NOT resolved, and FIXED 2026-08-06** | Tracked-game count still conflicts (31 vs 32) somewhere live, despite the 11 July fix | Medium | Grep for hard-coded game counts sitewide | Not yet confirmed live |
+| C3-059, **NOT REPRODUCIBLE 2026-08-06** | Quiz count conflicts (29 vs an older figure) somewhere live | Low | Confirm the 12 July fix reached every page stating a quiz count | Not yet confirmed live |
 
 ---
+
+
+**Task 17 evidence, 3-pricing confirmation slice, 6 August 2026, task
+`c3-audit-3pricing-ev-confirm`. Every claim checked against the live site, not
+against this register's summary of it.**
+
+First, a structural fact none of the rows above recorded: **the 45 EV pages are
+static files at the REPO ROOT in `ev-calculator/`, not under `src/`**, and the
+index at `src/ev-calculator.html` links to 43 of them.
+
+*Confirmed live and wrong, all six left unpatched deliberately.*
+
+- **C3-024/025, Warhammer 40,000, and it is worse than the row said.** The page
+  contradicts ITSELF. Prose: "a Collector Booster box containing 12 packs". Buy
+  block on the same page: "MTG Warhammer 40K, Play Booster Box (12 Packs)" and
+  "12 Play Boosters, 14 MTG cards each". **Play Boosters did not exist until
+  February 2024**; Warhammer 40K shipped in October 2022 as four Commander decks
+  plus Collector Boosters. So the page sells a product that has never existed,
+  under an affiliate link.
+- **C3-026/029/030, and also worse than the row said.** Zendikar Rising (Sept
+  2020) is modelled as a "Play Booster Box (36 Packs)"; it shipped Draft and Set
+  Boosters. Commander Legends (Nov 2020) is modelled as a "Play Booster Box (24
+  Packs)" with "14 MTG cards each"; it shipped 24 Draft Boosters of **20 cards**.
+  Both anachronistic, and Commander Legends is wrong on pack contents too.
+- **C3-032/033.** Final Fantasy carries an EV row `Serialised Card | Extremely
+  rare | ~0.05 | $200.00+` and Modern Horizons 3 carries `Serialised Retro Frame
+  | Under 1% per box | ~0.2 | $100.00+`, both on pages modelling a 36-pack **Play
+  Booster** box. Serialised cards in both sets are **Collector Booster
+  exclusive**, so both EVs are inflated by a card the modelled box cannot yield.
+  Note the products themselves are correctly Play Booster era here, unlike the
+  two above; the defect is slot eligibility, not the product.
+- **C3-027/028.** Zendikar Rising's row reads `Expedition Land (Bonus Sheet) |
+  Very rare, ~1 per case | ~0.1 | $30.00-$200.00+`. Contradictory twice over:
+  "~1 per case" is roughly 0.167 per box against a stated 0.1, and **"Bonus
+  Sheet" is the wrong mechanic** since Expeditions were a Collector Booster
+  insert, not a bonus sheet.
+- **C3-031.** `mtg-commander-masters.html` calls Jeweled Lotus an "expensive
+  Commander staple" and "the headline mythic", in the present tense. It was
+  **banned in Commander on 23 September 2024**. Worth noting the same page gets
+  its product structure right, "24-pack Draft Booster box", so this one is a
+  valuation-currency defect rather than a product-record defect.
+- **A verdict is shown from an assumed price, not a real one.** The cost field
+  ships pre-filled: `<input ... id="purchase-price" value="320.00">`. The page
+  therefore renders a buy or avoid verdict on load, computed from a hardcoded
+  assumption the visitor never entered.
+
+*Confirmed live and fixed in this task, both contained wording changes.*
+
+- **C3-012/013 was NOT resolved.** `/legal` said "31 tracked trading card games"
+  and `/pricing` said "all 31 tracked games", against 32 everywhere else and in
+  CLAUDE.md. Both corrected. **A first pass here wrongly concluded it was
+  resolved, because the grep looked for "31 games" and "31 TCGs" and neither page
+  uses either phrase. A negative grep is only as good as its pattern**, which is
+  the same shape of error as C3L-34 and C3L-40.
+- **C3-001/003.** `/tracker` claimed it "tells you the exact AUD number". The
+  figure is a USD market price converted at a stored rate, so it is a modelled
+  estimate. Reworded to "an estimated AUD value".
+
+*Confirmed live, not fixed, because neither is a code decision.*
+
+- **C3-122.** `/pricing` says "C3 is currently in beta. All features are free
+  during this period. Paid plans are planned for the future." `/legal` carries
+  "Subscription Terms (C3 Seller Intelligence)", says the product is "available
+  at cardsoncardsoncards.com.au/pricing", and describes what "the Subscription
+  **currently provides**" with 14 days notice of feature reductions. A live
+  Stripe payment link and a billing portal link both exist. **Which of those is
+  true is a business fact I do not have**, and the ACCC priority named in this
+  row makes guessing the wrong move. Needs Sammy.
+- **C3-076/077.** `/ev-calculator.html`, `/pricing.html` and `/tools.html` all
+  return **200** alongside their clean routes, with no redirect. `/quiz.html`
+  returns 404. Whether to 301 the legacy forms is a URL-strategy decision with
+  SEO consequences given the sitemap work in tasks 84 to 107.
+
+*Closed on evidence.*
+
+- **C3-075 resolved.** `www` returns 301 to the apex, so one generation is
+  served, not two.
+- **C3-059 not reproducible.** No page in `src/` states a quiz count in any
+  form, so there is nothing left to conflict.
+
+**Why the six EV defects were not patched, per this task's own instruction and
+Section 15's fragility rule.** They share one root cause: **the EV pages carry
+no immutable product record.** Each page's product structure, pack size and slot
+list were written from memory into static HTML, which is exactly what protocol
+Section 5 point 8 exists to prevent. Renaming "Play Booster" to "Draft Booster"
+on two pages would correct a label while leaving the EV arithmetic sitting on
+unverified slot data, and would leave the other 40 pages unaudited. On a page
+that carries an affiliate buy link and prints a buy or avoid verdict in AUD,
+that is the halfway patch the instruction warned against.
+
+**What is left of 3-pricing after this slice, so the next piece can be scoped
+rather than guessed.** This slice confirmed claims; it did not rebuild anything.
+Remaining: (1) the EV catalogue rebuild, 45 pages, each against a verified
+per-product record covering product type, pack count, cards per pack, slot
+eligibility and whether a slot is Collector-exclusive, which is the real body of
+work; (2) the verdict-from-assumed-price behaviour, which is a design decision
+about whether a verdict should render before real input; (3) C3-122's business
+decision; (4) C3-076/077's redirect decision; (5) protocol Section 5's wider
+"every displayed number" sweep beyond EV, which this slice did not touch at all.
+
 
 ## 5. Prioritised action tiers
 
