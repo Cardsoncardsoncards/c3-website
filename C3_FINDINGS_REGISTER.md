@@ -4,6 +4,75 @@ Canonical, single source of truth for every audit finding and every task's
 outcome. This file lives in the repo and is git-tracked, it is not a
 Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
+## START HERE, updated every task, read this first
+
+**As of:** 6 August 2026, `6587872` at the time of writing, which is the commit
+immediately before the one adding this section.
+
+**One-line state:** 16 numbered task files executed, findings run C3L-01 to
+C3L-60 with **45 resolved, 2 partly resolved, 4 High open, 5 Medium, 1 Low,
+3 informational**. Stated plainly because the example format assumes a master
+order and the reality does not match it: **the programme has run entirely on
+ad-hoc numbered task files, not on the Wave 1 plan.** None of `1-claims`,
+`3-pricing` or `4-links` has been started, and Section 10 has carried that as
+item 7 since the beginning.
+
+**Currently in flight:** none of mine. Every worktree from tasks 10 to 16 is
+removed and `main` is clean at 0 ahead, 0 behind. **One worktree that is NOT
+mine exists**, `C:/Users/sammy/Projects/c3-website-blog` on branch
+`blog-content`, last seen at `f555d27`. It has been left untouched and is
+presumed to belong to another session.
+
+**Immediate next action:** no task file is pending. **Two dated checkpoints
+fall due within hours and neither has happened yet, so neither should be
+recorded as proven:**
+1. **weissschwarz, 00:30 UTC today.** Its sync has now had the C3L-48, C3L-49
+   and C3L-55 fixes deployed but has NOT yet run with them. At the time of
+   writing it is **9 days stale**, last snapshot 2026-07-28, and UTC is 00:12.
+   The next run is the first real proof any of that work succeeded.
+2. **`daily-tcg-sync.yml`, roughly 04:00 UTC today.** `continue-on-error` was
+   removed in `f810c2f`, so this workflow should go **RED** on its next run.
+   Its last run, 5 August 06:15 UTC, still reported success because it predates
+   the fix. **A red result there is the fix working, not a new breakage.**
+
+**Open decisions awaiting Sammy:**
+- **C3L-54, which writer owns `pokemon_cards`.** The background sync and
+  `daily-tcg-sync.yml` both fire at `0 4 * * *` onto the same table with
+  different id and slug schemes. This has to be settled before C3L-53 is fixed,
+  because fixing the scripts without it trades silence for collision.
+- **C3L-53, the three schema mismatches** (`logo_uri` on `pokemon_sets`, `code`
+  on `lorcana_sets`, `num_of_cards` on `yugioh_sets`). **Explicitly noted per
+  the briefing's instruction: no Task 12 or any other task file for C3L-53
+  exists in Downloads. `task-12-business-selfserve-checkout.md` is a different
+  piece of work. So this is unassigned, not in progress.**
+- **C3L-56**, whether the 5 orphan slugs get redirects or whether slug
+  preservation is extended to non-colliding rows.
+- **Blog post p619**, shipped in `2be5d05`, renders its title twice: the layout
+  emits `<h1 class="post-h1">{{ title }}</h1>` and the content also opens with
+  an identical `# H1`. p616 to p618 have no content H1. Left exactly as
+  instructed, awaiting a decision, one line to remove.
+- **Three duplicate task files remain in Downloads**,
+  `task-12-c3l55-slug-seed (1).md`, `(2).md` and
+  `task-13-c3l55-slug-seed (1).md`. The two named originals were deleted on
+  6 August. These copies were not, because they were not named.
+
+**Anything live and wrong on the site right now:**
+- **weissschwarz prices are 9 days old**, and its card pages carry the same
+  "updated daily" framing as every other game. Fix deployed, unproven until
+  00:30 UTC today.
+- **yugioh's background sync has never completed a run** (C3L-57). It starts
+  three times a night, times out at Netlify's 15 minute ceiling each time, and
+  logs no terminal event. Its data is current only because snapshots are
+  written incrementally on the way down, so the site looks fine.
+- **All three daily sync scripts fail at their first step every day** (C3L-53).
+  Those games stay current only because a second writer keeps them so.
+- **p619 renders a duplicate H1**, above.
+
+**Full detail:** Section 9 for counts, Section 10 for the full ordered list of
+what to pick up next, Section 3 for every individual finding.
+
+---
+
 ## 0. Purpose and convention
 
 - **This is the one place findings live.** `c3-master-audit-protocol-v1.md`
@@ -26,6 +95,15 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
   (compliance, removal candidates, suggestions, blind-spot self-check,
   opportunities identified, complexity or fragility flags), condensed to
   what is non-empty. An absent line reads as not checked.
+- **Every task refreshes the START HERE section FIRST, before any other part
+  of this file, and a task is not finished while that section still describes
+  an earlier task's state.** Same non-negotiable standing as the six-line
+  report, and for the same reason: this register is now long enough that the
+  top of it is the only part guaranteed to be read, so a stale summary there
+  is worse than none. Refreshing it means every field, re-derived from what is
+  actually true in the repo and the database right now, not carried forward
+  from the previous task's wording. If a field's answer is genuinely unknown,
+  it says so explicitly rather than being quietly omitted.
 - **Section headings carry their ID range in the title** (for example,
   "Section 6, IDs C3X-01 to C3X-16"), and Section 9 keeps a running count,
   the same pattern that kept Voxsanity's much larger register navigable
