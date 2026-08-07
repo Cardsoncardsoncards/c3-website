@@ -60,15 +60,22 @@ here so it stops being an undocumented footgun. Counts are FILES, not occurrence
 re-derived by grep on 7 August 2026 rather than copied from the finding:
 
 - SUPABASE_SERVICE_KEY, read via Netlify.env.get, in 57 files under netlify/functions/.
-- SUPABASE_SERVICE_KEY, read via process.env, in 6 files under scripts/ (4 real plus 2 test
-  stubs), supplied by GitHub Actions secrets in deploy-health-check.yml and
-  sync-health-check.yml.
+  A 58th file, migrations/create-accounts-and-follows.sql, names the key but does not read
+  it, so it is not counted here.
+- SUPABASE_SERVICE_KEY, read via process.env, in 7 files under scripts/ (5 real plus 2 test
+  stubs), supplied by GitHub Actions secrets in deploy-health-check.yml,
+  sync-health-check.yml and crawler-volume-check.yml.
 - SUPABASE_SECRET_KEY, read via process.env, in exactly 2 files under scripts/,
   sync-mtg-daily.mjs and rls-recurring-check.mjs, supplied by GitHub Actions secrets in
   daily-mtg-sync.yml and weekly-rls-check.yml.
 
+That is 66 files across 3 name-and-access-method combinations. The scripts/ number moves
+whenever a workflow is added: it was 6 when C3L-96 was re-derived, and commit b123cf1 (the
+hourly card-views watcher) added crawler-volume-check.mjs and its workflow. Re-grep before
+quoting these, do not trust the number in a finding row.
+
 So the split is NOT "Netlify uses one name, GitHub Actions uses the other". The GitHub
-Actions secret store holds BOTH names, across four workflows. C3L-96 described it as 61
+Actions secret store holds BOTH names, across five workflows. C3L-96 described it as 61
 Netlify functions against 2 scripts; the shape above is what the repo actually contains.
 
 This is NOT a rule violation. process.env is correct in scripts/, because those run in GitHub
