@@ -1,0 +1,45 @@
+name: Crawler Volume Check
+
+# Sustained machine crawling of the whole card catalogue ran from 22 July 2026 and was not
+# noticed until 6 August, and then only because a person looked at GA4. Nothing watched traffic
+# volume. Five consecutive investigations recorded that gap without closing it. This closes it.
+#
+# The alert channel is deliberately GitHub's own failure email rather than anything new. It is
+# the same channel sync-health-check.yml, weekly-rls-check.yml and deploy-health-check.yml all
+# use, it is already proven to reach Sammy, and a second notification path would be one more
+# thing to maintain and to go quietly stale.
+#
+# Cadence: hourly at 5 past. The threshold is expressed per clock hour, so hourly is the
+# fastest cadence that can ever fire, and it turns a fortnight's detection lag into about an
+# hour. Five past rather than on the hour because GitHub delays scheduled jobs most at the top
+# of the hour. The script reads the last 3 COMPLETE hours on every run, so two consecutive
+# skipped runs still cannot hide a breach, and hours it has already reported are not re-sent.
+#
+# Public repo, so Actions minutes are unmetered and hourly costs nothing.
+
+on:
+  schedule:
+    - cron: '5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  crawler-volume:
+    name: No single network crawling faster than a person could
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      # No continue-on-error here, deliberately. C3L-53 was three sync scripts dying for a week
+      # behind exactly that flag. A detection job that cannot fail is not a detection job.
+      - name: Check crawler volume
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/crawler-volume-check.mjs
