@@ -33,4 +33,38 @@ Disallow: /rest/
 Disallow: /rest/v1/
 Disallow: /.netlify/
 
+# meta-externalagent, Meta's AI training and indexing crawler, is the single largest
+# source of load on this site. Measured 6 to 7 August 2026, the first 18 hours after
+# request fingerprinting went live: 9,237 card views, 66 per cent of all identified
+# traffic, every one of them a Magic: The Gathering card page. It rotates 18 user-agent
+# strings but all carry the meta-externalagent token, and the source IP resolves to
+# AS32934 Facebook, so it is honestly self-declaring.
+#
+# The reason it is closed off here rather than left alone: 8,183 of the 9,175 cards it
+# fetched, 89 per cent, are priced below the AUD$5 index threshold and so appear in no
+# sitemap. It is not following the URLs C3 submits, it is walking the internal link
+# graph, where set pages list up to 200 unfiltered card links each. That is enumeration
+# of the whole catalogue, not discovery of the indexable part of it.
+#
+# Only card pages are closed. Hub pages, set pages, the blog and the calendar stay open,
+# so anything with genuine editorial value remains reachable. Meta documents that
+# meta-externalagent obeys robots.txt.
+#
+# The other two Meta agents are deliberately NOT listed. facebookexternalhit powers share
+# previews and meta-externalfetcher serves user-requested fetches, and Meta documents that
+# both may bypass robots.txt, so a rule for either would be decoration rather than control.
+#
+# This group repeats the /api, /rest and /.netlify closures on purpose: a named user-agent
+# group REPLACES the "User-agent: *" group for that agent rather than adding to it, so
+# omitting them here would quietly open the internals that the general policy closes.
+#
+# Reversible by deleting this block, which restores the previous behaviour exactly.
+User-agent: meta-externalagent
+Disallow: /cards/
+Allow: /api/sitemap-
+Disallow: /api/
+Disallow: /rest/
+Disallow: /rest/v1/
+Disallow: /.netlify/
+
 Sitemap: https://cardsoncardsoncards.com.au/sitemap-index.xml
