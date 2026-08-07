@@ -14,13 +14,17 @@ Here's the actual checklist, with the real numbers from finding both.
 
 ## 1. Check your views-per-session ratio
 
-This is the single most useful number nobody checks. Divide your page views by your distinct visitor sessions. A real person browsing a site like this one views multiple pages per visit, our own genuine traffic averages 6.5 pages per session. Bot traffic that hits one page and never returns sits at exactly 1.0, every time, no exceptions.
+This is the single most useful number nobody checks. Divide your page views by your distinct visitor sessions.
+
+A real person browsing a site like this one views multiple pages per visit, our own genuine traffic averages 6.5 pages per session. Bot traffic that hits one page and never returns sits at exactly 1.0, every time, no exceptions.
 
 On one bad day, a full 1.00 ratio across the entire day's traffic turned out to mean every single visitor was automated. That's not a subtle signal, it's about as clear as this kind of thing gets.
 
 ## 2. Compare a single hour against your normal full day
 
-Look at your busiest hour on a normal day. Now look at whether any single hour recently beat that number on its own. During this incident, one hour of crawler traffic outpaced what had previously been an entire normal day's total. If an hour ever quietly becomes bigger than a day used to be, something changed, and it's worth finding out what.
+Look at your busiest hour on a normal day. Now look at whether any single hour recently beat that number on its own.
+
+During this incident, one hour of crawler traffic outpaced what had previously been an entire normal day's total. If an hour ever quietly becomes bigger than a day used to be, something changed, and it's worth finding out what.
 
 ## 3. Don't trust a country or location field you never actually verified
 
@@ -40,7 +44,9 @@ If you have server-side logs or fingerprinting, check whether unusual traffic is
 
 ## 7. Separate "self-declaring" bots from ones that hide
 
-Not all bot traffic is hostile. Some crawlers announce exactly what they are in their own request headers, honestly, and belong to real, identifiable companies. Others deliberately present as an ordinary browser and say nothing. The self-declaring kind can usually be managed with a polite, standard request. The kind that hides needs an actual technical block.
+Not all bot traffic is hostile. Some crawlers announce exactly what they are in their own request headers, honestly, and belong to real, identifiable companies. Others deliberately present as an ordinary browser and say nothing.
+
+The self-declaring kind can usually be managed with a polite, standard request. The kind that hides needs an actual technical block.
 
 ## 8. If you catch something, measure the real cost before panicking
 

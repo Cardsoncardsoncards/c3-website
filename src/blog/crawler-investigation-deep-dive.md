@@ -22,7 +22,9 @@ Neither used a disguised or spoofed identity in the way you might expect. Meta i
 
 Our first instinct was that a recent change making our pricing data more machine readable had made the site newly attractive to scrape. It was a reasonable theory. It was also wrong, and checking it properly is what actually mattered.
 
-The real trigger was smaller and more mundane: a fix, made about ten days before the crawling started, that stopped our own robots.txt file from accidentally blocking most of our own sitemaps. Before that fix, most of the site's catalogue was effectively unreachable through normal discovery. After it, the catalogue became visible for the first time in months. Ten days from "newly discoverable" to "a systematic crawl begins" is genuinely ordinary crawler scheduling, not a mystery.
+The real trigger was smaller and more mundane: a fix, made about ten days before the crawling started, that stopped our own robots.txt file from accidentally blocking most of our own sitemaps. Before that fix, most of the site's catalogue was effectively unreachable through normal discovery.
+
+After it, the catalogue became visible for the first time in months. Ten days from "newly discoverable" to "a systematic crawl begins" is genuinely ordinary crawler scheduling, not a mystery.
 
 We only know this because we went back and checked the actual timeline against real deploy history rather than trusting the first plausible-sounding explanation. It's worth saying plainly: the theory that felt right initially was not the theory that held up.
 
@@ -36,7 +38,7 @@ That single fact ruled out an entire category of fix. Nothing about tuning our s
 
 For the crawler that identified itself honestly, the fix was a targeted, standard request asking it to stay off the deepest, least valuable pages specifically, while leaving everything with genuine editorial value untouched. Reversible in one line if it ever needs to be undone.
 
-For the pair that didn't identify itself, a request alone wasn't a reliable option, so we used a direct network-level block on the two specific ranges we'd confirmed, and only those two, not the much wider block of addresses they technically sit inside, which would have affected plenty of unrelated traffic that never touched our site.
+For the pair that didn't identify itself, a request alone wasn't a reliable option. We've confirmed the two specific ranges involved, and a direct network-level block on just those two, not the much wider block of addresses they technically sit inside, which would affect plenty of unrelated traffic that never touched our site, is the next step.
 
 ## A mistake we caught before it shipped
 
@@ -56,11 +58,13 @@ We're not publishing the exact numbers this watches for. Sharing that precisely 
 
 ## What this actually cost
 
-Worth saying plainly, since it's easy to assume unwanted traffic is expensive by default. The measured real cost of the entire incident, every extra page load, every extra function call, across the whole window it ran, came to a little over a dollar. This was never a financial emergency. It was a data integrity and control question, not a cost one, and being honest about that shaped how urgently we treated it.
+Worth saying plainly, since it's easy to assume unwanted traffic is expensive by default. The measured real cost of the entire incident, every extra page load, every extra function call, across the whole window it ran, came to a little over a dollar.
+
+This was never a financial emergency. It was a data integrity and control question, not a cost one, and being honest about that shaped how urgently we treated it.
 
 ## Where this leaves us
 
-The crawler that identified itself is now managed by a targeted, standard request rather than a hard block, since it earned that by being honest about who it was. The crawler that didn't is blocked directly. And the actual gap this whole incident exposed, that nothing was watching for the next unknown actor, however it shows up, now has something watching it, tested against real data, not just built and assumed to work.
+The crawler that identified itself is now managed by a targeted, standard request rather than a hard block, since it earned that by being honest about who it was. The crawler that didn't has been identified down to the exact ranges involved, with a direct block still to come. And the actual gap this whole incident exposed, that nothing was watching for the next unknown actor, however it shows up, now has something watching it, tested against real data, not just built and assumed to work.
 
 ## Frequently asked questions
 

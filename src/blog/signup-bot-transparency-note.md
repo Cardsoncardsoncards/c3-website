@@ -22,7 +22,9 @@ To be clear, this wasn't a breach of anything we hold. The pattern points to a p
 
 ## What this wasn't
 
-No accounts were compromised. No passwords, payment details, or personal information beyond an email address were ever involved. Nobody's data was exposed to anyone else. This was an automated system submitting addresses it had gathered from elsewhere into a form that, at the time, sent an email without adequately checking whether a real person was on the other end of the submission.
+No accounts were compromised. No passwords, payment details, or personal information beyond an email address were ever involved.
+
+Nobody's data was exposed to anyone else. This was an automated system submitting addresses it had gathered from elsewhere into a form that, at the time, sent an email without adequately checking whether a real person was on the other end of the submission.
 
 ## What we did
 
@@ -32,7 +34,7 @@ We also went back and confirmed, using our email provider's own delivery records
 
 ## How we actually noticed
 
-This wasn't reported to us, we found it ourselves through routine review of account activity. The tell was straightforward once we looked: a large number of new signups, and almost none of them ever completing the one action the feature exists for. Real signups don't behave that way at any real scale, someone signing up and then simply not getting around to it happens, but not to nearly every single new account in a row.
+This wasn't reported to us, we found it ourselves through routine review of account activity. The tell was clear once we looked: a large number of new signups, and almost none of them ever completing the one action the feature exists for. Real signups don't behave that way at any real scale, someone signing up and then simply not getting around to it happens, but not to nearly every single new account in a row.
 
 Once we saw the pattern, we checked how the emails themselves had actually performed using our email provider's own delivery data, rather than assuming. That confirmed the picture: a short, real spike in unwanted sends, concentrated in a specific window, not an ongoing, unbounded problem.
 
