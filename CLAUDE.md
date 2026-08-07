@@ -53,6 +53,42 @@ SECURITY WARNING: This repo is PUBLIC on GitHub.
 Never hardcode any secret values, API keys, or auth tokens in any file.
 Always use Netlify.env.get('VAR_NAME') to read secrets at runtime.
 
+### The Supabase service credential lives under TWO names (C3L-96)
+
+One credential, two variable names, two secret stores, and nothing connects them. Recorded
+here so it stops being an undocumented footgun. Counts are FILES, not occurrences, and were
+re-derived by grep on 7 August 2026 rather than copied from the finding:
+
+- SUPABASE_SERVICE_KEY, read via Netlify.env.get, in 57 files under netlify/functions/.
+  A 58th file, migrations/create-accounts-and-follows.sql, names the key but does not read
+  it, so it is not counted here.
+- SUPABASE_SERVICE_KEY, read via process.env, in 7 files under scripts/ (5 real plus 2 test
+  stubs), supplied by GitHub Actions secrets in deploy-health-check.yml,
+  sync-health-check.yml and crawler-volume-check.yml.
+- SUPABASE_SECRET_KEY, read via process.env, in exactly 2 files under scripts/,
+  sync-mtg-daily.mjs and rls-recurring-check.mjs, supplied by GitHub Actions secrets in
+  daily-mtg-sync.yml and weekly-rls-check.yml.
+
+That is 66 files across 3 name-and-access-method combinations. The scripts/ number moves
+whenever a workflow is added: it was 6 when C3L-96 was re-derived, and commit b123cf1 (the
+hourly card-views watcher) added crawler-volume-check.mjs and its workflow. Re-grep before
+quoting these, do not trust the number in a finding row.
+
+So the split is NOT "Netlify uses one name, GitHub Actions uses the other". The GitHub
+Actions secret store holds BOTH names, across five workflows. C3L-96 described it as 61
+Netlify functions against 2 scripts; the shape above is what the repo actually contains.
+
+This is NOT a rule violation. process.env is correct in scripts/, because those run in GitHub
+Actions and never on Netlify, so the Netlify.env.get rule above does not reach them.
+
+Why it matters: rotating the service credential means updating THREE secrets across TWO
+stores. Update only the Netlify one and the MTG daily price sync and the weekly RLS check
+keep authenticating with a dead credential while every Netlify function carries on working,
+so the breakage is silent and partial, which is the shape this repo keeps producing.
+
+Do NOT rename or unify the two names on the strength of this note. That is a decision, not a
+repair, and it has to be sequenced against rotating the secrets in both stores.
+
 ---
 
 ## NETLIFY FUNCTION RULES -- APPLY TO EVERY .mjs FILE
