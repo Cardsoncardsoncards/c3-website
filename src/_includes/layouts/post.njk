@@ -108,7 +108,21 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     {% if description %}
     <p class="post-intro">{{ description }}</p>
     {% endif %}
+    {# Deliberately "!= false" and NOT a truthy check, so the default stays "show".
+       Measured before and after this change: 538 built posts rendered the disclaimer, and
+       538 still do. Only a post that explicitly sets affiliate_disclaimer: false loses it,
+       and no post in the corpus does yet.
+       Worth recording, because the task that commissioned this fix justified the "!= false"
+       form on a premise that turned out to be wrong: it said 69 posts omit the field and are
+       showing the disclaimer today, so a truthy check would strip it from all 69. Those 69
+       files omit "tags:" as well, and the permalink rule in .eleventy.js returns false
+       without it, so they are not built at all and show nothing. The truthy form would have
+       been harmless today. "!= false" is kept anyway because it is the more conservative
+       default: if any of those 69 is ever published by adding tags, it inherits the
+       disclaimer rather than silently losing it. #}
+    {% if affiliate_disclaimer != false %}
     <div class="disclaimer">This post contains affiliate links. If you buy through them, we may earn a small commission at no extra cost to you.</div>
+    {% endif %}
   </header>
 
   <div class="share-bar" id="post-share-bar">

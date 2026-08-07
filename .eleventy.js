@@ -96,7 +96,11 @@ module.exports = function(eleventyConfig) {
       "buying-guides":"tag-guide","value-and-worth":"tag-guide",
       "product-comparisons":"tag-guide","selling-and-money":"tag-guide",
       "beginner-guides":"tag-game","general-tcg":"tag-game",
-      "tools-and-trackers":"tag-tools","accessories":"tag-accessory"
+      "tools-and-trackers":"tag-tools","accessories":"tag-accessory",
+      // tag-review is used rather than a new tag-news class because it is already defined,
+      // identically, in both src/css/post.css and src/blog.njk. A new class would need CSS in
+      // both places to avoid an unstyled pill on one surface and a styled one on the other.
+      "news":"tag-review"
     };
     return map[category] || "tag-guide";
   });
@@ -106,7 +110,8 @@ module.exports = function(eleventyConfig) {
       "buying-guides":"Buying Guide","value-and-worth":"Buying Guide",
       "product-comparisons":"Buying Guide","selling-and-money":"Selling Guide",
       "beginner-guides":"Game Guide","general-tcg":"Game Guide",
-      "tools-and-trackers":"Free Tools","accessories":"Accessories"
+      "tools-and-trackers":"Free Tools","accessories":"Accessories",
+      "news":"News"
     };
     return map[category] || "Guide";
   });
