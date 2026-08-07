@@ -116,6 +116,126 @@ module.exports = function(eleventyConfig) {
     return map[category] || "Guide";
   });
 
+  // --- FAQPage JSON-LD for blog posts (PROTOTYPE, see the note below) ---------------
+  //
+  // The blog carries no structured data at all, while card-page.mjs has emitted FAQPage
+  // JSON-LD for a long time. This is the same pattern, applied to posts, and it is
+  // deliberately a PROTOTYPE rather than a rollout: it reads the ALREADY RENDERED post
+  // HTML and emits nothing at all unless it can find a real FAQ section with at least two
+  // parsed question and answer pairs. A post without one is untouched and emits no script
+  // tag, which is the whole point of the gate. Nothing here edits any of the 607 post files.
+  //
+  // Why parse rendered HTML rather than the markdown: by the time a layout runs, `content`
+  // is HTML, and the FAQ sections are already normalised into one shape by markdown-it.
+  // Measured across the built site, the shape is:
+  //
+  //     <h2>Frequently Asked Questions</h2>
+  //     <p><strong>Question?</strong>
+  //     Answer text.</p>
+  //
+  // A question and its answer share one paragraph because the source markdown separates
+  // them with a single newline, which markdown-it renders as a soft break inside one <p>.
+  // Anything that does not match that shape is SKIPPED rather than guessed at, so a post
+  // with an unusual FAQ layout emits nothing instead of emitting something wrong.
+
+  // U+2028 and U+2029 are LINE TERMINATORS in JavaScript source, so a raw one inside a regex
+  // literal here would break the parse of this very file. These are built from char codes so
+  // the source stays pure ASCII, the same defence shared/view-tracking.mjs already uses.
+  const LS = String.fromCharCode(0x2028);
+  const PS = String.fromCharCode(0x2029);
+  const LINE_SEPARATORS = new RegExp("[" + LS + PS + "]", "g");
+
+  const FAQ_HEADING = /<h([23])[^>]*>\s*(?:frequently\s+asked\s+questions|faqs?)\s*<\/h\1>/i;
+
+  // Decode only the five entities markdown-it actually produces. &amp; must go last or it
+  // would double-decode a literal "&amp;lt;" in the source into "<".
+  function decodeEntities(s) {
+    return s
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#(?:39|x27);/g, "'")
+      .replace(/&apos;/g, "'")
+      .replace(/&amp;/g, "&");
+  }
+
+  function plainText(html) {
+    return decodeEntities(String(html).replace(/<[^>]*>/g, " "))
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  eleventyConfig.addFilter("faqPageSchema", (content) => {
+    if (!content) return "";
+    const html = String(content);
+
+    const heading = html.match(FAQ_HEADING);
+    if (!heading) return "";
+
+    // Everything after the FAQ heading, cut at the next heading of the same level or higher,
+    // so a later "## Related guides" section cannot leak its paragraphs into the schema.
+    const level = Number(heading[1]);
+    const after = html.slice(heading.index + heading[0].length);
+    const stop = after.search(new RegExp(`<h[1-${level}][^>]*>`, "i"));
+    const section = stop === -1 ? after : after.slice(0, stop);
+
+    const pairs = [];
+    function addPair(question, answer) {
+      // Both halves must genuinely exist. A bolded lead-in with no answer, or a heading with
+      // nothing under it, is not a question and answer pair, so it is dropped rather than
+      // emitted with an empty acceptedAnswer, which would be invalid schema.
+      if (question.length < 8 || answer.length < 20) return;
+      pairs.push({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer }
+      });
+    }
+
+    // Shape A, the majority: question and answer share one paragraph, because the source
+    // markdown separates them with a single newline and markdown-it renders that as a soft
+    // break rather than a paragraph break.
+    const para = /<p>\s*<strong>([\s\S]*?)<\/strong>([\s\S]*?)<\/p>/gi;
+    let m;
+    while ((m = para.exec(section)) !== null) addPair(plainText(m[1]), plainText(m[2]));
+
+    // Shape B, used by roughly a third of the posts that have an FAQ section:
+    //     <h3>Question?</h3>
+    //     <p>Answer.</p>
+    // Tried ONLY when shape A found nothing usable, so one post can never be read both ways
+    // and emit the same question twice. Every paragraph up to the next h3 is taken as the
+    // answer, since a few answers run to two paragraphs.
+    if (pairs.length < 2) {
+      for (const chunk of section.split(/<h3[^>]*>/i).slice(1)) {
+        const close = chunk.search(/<\/h3>/i);
+        if (close === -1) continue;
+        const body = chunk.slice(close + "</h3>".length);
+        addPair(plainText(chunk.slice(0, close)), plainText((body.match(/<p>[\s\S]*?<\/p>/gi) || []).join(" ")));
+      }
+    }
+
+    // One lone pair is more likely to be a parse artefact than a real FAQ, so the gate is
+    // two. Below that, emit nothing.
+    if (pairs.length < 2) return "";
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: pairs
+    };
+
+    // Neutralise anything that could close the surrounding script element early. The values
+    // came out of post content, which is trusted-ish but not guaranteed, and this is the
+    // same standard the XSS rules apply to every other injected value in this repo.
+    const json = JSON.stringify(schema)
+      .replace(/</g, "\\u003c")
+      .replace(/>/g, "\\u003e")
+      .replace(/&/g, "\\u0026")
+      .replace(LINE_SEPARATORS, (c) => (c === LS ? "\\u2028" : "\\u2029"));
+
+    return `<script type="application/ld+json">${json}</script>`;
+  });
+
   return {
     dir: {
       input: "src",

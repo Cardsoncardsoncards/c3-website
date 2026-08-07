@@ -18,6 +18,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/post.css">
+{# FAQPage JSON-LD, PROTOTYPE. The filter returns an empty string for any post with no FAQ
+   section, or fewer than two parseable question and answer pairs, so posts without one emit
+   nothing at all. See the faqPageSchema filter in .eleventy.js for what it matches and why. #}
+{{ content | faqPageSchema | safe }}
 <style>
 nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !important}
 .nav-logo{display:inline-flex !important;align-items:center !important;gap:9px !important;white-space:nowrap !important}
