@@ -3,6 +3,7 @@ import { followBlockHtml } from './shared/follow-block.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { cardPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/buddyfight-card-page.mjs
 // Serves /cards/buddyfight/:slug
 // If slug starts with sets/, renders the set page inline (routing fix)
@@ -201,7 +202,7 @@ function esc(str) {
 export default async (req) => {
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/buddyfight/', '').replace(/^\/|\/$/g, '');
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200', 'Netlify-CDN-Cache-Control': 'public, max-age=3600, s-maxage=7200,durable' };
+  const headers = cardPageHeaders();
 
   if (!slug) return new Response(notFoundPage(''), { status: 404, headers });
 

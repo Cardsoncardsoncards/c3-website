@@ -7,6 +7,7 @@ import { escAttr, CLIENT_ESCAPE_FN } from './shared/html-escape.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { cardPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/pokemon-card-page.mjs
 // Serves dynamic Pokemon card pages at /cards/pokemon/[slug]
 // Mirrors MTG card page structure, adapted for Pokemon TCG data from TCGdex
@@ -296,7 +297,7 @@ export default async (req) => {
     return new Response('Not found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
   }
 
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600, s-maxage=7200', 'Netlify-CDN-Cache-Control': 'public, max-age=3600, s-maxage=7200,durable' };
+  const headers = cardPageHeaders();
 
 
 

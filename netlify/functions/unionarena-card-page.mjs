@@ -6,6 +6,7 @@ import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 // task-132 Part 11: the unified follow block reaches Union Arena too.
 import { followBlockHtml } from './shared/follow-block.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { cardPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/unionarena-card-page.mjs
 // Serves /cards/unionarena/:slug
 // Union Arena individual card pages with AUD pricing and affiliate links
@@ -92,10 +93,7 @@ export default async (req) => {
   const slug    = url.pathname.replace(/^\/cards\/unionarena\//, '').replace(/\/$/, '');
   const AUD_RATE = await getExchangeRate();
 
-  const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable'
-  };
+  const headers = cardPageHeaders();
 
   if (!slug || slug === '') {
     return Response.redirect('https://cardsoncardsoncards.com.au/cards/unionarena', 302);
