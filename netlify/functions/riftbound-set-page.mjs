@@ -2,6 +2,7 @@ import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { decodeSlugSegment } from './shared/url-slug.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
 import { setPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/riftbound-set-page.mjs
 // Serves /cards/riftbound/sets/:slug+
 // Rebuilt with: movers panel, rarity filters, full sort options
@@ -72,6 +73,11 @@ function graceful404(setSlug) {
 
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 export default async (req) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const headers = setPageHeaders();
   const url = new URL(req.url);
   const setSlug = decodeSlugSegment(url.pathname.replace(/^\/cards\/riftbound\/sets\//, '').replace(/\/$/, ''));

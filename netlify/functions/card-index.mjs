@@ -1,6 +1,7 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 import { escAttr } from './shared/html-escape.mjs';
 import { EBAY_PARAM_SUFFIX } from './shared/ebay-link.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/card-index.mjs
 // Serves:
 // /cards/mtg - MTG card hub with search
@@ -1365,6 +1366,11 @@ function clearFilters() {
 
 // Main router
 export default async (req) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const url = new URL(req.url);
   const path = url.pathname;
 

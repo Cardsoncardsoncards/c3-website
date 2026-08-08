@@ -3,6 +3,7 @@ import { decodeSlugSegment } from './shared/url-slug.mjs';
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
 import { setPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/yugioh-set-page.mjs
 // Serves /cards/yugioh/sets/:setCode
 
@@ -54,6 +55,11 @@ const ATTR_COLOURS = {'LIGHT':'#FFD700','DARK':'#9966CC','FIRE':'#FF4500','WATER
 
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 export default async (req) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const headers = setPageHeaders();
   const url = new URL(req.url);
   const setCode = decodeSlugSegment(url.pathname.replace(/^\/cards\/yugioh\/sets\//, '').replace(/\/$/, '').toLowerCase());

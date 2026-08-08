@@ -1,6 +1,7 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { wsPropertyLabel } from './shared/ws-properties.mjs';
 import { hubPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/weissschwarz-hub.mjs
 // Serves /cards/weissschwarz
 // Rebuilt to Pokemon hub standard -- 28 May 2026
@@ -150,6 +151,11 @@ function sharedCSS() {
 }
 
 export default async (req) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const headers = hubPageHeaders();
 
   // Fetch sets first and independently so the property directory grid never

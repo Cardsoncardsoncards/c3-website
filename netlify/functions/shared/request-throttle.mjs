@@ -115,6 +115,73 @@ const buckets = new Map();          // netBlock -> { count, paths:Set, resetAt }
 const verifiedCache = new Map();    // ip -> { verified:boolean, expires:number }
 const VERIFY_CACHE_MS = 6 * 60 * 60 * 1000;
 
+// ---------------------------------------------------------------------------------------
+// OBSERVABILITY. A throttle that cannot be seen cannot be monitored, and shipping a
+// discriminating mechanism with no record of what it caught would be the same silent-failure
+// shape this codebase keeps producing.
+//
+// Two channels, deliberately. console.warn goes to Netlify's function log for live tailing.
+// The sync_events row is the durable one, because it can be queried afterwards and it is the
+// stream C3L-51's health check already reads, so nothing new has to be maintained.
+//
+// ONE BLOCK PER WINDOW, NOT ONE PER REQUEST. Meta's peak hour would have produced 682
+// rejections; writing 682 rows would make the record useless and put a Supabase round trip
+// on every rejected request. The first block for a network in a window is recorded and the
+// rest are counted in memory, so the row says "this block, this many, this user agent".
+//
+// On the key: SUPABASE_SERVICE_KEY is used because sync_events is service_role write only.
+// This is not a new exposure. Netlify env vars are site-wide, so the value is already
+// present in every function's environment; what is new is one narrow append-only telemetry
+// write, before any HTML is built, and the variable never appears after a template literal.
+// Fire and forget with a 4 second cap: telemetry must never delay or fail a page response.
+const SYNC_EVENT_TYPE = 'throttle_block';
+
+function envGet(name) {
+  try {
+    if (typeof Netlify !== 'undefined' && Netlify.env) return Netlify.env.get(name);
+  } catch { /* not on Netlify, e.g. under the test harness */ }
+  return null;
+}
+
+function recordBlock(block, rec, req) {
+  rec.blocked = (rec.blocked || 0) + 1;
+  const ua = (req.headers && req.headers.get ? req.headers.get('user-agent') : null) || 'none';
+  let path = '';
+  try { path = new URL(req.url).pathname; } catch { /* ignore */ }
+
+  // Only the first block in this window writes anything.
+  if (rec.blocked !== 1) return;
+
+  console.warn(`[throttle] BLOCK block=${block} count=${rec.count} paths=${rec.paths.size} path=${path} ua=${ua.slice(0, 120)}`);
+
+  const url = envGet('SUPABASE_URL');
+  const key = envGet('SUPABASE_SERVICE_KEY');
+  if (!url || !key) return;
+
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);
+    fetch(`${url}/rest/v1/sync_events`, {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify({
+        event_type: SYNC_EVENT_TYPE,
+        game: null,
+        rows_affected: rec.count,
+        triggered_at: new Date().toISOString(),
+        webhook_fired: false,
+        error_message: `block=${block} paths=${rec.paths.size} path=${path} ua=${ua.slice(0, 200)}`,
+      }),
+    }).catch(() => {}).finally(() => clearTimeout(timer));
+  } catch { /* telemetry must never break the request */ }
+}
+
 function isAiAssistant(userAgent) {
   if (!userAgent) return false;
   const ua = userAgent.toLowerCase();
@@ -213,6 +280,7 @@ export async function checkThrottle(req, opts = {}) {
       return { throttled: false, retryAfter: 0, reason: 'verified-crawler', block };
     }
 
+    recordBlock(block, rec, req);
     const retryAfter = Math.max(1, Math.ceil((rec.resetAt - now) / 1000));
     return { throttled: true, retryAfter, reason: 'rate-limited', block };
   } catch {

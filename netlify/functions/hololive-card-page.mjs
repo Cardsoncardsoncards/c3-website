@@ -3,6 +3,7 @@ import { followBlockHtml } from './shared/follow-block.mjs';
 import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
 import { cardPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/hololive-card-page.mjs
 // Serves /cards/hololive/:slug
 // If slug starts with sets/, renders the set page inline (routing fix)
@@ -199,6 +200,11 @@ function esc(str) {
 }
 
 export default async (req) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/hololive/', '').replace(/^\/|\/$/g, '');
   const headers = cardPageHeaders();
