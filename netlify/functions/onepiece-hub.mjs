@@ -1,5 +1,6 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { hubPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/onepiece-hub.mjs
 // Serves /cards/onepiece
 // Rebuilt 24 May 2026 -- hidden sets, market pulse, 24-card carousel, guides, price source, bug widget
@@ -40,6 +41,11 @@ async function supabaseGet(path) {
 }
 
 export default async (req) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const headers = hubPageHeaders();
   const today = new Date(); today.setHours(0,0,0,0);
   const cutoff45 = new Date(Date.now()-45*864e5).toISOString().slice(0,10);

@@ -1,6 +1,7 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
 import { htmlCacheHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/mtg-hub.mjs
 // Serves: /cards/mtg
 
@@ -71,6 +72,11 @@ function esc(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 export default async (req) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const SEALED_KEYS = ['booster box','booster pack',' case','bundle','display','starter deck'];
 
   // Fetch core data -- sets and top cards first, market pulse separately to avoid timeout

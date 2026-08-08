@@ -12,6 +12,7 @@ import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { ebaySearchUrl, ebayStoreUrl, EPN_CAMPID } from './shared/ebay-link.mjs';
 import { resolveCardBySlug } from './shared/card-resolver.mjs';
 import { escAttr, CLIENT_ESCAPE_FN } from './shared/html-escape.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -1457,6 +1458,11 @@ ${viewTrackingScript('mtg', card.scryfall_id)}
 
 
 export default async (req, context) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const url = new URL(req.url);
   const slug = url.pathname.replace('/cards/mtg/', '').replace(/\/$/, '');
 

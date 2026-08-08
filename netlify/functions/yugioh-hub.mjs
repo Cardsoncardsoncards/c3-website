@@ -1,5 +1,6 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { htmlCacheHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/yugioh-hub.mjs
 // Serves /cards/yugioh
 // Rebuilt to Pokemon hub standard -- 27 May 2026
@@ -162,6 +163,11 @@ function sharedCSS() {
 }
 
 export default async (req) => {
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const headers = htmlCacheHeaders({ maxAge: 300, sMaxAge: 300, swr: 86400 });
 
   const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
