@@ -441,8 +441,12 @@ loadSetCarousel('riftbound', 500008, 'vendetta-carousel', '#818CF8');
     if (!s) { s = Math.random().toString(36).slice(2); localStorage.setItem(SESSION_KEY, s); }
     return s;
   }
+  // keepalive: see the note in view-tracking.mjs. Without it the browser cancels this POST
+  // when the document is torn down, so the visitors who leave fastest, which is exactly the
+  // population in question, are the ones this can never record.
   fetch('/api/page-view', {
     method: 'POST',
+    keepalive: true,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ path: location.pathname, pageType: t, sessionId: getSession() })
   }).catch(function(){});
