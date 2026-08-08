@@ -464,4 +464,15 @@ export default async (req) => {
   });
 };
 
-export const config = { path: '/cards/mtg/random-commander' };
+// priority: 1 is REQUIRED here and its absence was a live 404, caught in this task's own
+// Section 2 verification rather than by a user.
+//
+// card-page.mjs claims '/cards/mtg/:slug+' with no excludedPath, so it also matches
+// /cards/mtg/random-commander and answers with its "card not found" page. While this literal
+// route lived in card-index.mjs it won that contest; moving it to a file whose name sorts
+// AFTER card-page.mjs was enough to lose it, and the route started 404ing the moment the
+// split deployed. Nothing about the path changed, only which file declared it.
+//
+// priority: 1 is the repo's existing answer to exactly this problem: every game's
+// *-set-page.mjs carries it to beat the same catch-all. Matched rather than invented.
+export const config = { path: '/cards/mtg/random-commander', priority: 1 };
