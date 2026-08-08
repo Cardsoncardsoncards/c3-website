@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { hubPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/alphaclash-hub.mjs
 // Serves /cards/alphaclash
 // Rebuilt to Pokemon hub standard -- 28 May 2026
@@ -154,7 +155,7 @@ function sharedCSS() {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable' };
+  const headers = hubPageHeaders();
 
   const [setsRes, cardsRes] = await Promise.allSettled([
     supabaseGet('alphaclash_sets?order=release_date.desc.nullslast&limit=30&select=id,name,slug,release_date,card_count'),

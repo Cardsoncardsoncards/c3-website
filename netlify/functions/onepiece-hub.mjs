@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { hubPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/onepiece-hub.mjs
 // Serves /cards/onepiece
 // Rebuilt 24 May 2026 -- hidden sets, market pulse, 24-card carousel, guides, price source, bug widget
@@ -39,7 +40,7 @@ async function supabaseGet(path) {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable' };
+  const headers = hubPageHeaders();
   const today = new Date(); today.setHours(0,0,0,0);
   const cutoff45 = new Date(Date.now()-45*864e5).toISOString().slice(0,10);
 

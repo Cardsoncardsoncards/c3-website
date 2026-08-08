@@ -1,5 +1,6 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { wsPropertyLabel } from './shared/ws-properties.mjs';
+import { hubPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/weissschwarz-property-hub.mjs
 // Serves /cards/weissschwarz/:property (licensed property landing page)
 // Built to Weiss Schwarz hub standard -- 3 July 2026
@@ -98,7 +99,7 @@ function sharedCSS() {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable' };
+  const headers = hubPageHeaders();
 
   const url      = new URL(req.url);
   const rawProp  = url.pathname.replace(/^\/cards\/weissschwarz\/series\//, '').replace(/\/$/, '');

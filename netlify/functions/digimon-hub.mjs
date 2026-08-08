@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { hubPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/digimon-hub.mjs
 // Serves /cards/digimon
 // Auto-generated 20 May 2026 -- C3 standard hub
@@ -162,10 +163,7 @@ function css() {
 }
 
 export default async (req) => {
-  const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable'
-  };
+  const headers = hubPageHeaders();
 
   const [setsResult, topCardsResult] = await Promise.allSettled([
     supabaseGet('digimon_sets?order=release_date.desc.nullslast&limit=200&select=id,name,slug,abbreviation,release_date,card_count'),

@@ -1,5 +1,6 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
+import { htmlCacheHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/mtg-hub.mjs
 // Serves: /cards/mtg
 
@@ -659,7 +660,7 @@ function filterSets(query) {
 </html>`;
 
   return new Response(html, {
-    headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, s-maxage=3600,durable' }
+    headers: htmlCacheHeaders({ sMaxAge: 3600, swr: 86400 })
   });
 };
 

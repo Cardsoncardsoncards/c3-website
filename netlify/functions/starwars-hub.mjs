@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { hubPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/starwars-hub.mjs
 // Serves /cards/starwars
 // Rebuilt to Pokemon hub standard -- 27 May 2026
@@ -157,7 +158,7 @@ function sharedCSS() {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable' };
+  const headers = hubPageHeaders();
 
   const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
     supabaseGet('starwars_sets?order=release_date.desc.nullslast&limit=300&select=id,name,slug,release_date,card_count'),

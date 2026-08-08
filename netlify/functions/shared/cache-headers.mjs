@@ -38,6 +38,10 @@ const HTML = 'text/html; charset=utf-8';
 // what opts the entry into the persistent tier, and it is appended only to the Netlify
 // header: putting it on the standard Cache-Control would be an unknown token to every
 // other cache in the path.
+export function htmlCacheHeaders({ maxAge, sMaxAge, swr }) {
+  return headers({ maxAge, sMaxAge, swr });
+}
+
 function headers({ maxAge, sMaxAge, swr }) {
   const parts = ['public'];
   if (maxAge != null) parts.push(`max-age=${maxAge}`);
@@ -69,14 +73,26 @@ export function mtgCardPageHeaders() {
   return headers({ maxAge: null, sMaxAge: 3600, swr: 86400 });
 }
 
-// Set pages and hub pages, recorded here so the numbers are visible in one place. Not yet
-// wired into those functions: they currently send max-age=900/s-maxage=1800 and
-// max-age=1800/s-maxage=3600 respectively, with no stale-while-revalidate, so they carry
-// the same blocking-regeneration gap the card pages had. That is a separate stage.
+// Set pages. All 31 *-set-page.mjs files were sending exactly the same literal, so this is
+// a straight lift with stale-while-revalidate added and nothing else altered.
 export function setPageHeaders() {
   return headers({ maxAge: 900, sMaxAge: 1800, swr: 86400 });
 }
 
+// Hub pages. 31 of the 33 hub files were on these durations. The other two are NOT moved
+// onto this preset, and the reason is that their durations cannot be shown to be drift the
+// way finalfantasy and unionarena's could:
+//
+//   yugioh-hub.mjs   max-age=300, s-maxage=300   arrived in 1a1fa87 alongside the durable
+//                    rollout, with no comment. yugioh_cards is in the fast-syncing group
+//                    (1.9 hours stale when measured), so a short window is at least
+//                    consistent with its data, and raising it 12-fold on no evidence would
+//                    be a behaviour change dressed up as a cleanup.
+//   mtg-hub.mjs      s-maxage=3600, no max-age   the same shape MTG's card page uses, and
+//                    MTG is the live reference this policy was validated against.
+//
+// Both instead call htmlCacheHeaders directly with their own numbers, so they gain
+// stale-while-revalidate, which is purely additive, and keep every duration they had.
 export function hubPageHeaders() {
   return headers({ maxAge: 1800, sMaxAge: 3600, swr: 86400 });
 }

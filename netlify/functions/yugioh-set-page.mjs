@@ -2,6 +2,7 @@ import { decodeSlugSegment } from './shared/url-slug.mjs';
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { setPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/yugioh-set-page.mjs
 // Serves /cards/yugioh/sets/:setCode
 
@@ -53,7 +54,7 @@ const ATTR_COLOURS = {'LIGHT':'#FFD700','DARK':'#9966CC','FIRE':'#FF4500','WATER
 
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800', 'Netlify-CDN-Cache-Control': 'public, max-age=900, s-maxage=1800,durable' };
+  const headers = setPageHeaders();
   const url = new URL(req.url);
   const setCode = decodeSlugSegment(url.pathname.replace(/^\/cards\/yugioh\/sets\//, '').replace(/\/$/, '').toLowerCase());
   if (!setCode) return new Response(`<!DOCTYPE html>

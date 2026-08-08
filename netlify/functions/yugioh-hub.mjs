@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { htmlCacheHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/yugioh-hub.mjs
 // Serves /cards/yugioh
 // Rebuilt to Pokemon hub standard -- 27 May 2026
@@ -161,7 +162,7 @@ function sharedCSS() {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=300, s-maxage=300', 'Netlify-CDN-Cache-Control': 'public, max-age=300, s-maxage=300,durable' };
+  const headers = htmlCacheHeaders({ maxAge: 300, sMaxAge: 300, swr: 86400 });
 
   const [setsRes, cardsRes, gainersRes, losersRes] = await Promise.allSettled([
     supabaseGet('yugioh_sets?order=release_date.desc.nullslast&limit=700&select=id,name,slug,release_date,card_count'),

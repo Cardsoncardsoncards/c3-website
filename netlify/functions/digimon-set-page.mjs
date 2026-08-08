@@ -1,6 +1,7 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { decodeSlugSegment } from './shared/url-slug.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { setPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/digimon-set-page.mjs
 // C3 set-page v4 -- full MVP rebuild
 // Serves /cards/digimon/sets/:slug+
@@ -76,7 +77,7 @@ function graceful404(setSlug) {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800', 'Netlify-CDN-Cache-Control': 'public, max-age=900, s-maxage=1800,durable' };
+  const headers = setPageHeaders();
   const url = new URL(req.url);
   const setSlug = decodeSlugSegment(url.pathname.replace(/^\/cards\/digimon\/sets\//, '').replace(/\/$/, ''));
 

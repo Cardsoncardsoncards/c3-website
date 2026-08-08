@@ -1,4 +1,5 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { hubPageHeaders } from './shared/cache-headers.mjs';
 // netlify/functions/pokemon-hub.mjs
 // Serves /cards/pokemon
 // Rebuilt to MTG hub standard -- 20 May 2026
@@ -200,10 +201,7 @@ function sharedCSS(accent, accentRgb) {
 // --- Nav HTML ---
 // --- Handler ---
 export default async (req) => {
-  const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable'
-  };
+  const headers = hubPageHeaders();
 
   const [setsResult, topCardsResult, countResult, gainersResult, losersResult] = await Promise.allSettled([
     supabaseGet('pokemon_sets?order=release_date.desc.nullslast&limit=300&select=id,name,slug,release_date,card_count'),
