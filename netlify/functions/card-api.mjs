@@ -187,6 +187,34 @@ async function handleView(req, context) {
   return json({ ok: true });
 }
 
+// --- Page view tracker, everything that is not a card page ---
+// Task B. handleView above only ever fires on card pages, so hub, set, blog and the 23
+// static pages have never had request provenance recorded. Measured 8 August 2026: GA4
+// reported 18,814 sessions in 24 hours against ZERO card views in the preceding hour, so the
+// traffic that matters is entirely on pages this database has never seen.
+//
+// Separate table, not a widened card_views: that table is keyed on (game, card_ref), which
+// is meaningless for a blog post, and mixing them would corrupt the card analytics.
+// Best-effort in exactly the same way: never fail the request.
+async function handlePageView(req, context) {
+  const body = await req.json().catch(() => ({}));
+  const { path, pageType, sessionId } = body;
+  if (!path || typeof path !== 'string') return json({ ok: true });
+  try {
+    await supabasePost('page_views', {
+      // Cap both, because they arrive from the client and are attacker controlled. The path
+      // is stored without its query string; the client already sends location.pathname, and
+      // this is the server-side guarantee of that rather than a trust in the client.
+      path: path.split('?')[0].slice(0, 300),
+      page_type: typeof pageType === 'string' ? pageType.slice(0, 20) : null,
+      session_id: sessionId || null,
+      viewed_at: new Date().toISOString(),
+      ...requestFingerprint(req, context)
+    });
+  } catch { /* analytics is best-effort; do not fail the request */ }
+  return json({ ok: true });
+}
+
 // --- Price alert ---
 async function handlePriceAlert(req) {
   const body = await req.json();
@@ -1061,6 +1089,10 @@ export default async (req, context) => {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
     return handleView(req, context);
   }
+  if (path === '/api/page-view') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handlePageView(req, context);
+  }
   if (path === '/api/price-alert') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
     return handlePriceAlert(req);
@@ -1109,6 +1141,7 @@ export const config = {
   path: [
     '/api/card-like',
     '/api/card-view',
+    '/api/page-view',
     '/api/price-alert',
     '/api/collection-waitlist',
     '/api/random-commander',

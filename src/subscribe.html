@@ -341,5 +341,28 @@
     });
   })();
 </script>
+<script>
+(function(){
+  var p = location.pathname.split('/').filter(Boolean);
+  // A three segment /cards/ path is a card page and is already covered by card_views.
+  if (p.length === 3 && p[0] === 'cards') return;
+  var t = 'other';
+  if (p.length === 0) t = 'static';
+  else if (p[0] === 'cards') t = (p.length === 1) ? 'static' : (p.length === 2 ? 'hub' : 'set');
+  else if (p[0] === 'blog') t = 'blog';
+  else if (['compare','market','search','account','tools','play','calendar','welcome','subscribe','shop','pricing'].indexOf(p[0]) !== -1) t = 'tool';
+  var SESSION_KEY = 'c3_session';
+  function getSession() {
+    var s = localStorage.getItem(SESSION_KEY);
+    if (!s) { s = Math.random().toString(36).slice(2); localStorage.setItem(SESSION_KEY, s); }
+    return s;
+  }
+  fetch('/api/page-view', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ path: location.pathname, pageType: t, sessionId: getSession() })
+  }).catch(function(){});
+})();
+</script>
 </body>
 </html>
