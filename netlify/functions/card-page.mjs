@@ -1834,5 +1834,17 @@ ${navHtml({ gameLabel: 'MTG', gameHref: '/cards/mtg' })}
 
 export const config = {
   path: '/cards/mtg/:slug+',
+  // Task D. MTG was the ONLY game whose card page carried no excludedPath, while all 31
+  // others exclude their own set pages. It appeared to work purely because "card-index"
+  // sorts before "card-page" and won the overlap by name order, which is luck rather than
+  // routing. The moment /cards/mtg/random-commander moved to a file named
+  // mtg-random-commander.mjs, which sorts AFTER card-page, this pattern swallowed it and
+  // answered with the "card's page is coming soon" 404. priority: 1 on the other function
+  // did NOT override it; the exclusion here is what actually resolves it.
+  //
+  // /cards/mtg/sets/* is listed too. It is not currently broken, but it is only unbroken by
+  // the same name-ordering accident, and leaving it implicit means the next rename breaks
+  // every MTG set page instead of one generator.
+  excludedPath: ['/cards/mtg/sets/*', '/cards/mtg/random-commander'],
   cache: 'manual'
 };

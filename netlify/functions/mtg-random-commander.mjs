@@ -464,15 +464,21 @@ export default async (req) => {
   });
 };
 
-// priority: 1 is REQUIRED here and its absence was a live 404, caught in this task's own
-// Section 2 verification rather than by a user.
+// This route 404d live for a few minutes after the split, caught by this task's own Section 2
+// verification rather than by a user, and the first fix attempted was WRONG.
 //
-// card-page.mjs claims '/cards/mtg/:slug+' with no excludedPath, so it also matches
-// /cards/mtg/random-commander and answers with its "card not found" page. While this literal
-// route lived in card-index.mjs it won that contest; moving it to a file whose name sorts
-// AFTER card-page.mjs was enough to lose it, and the route started 404ing the moment the
-// split deployed. Nothing about the path changed, only which file declared it.
+// What happened: card-page.mjs claims '/cards/mtg/:slug+'. While this literal route lived in
+// card-index.mjs it won the overlap, because "card-index" sorts before "card-page" by
+// function name. Moving it to a file named mtg-random-commander.mjs, which sorts AFTER
+// card-page, lost it, and card-page answered with its "this card's page is coming soon" 404.
+// The path string never changed. Only the file declaring it did.
 //
-// priority: 1 is the repo's existing answer to exactly this problem: every game's
-// *-set-page.mjs carries it to beat the same catch-all. Matched rather than invented.
-export const config = { path: '/cards/mtg/random-commander', priority: 1 };
+// priority: 1 was tried first, on the reasoning that every *-set-page.mjs carries it to beat
+// the same catch-all. It deployed and the route still 404d, so that is NOT the mechanism and
+// the note claiming it was has been removed rather than left to mislead. What actually fixes
+// it is excludedPath on card-page.mjs, which is what the other 31 games have always used.
+//
+// The general point, worth more than this instance: splitting a route into its own file can
+// break it even when the path string is byte identical, because resolution depends on which
+// file declares it. A split is not automatically behaviour preserving.
+export const config = { path: '/cards/mtg/random-commander' };
