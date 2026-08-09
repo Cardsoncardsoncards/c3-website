@@ -18,6 +18,10 @@ const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const TCGAPI_KEY        = Netlify.env.get('TCGAPI_KEY');
 const RESEND_API_KEY    = Netlify.env.get('RESEND_API_KEY');
 
+// C3L-130: the single source of truth for USD to AUD, replacing the hardcoded 1.45 that used
+// to live inside tcgMovers. Logs when it has to fall back, which the literal never did.
+import { getFxRate } from './fx-rate.mjs';
+
 const EPN_CAMPID    = '5339146789';
 const TCGAPI_BASE   = 'https://api.tcgapi.dev/v1';
 const FROM_EMAIL    = 'alerts@cardsoncardsoncards.com.au';
@@ -80,20 +84,64 @@ function ebayUrl(name,game){
   const kw=encodeURIComponent(name+' '+(game==='mtg'?'mtg':(GAME_CONFIG[game]?GAME_CONFIG[game].label:game)));
   return `https://www.ebay.com.au/sch/i.html?_nkw=${kw}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 }// ---------- data (mirrors /market logic) ----------
-async function tcgMovers(game,direction,limit){
+// The upstream field is `price_change`, and it is a PERCENTAGE expressed as a plain number,
+// so 80758.59 means +80,758.59 per cent. That was established by comparison against an
+// independent source rather than assumed: for Entei Star the API reported market_price 800.50
+// with price_change 80758.59, and market_price / (1 + price_change/100) gives $0.99, which is
+// exactly what our own pokemon_cards table independently recorded for that card.
+//
+// The previous code read `c.price_change_7d || c.change_7d || 0`. NEITHER field exists in the
+// response, so every non-MTG card arrived with change7d = 0. See MAX_SANE_CHANGE_PCT below for
+// why simply correcting the field name is not enough on its own.
+const TCG_CHANGE_FIELD = 'price_change';
+
+// A 7-day move above this is a broken baseline, not a market movement, and must not be
+// reported as one. Every card the endpoint returned on 9 August had a near-zero previous
+// price: Entei Star $0.99 to $800.50, Energy Retrieval $0.97 to $38.46, Patrat $0.01 to $0.34.
+// The endpoint sorts by percentage, so artifacts dominate it structurally. Correcting the field
+// name WITHOUT this ceiling would have swapped "up 0.0 per cent" for a confident
+// "up 80,758.59 per cent", which is worse because it reads as authoritative.
+const MAX_SANE_CHANGE_PCT = 300;
+
+// Matches the floor mtgMovers already applies (`price_aud=gt.1`). A 34 cent card is not a
+// market story on any game, and this keeps one rule across MTG and the external feeds rather
+// than inventing a second convention.
+const MIN_PRICE_AUD = 1;
+
+async function tcgMovers(game,direction,limit,rate){
   if(!TCGAPI_KEY)return[];
   const g=TCG_API_GAME_MAP[game]; if(!g)return[];
   try{
     const res=await timedFetch(`${TCGAPI_BASE}/prices/top-movers?game=${g}&direction=${direction}&period=7d&limit=${limit}`,{headers:{'X-API-Key':TCGAPI_KEY}});
-    if(!res.ok)return[];
+    if(!res.ok){
+      console.warn(`[weekly-core] tcgMovers ${game}/${direction} HTTP ${res.status}, contributing nothing`);
+      return[];
+    }
     const d=await res.json();
-    return (d.data||[]).map(c=>({
-      name:c.name||c.card_name||'', setName:c.set_name||c.set||'',
-      priceAud:((c.market_price||c.price||0)*1.45).toFixed(2),
-      change7d:c.price_change_7d||c.change_7d||0, rarity:c.rarity||'',
-      slug:c.slug||'', game,
-    }));
-  }catch{return[];}
+    const raw=(d.data||[]);
+    const mapped=raw.map(c=>{
+      const usd=Number(c.market_price ?? c.price);
+      const pct=Number(c[TCG_CHANGE_FIELD]);
+      if(!Number.isFinite(usd)||usd<=0)return null;          // no price is not a price of zero
+      if(!Number.isFinite(pct)||pct===0)return null;          // no movement is not a movement of zero
+      if(Math.abs(pct)>MAX_SANE_CHANGE_PCT)return null;       // broken baseline, not a mover
+      const aud=usd*rate;
+      if(aud<MIN_PRICE_AUD)return null;
+      return {
+        name:c.name||c.card_name||'', setName:c.set_name||c.set||'',
+        priceAud:aud.toFixed(2),
+        change7d:Number(pct.toFixed(1)), rarity:c.rarity||'',
+        slug:c.slug||'', game,
+      };
+    }).filter(Boolean);
+    if(raw.length&&!mapped.length){
+      console.warn(`[weekly-core] tcgMovers ${game}/${direction}: all ${raw.length} row(s) rejected as unusable (zero price, zero change, above ${MAX_SANE_CHANGE_PCT}% or below AU$${MIN_PRICE_AUD})`);
+    }
+    return mapped;
+  }catch(err){
+    console.warn(`[weekly-core] tcgMovers ${game}/${direction} threw: ${err.message}`);
+    return[];
+  }
 }
 async function mtgMovers(direction,limit){
   try{
@@ -307,17 +355,49 @@ async function sendBatch(items, listUnsubscribe = LIST_UNSUBSCRIBE){
 }
 // Pull the week's movers and buy/sell signals. Identical logic to the paid report.
 export async function fetchMarketData() {
+  // One rate lookup for the whole email, so every price in a single send is converted at the
+  // same number. Replaces the hardcoded 1.45 that was inside tcgMovers.
+  const fx = await getFxRate();
+  if (fx.source !== 'site_config') {
+    console.warn(`[weekly-core] FX rate came from the emergency fallback (${fx.rate}), not site_config. Prices in this email are approximate.`);
+  }
+
   const r = await Promise.allSettled([
     mtgMovers('up',6), mtgMovers('down',6), mtgBuy(6), mtgSell(6),
-    tcgMovers('pokemon','gainers',4), tcgMovers('pokemon','losers',4),
-    tcgMovers('onepiece','gainers',3), tcgMovers('onepiece','losers',3),
-    tcgMovers('lorcana','gainers',3), tcgMovers('lorcana','losers',3),
-    tcgMovers('riftbound','gainers',3), tcgMovers('riftbound','losers',3),
+    tcgMovers('pokemon','gainers',4,fx.rate), tcgMovers('pokemon','losers',4,fx.rate),
+    tcgMovers('onepiece','gainers',3,fx.rate), tcgMovers('onepiece','losers',3,fx.rate),
+    tcgMovers('lorcana','gainers',3,fx.rate), tcgMovers('lorcana','losers',3,fx.rate),
+    tcgMovers('riftbound','gainers',3,fx.rate), tcgMovers('riftbound','losers',3,fx.rate),
   ]);
   const v = i => r[i].status === 'fulfilled' ? r[i].value : [];
-  const up   = [v(0),v(4),v(6),v(8),v(10)].flat().sort((a,b)=>Math.abs(b.change7d)-Math.abs(a.change7d)).slice(0,8);
-  const down = [v(1),v(5),v(7),v(9),v(11)].flat().sort((a,b)=>a.change7d-b.change7d).slice(0,6);
-  return { up, down, buy: v(2), sell: v(3) };
+
+  // MTG returning nothing is a FAULT, not a quiet condition. It is the lead game, and on
+  // 8 August it contributed nothing to a live send while nobody knew: mtg_price_snapshots is
+  // missing 29 July to 3 August, so the 7-days-ago snapshot mtgMovers requires did not exist
+  // and it bailed. That silence is what let a Pokemon card with a 0.0 per cent change become
+  // the subject line. It is now visible in the logs.
+  if (!v(0).length && !v(1).length) {
+    console.warn('[weekly-core] FAULT: mtgMovers returned nothing for BOTH directions. MTG is the lead game and is contributing nothing to this email. Most likely cause is a gap in mtg_price_snapshots at the 7-days-ago date. See C3L-130 and the 29 Jul to 3 Aug gap.');
+  }
+
+  // The direction the API was ASKED for is not trusted, only the sign of the number it
+  // returned. Found by the dry-run of this very change: `direction=losers` came back carrying
+  // the same onepiece and riftbound cards as `direction=gainers`, all with POSITIVE changes,
+  // so the "biggest fallers" section of the email was about to list four risers. Filtering on
+  // the sign makes the two lists mean what their headings say regardless of what the upstream
+  // direction parameter does.
+  const up   = [v(0),v(4),v(6),v(8),v(10)].flat()
+    .filter(c => Number(c.change7d) > 0)
+    .sort((a,b)=>Math.abs(b.change7d)-Math.abs(a.change7d)).slice(0,8);
+  const down = [v(1),v(5),v(7),v(9),v(11)].flat()
+    .filter(c => Number(c.change7d) < 0)
+    .sort((a,b)=>a.change7d-b.change7d).slice(0,6);
+
+  if (!down.length) {
+    console.warn('[weekly-core] no genuine fallers this week: every row the losers endpoints returned was either unusable or actually a riser.');
+  }
+
+  return { up, down, buy: v(2), sell: v(3), fx };
 }
 
 export { buildEmail, plainText, sendBatch, FROM_EMAIL, FROM_NAME, LIST_UNSUBSCRIBE, SUPPORT_EMAIL, RESEND_API_KEY };
