@@ -4,6 +4,13 @@
 // Upserts into yugioh_sets, yugioh_cards, yugioh_price_snapshots
 
 import { assignStableSlugs } from './shared/slug-assign.mjs';
+import {
+  makeBudget,
+  loadSetProgress,
+  orderSetsByStaleness,
+  markSetSynced,
+  rotationSummary
+} from './shared/sync-rotation.mjs';
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -14,6 +21,24 @@ const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
 const ENRICH_MAX_PER_RUN   = 1500;
+const PROGRESS_TABLE       = 'yugioh_sync_progress';
+
+// C3L-134. This sync used to walk all 615 sets in a fixed order with no time limit, so Netlify
+// killed it at 900s, three times a night, and it never once reached either its success or its
+// error line: 21 starts and zero outcomes in 7 days. Worse, each retry restarted from the SAME
+// position, so the same head sets were refreshed repeatedly and the tail starved. Measured on
+// 9 August: 248 of 615 sets refreshed that day, while 365 sets holding about 21,500 cards were
+// last written between 7 June and 11 July. max(yugioh_cards.updated_at) still read "today",
+// which is why nothing noticed.
+//
+// Ordering by staleness makes the three attempts add up instead of repeat, and the budget means
+// the run ends by choosing to rather than by being killed. See shared/sync-rotation.mjs.
+const ROTATION_BUDGET_MS   = 720_000;
+
+// Yu-Gi-Oh sets are smaller on average than Pokemon's (47,071 cards across 615 sets, about 77
+// each, against Pokemon's 135) so the per-set reservation is lower. Still deliberately
+// pessimistic against the largest sets rather than set to the average.
+const SET_ESTIMATE_MS      = 20_000;
 
 function slugify(name, number, setAbbr) {
   const base = name
@@ -256,13 +281,52 @@ export default async (req) => {
       await supabaseUpsert('yugioh_sets', setRows.slice(i, i + 100));
     }
 
-    // Step 3: For each set, fetch cards + prices
+    // Step 3: Refresh cards + prices, most stale set first, until the budget is spent.
+    //
+    // yugioh_sync_progress already existed with the right two columns but was never read: it
+    // holds 611 rows all stamped 2026-05-15 and nothing has touched it since. It is now the
+    // rotation's ordering key, which is what makes a killed or budget-stopped run resume from
+    // where it stopped rather than from the top.
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
     let enrichCount = 0;
+    let setCount = 0;
 
-    for (const set of allSets) {
+    const setProgress = await loadSetProgress({
+      table: PROGRESS_TABLE,
+      supabaseUrl: SUPABASE_URL,
+      serviceKey: SUPABASE_SERVICE_KEY,
+      logPrefix: '[sync-yugioh]'
+    });
+    const rotationOrder = orderSetsByStaleness(allSets, setProgress);
+
+    // Sample mode: manual invocation only, so a scheduled run cannot be silently capped.
+    const url = new URL(req.url);
+    const maxSetsParam = parseInt(url.searchParams.get('maxSets') ?? '', 10);
+    const maxSets = (!isScheduled && Number.isFinite(maxSetsParam) && maxSetsParam > 0)
+      ? maxSetsParam
+      : rotationOrder.length;
+    if (maxSets < rotationOrder.length) {
+      console.log(`[sync-yugioh] SAMPLE MODE: limiting to ${maxSets} of ${rotationOrder.length} sets`);
+    }
+
+    const oldestStamp = s => (setProgress.has(s.id) ? new Date(setProgress.get(s.id)).toISOString().slice(0, 10) : 'never');
+    console.log(`[sync-yugioh] rotation: ${setProgress.size} stamps, order head: ` +
+      rotationOrder.slice(0, 3).map(s => `${s.name} (${oldestStamp(s)})`).join(', '));
+
+    const budget = makeBudget(ROTATION_BUDGET_MS);
+    let deferredFirst = null;
+
+    for (const set of rotationOrder) {
+      // Checked BEFORE the set is started, so no set is begun that cannot be finished and no
+      // card write is left half-applied by a kill.
+      if (setCount >= maxSets || budget.cannotFit(SET_ESTIMATE_MS)) {
+        if (!deferredFirst) deferredFirst = set;
+        continue;
+      }
+      setCount++;
+
       const setCards = [];
       let cardPage = 1;
       while (cardPage <= MAX_PAGES) {
@@ -272,7 +336,12 @@ export default async (req) => {
         if (cards.length < 100) break;
         cardPage++;
       }
-      if (!setCards.length) continue;
+      // Stamp even an empty set, otherwise it stays permanently at the head of the staleness
+      // queue and is retried first every single night while real sets wait behind it.
+      if (!setCards.length) {
+        await markSetSynced({ table: PROGRESS_TABLE, setId: set.id, supabaseUrl: SUPABASE_URL, serviceKey: SUPABASE_SERVICE_KEY, logPrefix: '[sync-yugioh]' });
+        continue;
+      }
 
       // Card Details: existing enrichment for this set (preserve on upsert, skip re-fetch)
       const enrichedMap = new Map();
@@ -389,13 +458,25 @@ export default async (req) => {
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
-      console.log(`[sync-yugioh] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      await markSetSynced({ table: PROGRESS_TABLE, setId: set.id, supabaseUrl: SUPABASE_URL, serviceKey: SUPABASE_SERVICE_KEY, logPrefix: '[sync-yugioh]' });
+      console.log(`[sync-yugioh] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots (${budget.elapsedS()}s)`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-yugioh] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
-    await logSyncEvent('sync_success', totalCards);
-    return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
+
+    // C3L-134. Without this line a run that covered 248 of 615 sets and a run that was killed
+    // after 248 are indistinguishable from outside. summary is null on a complete rotation.
+    const summary = rotationSummary({
+      refreshed: setCount,
+      total: maxSets,
+      budgetMs: budget.elapsedMs(),
+      oldestRemaining: deferredFirst ? oldestStamp(deferredFirst) : null
+    });
+
+    console.log(`[sync-yugioh] Done. ${setCount} sets, ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
+    if (summary) console.log(`[sync-yugioh] ${summary}`);
+    await logSyncEvent('sync_success', totalCards, summary);
+    return new Response(JSON.stringify({ setsRefreshed: setCount, cards: totalCards, snapshots: totalSnaps, elapsed, rotation: summary }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

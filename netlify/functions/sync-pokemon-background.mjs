@@ -7,6 +7,13 @@
 //   snapshot writes run for ALL sets every day regardless
 
 import { assignStableSlugs } from './shared/slug-assign.mjs';
+import {
+  makeBudget,
+  loadSetProgress,
+  orderSetsByStaleness,
+  markSetSynced as markSetRotated,
+  rotationSummary
+} from './shared/sync-rotation.mjs';
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -17,6 +24,26 @@ const GAME_SLUG            = 'pokemon';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
+const PROGRESS_TABLE       = 'pokemon_sync_progress';
+
+// C3L-133. Card writes used to be gated on "is this set new", which froze market_price for
+// 215 of 235 sets from 14 May 2026 onward while the sync kept reporting success nightly.
+// They are now gated on a wall-clock budget instead, in staleness order, so the catalogue
+// rotates rather than latching. See shared/sync-rotation.mjs for why this shape.
+//
+// Netlify kills a background function at 900s. Pass A (full refresh from tcgapi.dev) gets 600s
+// and Pass B (the cheap snapshot-only pass over everything Pass A did not reach) gets until
+// 780s, leaving 120s of headroom. Overrunning is not merely slow: the process is killed, so
+// neither the success nor the error line runs and the whole run goes silent, which is C3L-134.
+const ROTATION_BUDGET_MS   = 600_000;
+const TOTAL_BUDGET_MS      = 780_000;
+
+// Checked BEFORE a set is started, never after, so a set is never begun that cannot finish and
+// no card write is ever left half-applied. Measured, not guessed: the 29 July run did 16 sets
+// with full card writes in roughly 20 seconds of its own work, and the slowest sets are the
+// large modern ones at several hundred cards, so 25s is a deliberately pessimistic per-set
+// reservation rather than an average.
+const SET_ESTIMATE_MS      = 25_000;
 
 // --- Helpers ---
 
@@ -240,39 +267,21 @@ async function fetchPokemonTCGPricesForSet(pokemonSetId) {
 }
 
 // --- Progress tracking ---
-
-async function getAlreadySyncedSetIds() {
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/pokemon_sync_progress?select=set_id&limit=1000`,
-    {
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
-      }
-    }
-  );
-  if (!res.ok) {
-    console.error('[sync-pokemon] Could not fetch sync progress, will do full sync');
-    return new Set();
-  }
-  const rows = await res.json();
-  return new Set(rows.map(r => r.set_id));
-}
+//
+// pokemon_sync_progress is KEPT and still written on every refresh, but it no longer decides
+// what gets synced. Its synced_at column is now purely an ordering key: oldest first. The old
+// behaviour, where the mere presence of a row excluded a set permanently, is C3L-133 and is
+// what froze the catalogue. Reading and writing it now goes through shared/sync-rotation.mjs
+// so the two games using this pattern cannot drift apart.
 
 async function markSetSynced(setId) {
-  await fetch(
-    `${SUPABASE_URL}/rest/v1/pokemon_sync_progress`,
-    {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates,return=minimal'
-      },
-      body: JSON.stringify({ set_id: setId, synced_at: new Date().toISOString() })
-    }
-  );
+  await markSetRotated({
+    table: PROGRESS_TABLE,
+    setId,
+    supabaseUrl: SUPABASE_URL,
+    serviceKey: SUPABASE_SERVICE_KEY,
+    logPrefix: '[sync-pokemon]'
+  });
 }
 
 // --- Main ---
@@ -307,8 +316,13 @@ export default async (req) => {
     ]);
     console.log(`[sync-pokemon] AUD rate: ${audRate}, pokemontcg.io set map: ${pokemonTCGSetMap.size} entries`);
 
-    const syncedSetIds = await getAlreadySyncedSetIds();
-    console.log(`[sync-pokemon] ${syncedSetIds.size} sets already synced`);
+    const setProgress = await loadSetProgress({
+      table: PROGRESS_TABLE,
+      supabaseUrl: SUPABASE_URL,
+      serviceKey: SUPABASE_SERVICE_KEY,
+      logPrefix: '[sync-pokemon]'
+    });
+    console.log(`[sync-pokemon] rotation: ${setProgress.size} sets carry a last-refreshed stamp`);
 
     // Step 1: Fetch all sets
     console.log('[sync-pokemon] Fetching sets...');
@@ -339,7 +353,11 @@ export default async (req) => {
     }
     console.log(`[sync-pokemon] Upserted ${setRows.length} sets`);
 
-    // Step 3: For each set, fetch cards + prices
+    // Step 3: PASS A. Refresh cards + prices, most stale set first, until the budget is spent.
+    //
+    // Every set is eligible on every run. What limits the work is the clock, not a flag, which
+    // is the whole of the C3L-133 fix: a set that misses today's budget sits at the front of
+    // tomorrow's queue instead of being excluded forever.
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
@@ -347,72 +365,42 @@ export default async (req) => {
     let setCount = 0;
     let skippedCount = 0;
 
-    for (const set of allSets) {
-      const isNewSet = !syncedSetIds.has(set.id);
+    const rotationOrder = orderSetsByStaleness(allSets, setProgress);
 
+    // Sample mode, for verifying a change on a handful of sets before letting it touch the
+    // catalogue. Manual invocation only: a scheduled run has no secret header and cannot reach
+    // it, so the nightly job can never be silently capped by a stray query string.
+    const url = new URL(req.url);
+    const maxSetsParam = parseInt(url.searchParams.get('maxSets') ?? '', 10);
+    const maxSets = (!isScheduled && Number.isFinite(maxSetsParam) && maxSetsParam > 0)
+      ? maxSetsParam
+      : rotationOrder.length;
+    if (maxSets < rotationOrder.length) {
+      console.log(`[sync-pokemon] SAMPLE MODE: limiting Pass A to ${maxSets} of ${rotationOrder.length} sets`);
+    }
+
+    const oldestStamp = s => (setProgress.has(s.id) ? new Date(setProgress.get(s.id)).toISOString().slice(0, 10) : 'never');
+    console.log(`[sync-pokemon] rotation order head: ` +
+      rotationOrder.slice(0, 3).map(s => `${s.name} (${oldestStamp(s)})`).join(', '));
+
+    const budget = makeBudget(ROTATION_BUDGET_MS);
+    const refreshedSetIds = new Set();
+    const deferred = [];
+
+    for (const set of rotationOrder) {
       // Resolve pokemontcg.io set ID via name first, then abbreviation fallback
       const setNameKey   = (set.name || '').toLowerCase().trim();
       const setAbbrKey   = (set.abbreviation || '').toLowerCase().trim();
       const pokemonSetId = pokemonTCGSetMap.get(setNameKey) || pokemonTCGSetMap.get(setAbbrKey) || null;
 
-      if (!isNewSet) {
+      // Checked BEFORE the set is started, so a set is never begun that cannot be finished.
+      if (refreshedSetIds.size >= maxSets || budget.cannotFit(SET_ESTIMATE_MS)) {
         skippedCount++;
-
-        // SNAPSHOT DECOUPLING FIX:
-        // Card data writes are gated on sync progress (isNewSet).
-        // Snapshot writes must run for EVERY set EVERY day regardless.
-        // For already-synced sets: fetch pokemontcg.io prices and write today's snapshots
-        // using market_price already stored in pokemon_cards.
-        try {
-          const ptcgPrices = pokemonSetId ? await fetchPokemonTCGPricesForSet(pokemonSetId) : new Map();
-
-          const existingRes = await fetch(
-            `${SUPABASE_URL}/rest/v1/pokemon_cards?set_id=eq.${set.id}&select=id,name,number,market_price&limit=1000`,
-            { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } }
-          );
-          if (existingRes.ok) {
-            const existingCards = await existingRes.json();
-            const snapRows = [];
-            for (const card of existingCards) {
-              const mp = card.market_price ? parseFloat(card.market_price) : null;
-              if (!mp || mp < 0.50) continue;
-              const key  = `${(card.name || '').toLowerCase().trim()}|${(card.number || '').toLowerCase().trim()}`;
-              const ptcg = ptcgPrices.get(key) || {};
-              snapRows.push({
-                card_id:       card.id,
-                snapshot_date: today,
-                market_price:  mp,
-                price_aud:     parseFloat((mp * audRate).toFixed(2)),
-                aud_rate:      audRate,
-                tcg_low:             ptcg.tcg_low             ?? null,
-                tcg_mid:             ptcg.tcg_mid             ?? null,
-                tcg_market:          ptcg.tcg_market          ?? null,
-                tcg_direct_low:      ptcg.tcg_direct_low      ?? null,
-                holofoil_low:        ptcg.holofoil_low        ?? null,
-                holofoil_mid:        ptcg.holofoil_mid        ?? null,
-                holofoil_market:     ptcg.holofoil_market     ?? null,
-                reverse_holo_low:    ptcg.reverse_holo_low    ?? null,
-                reverse_holo_mid:    ptcg.reverse_holo_mid    ?? null,
-                reverse_holo_market: ptcg.reverse_holo_market ?? null,
-                cardmarket_low:      ptcg.cardmarket_low      ?? null,
-                cardmarket_trend:    ptcg.cardmarket_trend    ?? null,
-                cardmarket_avg7:     ptcg.cardmarket_avg7     ?? null,
-                cardmarket_avg30:    ptcg.cardmarket_avg30    ?? null,
-              });
-            }
-            for (let i = 0; i < snapRows.length; i += 500) {
-              await supabaseUpsertSnapshots('pokemon_price_snapshots', snapRows.slice(i, i + 500));
-            }
-            totalSnaps += snapRows.length;
-          }
-        } catch (e) {
-          if (e.message.includes('Rate limit low')) throw e;
-          console.error(`[sync-pokemon] Snapshot-only pass failed for set ${set.id}:`, e.message);
-        }
+        deferred.push({ set, pokemonSetId });
         continue;
       }
 
-      // New set -- full card + snapshot write
+      // Full card + snapshot write
       setCount++;
       if (setCount % 10 === 0) {
         const elapsed = ((Date.now() - start) / 1000).toFixed(1);
@@ -550,14 +538,93 @@ export default async (req) => {
 
       totalCards += cardRows.length;
       totalSnaps += snapRows.length;
+      refreshedSetIds.add(set.id);
       await markSetSynced(set.id);
-      console.log(`[sync-pokemon] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      console.log(`[sync-pokemon] Set ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots (${budget.elapsedS()}s)`);
+    }
+
+    console.log(`[sync-pokemon] Pass A done: ${setCount} sets refreshed, ${skippedCount} deferred, ${budget.elapsedS()}s of ${ROTATION_BUDGET_MS / 1000}s budget`);
+
+    // Step 4: PASS B. Snapshot-only, for every set Pass A did not reach.
+    //
+    // This keeps the daily price history continuous while the rotation works through the
+    // catalogue. It writes the market_price already stored in pokemon_cards, so for a set that
+    // has not been refreshed yet the row it writes repeats yesterday's figure. That is a known
+    // and accepted property, NOT a second copy of C3L-133: under the old code EVERY set was in
+    // this state permanently, whereas now each one leaves it as the rotation reaches it.
+    // It costs no tcgapi.dev quota, which is why it can cover the whole remainder cheaply.
+    for (const { set, pokemonSetId } of deferred) {
+      if (Date.now() - start >= TOTAL_BUDGET_MS) {
+        console.warn(`[sync-pokemon] Pass B stopped at the total budget with ${deferred.length} sets queued`);
+        break;
+      }
+      try {
+        const ptcgPrices = pokemonSetId ? await fetchPokemonTCGPricesForSet(pokemonSetId) : new Map();
+
+        const existingRes = await fetch(
+          `${SUPABASE_URL}/rest/v1/pokemon_cards?set_id=eq.${set.id}&select=id,name,number,market_price&limit=1000`,
+          { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } }
+        );
+        if (existingRes.ok) {
+          const existingCards = await existingRes.json();
+          const snapRows = [];
+          for (const card of existingCards) {
+            const mp = card.market_price ? parseFloat(card.market_price) : null;
+            if (!mp || mp < 0.50) continue;
+            const key  = `${(card.name || '').toLowerCase().trim()}|${(card.number || '').toLowerCase().trim()}`;
+            const ptcg = ptcgPrices.get(key) || {};
+            snapRows.push({
+              card_id:       card.id,
+              snapshot_date: today,
+              market_price:  mp,
+              price_aud:     parseFloat((mp * audRate).toFixed(2)),
+              aud_rate:      audRate,
+              tcg_low:             ptcg.tcg_low             ?? null,
+              tcg_mid:             ptcg.tcg_mid             ?? null,
+              tcg_market:          ptcg.tcg_market          ?? null,
+              tcg_direct_low:      ptcg.tcg_direct_low      ?? null,
+              holofoil_low:        ptcg.holofoil_low        ?? null,
+              holofoil_mid:        ptcg.holofoil_mid        ?? null,
+              holofoil_market:     ptcg.holofoil_market     ?? null,
+              reverse_holo_low:    ptcg.reverse_holo_low    ?? null,
+              reverse_holo_mid:    ptcg.reverse_holo_mid    ?? null,
+              reverse_holo_market: ptcg.reverse_holo_market ?? null,
+              cardmarket_low:      ptcg.cardmarket_low      ?? null,
+              cardmarket_trend:    ptcg.cardmarket_trend    ?? null,
+              cardmarket_avg7:     ptcg.cardmarket_avg7     ?? null,
+              cardmarket_avg30:    ptcg.cardmarket_avg30    ?? null,
+            });
+          }
+          for (let i = 0; i < snapRows.length; i += 500) {
+            await supabaseUpsertSnapshots('pokemon_price_snapshots', snapRows.slice(i, i + 500));
+          }
+          totalSnaps += snapRows.length;
+        }
+      } catch (e) {
+        if (e.message.includes('Rate limit low')) throw e;
+        console.error(`[sync-pokemon] Snapshot-only pass failed for set ${set.id}:`, e.message);
+      }
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    console.log(`[sync-pokemon] Done. ${setCount} new sets, ${skippedCount} skipped. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
-    await logSyncEvent('sync_success', totalCards);
-    return new Response(JSON.stringify({ ok: true, cards: totalCards, snapshots: totalSnaps, elapsed, failedSets, failedSetCount: failedSets.length }), {
+
+    // C3L-134. A run that covered 42 of 235 sets and a run that was killed after 42 look
+    // identical from outside unless the run says which it was. summary is null on a complete
+    // rotation, so a full run records nothing misleading.
+    const oldestRemaining = deferred.length
+      ? oldestStamp(deferred[0].set)
+      : null;
+    const summary = rotationSummary({
+      refreshed: setCount,
+      total: maxSets,
+      budgetMs: budget.elapsedMs(),
+      oldestRemaining
+    });
+
+    console.log(`[sync-pokemon] Done. ${setCount} sets refreshed, ${skippedCount} snapshot-only. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
+    if (summary) console.log(`[sync-pokemon] ${summary}`);
+    await logSyncEvent('sync_success', totalCards, summary);
+    return new Response(JSON.stringify({ ok: true, setsRefreshed: setCount, setsDeferred: skippedCount, cards: totalCards, snapshots: totalSnaps, elapsed, rotation: summary, failedSets, failedSetCount: failedSets.length }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
