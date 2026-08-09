@@ -4,6 +4,7 @@ import { viewTrackingScript } from './shared/view-tracking.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
 import { cardPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/warhammer-card-page.mjs
 // Serves /cards/warhammer/:slug
 // If slug starts with sets/, renders the set page inline (routing fix)
@@ -66,6 +67,10 @@ function setNotFoundPage(setSlug) {
 }
 
 async function handleSetPage(setSlug, htmlHeaders) {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   const accent = '#B71C1C';
   const [_psr0, _psr1] = await Promise.allSettled([
     supabaseGet(`warhammer_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`),
@@ -85,7 +90,7 @@ async function handleSetPage(setSlug, htmlHeaders) {
   const cards = _psr2.status === 'fulfilled' ? _psr2.value : [];
   const ebayListings = _psr3.status === 'fulfilled' ? _psr3.value : [];
 
-  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
+  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * audRate : 0;
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
   const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
   const sealedCards = (cards || []).filter(c => !isSingles(c));
@@ -200,6 +205,10 @@ function esc(str) {
 }
 
 export default async (req) => {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
   // be rejected must not first cost a Supabase round trip and a full render.
   const _t = await checkThrottle(req);
@@ -226,7 +235,7 @@ export default async (req) => {
     const _setRows = card.set_id ? await supabaseGet(`warhammer_sets?id=eq.${card.set_id}&limit=1&select=slug`).catch(() => []) : [];
     const setUrl = (Array.isArray(_setRows) && _setRows[0] && _setRows[0].slug) ? `/cards/warhammer/sets/${_setRows[0].slug}` : `/cards/warhammer`;
 
-    const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * 1.45 : null);
+    const priceAud = parseFloat(card.price_aud) || (card.market_price ? card.market_price * audRate : null);
     const pageUrl = encodeURIComponent(`https://cardsoncardsoncards.com.au/cards/warhammer/${card.slug}`);
     const shareText = encodeURIComponent(`${card.name} Warhammer TCG Card Game -- ${priceAud ? 'AU$'+priceAud.toFixed(2) : 'check price'} on Cards on Cards on Cards`);
     const ebaySearchUrl = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(card.name+' warhammer tcg card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
@@ -255,7 +264,7 @@ export default async (req) => {
       <h2 style="font-size:18px;margin-bottom:16px;font-family:'Cinzel',serif">More from ${card.set_name || 'this Set'}</h2>
       <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none">
         ${relatedCards.map(c => {
-          const rAud = parseFloat(c.price_aud) || (c.market_price ? c.market_price * 1.45 : 0);
+          const rAud = parseFloat(c.price_aud) || (c.market_price ? c.market_price * audRate : 0);
           return `<a href="/cards/warhammer/${c.slug}" style="flex:0 0 130px;background:#161929;border:1px solid #252840;border-radius:8px;padding:8px;text-decoration:none">
             ${c.image_url ? `<img src="${c.image_url}" alt="${esc(c.name)}" loading="lazy" style="width:100%;border-radius:5px">` : ''}
             <div style="font-size:10px;color:#F0F2FF;margin-top:5px;line-height:1.3">${esc(c.name)}</div>

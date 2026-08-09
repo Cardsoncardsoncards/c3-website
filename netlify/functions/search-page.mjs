@@ -1,5 +1,6 @@
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/search-page.mjs
 // Serves: /search?q=lightning+bolt
 // Full search results page across all 32 games with card pages
@@ -62,6 +63,10 @@ async function resolveWsSetIds(property) {
 }
 
 async function searchGame(cfg, query, limit, extraFilter = '') {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   // ilike value appended manually - URLSearchParams.set encodes * to %2A breaking PostgREST wildcard
   const baseUrl = new URL(`${SUPABASE_URL}/rest/v1/${cfg.table}`);
   baseUrl.searchParams.set('select', `slug,name,${cfg.imgCol},${cfg.priceCol},set_name,rarity`);
@@ -80,7 +85,7 @@ async function searchGame(cfg, query, limit, extraFilter = '') {
     const data = await res.json();
     return (Array.isArray(data) ? data : []).map(card => {
       const rawPrice = card[cfg.priceCol] ? parseFloat(card[cfg.priceCol]) : null;
-      const priceAud = rawPrice ? (cfg.isAud ? rawPrice : rawPrice * 1.45) : null;
+      const priceAud = rawPrice ? (cfg.isAud ? rawPrice : rawPrice * audRate) : null;
       return {
         slug:      card.slug,
         name:      card.name,

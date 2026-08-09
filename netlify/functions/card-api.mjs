@@ -37,6 +37,7 @@ import { FOLLOW_GAMES, GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared
 // One shared definition of what we record about the incoming request, so this file and
 // account.mjs capture the same fields the same way instead of each inventing its own.
 import { requestFingerprint } from './shared/request-fingerprint.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -963,6 +964,10 @@ function getEbayUrls(cardName, game = 'mtg') {
 
 // --- Random card draw ---
 async function handleRandomCard(req) {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   const url = new URL(req.url);
   const game = url.searchParams.get('game') || 'mtg';
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '3'), 10);
@@ -999,7 +1004,7 @@ async function handleRandomCard(req) {
       name: c[cfg.nameCol],
       image: c[cfg.imgCol],
       price_usd: c[cfg.priceCol] || null,
-      price_aud: c.price_aud || (c[cfg.priceCol] ? (c[cfg.priceCol] * 1.45).toFixed(2) : null),
+      price_aud: c.price_aud || (c[cfg.priceCol] ? (c[cfg.priceCol] * audRate).toFixed(2) : null),
       set_name: c.set_name || '',
       rarity: c.rarity || '',
       extra: { type: c.type_line || c.type || '', color: c.color_identity || c.ink || c.attribute || '', ink: c.ink || '' },

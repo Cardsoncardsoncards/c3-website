@@ -1,4 +1,5 @@
 // netlify/functions/shared/price-chart.mjs
+import { EMERGENCY_FALLBACK_RATE } from './fx-rate.mjs';
 // Single-line interactive price-history chart, ported verbatim from MTG's
 // buildPriceChart in card-page.mjs with the foil series removed (no non-MTG game
 // has foil price data -- foil_price_aud / foil_price are 0 across all 22 games).
@@ -17,7 +18,11 @@ function audValue(p, fxRate) {
   return m > 0 ? m * fxRate : 0;
 }
 
-export function priceChartHtml(snapshots, fxRate = 1.45) {
+// The default is the single labelled emergency constant rather than a second hardcoded
+// literal, so there is one number to change and it is already the closer one. Every one of
+// the 24 call sites relies on this default, though audValue prefers stored price_aud and
+// only reaches the rate when a snapshot has none. C3L-130 shape 2.
+export function priceChartHtml(snapshots, fxRate = EMERGENCY_FALLBACK_RATE) {
   if (!snapshots || snapshots.length < 2) return '';
   const points = snapshots.slice(-90);
   const prices = points.map(p => audValue(p, fxRate));

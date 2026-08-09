@@ -6,6 +6,7 @@ import { EBAY_PARAM_SUFFIX } from './shared/ebay-link.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 import { BASE_STYLES } from './shared/mtg-base-styles.mjs';
 import { htmlCacheHeaders } from './shared/cache-headers.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/card-index.mjs
 // Serves ONE route:
 // /cards/mtg/sets/:setSlug - MTG set index pages
@@ -77,7 +78,9 @@ async function supabaseGet(path) {
 // mtg-random-commander.mjs can share it without duplication.
 
 // MTG Card Hub Page
-function renderCardHub(sets, topCards) {
+// audRate is threaded in as a parameter rather than awaited here: this function is
+// synchronous and module level, so it has no async scope to close over. C3L-130 shape 2.
+function renderCardHub(sets, topCards, audRate) {
 
   // Group sets: parent sets (no parent_set_code) are top-level
   // Sub-sets (have parent_set_code) are children of their parent
@@ -127,7 +130,7 @@ function renderCardHub(sets, topCards) {
     <a href="/cards/mtg/${c.slug}" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;transition:border-color 0.2s" onmouseover="this.style.borderColor='#f5a623'" onmouseout="this.style.borderColor='#2d3254'">
       ${c.image_uri_small ? `<img src="${c.image_uri_small}" alt="${escAttr(c.name)}" style="width:100%;border-radius:6px">` : `<div style="height:80px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:11px">${c.name}</div>`}
       <div style="font-size:11px;margin-top:4px;color:var(--text)">${c.name}</div>
-      <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * 1.45).toFixed(0)}` : ''}</div>
+      <div style="font-size:12px;color:var(--accent);font-weight:bold">${(c.price_usd && c.price_usd >= 3) ? `~AU$${(c.price_aud > 0 ? parseFloat(c.price_aud) : c.price_usd * audRate).toFixed(0)}` : ''}</div>
     </a>`).join('');
 
   return `<!DOCTYPE html>
@@ -286,7 +289,7 @@ async function searchCard() {
     const data = await resp.json();
     if (!data.length) { res.innerHTML = '<p style="color:var(--text2)">No cards found. <a href="https://www.ebay.com.au/sch/i.html?_nkw=' + encodeURIComponent(q + ' mtg') + '&${EBAY_PARAM_SUFFIX}" target="_blank">Search eBay AU →</a></p>'; return; }
     res.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px">' +
-      data.map(c => '<a href="/cards/mtg/' + c.slug + '" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block"><img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '"><div style="font-size:11px;margin-top:4px">' + c.name + '</div><div style="font-size:12px;color:var(--accent)">' + (c.price_usd ? '~AU$' + (c.price_usd * 1.45).toFixed(0) : '') + '</div></a>').join('') + '</div>';
+      data.map(c => '<a href="/cards/mtg/' + c.slug + '" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block"><img src="' + (c.image_uri_small || '') + '" style="width:100%;border-radius:4px" alt="' + c.name + '"><div style="font-size:11px;margin-top:4px">' + c.name + '</div><div style="font-size:12px;color:var(--accent)">' + (c.price_usd ? '~AU$' + (c.price_usd * ${audRate}).toFixed(0) : '') + '</div></a>').join('') + '</div>';
   } catch { clearTimeout(timer); res.innerHTML = '<p style="color:#f44">Search error. Try again.</p>'; }
 }
 
@@ -414,6 +417,8 @@ function closeDrawer() {
 
 // Set Index Page - P2 rebuild with full filter system
 async function renderSetIndex(setSlug) {
+  // C3L-130 shape 2. Live rate for this render path.
+  const audRate = await fxRate();
   const sets = await supabaseGet(`mtg_sets?set_slug=eq.${setSlug}&limit=1&select=set_code,set_name,set_type,release_date,card_count,amazon_asin,parent_set_code,set_slug`);
   if (!sets || !sets[0]) return null;
   const set = sets[0];
@@ -474,7 +479,7 @@ async function renderSetIndex(setSlug) {
   // Helper: convert price_usd to AUD
   const toAud = (c) => {
     if (c.price_aud && c.price_aud > 0) return parseFloat(c.price_aud);
-    if (c.price_usd && c.price_usd > 0) return parseFloat(c.price_usd) * 1.45;
+    if (c.price_usd && c.price_usd > 0) return parseFloat(c.price_usd) * audRate;
     return 0;
   };
 
@@ -975,7 +980,8 @@ export default async (req) => {
     ]);
     const sets     = setsResult.status     === 'fulfilled' ? setsResult.value     : [];
     const topCards = topCardsResult.status === 'fulfilled' ? topCardsResult.value : [];
-    return new Response(renderCardHub(sets, topCards), {
+    const audRate = await fxRate();
+    return new Response(renderCardHub(sets, topCards, audRate), {
       headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=3600' }
     });
   }

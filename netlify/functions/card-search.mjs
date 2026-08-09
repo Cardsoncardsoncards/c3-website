@@ -4,6 +4,7 @@
 // Only includes games that have card page functions built
 
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -21,6 +22,10 @@ const SEARCHABLE_GAMES = [
 ];
 
 async function searchGame(cfg, query, limit) {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   // ilike value appended manually - URLSearchParams.set encodes * to %2A breaking PostgREST wildcard
   const baseUrl = new URL(`${SUPABASE_URL}/rest/v1/${cfg.table}`);
   baseUrl.searchParams.set('select', `slug,name,${cfg.imgCol},${cfg.priceCol},set_name`);
@@ -39,7 +44,7 @@ async function searchGame(cfg, query, limit) {
     const data = await res.json();
     return (Array.isArray(data) ? data : []).map(card => {
       const rawPrice = card[cfg.priceCol] ? parseFloat(card[cfg.priceCol]) : null;
-      const priceAud = rawPrice ? (cfg.isAud ? rawPrice : rawPrice * 1.45) : null;
+      const priceAud = rawPrice ? (cfg.isAud ? rawPrice : rawPrice * audRate) : null;
       return {
         slug:         card.slug,
         name:         card.name,

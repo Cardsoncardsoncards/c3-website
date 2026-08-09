@@ -3,6 +3,7 @@ import { decodeSlugSegment } from './shared/url-slug.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
 import { setPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/onepiece-set-page.mjs
 // Serves /cards/onepiece/sets/:slug+
 
@@ -62,6 +63,10 @@ function graceful404(setSlug) {
 }
 
 export default async (req) => {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
   // be rejected must not first cost a Supabase round trip and a full render.
   const _t = await checkThrottle(req);
@@ -98,7 +103,7 @@ export default async (req) => {
     const cards = cardsRes.status === 'fulfilled' ? (cardsRes.value || []) : [];
     const ebayListings = ebayRes.status === 'fulfilled' ? (ebayRes.value || []) : [];
 
-    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
+    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * audRate : 0;
     const pricedCards = cards.filter(c => toAud(c) > 0);
     const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
     const moversEligible = cards.filter(c => c.price_change_7d != null && parseFloat(c.price_aud||0) > 0.50);

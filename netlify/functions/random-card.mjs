@@ -6,6 +6,8 @@
 //                  dragonball, weissschwarz
 // Optional &property=<slug> narrows Weiss Schwarz to one licensed property (via weissschwarz_sets).
 
+import { fxRate } from './shared/fx-rate.mjs';
+
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 const EPN_CAMPID        = '5339146789';
@@ -81,6 +83,10 @@ function json(data, status = 200) {
 }
 
 export default async (req) => {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   const url   = new URL(req.url);
   const game  = (url.searchParams.get('game') || '').toLowerCase();
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '1'), 20);
@@ -203,7 +209,7 @@ export default async (req) => {
       const priceAud = c.price_aud
         ? `AU$${parseFloat(c.price_aud).toFixed(2)}`
         : c.market_price
-          ? `~AU$${(parseFloat(c.market_price) * 1.45).toFixed(2)}`
+          ? `~AU$${(parseFloat(c.market_price) * audRate).toFixed(2)}`
           : 'Price TBC';
       return {
         ...c,

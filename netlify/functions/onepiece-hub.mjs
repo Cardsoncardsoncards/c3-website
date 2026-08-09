@@ -1,6 +1,7 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { hubPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/onepiece-hub.mjs
 // Serves /cards/onepiece
 // Rebuilt 24 May 2026 -- hidden sets, market pulse, 24-card carousel, guides, price source, bug widget
@@ -41,6 +42,9 @@ async function supabaseGet(path) {
 }
 
 export default async (req) => {
+  // C3L-130 shape 3. This hub carries the user-visible rate claim but no inline conversion,
+  // so it was not caught by the arithmetic sweep. The copy still has to tell the truth.
+  const audRate = await fxRate();
   // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
   // be rejected must not first cost a Supabase round trip and a full render.
   const _t = await checkThrottle(req);
@@ -342,7 +346,7 @@ ${carouselHTML ? `<section class="carousel-section fade-up fade-up-2">
     <a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/onepiece">One Piece</a><a href="/cards/pokemon">Pokemon</a><a href="/cards/mtg">MTG</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Toei Animation. Prices sourced from TCGPlayer (USD), converted to AUD at approximately 1.45.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Toei Animation. Prices sourced from TCGPlayer (USD), converted to AUD at approximately ${audRate.toFixed(2)}.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 

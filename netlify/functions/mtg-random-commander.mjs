@@ -24,6 +24,7 @@ import { NAV_HTML } from './shared/nav.mjs';
 import { BASE_STYLES } from './shared/mtg-base-styles.mjs';
 import { htmlCacheHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 
 // These two came across with the function and are NOT optional. renderRandomCommander
 // interpolates both into the page so the browser can query Supabase directly, which is where
@@ -37,7 +38,10 @@ import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
 
-function renderRandomCommander() {
+// audRate is threaded in and then interpolated into the emitted client script below. The
+// conversion here runs in the BROWSER, inside the <script> block, so it cannot read a
+// server-side binding and cannot await. C3L-130 shape 2.
+function renderRandomCommander(audRate) {
   return `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -214,6 +218,7 @@ ${NAV_HTML}
 <script>
 window.C3_SUPA_URL = '${SUPABASE_URL}';
 window.C3_SUPA_KEY = '${SUPABASE_ANON_KEY}';
+window.C3_AUD_RATE = ${audRate};
 
 let selectedColors = [];
 let selectedCmc = 99;
@@ -328,7 +333,7 @@ async function fetchOneCommander(exclude) {
 function cardHTML(card, index) {
   const price = card.price_aud > 0
     ? 'AU$' + parseFloat(card.price_aud).toFixed(2)
-    : card.price_usd ? '~AU$' + (card.price_usd * 1.45).toFixed(2) : 'Price N/A';
+    : card.price_usd ? '~AU$' + (card.price_usd * window.C3_AUD_RATE).toFixed(2) : 'Price N/A';
   const img = card.image_uri_normal || card.image_uri_small || '';
   // Colour identity pips
   const ci = Array.isArray(card.color_identity) ? card.color_identity : [];
@@ -459,7 +464,8 @@ export default async (req) => {
   // s-maxage 86400 is carried over unchanged from card-index.mjs. What is new is the durable
   // tier and stale-while-revalidate: this route previously set no Netlify-CDN-Cache-Control
   // at all, so the durable cache reported fwd=bypass on every request.
-  return new Response(renderRandomCommander(), {
+  const audRate = await fxRate();
+  return new Response(renderRandomCommander(audRate), {
     headers: htmlCacheHeaders({ sMaxAge: 86400, swr: 86400 }),
   });
 };

@@ -2,6 +2,7 @@ import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
 import { htmlCacheHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/mtg-hub.mjs
 // Serves: /cards/mtg
 
@@ -72,6 +73,10 @@ function esc(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 export default async (req) => {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
   // be rejected must not first cost a Supabase round trip and a full render.
   const _t = await checkThrottle(req);
@@ -157,7 +162,7 @@ export default async (req) => {
   }).join('');
 
   const topCardHTML = topCardsData.map(function(c) {
-    const price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * 1.45 : 0);
+    const price = c.price_aud > 0 ? parseFloat(c.price_aud) : (c.price_usd ? c.price_usd * audRate : 0);
     const priceStr = price > 0 ? 'AU$' + price.toFixed(0) : '';
     const safeName = c.name.replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     const ebayQ = encodeURIComponent(c.name + ' mtg card');
@@ -535,7 +540,7 @@ export default async (req) => {
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG Cards</a></p>
-  <p style="margin-top:8px;font-size:12px">Prices updated daily. All prices in AUD. &copy; 2026 Cards on Cards on Cards &middot; Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Wizards of the Coast. USD prices converted to AUD at approximately 1.45.</p>
+  <p style="margin-top:8px;font-size:12px">Prices updated daily. All prices in AUD. &copy; 2026 Cards on Cards on Cards &middot; Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Wizards of the Coast. USD prices converted to AUD at approximately ${audRate.toFixed(2)}.</p>
   <p style="margin-top:6px;font-size:10px;opacity:.5">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">Powered by <a href="https://scryfall.com" target="_blank" rel="noopener" style="color:inherit">Scryfall</a>.</p>

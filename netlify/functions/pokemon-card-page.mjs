@@ -9,6 +9,7 @@ import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
 import { cardPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/pokemon-card-page.mjs
 // Serves dynamic Pokemon card pages at /cards/pokemon/[slug]
 // Mirrors MTG card page structure, adapted for Pokemon TCG data from TCGdex
@@ -143,6 +144,10 @@ function rarityClass(rarity) {
 
 
 async function handleSetPage(setSlug, headers) {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   const accent = '#f5a623';
   const [_psr0] = await Promise.allSettled([
     supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`)
@@ -157,7 +162,7 @@ async function handleSetPage(setSlug, headers) {
 
   const cards = await supabaseGet(`pokemon_cards?set_id=eq.${encodeURIComponent(set.id)}&order=market_price.desc.nullslast&limit=400&select=slug,name,image_url,market_price,price_aud,number,rarity,price_change_7d`);
 
-  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
+  const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * audRate : 0;
   const isSingles = c => c.number !== null && c.number !== undefined && c.rarity !== 'None' && c.rarity !== null;
   const pricedCards = (cards || []).filter(c => isSingles(c) && toAud(c) > 0);
   const sealedCards = (cards || []).filter(c => !isSingles(c));
@@ -291,6 +296,10 @@ function esc(str) {
 }
 
 export default async (req) => {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
   // be rejected must not first cost a Supabase round trip and a full render.
   const _t = await checkThrottle(req);
@@ -349,7 +358,7 @@ export default async (req) => {
 
     // Use stored price_aud if available, fallback to conversion
     const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud)
-                   : card.market_price > 0 ? parseFloat(card.market_price) * 1.45
+                   : card.market_price > 0 ? parseFloat(card.market_price) * audRate
                    : null;
     const audRate = card.aud_rate ? parseFloat(card.aud_rate) : 1.45;
 
@@ -406,7 +415,7 @@ export default async (req) => {
           <a href="/cards/pokemon/${c.slug}" class="mini-card">
             ${c.image_url ? `<img src="${c.image_url}" alt="${esc(c.name)}" loading="lazy" style="width:100%;border-radius:6px">` : `<div style="height:80px;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text2)">${esc(c.name)}</div>`}
             <div class="mini-card-name">${esc(c.name)}</div>
-            <div class="mini-card-price">${c.market_price ? '~AU$'+(c.market_price*1.45).toFixed(2) : ''}</div>
+            <div class="mini-card-price">${c.market_price ? '~AU$'+(c.market_price * audRate).toFixed(2) : ''}</div>
           </a>`).join('')}
       </div>
     </section>` : '';
@@ -701,7 +710,7 @@ ${relatedHTML}
     <a href="/cards/pokemon">Pokemon Cards</a>
   </div>
   <p>© 2026 Cards on Cards on Cards · cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Prices are estimates based on USD Scryfall/TCGdex data converted at approximately 1.45 AUD. Check eBay AU for live Australian pricing.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Prices are estimates based on USD Scryfall/TCGdex data converted at approximately ${audRate.toFixed(2)} AUD. Check eBay AU for live Australian pricing.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 <div id="c3-compare-tray" style="position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1a1d2e;border-top:1px solid #2d3254;padding:10px 24px;display:flex;align-items:center;gap:12px;font-family:sans-serif;font-size:13px;transform:translateY(100%);transition:transform .25s;box-shadow:0 -4px 24px rgba(0,0,0,.5)">
