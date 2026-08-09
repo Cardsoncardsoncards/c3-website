@@ -127,7 +127,7 @@ export default async (req) => {
   const testEmail = url.searchParams.get('testEmail');
 
   // Market data, identical to the paid report.
-  const { up, down, buy, sell } = await fetchMarketData();
+  const { up, down, buy, sell, extreme } = await fetchMarketData();
 
   const top     = up[0];
   const dateStr = new Date().toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -141,7 +141,7 @@ export default async (req) => {
     : `Here are this week's movers across the games we track, plus the cards sitting well below their highs and the ones near them.`;
 
   // REPORT_LABEL keeps the paid tier's "Weekly Seller Report" framing out of the free email.
-  const htmlEmail = buildEmail({ dateStr, callTitle, callBody, up, down, buy, sell, reportLabel: REPORT_LABEL });
+  const htmlEmail = buildEmail({ dateStr, callTitle, callBody, up, down, buy, sell, extreme, reportLabel: REPORT_LABEL });
   const text      = plainText(dateStr, `C3 ${REPORT_LABEL}`);
 
   const counts = { up: up.length, down: down.length, buy: buy.length, sell: sell.length };

@@ -104,7 +104,7 @@ export default async (req)=>{
   }
 
   // Pull data. Identical query set and slicing to the copy this file used to carry.
-  const {up,down,buy,sell}=await fetchMarketData();
+  const { up, down, buy, sell, extreme } = await fetchMarketData();
 
   // The C3 Call (auto-draft from top mover, override via env)
   const top=up[0];
@@ -117,7 +117,7 @@ export default async (req)=>{
   // buildEmail and plainText default to the paid-tier labels ("Weekly Seller Report" and
   // "C3 Weekly Seller Report"), which is exactly what this file used to hardcode, so the
   // rendered output is unchanged.
-  const htmlEmail=buildEmail({dateStr,callTitle,callBody,up,down,buy,sell});
+  const htmlEmail=buildEmail({dateStr,callTitle,callBody,up,down,buy,sell,extreme});
   const text=plainText(dateStr);
 
   // Fetch paid subscribers from MailerLite, then fan out via Resend batch.

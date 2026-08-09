@@ -56,10 +56,24 @@ const GAME_CONFIG = {
 // dbsfusionworld -> 'dragon-ball-super-fusion-world' (sync-dbsfusionworld-background.mjs).
 // The previous value here was 'dragon-ball-super', which matches NEITHER real slug (the CCG is
 // 'dragon-ball-super-ccg', per sync-dragonball-background.mjs). It was dead, and wrong.
+// CORRECTED 9 August 2026, and the comment above was wrong about these being verified. Two of
+// the seven slugs were not real, checked against the API's own /v1/games list, which knows 50:
+//
+//   lorcana was 'disney-lorcana'. The real slug is 'lorcana-tcg'.
+//   starwars was 'star-wars-unlimited'. There IS no correct value: this API does not carry
+//   Star Wars at all, so the entry is removed rather than replaced with another guess.
+//
+// WHY THIS MATTERED RATHER THAN BEING COSMETIC. An unrecognised slug does not error. The API
+// silently returns a GLOBAL, UNFILTERED list. Requesting 'disney-lorcana' returned an Entei
+// Star (Pokemon) and a Pedal to the Metal (FLESH AND BLOOD), and tcgMovers then labelled both
+// as Lorcana and linked them to /cards/lorcana/... Flesh and Blood is PERMANENTLY EXCLUDED from
+// this project under LSS commercial restrictions, so a wrong slug was about to put an FAB card
+// in a commercial email. That is why the validation in tcgMovers exists and must stay: the slug
+// map is a convenience, the response's own game_slug is the authority.
 const TCG_API_GAME_MAP = {
-  pokemon: 'pokemon', yugioh: 'yugioh', lorcana: 'disney-lorcana',
+  pokemon: 'pokemon', yugioh: 'yugioh', lorcana: 'lorcana-tcg',
   onepiece: 'one-piece-card-game', dbsfusionworld: 'dragon-ball-super-fusion-world',
-  starwars: 'star-wars-unlimited', riftbound: 'riftbound-league-of-legends-trading-card-game',
+  riftbound: 'riftbound-league-of-legends-trading-card-game',
 };
 
 // ---------- helpers ----------
@@ -95,12 +109,21 @@ function ebayUrl(name,game){
 // why simply correcting the field name is not enough on its own.
 const TCG_CHANGE_FIELD = 'price_change';
 
-// A 7-day move above this is a broken baseline, not a market movement, and must not be
-// reported as one. Every card the endpoint returned on 9 August had a near-zero previous
-// price: Entei Star $0.99 to $800.50, Energy Retrieval $0.97 to $38.46, Patrat $0.01 to $0.34.
-// The endpoint sorts by percentage, so artifacts dominate it structurally. Correcting the field
-// name WITHOUT this ceiling would have swapped "up 0.0 per cent" for a confident
-// "up 80,758.59 per cent", which is worse because it reads as authoritative.
+// The line between a normal mover and an extreme one. This is a SPLIT, not an exclusion.
+//
+// A 7-day move above this is usually a broken baseline rather than a market movement. Every
+// row the endpoint returned on 9 August had a near-zero previous price: Entei Star $0.99 to
+// $800.50, Energy Retrieval $0.97 to $38.46, Patrat $0.01 to $0.34. The endpoint sorts by
+// percentage, so those dominate it structurally.
+//
+// But "usually" is not "always", and silently dropping them would hide a genuine spike as
+// readily as an artifact. So cards above this line are still shown, in their own clearly
+// captioned section with a caveat, and they are NEVER allowed to drive the subject line. The
+// confident "X leads the market this week" claim is reserved for the sane range, because that
+// is the claim a reader will act on.
+//
+// The two HARD excludes are unchanged and are applied before this split: a zero or missing
+// change is not a movement, and anything under the price floor is not a market story.
 const MAX_SANE_CHANGE_PCT = 300;
 
 // Matches the floor mtgMovers already applies (`price_aud=gt.1`). A 34 cent card is not a
@@ -119,12 +142,21 @@ async function tcgMovers(game,direction,limit,rate){
     }
     const d=await res.json();
     const raw=(d.data||[]);
+    let wrongGame=0;
     const mapped=raw.map(c=>{
+      // THE RESPONSE IS THE AUTHORITY ON WHAT GAME A CARD IS, not the slug we asked for.
+      // An unrecognised slug makes this API return a global unfiltered list instead of an
+      // error, so without this check a typo in the map silently injects other games' cards
+      // into the email under the wrong label and the wrong card-page link. That is exactly
+      // what 'disney-lorcana' did: it returned a Pokemon card and a FLESH AND BLOOD card,
+      // and FAB is permanently excluded from this project under LSS commercial restrictions.
+      if(c.game_slug && c.game_slug!==g){ wrongGame++; return null; }
       const usd=Number(c.market_price ?? c.price);
       const pct=Number(c[TCG_CHANGE_FIELD]);
+      // The two HARD excludes. Anything past them is kept and tiered later by fetchMarketData,
+      // so an extreme move is separated rather than silently dropped.
       if(!Number.isFinite(usd)||usd<=0)return null;          // no price is not a price of zero
       if(!Number.isFinite(pct)||pct===0)return null;          // no movement is not a movement of zero
-      if(Math.abs(pct)>MAX_SANE_CHANGE_PCT)return null;       // broken baseline, not a mover
       const aud=usd*rate;
       if(aud<MIN_PRICE_AUD)return null;
       return {
@@ -134,8 +166,11 @@ async function tcgMovers(game,direction,limit,rate){
         slug:c.slug||'', game,
       };
     }).filter(Boolean);
+    if(wrongGame){
+      console.warn(`[weekly-core] tcgMovers ${game}/${direction}: REJECTED ${wrongGame} row(s) belonging to a different game. The slug '${g}' is not being honoured by the API, which returns a global list for an unrecognised slug. Check TCG_API_GAME_MAP against /v1/games.`);
+    }
     if(raw.length&&!mapped.length){
-      console.warn(`[weekly-core] tcgMovers ${game}/${direction}: all ${raw.length} row(s) rejected as unusable (zero price, zero change, above ${MAX_SANE_CHANGE_PCT}% or below AU$${MIN_PRICE_AUD})`);
+      console.warn(`[weekly-core] tcgMovers ${game}/${direction}: all ${raw.length} row(s) rejected as unusable (wrong game, zero price, zero change, or below AU$${MIN_PRICE_AUD})`);
     }
     return mapped;
   }catch(err){
@@ -281,7 +316,21 @@ function sectionRows(list,mode){
 // masthead subtitle, and "Weekly Seller Report" is paid-tier framing that must not appear in the
 // free digest. The default reproduces the paid output byte for byte, so migrating the paid
 // function onto this module later is a no-op.
-function buildEmail({dateStr,callTitle,callBody,up,down,buy,sell,reportLabel='Weekly Seller Report'}){
+// The extreme-moves block. Rendered ONLY when there is something to put in it, so a normal week
+// looks exactly as it did before. The caveat is deliberately specific about the likely cause
+// rather than a vague "may be inaccurate": the measured cause is a near-zero previous price in
+// the source data, and a reader who knows that can judge the figure for themselves.
+function extremeSection(extreme){
+  if(!extreme||!extreme.length)return '';
+  return `  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#8892b0;border-top:1px solid #1e2638;padding-top:18px;">Extreme moves this week</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.6;margin-top:6px;">Unusually large moves, unverified. A jump this size usually means the earlier price in our source data was missing or wrong, not that the card really moved this much. Check a live price before relying on these figures.</div>
+  </td></tr>
+  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 10px;">${extreme.map(c=>row(c,Number(c.change7d)>0?'up':'down')).join('')}</td></tr>
+`;
+}
+
+function buildEmail({dateStr,callTitle,callBody,up,down,buy,sell,extreme,reportLabel='Weekly Seller Report'}){
   return `<div style="display:none;max-height:0;overflow:hidden;opacity:0;">This week in the AU TCG market: the movers, the buy signals, and where to list.</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#080b12" style="background:#080b12;margin:0;padding:0;"><tr><td align="center" style="padding:24px 12px;">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
@@ -305,7 +354,7 @@ function buildEmail({dateStr,callTitle,callBody,up,down,buy,sell,reportLabel='We
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#ef4444;border-top:1px solid #1e2638;padding-top:18px;">&#9660;&nbsp; Sliding this week, clear stock before it drops</div>
   </td></tr>
   <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 10px;">${sectionRows(down,'down')}</td></tr>
-  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
+${extremeSection(extreme)}  <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:8px 26px 4px;">
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#C9A84C;border-top:1px solid #1e2638;padding-top:18px;">Grab these, well below their recent high</div>
   </td></tr>
   <tr><td bgcolor="#0f1420" style="background:#0f1420;border-left:1px solid #1e2638;border-right:1px solid #1e2638;padding:6px 26px 10px;">${sectionRows(buy,'buy')}</td></tr>
@@ -386,18 +435,28 @@ export async function fetchMarketData() {
   // so the "biggest fallers" section of the email was about to list four risers. Filtering on
   // the sign makes the two lists mean what their headings say regardless of what the upstream
   // direction parameter does.
-  const up   = [v(0),v(4),v(6),v(8),v(10)].flat()
-    .filter(c => Number(c.change7d) > 0)
-    .sort((a,b)=>Math.abs(b.change7d)-Math.abs(a.change7d)).slice(0,8);
-  const down = [v(1),v(5),v(7),v(9),v(11)].flat()
-    .filter(c => Number(c.change7d) < 0)
-    .sort((a,b)=>a.change7d-b.change7d).slice(0,6);
+  const allRisers  = [v(0),v(4),v(6),v(8),v(10)].flat().filter(c => Number(c.change7d) > 0);
+  const allFallers = [v(1),v(5),v(7),v(9),v(11)].flat().filter(c => Number(c.change7d) < 0);
 
-  if (!down.length) {
-    console.warn('[weekly-core] no genuine fallers this week: every row the losers endpoints returned was either unusable or actually a riser.');
-  }
+  // The tier test is applied to the NUMBER, not to its source, so an MTG card computed from our
+  // own snapshots is held to the same line as one from the external feed.
+  const isSane = c => Math.abs(Number(c.change7d)) <= MAX_SANE_CHANGE_PCT;
 
-  return { up, down, buy: v(2), sell: v(3), fx };
+  const up   = allRisers.filter(isSane).sort((a,b)=>Math.abs(b.change7d)-Math.abs(a.change7d)).slice(0,8);
+  const down = allFallers.filter(isSane).sort((a,b)=>a.change7d-b.change7d).slice(0,6);
+
+  // Above the line. Kept and shown separately, never allowed near the subject line. Sorted by
+  // magnitude so the most extreme reads first, which is the honest ordering for a section whose
+  // whole point is "these numbers are suspect".
+  const extreme = [...allRisers, ...allFallers]
+    .filter(c => !isSane(c))
+    .sort((a,b)=>Math.abs(b.change7d)-Math.abs(a.change7d))
+    .slice(0,6);
+
+  if (!down.length)    console.warn('[weekly-core] no genuine fallers in the sane range this week.');
+  if (extreme.length)  console.warn(`[weekly-core] ${extreme.length} card(s) above ${MAX_SANE_CHANGE_PCT}% routed to the extreme-moves section, not the headline: ` + extreme.map(c=>`${c.name} ${c.change7d}%`).join(', '));
+
+  return { up, down, buy: v(2), sell: v(3), extreme, fx };
 }
 
 export { buildEmail, plainText, sendBatch, FROM_EMAIL, FROM_NAME, LIST_UNSUBSCRIBE, SUPPORT_EMAIL, RESEND_API_KEY };
