@@ -219,6 +219,27 @@ export default async (req) => {
 
 // No `path` key here. Netlify rejects a custom path on a scheduled function, so this is
 // reachable only at its default URL, /.netlify/functions/generate-weekly-digest-free.
-export const config = {
-  schedule: '0 22 * * 6'   // 22:00 UTC Saturday = 8am Sunday Sydney. See the note at the top.
-};
+//
+// PAUSED 9 August 2026. The schedule below is commented out, not deleted, so restoring it is
+// uncommenting one line.
+//
+// Why: nobody could confirm whether the "Entei Star leads the market this week" digest could
+// send again, and it could. This is a Netlify SCHEDULED function on '0 22 * * 6', which is
+// 22:00 UTC Saturday, 8am Sunday Sydney. It last fired 8 August 22:00 UTC, which is the send
+// that was noticed, and the next fire would have been 15 August 22:00 UTC without anyone
+// starting it. Pausing it is reversible and was the point of finding it.
+//
+// What this does NOT do, stated so nobody reads the pause as broader than it is: the function
+// is still deployed and still reachable at its default URL, and the guard above rejects only
+// a WRONG x-sync-secret, so a request carrying NO header still passes and still sends. The
+// pause removes the recurring trigger. It does not close that door. See the task report.
+//
+// The underlying content is untouched by this change, deliberately. The digest reads
+// mtg_cards through shared/weekly-report-core.mjs, NOT tcg_price_movers or
+// tcg_market_summary, so whatever is wrong with those two tables is a separate problem from
+// whatever is wrong with this email.
+//
+// export const config = {
+//   schedule: '0 22 * * 6'   // 22:00 UTC Saturday = 8am Sunday Sydney. See the note at the top.
+// };
+export const config = {};
