@@ -87,9 +87,31 @@ function unsubscribeUrl(email) {
 }
 
 export default async (req) => {
-  // Scheduled invocations carry no secret; manual ones must present it.
+  // The secret is REQUIRED. A missing header is rejected exactly like a wrong one.
+  //
+  // What was wrong before: the guard read `if (secret && SYNC_SECRET && secret !== SYNC_SECRET)`,
+  // so it rejected a WRONG secret and let a request carrying NO header through. Anyone who knew
+  // the URL could trigger a real send to the whole list, unauthenticated. The URL is not secret:
+  // this function's own header comment names it.
+  //
+  // Why this is NOT the C3L-93 shape. That fix, in enrich-apitcg-stats-background.mjs, treats
+  // "no x-sync-secret and no origin and no referer" as proof of a scheduled invocation, because
+  // Netlify's scheduler sends no custom headers. That heuristic cannot tell the scheduler apart
+  // from `curl` with no headers, which is precisely the bypass being closed here, so copying it
+  // would have re-implemented the hole in a new place.
+  //
+  // Requiring the secret unconditionally is safe RIGHT NOW because the schedule below is paused,
+  // so there is no scheduled invocation to accommodate. That is the whole reason this can be
+  // strict. If the schedule is ever restored, this guard WILL answer 401 on every scheduled run
+  // and the digest will silently stop, which is the C3L-93 failure in reverse. Restoring the
+  // schedule therefore means solving scheduler identification properly first, not deleting this
+  // check: a Netlify scheduled invocation arrives as a POST whose JSON body carries `next_run`,
+  // which is a positive signal to test for rather than an absence to infer from.
+  //
+  // Fails closed on a missing SYNC_SECRET too. A function that cannot authenticate is not a
+  // function that should send email to a live list.
   const secret = req.headers.get('x-sync-secret');
-  if (secret && SYNC_SECRET && secret !== SYNC_SECRET) {
+  if (!SYNC_SECRET || !secret || secret !== SYNC_SECRET) {
     return new Response(JSON.stringify({ ok: false, error: 'unauthorised' }), {
       status: 401, headers: { 'Content-Type': 'application/json' }
     });
