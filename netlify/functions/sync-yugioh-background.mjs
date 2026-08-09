@@ -489,6 +489,10 @@ export default async (req) => {
 };
 
 export const config = {
-  schedule: "0 0 * * *",
+  // TEMPORARY, BRANCH ONLY, DO NOT MERGE: schedule replaced by path so the deploy
+  // preview can be sample-tested. Netlify returns 403 to every HTTP request for a
+  // SCHEDULED function, on production too, so ?maxSets=N is otherwise unreachable.
+  // Restore before merge: schedule: "0 0 * * *", type: "background"
+  path: "/__test-sync-yugioh",
   type: "background"
 };
