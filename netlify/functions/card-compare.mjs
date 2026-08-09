@@ -1681,15 +1681,13 @@ export default async (req) => {
     });
   }
 
-  // C3L-130 shape 2. getLiveRate() used to sit in the SAME Promise.all as the card fetches,
-  // so its result could not possibly be available to them, and every fetchCard call passed a
-  // hardcoded 1.45 instead. The page fetched the live rate and then ignored it. Resolving the
-  // rate first costs one serial round trip and makes the value actually reach the conversion.
-  const usdToAud = await getLiveRate();
-  const cardResults = await Promise.all(rawTokens.map(token => {
-    const { game, slug } = parseToken(token);
-    return fetchCard(game, slug, usdToAud);
-  }));
+  const [usdToAud, ...cardResults] = await Promise.all([
+    getLiveRate(),
+    ...rawTokens.map(token => {
+      const { game, slug } = parseToken(token);
+      return fetchCard(game, slug, 1.45);
+    })
+  ]);
 
   const cards = cardResults
     .filter(c => c !== null)
