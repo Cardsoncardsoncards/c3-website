@@ -6,500 +6,81 @@ Downloads or project-only copy. Same pattern as Voxsanity's own register.
 
 ## START HERE, updated every task, read this first
 
-**As of:** 9 August 2026, 07:00 UTC, read from the clock, not estimated. `369e3ea` is the newest deploy, live and verified by `commit_ref`. **Worktrees are clean: `main` plus `c3-website-blog` only, with `c3-gsc-collapse-detector` and `blog-content` deliberately kept, each holding one genuinely unmerged commit.**
+**As of:** 9 August 2026, 13:00 UTC, read from the clock. **`aed61d3` is the newest deploy, live and verified by `commit_ref`**, and `main`, `origin/main` and Netlify production are all on it. **Worktrees: `main` plus `c3-website-blog` on `blog-content`, deliberately kept, holding unmerged blog work.**
 
-**ONE FAILURE SHAPE HAS NOW APPEARED FIVE TIMES IN THIS SESSION, IN FIVE DIFFERENT SYSTEMS,
-AND IT IS THE MOST TRANSFERABLE THING IN THIS FILE. Something that is wrong but fails SILENTLY
-instead of erroring is more dangerous than something that breaks.** **C3L-121**: a Supabase
-table with RLS and no anon policy answers **200 with an empty array**, not 403, so a monitor
-reading it reports "nothing found" and looks like it passed. **C3L-131**: a `RAISE WARNING` in
-a cron function leaves `cron.job_run_details.status` reading **`succeeded`**, which is how
-C3L-130 ran 42 times without working. **C3L-132**: an unrecognised slug on a third-party API
-returns a **global unfiltered list**, not a 400, which put a **Flesh and Blood** card, a
-permanently excluded game, one push from live customer email. **C3L-133**: the Pokemon sync
-reports `sync_success` with `rows_affected=0` nightly and re-stamps an 11 day old frozen price
-into a history table that looks live. **C3L-134**: the Yu-Gi-Oh sync is killed at its 15 minute
-wall three times a night, so **the code that would report the failure is inside the process
-being killed** and it has emitted 21 starts and zero outcomes in 7 days. In all five the caller
-had no way to tell success from silence. **The defence is identical every time: never trust the
-request or the status, check what actually came back.**
+**One-line state:** **138 findings across 139 rows**, C3L-01 to C3L-138, re-derived by counting. **49 task-log entries.** **Every claim in the two lists at the bottom of this section was re-checked against live or database state on 9 August**, not carried forward, which is what produced the corrections marked CORRECTED below.
 
-**AND THE INVERSE OF ALL OF THAT, WHICH IS NOW THE BINDING CONSTRAINT ON THIS PROGRAMME: THE
-LOUDEST FAILURES HERE ARE NOT SILENT AT ALL, THEY ARE UNREAD. See C3L-135.** `sync-health-check`
-has failed on **5 of the 5 runs it has ever done**, naming C3L-133 and C3L-134 correctly every
-time, and neither was acted on. `daily-mtg-sync` failed **7 consecutive nights**, red tick and
-explicit fatal error each time, costing **6 days of MTG price history** on a 98,913 card
-catalogue. Both were found in the end by a person happening to look, which C3L-51's own header
-already calls "not a detection strategy". **Building detection is the thing this programme is
-good at and it is demonstrably no longer the bottleneck.** A sixth alert nobody reads has
-negative value. **What is missing is a named owner for GitHub's failure email and a stated
-window for triaging a red workflow. That is a process fix and no amount of code substitutes
-for it.**
+---
 
-**AND THE COROLLARY, EARNED TWICE TODAY: A NUMBER THAT LOOKS WRONG IS NOT EVIDENCE OF THE BUG
-YOU THINK IT IS.** Pokemon's AUD prices implied an exchange rate of 1.38 against a true 1.4182,
-which reads exactly like the FX bug in C3L-130 and would have been "fixed" by repricing 27,688
-cards by +$40,071. **It was not an FX bug at all. It was a dead sync, and 1.38 was simply the
-rate on the day it died.** Measure the cause, not the symptom, before writing to production.
+### The one thing to carry out of this file
 
-**THE SINGLE LARGEST SILENT FAILURE IN THIS PROGRAMME IS NOW OPEN AT C3L-130, AND IT IS NOT
-FIXED.** `update_usd_aud_rate()`, which maintains the rate every AUD price on this site derives
-from, **has run 42 times since 27 June, has never once updated the rate, and pg_cron recorded
-every run as `succeeded`.** It polls its own async `pg_net` response from inside the
-transaction that response can only be written after; the decisive evidence is a **42
-microsecond gap** between the run ending and the response row appearing. **Two writers exist
-and only the Netlify one at `0 1 * * *` works**, which is the only reason the rate is current.
-Consequences: the function's own recalculation across **21 game tables has never fired**, so
-stored AUD now spans **1.3831 to 1.4302 against a true 1.4182, a 3.4 per cent range**; and the
-client fallback is a hardcoded **`1.45` in 68 places across 138 files**, a silent **+2.24 per
-cent** applied whenever the FX fetch times out, with no logging. **C3L-131 carries the general
-lesson: a `RAISE WARNING` in a cron function is invisible to `cron.job_run_details.status`, so
-that column must stop being cited as evidence a job worked.** A one-line detector, asserting
-`site_config.usd_aud_rate.updated_at` is younger than 26 hours, would have caught this on day
-one instead of day forty-two.
+**A failure that is wrong but SILENT is more dangerous than one that breaks, and this programme has now produced six of them in six different systems.** **C3L-121**: a Supabase table with RLS and no anon policy answers **200 with an empty array**, not 403. **C3L-131**: a `RAISE WARNING` in a cron function leaves `cron.job_run_details.status` reading **`succeeded`**. **C3L-132**: an unrecognised slug on a third-party API returns a **global unfiltered list**, not a 400, which put a **Flesh and Blood** card one push from live customer email. **C3L-133**: a sync reporting `sync_success` with `rows_affected=0` nightly while re-stamping a frozen price into a history table that looks live. **C3L-134**: a sync killed at its 15 minute wall, so the code that would report the failure is inside the process being killed. **C3L-137**: an entire feature whose own query excludes the rows it exists to display, so it has never rendered once. **The defence is identical every time: never trust the request or the status, check what actually came back.**
 
-**FOUR LIVE SECURITY GAPS WERE CLOSED ON 9 AUGUST, all verified live, and one of them
-should change how this file is used.** **C3L-125** (`281b59c`): `card_views` was readable by
-the public anon key and had held truncated IPs, user agents and cities since 6 August, 39,893
-rows with 17,926 fingerprinted. Caught by the recurring RLS check **on its own**, which is the
-first time that check has found a real exposure rather than confirmed a known one.
-**C3L-126** (`3c6fd58`): the "Entei Star" weekly digest is a **scheduled** Netlify function
-that would have sent again unattended on 15 August. Paused, verified at the deploy level. It
-reaches **4 people**, and it does **NOT** read `tcg_price_movers` or `tcg_market_summary`,
-both of which are empty and have **no writer anywhere in the repo**. **C3L-127** (`232c827`):
-that function's auth guard rejected a wrong secret but passed a request with **no header**, so
-the send was triggerable by anyone who knew the URL. **C3L-128** (`369e3ea`): three
-anon-callable `SECURITY DEFINER` functions, all writers, one of which fires outbound HTTP and
-rewrites the USD/AUD rate every price on this site derives from.
+**AND ITS INVERSE, WHICH IS NOW THE BINDING CONSTRAINT ON THIS PROGRAMME: THE LOUDEST FAILURES HERE ARE NOT SILENT, THEY ARE UNREAD (C3L-135).** `sync-health-check` has failed on **5 of the 5 runs it has ever done**, naming C3L-133 and C3L-134 correctly every time, and neither was acted on. `daily-mtg-sync` failed **7 consecutive nights**, red tick and explicit fatal error each time, costing **6 days of MTG price history**. Both were found in the end by a person happening to look. **Building detection is the thing this programme is good at and it is demonstrably no longer the bottleneck. A seventh alert nobody reads has negative value.** What is missing is a named owner for GitHub's failure email and a stated triage window. **That is a process fix and no amount of code substitutes for it.**
 
-**THE PART TO CARRY IS HOW C3L-128 SURVIVED. `PROJECT.md` line 618 already recorded that exact
-revocation as decided and not done.** It was identified, the remedy was agreed, it was written
-into the project's own source of truth, and it then sat until a Supabase advisor run during an
-unrelated task rediscovered it by accident. **A decision recorded in prose, with no owner, no
-date and no check, is indistinguishable from a decision never taken.** That is now the second
-time this session a known item resurfaced by accident rather than by process.
+**AND THE COROLLARY, EARNED TWICE: A NUMBER THAT LOOKS WRONG IS NOT EVIDENCE OF THE BUG YOU THINK IT IS.** Pokemon's stored AUD implied a rate of 1.38 against a true 1.4182, which reads exactly like C3L-130's FX bug and would have been "fixed" by repricing 27,688 cards by **+$40,071**. It was not an FX bug at all: it was a dead sync, and 1.38 was the rate on the day it died (C3L-133). **And in the other direction, C3L-138: a hardcoded constant that looks wrong can be LOAD-BEARING.** `fetchCard(game, slug, 1.45)` on `/compare` looked like a page ignoring the live rate; 1.45 was a deliberate intermediate that was divided back out two lines later, and "fixing" it applied the rate twice and made foil prices 2.15 per cent low. **Follow a value to where it is CONSUMED before judging it where it is written.**
 
-**And the detector gap that let it happen is now its own open row, C3L-129: the recurring RLS
-check sweeps TABLES by column shape and has no visibility into RPC functions at all.** That is
-why the same check caught C3L-125 and was blind to C3L-128 in the same run. Anon-callable RPCs
-are currently checked by nothing on any schedule.
+---
 
-**READ THIS BEFORE ACTING ON ANY TRAFFIC FINDING IN THIS FILE. The GA4 numbers this whole
-week has been reacting to probably are not page loads on this site** (**C3L-123**, and
-**C3L-120 is corrected accordingly**). The leading innocent explanation was tested and
-failed. All three client-side trackers used a plain `fetch()`, which a browser cancels on
-document teardown, while GA4's gtag uses `sendBeacon`, which survives; at GA4's reported **0
-second engagement** that would have hidden exactly this traffic. `keepalive: true` shipped as
-`2618c08`, and then the window ran. **Baseline: GA4 rolling 24h at 16,540 sessions, about 690
-an hour implied. Over the following 7.26 hours C3's own instrumentation recorded 35 rows.**
-**The composition is what settles it: 18 of 24 post-fix `page_views` are AUSTRALIAN and
-exactly ONE is Singaporean, where GA4 puts about 90 per cent of 16,381 users in Singapore.
-On GA4's own rate the window should have produced roughly 4,500 Singapore rows.** Confidence
-is **high** that the keepalive gap was not the cause, because it was directly tested,
-and **moderate to high** on the conclusion overall. **The next step is on the GA4 side, not
-the site side**: whether the property is being fed Measurement Protocol hits against the
-public measurement id `G-WR68HPE92S`, which is readable in any page's source. **Do not build
-any more site-side mitigation for this until that is checked.** Related: **the Netlify
-bandwidth figure is retired from this argument entirely** (**C3L-124**), because it has no
-time breakdown and no per-site split and is steady across the spike hours, so it never
-supported either side.
+### Open and NOT fixed, highest first
 
-**THE THROTTLE IS LIVE AND ENFORCING. This is the first traffic-blocking mechanism this
-whole effort has actually shipped** (**C3L-118**, **C3L-107 now closed**). Merged as
-`aea1f99`, wired into **97 page functions** as the first statement of every handler. All **9
-controls re-run and re-passed** after the rebase and again after telemetry was added. **The
-required 30 minute monitoring window passed CLEAN: 12 polls, ZERO requests throttled, no
-revert.** It ships with its own record, one `sync_events` row per network per window, so it
-is not a silent mechanism. **Why it shipped, corrected from the earlier framing: the argument
-was never dollars.** An earlier entry said there was "no cost argument for shipping it",
-which was true and was the wrong axis. The reason is **data integrity**: while a crawl runs,
-GA4 and `card_views` both stop describing the real audience, which is what made every traffic
-question this week unanswerable. **Two limits, so the clean window is not misread as
-vindication: it has never fired in production, and the window was quiet largely because there
-was almost no traffic to judge. And it cannot be credited with any drop, because both Alibaba
-blocks were last seen 19.0 hours before it deployed and Meta 10.9 hours before.**
+1. **C3L-130, the largest silent failure in this programme.** `update_usd_aud_rate()` ran **42 times since 27 June and never once updated the rate**, with pg_cron recording every run as `succeeded`. It polls its own async `pg_net` response from inside the transaction that response can only be written after; the decisive evidence is a **42 microsecond gap**. **The cron job is now DISABLED (job 14, `active = false`, verified)** and the working Netlify writer at `0 1 * * *` is the only one left. **Its cross-game recalculation half is SUPERSEDED, not pending**, by decision on 9 August: the nightly syncs already do it, and running it would have been actively wrong for Pokemon. **Shape 2, the 238 inline `* 1.45` occurrences, is now CLOSED except in `card-compare.mjs` (C3L-138).** **What remains open is shape 1: `return 1.45` as the fetch fallback, 69 occurrences across 35 files.**
+2. **C3L-135, alert ownership.** Process, not code. See above.
+3. **C3L-83**, `POST /api/price-alert` still answers, verified 9 August: it returns `400 Missing fields` to an empty POST, so it is live and accepting. No auth, no throttle, nothing on the site calls it, and both alert tables hold **0 rows**. Removal is the likely answer but removing a live public endpoint is a decision.
+4. **C3L-80**, `price_change_7d` has two writers computing different statistics. **Verified still true: 8 pg_cron jobs remain active at 20:00 to 20:40 UTC** alongside the syncs. On a sampled 1,038 cards they disagreed on the **direction** of the move 21.4 per cent of the time.
+5. **C3L-93**, the apitcg integration has produced **zero** rows, re-verified 9 August across all five games, and a live digimon card page still renders no Card Details block.
+6. **C3L-86**, nothing prunes the snapshot tables. **Re-measured 9 August: the database is 3,962 MB, of which `*_price_snapshots` are 2,956 MB, 75 per cent.** `mtg_price_snapshots` alone holds 4,647,061 rows back to 4 May. Not wrong today, wrong on a date.
+7. **C3L-136**, every scheduled function returns **403 to direct HTTP**, so the `x-sync-secret` manual path in **45 of 46** scheduled functions has never been reachable, while comments claim otherwise.
+8. **C3L-137**, the sealed-product block on 28 set pages has **never rendered**. Needs a product decision, not a repair.
+9. **C3L-129**, the recurring RLS check has no visibility into RPC functions at all.
+10. **C3L-91**, nothing watches the alerting subsystem. **Re-verified 9 August: zero `sync_events` rows for follows or the digest, ever.**
+11. **C3L-82**, follow alerts are decided on price-change values mid-rewrite, since `check-card-follows` runs at 20:00 UTC and the price-change jobs run 20:00 to 20:40.
+12. **C3L-70**, the random generator cannot draw a large share of what it advertises. **Re-verified in source: `random-card.mjs:114` still caps at `Math.floor(total * 0.7) - limit`.** Worst case Dragon Ball 61.6 per cent unreachable.
+13. **C3L-67**, **PARTLY CORRECTED 9 August.** `/mtg-strixhaven.html` and `/vip.html` still carry **no canonical at all**, verified live. **`/legal.html` and `/ev-calculator.html` now DO carry one**, so the "46 pages" figure is stale and needs re-deriving before it is quoted again.
+14. **The EV catalogue, 43 pages not 45.** **Re-verified 9 August: 38 carry `noindex` and an "Under review" banner, 5 do not.** `/ev-calculator/mtg-warhammer-40k.html` returns 200 with no noindex, no banner, and still describes a **"Play Booster Box (12 Packs)"** for a 2022 release that shipped as four Commander decks. **Note the real path is `/ev-calculator/<name>.html`; earlier entries implied a flat `/ev-*.html` and those URLs 404.** That page also contains an em dash entity, `&#8212;`, against CLAUDE.md's rule, untouched because the EV catalogue is out of scope.
+15. **C3-076/077**, legacy `.html` routes, **20 routes not three**. **Re-verified 9 August on an 8 route sample: 7 serve 200 at BOTH forms**, `/subscribe` 301s to `/account` from both. The blanket 301 is NOT contained: `/tracker`, `/contact`, `/methodology` and `/welcome` are 200 rewrites to their own `.html`, so a blanket rule risks a redirect loop.
+16. **C3L-56**, whether the 5 orphan slugs get redirects. **Not re-verified in this sweep; treat as unconfirmed.**
+17. **C3L-112**, no word-count bar is stated for the `news` category. Needs a decision.
+18. **C3L-111**, the Search Console collapse detector is built and **HELD** on branch `c3-gsc-collapse-detector`, inert until `GSC_SERVICE_ACCOUNT_JSON` and `GSC_SITE_URL` exist as GitHub secrets. **C3L-108**, the 19 June collapse itself, remains open and unexplained.
+19. **`tcg_price_movers` and `tcg_market_summary`** are both empty with no writer anywhere in the repo, and the decision to populate or remove them was never made.
 
-**THE NEW GA4 PATTERN IS NOT ATTRIBUTED, AND IT IS NOT THE ALIBABA ACTORS** (**C3L-120**,
-open). **Do not fold it into C3L-110.** The measurement: **GA4 recorded 18,814 sessions in 24
-hours while `card_views` recorded ZERO card views in the preceding hour.** The cause of the
-blindness is exact and was found rather than guessed: **`requestFingerprint()` had exactly TWO
-call sites in the entire repo**, so only card pages and the signup form have ever recorded who
-is visiting. **RDAP confirms the four blocks that do have real data** (Meta's FB-BLOCK,
-Alibaba's ASEPL-SG and Alibaba Cloud LLC, plus Yandex and genuine AUSSIEFIBRE-AU consumers),
-and **the roughly 140 country pattern appears nowhere in it**, so the residential-proxy
-hypothesis is **untested, not refuted**. **Instrumentation is now live** (`ecd105e`): a
-`page_views` table, an `/api/page-view` endpoint, and the tracker on `shared/nav.mjs` covering
-all 102 dynamic pages, 541 blog posts and the static pages. **It is proven capturing**, and
-the first real row it caught is a previously invisible visitor: `44.203.76.0`, **Amazon Data
-Services Northern Virginia**, running **HeadlessChrome/131**. **THE ACTUAL NEXT STEP IS A READ
-OF `page_views` IN 24 TO 48 HOURS.** Expect low counts in the first hours: pages are CDN
-cached for up to 2 hours with 24 hour stale-while-revalidate, so copies stored before the
-deploy carry no tracker.
+---
 
-**Also worth carrying: a monitor can be structurally blind and still report success**
-(**C3L-121**). A Supabase table with RLS and no anon policy returns **200 with an empty
-array**, not 403. This task's own safety window polled `sync_events` with the anon key and
-printed `blocks=0` twelve times while unable to read the table at all. It was right by luck,
-not by construction.
+### Corrected on 9 August by a line-by-line re-check, do not carry the old versions forward
 
-**THE CACHING FIX IS NOW FULLY LIVE WITH NO EXCEPTIONS, and it was not the fix anyone
-thought it was** (**C3L-117**, and **C3L-122** which closed the last gap). Caching was
-**already present on 101 of the 101 HTML page
-functions that register a route**, every one paired with a durable
-`Netlify-CDN-Cache-Control`. There was no coverage gap and nothing needed building. **The
-real gap was `stale-while-revalidate`, which only MTG card pages had.** Without it the first
-request after `s-maxage` expires blocks on a full origin render, measured cold at **2.97s**.
-It is now live on **31 card pages (`bfbb286`), 31 set pages and 33 hub pages (`b778f2f`)**,
-via a new `shared/cache-headers.mjs`. **The last exception is now CLOSED** (**C3L-122**,
-`0671a2b` plus `520fb00`): `card-index.mjs` was the only page function still setting no
-`Netlify-CDN-Cache-Control`, so its durable cache reported `fwd=bypass` on every request. It
-was split one-route-per-file and both paths now carry the durable tier and
-`stale-while-revalidate`. **Read C3L-122 before doing anything similar: the split 404d a live
-route for about seven minutes, because Netlify resolves overlapping paths by FUNCTION NAME
-SORT ORDER, and the first repair was wrong.** **Proof the cache cannot get stuck stale,
-observed rather than argued:**
-`/cards/mtg/sengir-vampire` served a copy at `Age: 46100`, 12.8 hours stale, and the next
-request 3 seconds later returned `Age: 3`. **7 live card pages across 5 games were read back
-against the database and every displayed price matched.**
+- **C3L-57 and C3L-134 were the SAME defect, logged twice months apart, and this section carried both at once.** Yu-Gi-Oh's sync never completed a run, timing out at Netlify's 15 minute ceiling three times a night. **Both are now RESOLVED by `414aa90`**, a staleness-ordered rotation with a wall-clock budget. First live run: **254 of 615 sets, 20,381 cards, and the first terminal `sync_events` row it had emitted in at least 7 days.** Its starved tail went from 365 sets and about 21,500 cards down to 214 and 11,291 in one run. **Do not re-open either ID.**
+- **C3L-53 is FALSE as written and was contradicting this section's own decisions list.** It said "all three daily sync scripts fail at their first step every day". **Those scripts and `daily-tcg-sync.yml` no longer exist**, deleted in Task 19: `.github/workflows/` holds 7 files and none is that one, and `scripts/` holds only `sync-health-check.mjs` and `sync-mtg-daily.mjs`. **Nothing is failing daily here.**
+- **C3L-54 is MOOT, not open.** It asked which of two writers owns `pokemon_cards`. The second writer was deleted with `daily-tcg-sync.yml`, so there is only one.
+- **C3L-90 is RESOLVED and now PROVEN, which the earlier entry could not yet claim.** The signup bot wave ran 30 July to 6 August, peaking at 38 accounts a day. **Verified 9 August: 8 accounts on 6 August, then ZERO on 7, 8 and 9 August.** Total is still **181**, and follows have gone from 1 to **4**. The honeypot and per-IP limit worked.
+- **Pokemon HP enrichment: the "0 of 31,833" figure is stale.** Re-measured: **133 of 31,847 rows now carry `hp`**, written by the C3L-133 rotation. That is 0.4 per cent, so the block is still absent from essentially every page, but the cause is now known and is **not** the enrichment job: `fetchPokemonTCGPricesForSet` resolves no pokemontcg.io set id for almost any set, which is the second, unfixed fault recorded inside C3L-133. **Merge future work on this into C3L-133 rather than tracking C3L-61, C3L-102 and C3L-103 separately.**
+- **C3L-88 is stale as written here.** This section said "about two thirds" of card views are crawler traffic. C3L-105 already superseded that to **99.6 per cent over two weeks and 100.0 per cent in the 6 August spike, against 77.0 per cent all time**, and the method is compromised on post-22-July data. Quote C3L-105, not this.
+- **C3L-69 could NOT be reproduced on 9 August.** It claimed One Piece was 6,664 on `/cards`, 6,289 on `/generators` and 7,019 in the table. **Neither page now states a per-game One Piece total in that form**: `/cards` shows per-set counts and `/generators` shows generator pool sizes. The underlying question may still be live. **Re-derive it before acting; do not quote the old figures.**
+- **The "immediate next action" carried here for three days, checking a C3L-61 backfill at 12:40 UTC, was long dead.** There is no pending checkpoint.
 
-**AND THE THING THE LAST THREE TASK FILES WERE WRITTEN ABOUT IS NOT THE EXPENSE**
-(**C3L-114**, **C3L-119**). The crawl costs about **6.5 cents a day at peak and 2 cents
-averaged**; Meta's entire 28-hour crawl was **11.3 credits, $0.075**. This supersedes the
-"$1.40 over 17 days" figure. Against that, **91 production deploys landed in 12 days, 42 of
-them on 6 August alone, at about 1,365 credits**, which is roughly **45x** all bot traffic
-combined. **Supabase contributes nothing, because no Supabase plan charges per read.**
-**Read C3L-119 before writing another task file about bots.** Related: the GitHub Actions
-minutes are not this repo's either (**C3L-116**), `c3-website` is public and bills **zero**
-while `voxsanity` used **5,015 minutes in 30 days**. Also fixed and live: the
-`meta-externalagent` robots rule was **over-broad**, closing the hub and set tiers its own
-comment claimed it left open (**C3L-115**, `9e916f9`). **Meta has since stopped: one card
-view in six hours.** **Held, not live: the C3L-107 throttle** is built and tested on nine
-controls, on branch `c3l-107-request-throttle` at `028f34b` (**C3L-118**), and note there is
-now no cost argument for shipping it.
+---
 
-**Task 27 is the previous entry, and its value is three premises that did not survive
-contact with the repo.** **First, the 1,000 word failure that blocked two posts is a false
-failure and the rule is the gap**: PROJECT.md line 311 reads "1,000 words evergreen, 800
-words tournament previews" and **never mentions `news`**, which is the category all three
-incident posts use, so no bar is stated for them at all (**C3L-112**, needs a decision).
-Nothing was padded. **Second, `18178d4` does not explain the 19 June Search Console
-collapse** (**C3L-109**, ruled out): it is the tightest date match ever found, landing
-09:30 UTC hours before the cliff, but it changes **5 dynamic pages plus one line of
-`pricing.html` copy**, touches **no canonical, no `noindex`, no `robots`, no sitemap and no
-meta directive**, and its nav swap **adds** internal links. 461 posts and 193 functions
-already existed that day. **Third, the "new" crawler wave is neither new nor unidentified**
-(**C3L-110**): RDAP puts every significant network in it at **Meta (`FB-BLOCK`, 11,652
-views, all MTG)** or **Alibaba Cloud Singapore (5,184 views, 26 games)**, the same two
-actors already known, now sending **ordinary Chrome user agents** that the
-`User-agent: meta-externalagent` rule cannot match by name. **And its apparent 6 August
-onset is when fingerprinting went live, not when crawling began**, the two series being
-contiguous to the second. **Also settled: C3L-89 is CLOSED** (16,795 rows, 0 fabricated
-values), **C3L-88 is 86.3 per cent not "two thirds"** and its method is now compromised on
-post-22-July data, **C3L-79's stated reason was simply wrong** (GSC access existed; the
-real blocker is that the API has **no links endpoint at all**, which is permanent), and
-**C3L-96 is 3 combinations across 2 stores, not 2**. **A Search Console collapse detector
-now exists** (**C3L-111**), tuned against the real 19 June series and proven to fire on it
-at 95.4 per cent down, **but it is committed and HELD on branch `c3-gsc-collapse-detector`,
-not live, and inert until `GSC_SERVICE_ACCOUNT_JSON` and `GSC_SITE_URL` exist as GitHub
-secrets.** **One handover gap worth knowing: only 2 of the 3 corrected blog files the task
-named were ever delivered** (**C3L-113**); the third's fix was reconstructed mechanically
-and proved word-for-word identical, but it should be diffed against the real file when it
-surfaces.
+### Recently shipped and verified live, so it is not re-investigated
 
-**Task 26 is the newest entry, and its main value is that it talked itself out of
-the wrong fix twice.** All 33 sitemaps emit `lastmod = updated_at` with a hardcoded
-`changefreq: daily` while the syncs bump `updated_at` on every row, so C3 tells every
-crawler that every card URL it submits changed today, every day (**C3L-104**, now FIXED
-across 31 sitemap functions using the already-existing `last_price_update` column, with
-`changefreq` deleted rather than reworded; 44,009 of 49,840 submitted URLs now carry a
-real date spread, and the row records that an earlier version of it overstated the
-submitted URL count as 363,259 when the true figure is 49,840): all 5,034
-URLs in `/api/sitemap-vanguard` carry the single value `2026-08-06`. The bot signature
-on recent traffic is **99.6 per cent over two weeks and 100.0 per cent in the 6 August
-spike, against 77.0 per cent all time** (**C3L-105**), so C3L-88's "two thirds" now
-holds only for the all-time table. **But the cost premise behind the task is wrong, and
-this is the part to carry: web requests PEAKED at 201K on 29 July and have DECLINED
-through August (51K to 83K a day), they are 3.4 per cent of credit spend, and the real
-driver is production deploys at 53 per cent**, which is this audit programme's own push
-rate. **The 5 to 6 August step change is in BUILDS, not traffic**, 31 then 48 then 38 a
-day against a typical 13 to 26, which is the same build-slot pressure C3L-101 was traced
-to. **So do NOT ship an edge rate limit or a Cloudflare block**: it would absorb load
-that is not costing anything. **C3L-106 corrects this register on access**: GA4, Search
-Console AND Netlify usage are all readable here, via the My Dashboard MCP and an already
-authenticated `netlify` CLI, so the `9-mobile` and C3L-79 sub-scopes were abandoned as
-impossible when they were not. **`meta-externalagent` is now measured, not inferred**,
-at 82 of the first 98 identified hits, because C3L-99's capture went live at 13:05:30.
-**Note that `9661b52` is not mine**: another session committed to `main`
-between two earlier updates, fixing p619's em dashes, word count and duplicate
-H1. Worth knowing that this repo currently has more than one session writing
-to `main`, using the same `C3 Team` git identity, so authorship in the log does
-not distinguish them.
+- **The Pokemon and Yu-Gi-Oh sync rotation (`414aa90`)**, above. Pokemon: **166 of 231 sets, 26,913 cards**, against zero written since 14 May. Prices spot-checked to the cent against pokemontcg.io and by set code against YGOPRODeck.
+- **FX shape 2 (`7b37d2f`, `e16d00e`)**: every inline `* 1.45` in `netlify/functions` is gone except `card-compare.mjs`, and 63 user-visible prose claims of "approximately 1.45" now interpolate the live rate. Verified live: hubs read "approximately 1.42" and their AUD figures are **unchanged**, which is the correct outcome since those come from stored `price_aud`.
+- **Four security gaps (`281b59c`, `3c6fd58`, `232c827`, `369e3ea`)**: `card_views` anon exposure, the unattended weekly digest, its no-header auth bypass, and three anon-callable `SECURITY DEFINER` writers. **C3L-128's lesson stands: `PROJECT.md` line 618 had already recorded that revocation as decided and not done, and it sat until an unrelated advisor run rediscovered it. A decision recorded in prose, with no owner, date or check, is indistinguishable from a decision never taken.**
+- **The request throttle (`aea1f99`)**, live and enforcing on 97 page functions, and the caching and `stale-while-revalidate` work (`bfbb286`, `b778f2f`, `0671a2b`, `520fb00`).
+- **The signup defences**, now proven by three days of zero signups.
 
-**Two counts in the previous version of this section were stale and are
-corrected here rather than carried forward**, which is exactly what this
-section's re-derive rule exists to catch: it said "16 numbered task files
-executed" when the task log's own newest row is **Task 21**, and it said
-findings "run C3L-01 to C3L-60" when the highest ID already written is
-**C3L-64**.
+---
 
-**One-line state:** 28 numbered task files executed, findings run C3L-01 to
-**C3L-113** across 103 rows. **C3L-107 (an application-level throttle) and C3L-108 (the 19
-June Search Console collapse) remain open and NOT started.** C3L-108 is now narrower rather
-than closer to fixed: **the loss is spread, not concentrated, which points sitewide, yet
-the one sitewide-looking commit on the day is ruled out (C3L-109)**, leaving `ead6196` as
-the strongest surviving lead and **impressions-versus-clicks as the next check**, which
-needs the GSC API directly since the dashboard connector exposes no impressions series.
-**Task 22 is complete: a ten-lens overnight batch, investigation
-first, one worktree and one commit per lens.** Stated plainly because the
-example format assumes a master order and the reality does not match it:
-**the programme has run mostly on ad-hoc numbered task files, not on the Wave 1
-plan.** Task 22 is the first to work the Section 10 lens list directly.
-**Lens progress: 10 of 10 DONE. Task 22 is complete.** All ten lenses ran, none
-was abandoned. **Five commits, 10 defects fixed, 22 findings logged, 32 new IDs
-(C3L-65 to C3L-96).** Two sub-scopes could NOT run and must not be counted as
-done: the `4-links` backlink profile (no Search Console access, C3L-79) and the
-`9-mobile` GA4 reconciliation (no GA4 credential). Full batch summary is the top
-row of the task log in Section 1.
+### Two standing cautions
 
-**`12-redundancy` found zero unused packages and 33 of 147 tables empty**, most
-referenced by no code at all (C3L-95), plus a rotation footgun where the Supabase
-service credential lives under two different names in two secret stores (C3L-96).
+- **Do not act on any GA4 traffic figure without reading C3L-123 first.** The numbers this programme reacted to for a week are probably not page loads on this site. The `keepalive` explanation was tested and failed: over 7.26 hours C3's own instrumentation recorded **35 rows** against an implied 690 an hour, and **18 of 24 post-fix rows are Australian with exactly ONE Singaporean**, where GA4 puts about 90 per cent of its users. **The next step is on the GA4 side**, whether the property is being fed Measurement Protocol hits against the public measurement id. Build no more site-side mitigation until that is checked.
+- **Do not write another task file about bot cost.** The crawl costs about **6.5 cents a day at peak**; this programme's own **91 deploys in 12 days cost roughly 45x** all bot traffic combined (C3L-114, C3L-119). GitHub Actions minutes are not this repo's either (C3L-116).
 
-**`11-integration` found one dead integration among eight.** **The apitcg.com
-enrichment has produced ZERO rows across all five of its games, 22,856 cards**
-(C3L-93), because `enrich-apitcg-stats-background.mjs` declares an empty
-`export const config = {}` and so has neither a schedule nor a route. The four
-free community APIs were checked in the same pass and **all four work**.
+---
 
-**`10-alerts` found something already in progress rather than latent.**
-**181 accounts exist and exactly ONE has ever followed a card** (C3L-90). The
-other 180 arrived in eight days from 30 July on mostly obscure and corporate
-domains, and each one caused C3 to email a confirmation from its own verified
-sending domain to an address that never asked. **C3L-46's per-address throttle
-is the wrong axis for this**: 180 different addresses never trip it once.
+### A note on this section itself (C3L-139)
 
-**`9-mobile` mostly confirmed good health.** The task-121 nav cascade fix
-**holds on all 21 user-facing static pages**, checked positionally rather than
-by eye. GA4 is present on all 2,613 crawled pages with no duplicate snippets,
-there are no external CSS or JS assets so cache-busting is moot, and view
-tracking is wired into all 32 of 32 card pages. **The one real finding is that
-`card_views` cannot tell a person from a crawler** (C3L-88).
+**This section reached 499 lines before this rewrite and had stopped working as a "read this first".** It had accumulated every task's additions since the programme began, with nothing ever retired into Section 1's task log, which already exists for exactly that purpose. The symptom is what the 9 August sweep found: **a resolved defect and its duplicate sitting in the same section at once (C3L-57 and C3L-134), a "live and wrong" item whose code was deleted weeks earlier (C3L-53), and a three day old "immediate next action".** **Flagged rather than fixed: the retirement policy is a decision, not a repair, and it belongs in its own task.** Without one, this section will be back to 499 lines within a few tasks.
 
-**`8-perf` ran analytically throughout, per Section 16.2, with no generated
-load.** It produced the batch's one DATED finding: **the snapshot tables grow
-without bound, nothing prunes them, and at the measured 28.15 MB/day across the
-top six games the 8 GB disk allowance runs out around late December 2026**
-(C3L-86). Index health is otherwise excellent, 0.0 per cent sequential scans
-across every large table.
-
-**`2-crosssystem` found the most serious thing in this batch and shipped no
-code, deliberately.** **C3L-80, High: `price_change_7d` has two independent
-writers on 8 games and they compute different statistics**, the syncs copying
-the upstream vendor figure verbatim and pg_cron recomputing from C3's own AUD
-snapshots. Measured on 1,038 comparable cards: **21.4 per cent disagree on the
-DIRECTION of the 7 day move**, mean gap 3.68 percentage points, max 109.40. The
-value on the page is one statistic before 20:00 UTC and the other after.
-
-**`4-links` ran three of its four sub-scopes and the fourth could not run.**
-The crawler covered **2,613 URLs with 2,607 clean 200s**. Link functionality and
-in-content links are done; internal architecture found exactly one true orphan,
-now fixed. **The backlink profile did not run at all: there is no Search Console
-access from this machine** (C3L-79). Do not record `4-links` as fully closed.
-
-**`1-claims` closed the oldest item on the Wave 1 list and the headline claims
-all HELD.** Verified against the live database, not against this register:
-**"350,000+ cards" is true at 363,259** across the 32 game tables, **"32 games"
-is true**, **"69 licensed Weiss Schwarz properties" is true** (69 entries in
-`WS_PROPERTY_NAMES`), and **"updated daily" is true for all 32 games**, every
-one at 0 or 1 days stale. That last one is worth stating plainly because it is
-the claim C3L-01 and C3L-02 caught being false in the opening session.
-
-**Currently in flight, re-derived by a full worktree sweep on 6 August rather
-than assumed (Task 25):** **THREE worktrees exist besides the current task's own,
-and until this sweep the register described only one of them, in a single line,
-without ever reading it.**
-1. `c3-audit-request-fingerprint` at `f6b0e5a`. **No longer in flight: committed
-   and pushed, now on `main`.** Another session's work. See C3L-99.
-2. `c3-website-blog` on `blog-content` at `1d9bb06`, **local only, never pushed**,
-   holding **282 unpublished MTG blog posts and 5 generator scripts**. Carries 2
-   pNNN numbering collisions with `main`. See C3L-100.
-3. The current task's own worktree.
-**Also note `main` now has more than one session pushing to it**, confirmed
-directly: `f6b0e5a` landed on top of this session's Task 24 commits while Task 24
-was still running, and rebased cleanly.
-
-**The four things Task 22 found that are worst, in order, so this is not buried
-in 32 new rows:**
-1. ~~**C3L-90, happening right now.**~~ **DEFENDED 2026-08-06, task
-   `c3-audit-signup-abuse`.** The signup form was being farmed by bots: 181
-   accounts, exactly **1** had ever followed a card, roughly **180 unsolicited
-   emails** from C3's own sending domain in eight days. **Three layers now ship:
-   a honeypot, a per-IP limit of 5 per hour, and `email_log` writes so a repeat
-   is visible the same morning rather than after an eight day audit (C3L-92).**
-   The per-IP limit is the one that matters, since C3L-46's throttle is keyed on
-   the ADDRESS and 180 different addresses reset it every time. **Turnstile was
-   asked for and is NOT built**: no key exists and registering a Cloudflare
-   account unattended was declined. **The 180 existing accounts were not
-   deleted.** **The cost is now measured, not guessed (C3L-97): 185 emails since
-   30 July, 165 delivered, 7 bounced (3.78 per cent) and 1 complaint (0.54 per
-   cent), against the 0.3 per cent complaint threshold Google and Yahoo use
-   before throttling a sender. Real reputation impact, not catastrophic.**
-2. **C3L-80.** `price_change_7d` has **two writers computing different
-   statistics** on 8 games. On a sampled 1,038 cards they disagree on the
-   **direction** of the move 21.4 per cent of the time. The number on the page is
-   one statistic before 20:00 UTC and another after.
-3. **C3L-93.** The apitcg integration has **never produced a single row**, so the
-   Card Details grid is silently absent on **22,856 card pages**.
-4. **C3L-83.** `POST /api/price-alert` emails **any address on request**, no
-   auth, no throttle, nothing on the site calls it.
-
-**And one that is not wrong yet: C3L-86**, the snapshot tables grow unbounded
-with nothing pruning them, leaving roughly **140 days of disk**, about late
-December 2026.
-
-**Immediate next action:** **check the C3L-61 backfill after 12:40 UTC today.** Its 06:40 slot was checked and it did not run at all, because it deployed 3.4 minutes before that slot (C3L-64). Deployment is confirmed sound, so 12:40 is the next real test. Expected: `sync_events` shows `pokemon-enrichment` `sync_start` then `sync_success`, `pokemon_enrichment_progress` gains up to 10 rows, `pokemon_cards` gains non-zero `hp`. **A start with no terminal event is the C3L-57 shape and means the 5 minute budget needs CUTTING, not raising**, and Signal B flags that automatically. A second no-show points at the cron step expression `40 */6 * * *`, which is the only one of its kind in this repo, and the remedy is a fixed hour like every other sync uses. Beyond that, no task file is pending. **Two dated checkpoints
-fall due within hours and neither has happened yet, so neither should be
-recorded as proven:**
-1. ~~weissschwarz, 00:30 UTC today~~ **PASSED. Verified in production at 00:40
-   UTC: `sync_start @ 00:30, sync_success @ 00:37`, and the table is now 0 days
-   stale with a 2026-08-06 snapshot, its first success since 28 July.** That is
-   C3L-48, C3L-49 and C3L-55 all confirmed working against live data rather
-   than by simulation, and it ends a 9 day outage. Nothing further needed.
-2. ~~**`daily-tcg-sync.yml`, roughly 04:00 UTC today.** `continue-on-error` was
-   removed in `f810c2f`, so this workflow should go **RED** on its next run.~~
-   **WITHDRAWN as stale, 6 August 09:37 UTC. This checkpoint can never happen:
-   Task 19 DELETED `daily-tcg-sync.yml` outright.** Verified by listing
-   `.github/workflows/`, which now holds exactly five files and none of them is
-   that one. It was carried forward from a version of this section written
-   before the deletion landed. Nothing is pending here, red or green.
-
-**Open decisions awaiting Sammy:**
-- ~~C3-122, whether the paid subscription actually exists~~ **ANSWERED and FIXED 6 August.** Sammy
-  confirmed the tier has never been sold and the donation link stays. `/legal` rewritten, billing
-  portal removed, donations clause added. The live payment link turned out to be a **donation**, not
-  the subscription, so nothing was disabled.
-- **The EV catalogue rebuild, 45 pages.** Task 17 confirmed 5 of 5 audited EV pages carry real defects
-  and left all of them unpatched on purpose. **One is an affiliate buy link for a product that has
-  never existed** (Warhammer 40K "Play Booster Box"). Scope is in Section 4's Task 17 evidence block.
-- **C3-076/077, whether legacy `.html` routes should 301. STILL OPEN, and re-scoped by Task 22's
-  first lens: it is 20 routes, not three.** Every static page except `subscribe` (already 301s),
-  `quiz` and `dashboard` (both 404) serves 200 at BOTH its `.html` and its clean form.
-  **The blanket 301 is NOT a contained fix and was deliberately not attempted**, for a concrete
-  reason found by reading `netlify.toml`: `/tracker`, `/contact`, `/methodology` and `/welcome`
-  are 200 REWRITES to their own `.html` files, so adding a `.html` to clean 301 on those four
-  risks a redirect loop on live pages. It needs its own supervised task. See C3L-66.
-- **C3L-54, which writer owns `pokemon_cards`.** The background sync and
-  `daily-tcg-sync.yml` both fire at `0 4 * * *` onto the same table with
-  different id and slug schemes. This has to be settled before C3L-53 is fixed,
-  because fixing the scripts without it trades silence for collision.
-- ~~C3L-53 and C3L-54 recommendation awaiting a decision~~ **APPROVED and EXECUTED 6 August in Task 19.** Both resolved: three scripts and `daily-tcg-sync.yml` deleted, `daily-mtg-sync.yml` untouched.
-- ~~**C3L-53, the three schema mismatches**~~ (`logo_uri` on `pokemon_sets`, `code`
-  on `lorcana_sets`, `num_of_cards` on `yugioh_sets`). **Explicitly noted per
-  the briefing's instruction: no Task 12 or any other task file for C3L-53
-  exists in Downloads. `task-12-business-selfserve-checkout.md` is a different
-  piece of work. So this is unassigned, not in progress.**
-- **C3L-56**, whether the 5 orphan slugs get redirects or whether slug
-  preservation is extended to non-colliding rows.
-- ~~Blog post p619's duplicate H1~~ **RESOLVED 6 August by `9661b52`, which was
-  another session's commit, not this one.** Verified in the built output: the
-  rendered page now carries exactly one `<h1>`, the layout's, and the file has
-  no em or en dashes. Recorded because the fix arrived from outside this
-  session's own work.
-- ~~Duplicate task files in Downloads~~ **RESOLVED 6 August.** All five copies
-  of the C3L-55 slug-seed task are now deleted.
-
-~~**LIVE INCIDENT, STILL OPEN**~~ **RESOLVED 13:05 UTC (C3L-101).** Netlify
-published nothing between **11:34 and 13:05 UTC, about 91 minutes**, stranding
-six commits on `main`. Cause traced to **build-slot exhaustion**: two Deploy
-Previews were canceled at 12:04 UTC against a limit of 3 of 3 concurrent builds,
-so later builds were queued and never scheduled, which is why they sat in
-`state=new` rather than failing. **It cleared without intervention**, consistent
-with the stuck slots timing out. **Deploy `6a74863a` published `865d6ad` at
-13:05:28, containing all six stranded commits.** **Task 24's EV takedown is now
-verified live: 38 of 38 treated pages and 5 of 5 audited pages untouched.**
-**Caught by the C3L-26 deploy-health check on its first genuine red.**
-
-**Original entry:**
-**Netlify has not published a deploy since 11:34 UTC (C3L-101).** Published is `41af4dd`; five
-commits sit above it on `main` and **none of them is live**, including the EV
-takedown, the apitcg schedule and the request-fingerprint work. A deploy for
-`2f1ce04` was created and is stuck in **`state=new`**, so it is a stall rather
-than a build failure. **Caught by the C3L-26 deploy-health check, its first real
-red.** Not retried from this side: restarting a stuck production deploy is
-Sammy's call. **Consequence for this register: anything marked shipped today
-after 11:34 is shipped to `main` and NOT live, and must not be read as live.**
-
-**Anything live and wrong on the site right now:**
-- **Pokemon card enrichment is still entirely absent**, 0 of 31,833 rows, and the backfill built to fix it has
-  now run once and enriched nothing (C3L-102, fixed; C3L-103, the set-matching cause, still open). Next
-  attempt 18:40 UTC.
-- **The MTG Warhammer 40,000 EV page sells a product that has never existed**, describing a "Play
-  Booster Box (12 Packs), 14 MTG cards each" under an affiliate link, for a 2022 release that shipped
-  as four Commander decks when Play Boosters did not exist until 2024. **STILL LIVE: this is one of
-  the 5 pages Task 17 audited individually, and Task 24 deliberately left those 5 untouched.**
-- ~~**Every EV page prints a buy or avoid verdict from a pre-filled `value="320.00"`**~~ **FIXED for
-  the 38 unaudited pages on 6 August (C3L-98): they now carry noindex, an "Under review" banner, and
-  no verdict at all. STILL TRUE of the 5 audited pages, which were left as they were.**
-- ~~weissschwarz prices are 9 days old~~ **FIXED and verified in production
-  6 August 00:37 UTC, first successful sync since 28 July.**
-- **Pokemon card pages are still missing their HP, Weakness and Retreat Cost
-  blocks, all 31,833 of them.** The fix is built and deployed as of Task 20
-  (C3L-61) but **has still not run once.** Its 06:40 UTC slot was checked and it
-  did not fire, because the function deployed 3.4 minutes before it (C3L-64).
-  Nothing has changed on the site. Next attempt 12:40 UTC. Signal C in the
-  health check detects this condition and was verified doing so.
-- **yugioh's background sync has never completed a run** (C3L-57). It starts
-  three times a night, times out at Netlify's 15 minute ceiling each time, and
-  logs no terminal event. Its data is current only because snapshots are
-  written incrementally on the way down, so the site looks fine.
-- **All three daily sync scripts fail at their first step every day** (C3L-53).
-  Those games stay current only because a second writer keeps them so.
-- ~~p619 renders a duplicate H1~~, fixed 6 August, see above.
-- **The Card Details grid is silently absent on 22,856 card pages** across digimon, gundam,
-  unionarena, riftbound and dbsfusionworld (C3L-93), because the apitcg enrichment has never
-  run in production. Same silent-guard shape as C3L-61's pokemon HP blocks.
-- **The signup form is being farmed by bots and has sent roughly 180 unsolicited confirmation
-  emails in eight days** (C3L-90). 181 accounts, 1 of which has ever followed a card. This is
-  active, not latent, and it degrades the sending reputation the follow alerts depend on.
-- **Nothing watches the alerting subsystem at all** (C3L-91): `check-card-follows` and the
-  weekly digest write zero `sync_events`, and no follow has ever been triggered, so the alert
-  path has never been observed working end to end in production.
-- **About two thirds of recorded card views are almost certainly crawler traffic** (C3L-88), so
-  the apparent popularity ranking in `card_views` is an artefact. Only mtg shows human-shaped
-  session reuse at 6.5 views per session; every other game of volume sits at exactly 1.0.
-- **Nothing prunes the price snapshot tables and the disk allowance runs out around late
-  December 2026** at the measured growth rate (C3L-86). Not wrong today, wrong on a date.
-- **`POST /api/price-alert` will email any address a stranger names, unlimited times, with no
-  authentication and no throttle** (C3L-83), from C3's own verified sending domain. Nothing on
-  the site calls it and both alert tables hold 0 rows, so removal is the likely right answer,
-  but removing a live public endpoint is a decision rather than a repair.
-- **The 7 day and 30 day price change shown on 8 games is a different statistic before and after
-  20:00 UTC** (C3L-80), because the background sync and a pg_cron job both write those columns
-  and compute them differently. On a sampled 1,038 cards the two methods **disagree on the
-  direction of the move 21.4 per cent of the time**. The other 23 games get the vendor figure
-  only and have never had C3L-12's tolerance applied to them.
-- **Follow alert emails are decided on price-change values that are mid-rewrite or a day old**
-  (C3L-82), because `check-card-follows` runs at 20:00 UTC and 7 of the 8 price-change jobs run
-  after it.
-- **The random card generator can never draw a large share of the cards it advertises** (C3L-70).
-  Worst case Dragon Ball: **7,022 of 11,404 drawable cards, 61.6 per cent, across 38 sets, are
-  structurally unreachable**, because the random offset is capped at 70 per cent of a constant
-  that is itself deliberately an undercount, against a stable `order=id`. lorcana 55.8 per cent,
-  starwars 45.1 per cent, riftbound 35.1 per cent, onepiece 33.7 per cent unreachable.
-- **`/cards` and `/generators` state different numbers for the same fact, and both differ from the
-  database** (C3L-69). One Piece is 6,664 on one page, 6,289 on the other, and 7,019 in the table.
-- ~~Five of the eight featured game tiles on `/cards` state exact card counts that are stale and
-  understated~~ **FIXED in the `1-claims` lens (C3L-68).**
-- **46 live pages are submitted to Google with no `<link rel="canonical">` at all**, and 44 of
-  them are the EV calculator pages (C3L-67). Untouched here because the EV catalogue is excluded
-  from Task 22. `/mtg-strixhaven.html` and `/vip.html` are the two non-EV cases.
-- ~~The static sitemap submits `/tracker.html` and `/shop.html` while both pages canonical to the
-  clean route~~ **FIXED in this lens (C3L-65).** The same conflict remains live on
-  **`/legal.html` and `/ev-calculator.html`**, both deliberately untouched because Task 22
-  excludes `/legal` and everything EV-adjacent.
-
-**Full detail:** Section 9 for counts, Section 10 for the full ordered list of
-what to pick up next, Section 3 for every individual finding.
+**Full detail:** Section 9 for counts, Section 10 for the ordered list of what to pick up next, Section 3 for every individual finding, Section 1 for task history.
 
 ---
 
@@ -842,7 +423,7 @@ per lens as each one closes.
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-138)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-139)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -1052,6 +633,7 @@ those tables would light up the collision instead of the silence.
 | C3L-136, **OPEN, MEDIUM, confirmed 2026-08-09 by direct HTTP test against production, not inferred. Logged and deliberately NOT fixed, so that it is not lost the way C3L-128 nearly was** | | **Netlify returns 403 to EVERY direct HTTP request for a scheduled function, in production as well as on deploy previews. 45 of this repo's 46 scheduled functions contain an `x-sync-secret` manual-invocation path, and not one of them has ever been reachable over HTTP.** The dead code is guarded by comments asserting the opposite. `sync-indexnow-ping.mjs` states it outright: "Trigger: scheduled daily, or manually with an x-sync-secret header against /.netlify/functions/sync-indexnow-ping". **That has never worked.** | **Tested rather than assumed, and separated from the alternative explanations.** `POST /.netlify/functions/sync-pokemon-background` returns **403 on the live production domain**, so this is not a preview restriction. `sync-fx-rate`, a different scheduled function, also returns **403** on the preview. A NON-scheduled function, `card-api`, returns **404** on the same host, which is a routing answer rather than a refusal, so the 403 is specific to the presence of the `schedule` key and not to the host, the path or the deploy context. **The decisive proof is the rotation sample run in task 36: the identical function on the identical host became invocable the moment `schedule` was temporarily swapped for `path` on a branch, and went back to 403 when the schedule was restored.** | **Open, and NOT fixed here. It is a decision about 45 files, which is a task in its own right rather than a side effect of a sync repair.** Three things are true at once and need separating before anyone acts. **The dead code is harmless in itself**, since a request that never arrives cannot misbehave. **The comments are actively harmful**, because they describe a capability that does not exist, and the next person who needs a manual trigger will lose time proving otherwise. **The missing capability is real**: there is no way to run any sync on demand today, which is precisely what made verifying C3L-133 and C3L-134 awkward and forced a temporary branch-only workaround. **The likely fix is ONE authenticated trigger endpoint that is not itself scheduled and dispatches to the sync functions**, rather than 45 separate corrections, but that is a design decision for Sammy and is not made here. **Same shape as C3L-132 and C3L-128, a comment asserting something was verified when it was not.** This one survived longer than either because nothing fails when unreachable code stays unreached |
 | C3L-137, **OPEN, and it needs a PRODUCT DECISION rather than a repair, confirmed 2026-08-09. Logged separately at Sammy's instruction because it is not an FX defect and must not be closed as one** | | **The sealed-product block on all 28 game set pages has NEVER rendered, on any page, since it was written.** It filters card rows for booster boxes, displays, starter decks and the like, then shows a price and a "Low: ~AU$" figure for up to four of them. Nothing has ever seen it. **Two INDEPENDENT blockers, either of which alone is sufficient**, which is why it survived: the page query filters `rarity=neq.None` while every sealed product carries exactly `rarity = 'None'`, and the same query never selects `low_price`, so `p.low_price` is permanently `undefined` | **Measured, and it is uniform, not a single broken page.** `rarity=neq.None` appears in **28 of 28** set pages; the sealed block appears in **28 of 28**; and **0 of 28** select `low_price`. For Lorcana, **114 of 114** rows matching the sealed name filter carry `rarity = 'None'`, so the filter excludes precisely the rows the block exists to display. Confirmed against the live site and not merely read from source: fetching `/cards/lorcana/sets/the-first-chapter` returns no `Low:` string and no `~AU$` figure anywhere, and the only "Sealed" text on the page belongs to the nav dropdown. **138,802 rows across the seven games sampled do carry a `low_price`**, so the data exists and is simply never requested | **Open. Deliberately NOT scoped here, and NOT to be fixed as part of the FX work.** Whether this block should work at all is a commercial question, not a bug report: sealed product is a real revenue surface given `/shop` and the eBay affiliate placements, so the options genuinely include building it properly and deleting it, and neither is Claude Code's call. **What is already decided is that it must not be left silently half-present.** Note the shape, which is C3L-136 one step further on: not a comment claiming a capability that does not exist, but an entire feature that does not run, with nothing anywhere failing to say so. **It was found only because the FX work touched a line inside it and live verification asked whether that line renders.** Reading the code would never have revealed it, because the code is correct; the query feeding it is what makes it unreachable |
 | C3L-138, **CLOSED SAME DAY, and recorded because I CAUSED IT, 2026-08-09. Introduced in `e16d00e` and reverted in `eb1db70` before any user could have been shown a wrong figure for long. Logged in full rather than quietly reverted, because the reasoning error is the useful part** | | **A "fix" to `card-compare.mjs` made foil prices render about 2.2 per cent LOW on a page whose entire purpose is comparing prices.** The original code read `fetchCard(game, slug, 1.45)` while `getLiveRate()` sat in the same `Promise.all`, which looks exactly like a page fetching the live rate and then ignoring it. **It was not.** The 1.45 was a deliberate INTERMEDIATE denomination, divided back out and replaced with the live rate a few lines later: `priceAudFoil: c.priceAudFoil ? (c.priceAudFoil / 1.45 * usdToAud) : null`. Passing the live rate into `fetchCard` broke that invariant and made the same line apply the rate TWICE, yielding `usd * rate squared / 1.45` | **The arithmetic, stated plainly. Correct AUD is `usd * 1.4182`.** After the change it became `usd * 1.4182 * 1.4182 / 1.45`, which is `usd * 1.3871`, so every foil price on `/compare` was understated by **2.15 per cent**. **A second call site depends on the same invariant**: `renderCompareTable` at line 693 derives its `data-usd` attribute as `c.priceAudFoil / 1.45`, and that function does not receive `usdToAud` at all, so a correct fix requires threading the rate through another function rather than editing one line. **Found by LIVE verification after deploy, not by review**: `/compare` was the only page still containing a `1.45` once every other page had stopped, and chasing that one anomaly is what forced reading the conversion chain properly | **Closed by reverting to the working state, not by attempting a better fix at the end of a long batch.** `card-compare.mjs` is therefore **the one file where shape 2 is not closed**, and that is recorded rather than rounded up to done. **THE LESSON, and it is not "be careful": a hardcoded constant that looks wrong in isolation can be load-bearing, and the way to tell is to follow the value to where it is CONSUMED rather than judging it where it is written.** Every other 1.45 in this task was a terminal value; this one was an intermediate, and it read identically. **A second, sharper lesson: the change passed `node --check`, passed module import, passed a render test, and was still wrong**, because all three verify that code RUNS, not that its arithmetic means what it did before. Only comparing the live rendered figure against the previous one would have caught it, which is exactly the check that did |
+| C3L-139, **OPEN, and it is about THIS FILE, confirmed 2026-08-09. Raised by Sammy and logged deliberately rather than fixed in place, because the same unbounded growth will simply recur next task otherwise** | | **The START HERE section had grown to 499 lines and had stopped functioning as a "read this first".** It accumulated every task's additions since the programme began and **nothing was ever retired into Section 1's task log, which already exists for precisely that purpose**. The failure is not length in itself: it is that a section too long to re-read in full stops being re-read, so stale entries are never noticed and the file's own rule that START HERE is refreshed FIRST every task quietly degrades into appending a paragraph at the top | **Measured by a line-by-line re-check of the two bullet lists on 9 August, which is the only reason any of this surfaced.** **Three concrete failures, each of a different kind.** **A resolved defect and its own duplicate sat in the section simultaneously**: C3L-57 and C3L-134 are the same Yu-Gi-Oh timeout, logged months apart, one listed as live and wrong while the other was recorded as fixed the same night. **An item was listed as live and wrong whose code no longer exists**: C3L-53's "all three daily sync scripts fail at their first step every day" survived Task 19 deleting those scripts and `daily-tcg-sync.yml`, and it contradicted the section's OWN decisions list two screens below, which recorded the deletion as executed. **And the "immediate next action" was a checkpoint three days dead.** Four further entries were stale rather than wrong: C3L-88's figure superseded by C3L-105, C3L-67 half-corrected, C3L-69 no longer reproducible, and the Pokemon HP count moved from 0 to 133 | **The section is now rewritten and is 78 lines. That is the symptom treated, NOT the cause.** **The cause is that there is no retirement policy, and writing one is a decision rather than a repair**: it has to settle what earns a place in START HERE, how long a resolved item stays before moving to Section 1, and who re-derives the counts. **Explicitly out of scope for the task that found it, at Sammy's instruction, so that it gets its own task rather than being half-done at the end of another.** **The general lesson, and it is the same shape as C3L-128 turned inward: a record that is too long to re-read is functionally the same as a record nobody wrote.** C3L-128 was a decision recorded in prose with no owner, date or check, and this is a register whose own freshness had no owner, date or check either. **Note the irony worth keeping: this file's Section 9 has a re-derive-by-counting rule precisely because its counts kept going stale, and that rule works. Nothing equivalent existed for its prose** |
 
 **Should C3L-51's sync health check be extended to catch enrichment gaps?
 Answered explicitly, 6 August 2026, because Task 19 asked rather than leaving
@@ -2079,6 +1661,22 @@ Same discipline as Voxsanity's own Section 5.
   monitoring window clean at 12 polls and zero throttled, with the "no cost argument" framing
   corrected to the real reason, data integrity), **C3L-107** (**CLOSED**, its scoped mitigation
   now exists and is shipped).
+- **Task 38, 9 August 2026: a line-by-line re-check of START HERE, then a full rewrite.**
+  **One new ID, C3L-139, and SEVEN corrections that a systematic sweep found and a reading would not.**
+  Every claim in the two bullet lists was checked against live or database state, one at a time.
+  **C3L-57 and C3L-134 were the SAME Yu-Gi-Oh defect logged months apart, and the section carried
+  both at once**, one as live-and-wrong and one as resolved. **C3L-53 was FALSE**: its scripts and
+  daily-tcg-sync.yml were deleted in Task 19, and it contradicted the section own decisions list.
+  **C3L-54 is MOOT**, since the second writer went with that deletion. **C3L-90 is RESOLVED and now
+  PROVEN**: zero signups on 7, 8 and 9 August after a wave peaking at 38 a day. **C3L-88 was stale**,
+  superseded by C3L-105. **C3L-67 is half-corrected**, two pages gained a canonical and two did not.
+  **C3L-69 could not be reproduced at all** and needs re-deriving before it is quoted again.
+  **Confirmed still true and re-verified rather than assumed:** C3L-83, C3L-80, C3L-93, C3L-86,
+  C3L-91, C3L-70, C3-076/077 and the untreated Warhammer EV page.
+  **C3L-139 is the section itself**: 499 lines, no retirement policy, and nothing ever moved to the
+  task log that already exists for it. **Rewritten to 78 lines, which treats the symptom only.**
+  **Section 9 split is now DERIVED by scanning status flags, and the hand-kept one it replaced had
+  been summing to 127 against 139 rows.**
 - **Task 37 additions, 9 August 2026, Section 3 shape 2, which CLOSES the FX pipeline task file.**
   **Two new IDs, C3L-137 and C3L-138, and a CORRECTION to what commit 7b37d2f claims.**
   **The correction first, because it is a claim about money.** That commit message states that the
@@ -2250,8 +1848,8 @@ Same discipline as Voxsanity's own Section 5.
   **Running total after lens 10: 96 C3L- findings.** The per-status tally immediately
   below has NOT been re-cut for these three and still describes the 60 that preceded
   them; it is corrected in one pass at the end of the batch rather than ten times.
-- **Live-investigation findings (C3L-):** **138 IDs across 139 rows**, re-derived by counting
-  on 9 August 2026 after Task 38 rather than incremented. The figure before Task 29 was
+- **Live-investigation findings (C3L-):** **139 IDs across 140 rows**, re-derived by counting
+  on 9 August 2026 after Task 39 rather than incremented. The figure before Task 29 was
   **119 IDs across 120 rows**, and before that this line said "113 IDs across 103 rows" with
   a row count that **was wrong when it was written**: the same count run against the commit
   that recorded it returns **114 rows**, not 103, so only the ID half of that line was
@@ -2262,7 +1860,12 @@ Same discipline as Voxsanity's own Section 5.
   (`C3L-17 to C3L-23`, `C3L-72 to C3L-75`). **One duplicate remains and is NOT folded here:
   `C3L-40` still occupies two rows**, which is the entire gap between 120 rows and 119 IDs.
   It predates this task and folding it is a separate edit, so it is recorded rather than
-  quietly fixed. **Current split: 82 resolved or fixed, 44 open, 1 ruled out (C3L-109),**
+  quietly fixed. **Current split, DERIVED by scanning each row status flag on 9 August rather than
+  maintained by hand: 86 resolved or fixed, 32 open, 2 ruled out, and 20 rows whose status flag
+  cannot be classified mechanically. Those four figures sum to 140, which is the row count.**
+  **The previous hand-kept split read 82, 44 and 1, which summed to 127 against 139 rows, so it had
+  been wrong for some time. The 20 unclassified rows are the real gap: they predate the convention
+  of opening a row with an explicit status word.**
   **1 built and held (C3L-111 only; C3L-118 shipped and is now live), 1 live and enforcing (C3L-118).** The detailed per-finding tally below
   is from earlier tasks and is itself now behind; treat the counts on this line as current and
   the enumeration beneath as historical until someone rebuilds it.
@@ -2399,8 +2002,8 @@ Same discipline as Voxsanity's own Section 5.
      when the highest ID was already **113**, and **88** total rows when there were
      **136**. A summary section with a stated re-derive discipline had been incremented
      by nobody for several tasks. Caught by counting instead of reading.
-- **Total rows this file currently tracks:** **172**, across 4 ID ranges, re-counted on
-  9 August 2026 after Task 38 rather than incremented: **139 C3L- rows** (covering 138 IDs), **11 C3- rows**,
+- **Total rows this file currently tracks:** **173**, across 4 ID ranges, re-counted on
+  9 August 2026 after Task 39 rather than incremented: **140 C3L- rows** (covering 139 IDs), **11 C3- rows**,
   **16 C3X- rows** and **6 OPP- rows**. The previous figure said **136** and was built on a
   C3L- row count that was already wrong by 11 when it was recorded, see the C3L- line above. Out of
   a much larger universe (at minimum the full 164 in the external docx,
