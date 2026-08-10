@@ -4,6 +4,9 @@ import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redire
 import { setPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 import { fxRate } from './shared/fx-rate.mjs';
+// C3L-141. escAttr was called on two lines in this file and imported on none, so every
+// render that reached either one threw a ReferenceError and the catch turned it into a 503.
+import { escAttr } from './shared/html-escape.mjs';
 // netlify/functions/riftbound-set-page.mjs
 // Serves /cards/riftbound/sets/:slug+
 // Rebuilt with: movers panel, rarity filters, full sort options
