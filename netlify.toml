@@ -220,6 +220,74 @@
   status = 301
   force = true
 
+# ── C3-076/077 BATCH 2 ──
+# Batch 1 (above) was verified live before this batch was written: all four .html forms answer
+# 301 to the clean form, the clean form still answers 200, and following the redirect resolves
+# in ONE hop with no loop. This batch applies the identical, now-proven shape to the rest of the
+# non-rewrite routes.
+#
+# /ev-calculator.html and /mtg-strixhaven.html are in this batch rather than batch 1 because
+# sitemap-static.mjs submitted BOTH of them to Google in their .html form. Redirecting them
+# without moving the sitemap entry would have put a URL that 301s into the sitemap, which is a
+# worse state than the duplicate it fixes. Both entries are moved to the clean form in the same
+# commit, and mtg-strixhaven's canonical tag, which was set to the .html form earlier tonight
+# precisely because the sitemap said .html, moves with them.
+[[redirects]]
+  from = "/dnd.html"
+  to = "/dnd"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/generators.html"
+  to = "/generators"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/play.html"
+  to = "/play"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quizzes.html"
+  to = "/quizzes"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/vip.html"
+  to = "/vip"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/content-engine.html"
+  to = "/content-engine"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ev-calculator.html"
+  to = "/ev-calculator"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/mtg-strixhaven.html"
+  to = "/mtg-strixhaven"
+  status = 301
+  force = true
+
+# /index.html duplicates the homepage. Note this one is NOT symmetrical with the others:
+# /index already 301s to / on its own, so only the .html form needed a rule.
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
 # ── 301s for dead URLs flagged in Search Console ──
 [[redirects]]
   from = "/quiz"

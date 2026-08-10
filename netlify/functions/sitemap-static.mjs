@@ -64,7 +64,7 @@ const STATIC_PAGES = [
   { path: '/tracker',             priority: '0.8', changefreq: 'weekly'  },
   // /ev-calculator.html has the SAME conflict (canonical=/ev-calculator) and is deliberately
   // left alone: this batch excludes the EV pages and anything EV-adjacent. Logged as C3L-65.
-  { path: '/ev-calculator.html',  priority: '0.7', changefreq: 'weekly'  },
+  { path: '/ev-calculator',       priority: '0.7', changefreq: 'weekly'  },
   { path: '/calendar',            priority: '0.7', changefreq: 'weekly'  },
   { path: '/shop',                priority: '0.6', changefreq: 'weekly'  },
 
@@ -79,7 +79,7 @@ const STATIC_PAGES = [
   // QR destination on the parcel insert card. Not linked from the nav or any other page, so
   // this sitemap entry is the only way Google will ever discover it.
   { path: '/welcome',                                  priority: '0.6', changefreq: 'monthly' },
-  { path: '/mtg-strixhaven.html',                      priority: '0.6', changefreq: 'monthly' },
+  { path: '/mtg-strixhaven',                           priority: '0.6', changefreq: 'monthly' },
 
   // Quizzes
   { path: '/quizzes/which-tcg',                        priority: '0.7', changefreq: 'monthly' },
