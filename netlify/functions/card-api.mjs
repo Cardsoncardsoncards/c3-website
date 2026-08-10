@@ -216,56 +216,11 @@ async function handlePageView(req, context) {
   return json({ ok: true });
 }
 
-// --- Price alert ---
-async function handlePriceAlert(req) {
-  const body = await req.json();
-  const { scryfallId, cardName, email, targetPriceAud } = body;
-  if (!scryfallId || !email || !targetPriceAud) return json({ error: 'Missing fields' }, 400);
-
-  await supabasePost('mtg_price_alerts', {
-    scryfall_id: scryfallId,
-    email,
-    target_price_aud: targetPriceAud,
-    alert_type: 'below',
-    is_active: true
-  });
-
-  // Send confirmation email via Resend
-  if (RESEND_API_KEY) {
-    try {
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          from: 'C3 Price Alerts <alerts@cardsoncardsoncards.com.au>',
-          to: [email],
-          // task-22 (C3L-84): the SUBJECT is deliberately left unescaped. It is plain text, not
-          // HTML, so esc() here would render "&amp;" literally in the mail client. Header
-          // injection is not a concern because this goes to Resend as JSON, not raw SMTP.
-          subject: `Price alert set for ${cardName}`,
-          html: `<p>Hi,</p>
-<p>You will be notified when <strong>${esc(cardName)}</strong> drops below <strong>AU$${esc(targetPriceAud)}</strong>.</p>
-<p>We check prices daily. When the price drops we will email you straight away.</p>
-<p>You can browse more cards at <a href="https://cardsoncardsoncards.com.au/cards/mtg">cardsoncardsoncards.com.au</a></p>
-<p>The C3 Team</p>
-<p style="font-size:11px;color:#999">To unsubscribe from price alerts, reply to this email.</p>`
-        })
-      });
-    } catch (e) {
-      console.error('Resend error:', e.message);
-    }
-  }
-
-  return json({ ok: true });
-}
-
 // --- Follow this card (multi-game percentage-change alerts) ---
 //
-// Distinct from handlePriceAlert above, which is the MTG-only, one-shot target-price
-// system backed by mtg_price_alerts and untouched by task-109. This one is multi-game and
+// This used to be described as "distinct from handlePriceAlert above". That handler was
+// REMOVED on 10 August 2026 under C3L-83, so there is no longer anything to be distinct from
+// and this is the ONLY alert-signup path in this file. It is multi-game and
 // backed by the unified follows table, one row per (account, card), no target price. The
 // user is emailed when the card moves by a threshold percentage (see check-card-follows.mjs).
 //
@@ -1156,10 +1111,14 @@ export default async (req, context) => {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
     return handlePageView(req, context);
   }
-  if (path === '/api/price-alert') {
-    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
-    return handlePriceAlert(req);
-  }
+  // C3L-83. /api/price-alert was REMOVED on 10 August 2026, endpoint, handler and route entry.
+  // It accepted an arbitrary `email` in the request body and sent mail to it from
+  // alerts@cardsoncardsoncards.com.au, with no auth, no throttle and no confirmation step, so
+  // it was an open relay to any address from a domain C3 owns and has verified with Resend.
+  // Nothing on the site ever called it: verified live across six pages, zero references. Both
+  // tables it wrote have held zero rows since they were created. No functionality was lost.
+  // Do not reinstate this shape. The follow system (/api/card-follow) is the supported path and
+  // it confirms the address before it will send anything.
   if (path === '/api/collection-waitlist') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
     return handleWaitlist(req);
@@ -1205,7 +1164,6 @@ export const config = {
     '/api/card-like',
     '/api/card-view',
     '/api/page-view',
-    '/api/price-alert',
     '/api/collection-waitlist',
     '/api/random-commander',
     '/api/random-card',
