@@ -16,10 +16,17 @@
 // identical across those variants and only Rarity differs, so the map keeps the FIRST
 // entry seen per code and counts the collapsed duplicates for the log.
 //
-// Trigger: manual POST with an x-sync-secret header, same as sync-sales-history.mjs.
-// Not scheduled. Once the backfill is complete, a much lighter periodic re-run
-// (monthly, to pick up new sets) could be scheduled later if wanted, but that is a
-// separate decision and no schedule entry is added to netlify.toml here.
+// Trigger: scheduled weekly at 13:00 UTC Sunday, see the config at the bottom of this file.
+// THERE IS NO WORKING MANUAL TRIGGER FOR THIS FUNCTION.
+// C3L-136, corrected 10 August 2026. This comment previously said "Trigger: manual POST with
+// an x-sync-secret header, same as sync-sales-history.mjs. Not scheduled." BOTH halves were
+// false, and each explains the other: a `schedule` key was added at some point, and it is
+// precisely the presence of that key that makes Netlify answer 403 to direct HTTP. Verified
+// live the same day: this path answers 403. The manual POST it describes has never worked.
+// The real manual mechanism is POST /api/admin/trigger with an x-sync-secret header. This job
+// is NOT in its registry yet (it covers pokemon, yugioh and fx-rate). Note that this one takes
+// a ?dryRun=1 parameter, so adding it needs a way to pass options through the trigger, which
+// the trigger does not do today.
 //
 // Pass ?dryRun=1 to report match rates without writing anything.
 

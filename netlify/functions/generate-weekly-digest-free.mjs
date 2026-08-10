@@ -14,9 +14,15 @@
 // It was briefly "0 22 * * 0", which is 22:00 UTC Sunday = 8am MONDAY Sydney. Cron day 0 is
 // Sunday, so the day number has to be the day BEFORE the intended Sydney morning.
 //
-// Trigger: scheduled weekly, or manually with an x-sync-secret header against
-// /.netlify/functions/generate-weekly-digest-free (a scheduled function cannot have a custom
-// path, so there is no /api/... alias for this one).
+// Trigger: NOT scheduled. `export const config = {}` below, paused under C3L-126.
+// The manual x-sync-secret path against /.netlify/functions/generate-weekly-digest-free DOES
+// work here, and this is the ONLY one of the 46 functions in this repo where it does.
+// C3L-136, clarified 10 August 2026. The reason it works is the same reason it is paused: with
+// the `schedule` key commented out, Netlify treats this as an ordinary function and lets HTTP
+// through. Verified live the same day: this path answers 401 to a wrong secret, where every
+// still-scheduled function answers 403 before any guard runs. If the schedule is ever restored,
+// THIS MANUAL PATH DIES WITH IT, and the job would need adding to admin-trigger-background.mjs
+// instead. It is not in that registry today.
 // Pass ?dryRun=1 to build the email and count recipients WITHOUT sending to the list.
 // Pass ?testEmail=you@example.com to send a single real email to that address only.
 
