@@ -1,3 +1,4 @@
+import { SECURITY_HEADERS } from './shared/security-headers.mjs';
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 // netlify/functions/market-insights.mjs
 // C3 Market page - returns HTML shell instantly. All data loaded client-side via /api/market-data.
@@ -507,7 +508,7 @@ export default async (req) => {
   return new Response(html, {
     status: 200,
     headers: {
-      'Content-Type': 'text/html; charset=utf-8',
+      ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
     }
   });

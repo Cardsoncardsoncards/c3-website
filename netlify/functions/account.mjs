@@ -1,3 +1,4 @@
+import { SECURITY_HEADERS } from './shared/security-headers.mjs';
 // netlify/functions/account.mjs
 // task-110: the /account dashboard. The return-visit hook: somewhere to come back to between
 // alert emails, see what you track, and see how it has moved.
@@ -466,7 +467,7 @@ async function sendLinkEmail(account, kind) {
 // ---------------------------------------------------------------------------
 function page(title, bodyHtml, { status = 200, cookie = null } = {}) {
   const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
+    ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8',
     'X-Robots-Tag': 'noindex',
     'Cache-Control': 'private, no-store',
   };

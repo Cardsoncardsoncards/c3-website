@@ -1,3 +1,4 @@
+import { SECURITY_HEADERS } from './shared/security-headers.mjs';
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
 import { resolveCardBySlug } from './shared/card-resolver.mjs';
@@ -1707,7 +1708,7 @@ export default async (req) => {
   return new Response(html, {
     status: 200,
     headers: {
-      'Content-Type': 'text/html; charset=utf-8',
+      ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'public, s-maxage=180, stale-while-revalidate=900',
       'X-Robots-Tag': 'index, follow'
     }

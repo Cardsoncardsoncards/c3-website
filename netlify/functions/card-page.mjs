@@ -1,3 +1,4 @@
+import { SECURITY_HEADERS } from './shared/security-headers.mjs';
 // netlify/functions/card-page.mjs
 // Serves dynamic MTG card pages at /cards/mtg/[slug]
 // Server-renders full HTML with all card data, price history, and interlinking
@@ -1470,7 +1471,7 @@ export default async (req, context) => {
   if (slug === 'banned' || slug.startsWith('banned/')) {
     const bannedHtml = await renderBannedPage(slug);
     return new Response(bannedHtml, {
-      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=86400', 'Netlify-CDN-Cache-Control': 'public, s-maxage=86400,durable' }
+      headers: { ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=86400', 'Netlify-CDN-Cache-Control': 'public, s-maxage=86400,durable' }
     });
   }
 
@@ -1503,7 +1504,7 @@ export default async (req, context) => {
       // Card not found - show graceful not found page
       return new Response(renderNotFound(slug), {
         status: 404,
-        headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        headers: { ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8' }
       });
     }
 
@@ -1594,7 +1595,7 @@ export default async (req, context) => {
     return new Response(html, {
       status: 200,
       headers: {
-        'Content-Type': 'text/html; charset=utf-8',
+        ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
         'Netlify-CDN-Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400,durable'
       }
@@ -1602,7 +1603,7 @@ export default async (req, context) => {
 
   } catch (err) {
     console.error('[card-page] Error:', err.message);
-    return new Response('<h1>Something went wrong</h1>', { status: 503, headers: { 'Content-Type': 'text/html', 'Retry-After': '120' }});
+    return new Response('<h1>Something went wrong</h1>', { status: 503, headers: { ...SECURITY_HEADERS, 'Content-Type': 'text/html', 'Retry-After': '120' }});
   }
 };
 

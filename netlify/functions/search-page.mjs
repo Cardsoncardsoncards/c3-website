@@ -1,3 +1,4 @@
+import { SECURITY_HEADERS } from './shared/security-headers.mjs';
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
 import { fxRate } from './shared/fx-rate.mjs';
@@ -429,7 +430,7 @@ if ('${query.replace(/'/g,"\\'").replace(/</g,'').replace(/>/g,'')}') {
 
   return new Response(html, {
     status: 200,
-    headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=300' }
+    headers: { ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=300' }
   });
 };
 
