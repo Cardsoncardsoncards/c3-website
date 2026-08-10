@@ -963,6 +963,40 @@ function getEbayUrls(cardName, game = 'mtg') {
 
 
 // --- Random card draw ---
+// C3L-70. Rows matching a filter, from the planner estimate rather than an exact count.
+// Memoised per filter so a burst of draws does not issue a lookup each time.
+const randomCountCache = new Map();
+const RANDOM_COUNT_TTL_MS = 10 * 60 * 1000;
+
+async function countRows(table, filter) {
+  const key = `${table}?${filter}`;
+  const hit = randomCountCache.get(key);
+  if (hit && Date.now() - hit.at < RANDOM_COUNT_TTL_MS) return hit.total;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}&select=${table === 'mtg_cards' ? 'id' : 'id'}&limit=1`, {
+      signal: controller.signal,
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'count=estimated',
+        'Range-Unit': 'items'
+      }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return null;
+    const total = parseInt((res.headers.get('content-range') || '').split('/')[1], 10);
+    if (!Number.isFinite(total) || total <= 0) return null;
+    randomCountCache.set(key, { total, at: Date.now() });
+    return total;
+  } catch {
+    clearTimeout(timer);
+    return null;
+  }
+}
+
 async function handleRandomCard(req) {
   // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
   // helpers close over it. It cannot be awaited at each use: several of those helpers
@@ -985,19 +1019,43 @@ async function handleRandomCard(req) {
   };
 
   const cfg = TABLE_MAP[game] || TABLE_MAP.mtg;
-  // Per-game max offset to avoid exceeding row count on smaller tables
-  const GAME_MAX_OFFSET = { mtg: 9000, pokemon: 9000, yugioh: 9000, lorcana: 3000, onepiece: 6000, dragonball: 4000, starwars: 3500, riftbound: 1000 };
-  const maxOffset = (GAME_MAX_OFFSET[game] || 9000) - limit;
-  const offset = Math.floor(Math.random() * maxOffset);
-  let query = `${cfg.table}?${cfg.imgCol}=not.is.null&limit=${limit}&offset=${offset}&select=${cfg.slugCol},${cfg.nameCol},${cfg.imgCol},${cfg.priceCol},price_aud,${cfg.extraCols}`;
 
+  // C3L-70, and note WHICH file this is. The finding named `random-card.mjs:114`, but THIS
+  // function is what actually serves /api/random-card: card-api.mjs registers the path
+  // internally and random-card.mjs registers the same path in its own config, and Netlify
+  // resolves an overlap by function NAME SORT ORDER, so `card-api` wins and `random-card` has
+  // never served a request. Same resolution rule that produced C3L-122.
+  //
+  // What was here: a hand-written per-game offset ceiling,
+  //   { mtg: 9000, pokemon: 9000, yugioh: 9000, lorcana: 3000, onepiece: 6000,
+  //     dragonball: 4000, starwars: 3500, riftbound: 1000 }
+  // against real row counts of roughly 96,684 / 29,103 / 45,902 / 3,171 / 6,644 / 11,405 /
+  // 7,789 / 1,250. So MTG could draw from about 9.3 per cent of its own catalogue, Yu-Gi-Oh
+  // 19.6, Pokemon 31, dragonball 35.1, starwars 44.9. Worse than the figure in the finding,
+  // because the finding was measuring the file that does not run.
+  //
+  // Now counted live against the same filter the draw will use, so the ceiling cannot drift
+  // from the data again. count=exact stays banned (sequential scan); count=estimated reads the
+  // planner. An estimate landing high returns an empty page rather than an error, so the draw
+  // retries at half the offset and then at 0 instead of permanently reserving a safety margin.
+  let filter = `${cfg.imgCol}=not.is.null`;
   if (rarity && rarity !== 'all') {
-    if (rarity === 'rare+') query += `&rarity=in.(Rare,Mythic Rare,Mythic,Secret Rare,Ultra Rare,Legendary)`;
-    else if (rarity === 'mythic') query += `&rarity=in.(Mythic Rare,Mythic,Secret Rare)`;
+    if (rarity === 'rare+') filter += `&rarity=in.(Rare,Mythic Rare,Mythic,Secret Rare,Ultra Rare,Legendary)`;
+    else if (rarity === 'mythic') filter += `&rarity=in.(Mythic Rare,Mythic,Secret Rare)`;
   }
+  const selectCols = `${cfg.slugCol},${cfg.nameCol},${cfg.imgCol},${cfg.priceCol},price_aud,${cfg.extraCols}`;
+
+  const total = await countRows(cfg.table, filter);
+  const ceiling = total != null ? Math.max(0, total - limit) : 0;
+  const firstOffset = ceiling > 0 ? Math.floor(Math.random() * (ceiling + 1)) : 0;
 
   try {
-    const res = await supabaseGet(query);
+    let res = null;
+    const attempts = firstOffset > 0 ? [firstOffset, Math.floor(firstOffset / 2), 0] : [0];
+    for (const off of attempts) {
+      const rows = await supabaseGet(`${cfg.table}?${filter}&limit=${limit}&offset=${off}&select=${selectCols}`);
+      if (rows && rows.length) { res = rows; break; }
+    }
     if (!res || !res.length) return json({ error: 'No cards found' }, 404);
     const cards = res.map(c => ({
       slug: c[cfg.slugCol],
