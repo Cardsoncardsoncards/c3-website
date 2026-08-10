@@ -241,6 +241,19 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
   <h1>Thanks for shopping with us. Here's what else C3 does.</h1>
   <p class="subhead">Cards on Cards on Cards isn't just an eBay store. The website tracks live prices across every major TCG, sold in Australian dollars, updated daily.</p>
 
+  <!-- task-156: MOVED, not rewritten. This callout was the last block on the page, below three
+       tile rows and two carousels, so the one real button on a page reached by a QR code on a
+       physical parcel insert sat several screens down. It now sits directly under the greeting,
+       inside the first mobile viewport, which is the whole point: the person scanning it has
+       just opened a parcel. Heading, body copy, button label, href and every eBay EPN parameter
+       (campid 5339146789, customid=welcome) are byte-identical to what was here before. Position
+       is the only thing that changed. Do not "tidy" this back down the page. -->
+  <section class="callout">
+    <h2>Keep shopping with us</h2>
+    <p>Follow our eBay store to see new listings as soon as they go live.</p>
+    <a class="cta" href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&amp;customid=welcome&amp;mkevt=1&amp;mkcid=1&amp;mkrid=705-53470-19255-0&amp;toolid=10001">Follow our eBay store</a>
+  </section>
+
   <!-- Tile row 1: Market, Compare -->
   <div class="features">
     <section class="feature">
@@ -323,12 +336,8 @@ footer{border-top:1px solid var(--border);padding:28px 20px 40px;text-align:cent
       <a href="/tracker.html">Get the free tracker</a>
     </section>
   </div>
-
-  <section class="callout">
-    <h2>Keep shopping with us</h2>
-    <p>Follow our eBay store to see new listings as soon as they go live.</p>
-    <a class="cta" href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&amp;customid=welcome&amp;mkevt=1&amp;mkcid=1&amp;mkrid=705-53470-19255-0&amp;toolid=10001">Follow our eBay store</a>
-  </section>
+  <!-- task-156: the "Keep shopping with us" callout used to close this block. It now opens the
+       page, directly under the greeting. See the note at its new location. -->
 </main>
 
 <footer>
