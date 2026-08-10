@@ -172,6 +172,54 @@
   to = "/welcome.html"
   status = 200
 
+# ── C3-076/077 BATCH 1: legacy .html forms 301 to the canonical clean URL ──
+#
+# Re-derived live on 10 August 2026 rather than taken from the finding: **18** static routes
+# serve 200 at BOTH /x and /x.html, not the 20 previously recorded, plus /index.html which
+# duplicates /. Full list: calendar, cards, contact, content-engine, dnd, ev-calculator,
+# generators, legal, methodology, mtg-strixhaven, play, pricing, quizzes, shop, tools, tracker,
+# vip, welcome.
+#
+# `force = true` is REQUIRED on every one of these and is not decoration. /calendar.html is a
+# real file that Eleventy publishes, and Netlify serves an existing file in preference to a
+# redirect rule unless the rule is forced. Without it the rule silently does nothing and the
+# duplicate keeps serving 200, which is the failure mode this whole batch exists to remove.
+#
+# No loop is possible for these four: /calendar has no rule pointing at /calendar.html. Netlify
+# resolves /calendar to the file calendar.html by its own pretty-URL handling, which is file
+# serving and not a redirect, so it never re-enters this table. That is NOT true of /tracker,
+# /contact, /methodology and /welcome, which have explicit status = 200 rewrites above and are
+# deliberately handled separately.
+#
+# Batch 1 is the four whose sitemap entry ALREADY uses the clean form, so adding the redirect
+# cannot put a redirecting URL into sitemap-static.mjs. /ev-calculator.html and
+# /mtg-strixhaven.html are both submitted in their .html form and are held for batch 2, where
+# the sitemap entry and (for strixhaven) the canonical tag have to move in the same change.
+# /legal and /pricing are excluded by this task's permissions and were not touched.
+[[redirects]]
+  from = "/calendar.html"
+  to = "/calendar"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cards.html"
+  to = "/cards"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools.html"
+  to = "/tools"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/shop.html"
+  to = "/shop"
+  status = 301
+  force = true
+
 # ── 301s for dead URLs flagged in Search Console ──
 [[redirects]]
   from = "/quiz"
