@@ -1,5 +1,8 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { wsPropertyLabel } from './shared/ws-properties.mjs';
+import { hubPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/weissschwarz-property-hub.mjs
 // Serves /cards/weissschwarz/:property (licensed property landing page)
 // Built to Weiss Schwarz hub standard -- 3 July 2026
@@ -98,7 +101,16 @@ function sharedCSS() {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable' };
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
+  const headers = hubPageHeaders();
 
   const url      = new URL(req.url);
   const rawProp  = url.pathname.replace(/^\/cards\/weissschwarz\/series\//, '').replace(/\/$/, '');
@@ -155,7 +167,7 @@ export default async (req) => {
   const ebaySearch = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(label + ' Weiss Schwarz')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
 
   function cardTile(c) {
-    const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price * 1.45).toFixed(0)}` : '';
+    const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price * audRate).toFixed(0)}` : '';
     const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name + ' Weiss Schwarz card')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<div class="carousel-card"><a href="/cards/weissschwarz/${esc(c.slug)}" style="display:block;text-decoration:none"><div class="carousel-img-wrap"><img src="${esc(c.image_url)}" alt="${esc(c.name).replace(/"/g,'&quot;')}" loading="lazy" onerror="this.onerror=null;this.src='/card-placeholder.svg';this.style.opacity='1'"></div><div class="carousel-name">${esc(c.name)}</div>${c.rarity?`<div class="carousel-rarity">${esc(c.rarity)}</div>`:''}<div class="carousel-price">${price}</div></a><div class="carousel-buy-row"><a href="${ebay}" target="_blank" rel="noopener" class="carousel-buy-btn">Buy eBay &#8599;</a></div></div>`;
   }
@@ -165,7 +177,7 @@ export default async (req) => {
     const arrow = isGainer ? '&#8593;' : '&#8595;';
     const col   = isGainer ? '#4ADE80' : '#f87171';
     const pct   = Math.abs(parseFloat(c.price_change_7d||0)).toFixed(1);
-    const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price*1.45).toFixed(0) : '';
+    const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price * audRate).toFixed(0) : '';
     return `<a href="/cards/weissschwarz/${esc(c.slug)}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none">${c.image_url?`<img src="${esc(c.image_url)}" alt="" loading="lazy" style="width:40px;height:56px;object-fit:cover;border-radius:4px;flex-shrink:0">`:'<div style="width:40px;height:56px;background:var(--bg3);border-radius:4px;flex-shrink:0"></div>'}<div style="min-width:0;flex:1"><div style="font-size:11.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(c.name)}</div><div style="font-size:10px;color:var(--text2)">${esc(c.set_name||'')}</div><div style="font-size:11px;color:var(--accent);font-weight:700">${price}</div></div><div style="font-size:12px;font-weight:700;color:${col};flex-shrink:0">${arrow}${pct}%</div></a>`;
   }
   const gainerHTML = gainers.map(c => moverCard(c, true)).join('');
@@ -237,7 +249,7 @@ ${propSlug === 'hololive' ? `<div class="wrap"><div style="background:rgba(${ACC
       <p style="font-size:13px;color:var(--text2)">Most valuable ${esc(label)} singles across all sets, in AUD.</p>
     </div>
     <div class="card-grid">${cardGridHTML}</div>
-    <p style="text-align:center;color:var(--text2);font-size:11px;margin-top:14px">Prices sourced from TCGPlayer (USD), converted to AUD at approximately 1.45. Updated daily.</p>
+    <p style="text-align:center;color:var(--text2);font-size:11px;margin-top:14px">Prices sourced from TCGPlayer (USD), converted to AUD at approximately ${audRate.toFixed(2)}. Updated daily.</p>
   </div>` : ''}
 
   ${hasMovers ? `<div class="section fade-up fade-up-3" style="margin-bottom:28px">
@@ -272,7 +284,7 @@ ${propSlug === 'hololive' ? `<div class="wrap"><div style="background:rgba(${ACC
     <a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/weissschwarz">Weiss Schwarz</a><a href="/cards/pokemon">Pokemon</a><a href="/cards/mtg">MTG</a><a href="/cards/yugioh">Yu-Gi-Oh</a><a href="/cards/lorcana">Lorcana</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. USD prices converted to AUD at approximately 1.45.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. USD prices converted to AUD at approximately ${audRate.toFixed(2)}.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 

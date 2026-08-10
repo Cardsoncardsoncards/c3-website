@@ -14,12 +14,26 @@
 // It was briefly "0 22 * * 0", which is 22:00 UTC Sunday = 8am MONDAY Sydney. Cron day 0 is
 // Sunday, so the day number has to be the day BEFORE the intended Sydney morning.
 //
-// Trigger: scheduled weekly, or manually with an x-sync-secret header against
-// /.netlify/functions/generate-weekly-digest-free (a scheduled function cannot have a custom
-// path, so there is no /api/... alias for this one).
+// Trigger: NOT scheduled. `export const config = {}` below, paused under C3L-126.
+// The manual x-sync-secret path against /.netlify/functions/generate-weekly-digest-free DOES
+// work here, and this is the ONLY one of the 46 functions in this repo where it does.
+// C3L-136, clarified 10 August 2026. The reason it works is the same reason it is paused: with
+// the `schedule` key commented out, Netlify treats this as an ordinary function and lets HTTP
+// through. Verified live the same day: this path answers 401 to a wrong secret, where every
+// still-scheduled function answers 403 before any guard runs. If the schedule is ever restored,
+// THIS MANUAL PATH DIES WITH IT, and the job would need adding to admin-trigger-background.mjs
+// instead. It is not in that registry today.
 // Pass ?dryRun=1 to build the email and count recipients WITHOUT sending to the list.
 // Pass ?testEmail=you@example.com to send a single real email to that address only.
 
+// C3L-91, added 10 August 2026. Terminal sync_events rows on every outcome this function has.
+// It has never written one, so there has been no way to tell a quiet week from a dead job.
+// Purely additive: no send logic, recipient resolution or template behaviour changes.
+// KNOWN RESIDUAL GAP, stated rather than hidden: this handler has no outer try/catch, so an
+// uncaught throw still produces no row at all. Adding one means re-indenting the whole body and
+// was judged too invasive for a batch billed as small and safe. check-card-follows.mjs does have
+// a catch and its error path IS logged.
+import { logSyncEvent } from './shared/sync-event.mjs';
 import {
   fetchMarketData,
   buildEmail,
@@ -87,9 +101,31 @@ function unsubscribeUrl(email) {
 }
 
 export default async (req) => {
-  // Scheduled invocations carry no secret; manual ones must present it.
+  // The secret is REQUIRED. A missing header is rejected exactly like a wrong one.
+  //
+  // What was wrong before: the guard read `if (secret && SYNC_SECRET && secret !== SYNC_SECRET)`,
+  // so it rejected a WRONG secret and let a request carrying NO header through. Anyone who knew
+  // the URL could trigger a real send to the whole list, unauthenticated. The URL is not secret:
+  // this function's own header comment names it.
+  //
+  // Why this is NOT the C3L-93 shape. That fix, in enrich-apitcg-stats-background.mjs, treats
+  // "no x-sync-secret and no origin and no referer" as proof of a scheduled invocation, because
+  // Netlify's scheduler sends no custom headers. That heuristic cannot tell the scheduler apart
+  // from `curl` with no headers, which is precisely the bypass being closed here, so copying it
+  // would have re-implemented the hole in a new place.
+  //
+  // Requiring the secret unconditionally is safe RIGHT NOW because the schedule below is paused,
+  // so there is no scheduled invocation to accommodate. That is the whole reason this can be
+  // strict. If the schedule is ever restored, this guard WILL answer 401 on every scheduled run
+  // and the digest will silently stop, which is the C3L-93 failure in reverse. Restoring the
+  // schedule therefore means solving scheduler identification properly first, not deleting this
+  // check: a Netlify scheduled invocation arrives as a POST whose JSON body carries `next_run`,
+  // which is a positive signal to test for rather than an absence to infer from.
+  //
+  // Fails closed on a missing SYNC_SECRET too. A function that cannot authenticate is not a
+  // function that should send email to a live list.
   const secret = req.headers.get('x-sync-secret');
-  if (secret && SYNC_SECRET && secret !== SYNC_SECRET) {
+  if (!SYNC_SECRET || !secret || secret !== SYNC_SECRET) {
     return new Response(JSON.stringify({ ok: false, error: 'unauthorised' }), {
       status: 401, headers: { 'Content-Type': 'application/json' }
     });
@@ -105,7 +141,7 @@ export default async (req) => {
   const testEmail = url.searchParams.get('testEmail');
 
   // Market data, identical to the paid report.
-  const { up, down, buy, sell } = await fetchMarketData();
+  const { up, down, buy, sell, extreme } = await fetchMarketData();
 
   const top     = up[0];
   const dateStr = new Date().toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -119,7 +155,7 @@ export default async (req) => {
     : `Here are this week's movers across the games we track, plus the cards sitting well below their highs and the ones near them.`;
 
   // REPORT_LABEL keeps the paid tier's "Weekly Seller Report" framing out of the free email.
-  const htmlEmail = buildEmail({ dateStr, callTitle, callBody, up, down, buy, sell, reportLabel: REPORT_LABEL });
+  const htmlEmail = buildEmail({ dateStr, callTitle, callBody, up, down, buy, sell, extreme, reportLabel: REPORT_LABEL });
   const text      = plainText(dateStr, `C3 ${REPORT_LABEL}`);
 
   const counts = { up: up.length, down: down.length, buy: buy.length, sell: sell.length };
@@ -136,6 +172,7 @@ export default async (req) => {
     let detail = '';
     try { detail = (await res.text()).slice(0, 300); } catch { /* body optional */ }
     console.log(`[weekly-digest-free] TEST send to ${testEmail}: HTTP ${res.status}`);
+    await logSyncEvent({ eventType: res.ok ? 'sync_test' : 'sync_error', game: 'digest', rowsAffected: res.ok ? 1 : 0, errorMessage: res.ok ? null : 'test send HTTP ' + res.status, logPrefix: '[weekly-digest-free]' });
     return new Response(JSON.stringify({
       ok: res.ok, mode: 'testEmail', recipient: testEmail, status: res.status,
       detail: detail || undefined, counts
@@ -161,10 +198,14 @@ export default async (req) => {
       note: 'No email was sent. Nobody on the main list was contacted.'
     };
     console.log('[weekly-digest-free]', JSON.stringify(summary));
+    // Its own event type. A dryRun sent nothing, so calling it sync_success would make the table
+    // claim a delivery that never happened.
+    await logSyncEvent({ eventType: 'sync_dryrun', game: 'digest', rowsAffected: subscribers.length, logPrefix: '[weekly-digest-free]' });
     return new Response(JSON.stringify(summary, null, 2), { headers: { 'Content-Type': 'application/json' } });
   }
 
   if (subscribers.length === 0) {
+    await logSyncEvent({ eventType: 'sync_success', game: 'digest', rowsAffected: 0, logPrefix: '[weekly-digest-free]' });
     return new Response(JSON.stringify({ ok: true, sent: 0, subscriberCount: 0, counts,
       message: 'Main list is empty, nothing sent.' }, null, 2),
       { status: 200, headers: { 'Content-Type': 'application/json' } });
@@ -210,6 +251,15 @@ export default async (req) => {
     ...(errors.length ? { errors } : {})
   };
   console.log('[weekly-digest-free] SUMMARY', JSON.stringify(summary));
+  // rows_affected is emails actually sent. A partial send is logged as sync_error even though
+  // some went out, because that is the case most likely to be mistaken for a good week.
+  await logSyncEvent({
+    eventType: failedCount === 0 ? 'sync_success' : 'sync_error',
+    game: 'digest',
+    rowsAffected: sentCount,
+    errorMessage: failedCount === 0 ? null : failedCount + ' of ' + subscribers.length + ' failed: ' + JSON.stringify(errors).slice(0, 300),
+    logPrefix: '[weekly-digest-free]'
+  });
 
   return new Response(JSON.stringify(summary, null, 2), {
     status: failedCount === 0 ? 200 : 502,
@@ -219,6 +269,27 @@ export default async (req) => {
 
 // No `path` key here. Netlify rejects a custom path on a scheduled function, so this is
 // reachable only at its default URL, /.netlify/functions/generate-weekly-digest-free.
-export const config = {
-  schedule: '0 22 * * 6'   // 22:00 UTC Saturday = 8am Sunday Sydney. See the note at the top.
-};
+//
+// PAUSED 9 August 2026. The schedule below is commented out, not deleted, so restoring it is
+// uncommenting one line.
+//
+// Why: nobody could confirm whether the "Entei Star leads the market this week" digest could
+// send again, and it could. This is a Netlify SCHEDULED function on '0 22 * * 6', which is
+// 22:00 UTC Saturday, 8am Sunday Sydney. It last fired 8 August 22:00 UTC, which is the send
+// that was noticed, and the next fire would have been 15 August 22:00 UTC without anyone
+// starting it. Pausing it is reversible and was the point of finding it.
+//
+// What this does NOT do, stated so nobody reads the pause as broader than it is: the function
+// is still deployed and still reachable at its default URL, and the guard above rejects only
+// a WRONG x-sync-secret, so a request carrying NO header still passes and still sends. The
+// pause removes the recurring trigger. It does not close that door. See the task report.
+//
+// The underlying content is untouched by this change, deliberately. The digest reads
+// mtg_cards through shared/weekly-report-core.mjs, NOT tcg_price_movers or
+// tcg_market_summary, so whatever is wrong with those two tables is a separate problem from
+// whatever is wrong with this email.
+//
+// export const config = {
+//   schedule: '0 22 * * 6'   // 22:00 UTC Saturday = 8am Sunday Sydney. See the note at the top.
+// };
+export const config = {};

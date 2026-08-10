@@ -36,7 +36,7 @@ async function supabaseFetch(url, extraHeaders = {}) {
 // swallowed error would silently truncate the sitemap and de-index real pages.
 async function fetchSlugs(afterId) {
   const url = `${SUPABASE_URL}/rest/v1/starwars_cards`
-    + `?select=id,slug,price_aud,updated_at`
+    + `?select=id,slug,price_aud,updated_at,last_price_update`
     + `&price_aud=gte.${PRICE_THRESHOLD}`
     + `&slug=not.is.null`
     + (afterId != null ? `&id=gt.${afterId}` : ``)
@@ -81,14 +81,13 @@ export default async (req) => {
     const urls = allCards
       .filter(c => c.slug && c.slug.trim() !== '')
       .map(c => {
-        const lastmod = c.updated_at ? c.updated_at.slice(0, 10) : today;
+        const lastmod = (c.last_price_update || c.updated_at || '').slice(0, 10) || today;
         const price = parseFloat(c.price_aud) || 0;
         const priority = price >= 20 ? '0.9' : price >= 5 ? '0.8' : '0.7';
         return [
           `  <url>`,
           `    <loc>${SITE_URL}/cards/starwars/${c.slug}</loc>`,
           `    <lastmod>${lastmod}</lastmod>`,
-          `    <changefreq>daily</changefreq>`,
           `    <priority>${priority}</priority>`,
           `  </url>`,
         ].join('\n');

@@ -458,5 +458,32 @@ const QUIZ_SLUGS = [
   </div>
 </div>
 <script>(function(){var urlInput=document.getElementById('bugPageUrl');if(urlInput)urlInput.value=window.location.href;var form=document.getElementById('bugReportForm');if(!form)return;form.addEventListener('submit',function(e){e.preventDefault();var btn=document.getElementById('bugSubmit');btn.disabled=true;btn.textContent='Sending...';var data=new FormData(form);fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()}).then(function(){document.getElementById('bugThanks').style.display='block';form.querySelector('select').style.display='none';form.querySelector('textarea').style.display='none';btn.style.display='none';setTimeout(function(){document.getElementById('bugModal').classList.remove('open');},2000);}).catch(function(){btn.disabled=false;btn.textContent='Submit Report';});});})()</script>
+<script>
+(function(){
+  var p = location.pathname.split('/').filter(Boolean);
+  // A three segment /cards/ path is a card page and is already covered by card_views.
+  if (p.length === 3 && p[0] === 'cards') return;
+  var t = 'other';
+  if (p.length === 0) t = 'static';
+  else if (p[0] === 'cards') t = (p.length === 1) ? 'static' : (p.length === 2 ? 'hub' : 'set');
+  else if (p[0] === 'blog') t = 'blog';
+  else if (['compare','market','search','account','tools','play','calendar','welcome','subscribe','shop','pricing'].indexOf(p[0]) !== -1) t = 'tool';
+  var SESSION_KEY = 'c3_session';
+  function getSession() {
+    var s = localStorage.getItem(SESSION_KEY);
+    if (!s) { s = Math.random().toString(36).slice(2); localStorage.setItem(SESSION_KEY, s); }
+    return s;
+  }
+  // keepalive: see the note in view-tracking.mjs. Without it the browser cancels this POST
+  // when the document is torn down, so the visitors who leave fastest, which is exactly the
+  // population in question, are the ones this can never record.
+  fetch('/api/page-view', {
+    method: 'POST',
+    keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ path: location.pathname, pageType: t, sessionId: getSession() })
+  }).catch(function(){});
+})();
+</script>
 </body>
 </html>

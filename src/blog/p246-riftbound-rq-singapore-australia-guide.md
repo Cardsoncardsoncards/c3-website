@@ -8,7 +8,9 @@ emoji: "🌏"
 tags: post
 affiliate_disclaimer: true
 layout: post
----## Quick Answer
+---
+
+## Quick Answer
 
 RQ Singapore is the second APAC Regional Qualifier of 2026, running September 4-6 in Singapore. For Australian players who want to compete at the highest level of Riftbound outside of Sydney, Singapore is the next step. Here is what you need to know now. See current prices at [C3 Riftbound card prices](/cards/riftbound).
 
@@ -16,19 +18,27 @@ RQ Singapore is the second APAC Regional Qualifier of 2026, running September 4-
 
 RQ Singapore is the second APAC Regional Qualifier of 2026, running September 4-6 in Singapore. For Australian players who want to compete at the highest level of Riftbound outside of Sydney, Singapore is the next step. Here is what you need to know now.
 
-## The Key Date to Lock In First: July 8
+## The Key Date Has Now Passed: What July 8 Means Today
 
-Badge sales for RQ Singapore open at 9am SGT on July 8, 2026. For Australian players that is 11am AEST on July 8.
+Badge sales for RQ Singapore opened at 9am SGT on July 8, 2026, which was 11am AEST. That sale has been and gone. Main Event badges are now showing as sold out on the official Eventbrite listing, with a waitlist open for players hoping more are released.
 
-This date matters. RQ Sydney's Competitor badges sold quickly once announced. Singapore will draw players from across Southeast Asia, Japan, Australia, and New Zealand. The Competitor badge is the one that grants Main Event access. Missing the sale window means no competitive entry.
+This date mattered. RQ Sydney's Competitor badges sold quickly once announced. Singapore drew players from across Southeast Asia, Japan, Australia, and New Zealand. The Competitor badge is the one that grants Main Event access. Missing the sale window means no competitive entry.
 
-Set a calendar reminder now for July 8 at 11am AEST.
+If you did not get a badge, join the waitlist on the official event listing. Waitlisted players are only contacted if additional badges become available, so treat it as a possibility rather than a plan.
+
+## Can You Still Get In as a Spectator?
+
+A sold out Main Event does not automatically mean the doors are shut, and it is worth knowing what the comparable event offered. At RQ Sydney there were two badge types. The Spectator badge granted full venue access across the weekend plus one side event voucher. The Competitor badge granted Main Event access and also carried a side event voucher.
+
+Singapore's own badge tiers have not been confirmed on this page. The official listing names a Competitor badge and a Premium Competitor badge, but it does not spell out what each one includes, and it does not confirm whether a Spectator badge is being sold for Singapore at all. Do not assume the Sydney structure carries across.
+
+Check UVS Games' own event page for Singapore before you book anything on the assumption you can get in the door. That page, not this one, is the authority on Singapore's exact tiers, what each badge includes, and whether spectator entry is available.
 
 ## Event Overview
 
 **Dates:** September 4-6, 2026
 
-**Location:** Singapore (venue to be confirmed as event approaches)
+**Location:** Singapore EXPO, Hall 3
 
 **Format:** Constructed. Bring your own deck built around a Champion Legend.
 
@@ -52,7 +62,7 @@ Singapore is approximately 7-8 hours flying time from the east coast of Australi
 
 Practical notes: Singapore is in the same time zone group as Perth (SGT is UTC+8, AWST is UTC+8). East coast Australian players will be adjusting from AEST (UTC+10), meaning a 2-hour difference. This is manageable with one night of adjustment.
 
-Accommodation near the venue will book fast once the venue is confirmed. Monitor the official Riftbound announcements for venue details.
+The venue is Singapore EXPO, Hall 3. Accommodation near the EXPO books fast for events of this size, so if you have a badge, sort your accommodation early rather than closer to the date.
 
 ## Why RQ Singapore Is Different from RQ Sydney
 
@@ -89,7 +99,7 @@ For Riftbound singles shopping in Singapore, the local TCG market will have Vend
 
 ---
 
-Subscribe to our newsletter at [C3 Collection Tracker](/tracker) for RQ Singapore updates as the venue, badge details, and meta previews are confirmed.
+Subscribe to our newsletter at [C3 Collection Tracker](/tracker) for RQ Singapore updates as badge details, side events, and meta previews are confirmed.
 
 Not affiliated with Riot Games or UVS Games. Riftbound and all associated marks are property of Riot Games. Event details current as of May 2026.
 

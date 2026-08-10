@@ -6,6 +6,9 @@ import { priceChartHtml, PRICE_CHART_SCRIPT } from './shared/price-chart.mjs';
 // task-132 Part 11: the unified follow block reaches Final Fantasy too.
 import { followBlockHtml } from './shared/follow-block.mjs';
 import { lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { cardPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/finalfantasy-card-page.mjs
 // Serves /cards/finalfantasy/:slug
 // Final Fantasy TCG individual card pages with AUD pricing and affiliate links
@@ -88,14 +91,20 @@ async function getExchangeRate() {
   }
 }
 export default async (req) => {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
   const url     = new URL(req.url);
   const slug    = url.pathname.replace(/^\/cards\/finalfantasy\//, '').replace(/\/$/, '');
   const AUD_RATE = await getExchangeRate();
 
-  const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable'
-  };
+  const headers = cardPageHeaders();
 
   if (!slug || slug === '') {
     return Response.redirect('https://cardsoncardsoncards.com.au/cards/finalfantasy', 302);
@@ -159,7 +168,7 @@ export default async (req) => {
   const prevCard = cardIdx > 0 ? allSetCards[cardIdx - 1] : null;
   const nextCard = cardIdx >= 0 && cardIdx < allSetCards.length - 1 ? allSetCards[cardIdx + 1] : null;
 
-  const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * 1.45 : null;
+  const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : card.market_price > 0 ? card.market_price * audRate : null;
 
   // task-132 Part 10: price history (Final Fantasy snapshots are current, verified in Part 9).
   // C3L-36: bounded by DATE, not row count. A bare limit=90 with asc ordering returns the
@@ -186,7 +195,7 @@ export default async (req) => {
   const setPageUrl   = set?.slug ? `/cards/finalfantasy/sets/${esc(set.slug)}` : `/cards/finalfantasy`;
 
   const relatedHTML = relatedCards.length ? relatedCards.map(c => {
-    const p = c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? (c.market_price*1.45) : 0;
+    const p = c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? (c.market_price * audRate) : 0;
     return `<a href="/cards/finalfantasy/${c.slug}" style="background:#111420;border:1px solid #242840;border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#6366F1'" onmouseout="this.style.borderColor='#242840'">
       ${c.image_url ? `<img src="${esc(c.image_url)}" alt="${esc(c.name)}" style="width:100%;border-radius:5px;max-height:110px;object-fit:contain;margin-bottom:4px" loading="lazy">` : `<div style="height:80px;background:#0d0f1a;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#9ba3c4;margin-bottom:4px">&#127183;</div>`}
       <div style="font-size:10px;color:#e8eaf0;line-height:1.3;font-weight:600">${esc(c.name)}</div>
@@ -389,7 +398,7 @@ export default async (req) => {
     <a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/finalfantasy">Final Fantasy TCG</a>${set ? `<a href="${setPageUrl}">${esc(set.name)}</a>` : ''}
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made via affiliate links at no extra cost to you. Prices are estimates based on US market data converted to AUD at approximately 1.45.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made via affiliate links at no extra cost to you. Prices are estimates based on US market data converted to AUD at approximately ${audRate.toFixed(2)}.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 <script>

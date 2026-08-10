@@ -1,6 +1,9 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { decodeSlugSegment } from './shared/url-slug.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { setPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/universus-set-page.mjs
 // C3 set-page v4 -- full MVP rebuild
 // Serves /cards/universus/sets/:slug+
@@ -76,7 +79,12 @@ function graceful404(setSlug) {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800', 'Netlify-CDN-Cache-Control': 'public, max-age=900, s-maxage=1800,durable' };
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
+  const headers = setPageHeaders();
   const url = new URL(req.url);
   const setSlug = decodeSlugSegment(url.pathname.replace(/^\/cards\/universus\/sets\//, '').replace(/\/$/, ''));
 
@@ -99,14 +107,26 @@ export default async (req) => {
 
     const set = sets[0];
 
-    const [cardsR, ebayListingsR] = await Promise.allSettled([
+    const [cardsR, sealedR, ebayListingsR] = await Promise.allSettled([
       supabaseGet(`universus_cards?set_id=eq.${set.id}&rarity=neq.None&order=name.asc&limit=200&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,price_change_7d,price_change_30d`),
+      // C3L-137. The singles query above excludes rarity None, and in these tables every
+      // booster box, display, case and starter deck carries rarity None or NULL, so the
+      // sealed block has never had a row to render. It reads THIS result instead of cards,
+      // which leaves the singles list exactly as it was and keeps oversized promos, energy
+      // markers and puzzle inserts (which share rarity None) out of it.
+      supabaseGet(`universus_cards?set_id=eq.${set.id}&or=(rarity.eq.None,rarity.is.null)&order=market_price.desc.nullslast&limit=300&select=slug,name,image_url,market_price,price_aud,low_price`),
       getEbayListings(`${set.name} universus card game card`, ebayToken)
     ]);
     const cards = cardsR.status === 'fulfilled' ? cardsR.value : [];
+    const sealedRows = sealedR.status === 'fulfilled' ? sealedR.value : [];
     const ebayListings = ebayListingsR.status === 'fulfilled' ? ebayListingsR.value : [];
 
-    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * 1.45 : 0;
+    // C3L-130 shape 2. These conversions used a hardcoded 1.45. The live rate is read once
+    // per request here and reused below, because the render paths are synchronous template
+    // literals and cannot await individually. fxRate() never throws and never returns a
+    // nonsense number: it falls back to a labelled constant and LOGS when it does.
+    const audRate = await fxRate();
+    const toAud = (c) => c.price_aud > 0 ? parseFloat(c.price_aud) : c.market_price > 0 ? c.market_price * audRate : 0;
     const pricedCards = (cards || []).filter(c => toAud(c) > 0);
     const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
     // Biggest movers: min AU$0.50 price, need 5+ eligible cards to show panel
@@ -286,11 +306,16 @@ export default async (req) => {
 
   ${(() => {
     const SEALED_KEYS = ['booster box','booster pack','display','starter deck','starter set','trial deck','trial set','box set','collection box','premium set'];
-    const sealedItems = (cards||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && c.market_price > 0; });
+    const sealedItems = (sealedRows||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && (parseFloat(c.price_aud) > 0 || parseFloat(c.market_price) > 0); });
     if (!sealedItems.length) return '';
     const itemsHTML = sealedItems.slice(0,4).map(p => {
-      const price = p.price_aud > 0 ? `AU$${parseFloat(p.price_aud).toFixed(2)}` : `~AU$${(p.market_price*1.45).toFixed(2)}`;
-      const low = p.low_price ? `Low: ~AU$${(p.low_price*1.45).toFixed(2)}` : '';
+      const priceAud = parseFloat(p.price_aud) > 0 ? parseFloat(p.price_aud) : parseFloat(p.market_price) * audRate;
+      const price = parseFloat(p.price_aud) > 0 ? `AU$${priceAud.toFixed(2)}` : `~AU$${priceAud.toFixed(2)}`;
+      // C3L-137. low_price is the upstream USD low and sits ABOVE market_price on 629 of the
+      // 1,614 sealed rows that carry both, so printing it unconditionally would label a number
+      // higher than the price above it as the low. Shown only when it is genuinely lower.
+      const lowAud = parseFloat(p.low_price) > 0 ? parseFloat(p.low_price) * audRate : 0;
+      const low = (lowAud > 0 && lowAud < priceAud) ? `Low: ~AU$${lowAud.toFixed(2)}` : '';
       const nm = (p.name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       return `<a href="/cards/universus/${p.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#EF4444'" onmouseout="this.style.borderColor='#1e2235'">
         ${p.image_url ? `<img src="${p.image_url.replace(/"/g,'&quot;')}" alt="${nm.replace(/"/g,'&quot;')}" style="width:100%;max-height:120px;object-fit:contain;border-radius:6px" loading="lazy">` : ''}
@@ -334,7 +359,7 @@ export default async (req) => {
   </div>
 
   <div style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:20px;font-size:13px;color:#8892b0">
-    <strong style="color:#F0F2FF">About this set:</strong> UniVersus TCG card prices in AUD, converted from USD at approximately 1.45x. Updated daily.
+    <strong style="color:#F0F2FF">About this set:</strong> UniVersus TCG card prices in AUD, converted from USD at approximately ${audRate.toFixed(2)}x. Updated daily.
     <div style="margin-top:10px"><a href="/cards/universus" style="color:#10B981">Browse all UniVersus sets</a></div>
   </div>
 </div>

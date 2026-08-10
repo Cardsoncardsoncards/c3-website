@@ -34,6 +34,11 @@ import { resolveFollowCard } from './shared/card-resolver.mjs';
 // path (here) and the dashboard read path (account.mjs), so the two can never drift apart again.
 import { FOLLOW_GAMES, GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared/game-meta.mjs';
 
+// One shared definition of what we record about the incoming request, so this file and
+// account.mjs capture the same fields the same way instead of each inventing its own.
+import { requestFingerprint } from './shared/request-fingerprint.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
+
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -160,7 +165,7 @@ async function handleLike(req) {
 // Generic sitewide view logging: writes to card_views keyed by (game, card_ref).
 // card_ref is scryfall_id for MTG (ambiguous slugs) and the unique slug for the
 // other 31 games. Best-effort analytics: never fail the request.
-async function handleView(req) {
+async function handleView(req, context) {
   const body = await req.json();
   let { game, cardRef, sessionId, scryfallId } = body;
   // Backward-compat: the old MTG-only client shape sent { scryfallId } with no
@@ -173,7 +178,39 @@ async function handleView(req) {
       card_ref: cardRef,
       session_id: sessionId || null,
       viewed_at: new Date().toISOString(),
-      country_code: 'AU'
+      // country_code is NO LONGER WRITTEN. It was hardcoded to 'AU' on every row, for every
+      // visitor on earth, which is why all 20,422 rows to date carry exactly one value. It is
+      // left NULL from here on rather than being fed real data, so the fabricated rows stay
+      // distinguishable from anything collected afterwards. Real geo goes to geo_country.
+      ...requestFingerprint(req, context)
+    });
+  } catch { /* analytics is best-effort; do not fail the request */ }
+  return json({ ok: true });
+}
+
+// --- Page view tracker, everything that is not a card page ---
+// Task B. handleView above only ever fires on card pages, so hub, set, blog and the 23
+// static pages have never had request provenance recorded. Measured 8 August 2026: GA4
+// reported 18,814 sessions in 24 hours against ZERO card views in the preceding hour, so the
+// traffic that matters is entirely on pages this database has never seen.
+//
+// Separate table, not a widened card_views: that table is keyed on (game, card_ref), which
+// is meaningless for a blog post, and mixing them would corrupt the card analytics.
+// Best-effort in exactly the same way: never fail the request.
+async function handlePageView(req, context) {
+  const body = await req.json().catch(() => ({}));
+  const { path, pageType, sessionId } = body;
+  if (!path || typeof path !== 'string') return json({ ok: true });
+  try {
+    await supabasePost('page_views', {
+      // Cap both, because they arrive from the client and are attacker controlled. The path
+      // is stored without its query string; the client already sends location.pathname, and
+      // this is the server-side guarantee of that rather than a trust in the client.
+      path: path.split('?')[0].slice(0, 300),
+      page_type: typeof pageType === 'string' ? pageType.slice(0, 20) : null,
+      session_id: sessionId || null,
+      viewed_at: new Date().toISOString(),
+      ...requestFingerprint(req, context)
     });
   } catch { /* analytics is best-effort; do not fail the request */ }
   return json({ ok: true });
@@ -205,9 +242,12 @@ async function handlePriceAlert(req) {
         body: JSON.stringify({
           from: 'C3 Price Alerts <alerts@cardsoncardsoncards.com.au>',
           to: [email],
+          // task-22 (C3L-84): the SUBJECT is deliberately left unescaped. It is plain text, not
+          // HTML, so esc() here would render "&amp;" literally in the mail client. Header
+          // injection is not a concern because this goes to Resend as JSON, not raw SMTP.
           subject: `Price alert set for ${cardName}`,
           html: `<p>Hi,</p>
-<p>You will be notified when <strong>${cardName}</strong> drops below <strong>AU$${targetPriceAud}</strong>.</p>
+<p>You will be notified when <strong>${esc(cardName)}</strong> drops below <strong>AU$${esc(targetPriceAud)}</strong>.</p>
 <p>We check prices daily. When the price drops we will email you straight away.</p>
 <p>You can browse more cards at <a href="https://cardsoncardsoncards.com.au/cards/mtg">cardsoncardsoncards.com.au</a></p>
 <p>The C3 Team</p>
@@ -830,11 +870,11 @@ async function handleFeedback(req) {
           subject: `C3 Feedback${rating ? ' (' + '★'.repeat(rating) + ')' : ''} - ${page || 'unknown page'}`,
           html: `
             <h2>New C3 Feedback</h2>
-            <p><strong>Page:</strong> ${page || 'N/A'}</p>
-            ${cardName ? `<p><strong>Card:</strong> ${cardName}</p>` : ''}
+            <p><strong>Page:</strong> ${esc(page) || 'N/A'}</p>
+            ${cardName ? `<p><strong>Card:</strong> ${esc(cardName)}</p>` : ''}
             ${rating ? `<p><strong>Rating:</strong> ${'★'.repeat(rating)}${'☆'.repeat(5-rating)} (${rating}/5)</p>` : ''}
-            ${text ? `<p><strong>Message:</strong><br>${text}</p>` : ''}
-            ${email ? `<p><strong>Reply to:</strong> <a href="mailto:${email}">${email}</a></p>` : '<p><em>No email provided</em></p>'}
+            ${text ? `<p><strong>Message:</strong><br>${esc(text)}</p>` : ''}
+            ${email ? `<p><strong>Reply to:</strong> <a href="mailto:${esc(email)}">${esc(email)}</a></p>` : '<p><em>No email provided</em></p>'}
           `
         })
       });
@@ -923,7 +963,45 @@ function getEbayUrls(cardName, game = 'mtg') {
 
 
 // --- Random card draw ---
+// C3L-70. Rows matching a filter, from the planner estimate rather than an exact count.
+// Memoised per filter so a burst of draws does not issue a lookup each time.
+const randomCountCache = new Map();
+const RANDOM_COUNT_TTL_MS = 10 * 60 * 1000;
+
+async function countRows(table, filter) {
+  const key = `${table}?${filter}`;
+  const hit = randomCountCache.get(key);
+  if (hit && Date.now() - hit.at < RANDOM_COUNT_TTL_MS) return hit.total;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}&select=${table === 'mtg_cards' ? 'id' : 'id'}&limit=1`, {
+      signal: controller.signal,
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'count=estimated',
+        'Range-Unit': 'items'
+      }
+    });
+    clearTimeout(timer);
+    if (!res.ok) return null;
+    const total = parseInt((res.headers.get('content-range') || '').split('/')[1], 10);
+    if (!Number.isFinite(total) || total <= 0) return null;
+    randomCountCache.set(key, { total, at: Date.now() });
+    return total;
+  } catch {
+    clearTimeout(timer);
+    return null;
+  }
+}
+
 async function handleRandomCard(req) {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   const url = new URL(req.url);
   const game = url.searchParams.get('game') || 'mtg';
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '3'), 10);
@@ -941,26 +1019,50 @@ async function handleRandomCard(req) {
   };
 
   const cfg = TABLE_MAP[game] || TABLE_MAP.mtg;
-  // Per-game max offset to avoid exceeding row count on smaller tables
-  const GAME_MAX_OFFSET = { mtg: 9000, pokemon: 9000, yugioh: 9000, lorcana: 3000, onepiece: 6000, dragonball: 4000, starwars: 3500, riftbound: 1000 };
-  const maxOffset = (GAME_MAX_OFFSET[game] || 9000) - limit;
-  const offset = Math.floor(Math.random() * maxOffset);
-  let query = `${cfg.table}?${cfg.imgCol}=not.is.null&limit=${limit}&offset=${offset}&select=${cfg.slugCol},${cfg.nameCol},${cfg.imgCol},${cfg.priceCol},price_aud,${cfg.extraCols}`;
 
+  // C3L-70, and note WHICH file this is. The finding named `random-card.mjs:114`, but THIS
+  // function is what actually serves /api/random-card: card-api.mjs registers the path
+  // internally and random-card.mjs registers the same path in its own config, and Netlify
+  // resolves an overlap by function NAME SORT ORDER, so `card-api` wins and `random-card` has
+  // never served a request. Same resolution rule that produced C3L-122.
+  //
+  // What was here: a hand-written per-game offset ceiling,
+  //   { mtg: 9000, pokemon: 9000, yugioh: 9000, lorcana: 3000, onepiece: 6000,
+  //     dragonball: 4000, starwars: 3500, riftbound: 1000 }
+  // against real row counts of roughly 96,684 / 29,103 / 45,902 / 3,171 / 6,644 / 11,405 /
+  // 7,789 / 1,250. So MTG could draw from about 9.3 per cent of its own catalogue, Yu-Gi-Oh
+  // 19.6, Pokemon 31, dragonball 35.1, starwars 44.9. Worse than the figure in the finding,
+  // because the finding was measuring the file that does not run.
+  //
+  // Now counted live against the same filter the draw will use, so the ceiling cannot drift
+  // from the data again. count=exact stays banned (sequential scan); count=estimated reads the
+  // planner. An estimate landing high returns an empty page rather than an error, so the draw
+  // retries at half the offset and then at 0 instead of permanently reserving a safety margin.
+  let filter = `${cfg.imgCol}=not.is.null`;
   if (rarity && rarity !== 'all') {
-    if (rarity === 'rare+') query += `&rarity=in.(Rare,Mythic Rare,Mythic,Secret Rare,Ultra Rare,Legendary)`;
-    else if (rarity === 'mythic') query += `&rarity=in.(Mythic Rare,Mythic,Secret Rare)`;
+    if (rarity === 'rare+') filter += `&rarity=in.(Rare,Mythic Rare,Mythic,Secret Rare,Ultra Rare,Legendary)`;
+    else if (rarity === 'mythic') filter += `&rarity=in.(Mythic Rare,Mythic,Secret Rare)`;
   }
+  const selectCols = `${cfg.slugCol},${cfg.nameCol},${cfg.imgCol},${cfg.priceCol},price_aud,${cfg.extraCols}`;
+
+  const total = await countRows(cfg.table, filter);
+  const ceiling = total != null ? Math.max(0, total - limit) : 0;
+  const firstOffset = ceiling > 0 ? Math.floor(Math.random() * (ceiling + 1)) : 0;
 
   try {
-    const res = await supabaseGet(query);
+    let res = null;
+    const attempts = firstOffset > 0 ? [firstOffset, Math.floor(firstOffset / 2), 0] : [0];
+    for (const off of attempts) {
+      const rows = await supabaseGet(`${cfg.table}?${filter}&limit=${limit}&offset=${off}&select=${selectCols}`);
+      if (rows && rows.length) { res = rows; break; }
+    }
     if (!res || !res.length) return json({ error: 'No cards found' }, 404);
     const cards = res.map(c => ({
       slug: c[cfg.slugCol],
       name: c[cfg.nameCol],
       image: c[cfg.imgCol],
       price_usd: c[cfg.priceCol] || null,
-      price_aud: c.price_aud || (c[cfg.priceCol] ? (c[cfg.priceCol] * 1.45).toFixed(2) : null),
+      price_aud: c.price_aud || (c[cfg.priceCol] ? (c[cfg.priceCol] * audRate).toFixed(2) : null),
       set_name: c.set_name || '',
       rarity: c.rarity || '',
       extra: { type: c.type_line || c.type || '', color: c.color_identity || c.ink || c.attribute || '', ink: c.ink || '' },
@@ -1037,7 +1139,10 @@ async function handleQuizStats(req) {
 }
 
 // --- Main router ---
-export default async (req) => {
+// The second argument is Netlify's Functions v2 context, which carries the parsed geo object.
+// The repo rule is "export default async (req)"; taking the context alongside it keeps that
+// shape and is what makes geo available at all (a handler that ignores it records no geo).
+export default async (req, context) => {
   const url = new URL(req.url);
   const path = url.pathname;
   const noindexHeaders = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'X-Robots-Tag': 'noindex' };
@@ -1045,7 +1150,11 @@ export default async (req) => {
   if (path === '/api/card-like') return handleLike(req);
   if (path === '/api/card-view') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
-    return handleView(req);
+    return handleView(req, context);
+  }
+  if (path === '/api/page-view') {
+    if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
+    return handlePageView(req, context);
   }
   if (path === '/api/price-alert') {
     if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: noindexHeaders });
@@ -1095,6 +1204,7 @@ export const config = {
   path: [
     '/api/card-like',
     '/api/card-view',
+    '/api/page-view',
     '/api/price-alert',
     '/api/collection-waitlist',
     '/api/random-commander',

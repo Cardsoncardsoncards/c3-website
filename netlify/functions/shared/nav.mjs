@@ -497,9 +497,29 @@ function buildNav(gameLabel = '', gameHref = '') {
 `;
 }
 
-export const NAV_HTML = buildNav();
+// Task B. The page-view tracker rides along with the nav, and this is a deliberate choice
+// worth explaining rather than a convenience.
+//
+// The problem it solves: requestFingerprint() had only two call sites, so the only pages this
+// site had ever recorded request provenance for were card pages and the signup form. On
+// 8 August 2026 GA4 reported 18,814 sessions in 24 hours while card_views recorded ZERO card
+// views in the preceding hour, meaning the traffic that matters was entirely on pages the
+// database had never seen.
+//
+// Why here: every one of the 102 dynamic page functions already renders navHtml() or
+// NAV_HTML, and it lands immediately inside <body>, which is a valid place for a script.
+// Attaching it here covers all 102 in one edit instead of 102 separate injections, each of
+// which would be a chance to put it in the wrong template. It is the same reasoning that put
+// the nav itself here.
+//
+// The script classifies its own page and SKIPS card pages, which already log to card_views,
+// so nothing is recorded twice and no card page gains a second POST. See
+// shared/page-view-tracking.mjs for the segment-count rules.
+import { NAV_PAGE_VIEW_SCRIPT } from './page-view-tracking.mjs';
+
+export const NAV_HTML = buildNav() + NAV_PAGE_VIEW_SCRIPT;
 
 // Per-game variant: keeps the active-game indicator on hub/set/card pages.
 export function navHtml({ gameLabel, gameHref } = {}) {
-  return buildNav(gameLabel, gameHref);
+  return buildNav(gameLabel, gameHref) + NAV_PAGE_VIEW_SCRIPT;
 }

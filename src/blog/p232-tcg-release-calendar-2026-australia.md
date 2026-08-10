@@ -42,8 +42,8 @@ Riftbound has the most active competitive calendar of any new TCG in 2026. Three
 - 21-23 August: RQ Barcelona, Spain
 - 4-6 September: RQ Singapore. Second APAC RQ, relevant for Australian competitors.
 - 21 September: Radiance Preview Season Begins
+- 25-27 September: RQ Los Angeles, final 2026 Regional Qualifier
 - 23 October: Radiance (Set 5) releases globally
-- 25-27 October: RQ Los Angeles, final 2026 Regional Qualifier
 
 Read the full RQ Sydney event guide at [/blog/p150-riftbound-rq-sydney-2026-guide](/blog/riftbound-rq-sydney-2026-guide).
 

@@ -652,7 +652,7 @@ const EVENTS = [
   {date:'2026-10-23',game:'RIFTBOUND',colour:'#EF4444',name:'Radiance (Set 5)',type:'Set Release',desc:'Final 2026 set. Features Ekko and Seraphine. Global simultaneous release.',status:'confirmed',ebay:'riftbound+radiance',prize:null,hub:'/cards/riftbound',state:null,priceWindow:'Buy during preview season 3-4 weeks before. Sell sealed week 1.'},
   {date:'2026-10-23',game:'OTHER',colour:'#94A3B8',name:'Gundam GD06 Stardust Trails',type:'Set Release',desc:'Mobile Suit Gundam ZZ themed booster. Confirmed via Bandai schedule.',status:'confirmed',ebay:'gundam+card+game',prize:null,hub:'/cards',state:null},
   {date:'2026-10-23',game:'OTHER',colour:'#94A3B8',name:'Hololive: Live Start Deck (6 Types)',type:'Set Release',desc:'Six starter deck types releasing simultaneously. Confirmed via Hololive Official Card Game schedule.',status:'confirmed',ebay:'hololive+card+game+starter+deck',prize:null,hub:'/cards',state:null},
-  {date:'2026-10-25',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Los Angeles',type:'Tournament',desc:'Final 2026 Regional Qualifier.',status:'confirmed',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:null},
+  {date:'2026-09-25',game:'RIFTBOUND',colour:'#EF4444',name:'RQ Los Angeles',type:'Tournament',desc:'Final 2026 Regional Qualifier.',status:'confirmed',ebay:'riftbound+cards',prize:'USD $25,000',hub:'/cards/riftbound',state:null},
   {date:'2026-10-30',game:'LORCANA',colour:'#38BDF8',name:"Illumineer's Quest: The Great Hunny Rescue",type:'Set Release',desc:"Co-op quest product. Month confirmed by Ravensburger.",status:'confirmed',ebay:'lorcana',prize:null,hub:'/cards/lorcana',state:null},
   {date:'2026-10-31',game:'DRAGONBALL',colour:'#F97316',name:'Brightness of Hope [FB11]',type:'Set Release',desc:'Booster pack. Announced without exact date, October placeholder.',status:'estimated',ebay:'dragon+ball+super+fusion+world',prize:null,hub:'/cards/dragonball',state:null},
   {date:'2026-11-15',game:'STARWARS',colour:'#60A5FA',name:'Homeworlds',type:'Set Release',desc:'Booster set. Month announced officially.',status:'confirmed',ebay:'star+wars+unlimited+homeworlds',prize:null,hub:'/cards/starwars',state:null},
@@ -964,6 +964,33 @@ async function mergeLiveReleases() {
 }
 
 mergeLiveReleases();
+</script>
+<script>
+(function(){
+  var p = location.pathname.split('/').filter(Boolean);
+  // A three segment /cards/ path is a card page and is already covered by card_views.
+  if (p.length === 3 && p[0] === 'cards') return;
+  var t = 'other';
+  if (p.length === 0) t = 'static';
+  else if (p[0] === 'cards') t = (p.length === 1) ? 'static' : (p.length === 2 ? 'hub' : 'set');
+  else if (p[0] === 'blog') t = 'blog';
+  else if (['compare','market','search','account','tools','play','calendar','welcome','subscribe','shop','pricing'].indexOf(p[0]) !== -1) t = 'tool';
+  var SESSION_KEY = 'c3_session';
+  function getSession() {
+    var s = localStorage.getItem(SESSION_KEY);
+    if (!s) { s = Math.random().toString(36).slice(2); localStorage.setItem(SESSION_KEY, s); }
+    return s;
+  }
+  // keepalive: see the note in view-tracking.mjs. Without it the browser cancels this POST
+  // when the document is torn down, so the visitors who leave fastest, which is exactly the
+  // population in question, are the ones this can never record.
+  fetch('/api/page-view', {
+    method: 'POST',
+    keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ path: location.pathname, pageType: t, sessionId: getSession() })
+  }).catch(function(){});
+})();
 </script>
 </body>
 </html>

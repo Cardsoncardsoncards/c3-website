@@ -1,0 +1,42 @@
+name: Sync Health Check
+
+# C3L-51. Nothing watched the 31 background syncs or the 4 script syncs until this existed.
+# weissschwarz froze for 8 days writing a sync_error every night that nobody read, and three
+# daily scripts died for a week behind a green tick. Both were found by a person happening to
+# look, which is not a detection strategy.
+#
+# The alert channel is deliberately GitHub's own failure email rather than anything new. It is
+# already proven to reach Sammy: it is how the original MTG outage surfaced, and it is what the
+# RLS check and the deploy health check both rely on.
+#
+# Cadence: daily at 14:00 UTC. The background syncs run staggered from 00:00 to 12:00 UTC and
+# the two Actions sync workflows at 03:00 and 04:00, so 14:00 is after everything with two
+# hours of slack. Hourly would add nothing, since the thing being measured only changes once a
+# day, and a check that fires noise gets ignored.
+
+on:
+  schedule:
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-health:
+    name: Every game fresh, every run finished
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      # No continue-on-error here, deliberately. C3L-53 was three sync scripts dying for a week
+      # behind exactly that flag. A detection job that cannot fail is not a detection job.
+      - name: Check sync health
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/sync-health-check.mjs

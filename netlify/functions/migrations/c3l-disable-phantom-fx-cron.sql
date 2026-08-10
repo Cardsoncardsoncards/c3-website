@@ -1,0 +1,48 @@
+-- netlify/functions/migrations/c3l-disable-phantom-fx-cron.sql
+--
+-- Disables pg_cron job 14, "update-usd-aud-rate-daily", which calls update_usd_aud_rate().
+--
+-- WHY, from C3L-130. That function has run 42 times since 27 June, pg_cron recorded every run
+-- as `succeeded`, and it has never once updated the rate. It calls net.http_get() and then
+-- polls net._http_response from INSIDE the same transaction that response can only be written
+-- after: pg_net's background worker materialises the row when the calling transaction ends, so
+-- the poll can never observe it. The decisive evidence is a 42 microsecond gap, with the most
+-- recent run ending at 06:00:30.117407 and the newest response row created at 06:00:30.117365.
+-- It exhausts pg_sleep(1) fifteen times against each of two endpoints, hits a NULL rate, raises
+-- a WARNING, and returns having written nothing. A WARNING is not an error, which is why the
+-- status column has read `succeeded` 42 times.
+--
+-- WHY THIS IS SAFE, confirmed by reading both writers rather than trusting a summary:
+--
+--   sync-fx-rate.mjs is a Netlify scheduled function on `0 1 * * *`. It fetches USD/AUD from
+--   the keyed v6.exchangerate-api.com endpoint and PATCHes site_config directly with the
+--   service key. It is entirely self-contained: it does not call this function, share code with
+--   it, or depend on it in any way. On any failure it deliberately leaves the cached value
+--   untouched rather than overwriting it.
+--
+--   The stored rate's own timestamp settles which writer is load-bearing. site_config
+--   .usd_aud_rate.updated_at reads 01:00:50, which is the Netlify schedule. It is NOT 06:00,
+--   which is this cron's. Had job 14 ever reached its INSERT ... ON CONFLICT line, that line
+--   sets updated_at = NOW() unconditionally and the timestamp would say 06:00.
+--
+-- So disabling this removes a function that contributes nothing today. It cannot break anything
+-- currently correct, because nothing currently correct depends on it.
+--
+-- WHAT THIS DELIBERATELY DOES NOT DO:
+--
+--   1. The FUNCTION is not dropped, only the schedule is disabled. C3L-130's other half, the
+--      cross-game recalculation across 21 tables, is a live open question and the function body
+--      is the record of what was originally intended. Deciding between repairing this function
+--      and replacing the design is explicitly Sammy's call and is NOT made here.
+--   2. Nothing about the cross-game recalculation is changed. The 3.4 per cent spread in stored
+--      price_aud across games is untouched by this migration and stays untouched until that
+--      decision is made.
+--   3. `cron.alter_job` is used rather than `cron.unschedule`, so the job row, its schedule and
+--      its full run history all survive. Re-enabling is one statement:
+--        select cron.alter_job(14, active := true);
+--
+-- The tripwire added in 9545293, scripts/fx-freshness-check.mjs, now watches the rate's actual
+-- freshness daily and does not care which writer maintains it. If the Netlify function ever
+-- stops, that check fails rather than nothing happening for six weeks.
+
+select cron.alter_job(14, active := false);

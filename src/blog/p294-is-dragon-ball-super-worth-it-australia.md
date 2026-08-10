@@ -5,6 +5,7 @@ title: Is Dragon Ball Super Card Game Worth It in Australia? (2026)
 date: 2026-05-22
 description: Honest assessment of whether the Dragon Ball Super card game is worth starting in Australia in 2026. Costs, card availability, competitive scene, and resale value.
 category: value-and-worth
+tags: post
 game: dragonball
 emoji: 🐉
 permalink: /blog/is-dragon-ball-super-worth-it-australia/

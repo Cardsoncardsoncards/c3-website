@@ -1,6 +1,8 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { decodeSlugSegment } from './shared/url-slug.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { setPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 // netlify/functions/pokemon-set-page.mjs
 // Serves /cards/pokemon/sets/:slug+
 
@@ -61,7 +63,12 @@ function graceful404(setSlug) {
 }
 
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800', 'Netlify-CDN-Cache-Control': 'public, max-age=900, s-maxage=1800,durable' };
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
+  const headers = setPageHeaders();
   const url = new URL(req.url);
   const setSlug = decodeSlugSegment(url.pathname.replace(/^\/cards\/pokemon\/sets\//, '').replace(/\/$/, ''));
   if (!setSlug) return new Response(graceful404(''), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });

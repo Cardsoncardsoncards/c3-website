@@ -2,6 +2,12 @@ import { decodeSlugSegment } from './shared/url-slug.mjs';
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { numericSetRedirect, lowercaseRedirect } from './shared/canonical-redirect.mjs';
+import { setPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
+// C3L-141. escAttr was called in the eBay listings block and imported nowhere, so any render
+// that got listings back threw a ReferenceError and the catch turned it into a 503.
+import { escAttr } from './shared/html-escape.mjs';
 // netlify/functions/yugioh-set-page.mjs
 // Serves /cards/yugioh/sets/:setCode
 
@@ -53,7 +59,16 @@ const ATTR_COLOURS = {'LIGHT':'#FFD700','DARK':'#9966CC','FIRE':'#FF4500','WATER
 
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 export default async (req) => {
-  const headers = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=900, s-maxage=1800', 'Netlify-CDN-Cache-Control': 'public, max-age=900, s-maxage=1800,durable' };
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
+  const headers = setPageHeaders();
   const url = new URL(req.url);
   const setCode = decodeSlugSegment(url.pathname.replace(/^\/cards\/yugioh\/sets\//, '').replace(/\/$/, '').toLowerCase());
   if (!setCode) return new Response(`<!DOCTYPE html>
@@ -152,7 +167,7 @@ export default async (req) => {
   const ebayBoxURL = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(set.name+' yugioh booster box')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
   const ebayListings = await getEbayListings(`${set.name} yugioh card`, ebayToken);
 
-  const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * 1.45 : 0;
+  const toAud = (c) => c.market_price && c.market_price > 0 ? parseFloat(c.market_price) * audRate : 0;
   const pricedCards = cards.filter(c => toAud(c) > 0);
   const top5 = [...pricedCards].sort((a,b) => toAud(b) - toAud(a)).slice(0, 5);
   const rarities = [...new Set(cards.map(c => c.rarity).filter(Boolean))].sort();

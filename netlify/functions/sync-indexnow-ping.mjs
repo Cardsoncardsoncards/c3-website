@@ -18,8 +18,18 @@
 // its contents against `key`. The key lives in the INDEXNOW_KEY env var and is served from
 // https://cardsoncardsoncards.com.au/<key>.txt (Eleventy passthrough).
 //
-// Trigger: scheduled daily, or manually with an x-sync-secret header against
-// /.netlify/functions/sync-indexnow-ping (a scheduled function cannot have a custom path).
+// Trigger: scheduled daily. THERE IS NO WORKING MANUAL TRIGGER FOR THIS FUNCTION.
+// C3L-136, corrected 10 August 2026. This comment previously said it could be run "manually
+// with an x-sync-secret header against /.netlify/functions/sync-indexnow-ping". That has never
+// worked and cannot: Netlify returns 403 to every direct HTTP request for a function whose
+// config carries `schedule`, so the guard below is unreachable, not merely strict. Verified
+// live the same day: this path answers 403, while an unscheduled function on the same host
+// answers its own 400 or 401. The x-sync-secret check below is kept because the scheduler is
+// not the only future caller, but nothing can currently reach it.
+// The real manual mechanism is POST /api/admin/trigger with an x-sync-secret header. This job
+// is NOT in its registry yet (it covers pokemon, yugioh and fx-rate); adding it means an import
+// and a HANDLERS entry in admin-trigger-background.mjs, and a decision about whether pinging
+// IndexNow on demand is wanted, since the 20 hour rate gate below applies to every caller.
 // Pass ?dryRun=1 to collect and count URLs without submitting anything.
 //
 // RATE GATE (task-157): a real submission runs at most once every 20 hours, enforced against a

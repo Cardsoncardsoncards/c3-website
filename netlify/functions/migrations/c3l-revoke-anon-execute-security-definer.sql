@@ -1,0 +1,60 @@
+-- netlify/functions/migrations/c3l-revoke-anon-execute-security-definer.sql
+--
+-- Revokes PUBLIC (and therefore anon and authenticated) EXECUTE on three SECURITY DEFINER
+-- functions that all genuinely WRITE.
+--
+-- This was already a known, decided, undone item. PROJECT.md line 618 reads: "Still open from
+-- that audit, not yet done: revoke public EXECUTE from anon and authenticated on three
+-- SECURITY DEFINER functions (compute_mtg_signals_batch, update_mtg_signals_batched,
+-- update_usd_aud_rate)". Supabase's own security advisor flags all three independently. This
+-- migration is that revocation.
+--
+-- WHAT EACH ONE ACTUALLY DOES, read from pg_get_functiondef rather than inferred from the name:
+--
+--   update_usd_aud_rate()            SECURITY DEFINER, volatile. Makes OUTBOUND HTTP requests
+--                                    via pg_net to open.er-api.com and, on failure, to
+--                                    api.frankfurter.app, polling with pg_sleep(1) up to 15
+--                                    times per endpoint, then writes the USD/AUD rate. That
+--                                    rate is what every AUD price on the site is derived from.
+--                                    Anon-callable, this is both a data-integrity write and a
+--                                    cheap resource sink: each call can hold a connection for
+--                                    up to the 30s statement timeout.
+--
+--   update_mtg_signals_batched()     SECURITY DEFINER, volatile. Loops compute_mtg_signals_batch
+--                                    across the whole catalogue, then UPDATEs mtg_signals,
+--                                    nulling buy_verdict, sell_verdict and days_of_history for
+--                                    cards absent from the newest snapshot date. Reads across
+--                                    mtg_price_snapshots, which is ~4.6M rows.
+--
+--   compute_mtg_signals_batch(int,int) SECURITY DEFINER, volatile. INSERTs into mtg_signals for
+--                                    one 500-card window. This is the third function; the task
+--                                    that raised this asked for it to be confirmed rather than
+--                                    assumed, and it is a writer like the other two.
+--
+-- WHY THE GRANT EXISTED: the ACL on all three read `=X/postgres`, whose empty grantee means
+-- PUBLIC. That is PostgreSQL's default for a newly created function, so this was never an
+-- explicit decision to expose them; it is the default nobody removed.
+--
+-- BLAST RADIUS, checked before revoking, same discipline as the card_views fix:
+--   1. NO shipped code calls any of the three. Every repo hit is documentation: PROJECT.md,
+--      C3_FINDINGS_REGISTER.md, C3L34_INVESTIGATION_2026-08-05.md and a comment in
+--      c3l43-expire-stale-signal-verdicts.sql.
+--   2. The only RPC calls in shipped code are increment_quiz_count (card-api.mjs) and
+--      rls_audit_targets (the RLS check, service key). Neither is affected.
+--   3. The real callers are pg_cron jobs running as postgres: job 14
+--      "update-usd-aud-rate-daily" at 0 6 * * *, and job 15 "update-mtg-signals-daily" at
+--      0 21 * * *. compute_mtg_signals_batch is called internally by the latter.
+--      postgres and service_role hold their own explicit EXECUTE grants, so neither job is
+--      touched by revoking PUBLIC.
+--
+-- NOT DONE HERE, deliberately: the materialized view mtg_commanders is also anon-selectable,
+-- flagged by the same advisor, and is left alone. It holds 10,287 rows of PUBLIC MTG card data
+-- (name, type line, oracle text, image, price), verified by reading it with the anon key. That
+-- is the same class of data mtg_cards deliberately serves to browsers, so it exposes nothing
+-- the site does not already publish. Recorded as low priority rather than revoked, because
+-- revoking it would be a change with no security benefit and a non-zero chance of breaking a
+-- future consumer.
+
+revoke execute on function public.update_usd_aud_rate()                            from public, anon, authenticated;
+revoke execute on function public.update_mtg_signals_batched()                     from public, anon, authenticated;
+revoke execute on function public.compute_mtg_signals_batch(integer, integer)      from public, anon, authenticated;

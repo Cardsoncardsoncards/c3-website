@@ -1,0 +1,47 @@
+name: FX Freshness Check
+
+# C3L-131's recommended tripwire for C3L-130.
+#
+# update_usd_aud_rate() ran 42 times between 27 June and 9 August, pg_cron recorded every run
+# as `succeeded`, and it never once updated the rate that every AUD price on this site derives
+# from. A RAISE WARNING is not an error, so the status column could not tell a working run from
+# one that gave up. Nothing noticed for six weeks.
+#
+# This does not touch that function. It asserts the one thing that would have caught it on day
+# one: that the value itself is fresh.
+#
+# The alert channel is GitHub's own failure email, matching the sync, RLS and deploy checks. It
+# is already proven to reach Sammy and adds nothing new to maintain.
+#
+# Cadence: daily at 04:00 UTC. The rate is written at 01:00 UTC by sync-fx-rate.mjs, so a
+# healthy run sees an age of about 3 hours and one entirely missed cycle sees about 27, which is
+# past the 26 hour limit in the script. That leaves no borderline case in either direction.
+# Hourly would add nothing, since the thing being measured only changes once a day.
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  fx-freshness:
+    name: The USD/AUD rate is actually fresh
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      # No continue-on-error, deliberately. C3L-53 was three sync scripts dying for a week
+      # behind exactly that flag, and C3L-130 is six weeks of a job reporting success while
+      # doing nothing. A detection job that cannot fail is not a detection job.
+      - name: Check FX rate freshness
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/fx-freshness-check.mjs

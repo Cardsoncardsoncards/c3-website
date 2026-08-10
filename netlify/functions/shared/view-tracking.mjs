@@ -34,8 +34,15 @@ export function viewTrackingScript(game, cardRef) {
     if (!s) { s = Math.random().toString(36).slice(2); localStorage.setItem(SESSION_KEY, s); }
     return s;
   }
+  // keepalive lets this POST outlive the page. Without it the browser CANCELS an in-flight
+  // fetch the moment the document is torn down, so a visitor who leaves immediately is never
+  // recorded. GA4's gtag uses navigator.sendBeacon, which does survive, and that asymmetry is
+  // measurable: on 8 August GA4 reported 24,102 users for the day while card_views recorded
+  // 13 and page_views 33, against a GA4 average engagement time of 0 seconds. Whatever else
+  // that traffic is, this tracker could not have counted it.
   fetch('/api/card-view', {
     method: 'POST',
+    keepalive: true,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ game: '${jsStr(game)}', cardRef: '${jsStr(cardRef)}', sessionId: getSession() })
   }).catch(function(){});

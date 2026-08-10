@@ -33,4 +33,95 @@ Disallow: /rest/
 Disallow: /rest/v1/
 Disallow: /.netlify/
 
+# meta-externalagent, Meta's AI training and indexing crawler, is the single largest
+# source of load on this site. Measured 6 to 7 August 2026, the first 18 hours after
+# request fingerprinting went live: 9,237 card views, 66 per cent of all identified
+# traffic, every one of them a Magic: The Gathering card page. It rotates 18 user-agent
+# strings but all carry the meta-externalagent token, and the source IP resolves to
+# AS32934 Facebook, so it is honestly self-declaring.
+#
+# The reason it is closed off here rather than left alone: 8,183 of the 9,175 cards it
+# fetched, 89 per cent, are priced below the AUD$5 index threshold and so appear in no
+# sitemap. It is not following the URLs C3 submits, it is walking the internal link
+# graph, where set pages list up to 200 unfiltered card links each. That is enumeration
+# of the whole catalogue, not discovery of the indexable part of it.
+#
+# Only card pages are closed. Hub pages, set pages, the blog and the calendar stay open,
+# so anything with genuine editorial value remains reachable. Meta documents that
+# meta-externalagent obeys robots.txt.
+#
+# CORRECTED 8 August 2026. The paragraph above stated the intent correctly and the rules
+# below did not deliver it. Every tier of this site lives under /cards/: the hub is
+# /cards/<game>, the set page is /cards/<game>/sets/<slug>, and the card page is
+# /cards/<game>/<slug>. A bare "Disallow: /cards/" is a PREFIX match, so it closed all
+# three, not just the card pages, and it closed the two tiers that carry the editorial
+# value this block set out to protect. The explicit Allow lines below re-open the hub and
+# set tiers and leave the card leaf closed, which is what the paragraph above always said.
+#
+# Why one Allow line per game rather than a pattern: robots.txt has no way to express
+# "one path segment". /cards/mtg and /cards/mtg/black-lotus are both prefixed by
+# /cards/mtg, so only the "$" end-of-path anchor can separate the hub from its cards, and
+# "$" cannot be combined with a wildcard to cover all 32 games at once. Set pages need no
+# such treatment because "sets" is a literal segment, so one wildcard covers all of them.
+# The 32 hub lines were generated from the 32 *-hub.mjs route configs and cross-checked
+# against GAME_TABLES in compare-search.mjs: 32 in each, with no game in one and not the
+# other. If a 33rd game is added, its hub needs a line here or the hub silently closes.
+#
+# Google and the RFC 9309 grammar both resolve Allow against Disallow by the LENGTH of the
+# matching pattern, not by file order, and ties go to Allow. "/cards/mtg$" (11 characters)
+# and "/cards/*/sets/" (14) are both longer than "/cards/" (7), so each wins over it. A
+# card URL matches neither, so it keeps falling through to the Disallow. Verified by
+# executing that rule against real URLs, not by reading it: see the task report.
+#
+# The other two Meta agents are deliberately NOT listed. facebookexternalhit powers share
+# previews and meta-externalfetcher serves user-requested fetches, and Meta documents that
+# both may bypass robots.txt, so a rule for either would be decoration rather than control.
+#
+# This group repeats the /api, /rest and /.netlify closures on purpose: a named user-agent
+# group REPLACES the "User-agent: *" group for that agent rather than adding to it, so
+# omitting them here would quietly open the internals that the general policy closes.
+#
+# Reversible by deleting this block, which restores the previous behaviour exactly.
+User-agent: meta-externalagent
+Disallow: /cards/
+Allow: /cards/*/sets/
+Allow: /cards/weissschwarz/series/
+Allow: /cards/alphaclash$
+Allow: /cards/bakugan$
+Allow: /cards/battlespiritssaga$
+Allow: /cards/buddyfight$
+Allow: /cards/dbsfusionworld$
+Allow: /cards/digimon$
+Allow: /cards/dragonball$
+Allow: /cards/dragonballz$
+Allow: /cards/finalfantasy$
+Allow: /cards/forceofwill$
+Allow: /cards/gateruler$
+Allow: /cards/godzilla$
+Allow: /cards/grandarchive$
+Allow: /cards/gundam$
+Allow: /cards/hololive$
+Allow: /cards/lorcana$
+Allow: /cards/metazoo$
+Allow: /cards/mtg$
+Allow: /cards/onepiece$
+Allow: /cards/pokemon$
+Allow: /cards/riftbound$
+Allow: /cards/shadowverse$
+Allow: /cards/sorcery$
+Allow: /cards/starwars$
+Allow: /cards/unionarena$
+Allow: /cards/universus$
+Allow: /cards/vanguard$
+Allow: /cards/warhammer$
+Allow: /cards/weissschwarz$
+Allow: /cards/wixoss$
+Allow: /cards/wow$
+Allow: /cards/yugioh$
+Allow: /api/sitemap-
+Disallow: /api/
+Disallow: /rest/
+Disallow: /rest/v1/
+Disallow: /.netlify/
+
 Sitemap: https://cardsoncardsoncards.com.au/sitemap-index.xml

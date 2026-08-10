@@ -16,7 +16,7 @@ Regional Championships move card prices. Not always dramatically, not always imm
 
 Regional Championships move card prices. Not always dramatically, not always immediately, but the players who read a result and act in the first 48 hours consistently pay less than the players who wait for a Reddit post to tell them what happened.
 
-Simon Linabury won the [ANZ Super Series Cycle 11 Regional Championship in Sydney](https://cardsoncardsoncards.com.au/blog/p248-rq-sydney-2026) with Mono Green Landfall on 13 March. His runner-up was also on Mono Green Landfall. Three of eight Top 8 spots went to the archetype. This is what that means for card prices in Australia.
+Simon Linabury won the [ANZ Super Series Cycle 11 Regional Championship in Sydney](https://cardsoncardsoncards.com.au/blog/rq-sydney-2026/) with Mono Green Landfall on 13 March. His runner-up was also on Mono Green Landfall. Three of eight Top 8 spots went to the archetype. This is what that means for card prices in Australia.
 
 ---
 

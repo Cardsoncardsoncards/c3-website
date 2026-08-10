@@ -29,6 +29,11 @@ import {
 // task-129 Part 2: password auth. Hashing via Node's built-in scrypt (no new dependency).
 import { hashPassword, verifyPassword, passwordProblem } from './shared/password.mjs';
 
+// One shared definition of what we record about the incoming request. clientIp was previously
+// hand-rolled here, and again in email-subscribe.mjs, and again in register-interest.mjs; it now
+// has one definition that this file and card-api.mjs both call.
+import { clientIp, requestFingerprint } from './shared/request-fingerprint.mjs';
+
 import {
   hasSessionSecret,
   createSession,
@@ -154,9 +159,132 @@ function movementHtml(value, label) {
 // createMagicLink() only mints the token row; sending is the caller's job (same split card-api
 // uses). This sends the confirm/reset link through Resend, so no raw provider email reaches a
 // user unbranded.
+// ---------------------------------------------------------------------------
+// C3L-90 STEP A: TEMPORARY signup-email kill switch. THIS IS NOT PERMANENT.
+//
+// Why: the signup form is being farmed by bots. 181 accounts existed and exactly ONE had ever
+// followed a card, with 180 of them created in the eight days from 30 July. Every one of those
+// signups made this file send a confirmation from alerts@cardsoncardsoncards.com.au to an
+// address that never asked for it, which damages the sending reputation that the follow alerts
+// and the weekly digest both depend on. Flipping this to false stops the bleeding while the
+// real defences (honeypot, IP rate limit) are built.
+//
+// STEP E, DONE: this is back to TRUE. The switch stays in the file on purpose, as the fastest
+// lever if this ever recurs, but its normal state is ON. If you find it false, that is a bug
+// unless someone is mid-incident: real users cannot confirm a new account while it is off.
+//
+// WHY IT GATES BOTH BRANCHES OF handleSignup, not just the confirm path. C3L-44 closed an
+// account-enumeration channel by making signup send mail whether or not the address was already
+// registered, so that response body, length and timing are identical either way. Disabling only
+// the new-account confirm send would have reopened exactly that channel: the registered branch
+// would still make an outbound Resend call and the unregistered one would not, which is the same
+// 491ms separation C3L-44 measured and fixed. So the switch suppresses BOTH sends in
+// handleSignup and the two paths stay symmetric.
+//
+// handleForgot is deliberately NOT gated by this. It is a separate endpoint, it is not the path
+// being farmed, and it is the route a real user needs if they are locked out while this is off.
+const SIGNUP_CONFIRM_EMAIL_ENABLED = true;
+
 const RESEND_FROM = 'C3 Accounts <alerts@cardsoncardsoncards.com.au>';
-async function sendAccountEmail({ to, subject, html }) {
-  if (!RESEND_API_KEY) { console.error('[account] RESEND_API_KEY missing, cannot send'); return false; }
+// C3L-92 Step D: permanent record of every account email this file attempts.
+//
+// Why this file needed it at all: email_log already had three writers (card-api.mjs,
+// check-card-follows.mjs and shared/accounts-core.mjs) and account.mjs, which sends EVERY magic
+// link, confirmation and password reset, was not one of them. The table held 3 rows, all from
+// 27 July, while roughly 180 signup confirmations went out in the eight days from 30 July and
+// were recorded nowhere. That is why C3L-90 needed a manual audit to surface after eight days
+// instead of being visible the same morning.
+//
+// Fire-and-forget on purpose: a logging failure must never turn a delivered email into a
+// reported failure. It logs FAILURES as well as successes, which is the half that matters here,
+// because sendAccountEmail returns false on error and its only caller discards the return value,
+// so before this a failed send left no trace anywhere at all.
+async function logAccountEmail(recipient, emailType, success, errorMessage) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/email_log`, {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      // id is GENERATED ALWAYS AS IDENTITY and must not be supplied. related_card_alert_id is
+      // nullable and genuinely does not apply to an account email, so it is left out.
+      body: JSON.stringify([{
+        recipient,
+        email_type: emailType,
+        success: !!success,
+        error_message: errorMessage ? String(errorMessage).slice(0, 500) : null,
+      }]),
+    });
+    clearTimeout(t);
+    if (!res.ok) console.warn(`[email_log] insert failed ${res.status}`);
+  } catch (e) {
+    clearTimeout(t);
+    console.warn(`[email_log] insert error: ${e.message}`);
+  }
+}
+
+// The fixed vocabulary for signup_attempts.outcome. It lives here, in one place, rather than as
+// a database CHECK constraint: a constraint violation would reject the insert and throw away the
+// record of an attempt nobody anticipated, which is precisely the attempt worth keeping.
+const SIGNUP_OUTCOME = {
+  CREATED:      'created',        // new account row written
+  EXISTING:     'existing_address',// address already registered; sign-in link sent instead
+  HONEYPOT:     'rejected_honeypot',
+  RATE_LIMITED: 'rejected_rate_limit',
+  INVALID:      'rejected_validation',
+  ERROR:        'error',          // genuine server-side failure creating the account
+};
+
+// One row per signup attempt, whatever the outcome. Before this there was NO durable record of a
+// signup attempt anywhere: the per-IP limiter's counters live in an in-memory Map inside a single
+// serverless instance and vanish on cold start, so the ~180 attempts the bot farm made in eight
+// days left no request-level trace at all. That is why it took a manual audit to find.
+//
+// TIMING NOTE, and the reason every call site awaits this rather than firing and forgetting:
+// handleSignup deliberately does identical work on the "new address" and "already registered"
+// branches so the two cannot be told apart by response time (C3L-44). One awaited insert on both
+// branches keeps that symmetric. An insert on only one branch, or an awaited one on one and a
+// fire-and-forget on the other, would hand the enumeration channel straight back.
+async function logSignupAttempt(email, outcome, req, context) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/signup_attempts`, {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {
+        'apikey': SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      // id is GENERATED ALWAYS AS IDENTITY and must not be supplied; attempted_at defaults to now().
+      body: JSON.stringify([{
+        email: email || null,
+        outcome,
+        ...requestFingerprint(req, context),
+      }]),
+    });
+    clearTimeout(t);
+    if (!res.ok) console.warn(`[signup_attempts] insert failed ${res.status}`);
+  } catch (e) {
+    clearTimeout(t);
+    console.warn(`[signup_attempts] insert error: ${e.message}`);
+  }
+}
+
+async function sendAccountEmail({ to, subject, html, type = 'account_link' }) {
+  if (!RESEND_API_KEY) {
+    console.error('[account] RESEND_API_KEY missing, cannot send');
+    await logAccountEmail(to, type, false, 'RESEND_API_KEY missing');
+    return false;
+  }
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), 8000);
   try {
@@ -167,9 +295,19 @@ async function sendAccountEmail({ to, subject, html }) {
       body: JSON.stringify({ from: RESEND_FROM, to: [to], subject, html }),
     });
     clearTimeout(t);
-    if (!res.ok) { console.error('[account] Resend error', res.status); return false; }
+    if (!res.ok) {
+      console.error('[account] Resend error', res.status);
+      await logAccountEmail(to, type, false, `Resend HTTP ${res.status}`);
+      return false;
+    }
+    await logAccountEmail(to, type, true, null);
     return true;
-  } catch (e) { clearTimeout(t); console.error('[account] Resend fetch failed', e.message); return false; }
+  } catch (e) {
+    clearTimeout(t);
+    console.error('[account] Resend fetch failed', e.message);
+    await logAccountEmail(to, type, false, e.message);
+    return false;
+  }
 }
 
 // Login rate limiting. Per-email in-memory counter on a rolling window. This is a per-instance
@@ -240,6 +378,50 @@ async function padToFloor(startedAt, floorMs) {
 const LINK_SEND_WINDOW_MS = 15 * 60 * 1000;
 const LINK_SEND_MAX       = 3;
 const linkSendAttempts = new Map(); // email -> { count, resetAt }
+
+// ---------------------------------------------------------------------------
+// C3L-90 Step C: per-IP signup limit. A SECOND axis, deliberately, not a replacement.
+//
+// maySendLink above is keyed on the submitted ADDRESS. That is the right defence against someone
+// bombing one victim, and it is what C3L-46 added. It is the wrong axis for what actually
+// happened: 180 signups in eight days, each on a DIFFERENT address, so the per-address counter
+// was reset every single time and never once fired. Same origin, many addresses, walks straight
+// past it. This closes that axis.
+//
+// Five per hour is chosen to sit far above a real person and far below a farm. A household or a
+// small shop behind one NAT might legitimately create two or three accounts in a day; five in a
+// single hour from one address is not that.
+//
+// Same honest limitation as every other limiter in this file: the Map is per serverless instance
+// and in memory, so it blunts a burst from one origin and does NOT stop a distributed attempt
+// spread across many IPs. A shared counter needs a database or a KV store, which is the upgrade
+// if this proves insufficient. Stated rather than implied so nobody reads this as airtight.
+const SIGNUP_IP_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const SIGNUP_IP_MAX       = 5;
+const signupIpAttempts = new Map(); // ip -> { count, resetAt }
+
+// clientIp now comes from shared/request-fingerprint.mjs (imported at the top of this file).
+// The local copy that used to live here was byte-for-byte one of three, which is exactly the
+// drift this consolidation exists to stop. Behaviour is unchanged: the limiter below still keys
+// on the FULL address. Only what gets PERSISTED is truncated, and that happens in the shared
+// module, not here.
+
+// Returns true when this IP has room for another signup, and consumes one slot when it does.
+// An unknown IP is ALLOWED rather than blocked: keying every anonymous caller to one shared
+// bucket would let a single bot lock every genuine visitor out of signing up, which trades a
+// spam problem for an outage.
+function maySignupFromIp(ip) {
+  if (!ip) return true;
+  const now = Date.now();
+  const rec = signupIpAttempts.get(ip);
+  if (!rec || now > rec.resetAt) {
+    signupIpAttempts.set(ip, { count: 1, resetAt: now + SIGNUP_IP_WINDOW_MS });
+    return true;
+  }
+  if (rec.count >= SIGNUP_IP_MAX) return false;
+  rec.count += 1;
+  return true;
+}
 function maySendLink(email) {
   const now = Date.now();
   const rec = linkSendAttempts.get(email);
@@ -268,6 +450,9 @@ async function sendLinkEmail(account, kind) {
   const btnText = reset ? 'Set a new password' : 'Confirm my account';
   return sendAccountEmail({
     to: account.email,
+    // Distinguishes a new-account confirmation from a sign-in or password reset in email_log,
+    // which is what makes a signup spike visible on its own rather than buried in all account mail.
+    type: reset ? 'account_reset' : 'account_confirm',
     subject,
     html: `<p>Hi,</p><p>${intro}</p>
 <p><a href="${link}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">${btnText}</a></p>
@@ -446,6 +631,18 @@ function authPanel(mode = 'login', note = '', noteColor = '#F87171') {
     <input type="email" name="email" placeholder="you@example.com" required autocomplete="email">
     <input type="password" name="password" placeholder="Password (min 8 characters)" required autocomplete="new-password" minlength="8">
     <input type="password" name="confirm" placeholder="Confirm password" required autocomplete="new-password">
+    <!-- C3L-90 Step B: honeypot. A real browser never fills this in, because a sighted user
+         cannot see it and a screen-reader user is told to skip it. A naive bot fills every input
+         it finds and gives itself away for free.
+         Positioned off-screen rather than display:none on purpose: display:none is the first
+         thing a scraper checks for, and some fill-everything bots deliberately skip it.
+         aria-hidden plus tabindex="-1" keep it away from assistive tech and keyboard tabbing,
+         so this costs a real user nothing. autocomplete="off" stops a password manager
+         helpfully populating it, which would lock out a genuine visitor. -->
+    <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+      <label for="signup-website">Leave this field empty</label>
+      <input type="text" id="signup-website" name="website" tabindex="-1" autocomplete="off" value="">
+    </div>
     <button class="primary" type="submit">Create account</button>
     <p class="auth-alt">Already have an account? <a href="#" data-auth="login">Log in</a></p>
   </form>
@@ -798,14 +995,60 @@ async function handleLogin(form) {
   return dashboard({ uid: account.id, email: account.email }, { cookie });
 }
 
-async function handleSignup(form) {
+async function handleSignup(form, req, context) {
   const email    = normaliseEmail(form && form.get('email'));
   const password = form && form.get('password');
   const confirm  = form && form.get('confirm');
-  if (!email) return signedOutPage('Enter a valid email address.', 'signup');
+  // The validation rejects below log the RAW submitted address rather than the normalised one
+  // when normalisation failed, because "what did they actually send" is the useful thing when
+  // reading these rows back. It is capped: an unbounded form field must not size a row.
+  const rawEmail = String((form && form.get('email')) || '').trim().slice(0, 320) || null;
+  if (!email) {
+    await logSignupAttempt(rawEmail, SIGNUP_OUTCOME.INVALID, req, context);
+    return signedOutPage('Enter a valid email address.', 'signup');
+  }
   const pwProblem = passwordProblem(password);
-  if (pwProblem) return signedOutPage(pwProblem, 'signup');
-  if (password !== confirm) return signedOutPage('The two passwords do not match.', 'signup');
+  if (pwProblem) {
+    await logSignupAttempt(email, SIGNUP_OUTCOME.INVALID, req, context);
+    return signedOutPage(pwProblem, 'signup');
+  }
+  if (password !== confirm) {
+    await logSignupAttempt(email, SIGNUP_OUTCOME.INVALID, req, context);
+    return signedOutPage('The two passwords do not match.', 'signup');
+  }
+
+  // C3L-90 Step B: honeypot. The paired hidden input is in the signup form above; a real browser
+  // submits it empty. Anything in it means the submitter filled a field it could not see.
+  //
+  // The response is DELIBERATELY the same checkEmailPage the success path returns, built from the
+  // same address, so it is byte-identical to a genuine signup. A distinct error, a different
+  // status, or even a faster reply would tell an operator the trap exists and is trivial to
+  // adapt around. Silent means silent.
+  //
+  // Placed after validation and before the account lookup so a caught submission does no database
+  // work at all: no row, no magic-link token, no send.
+  if (String(form.get('website') || '').trim() !== '') {
+    console.warn('[account] signup rejected by honeypot');
+    // Logged, and this is the row that makes the trap worth having: a honeypot hit is a
+    // confirmed bot, so its user agent and network are ground truth for identifying the rest of
+    // the farm's traffic. The RESPONSE is unchanged and still byte-identical to the success page.
+    await logSignupAttempt(email, SIGNUP_OUTCOME.HONEYPOT, req, context);
+    return checkEmailPage('Check your email', `We have sent a link to ${email}. If you already have an account it will sign you in, otherwise it will confirm your new account.`);
+  }
+
+  // C3L-90 Step C: per-IP limit, checked after validation and the honeypot so a mistyped password
+  // or a caught bot never burns a real person's quota, and before any database work so a blocked
+  // caller costs nothing.
+  //
+  // Unlike the honeypot this message is DELIBERATELY visible and honest. A honeypot hit is always
+  // a bot and gets told nothing; an IP limit can catch a real household behind one NAT, and that
+  // person needs to know why they were stopped and that waiting fixes it. Silently showing them a
+  // success page that never produces an email would be the worse failure.
+  if (!maySignupFromIp(clientIp(req))) {
+    console.warn('[account] signup rate limited by IP');
+    await logSignupAttempt(email, SIGNUP_OUTCOME.RATE_LIMITED, req, context);
+    return signedOutPage('Too many sign-ups from this network in the past hour. Please wait and try again.', 'signup');
+  }
 
   // C3L-44: this used to answer "That email already has an account" on screen, which told any
   // caller whether an address was registered. handleForgot immediately below already solved this
@@ -825,18 +1068,28 @@ async function handleSignup(form) {
   const existing = await getAccountByEmail(email);
   const result   = await createAccountWithPassword(email, hashPassword(password));
 
+  // Each of the three branches below performs exactly ONE awaited logSignupAttempt, so the
+  // insert costs the same on all of them and the C3L-44 timing symmetry between "new address"
+  // and "already registered" survives. Only the outcome string differs, which costs nothing
+  // measurable. Do not make any of these conditional or fire-and-forget.
   if (result.ok) {
+    await logSignupAttempt(email, SIGNUP_OUTCOME.CREATED, req, context);
     // New account: the usual confirm link.
-    if (maySendLink(email)) await sendLinkEmail(result.account, 'confirm');
+    // C3L-90 Step A: SIGNUP_CONFIRM_EMAIL_ENABLED gates this temporarily. See the constant.
+    if (SIGNUP_CONFIRM_EMAIL_ENABLED && maySendLink(email)) await sendLinkEmail(result.account, 'confirm');
   } else if (result.reason === 'email_exists') {
+    await logSignupAttempt(email, SIGNUP_OUTCOME.EXISTING, req, context);
     // Already registered: send a sign-in link to the address instead of saying so on screen.
     // This is the useful thing for the real owner of the address (they get a way in) and tells
     // whoever submitted the form nothing at all.
-    if (existing && maySendLink(email)) await sendLinkEmail(existing, 'reset');
+    // C3L-90 Step A: gated by the SAME switch as the branch above, deliberately. Suppressing one
+    // send and not the other would reopen the C3L-44 timing channel. Both off, or both on.
+    if (SIGNUP_CONFIRM_EMAIL_ENABLED && existing && maySendLink(email)) await sendLinkEmail(existing, 'reset');
   } else {
     // A genuine server-side failure. Distinct on purpose: it is not conditioned on whether the
     // address exists, so it leaks nothing, and hiding a real fault behind a success page would
     // leave the user waiting for mail that is never coming.
+    await logSignupAttempt(email, SIGNUP_OUTCOME.ERROR, req, context);
     return signedOutPage('We could not create your account just now. Please try again.', 'signup');
   }
 
@@ -884,7 +1137,10 @@ async function handleSetPassword(session, form) {
 // ---------------------------------------------------------------------------
 // Handler
 // ---------------------------------------------------------------------------
-export default async (req) => {
+// The second argument is Netlify's Functions v2 context, carrying the parsed geo object. The
+// repo rule is "export default async (req)"; taking context alongside it keeps that shape and is
+// what makes geo available at all (a handler that ignores it records no geo).
+export default async (req, context) => {
   const url = new URL(req.url);
 
   // task-129 Part 5: admin view at /account/admin. Gated SERVER-SIDE by matching the session
@@ -932,7 +1188,7 @@ export default async (req) => {
 
     // Auth actions do not require an existing session.
     if (action === 'login')  return handleLogin(form);
-    if (action === 'signup') return handleSignup(form);
+    if (action === 'signup') return handleSignup(form, req, context);
     if (action === 'forgot') return handleForgot(form);
 
     // Everything else requires a session. A magic-link token is not accepted for POST:

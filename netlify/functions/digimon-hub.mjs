@@ -1,4 +1,7 @@
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { hubPageHeaders } from './shared/cache-headers.mjs';
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+import { fxRate } from './shared/fx-rate.mjs';
 // netlify/functions/digimon-hub.mjs
 // Serves /cards/digimon
 // Auto-generated 20 May 2026 -- C3 standard hub
@@ -162,10 +165,16 @@ function css() {
 }
 
 export default async (req) => {
-  const headers = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=1800, s-maxage=3600', 'Netlify-CDN-Cache-Control': 'public, max-age=1800, s-maxage=3600,durable'
-  };
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
+  // C3L-107/C3L-118. Runs before anything else in the handler: a request that is going to
+  // be rejected must not first cost a Supabase round trip and a full render.
+  const _t = await checkThrottle(req);
+  if (_t.throttled) return throttleResponse(_t.retryAfter);
+
+  const headers = hubPageHeaders();
 
   const [setsResult, topCardsResult] = await Promise.allSettled([
     supabaseGet('digimon_sets?order=release_date.desc.nullslast&limit=200&select=id,name,slug,abbreviation,release_date,card_count'),
@@ -189,7 +198,7 @@ export default async (req) => {
   const azButtons  = buildAZButtons(sets);
 
   const carouselHTML = topCards.map(c => {
-    const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price*1.45).toFixed(0)}` : '';
+    const price = c.price_aud ? `AU$${parseFloat(c.price_aud).toFixed(0)}` : c.market_price ? `~AU$${(c.market_price * audRate).toFixed(0)}` : '';
     const ebay  = `https://www.ebay.com.au/sch/i.html?_nkw=${encodeURIComponent(c.name+' digimon card game')}&_sacat=183454&mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&toolid=10001&mkevt=1`;
     return `<a href="/cards/digimon/${c.slug}" class="carousel-card" data-rarity="${esc(c.rarity||'')}">
       <div class="carousel-img-wrap"><img src="${esc(c.image_url)}" alt="${esc(c.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-placeholder>&#128009;</div>'"></div>
@@ -302,7 +311,7 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
     <a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/digimon">Digimon TCG</a><a href="/cards/mtg">MTG</a><a href="/cards/pokemon">Pokemon</a><a href="/cards/yugioh">Yu-Gi-Oh</a>
   </div>
   <p>&#169; 2026 Cards on Cards on Cards &middot; cardsoncardsoncards.com.au</p>
-  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Toei Animation. USD prices converted to AUD at approximately 1.45.</p>
+  <p style="margin-top:6px;font-size:11px;opacity:.5">Affiliate disclosure: this site earns commissions from eBay AU and Amazon AU purchases made through affiliate links at no extra cost to you. Not affiliated with Bandai or Toei Animation. USD prices converted to AUD at approximately ${audRate.toFixed(2)}.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
 </footer>
 
@@ -325,6 +334,10 @@ function applyFilters(q) {
   });
 }
 async function searchCard() {
+  // C3L-130 shape 2. Read the live rate once per invocation and let the nested render
+  // helpers close over it. It cannot be awaited at each use: several of those helpers
+  // are synchronous. fxRate() never throws and falls back to a labelled constant.
+  const audRate = await fxRate();
   const q = document.getElementById('card-search').value.trim();
   if (!q) return;
   const results = document.getElementById('search-results');
@@ -337,7 +350,7 @@ async function searchCard() {
     if (!cards.length) { results.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0">No cards found. Try a different name.</div>'; return; }
     results.innerHTML = cards.map(c => {
       const img = c.image_url || c.image || '';
-      const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price*1.45).toFixed(0) : c.priceAud ? 'AU$'+parseFloat(c.priceAud).toFixed(0) : '';
+      const price = c.price_aud ? 'AU$'+parseFloat(c.price_aud).toFixed(0) : c.market_price ? '~AU$'+(c.market_price * audRate).toFixed(0) : c.priceAud ? 'AU$'+parseFloat(c.priceAud).toFixed(0) : '';
       const safeName = (c.name||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       return '<a href="/cards/digimon/'+c.slug+'" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;display:block;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">'
         +(img ? '<img src="'+img.replace(/"/g,'')+'" alt="'+safeName+'" style="width:100%;border-radius:6px;max-height:130px;object-fit:contain" loading="lazy">' : '')
