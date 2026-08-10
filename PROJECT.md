@@ -228,7 +228,14 @@ Weiss Schwarz is a publisher/umbrella brand, not a single game. Each licensed pr
 - Pre-existing em-dash in card-compare.mjs: CLAUDE.md violation. Fix in next push.
 - ~~package-lock.json: has unrelated pre-existing local modification. Include in next push.~~
   RESOLVED (task-41, 10 Jul 2026): the local change removes the direct stream-chain dependency (consistent with package.json, which no longer lists it). Committed in task-41. NOTE: scripts/sync-mtg-daily.mjs still imports stream-chain, which now resolves only as a transitive dep of stream-json - worth adding back as a direct dep if that import is intended to be relied on.
-- siteid=15 in all eBay links: must be removed for worldwide routing. International users currently sent to eBay AU only.
+- ~~siteid=15 in all eBay links: must be removed for worldwide routing. International users currently sent to eBay AU only.~~
+  RESOLVED, and this line was contradicting three others in this same file. Re-verified by grep on 10 August 2026:
+  `siteid` appears EXACTLY ONCE in the whole repo, in a comment in netlify/functions/shared/ebay-link.mjs saying it is
+  deliberately not included. Zero live occurrences in netlify/functions, src or scripts. The removal was done on
+  5 July 2026 (287 occurrences across 104 files, recorded in the Resolved section above) and this open-bug entry was
+  simply never struck through. The "Pending" note under the Weiss Schwarz breakout in Step 5 said the same thing and
+  was equally stale; it has been corrected too. The remaining true statements about siteid in this file are the
+  strategic decision, the Resolved entry, audit check 10, and the affiliate link format note, and all four now agree.
 
 ### Medium priority (affects quality)
 - Visual audit: Cowork screenshot loop for all 27 game hub pages. Identify layout issues.
@@ -586,7 +593,7 @@ Update homepage copy, meta tags, nav, legal page to reflect worldwide scope and 
 
 ### Step 5: Weiss Schwarz breakout
 Schema work, new hub functions per licensed property.
-WS breakout complete 3 July 2026: new weissschwarz-property-hub.mjs serves /cards/weissschwarz/series/:property (70 licensed property groups), weissschwarz-hub.mjs converted to a property directory index, sync-weissschwarz-background.mjs auto-assigns property on new sets via weissschwarz_property_map. Route namespaced under /series/ to avoid collision with card-page :slug+ (card-page excludedPath updated). Pending: global siteid=15 removal from eBay links (per strategic direction) still applies to WS hub and property hub.
+WS breakout complete 3 July 2026: new weissschwarz-property-hub.mjs serves /cards/weissschwarz/series/:property (70 licensed property groups), weissschwarz-hub.mjs converted to a property directory index, sync-weissschwarz-background.mjs auto-assigns property on new sets via weissschwarz_property_map. Route namespaced under /series/ to avoid collision with card-page :slug+ (card-page excludedPath updated). CORRECTED 10 August 2026: this line previously read "Pending: global siteid=15 removal from eBay links (per strategic direction) still applies to WS hub and property hub." That is no longer true and had not been for over a month. Grep on 10 August found zero siteid occurrences anywhere in the repo, WS hub and property hub included. Nothing is pending here.
 
 ### Step 6: Expansion games and accessories
 Add remaining tcgapi.dev games and accessory/supply categories.

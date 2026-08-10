@@ -1,3 +1,4 @@
+import { logSyncEvent } from './sync-event.mjs';
 // netlify/functions/shared/sync-jobs.mjs
 //
 // The registry and the auth for the manual sync trigger (C3L-136).
@@ -92,40 +93,15 @@ export function syncSecret() {
   return SYNC_SECRET;
 }
 
-const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
-const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
-
 /**
  * Writes a sync_events row for the trigger itself. This is the only way a caller can see the
  * outcome of a background invocation, because Netlify answers 202 and discards the handler's
  * response, so without this the run would be exactly the silent shape this register keeps
  * complaining about.
+ *
+ * Delegates to shared/sync-event.mjs so there is one definition of the row shape rather than
+ * a fifty-first private copy.
  */
 export async function logTriggerEvent(eventType, job, rowsAffected = null, errorMessage = null) {
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) return;
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/sync_events`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify([{
-        event_type: eventType,
-        game: job,
-        rows_affected: rowsAffected,
-        error_message: errorMessage ? String(errorMessage).slice(0, 500) : null
-      }]),
-      signal: controller.signal
-    });
-    clearTimeout(timer);
-    if (!res.ok) console.warn(`[admin-trigger] sync_events log failed ${res.status}`);
-  } catch (e) {
-    clearTimeout(timer);
-    console.warn(`[admin-trigger] sync_events log error: ${e.message}`);
-  }
+  return logSyncEvent({ eventType, game: job, rowsAffected, errorMessage, logPrefix: '[admin-trigger]' });
 }

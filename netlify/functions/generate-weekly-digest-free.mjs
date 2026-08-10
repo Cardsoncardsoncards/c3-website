@@ -26,6 +26,14 @@
 // Pass ?dryRun=1 to build the email and count recipients WITHOUT sending to the list.
 // Pass ?testEmail=you@example.com to send a single real email to that address only.
 
+// C3L-91, added 10 August 2026. Terminal sync_events rows on every outcome this function has.
+// It has never written one, so there has been no way to tell a quiet week from a dead job.
+// Purely additive: no send logic, recipient resolution or template behaviour changes.
+// KNOWN RESIDUAL GAP, stated rather than hidden: this handler has no outer try/catch, so an
+// uncaught throw still produces no row at all. Adding one means re-indenting the whole body and
+// was judged too invasive for a batch billed as small and safe. check-card-follows.mjs does have
+// a catch and its error path IS logged.
+import { logSyncEvent } from './shared/sync-event.mjs';
 import {
   fetchMarketData,
   buildEmail,
@@ -164,6 +172,7 @@ export default async (req) => {
     let detail = '';
     try { detail = (await res.text()).slice(0, 300); } catch { /* body optional */ }
     console.log(`[weekly-digest-free] TEST send to ${testEmail}: HTTP ${res.status}`);
+    await logSyncEvent({ eventType: res.ok ? 'sync_test' : 'sync_error', game: 'digest', rowsAffected: res.ok ? 1 : 0, errorMessage: res.ok ? null : 'test send HTTP ' + res.status, logPrefix: '[weekly-digest-free]' });
     return new Response(JSON.stringify({
       ok: res.ok, mode: 'testEmail', recipient: testEmail, status: res.status,
       detail: detail || undefined, counts
@@ -189,10 +198,14 @@ export default async (req) => {
       note: 'No email was sent. Nobody on the main list was contacted.'
     };
     console.log('[weekly-digest-free]', JSON.stringify(summary));
+    // Its own event type. A dryRun sent nothing, so calling it sync_success would make the table
+    // claim a delivery that never happened.
+    await logSyncEvent({ eventType: 'sync_dryrun', game: 'digest', rowsAffected: subscribers.length, logPrefix: '[weekly-digest-free]' });
     return new Response(JSON.stringify(summary, null, 2), { headers: { 'Content-Type': 'application/json' } });
   }
 
   if (subscribers.length === 0) {
+    await logSyncEvent({ eventType: 'sync_success', game: 'digest', rowsAffected: 0, logPrefix: '[weekly-digest-free]' });
     return new Response(JSON.stringify({ ok: true, sent: 0, subscriberCount: 0, counts,
       message: 'Main list is empty, nothing sent.' }, null, 2),
       { status: 200, headers: { 'Content-Type': 'application/json' } });
@@ -238,6 +251,15 @@ export default async (req) => {
     ...(errors.length ? { errors } : {})
   };
   console.log('[weekly-digest-free] SUMMARY', JSON.stringify(summary));
+  // rows_affected is emails actually sent. A partial send is logged as sync_error even though
+  // some went out, because that is the case most likely to be mistaken for a good week.
+  await logSyncEvent({
+    eventType: failedCount === 0 ? 'sync_success' : 'sync_error',
+    game: 'digest',
+    rowsAffected: sentCount,
+    errorMessage: failedCount === 0 ? null : failedCount + ' of ' + subscribers.length + ' failed: ' + JSON.stringify(errors).slice(0, 300),
+    logPrefix: '[weekly-digest-free]'
+  });
 
   return new Response(JSON.stringify(summary, null, 2), {
     status: failedCount === 0 ? 200 : 502,
