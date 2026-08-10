@@ -107,11 +107,18 @@ export default async (req) => {
 
     const set = sets[0];
 
-    const [cardsR, ebayListingsR] = await Promise.allSettled([
+    const [cardsR, sealedR, ebayListingsR] = await Promise.allSettled([
       supabaseGet(`grandarchive_cards?set_id=eq.${set.id}&rarity=neq.None&order=name.asc&limit=200&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,price_change_7d,price_change_30d`),
+      // C3L-137. The singles query above excludes rarity None, and in these tables every
+      // booster box, display, case and starter deck carries rarity None or NULL, so the
+      // sealed block has never had a row to render. It reads THIS result instead of cards,
+      // which leaves the singles list exactly as it was and keeps oversized promos, energy
+      // markers and puzzle inserts (which share rarity None) out of it.
+      supabaseGet(`grandarchive_cards?set_id=eq.${set.id}&or=(rarity.eq.None,rarity.is.null)&order=market_price.desc.nullslast&limit=300&select=slug,name,image_url,market_price,price_aud,low_price`),
       getEbayListings(`${set.name} grand archive card`, ebayToken)
     ]);
     const cards = cardsR.status === 'fulfilled' ? cardsR.value : [];
+    const sealedRows = sealedR.status === 'fulfilled' ? sealedR.value : [];
     const ebayListings = ebayListingsR.status === 'fulfilled' ? ebayListingsR.value : [];
 
     // C3L-130 shape 2. These conversions used a hardcoded 1.45. The live rate is read once
@@ -299,11 +306,16 @@ export default async (req) => {
 
   ${(() => {
     const SEALED_KEYS = ['booster box','booster pack','display','starter deck','starter set','trial deck','trial set','box set','collection box','premium set'];
-    const sealedItems = (cards||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && c.market_price > 0; });
+    const sealedItems = (sealedRows||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && (parseFloat(c.price_aud) > 0 || parseFloat(c.market_price) > 0); });
     if (!sealedItems.length) return '';
     const itemsHTML = sealedItems.slice(0,4).map(p => {
-      const price = p.price_aud > 0 ? `AU$${parseFloat(p.price_aud).toFixed(2)}` : `~AU$${(p.market_price * audRate).toFixed(2)}`;
-      const low = p.low_price ? `Low: ~AU$${(p.low_price * audRate).toFixed(2)}` : '';
+      const priceAud = parseFloat(p.price_aud) > 0 ? parseFloat(p.price_aud) : parseFloat(p.market_price) * audRate;
+      const price = parseFloat(p.price_aud) > 0 ? `AU$${priceAud.toFixed(2)}` : `~AU$${priceAud.toFixed(2)}`;
+      // C3L-137. low_price is the upstream USD low and sits ABOVE market_price on 629 of the
+      // 1,614 sealed rows that carry both, so printing it unconditionally would label a number
+      // higher than the price above it as the low. Shown only when it is genuinely lower.
+      const lowAud = parseFloat(p.low_price) > 0 ? parseFloat(p.low_price) * audRate : 0;
+      const low = (lowAud > 0 && lowAud < priceAud) ? `Low: ~AU$${lowAud.toFixed(2)}` : '';
       const nm = (p.name||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       return `<a href="/cards/grandarchive/${p.slug}" style="background:#0e1118;border:1px solid #1e2235;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#EF4444'" onmouseout="this.style.borderColor='#1e2235'">
         ${p.image_url ? `<img src="${p.image_url.replace(/"/g,'&quot;')}" alt="${nm.replace(/"/g,'&quot;')}" style="width:100%;max-height:120px;object-fit:contain;border-radius:6px" loading="lazy">` : ''}
