@@ -288,6 +288,44 @@
   status = 301
   force = true
 
+# ── C3-076/077 SECTION 2: the four rewrite cases, ON A TEST BRANCH ──
+#
+# /tracker, /contact, /methodology and /welcome each have an explicit `status = 200` rewrite
+# ABOVE this block, pointing the clean form at the .html file. That is what makes them different
+# from every route in batches 1 and 2, where the clean form is resolved by Netlify's implicit
+# pretty-URL file serving and never touches the redirect table at all.
+#
+# The risk being tested: if a 200 rewrite RE-ENTERS the redirect table, then
+#   /welcome -> (rewrite) /welcome.html -> (this rule) 301 /welcome -> ...
+# is an infinite loop, and /welcome is the QR destination printed on physical parcel inserts.
+# Reasoning says Netlify resolves a rewrite to a file without re-processing rules, so the real
+# sequence is one 301 then one 200. Reasoning is not verification, and the cost of being wrong
+# here is a dead URL on printed material that cannot be recalled, so this is deployed to a branch
+# preview and fetched there before it is allowed anywhere near production.
+[[redirects]]
+  from = "/tracker.html"
+  to = "/tracker"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact.html"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/methodology.html"
+  to = "/methodology"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/welcome.html"
+  to = "/welcome"
+  status = 301
+  force = true
+
 # ── 301s for dead URLs flagged in Search Console ──
 [[redirects]]
   from = "/quiz"
