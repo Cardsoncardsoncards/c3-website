@@ -386,5 +386,23 @@ export default async (req) => {
 // Sunday 13:00 UTC is chosen because 13:00 is the only hour carrying no other scheduled function
 // in this repo, so this cannot contend with a price sync for the 15 minute background budget.
 export const config = {
-  schedule: '0 13 * * 0'
+  // C3L-93, changed 10 August 2026 from '0 13 * * 0' (WEEKLY) to monthly, 13:00 UTC on the 1st.
+  //
+  // This is NOT "turning the enrichment on". It is still producing zero rows and this task did
+  // not verify its data, because it could not: apitcg.com answers every request with HTTP 429
+  // and the body {"success":false,"error":"Request limit reached for this month."} The key is
+  // valid and the per-minute limit is untouched (300/min, 294 remaining), so the exhausted
+  // budget is the MONTHLY one.
+  //
+  // The schedule is changed because the weekly setting is what guarantees that stays true. This
+  // job is a full bulk re-backfill with no incremental mode, and its own header puts one full
+  // pass at about 219 requests against a stated 1,000/month free quota. Weekly is therefore
+  // about 940 requests a month, roughly the entire allowance, for a job that gains nothing from
+  // running four times instead of once. Monthly leaves about 780 requests of headroom.
+  //
+  // Evidence it is the quota and not the code: the 9 August run logged, by itself,
+  // "apitcg monthly quota exhausted after 1 requests; games completed: 0/5". The function is
+  // correctly scheduled, correctly instrumented, and reporting its own failure accurately. What
+  // is missing is budget, not engineering.
+  schedule: '0 13 1 * *'
 };

@@ -350,5 +350,29 @@ export default async (req) => {
 };
 
 export const config = {
-  schedule: '0 20 * * *'   // 06:00 AEST daily, after the overnight card syncs land
+  // C3L-82, changed 10 August 2026 from '0 20 * * *' (06:00 AEST) to 21:30 UTC (07:30 AEST).
+  //
+  // WHY. This function decides whether to email someone based on price_change_7d and
+  // price_change_30d, and eight pg_cron jobs REWRITE exactly those columns between 20:00 and
+  // 20:40 UTC. At 20:00 it was reading them mid-rewrite. Verified against cron.job on 10 August
+  // rather than trusted from the finding, because schedules move:
+  //
+  //   20:00  update-mtg-price-changes-daily        jobid 11   avg 2m33s, worst 6m04s
+  //   20:10  update-pokemon-price-changes-daily    jobid  4   ~18s
+  //   20:15  update-yugioh-price-changes-daily     jobid  5   ~21s
+  //   20:20  update-dragonball-price-changes-daily jobid  6   ~4s
+  //   20:25  update-onepiece-price-changes-daily   jobid  7   ~4s
+  //   20:30  update-starwars-price-changes-daily   jobid  8   ~3s
+  //   20:35  update-lorcana-price-changes-daily    jobid  9   ~1s
+  //   20:40  update-riftbound-price-changes-daily  jobid 10   <1s
+  //
+  // So the MTG job started in the SAME MINUTE as this function and ran for up to six more,
+  // and the other seven had not started at all. That is not a theoretical race: follow id 10 is
+  // an MTG card, so the one game whose rewrite overlapped this function's read is a game
+  // somebody actually follows.
+  //
+  // All eight are done by about 20:41 worst case. 21:30 leaves roughly 50 minutes of buffer and
+  // also clears update-mtg-signals-daily at 21:00, which is not read here but shares the window.
+  // Deliberately NOT set to 20:45: the buffer should absorb a slow night, not just an average one.
+  schedule: '30 21 * * *'
 };
