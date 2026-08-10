@@ -1,3 +1,4 @@
+import { SECURITY_HEADERS } from './security-headers.mjs';
 // netlify/functions/shared/cache-headers.mjs
 // Single definition of the CDN caching policy for public HTML pages, so the durations
 // can be reviewed in one place instead of being read off 100 separate header literals.
@@ -48,7 +49,13 @@ function headers({ maxAge, sMaxAge, swr }) {
   parts.push(`s-maxage=${sMaxAge}`);
   if (swr != null) parts.push(`stale-while-revalidate=${swr}`);
   const value = parts.join(', ');
+  // task-140. Every page function in this repo builds its response headers through this one
+  // function, via cardPageHeaders, mtgCardPageHeaders, setPageHeaders, hubPageHeaders or
+  // htmlCacheHeaders directly, so it is the single place the security headers can be added
+  // without editing 98 files. They are spread FIRST so a caller merging its own headers over
+  // the result still wins, and so nothing here can silently override a Content-Type.
   return {
+    ...SECURITY_HEADERS,
     'Content-Type': HTML,
     'Cache-Control': value,
     'Netlify-CDN-Cache-Control': `${value},durable`,
