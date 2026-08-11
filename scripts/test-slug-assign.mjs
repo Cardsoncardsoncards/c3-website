@@ -37,6 +37,13 @@ const WS_ORPHAN_3 = 'kaguya-sama-love-is-war-marked-deck-kgl-s79-e020-c';
 // Suzuki)", number 105/124, row id 124. Its base slug legitimately ends `-105-124`. Treating a
 // trailing number as an id suffix is what made C3L-56 read as 5 orphans when it is 3.
 const PKM_COINCIDENCE = 'world-championship-decks-n-2017-naoto-suzuki-105-124';
+// C3L-166. Both Kaguya sets slugify to kaguya-sama-love-is-war, so the "Booster Pack" product
+// in each yields this one card slug. Row 962497 (the "?" set) holds it. The other set's card
+// has never been written, which is why that set aborted with 23505 every night.
+// Declared HERE, in the initial fixture, and not appended later: the scan is cached per table
+// for the run, exactly as in production, so a row added after the first weissschwarz call
+// would never appear in the map.
+const KAGUYA_PACK = 'kaguya-sama-love-is-war-kaguyasama-love-is-war-booster-pack';
 
 const TABLE_ROWS = {
   weissschwarz_cards: {
@@ -44,7 +51,8 @@ const TABLE_ROWS = {
     961867:  'kaguya-sama-love-is-war-kaguyasama-love-is-war-booster-box-961867',
     985672:  WS_ORPHAN_1 + '-985672',
     985674:  WS_ORPHAN_2 + '-985674',
-    1131673: WS_ORPHAN_3 + '-1131673'
+    1131673: WS_ORPHAN_3 + '-1131673',
+    962497:  KAGUYA_PACK
   },
   pokemon_cards: { 124: PKM_COINCIDENCE },
   buddyfight_cards:  { 859700: 'immortal-entities-bold-dragon-eb01-0045en' },
@@ -204,6 +212,43 @@ const cached = scans === scansBefore;
 console.log((cached ? 'PASS  ' : 'FAIL  ') + 'RULE 3 scan is cached across per-set calls ('
   + (scans - scansBefore) + ' extra scans across 5 calls)');
 cached ? pass++ : fail++;
+
+// ---------------------------------------------------------------------------
+// C3L-166, RULE 4. A record never takes a bare slug another record already holds,
+// even when the two are never in the same batch.
+// ---------------------------------------------------------------------------
+
+await check('C3L-166: a lone record must NOT take a bare slug held by a record in another set',
+  [{ id: 999001 }], base(KAGUYA_PACK), 'weissschwarz_cards',
+  { 999001: KAGUYA_PACK + '-999001' });
+
+await check('C3L-166: the record that actually owns the bare slug still keeps it',
+  [{ id: 962497 }], base(KAGUYA_PACK), 'weissschwarz_cards',
+  { 962497: KAGUYA_PACK });
+
+await check('C3L-166: a COLLIDING group whose bare slug is owned from outside the batch gets '
+  + 'no winner at all, where RULE 2 used to hand it to the lowest id and cause the 23505',
+  [{ id: 999002 }, { id: 999003 }], base(KAGUYA_PACK), 'weissschwarz_cards',
+  { 999002: KAGUYA_PACK + '-999002', 999003: KAGUYA_PACK + '-999003' });
+
+// Within one run the cards path processes set after set. The map must reflect what earlier
+// batches were assigned, or two sets seconds apart both think the slug is free.
+{
+  const first = await assignStableSlugs({
+    items: [{ id: 888001 }], baseSlugFor: base('within-run-shared'),
+    table: 'newgame_cards', supabaseUrl: 'https://x', serviceKey: 'k'
+  });
+  const second = await assignStableSlugs({
+    items: [{ id: 888002 }], baseSlugFor: base('within-run-shared'),
+    table: 'newgame_cards', supabaseUrl: 'https://x', serviceKey: 'k'
+  });
+  const ok = first.get(888001) === 'within-run-shared'
+          && second.get(888002) === 'within-run-shared-888002';
+  console.log((ok ? 'PASS  ' : 'FAIL  ') + 'C3L-166: a slug assigned to an earlier SET in the '
+    + 'same run is not handed out again to a later set');
+  if (!ok) console.log('   got ' + JSON.stringify([first.get(888001), second.get(888002)]));
+  ok ? pass++ : fail++;
+}
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

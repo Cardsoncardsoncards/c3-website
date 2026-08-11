@@ -75,7 +75,25 @@ const STORED_PAGE      = 1000;
 const STORED_MAX_ROWS  = 200000;   // safety stop, well above the largest table
 const STORED_TTL_MS    = 15 * 60 * 1000;   // a run's own budget; a warm container must not reuse yesterday's
 
-const storedSlugCache = new Map();   // table -> { at: epochMs, byId: Map|null }
+//   RULE 4, added 11 August 2026 for C3L-166. A record never takes a bare slug that a
+//   DIFFERENT record already holds, even when the two never appear in the same batch.
+//
+//   Why this was missing: everything above reasons about one batch. The cards path of every
+//   game sync runs one batch PER SET, so two cards in different sets that compute the same
+//   slug are never compared, RULE 1's owner lookup never fires for them, and the second one
+//   takes a slug the first already owns. Postgres then aborts the WHOLE set's upsert with a
+//   23505 and that set writes nothing, every night, silently.
+//
+//   That is not hypothetical. `Kaguya-sama: Love is War` and `Kaguya-Sama: Love is War?`
+//   slugify to the same set slug, so the "Booster Pack" product in each produces one identical
+//   card slug, and the losing set had NEVER written a single row.
+//
+//   RULE 4 is the same principle as RULES 1 and 3 once more: a slug that is live never moves.
+//   The difference is only where the evidence comes from. RULE 1 asks the database about the
+//   handful of bases colliding inside this batch; RULE 4 reads the whole-table map that RULE 3
+//   already pays for, so it costs nothing extra.
+
+const storedSlugCache = new Map();   // table -> { at: epochMs, maps: {byId, bySlug}|null }
 
 /**
  * Stored slug for every row of `table`, keyed by String(id).
@@ -89,9 +107,10 @@ const storedSlugCache = new Map();   // table -> { at: epochMs, byId: Map|null }
  */
 async function fetchStoredSlugs(table, supabaseUrl, serviceKey) {
   const hit = storedSlugCache.get(table);
-  if (hit && (Date.now() - hit.at) < STORED_TTL_MS) return hit.byId;
+  if (hit && (Date.now() - hit.at) < STORED_TTL_MS) return hit.maps;
 
-  const byId = new Map();
+  const byId = new Map();      // String(id) -> slug
+  const bySlug = new Map();    // slug -> id, the direction RULE 4 needs
   try {
     let offset = 0;
     for (;;) {
@@ -112,7 +131,9 @@ async function fetchStoredSlugs(table, supabaseUrl, serviceKey) {
       }
       if (!Array.isArray(rows)) throw new Error('non-array response');
       for (const row of rows) {
-        if (row && row.id !== undefined && row.id !== null) byId.set(String(row.id), row.slug);
+        if (!row || row.id === undefined || row.id === null) continue;
+        byId.set(String(row.id), row.slug);
+        if (row.slug) bySlug.set(row.slug, row.id);
       }
       if (rows.length < STORED_PAGE) break;
       offset += STORED_PAGE;
@@ -121,14 +142,41 @@ async function fetchStoredSlugs(table, supabaseUrl, serviceKey) {
         break;
       }
     }
-    storedSlugCache.set(table, { at: Date.now(), byId });
-    return byId;
+    const maps = { byId, bySlug };
+    storedSlugCache.set(table, { at: Date.now(), maps });
+    return maps;
   } catch (err) {
     // Degrade to pre-RULE-3 behaviour rather than failing the sync. Logged loudly, because
     // silently losing slug preservation is the kind of thing this register keeps finding.
-    console.warn(`[slug-assign] stored slug scan on ${table} failed, RULE 3 disabled for this run: ${err.message}`);
-    storedSlugCache.set(table, { at: Date.now(), byId: null });
+    console.warn(`[slug-assign] stored slug scan on ${table} failed, RULES 3 and 4 disabled for this run: ${err.message}`);
+    storedSlugCache.set(table, { at: Date.now(), maps: null });
     return null;
+  }
+}
+
+/**
+ * Fold this batch's assignments back into the cached map.
+ *
+ * Without this, RULE 4 can only see the state at the START of the run, and the cards path
+ * writes set by set. Two sets processed 2 seconds apart in the SAME run would both be told the
+ * slug is free, which is the exact collision being fixed. Keeping the map current makes the
+ * guard hold within a run as well as across nights.
+ *
+ * Deliberately optimistic: it records what the caller is ABOUT to upsert, not what Postgres
+ * confirmed. If that upsert then fails, the map says a slug is taken when it is not, and the
+ * cost is a later record carrying a suffix it did not strictly need. That is the safe
+ * direction, and the opposite choice is a 23505 that loses a whole set.
+ */
+function rememberAssignments(maps, slugById) {
+  if (!maps) return;
+  for (const [id, slug] of slugById) {
+    const key = String(id);
+    const previous = maps.byId.get(key);
+    if (previous !== undefined && previous !== slug && String(maps.bySlug.get(previous)) === key) {
+      maps.bySlug.delete(previous);
+    }
+    maps.byId.set(key, slug);
+    maps.bySlug.set(slug, id);
   }
 }
 
@@ -203,17 +251,25 @@ export async function assignStableSlugs({ items, baseSlugFor, table, supabaseUrl
     owners = await fetchSlugOwners(table, collidingBases, supabaseUrl, serviceKey);
   }
 
-  // RULE 3 (C3L-56). Only needed if some base in this batch has exactly one claimant, which is
-  // the only case that previously bypassed every lookup. A batch that is entirely collisions
-  // pays nothing extra.
-  let stored = null;
-  const hasLoneGroup = [...byBase.values()].some(g => g.length === 1);
-  if (hasLoneGroup) {
-    stored = await fetchStoredSlugs(table, supabaseUrl, serviceKey);
-  }
+  // RULES 3 and 4 both read the whole-table map. RULE 3 needs it only for lone groups, but
+  // RULE 4 needs it for every group, because a base can be owned by a record in ANOTHER set
+  // that this batch never sees. One scan serves both and is cached for the run.
+  const stored = await fetchStoredSlugs(table, supabaseUrl, serviceKey);
 
   const slugById = new Map();
   for (const [base, group] of byBase) {
+    // Who holds the bare slug right now? `owners` is a live lookup and only covers bases that
+    // collide inside this batch, so fall back to the whole-table map, which covers the rest.
+    const liveOwner   = owners.get(base);
+    const storedOwner = stored ? stored.bySlug.get(base) : undefined;
+    const bareOwner   = liveOwner !== undefined ? liveOwner : storedOwner;
+    const ownerInGroup = bareOwner === undefined
+      ? null
+      : (group.find(item => String(item.id) === String(bareOwner)) || null);
+    // RULE 4: the bare slug belongs to a record that is not in this batch. Nobody here may
+    // take it, whatever the group size.
+    const externallyOwned = bareOwner !== undefined && !ownerInGroup;
+
     if (group.length === 1) {
       // RULE 3: this record is the only claimant now, but if it is ALREADY stored under the
       // suffixed form then that suffixed URL is live. Keep it. Compared against this record's
@@ -223,21 +279,23 @@ export async function assignStableSlugs({ items, baseSlugFor, table, supabaseUrl
       // C3L-56 read as 5 orphans when it is 3.
       const only = group[0];
       const suffixed = `${base}-${only.id}`;
-      const current = stored ? stored.get(String(only.id)) : undefined;
-      slugById.set(only.id, current === suffixed ? suffixed : base);
+      const current = stored ? stored.byId.get(String(only.id)) : undefined;
+      slugById.set(only.id, (current === suffixed || externallyOwned) ? suffixed : base);
       continue;
     }
     // RULE 1: if one of these records already owns the bare slug, it keeps it.
-    const ownerId = owners.get(base);
-    let winner = ownerId === undefined ? null : group.find(item => item.id === ownerId);
     // RULE 2: nothing owns it yet, so break the tie on the lowest id, once, and let the write
-    // freeze it.
-    if (!winner) {
+    // freeze it. Skipped entirely when the slug is owned from outside the batch, which is the
+    // case that used to fall through to RULE 2 and hand out a slug already in use.
+    let winner = ownerInGroup;
+    if (!winner && !externallyOwned) {
       winner = group.slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))[0];
     }
     for (const item of group) {
-      slugById.set(item.id, item.id === winner.id ? base : `${base}-${item.id}`);
+      slugById.set(item.id, (winner && item.id === winner.id) ? base : `${base}-${item.id}`);
     }
   }
+
+  rememberAssignments(stored, slugById);
   return slugById;
 }

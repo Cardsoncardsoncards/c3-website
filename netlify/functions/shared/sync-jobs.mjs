@@ -50,6 +50,16 @@ export const JOBS = {
     background: true,
     note: 'Same rotation shape as Pokemon, added in 414aa90 for C3L-57 and C3L-134.'
   },
+  weissschwarz: {
+    label: 'Weiss Schwarz card and price sync',
+    file: 'sync-weissschwarz-background.mjs',
+    schedule: '30 0 * * *',
+    background: true,
+    note: 'Added 11 August 2026 to verify C3L-166 on demand. This is the game where two sets '
+        + 'slugify identically, so it is the one whose cross-batch slug collision has to be '
+        + 'provable without waiting for 00:30 UTC. Both its upserts use resolution=merge-'
+        + 'duplicates, so a manual run on top of the nightly one is idempotent.'
+  },
   'fx-rate': {
     label: 'USD to AUD rate refresh',
     file: 'sync-fx-rate.mjs',
