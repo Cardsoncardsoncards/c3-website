@@ -2,6 +2,7 @@ import { JOBS, checkSyncSecret, syncSecret, logTriggerEvent } from './shared/syn
 import pokemonSync from './sync-pokemon-background.mjs';
 import yugiohSync from './sync-yugioh-background.mjs';
 import fxRateSync from './sync-fx-rate.mjs';
+import weissschwarzSync from './sync-weissschwarz-background.mjs';
 // netlify/functions/admin-trigger-background.mjs
 //
 // C3L-136. The half that actually runs a sync on demand.
@@ -21,8 +22,24 @@ import fxRateSync from './sync-fx-rate.mjs';
 const HANDLERS = {
   pokemon: pokemonSync,
   yugioh: yugiohSync,
-  'fx-rate': fxRateSync
+  'fx-rate': fxRateSync,
+  weissschwarz: weissschwarzSync
 };
+
+// JOBS and HANDLERS are two lists that have to agree, and on 11 August 2026 they did not: a job
+// was added to JOBS and not here. The front door validates against JOBS, so it accepted the job
+// and answered 202 accepted, and this half then dropped it as unknown. The caller was told the
+// run had started, nothing ran, and the only trace was one line in a function log.
+//
+// This does not merge the two lists, because they cannot be merged: JOBS is plain data that
+// admin-trigger.mjs can import cheaply, while HANDLERS holds static imports of the sync modules
+// themselves, and importing those into the front door would bundle every sync into it. What it
+// does instead is make the disagreement impossible to miss at startup.
+const MISSING_HANDLERS = Object.keys(JOBS).filter(name => !HANDLERS[name]);
+if (MISSING_HANDLERS.length) {
+  console.error(`[admin-trigger-bg] CONFIG DRIFT: JOBS lists ${MISSING_HANDLERS.join(', ')} with no handler here. `
+    + 'admin-trigger.mjs will accept those jobs and answer 202, and nothing will run.');
+}
 
 export default async (req) => {
   // Authenticated again here, independently of admin-trigger.mjs. This endpoint is reachable
@@ -44,7 +61,13 @@ export default async (req) => {
   }
 
   if (!job || !HANDLERS[job]) {
-    console.error(`[admin-trigger-bg] unknown job: ${JSON.stringify(job)}`);
+    // Netlify already answered 202 to the caller, so a bare 400 here is invisible. Write the
+    // failure to sync_events too, which is where this endpoint's own success note tells people
+    // to look. Without this row, "accepted" and "accepted then silently dropped" are
+    // indistinguishable from outside, which is exactly how the JOBS/HANDLERS drift above hid.
+    const known = JOBS[job] ? 'listed in JOBS but has no handler in admin-trigger-background' : 'not a known job';
+    console.error(`[admin-trigger-bg] unknown job: ${JSON.stringify(job)}, ${known}`);
+    await logTriggerEvent('manual_trigger_failure', job || 'unknown', null, `unknown job: ${known}`);
     return new Response('Unknown job', { status: 400 });
   }
 
