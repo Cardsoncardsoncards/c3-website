@@ -6,6 +6,7 @@
 // Snapshot decoupling: card data writes gated on sync progress,
 //   snapshot writes run for ALL sets every day regardless
 
+import { summariseFailures } from './shared/failure-summary.mjs';
 import { assignStableSlugs } from './shared/slug-assign.mjs';
 import {
   makeBudget,
@@ -631,9 +632,7 @@ export default async (req) => {
     // event type. NOTE the main per-set upserts are deliberately NOT wrapped in a catch
     // in this file: if one throws it reaches the outer handler and logs sync_error, which
     // is already correct, so nothing here changes that path.
-    const failureNote = failedSets.length
-      ? `${failedSets.length} set(s) failed: ${failedSets.slice(0, 5).join(' | ')}`
-      : null;
+    const failureNote = summariseFailures(failedSets);
     await logSyncEvent(
       failedSets.length ? 'sync_partial' : 'sync_success',
       totalCards,

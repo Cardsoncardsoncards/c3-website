@@ -3,6 +3,7 @@
 // Fetches all yugioh sets + cards + prices from tcgapi.dev Pro
 // Upserts into yugioh_sets, yugioh_cards, yugioh_price_snapshots
 
+import { summariseFailures } from './shared/failure-summary.mjs';
 import { assignStableSlugs } from './shared/slug-assign.mjs';
 import {
   makeBudget,
@@ -165,7 +166,7 @@ async function supabaseUpsertSnapshots(table, rows) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
       method: 'POST',
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,
@@ -488,9 +489,7 @@ export default async (req) => {
     // C3L-168: a lost set makes this sync_partial. The rotation summary is preserved and
     // the failure reasons are appended to it, because both matter and they are different
     // facts: summary says how much of the rotation was covered, failedSets says what broke.
-    const failureNote = failedSets.length
-      ? `${failedSets.length} set(s) failed: ${failedSets.slice(0, 5).join(' | ')}`
-      : null;
+    const failureNote = summariseFailures(failedSets);
     await logSyncEvent(
       failedSets.length ? 'sync_partial' : 'sync_success',
       totalCards,

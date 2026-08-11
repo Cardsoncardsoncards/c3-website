@@ -3,6 +3,7 @@
 // Fetches all wow (World of Warcraft TCG) sets + cards + prices from tcgapi.dev Pro
 // Upserts into wow_sets, wow_cards, wow_price_snapshots
 
+import { summariseFailures } from './shared/failure-summary.mjs';
 import { assignStableSlugs } from './shared/slug-assign.mjs';
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
@@ -112,7 +113,7 @@ async function supabaseUpsertSnapshots(table, rows) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=card_id,snapshot_date`, {
       method: 'POST',
       headers: {
         'apikey': SUPABASE_SERVICE_KEY,
@@ -370,9 +371,7 @@ export default async (req) => {
     await logSyncEvent(
       failedSets.length ? 'sync_partial' : 'sync_success',
       totalCards,
-      failedSets.length
-        ? `${failedSets.length} set(s) failed: ${failedSets.slice(0, 5).join(' | ')}`
-        : null
+      summariseFailures(failedSets)
     );
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
       status: 200,
