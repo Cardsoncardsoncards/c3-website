@@ -177,6 +177,39 @@ export function parseFaq(body) {
   return { found: true, count };
 }
 
+// Spelled-out counts as well as digits. The generator writes digits into the
+// title, but the same claim is written as a word in prose and in a few hand
+// written posts, so both forms are recognised.
+const NUMBER_WORDS = new Map([
+  ['one', 1], ['two', 2], ['three', 3], ['four', 4], ['five', 5],
+  ['six', 6], ['seven', 7], ['eight', 8], ['nine', 9], ['ten', 10],
+  ['eleven', 11], ['twelve', 12], ['thirteen', 13], ['fourteen', 14],
+  ['fifteen', 15], ['sixteen', 16], ['seventeen', 17], ['eighteen', 18],
+  ['nineteen', 19], ['twenty', 20], ['thirty', 30], ['forty', 40], ['fifty', 50],
+]);
+
+/**
+ * Pull the list length a piece of headline text claims, or null if it claims
+ * none. Anchored on "<number> most", which is the only shape this generator
+ * emits ("The 20 Most Expensive Cards").
+ *
+ * Anchoring matters. A bare \d+ would read "Magic 2015 MTG: The 20 Most
+ * Expensive Cards" as a claim of 2015, and "Core Set 2020" as 2020. Requiring
+ * the word "most" immediately after means only the actual claim matches.
+ *
+ * Returning null for "The Most Expensive Cards" is deliberate, not a miss: a
+ * title with no number promises no particular length, so there is nothing to
+ * contradict. That is exactly the shape the five repaired posts now have.
+ */
+export function extractClaimedCount(text) {
+  if (!text) return null;
+  const words = [...NUMBER_WORDS.keys()].join('|');
+  const m = String(text).match(new RegExp(`\\b(\\d{1,3}|${words})\\s+most\\b`, 'i'));
+  if (!m) return null;
+  const token = m[1].toLowerCase();
+  return /^\d+$/.test(token) ? Number(token) : NUMBER_WORDS.get(token);
+}
+
 /**
  * qaCheck
  *
@@ -425,6 +458,50 @@ export function qaCheck(markdown, sourceData, opts = {}) {
     }
   }
 
+  // --- 8. claimed_count_matches -------------------------------------
+  // The generator hardcodes the list length into the title, the description
+  // and the list heading, but emits only the rows the source data actually
+  // has. When a set's price or EDHREC coverage is thin those two numbers
+  // diverge, and nothing here compared them: entries_complete measures the
+  // body against sourceData, so a post claiming twenty and emitting eight
+  // matched its source perfectly and passed clean. Five posts shipped to a
+  // branch that way (Reality Fracture x2 at 11, Summer Magic / Edgar at 19,
+  // Star Trek x2 at 8) and were caught by hand at review, not by this file.
+  //
+  // Unlike checks 2, 3 and 7 this one needs no sourceData: it compares the
+  // post against itself, so it still runs for a hand written post.
+  // Title and description only, deliberately NOT section headings. A post is
+  // allowed to break its list into sub-sections that each describe a slice:
+  // p619 runs "## The five most expensive cards in the set", "## Numbers 6 to
+  // 12", "## Numbers 13 to 20" over a correct 20 entry body. Reading the first
+  // of those as the list's own heading flagged a post that was right, and a
+  // check that cries wolf is worse than no check here, per C3L-76.
+  const claims = [
+    ['title', frontMatter.title],
+    ['description', frontMatter.description],
+  ];
+
+  const countMismatches = [];
+  let titleClaim = null;
+  for (const [where, text] of claims) {
+    const claimed = extractClaimedCount(text);
+    if (where === 'title') titleClaim = claimed;
+    if (claimed === null) continue;
+    if (claimed !== entries.length) {
+      countMismatches.push(`${where} claims ${claimed}, body emits ${entries.length}`);
+    }
+  }
+
+  if (countMismatches.length) {
+    // A post that parses to zero entries and claims a number is still a real
+    // failure, not a skip: the headline promises a list the body does not have.
+    fail('claimed_count_matches', countMismatches.join('; '));
+  } else if (entries.length === 0) {
+    // Nothing numbered was parsed and nothing was claimed, so this is not a
+    // list post and there is no pair of numbers to compare.
+    skipped.push('claimed_count_matches');
+  }
+
   // Advisory only. Deliberately not pushed through fail(), so it can never
   // block a post or burn a retry attempt.
   const suspectWords = findSuspectWords(body, sourceData, opts.vocabulary);
@@ -435,6 +512,7 @@ export function qaCheck(markdown, sourceData, opts = {}) {
     info: {
       words,
       entries: entries.length,
+      title_claim: titleClaim,
       faq: faq.count,
       em_dashes: emCount,
       en_dashes: enCount,
