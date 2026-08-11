@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Summer Magic / Edgar MTG: The 20 Most Played Commander Cards"
-description: "The 20 most played Summer Magic / Edgar cards in Commander, ranked on EDHREC data, led by Llanowar Elves. Images, prices and links to every card page."
+title: "Summer Magic / Edgar MTG: The Most Played Commander Cards"
+description: "The most played Summer Magic / Edgar cards in Commander, ranked on EDHREC data, led by Llanowar Elves. Images, prices and links to every card page."
 date: 2026-08-06
 category: news
 game: mtg
@@ -10,15 +10,15 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-Summer Magic / Edgar is one of the strangest artefacts in Magic's history, a corrected reprint of the notorious Summer Magic set that released back on 1994-06-21. It never had much presence in constructed formats, but plenty of its cards have gone on to long careers in Commander decks, and that is what this list tracks. We have ranked the 20 most played cards from the set using EDHREC rank, where a lower number means a card shows up in more decklists.
+Summer Magic / Edgar is one of the strangest artefacts in Magic's history, a corrected reprint of the notorious Summer Magic set that released back on 1994-06-21. It never had much presence in constructed formats, but plenty of its cards have gone on to long careers in Commander decks, and that is what this list tracks. We have ranked the 19 most played cards from the set using EDHREC rank, where a lower number means a card shows up in more decklists.
 
 Every card here has just one printing in the set, so there was no need to pick between multiple versions for price or rank. The methodology note still applies for readers checking our other set lists: where a card does carry several printings, we use the best (lowest) EDHREC rank among them and the highest price among them, and if two printings land on the exact same price we say so rather than quietly picking one.
 
 Prices are listed in Australian dollars and are a snapshot only. Singles markets move, sometimes quickly, so treat every figure below as accurate to the moment it was pulled rather than a permanent number. You can chase these cards down through the card pages on our own site or through eBay Australia, both of which are worth checking against each other given how widely prices on older commons and rares can swing.
 
-The list runs from number 1, the most played card in the set, down to number 20. Llanowar Elves takes the top spot by a wide margin, and from there the field spreads out across a mix of commons, uncommons and rares that tell very different stories depending on whether you look at their play rate or their price tag.
+The list runs from number 1, the most played card in the set, down to number 19. Llanowar Elves takes the top spot by a wide margin, and from there the field spreads out across a mix of commons, uncommons and rares that tell very different stories depending on whether you look at their play rate or their price tag.
 
-## The 20 most played Summer Magic / Edgar cards in Commander
+## The most played Summer Magic / Edgar cards in Commander
 
 **1. Llanowar Elves - AU$0.43**
 
@@ -50,7 +50,7 @@ Basalt Monolith is an uncommon, and its price reflects that status rather than t
 
 Fog sits at number 4 at AU$1.42, with EDHREC rank 690, a single printing in the set.
 
-Fog is one of the cheaper cards near the top of this list, sitting as a common with a price closer to Llanowar Elves than to Basalt Monolith just above it. Its rank puts it firmly in the upper third of the twenty cards covered here.
+Fog is one of the cheaper cards near the top of this list, sitting as a common with a price closer to Llanowar Elves than to Basalt Monolith just above it. Its rank puts it firmly in the upper third of the nineteen cards covered here.
 
 **5. Ornithopter - AU$715.00**
 
@@ -66,7 +66,7 @@ Ornithopter is the outlier of the entire list, an uncommon priced far above ever
 
 Royal Assassin sits at number 6 at AU$5.68, with EDHREC rank 2204, a single printing in the set.
 
-Royal Assassin is the first rare to appear on the list and marks a clear drop in play rate from the cards above it, with its rank moving from the hundreds into the thousands. Its price sits mid-table compared with the rest of the twenty.
+Royal Assassin is the first rare to appear on the list and marks a clear drop in play rate from the cards above it, with its rank moving from the hundreds into the thousands. Its price sits mid-table compared with the rest of the nineteen.
 
 **7. Fireball - AU$1.42**
 
@@ -98,7 +98,7 @@ Howl from Beyond carries the lowest price of any card in the top half of this li
 
 Fear sits at number 10 at AU$0.21, with EDHREC rank 15941, a single printing in the set.
 
-Fear is priced lower again than Howl from Beyond, making it the cheapest card in the top ten by a small margin. Its rank sits comfortably past the midpoint of the twenty cards ranked here.
+Fear is priced lower again than Howl from Beyond, making it the cheapest card in the top ten by a small margin. Its rank sits right on the midpoint of the nineteen cards ranked here.
 
 **11. Giant Spider - AU$0.50**
 
@@ -114,7 +114,7 @@ Giant Spider is a common with one of the more forgettable price tags on this lis
 
 Bottle of Suleiman sits at number 12 at AU$0.71, with EDHREC rank 23383, a single printing in the set.
 
-Bottle of Suleiman is a rare, yet its price sits closer to the commons on this list than to the other rares that appear further down. Its rank places it in the lower half of the twenty, well behind the top ten.
+Bottle of Suleiman is a rare, yet its price sits closer to the commons on this list than to the other rares that appear further down. Its rank places it in the lower half of the nineteen, well behind the top ten.
 
 **13. Jump - AU$0.70**
 
@@ -130,7 +130,7 @@ Jump sits within a few cents of Bottle of Suleiman just above it, despite the tw
 
 Unstable Mutation sits at number 14 at AU$0.36, with EDHREC rank 25097, a single printing in the set.
 
-Unstable Mutation carries one of the lower prices on the entire list, a contrast to some of the rares that surround it in rank. Its play rate places it just past the middle of the twenty cards covered here.
+Unstable Mutation carries one of the lower prices on the entire list, a contrast to some of the rares that surround it in rank. Its play rate places it well past the middle of the nineteen cards covered here.
 
 **15. The Hive - AU$1.07**
 
@@ -138,7 +138,7 @@ Unstable Mutation carries one of the lower prices on the entire list, a contrast
 
 The Hive sits at number 15 at AU$1.07, with EDHREC rank 25348, a single printing in the set.
 
-The Hive is a rare priced only modestly above the commons near it on the list, a smaller gap than seen with some of the other rares here. Its rank places it in the lower third of the twenty.
+The Hive is a rare priced only modestly above the commons near it on the list, a smaller gap than seen with some of the other rares here. Its rank places it in the lower third of the nineteen.
 
 **16. Rod of Ruin - AU$568.00**
 
@@ -154,7 +154,7 @@ Rod of Ruin is an uncommon with a price that stands apart from every other card 
 
 Crystal Rod sits at number 17 at AU$7.10, with EDHREC rank 26700, a single printing in the set.
 
-Crystal Rod is another uncommon, priced well below Rod of Ruin just above it despite the two cards sharing a rarity. Its rank sits close to the bottom of the twenty, with only a handful of cards trailing it.
+Crystal Rod is another uncommon, priced well below Rod of Ruin just above it despite the two cards sharing a rarity. Its rank sits close to the bottom of the nineteen, with only two cards trailing it.
 
 **18. Rock Hydra - AU$1.42**
 
@@ -162,7 +162,7 @@ Crystal Rod is another uncommon, priced well below Rod of Ruin just above it des
 
 Rock Hydra sits at number 18 at AU$1.42, with EDHREC rank 27339, a single printing in the set.
 
-Rock Hydra shares its exact price with Fireball much higher up this list, one of only a couple of ties worth noting across the full twenty. Its rank places it near the bottom of the ranking.
+Rock Hydra shares its exact price with Fireball much higher up this list, one of only a couple of ties worth noting across the full nineteen. Its rank places it near the bottom of the ranking.
 
 **19. Granite Gargoyle - AU$35.50**
 
@@ -170,7 +170,7 @@ Rock Hydra shares its exact price with Fireball much higher up this list, one of
 
 Granite Gargoyle sits at number 19 at AU$35.50, with EDHREC rank 29834, a single printing in the set.
 
-Granite Gargoyle closes out the list with the lowest play rate of the twenty cards covered, yet its price is far from the cheapest here, sitting well above most of the commons and uncommons that rank ahead of it. That combination makes it one of the clearer examples on this list of price and play rate moving in opposite directions.
+Granite Gargoyle closes out the list with the lowest play rate of the nineteen cards covered, yet its price is far from the cheapest here, sitting well above most of the commons and uncommons that rank ahead of it. That combination makes it one of the clearer examples on this list of price and play rate moving in opposite directions.
 
 ## Frequently asked questions
 
@@ -181,13 +181,13 @@ The set released on 1994-06-21, and it has been available in the collector marke
 Llanowar Elves holds that position, with an EDHREC rank of 58, well ahead of every other card in the set.
 
 **How is this list ordered?**
-Cards are ranked from number 1 down to number 20 by EDHREC rank, where a lower rank number means the card appears in more Commander decklists.
+Cards are ranked from number 1 down to number 19 by EDHREC rank, where a lower rank number means the card appears in more Commander decklists.
 
 **How are cards with multiple printings in the set handled?**
 Each card appears only once on the list even if it has several printings. The lowest (best) EDHREC rank among its printings is used to place it, and the highest price among those printings is the one quoted, with any exact price ties between printings noted rather than resolved silently.
 
 **Do any cards on this list have more than one printing in the set?**
-No, every one of the twenty cards listed here has exactly one printing in Summer Magic / Edgar, so no rank or price merging was needed.
+No, every one of the nineteen cards listed here has exactly one printing in Summer Magic / Edgar, so no rank or price merging was needed.
 
 **Where can Australian buyers purchase these singles?**
 Readers can buy through the card pages on our own site or through eBay Australia, and it is worth comparing listings across both given how prices on older cards can vary.

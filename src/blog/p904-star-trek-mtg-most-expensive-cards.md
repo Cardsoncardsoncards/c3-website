@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Star Trek MTG: The 20 Most Expensive Cards"
-description: "The 20 most expensive cards in Star Trek, ranked on Australian dollar pricing, led by Crystalline Entity at AU$141.93. Images and links to every card page."
+title: "Star Trek MTG: The Most Expensive Cards"
+description: "The most expensive cards in Star Trek, ranked on Australian dollar pricing, led by Crystalline Entity at AU$141.93. Images and links to every card page."
 date: 2026-08-06
 category: news
 game: mtg
@@ -14,9 +14,9 @@ Star Trek is a Magic: The Gathering set due for release on 13 November 2026, bri
 
 This ranking measures each card once by its highest priced printing in Australian dollars. Where a card has more than one printing in the set, only the printing carrying a price counts toward its rank, and any printing without a listed price is simply left out of the comparison. If two printings of the same card were to land on the same price, that tie would be noted explicitly rather than resolved by an arbitrary rule, though as it happens the field below the top three settles into a run of near-identical prices rather than exact matches.
 
-The list runs from the single most expensive card in the set down to the twentieth, ordered strictly by that headline price. Preorder markets move as more information about a set becomes available and as supply changes closer to release, so every price here should be read as a point in time rather than a fixed figure. Readers in Australia can track these cards, and buy or watch them, through the card pages on our own site and through eBay Australia.
+The list runs from the single most expensive card in the set down to the eighth, ordered strictly by that headline price. Preorder markets move as more information about a set becomes available and as supply changes closer to release, so every price here should be read as a point in time rather than a fixed figure. Readers in Australia can track these cards, and buy or watch them, through the card pages on our own site and through eBay Australia.
 
-## The 20 most expensive cards in Star Trek
+## The most expensive cards in Star Trek
 
 **1. Crystalline Entity - AU$141.93**
 
@@ -97,7 +97,7 @@ Crystalline Entity is the most expensive card, priced well above every other car
 Each card appears once, ranked by its highest priced printing, and printings without a listed price are excluded from that comparison.
 
 **What happens if two printings share the exact same price?**
-The methodology notes such a tie explicitly rather than breaking it silently, though the current top twenty does not contain an exact price match between printings.
+The methodology notes such a tie explicitly rather than breaking it silently, though the current top eight does not contain an exact price match between printings.
 
 **Where can Australian readers buy these singles?**
 Singles can be bought through the card pages on our own site as well as through eBay Australia.

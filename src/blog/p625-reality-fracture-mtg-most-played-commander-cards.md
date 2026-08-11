@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Reality Fracture MTG: The 20 Most Played Commander Cards"
-description: "The 20 most played Reality Fracture cards in Commander, ranked on EDHREC data, led by The Theorist, Jace Beleren. Images, prices and links to every card page."
+title: "Reality Fracture MTG: The Most Played Commander Cards"
+description: "The most played Reality Fracture cards in Commander, ranked on EDHREC data, led by The Theorist, Jace Beleren. Images, prices and links to every card page."
 date: 2026-08-06
 category: news
 game: mtg
@@ -10,15 +10,15 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-Reality Fracture is the newest Magic: The Gathering set to have its Commander footprint measured before release, and this list tracks the 20 cards from it seeing the most play in the format, using EDHREC rank as the yardstick. A lower EDHREC rank means a card is showing up in more decks, so the card at number 1 is the one Commander players are slotting into the widest range of lists so far. The Theorist, Jace Beleren tops the field at rank 23318, priced at AU$70.93.
+Reality Fracture is the newest Magic: The Gathering set to have its Commander footprint measured before release, and this list tracks the 11 cards from it seeing the most play in the format, using EDHREC rank as the yardstick. A lower EDHREC rank means a card is showing up in more decks, so the card at number 1 is the one Commander players are slotting into the widest range of lists so far. The Theorist, Jace Beleren tops the field at rank 23318, priced at AU$70.93.
 
 Several cards in Reality Fracture were printed more than once within the set, so the methodology needs a fixed rule for handling that before any ranking is possible. Each card appears exactly once on this list regardless of how many printings it has, ranked by its best (lowest) EDHREC rank across those printings, and priced by whichever of its printings carries the highest price. Where two printings land on exactly the same figure, that tie is called out rather than quietly resolved, so nothing is lost in the rounding.
 
 Because Reality Fracture has not released yet, every price quoted here is a preorder price. These figures move, sometimes quickly, once a set reaches shelves and supply settles, so treat the numbers below as a snapshot rather than a fixed record. All prices are in Australian dollars.
 
-The 20 cards run from number 1 down to number 20 by that EDHREC measure. This first stretch of the list covers positions 1 through 11, mixing high-priced mythics with a couple of far cheaper uncommons that still see enough Commander play to sit inside the top dozen.
+The 11 cards run from number 1 down to number 11 by that EDHREC measure, mixing high-priced mythics with a couple of far cheaper uncommons that still see enough Commander play to rank among the set's most played.
 
-## The 20 most played Reality Fracture cards in Commander
+## The most played Reality Fracture cards in Commander
 
 **1. The Theorist, Jace Beleren - AU$70.93**
 

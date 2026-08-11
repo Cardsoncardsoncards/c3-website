@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Reality Fracture MTG: The 20 Most Expensive Cards"
-description: "The 20 most expensive cards in Reality Fracture, ranked on Australian dollar pricing, led by Bloodline Recollector // Ancestral Craving at AU$127.79. Images and links to every card page."
+title: "Reality Fracture MTG: The Most Expensive Cards"
+description: "The most expensive cards in Reality Fracture, ranked on Australian dollar pricing, led by Bloodline Recollector // Ancestral Craving at AU$127.79. Images and links to every card page."
 date: 2026-08-06
 category: news
 game: mtg
@@ -12,13 +12,13 @@ affiliate_disclaimer: true
 
 Reality Fracture is the next Magic: The Gathering set on the calendar, due for release on the 2nd of October 2026. Because the set has not yet reached shelves, every figure in this list is a preorder price, and those numbers can and will move as the release date approaches and stock actually starts to circulate.
 
-This post ranks the twenty most expensive cards in Reality Fracture by Australian dollar price, from number 1 at the top down to number 20. Where a card has several printings within the set, we have taken its highest priced printing as the figure that determines its rank, so a card is never counted twice just because it appears in more than one treatment. When two printings land on exactly the same price, that tie is noted in the pricing line rather than being quietly broken in one direction or another.
+This post ranks the eleven most expensive cards in Reality Fracture by Australian dollar price, from number 1 at the top down to number 11. Where a card has several printings within the set, we have taken its highest priced printing as the figure that determines its rank, so a card is never counted twice just because it appears in more than one treatment. When two printings land on exactly the same price, that tie is noted in the pricing line rather than being quietly broken in one direction or another.
 
 You will notice several mythics in this list sharing an identical headline price. That is not a rounding artefact, it reflects the actual figures pulled at the time of writing, and it is worth reading as a genuine tie rather than a coincidence to be explained away. As always, treat every number here as a snapshot rather than a fixed point, prices on preorder cards are especially prone to shifting between now and release.
 
 Singles for Reality Fracture can be sourced through the card pages on our own site or through eBay Australia, and both venues are referenced throughout this list wherever a specific price is quoted.
 
-## The 20 most expensive cards in Reality Fracture
+## The most expensive cards in Reality Fracture
 
 **1. Bloodline Recollector // Ancestral Craving - AU$127.79**
 
@@ -106,7 +106,7 @@ The step down from the Liliana pair to this uncommon is the steepest proportiona
 
 Titanbones, Towering Heart sits at number 11 at AU$4.25, with a single printing in the set.
 
-Matching Tinybones, Pocket Nuisance exactly, this uncommon closes out the list in a tied final position. With a single printing in the set, there is no internal spread to consider, the headline figure is the only figure. Together with its counterpart, it marks the floor of this twenty card ranking, a long way below the mythic cluster at the top.
+Matching Tinybones, Pocket Nuisance exactly, this uncommon closes out the list in a tied final position. With a single printing in the set, there is no internal spread to consider, the headline figure is the only figure. Together with its counterpart, it marks the floor of this eleven card ranking, a long way below the mythic cluster at the top.
 
 ## Frequently asked questions
 

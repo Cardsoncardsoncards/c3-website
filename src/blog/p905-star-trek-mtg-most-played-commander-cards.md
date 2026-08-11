@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Star Trek MTG: The 20 Most Played Commander Cards"
-description: "The 20 most played Star Trek cards in Commander, ranked on EDHREC data, led by Crystalline Entity. Images, prices and links to every card page."
+title: "Star Trek MTG: The Most Played Commander Cards"
+description: "The most played Star Trek cards in Commander, ranked on EDHREC data, led by Crystalline Entity. Images, prices and links to every card page."
 date: 2026-08-06
 category: news
 game: mtg
@@ -10,13 +10,13 @@ tags: post
 affiliate_disclaimer: true
 ---
 
-Star Trek is set to land as a Magic: The Gathering release on 13 November 2026, and because the set has not yet come out, every figure in this list is a preorder price rather than a settled market number. This post ranks the 20 most played cards from the set in Commander, using EDHREC rank as the measure of play, where a lower rank number means a card shows up in more decks. What follows here is the first eight of those twenty.
+Star Trek is set to land as a Magic: The Gathering release on 13 November 2026, and because the set has not yet come out, every figure in this list is a preorder price rather than a settled market number. This post ranks the 8 most played cards from the set in Commander, using EDHREC rank as the measure of play, where a lower rank number means a card shows up in more decks.
 
 Some cards in this set have more than one printing. Where that happens, the card is ranked by whichever printing has the best, meaning lowest, EDHREC rank, and priced using its highest priced printing. If two printings happen to land on exactly the same price, that tie is called out rather than quietly resolved one way or another. Cards with only one priced printing simply show that single figure.
 
 Prices are quoted in Australian dollars and, being preorder prices this far ahead of release, they will move as the set gets closer to shelves and as supply and demand settle in. Treat every number here as a snapshot rather than a fixed value. Singles can be sourced through the card pages on our own site or through eBay Australia, and both venues will carry their own fluctuations independent of this list.
 
-## The 20 most played Star Trek cards in Commander
+## The most played Star Trek cards in Commander
 
 **1. Crystalline Entity - AU$141.93**
 
