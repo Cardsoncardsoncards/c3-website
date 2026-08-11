@@ -2375,3 +2375,10 @@ Priority order for the next session:
    and 15 first, the two mandates and the no-known-safe rule. The habit
    this file exists to catch is calling something complete too early, that
    check is part of the process, not optional.
+6. **A consistency audit of this file proves it agrees with ITSELF, not that
+   it is still true.** The 11 August pass compared every Section 3 status
+   header against both START HERE lists and the live tally, and would not
+   have caught a row whose header, lists and counts all agree with each other
+   while the finding has quietly gone stale in reality. **Do not read
+   "internally consistent" as "still true": the two are different claims and
+   only the second needs live systems to check.**
