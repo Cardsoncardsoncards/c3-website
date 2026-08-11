@@ -72,6 +72,67 @@ export const JOBS = {
     schedule: '0 1 * * *',
     background: false,
     note: 'The one working writer of site_config.usd_aud_rate. The pg_cron writer is disabled, see C3L-130.'
+  },
+
+  // ---- BATCH 2, added 11 August 2026. Chosen smallest and safest first, on purpose. ----
+  //
+  // 'releases' writes one small table with a correct conflict target and reads everything else.
+  // The five 'ids-*' jobs currently have ZERO pending rows each (measured the same day), so
+  // invoking them exercises the entire trigger path end to end while doing almost no work,
+  // which is exactly what a first batch should do.
+  //
+  // READ THIS BEFORE ADDING MORE ids-* JOBS. These five are also the jobs that most NEED a
+  // manual path, and not for the usual reason. Each one self-chains when it hits its 13 minute
+  // budget by calling its OWN scheduled URL over HTTP, and Netlify answers 403 to exactly that
+  // (C3L-136), so the continuation has never been able to fire. See C3L-173. Running one
+  // through this trigger calls the handler directly and is therefore the only way a
+  // continuation can currently happen at all.
+  releases: {
+    label: 'Upcoming set releases aggregation',
+    file: 'sync-tcg-releases.mjs',
+    schedule: '30 2 * * *',
+    background: false,
+    note: 'Reads 32 <game>_sets tables, writes only tcg_releases, upserting on the unique key '
+        + '(game, slug, product_type). Idempotent: a manual run on top of the nightly one '
+        + 'rewrites the same rows and moves updated_at, which is what makes it easy to verify.'
+  },
+  'ids-lorcana': {
+    label: 'Lorcana tcgapi id resolution',
+    file: 'sync-ids-lorcana-background.mjs',
+    schedule: '0 15 * * *',
+    background: true,
+    note: 'Resolves tcgplayer_id to tcgapi.dev id. Only ever selects rows where tcgapi_id IS '
+        + 'NULL, so re-running cannot redo finished work. 0 pending on 11 August 2026.'
+  },
+  'ids-onepiece': {
+    label: 'One Piece tcgapi id resolution',
+    file: 'sync-ids-onepiece-background.mjs',
+    schedule: '0 15 * * *',
+    background: true,
+    note: 'Same shape as ids-lorcana. 0 pending on 11 August 2026.'
+  },
+  'ids-starwars': {
+    label: 'Star Wars Unlimited tcgapi id resolution',
+    file: 'sync-ids-starwars-background.mjs',
+    schedule: '0 15 * * *',
+    background: true,
+    note: 'Same shape as ids-lorcana. 0 pending on 11 August 2026.'
+  },
+  'ids-riftbound': {
+    label: 'Riftbound tcgapi id resolution',
+    file: 'sync-ids-riftbound-background.mjs',
+    schedule: '0 15 * * *',
+    background: true,
+    note: 'Same shape as ids-lorcana. 0 pending on 11 August 2026.'
+  },
+  'ids-dragonball': {
+    label: 'Dragon Ball Super CCG tcgapi id resolution',
+    file: 'sync-ids-dragonball-background.mjs',
+    schedule: '0 15 * * *',
+    background: true,
+    note: 'Same shape as ids-lorcana. This is the EXTENDED dragonball game (dragonball_cards), '
+        + 'NOT the Core dbsfusionworld. There is no ids job for dbsfusionworld at all. '
+        + '0 pending on 11 August 2026.'
   }
 };
 

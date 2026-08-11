@@ -3,6 +3,12 @@ import pokemonSync from './sync-pokemon-background.mjs';
 import yugiohSync from './sync-yugioh-background.mjs';
 import fxRateSync from './sync-fx-rate.mjs';
 import weissschwarzSync from './sync-weissschwarz-background.mjs';
+import releasesSync from './sync-tcg-releases.mjs';
+import idsLorcanaSync from './sync-ids-lorcana-background.mjs';
+import idsOnepieceSync from './sync-ids-onepiece-background.mjs';
+import idsStarwarsSync from './sync-ids-starwars-background.mjs';
+import idsRiftboundSync from './sync-ids-riftbound-background.mjs';
+import idsDragonballSync from './sync-ids-dragonball-background.mjs';
 // netlify/functions/admin-trigger-background.mjs
 //
 // C3L-136. The half that actually runs a sync on demand.
@@ -23,7 +29,16 @@ const HANDLERS = {
   pokemon: pokemonSync,
   yugioh: yugiohSync,
   'fx-rate': fxRateSync,
-  weissschwarz: weissschwarzSync
+  weissschwarz: weissschwarzSync,
+  // Batch 2, 11 August 2026. See the JOBS entries in shared/sync-jobs.mjs for why these six,
+  // and in particular why the ids-* jobs are the ones that most need this path: their own
+  // self-chaining calls a scheduled URL and gets a 403, so it has never worked (C3L-173).
+  releases: releasesSync,
+  'ids-lorcana': idsLorcanaSync,
+  'ids-onepiece': idsOnepieceSync,
+  'ids-starwars': idsStarwarsSync,
+  'ids-riftbound': idsRiftboundSync,
+  'ids-dragonball': idsDragonballSync
 };
 
 // JOBS and HANDLERS are two lists that have to agree, and on 11 August 2026 they did not: a job
