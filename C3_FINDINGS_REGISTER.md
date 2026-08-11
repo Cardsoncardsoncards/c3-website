@@ -449,7 +449,7 @@ per lens as each one closes.
 
 ---
 
-## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-175)
+## 3. Confirmed findings, live investigation (IDs C3L-01 to C3L-177)
 
 Checked directly against the live Supabase project (`owaroeqchreuffbyakqx`)
 and, where noted, the live site. Genuine confirmed evidence, not a report
@@ -1783,6 +1783,16 @@ new OAuth, no new scopes and no seller account.**
 Updated whenever a task changes the counts below, not left to go stale.
 Same discipline as Voxsanity's own Section 5.
 
+- **11 August 2026, `task-blog-content-merge` and its two follow-up closes. Two new IDs, C3L-176
+  and C3L-177. Totals RE-DERIVED BY COUNTING, not incremented: 177 findings across 179 rows,
+  C3L-01 to C3L-177.** **The entry immediately below this one is wrong on two points and they
+  are the same point.** It states 176 rows and "Only C3L-56 legitimately occupies two rows".
+  There are TWO such ids: `C3L-40-original` has sat directly beneath `C3L-40` since 5 August in
+  `dac8f7d`. So the correct arithmetic was 175 findings + 2 duplicate rows = 177 rows, and the
+  "corrected" 176 was itself short by one. **That is two consecutive commits getting this wrong,
+  both by assuming the gap rather than reconciling it, which is why Section 11 now carries a
+  standing rule about it rather than another one-off correction.** Section 3's heading range was
+  stale again by two ids and is fixed here.
 - **11 August 2026, `task-final-pass`, the ninth and last file of the batch. No new IDs. The
   totals are CORRECTED rather than incremented: 175 findings across 176 rows, C3L-01 to
   C3L-175.** The previously stated 179 rows was wrong and had been drifting for weeks, because
@@ -2550,3 +2560,26 @@ Priority order for the next session:
    while the finding has quietly gone stale in reality. **Do not read
    "internally consistent" as "still true": the two are different claims and
    only the second needs live systems to check.**
+7. **STANDING RULE: never increment a count in this file. Re-derive the row
+   count and the finding count by COUNTING, on every edit that touches
+   Section 3.** This is not advice and it is not a one-off correction, it is
+   the rule, because the alternative has now failed twice in a row.
+   - The two numbers are **different** and the gap between them is the thing
+     to reconcile. **Rows:** `grep -c "^| C3L-"`. **Findings:** distinct
+     numeric ids, `grep -oE "^\| C3L-[0-9]+" | sort -u | wc -l`. The
+     difference must equal the number of EXTRA rows held by deliberately
+     superseded ids, which is found with `... | sort | uniq -d`, not assumed.
+   - As of 11 August that list is **two** ids, `C3L-40` and `C3L-56`, giving
+     177 findings across 179 rows. **Do not treat "two" as a constant either:
+     re-run the duplicate check, because assuming it was one is exactly what
+     produced the last two wrong totals.**
+   - The failure mode is specific and worth naming: on 11 August the count
+     was corrected from a drifting 179 to 176 by someone who did re-count the
+     findings but assumed a single superseded id, so the correction shipped
+     one short, and the next commit inherited it. **A correction arrived at by
+     assumption is still an assumption.**
+   - **Why this survives review: an incremented number is indistinguishable
+     from a counted one by inspection.** Nothing about "176" looks wrong on
+     the page. The only defence is re-running the count, so re-run it, and
+     update all three places that state it: the START HERE one-line state,
+     Section 9, and Section 3's heading range.
