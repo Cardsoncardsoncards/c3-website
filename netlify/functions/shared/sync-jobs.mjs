@@ -57,8 +57,14 @@ export const JOBS = {
     background: true,
     note: 'Added 11 August 2026 to verify C3L-166 on demand. This is the game where two sets '
         + 'slugify identically, so it is the one whose cross-batch slug collision has to be '
-        + 'provable without waiting for 00:30 UTC. Both its upserts use resolution=merge-'
-        + 'duplicates, so a manual run on top of the nightly one is idempotent.'
+        + 'provable without waiting for 00:30 UTC. CORRECTED same day: an earlier version of '
+        + 'this note claimed a manual run on top of the nightly one is idempotent because both '
+        + 'upserts use resolution=merge-duplicates. That is true for cards and FALSE for '
+        + 'snapshots (C3L-170). The snapshot upsert merges on the primary key while a separate '
+        + 'unique index covers (card_id, snapshot_date), so a second run on the same day raises '
+        + '23505 on every card already snapshotted that day. Re-running is safe, nothing is '
+        + 'corrupted and the cards still update, but expect sync_partial and a large failed-set '
+        + 'count that is an artefact of the re-run rather than a real fault.'
   },
   'fx-rate': {
     label: 'USD to AUD rate refresh',
