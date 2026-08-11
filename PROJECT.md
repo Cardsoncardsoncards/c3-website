@@ -315,7 +315,17 @@ Process:
 - No banned words: straightforward, elevate, robust, comprehensive, leverage, delve, unlock, seamless, tapestry, vital, crucial, game-changer, dive in, furthermore, moreover
 - No filler phrases: "great question", "certainly", "absolutely"
 - Sign-off: "The C3 Team" only. Never "Sammy."
-- Blog posts: minimum 1,000 words evergreen, 800 words tournament previews
+- Blog posts, minimum word counts by category:
+  - evergreen: 1,000 words
+  - tournament previews: 800 words
+  - news: 800 words (C3L-112, decided 11 August 2026). Same bar as tournament previews and
+    for the same reason: a news post is tied to a dated event, is read in the days around it
+    and is not expected to earn traffic for a year, so holding it to the evergreen 1,000 buys
+    padding rather than depth. Not an arbitrary pick. It is what the corpus already does:
+    measured across the 28 live `category: news` posts on 11 August 2026, 26 already clear
+    800 and 20 of them sit between 800 and 850, so this writes down the standing practice
+    instead of imposing a new one. The two that fall short are both speculative
+    "everything we know" posts, 597 and 653 words, which are the cases the bar is for.
 - Minimum 5 FAQ pairs per post
 - Mandatory CTAs by post type
 - Maximum 3 sentences per paragraph

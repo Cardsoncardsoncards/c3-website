@@ -29,10 +29,14 @@
 // C3L-91, added 10 August 2026. Terminal sync_events rows on every outcome this function has.
 // It has never written one, so there has been no way to tell a quiet week from a dead job.
 // Purely additive: no send logic, recipient resolution or template behaviour changes.
-// KNOWN RESIDUAL GAP, stated rather than hidden: this handler has no outer try/catch, so an
-// uncaught throw still produces no row at all. Adding one means re-indenting the whole body and
-// was judged too invasive for a batch billed as small and safe. check-card-follows.mjs does have
-// a catch and its error path IS logged.
+//
+// THE RESIDUAL GAP THIS COMMENT USED TO DECLARE IS NOW CLOSED (11 August 2026). It read
+// "this handler has no outer try/catch, so an uncaught throw still produces no row at all.
+// Adding one means re-indenting the whole body and was judged too invasive." The re-indent
+// was avoidable: the body moved into `runDigest()` unchanged and the default export is now a
+// thin try/catch wrapper around it, so the diff is the wrapper plus the call sites, not 130
+// re-indented lines. See the block above `export default` for what is logged and what is
+// deliberately not.
 import { logSyncEvent } from './shared/sync-event.mjs';
 import {
   fetchMarketData,
@@ -100,7 +104,50 @@ function unsubscribeUrl(email) {
   return `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
 }
 
+// C3L-91 RESIDUAL, closed 11 August 2026. Purely additive: no auth, send, threshold or copy
+// behaviour changes below, only whether an exit path leaves a trace.
+//
+// What was still open. C3L-91 shipped on 10 August and made the happy paths log, so the claim
+// "the alerting subsystem writes no sync_events rows, ever" stopped being true. But every
+// logSyncEvent call sat on a `return` line inside a handler with NO try/catch at all, and the
+// body does roughly a dozen awaits (fetchMarketData, fetchMainSubscribers, sendBatch) any one
+// of which can throw. An unexpected exception therefore produced a runtime 500 and NO ROW, so
+// the single worst outcome, the digest dying in a way nobody predicted, was the exact outcome
+// that stayed invisible. That is this programme's recurring shape: the instrument covers the
+// cases you thought of.
+//
+// Two deliberate choices, so neither reads as an oversight:
+//
+//  1. The 401 path is NOT logged. It is the only branch reachable without the secret, so
+//     logging it would let an unauthenticated caller append unbounded rows to sync_events by
+//     just hitting the URL. A telemetry table that a stranger can flood is worse than a
+//     missing row, and the 401 is not a run of this job in any case.
+//
+//  2. `terminal()` writes AT MOST ONE row per invocation. Without the guard, a throw occurring
+//     after a success row was already written would append a contradicting error row for the
+//     same run, and a table holding both is harder to read than one holding neither.
 export default async (req) => {
+  let logged = false;
+  const terminal = async (eventType, rowsAffected = null, errorMessage = null) => {
+    if (logged) return;
+    logged = true;
+    await logSyncEvent({ eventType, game: 'digest', rowsAffected, errorMessage, logPrefix: '[weekly-digest-free]' });
+  };
+
+  try {
+    return await runDigest(req, terminal);
+  } catch (err) {
+    // Reached only by a genuinely unexpected throw. logSyncEvent never throws (it swallows its
+    // own failures by design), so this cannot turn a send problem into a logging crash.
+    console.error('[weekly-digest-free] FATAL:', (err && err.stack) || err);
+    await terminal('sync_error', 0, 'uncaught: ' + String((err && err.message) || err));
+    return new Response(JSON.stringify({ ok: false, error: 'internal error' }, null, 2), {
+      status: 500, headers: { 'Content-Type': 'application/json' }
+    });
+  }
+};
+
+async function runDigest(req, terminal) {
   // The secret is REQUIRED. A missing header is rejected exactly like a wrong one.
   //
   // What was wrong before: the guard read `if (secret && SYNC_SECRET && secret !== SYNC_SECRET)`,
@@ -131,6 +178,9 @@ export default async (req) => {
     });
   }
   if (!RESEND_API_KEY) {
+    // Logged, unlike the 401: this one is past the secret check, so only an authorised caller
+    // can reach it, and a digest that cannot send at all is exactly what a monitor wants to see.
+    await terminal('sync_error', 0, 'RESEND_API_KEY not set');
     return new Response(JSON.stringify({ ok: false, error: 'RESEND_API_KEY not set' }), {
       status: 500, headers: { 'Content-Type': 'application/json' }
     });
@@ -172,7 +222,7 @@ export default async (req) => {
     let detail = '';
     try { detail = (await res.text()).slice(0, 300); } catch { /* body optional */ }
     console.log(`[weekly-digest-free] TEST send to ${testEmail}: HTTP ${res.status}`);
-    await logSyncEvent({ eventType: res.ok ? 'sync_test' : 'sync_error', game: 'digest', rowsAffected: res.ok ? 1 : 0, errorMessage: res.ok ? null : 'test send HTTP ' + res.status, logPrefix: '[weekly-digest-free]' });
+    await terminal(res.ok ? 'sync_test' : 'sync_error', res.ok ? 1 : 0, res.ok ? null : 'test send HTTP ' + res.status);
     return new Response(JSON.stringify({
       ok: res.ok, mode: 'testEmail', recipient: testEmail, status: res.status,
       detail: detail || undefined, counts
@@ -181,6 +231,8 @@ export default async (req) => {
 
   const subscribers = await fetchMainSubscribers();
   if (subscribers === null) {
+    // Same reasoning as the RESEND_API_KEY branch: authorised caller, terminal failure, log it.
+    await terminal('sync_error', 0, 'MAILERLITE_API_KEY not set');
     return new Response(JSON.stringify({ ok: false, error: 'MAILERLITE_API_KEY not set' }), {
       status: 500, headers: { 'Content-Type': 'application/json' }
     });
@@ -200,12 +252,12 @@ export default async (req) => {
     console.log('[weekly-digest-free]', JSON.stringify(summary));
     // Its own event type. A dryRun sent nothing, so calling it sync_success would make the table
     // claim a delivery that never happened.
-    await logSyncEvent({ eventType: 'sync_dryrun', game: 'digest', rowsAffected: subscribers.length, logPrefix: '[weekly-digest-free]' });
+    await terminal('sync_dryrun', subscribers.length);
     return new Response(JSON.stringify(summary, null, 2), { headers: { 'Content-Type': 'application/json' } });
   }
 
   if (subscribers.length === 0) {
-    await logSyncEvent({ eventType: 'sync_success', game: 'digest', rowsAffected: 0, logPrefix: '[weekly-digest-free]' });
+    await terminal('sync_success', 0);
     return new Response(JSON.stringify({ ok: true, sent: 0, subscriberCount: 0, counts,
       message: 'Main list is empty, nothing sent.' }, null, 2),
       { status: 200, headers: { 'Content-Type': 'application/json' } });
@@ -253,19 +305,17 @@ export default async (req) => {
   console.log('[weekly-digest-free] SUMMARY', JSON.stringify(summary));
   // rows_affected is emails actually sent. A partial send is logged as sync_error even though
   // some went out, because that is the case most likely to be mistaken for a good week.
-  await logSyncEvent({
-    eventType: failedCount === 0 ? 'sync_success' : 'sync_error',
-    game: 'digest',
-    rowsAffected: sentCount,
-    errorMessage: failedCount === 0 ? null : failedCount + ' of ' + subscribers.length + ' failed: ' + JSON.stringify(errors).slice(0, 300),
-    logPrefix: '[weekly-digest-free]'
-  });
+  await terminal(
+    failedCount === 0 ? 'sync_success' : 'sync_error',
+    sentCount,
+    failedCount === 0 ? null : failedCount + ' of ' + subscribers.length + ' failed: ' + JSON.stringify(errors).slice(0, 300)
+  );
 
   return new Response(JSON.stringify(summary, null, 2), {
     status: failedCount === 0 ? 200 : 502,
     headers: { 'Content-Type': 'application/json' }
   });
-};
+}
 
 // No `path` key here. Netlify rejects a custom path on a scheduled function, so this is
 // reachable only at its default URL, /.netlify/functions/generate-weekly-digest-free.

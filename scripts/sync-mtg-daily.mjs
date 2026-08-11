@@ -179,7 +179,35 @@ function buildCardStream(path) {
   return chain([createReadStream(path), parser(), streamArray()]);
 }
 
-function computeCardHash(card) {
+// The five price values this sync STORES on mtg_cards, derived once so the content hash and
+// the row builder can never disagree about what a card's stored price actually is.
+//
+// C3L-160. These were absent from the content hash until 11 August 2026, and that omission is
+// the whole finding. The hash decided whether to upsert the mtg_cards row at all, so a card
+// whose metadata was stable kept whatever price it was last written with, indefinitely, while
+// mtg_price_snapshots (written before the hash check, on line 463) stayed correct. The result
+// was not a broken page, it was a page quietly quoting an old number: measured on 11 August,
+// 8,071 of 41,708 priced cards, 19.4 per cent, carried a price_usd on mtg_cards that disagreed
+// with that same morning's snapshot, the worst by US$115.
+//
+// It also made updated_at mean the wrong thing. That column tracks METADATA churn, not price
+// freshness, so a row reading "last updated 26 days ago" is not evidence that the sync skipped
+// the card, which is exactly the inference C3L-160 was originally written from.
+//
+// price_aud is included as the COMPUTED value, not as the upstream USD, because price_aud is
+// what gets stored and it moves with the exchange rate on a day when no upstream price changed
+// at all. Hashing the upstream figure alone would leave price_aud stale against the live rate.
+function priceFields(card, audRate) {
+  const priceUsd     = parseFloat(card.prices?.usd || 0) || null;
+  const priceUsdFoil = parseFloat(card.prices?.usd_foil || 0) || null;
+  const priceEur     = parseFloat(card.prices?.eur || 0) || null;
+  const priceTix     = parseFloat(card.prices?.tix || 0) || null;
+  const priceAud     = priceUsd ? Math.round(priceUsd * audRate * 100) / 100 : 0;
+  return { priceUsd, priceUsdFoil, priceEur, priceTix, priceAud };
+}
+
+function computeCardHash(card, audRate) {
+  const p = priceFields(card, audRate);
   const sigParts = [
     card.id, card.name, card.set, card.set_name, card.collector_number,
     card.rarity, card.type_line || '', card.oracle_text || card.card_faces?.[0]?.oracle_text || '',
@@ -189,7 +217,10 @@ function computeCardHash(card) {
     card.released_at || '', card.layout || '', (card.finishes || []).join(','),
     card.edhrec_rank || '', card.flavor_text || '', card.power || '',
     card.toughness || '', card.loyalty || '', card.artist || '',
-    JSON.stringify(card.legalities || {}), card.frame || '', card.border_color || ''
+    JSON.stringify(card.legalities || {}), card.frame || '', card.border_color || '',
+    // Prices last, so an existing hash changes for every priced card on the first run after
+    // this ships. That is intended and is a one-off: it rewrites the stale prices in place.
+    p.priceUsd ?? '', p.priceUsdFoil ?? '', p.priceEur ?? '', p.priceTix ?? '', p.priceAud
   ];
   return createHash('sha256').update(sigParts.join('|')).digest('hex').substring(0, 16);
 }
@@ -240,11 +271,9 @@ async function fetchExistingHashes() {
 }
 
 function buildCardRow(card, audRate, dataHash) {
-  const priceUsd = parseFloat(card.prices?.usd || 0) || null;
-  const priceUsdFoil = parseFloat(card.prices?.usd_foil || 0) || null;
-  const priceEur = parseFloat(card.prices?.eur || 0) || null;
-  const priceTix = parseFloat(card.prices?.tix || 0) || null;
-  const priceAud = priceUsd ? Math.round(priceUsd * audRate * 100) / 100 : 0;
+  // Shared with computeCardHash so the hash cannot claim a card is unchanged while the row
+  // builder writes a different price. See priceFields for why that mattered (C3L-160).
+  const { priceUsd, priceUsdFoil, priceEur, priceTix, priceAud } = priceFields(card, audRate);
 
   let imageUri = null, imageUriSmall = null, imageUriArtCrop = null, imageUriBorderCrop = null;
   if (card.image_uris) {
@@ -463,7 +492,7 @@ async function main() {
       const snap = buildSnapshotRow(card, audRate, today, ckMap);
       if (snap) allSnapshots.push(snap);
 
-      const newHash = computeCardHash(card);
+      const newHash = computeCardHash(card, audRate);
       const oldHash = existingHashes.get(card.id);
 
       if (!FORCE_FULL_SYNC && oldHash === newHash) {

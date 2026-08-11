@@ -235,7 +235,10 @@ export default async (req) => {
   }
 
   const log = [];
-  let checked = 0, sent = 0, skippedFloor = 0, belowThreshold = 0, missingCard = 0;
+  // missingChange (C3L-161) counts follows whose price-change column was NULL, so the summary
+  // can distinguish "did not move" from "no data to judge". It is deliberately separate from
+  // missingCard, which means the card row itself could not be resolved at all.
+  let checked = 0, sent = 0, skippedFloor = 0, belowThreshold = 0, missingCard = 0, missingChange = 0;
 
   try {
     // task-109: reads the unified follows table, not card_price_alerts.
@@ -317,8 +320,29 @@ export default async (req) => {
       const raw         = useSevenDay ? card.price_change_7d : card.price_change_30d;
       const windowLabel = useSevenDay ? '7 days' : '30 days';
 
+      // C3L-161. MISSING DATA IS NOT A ZERO PER CENT MOVE. This guard has to come BEFORE the
+      // numeric one, because `Number(null)` is `0`, not `NaN`, so a NULL price_change column
+      // sailed through `!Number.isFinite` as a literal flat move and was counted in
+      // belowThreshold one line down. The original line was clearly written expecting NULL to
+      // arrive as NaN, which is what an ABSENT PostgREST key gives; an explicit JSON `null`,
+      // which is what a NULL column actually gives, behaves the opposite way.
+      //
+      // This cannot have produced a wrong email in either direction: zero never crosses the
+      // 10 per cent threshold. What it cost was the only line anyone reads to decide whether
+      // this subsystem is healthy, because a night where every followed card had NO DATA and a
+      // night where every followed card SAT STILL produced an identical summary.
+      //
+      // Not hypothetical: on 11 August every one of the 41,675 MTG cards carrying a current
+      // price had price_change_7d NULL, MTG reads the 7 day window, and the one live MTG follow
+      // was therefore counted as a flat card rather than as a card with nothing to judge.
+      if (raw === null || raw === undefined || raw === '') {
+        missingChange++;
+        log.push(`${row.game}/${row.card_slug}: no ${windowLabel} price change data, not counted as a flat move`);
+        continue;
+      }
+
       const changePct = Number(raw);
-      if (!Number.isFinite(changePct)) continue;
+      if (!Number.isFinite(changePct)) { missingChange++; continue; }
 
       if (Math.abs(changePct) < CHANGE_THRESHOLD) { belowThreshold++; continue; }
 
@@ -332,7 +356,7 @@ export default async (req) => {
       log.push(`${row.game}/${row.card_slug}: ${changePct > 0 ? '+' : ''}${changePct.toFixed(1)}% over ${windowLabel}, emailed`);
     }
 
-    const summary = { ok: true, checked, sent, belowThreshold, skippedFloor, missingCard, threshold: CHANGE_THRESHOLD, priceFloorAud: PRICE_FLOOR_AUD, log };
+    const summary = { ok: true, checked, sent, belowThreshold, missingChange, skippedFloor, missingCard, threshold: CHANGE_THRESHOLD, priceFloorAud: PRICE_FLOOR_AUD, log };
     console.log('[check-card-follows]', JSON.stringify(summary));
     // rows_affected is EMAILS SENT, not follows examined. A run that checked 40 follows and sent
     // nothing is a normal quiet night; a run that sent nothing for weeks while checked climbs is
