@@ -1,4 +1,5 @@
 import { SECURITY_HEADERS } from './shared/security-headers.mjs';
+import { makeNonce, cspHeader } from './shared/csp.mjs';
 // netlify/functions/card-page.mjs
 // Serves dynamic MTG card pages at /cards/mtg/[slug]
 // Server-renders full HTML with all card data, price history, and interlinking
@@ -1469,9 +1470,18 @@ export default async (req, context) => {
 
   // Handle banned pages inline - Netlify resolves :slug+ before :format?
   if (slug === 'banned' || slug.startsWith('banned/')) {
-    const bannedHtml = await renderBannedPage(slug);
+    // CSP PILOT, this branch only. Deliberately scoped to the banned-list page type and NOT to
+    // the MTG card pages this same function also serves, which still carry inline handlers.
+    //
+    // NOTE ON CACHING, because it is the one thing that can make this silently wrong: the nonce
+    // is per response, and the CDN below stores the response as a unit, header and body
+    // together, so a cached hit serves a matching pair. That holds only while the header and the
+    // body are cached together. Do not move this policy to a page whose HTML is cached
+    // separately from its headers without switching to a hash-based policy first.
+    const nonce = makeNonce();
+    const bannedHtml = await renderBannedPage(slug, nonce);
     return new Response(bannedHtml, {
-      headers: { ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=86400', 'Netlify-CDN-Cache-Control': 'public, s-maxage=86400,durable' }
+      headers: { ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8', 'Content-Security-Policy': cspHeader(nonce), 'Cache-Control': 'public, s-maxage=86400', 'Netlify-CDN-Cache-Control': 'public, s-maxage=86400,durable' }
     });
   }
 
@@ -1735,7 +1745,8 @@ async function getBannedImages(slugs) {
   } catch { clearTimeout(timer); return {}; }
 }
 
-async function renderBannedPage(slug) {
+async function renderBannedPage(slug, nonce = '') {
+  const nonceAttr = nonce ? ` nonce="${nonce}"` : '';
   const parts = slug.split('/');
   const formatKey = parts.length > 1 ? parts[1].toLowerCase() : '';
   const format = BANNED_FORMATS[formatKey] || null;
@@ -1796,7 +1807,16 @@ async function renderBannedPage(slug) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <script${nonceAttr}>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');
+  // CSP pilot: replaces this page's single inline onclick. Delegated so later markup needs none.
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-c3-ev]') : null;
+    if (!el) return;
+    gtag('event', el.getAttribute('data-c3-ev'), {
+      event_category: el.getAttribute('data-c3-cat') || 'affiliate',
+      event_label: el.getAttribute('data-c3-label') || ''
+    });
+  });</script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}body{background:#0f1117;color:#e8eaf0;font-family:sans-serif;line-height:1.6}a{color:#f5a623;text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1100px;margin:0 auto;padding:0 24px}footer{background:#1a1d2e;border-top:1px solid #2d3254;padding:24px;text-align:center;color:#9ba3c4;font-size:13px;margin-top:48px}footer a{color:#9ba3c4;margin:0 10px}
     ${NAV_CSS}
@@ -1806,7 +1826,7 @@ async function renderBannedPage(slug) {
   </style>
 </head>
 <body>
-${navHtml({ gameLabel: 'MTG', gameHref: '/cards/mtg' })}
+${navHtml({ gameLabel: 'MTG', gameHref: '/cards/mtg', nonce })}
 <div class="wrap" style="padding-top:28px;padding-bottom:48px">
   <div style="font-size:12px;color:#9ba3c4;margin-bottom:12px"><a href="/" style="color:#9ba3c4">Home</a> &rsaquo; <a href="/cards" style="color:#9ba3c4">Card Vault</a> &rsaquo; <a href="/cards/mtg" style="color:#9ba3c4">MTG</a> &rsaquo; ${format ? `<a href="/cards/mtg/banned" style="color:#9ba3c4">Banned Cards</a> &rsaquo; ${format.label}` : 'Banned Cards'}</div>
   <h1 style="font-family:Cinzel,serif;font-size:clamp(22px,4vw,32px);margin-bottom:8px">MTG Banned Cards</h1>
@@ -1825,7 +1845,7 @@ ${navHtml({ gameLabel: 'MTG', gameHref: '/cards/mtg' })}
 </div>
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
-  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG</a></p>
+  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" data-c3-ev="ebay_click" data-c3-cat="affiliate" data-c3-label="footer">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG</a></p>
   <p style="margin-top:8px;font-size:12px">Ban lists current as of May 2026. &copy; 2026 Cards on Cards on Cards &middot; Affiliate links may earn a small commission.</p>
   <p style="margin-top:6px;font-size:10px;opacity:.4">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
 </footer>

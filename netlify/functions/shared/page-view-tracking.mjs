@@ -77,6 +77,13 @@ export function pageViewTrackingScript(pageType) {
 //   /cards/mtg/black-lotus      3           CARD PAGE, skipped
 //   /cards/mtg/sets/alpha       4           set page
 //   /cards/weissschwarz/series/x 4          the Weiss Schwarz property hub
+// Nonce-aware variant for pages that ship a Content-Security-Policy (shared/csp.mjs).
+// NAV_PAGE_VIEW_SCRIPT below is kept exactly as it was so the callers that import it directly
+// are untouched; navPageViewScript('') returns byte-identical output to it.
+export function navPageViewScript(nonce = '') {
+  return NAV_PAGE_VIEW_SCRIPT.replace('<script>', nonce ? `<script nonce="${nonce}">` : '<script>');
+}
+
 export const NAV_PAGE_VIEW_SCRIPT = `<script>
 (function(){
   var p = location.pathname.split('/').filter(Boolean);

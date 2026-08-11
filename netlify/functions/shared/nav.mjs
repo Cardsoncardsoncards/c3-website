@@ -359,7 +359,14 @@ export const NAV_CSS = `
 // Builds the nav. gameLabel/gameHref are optional; when present an active
 // per-game link is inserted after Card Vault in BOTH the desktop link row
 // and the mobile drawer.
-function buildNav(gameLabel = '', gameHref = '') {
+// `nonce` is optional and defaults to empty. When empty, buildNav emits exactly the markup it
+// always did apart from the three inline handlers below moving into the script block, so the 101
+// pages that call NAV_HTML or navHtml() without a nonce are unaffected. When a page ships a
+// Content-Security-Policy (see shared/csp.mjs) it passes its per-response nonce and these
+// scripts become the only inline scripts the browser will run. A nonce attribute on a page with
+// no CSP is inert, which is what makes this safe to add everywhere at once.
+function buildNav(gameLabel = '', gameHref = '', nonce = '') {
+  const nonceAttr = nonce ? ` nonce="${nonce}"` : '';
   const hasGame = Boolean(gameLabel && gameHref);
   const gameLink = hasGame
     ? `\n      <a href="${gameHref}" class="nav-link nav-link--game">${gameLabel}</a>`
@@ -378,9 +385,9 @@ function buildNav(gameLabel = '', gameHref = '') {
       <input class="nav-search-input" type="text" id="nav-q"
         placeholder="Search cards..."
         autocomplete="off"
-        onkeydown="if(event.key==='Enter'){var v=this.value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);}">
+        data-nav-search-input>
       <button class="nav-search-btn"
-        onclick="var v=document.getElementById('nav-q').value.trim();if(v)window.location='/search?q='+encodeURIComponent(v);">
+        data-nav-search-go>
         &#128269;
       </button>
     </div>
@@ -393,7 +400,7 @@ function buildNav(gameLabel = '', gameHref = '') {
       <a href="/blog"    class="nav-link nav-link--blog">Blog</a>
       <a href="/subscribe" class="nav-link nav-link--subscribe">Subscribe &#10024;</a>
       <div class="nav-shop-wrap" id="nav-shop-wrap">
-        <button class="nav-shop-btn" onclick="(function(){var w=document.getElementById('nav-shop-wrap');w.classList.toggle('open');})()">
+        <button class="nav-shop-btn" data-nav-shop-toggle>
           Shop <span class="nav-shop-arrow">&#9660;</span>
         </button>
         <div class="nav-shop-dropdown">
@@ -455,14 +462,38 @@ function buildNav(gameLabel = '', gameHref = '') {
 <div class="c3-disclosure-bar">
   As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.
 </div>
-<script>
+<script${nonceAttr}>
   // Close shop dropdown when clicking outside
   document.addEventListener('click', function(e) {
     var wrap = document.getElementById('nav-shop-wrap');
     if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
   });
+
+  // CSP pilot. These three behaviours were inline onkeydown/onclick attributes until 11 August
+  // 2026. An inline handler is an inline SCRIPT as far as CSP is concerned, so a policy without
+  // 'unsafe-inline' silently stops them running: the search box would look normal and do nothing
+  // on Enter. Delegated off document so the markup needs no handler attribute at all.
+  function c3NavSearch() {
+    var i = document.getElementById('nav-q');
+    var v = i && i.value.trim();
+    if (v) window.location = '/search?q=' + encodeURIComponent(v);
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter') return;
+    if (e.target && e.target.hasAttribute && e.target.hasAttribute('data-nav-search-input')) {
+      e.preventDefault();
+      c3NavSearch();
+    }
+  });
+  document.addEventListener('click', function(e) {
+    var t = e.target.closest ? e.target.closest('[data-nav-search-go],[data-nav-shop-toggle]') : null;
+    if (!t) return;
+    if (t.hasAttribute('data-nav-search-go')) return c3NavSearch();
+    var w = document.getElementById('nav-shop-wrap');
+    if (w) w.classList.toggle('open');
+  });
 </script>
-<script>
+<script${nonceAttr}>
   // Mobile drawer: open/close on hamburger, close on scrim/close/ESC/link.
   (function(){
     var burger = document.getElementById('nav-burger');
@@ -515,11 +546,11 @@ function buildNav(gameLabel = '', gameHref = '') {
 // The script classifies its own page and SKIPS card pages, which already log to card_views,
 // so nothing is recorded twice and no card page gains a second POST. See
 // shared/page-view-tracking.mjs for the segment-count rules.
-import { NAV_PAGE_VIEW_SCRIPT } from './page-view-tracking.mjs';
+import { NAV_PAGE_VIEW_SCRIPT, navPageViewScript } from './page-view-tracking.mjs';
 
 export const NAV_HTML = buildNav() + NAV_PAGE_VIEW_SCRIPT;
 
 // Per-game variant: keeps the active-game indicator on hub/set/card pages.
-export function navHtml({ gameLabel, gameHref } = {}) {
-  return buildNav(gameLabel, gameHref) + NAV_PAGE_VIEW_SCRIPT;
+export function navHtml({ gameLabel, gameHref, nonce } = {}) {
+  return buildNav(gameLabel, gameHref, nonce) + navPageViewScript(nonce);
 }
