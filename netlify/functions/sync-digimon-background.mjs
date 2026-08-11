@@ -226,6 +226,9 @@ export default async (req) => {
     // Step 3: For each set, fetch cards + prices
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
+    // C3L-168: every set whose upsert failed, so the run can report sync_partial
+    // instead of a sync_success that counts rows nothing ever wrote.
+    const failedSets = [];
     let totalSnaps = 0;
 
     for (const set of allSets) {
@@ -324,15 +327,20 @@ export default async (req) => {
         }
       }
 
+      let cardsWritten = 0, snapsWritten = 0;
       const results = await Promise.allSettled([
         (async () => {
           for (let i = 0; i < cardRows.length; i += 200) {
-            await supabaseUpsert('digimon_cards', cardRows.slice(i, i + 200));
+            const chunk = cardRows.slice(i, i + 200);
+            await supabaseUpsert('digimon_cards', chunk);
+            cardsWritten += chunk.length;
           }
         })(),
         (async () => {
           for (let i = 0; i < snapRows.length; i += 500) {
-            await supabaseUpsertSnapshots('digimon_price_snapshots', snapRows.slice(i, i + 500));
+            const chunk = snapRows.slice(i, i + 500);
+            await supabaseUpsertSnapshots('digimon_price_snapshots', chunk);
+            snapsWritten += chunk.length;
           }
         })()
       ]);
@@ -340,17 +348,29 @@ export default async (req) => {
       for (const r of results) {
         if (r.status === 'rejected') {
           console.error(`[sync-digimon] Upsert error for set ${set.name}:`, r.reason?.message);
+          failedSets.push(`${set.name}: ${r.reason?.message || 'unknown error'}`);
         }
       }
 
-      totalCards += cardRows.length;
-      totalSnaps += snapRows.length;
-      console.log(`[sync-digimon] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      // C3L-168: cardsWritten/snapsWritten count rows the database accepted. The old
+      // cardRows.length counted rows ASSEMBLED, so a set whose upsert aborted still
+      // added its full row count and the run reported a total nothing had written.
+      totalCards += cardsWritten;
+      totalSnaps += snapsWritten;
+      console.log(`[sync-digimon] ${set.name}: ${cardsWritten}/${cardRows.length} cards, ${snapsWritten}/${snapRows.length} snapshots written`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
     console.log(`[sync-digimon] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
-    await logSyncEvent('sync_success', totalCards);
+    // C3L-168: a run that lost a set reports sync_partial with the reasons, not
+    // sync_success. Nothing about the sync's own behaviour changes, only what it says.
+    await logSyncEvent(
+      failedSets.length ? 'sync_partial' : 'sync_success',
+      totalCards,
+      failedSets.length
+        ? `${failedSets.length} set(s) failed: ${failedSets.slice(0, 5).join(' | ')}`
+        : null
+    );
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }

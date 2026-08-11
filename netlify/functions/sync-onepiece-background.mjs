@@ -262,6 +262,10 @@ export default async (req) => {
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
     let totalSnaps = 0;
+    // C3L-168: this array already existed here and already collected sets that failed
+    // to FETCH, and it was returned in the HTTP response while the run still logged
+    // sync_success. Upsert failures now feed the same array, and the array now decides
+    // the event type, so both kinds of lost set are visible in sync_events.
     const failedSets = [];
     let enrichCount = 0;
 
@@ -372,15 +376,20 @@ export default async (req) => {
         }
       }
 
+      let cardsWritten = 0, snapsWritten = 0;
       const results = await Promise.allSettled([
         (async () => {
           for (let i = 0; i < cardRows.length; i += 200) {
-            await supabaseUpsert('onepiece_cards', cardRows.slice(i, i + 200));
+            const chunk = cardRows.slice(i, i + 200);
+            await supabaseUpsert('onepiece_cards', chunk);
+            cardsWritten += chunk.length;
           }
         })(),
         (async () => {
           for (let i = 0; i < snapRows.length; i += 500) {
-            await supabaseUpsertSnapshots('onepiece_price_snapshots', snapRows.slice(i, i + 500));
+            const chunk = snapRows.slice(i, i + 500);
+            await supabaseUpsertSnapshots('onepiece_price_snapshots', chunk);
+            snapsWritten += chunk.length;
           }
         })()
       ]);
@@ -388,17 +397,29 @@ export default async (req) => {
       for (const r of results) {
         if (r.status === 'rejected') {
           console.error(`[sync-onepiece] Upsert error for set ${set.name}:`, r.reason?.message);
+          failedSets.push(`${set.name}: ${r.reason?.message || 'unknown error'}`);
         }
       }
 
-      totalCards += cardRows.length;
-      totalSnaps += snapRows.length;
-      console.log(`[sync-onepiece] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots`);
+      // C3L-168: cardsWritten/snapsWritten count rows the database accepted. The old
+      // cardRows.length counted rows ASSEMBLED, so a set whose upsert aborted still
+      // added its full row count and the run reported a total nothing had written.
+      totalCards += cardsWritten;
+      totalSnaps += snapsWritten;
+      console.log(`[sync-onepiece] ${set.name}: ${cardsWritten}/${cardRows.length} cards, ${snapsWritten}/${snapRows.length} snapshots written`);
     }
 
     const elapsed = ((Date.now() - start) / 1000).toFixed(1);
     console.log(`[sync-onepiece] Done. ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
-    await logSyncEvent('sync_success', totalCards);
+    // C3L-168: a run that lost a set reports sync_partial with the reasons, not
+    // sync_success. Nothing about the sync's own behaviour changes, only what it says.
+    await logSyncEvent(
+      failedSets.length ? 'sync_partial' : 'sync_success',
+      totalCards,
+      failedSets.length
+        ? `${failedSets.length} set(s) failed: ${failedSets.slice(0, 5).join(' | ')}`
+        : null
+    );
     return new Response(JSON.stringify({ cards: totalCards, snapshots: totalSnaps, elapsed, failedSets, failedSetCount: failedSets.length }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }

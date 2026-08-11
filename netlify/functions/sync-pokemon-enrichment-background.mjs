@@ -294,9 +294,16 @@ export default async (req) => {
     // A run where every set attempted came back needing a retry is not a success, whatever the
     // absence of a thrown error suggests. Logging it as an error is what makes it visible to the
     // C3L-51 health check rather than looking like quiet progress.
+    // C3L-168 extends that same reasoning to the middle case. All-failed was already an error
+    // and none-failed was already a success, but SOME failed still logged a clean sync_success,
+    // so a run that lost half its sets was indistinguishable from one that lost none.
+    // cardsUpdated was already an honest count of what landed, so only the status changes here.
     if (setsDone > 0 && setsNeedingRetry === setsDone) {
       await logSyncEvent('sync_error', 0,
         `all ${setsDone} sets attempted needed a retry, 0 cards enriched`);
+    } else if (setsNeedingRetry > 0) {
+      await logSyncEvent('sync_partial', cardsUpdated,
+        `${setsNeedingRetry} of ${setsDone} sets attempted needed a retry`);
     } else {
       await logSyncEvent('sync_success', cardsUpdated);
     }

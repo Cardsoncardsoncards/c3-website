@@ -603,6 +603,9 @@ export default async (req) => {
       } catch (e) {
         if (e.message.includes('Rate limit low')) throw e;
         console.error(`[sync-pokemon] Snapshot-only pass failed for set ${set.id}:`, e.message);
+        // C3L-168: this pass swallowed its failure and recorded nothing, so a set that lost
+        // its snapshots entirely still landed inside a sync_success.
+        failedSets.push(`${set.id ?? set.name ?? 'unknown'} (snapshot-only): ${e.message}`);
       }
     }
 
@@ -623,7 +626,19 @@ export default async (req) => {
 
     console.log(`[sync-pokemon] Done. ${setCount} sets refreshed, ${skippedCount} snapshot-only. ${totalCards} cards, ${totalSnaps} snapshots. ${elapsed}s`);
     if (summary) console.log(`[sync-pokemon] ${summary}`);
-    await logSyncEvent('sync_success', totalCards, summary);
+    // C3L-168: failedSets was already collected here and already returned in the HTTP
+    // response, and the event still said sync_success regardless. It now decides the
+    // event type. NOTE the main per-set upserts are deliberately NOT wrapped in a catch
+    // in this file: if one throws it reaches the outer handler and logs sync_error, which
+    // is already correct, so nothing here changes that path.
+    const failureNote = failedSets.length
+      ? `${failedSets.length} set(s) failed: ${failedSets.slice(0, 5).join(' | ')}`
+      : null;
+    await logSyncEvent(
+      failedSets.length ? 'sync_partial' : 'sync_success',
+      totalCards,
+      [summary, failureNote].filter(Boolean).join(' || ') || null
+    );
     return new Response(JSON.stringify({ ok: true, setsRefreshed: setCount, setsDeferred: skippedCount, cards: totalCards, snapshots: totalSnaps, elapsed, rotation: summary, failedSets, failedSetCount: failedSets.length }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }

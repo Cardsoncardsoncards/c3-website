@@ -289,6 +289,9 @@ export default async (req) => {
     // where it stopped rather than from the top.
     const today = new Date().toISOString().split('T')[0];
     let totalCards = 0;
+    // C3L-168: sets whose upsert failed, so the run reports sync_partial rather than a
+    // sync_success carrying a row count nothing ever wrote.
+    const failedSets = [];
     let totalSnaps = 0;
     let enrichCount = 0;
     let setCount = 0;
@@ -437,15 +440,20 @@ export default async (req) => {
         }
       }
 
+      let cardsWritten = 0, snapsWritten = 0;
       const results = await Promise.allSettled([
         (async () => {
           for (let i = 0; i < cardRows.length; i += 200) {
-            await supabaseUpsert('yugioh_cards', cardRows.slice(i, i + 200));
+            const chunk = cardRows.slice(i, i + 200);
+            await supabaseUpsert('yugioh_cards', chunk);
+            cardsWritten += chunk.length;
           }
         })(),
         (async () => {
           for (let i = 0; i < snapRows.length; i += 500) {
-            await supabaseUpsertSnapshots('yugioh_price_snapshots', snapRows.slice(i, i + 500));
+            const chunk = snapRows.slice(i, i + 500);
+            await supabaseUpsertSnapshots('yugioh_price_snapshots', chunk);
+            snapsWritten += chunk.length;
           }
         })()
       ]);
@@ -453,11 +461,13 @@ export default async (req) => {
       for (const r of results) {
         if (r.status === 'rejected') {
           console.error(`[sync-yugioh] Upsert error for set ${set.name}:`, r.reason?.message);
+          failedSets.push(`${set.name}: ${r.reason?.message || 'unknown error'}`);
         }
       }
 
-      totalCards += cardRows.length;
-      totalSnaps += snapRows.length;
+      // C3L-168: what the database accepted, not what was assembled.
+      totalCards += cardsWritten;
+      totalSnaps += snapsWritten;
       await markSetSynced({ table: PROGRESS_TABLE, setId: set.id, supabaseUrl: SUPABASE_URL, serviceKey: SUPABASE_SERVICE_KEY, logPrefix: '[sync-yugioh]' });
       console.log(`[sync-yugioh] ${set.name}: ${cardRows.length} cards, ${snapRows.length} snapshots (${budget.elapsedS()}s)`);
     }
@@ -475,7 +485,17 @@ export default async (req) => {
 
     console.log(`[sync-yugioh] Done. ${setCount} sets, ${totalCards} cards, ${totalSnaps} snapshots in ${elapsed}s`);
     if (summary) console.log(`[sync-yugioh] ${summary}`);
-    await logSyncEvent('sync_success', totalCards, summary);
+    // C3L-168: a lost set makes this sync_partial. The rotation summary is preserved and
+    // the failure reasons are appended to it, because both matter and they are different
+    // facts: summary says how much of the rotation was covered, failedSets says what broke.
+    const failureNote = failedSets.length
+      ? `${failedSets.length} set(s) failed: ${failedSets.slice(0, 5).join(' | ')}`
+      : null;
+    await logSyncEvent(
+      failedSets.length ? 'sync_partial' : 'sync_success',
+      totalCards,
+      [summary, failureNote].filter(Boolean).join(' || ') || null
+    );
     return new Response(JSON.stringify({ setsRefreshed: setCount, cards: totalCards, snapshots: totalSnaps, elapsed, rotation: summary }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }

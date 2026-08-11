@@ -129,7 +129,7 @@ async function selfChain() {
 // time), so there is no error path to hook. Only ids_sync_start and ids_sync_success
 // are emitted; a hard failure shows up as a missing success row, plus the Netlify logs.
 // Each self-chained continuation emits its own start row.
-async function logSyncEvent(eventType, rowsAffected = null) {
+async function logSyncEvent(eventType, rowsAffected = null, errorMessage = null) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 8000);
   try {
@@ -144,7 +144,9 @@ async function logSyncEvent(eventType, rowsAffected = null) {
       body: JSON.stringify([{
         event_type:    eventType,
         game:          GAME_CONFIG.game,
-        rows_affected: rowsAffected
+        rows_affected: rowsAffected,
+        // C3L-168: added so a partial run can say WHY, not just that it was partial.
+        error_message: errorMessage ? String(errorMessage).slice(0, 500) : null
       }]),
       signal: controller.signal
     });
@@ -195,7 +197,14 @@ export default async (req) => {
     await selfChain();
   }
 
-  await logSyncEvent('ids_sync_success', totalSucceeded);
+  // C3L-168: totalFailed was already counted here and never reached sync_events, so a
+  // run that failed on every id looked identical to a clean one. The row count was
+  // always honest in this file (it counts successes), only the status was not.
+  await logSyncEvent(
+    totalFailed > 0 ? 'ids_sync_partial' : 'ids_sync_success',
+    totalSucceeded,
+    totalFailed > 0 ? `${totalFailed} id lookup(s) failed` : null
+  );
 
   return new Response(JSON.stringify({ game, totalProcessed, totalSucceeded, totalFailed, rateLimitHit, timeLimitHit, currentRemaining, elapsedSec, done, log }, null, 2), {
     headers: { 'Content-Type': 'application/json' }
