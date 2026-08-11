@@ -1,4 +1,5 @@
 import { SECURITY_HEADERS } from './shared/security-headers.mjs';
+import { makeNonce, cspHeader } from './shared/csp.mjs';
 import { NAV_CSS, NAV_HTML } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
 // netlify/functions/mtg-banned.mjs
@@ -177,6 +178,10 @@ export default async (req) => {
     ? `Complete list of cards banned in MTG ${format.label} as of 2026. Includes ban reasons for each card. Australian prices and eBay AU buy links.`
     : 'Complete MTG banned card lists for Standard, Pioneer, Modern, and Commander. Includes ban reasons for every banned card. Australian prices and eBay AU buy links.';
 
+  // CSP pilot: one nonce per response, stamped onto the single inline <script> below and
+  // into the Content-Security-Policy header. Generated here so both use the same value.
+  const nonce = makeNonce();
+
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -193,7 +198,18 @@ export default async (req) => {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+  <script nonce="${nonce}">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');
+  // CSP pilot. This replaces the one inline onclick this page used to carry. A delegated
+  // listener is used rather than a per-element binding so it keeps working for anything added
+  // later, and it reads the event name off data attributes so no markup needs a handler again.
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-c3-ev]') : null;
+    if (!el) return;
+    gtag('event', el.getAttribute('data-c3-ev'), {
+      event_category: el.getAttribute('data-c3-cat') || 'affiliate',
+      event_label: el.getAttribute('data-c3-label') || ''
+    });
+  });</script>
   <style>
     :root{--bg:#0f1117;--bg2:#1a1d2e;--bg3:#22263a;--accent:#f5a623;--text:#e8eaf0;--text2:#9ba3c4;--border:#2d3254;--radius:12px;--gold:#C9A84C}
     *{box-sizing:border-box;margin:0;padding:0}
@@ -272,7 +288,7 @@ export default async (req) => {
 
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
-  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG Cards</a></p>
+  <p><a href="/">Home</a><a href="/shop">Shop</a><a href="/blog">Blog</a><a href="/tracker">Tracker</a><a href="/cards">Card Prices</a><a href="/compare">Compare</a><a href="/market">Market</a><a href="/tools">Tools</a><a href="/play">Play</a><a href="/contact">Contact</a><a href="/legal">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" data-c3-ev="ebay_click" data-c3-cat="affiliate" data-c3-label="footer">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener">D&amp;D Tools on Etsy &#8599;</a><br><a href="/cards/mtg">MTG Cards</a></p>
   <p style="margin-top:8px;font-size:12px">Ban lists current as of 2026. All prices in AUD. &copy; 2026 Cards on Cards on Cards &middot; Affiliate links may earn a small commission.</p>
   <p style="margin-top:6px;font-size:10px;opacity:.5">Cards on Cards on Cards is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards of the Coast. Portions of the materials used are property of Wizards of the Coast LLC.</p>
   <p style="margin-top:6px;font-size:11px;opacity:.5">This product uses TCGplayer data but is not endorsed or certified by TCGplayer.</p>
@@ -282,7 +298,18 @@ export default async (req) => {
 </html>`;
 
   return new Response(html, {
-    headers: { ...SECURITY_HEADERS, 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, s-maxage=86400' }
+    headers: {
+      ...SECURITY_HEADERS,
+      'Content-Type': 'text/html; charset=utf-8',
+      // CSP pilot, this page type only. The nonce is per response, so the cached copy and its
+      // header are stamped together by the same request. NOTE the interaction with the
+      // s-maxage below: a shared cache serves one stored response, header and body together,
+      // so the nonce stays consistent for anyone served from cache. If this policy is ever
+      // extended to a page whose HTML is cached SEPARATELY from its headers, the nonce
+      // approach breaks and a hash-based policy is required instead.
+      'Content-Security-Policy': cspHeader(nonce),
+      'Cache-Control': 'public, s-maxage=86400'
+    }
   });
 };
 
