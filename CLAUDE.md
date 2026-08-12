@@ -53,6 +53,33 @@ SECURITY WARNING: This repo is PUBLIC on GitHub.
 Never hardcode any secret values, API keys, or auth tokens in any file.
 Always use Netlify.env.get('VAR_NAME') to read secrets at runtime.
 
+"Any file" INCLUDES THE DOCUMENTATION, AND THAT IS THE PART THAT ACTUALLY WENT WRONG (C3L-193).
+The rule above reads as being about code. It is not. C3_FINDINGS_REGISTER.md, PROJECT.md, this
+file and every task write-up are committed to the same public repo, so a credential quoted in a
+findings entry is exactly as published as one hardcoded in a function. On 12 August a live eBay
+Cert ID was pasted into a C3L-192 register entry, in the very row describing a credential
+mistake, and it was public until the next commit removed it.
+
+So: FINGERPRINTS, NEVER VALUES, in the register and in any other committed document.
+- Record what identifies a secret without reproducing it: length, prefix, segment shape, the
+  LAST FOUR characters, or a short hash prefix. Those are enough to compare two values, to prove
+  a rotation happened, and to tell a masked read-back apart from a stale one.
+- Never paste a full credential, not even one you believe is already revoked, expired or
+  replaced. Revocation propagates on a delay (the same eBay cert still authenticated for over
+  three hours after a "0 day" rotation), and a dead value still teaches an attacker your format.
+- This applies to the old value in a rotation write-up just as much as the new one.
+- Removing a value in a later commit does NOT unpublish it. It stays in git history, so the
+  credential must be rotated at the provider. Treat any committed secret as burned.
+
+Two things make this self-enforcing, and both are worth knowing before the next rotation:
+- Netlify's build-time secrets scanner only scans for the values of env vars flagged
+  `is_secret`. Flagging a variable therefore arms a repo-wide detector for its value, and a
+  build will FAIL with "Exposed secrets detected: VAR_NAME" if it appears anywhere in the
+  checked-out tree. That is how C3L-193 was caught, within one build. Do not work around it,
+  it is doing its job.
+- Before committing anything that discusses a credential, grep the working tree for the value
+  itself, not for the variable name.
+
 ### The Supabase service credential lives under TWO names (C3L-96)
 
 One credential, two variable names, two secret stores, and nothing connects them. Recorded
