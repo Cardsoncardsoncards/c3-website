@@ -67,6 +67,13 @@ export const ALERTABLE_GAMES = new Set([
   'mtg', 'pokemon', 'lorcana', 'onepiece', 'yugioh', 'dbsfusionworld', 'starwars'
 ]);
 
+// C3L-185: FOLLOW_GAMES now has ZERO callers, and its name is actively dangerous. It reads as
+// "the games you can follow" and it is all 32. Its only ever use was the follow-creation guard
+// in card-api.mjs, which is exactly the one job it was wrong for: it rejected a nonsense game
+// and accepted weissschwarz, which is how follow id 7 came to exist. That call site now uses
+// ALERTABLE_GAMES. Kept rather than deleted because removing an export is a separate decision,
+// NOT because anything needs it. Do not reach for this to gate a follow. If you want "every
+// game that has a card page", say Object.keys(GAME_META) and mean it.
 export const FOLLOW_GAMES   = new Set(Object.keys(GAME_META));
 export const GAME_TABLES    = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[0]]));
 export const GAME_IMAGE_COL = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[1]]));

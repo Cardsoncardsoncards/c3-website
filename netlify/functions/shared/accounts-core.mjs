@@ -19,6 +19,8 @@
 // everybody, and eligibility is resolved at send time from subscribers. That is what makes
 // upgrade and downgrade free: a follow row never moves, is never copied, is never migrated.
 
+import { ALERTABLE_GAMES } from './game-meta.mjs';
+
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 
@@ -252,6 +254,25 @@ export async function listFollows(userId) {
 // the shared slug rule, which is exactly how every follow behaved before this task. It is
 // never inferred here, because a guess stored in this column is indistinguishable from a fact.
 export async function applyFollow({ email, game, cardSlug, cardName, printingId = null, autoConfirm = false }) {
+  // C3L-185. The authoritative game check, and it is FIRST for two reasons.
+  //
+  // Why it belongs here at all: this is the ONE follow write path, so a guard anywhere else is
+  // a guard a future second caller can forget. C3L-183 gated the BUTTON in follow-block.mjs,
+  // which stops the promise being offered but does nothing about a direct POST to
+  // /api/card-follow. card-api.mjs does carry its own fail-fast check, and that one is worth
+  // keeping because it refuses before any work at all, but it is a convenience rather than the
+  // guarantee. This is the guarantee.
+  //
+  // Why FIRST, ahead of even the email check: resolveOrCreateAccount() below CREATES an account
+  // row as a side effect. Validating the game afterwards would mean a POST naming a game we
+  // will certainly refuse still leaves a real account behind, so a junk loop could grow the
+  // accounts table without ever creating a follow. Refusing here costs one Set lookup and
+  // touches no table.
+  //
+  // Note this checks ALERTABLE_GAMES (7), NOT FOLLOW_GAMES (all 32). Those two names are the
+  // whole reason C3L-183 existed; see the comment above ALERTABLE_GAMES in game-meta.mjs.
+  if (!ALERTABLE_GAMES.has(String(game))) return { ok: false, reason: 'unsupported_game' };
+
   const normalised = normaliseEmail(email);
   if (!normalised) return { ok: false, reason: 'invalid_email' };
 

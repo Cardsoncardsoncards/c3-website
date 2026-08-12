@@ -32,7 +32,7 @@ import { resolveFollowCard } from './shared/card-resolver.mjs';
 
 // task-135: the 32-game roster now lives in one shared module, imported by both the follow write
 // path (here) and the dashboard read path (account.mjs), so the two can never drift apart again.
-import { FOLLOW_GAMES, GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared/game-meta.mjs';
+import { ALERTABLE_GAMES, GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './shared/game-meta.mjs';
 
 // One shared definition of what we record about the incoming request, so this file and
 // account.mjs capture the same fields the same way instead of each inventing its own.
@@ -363,7 +363,12 @@ async function handleCardFollow(req) {
     ? String(printingId).trim().slice(0, 128) || null
     : null;
 
-  if (!FOLLOW_GAMES.has(game))     return json({ error: 'Unsupported game' }, 400);
+  // C3L-185. This check already existed and had the right shape; it was pointed at the wrong
+  // set. FOLLOW_GAMES is all 32 games, so it rejected a nonsense game but happily accepted
+  // weissschwarz, which is precisely how follow id 7 was created. ALERTABLE_GAMES is the 7 this
+  // site can actually alert on. The authoritative guard is in applyFollow(); this one stays
+  // because it refuses before the session lookup and before any DB work at all.
+  if (!ALERTABLE_GAMES.has(game))  return json({ error: 'Unsupported game' }, 400);
   if (!cardSlug || typeof cardSlug !== 'string') return json({ error: 'Card is required' }, 400);
 
   // task-132 auth-aware path. No email in the body means "try the signed-in one-click follow".
@@ -377,6 +382,12 @@ async function handleCardFollow(req) {
     if (!r.ok) {
       if (r.reason === 'cap_reached') {
         return json({ error: `You have reached the maximum number of followed cards (${r.cap}). Remove one to add another.`, capReached: true }, 429);
+      }
+      // C3L-185: a refused game is the caller's error, not ours, so it must not fall through to
+      // the 500 below. It is reachable here despite the check above only if the two sets ever
+      // disagree, which is exactly the drift worth surfacing rather than reporting as a fault.
+      if (r.reason === 'unsupported_game') {
+        return json({ error: 'Follows are not available for this game yet.' }, 400);
       }
       console.error('[card-follow] signed-in applyFollow failed:', r.reason);
       return json({ error: 'Could not save your follow. Please try again.' }, 500);
@@ -401,6 +412,10 @@ async function handleCardFollow(req) {
     }
     if (result.reason === 'invalid_email') {
       return json({ error: 'A valid email is required' }, 400);
+    }
+    // C3L-185, same reasoning as the signed-in branch above: caller error, 400 not 500.
+    if (result.reason === 'unsupported_game') {
+      return json({ error: 'Follows are not available for this game yet.' }, 400);
     }
     console.error('[card-follow] applyFollow failed:', result.reason);
     return json({ error: 'Could not save your follow. Please try again.' }, 500);
