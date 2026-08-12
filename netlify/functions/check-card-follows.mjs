@@ -29,6 +29,12 @@ import { logSyncEvent } from './shared/sync-event.mjs';
 // Supabase only, no external card APIs. Resend is used for the emails.
 
 import { resolveFollowCard } from './shared/card-resolver.mjs';
+import {
+  ALERTABLE_GAMES,
+  GAME_TABLES    as ALL_GAME_TABLES,
+  GAME_IMAGE_COL as ALL_GAME_IMAGE_COL,
+  GAME_LABELS    as ALL_GAME_LABELS
+} from './shared/game-meta.mjs';
 
 const SUPABASE_URL         = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
@@ -43,36 +49,23 @@ const BATCH            = 200;
 // Games whose 7-day price change is trustworthy. Everything else falls back to 30d.
 const SEVEN_DAY_RELIABLE = new Set(['onepiece', 'yugioh', 'mtg']);
 
-const GAME_TABLES = {
-  mtg:            'mtg_cards',
-  pokemon:        'pokemon_cards',
-  lorcana:        'lorcana_cards',
-  onepiece:       'onepiece_cards',
-  yugioh:         'yugioh_cards',
-  dbsfusionworld: 'dbsfusionworld_cards',
-  starwars:       'starwars_cards'
-};
+// C3L-183. These three maps used to be literals here, listing the same 7 games that
+// shared/game-meta.mjs already described for all 32. That duplication was not harmless: this
+// file's local constant was named GAME_TABLES and game-meta.mjs exports a DIFFERENT
+// GAME_TABLES covering all 32 games, so the same name meant two different things depending on
+// which file you were reading. They are now DERIVED from the one canonical set, so the games
+// this function can evaluate and the games follow-block.mjs offers a button for cannot drift
+// apart: both read ALERTABLE_GAMES, and adding a game there changes both at once.
+//
+// MTG stores art as image_uri_*; every other game uses a single image_url. That distinction
+// lives in game-meta.mjs and is inherited here rather than restated.
+const pick = (src) => Object.fromEntries(
+  Object.entries(src).filter(([g]) => ALERTABLE_GAMES.has(g))
+);
 
-// MTG stores art as image_uri_*; every other Core game uses a single image_url.
-const GAME_IMAGE_COL = {
-  mtg:            'image_uri_normal',
-  pokemon:        'image_url',
-  lorcana:        'image_url',
-  onepiece:       'image_url',
-  yugioh:         'image_url',
-  dbsfusionworld: 'image_url',
-  starwars:       'image_url'
-};
-
-const GAME_LABELS = {
-  mtg:            'Magic: The Gathering',
-  pokemon:        'Pokemon',
-  lorcana:        'Lorcana',
-  onepiece:       'One Piece',
-  yugioh:         'Yu-Gi-Oh',
-  dbsfusionworld: 'Dragon Ball Fusion World',
-  starwars:       'Star Wars Unlimited'
-};
+const GAME_TABLES    = pick(ALL_GAME_TABLES);
+const GAME_IMAGE_COL = pick(ALL_GAME_IMAGE_COL);
+const GAME_LABELS    = pick(ALL_GAME_LABELS);
 
 function esc(str) {
   return (str == null ? '' : String(str))
@@ -239,6 +232,7 @@ export default async (req) => {
   // can distinguish "did not move" from "no data to judge". It is deliberately separate from
   // missingCard, which means the card row itself could not be resolved at all.
   let checked = 0, sent = 0, skippedFloor = 0, belowThreshold = 0, missingCard = 0, missingChange = 0;
+  let skippedUnsupported = 0;   // C3L-183: follows on games this function cannot evaluate
 
   try {
     // task-109: reads the unified follows table, not card_price_alerts.
@@ -269,7 +263,22 @@ export default async (req) => {
 
     for (const row of rows) {
       const table = GAME_TABLES[row.game];
-      if (!table) { log.push(`unknown game ${row.game} on alert ${row.id}`); continue; }
+      if (!table) {
+        // C3L-183. This `continue` used to sit ABOVE `checked++`, so a follow on a game this
+        // function cannot evaluate left no trace at all: it was not counted, the run still
+        // reported sync_success, and the only visible symptom was a `checked` total quietly
+        // one short of the follows that actually exist. That is the same silent-partial shape
+        // as C3L-168 and C3L-136, and it is why a weissschwarz follow went unnoticed nightly
+        // from 16 July.
+        //
+        // `checked` still means EXAMINED and deliberately does not include these, because
+        // inflating it would hide the gap rather than show it. The skip gets its own counter,
+        // reaches the JSON summary, and downgrades the run to sync_partial below, so a skipped
+        // follow is now impossible to miss without reading the log array.
+        skippedUnsupported++;
+        log.push(`unsupported game ${row.game} on follow ${row.id}, cannot alert, see C3L-183`);
+        continue;
+      }
 
       checked++;
 
@@ -356,12 +365,24 @@ export default async (req) => {
       log.push(`${row.game}/${row.card_slug}: ${changePct > 0 ? '+' : ''}${changePct.toFixed(1)}% over ${windowLabel}, emailed`);
     }
 
-    const summary = { ok: true, checked, sent, belowThreshold, missingChange, skippedFloor, missingCard, threshold: CHANGE_THRESHOLD, priceFloorAud: PRICE_FLOOR_AUD, log };
+    const summary = { ok: true, checked, sent, belowThreshold, missingChange, skippedFloor, missingCard, skippedUnsupported, threshold: CHANGE_THRESHOLD, priceFloorAud: PRICE_FLOOR_AUD, log };
     console.log('[check-card-follows]', JSON.stringify(summary));
     // rows_affected is EMAILS SENT, not follows examined. A run that checked 40 follows and sent
     // nothing is a normal quiet night; a run that sent nothing for weeks while checked climbs is
     // the thing worth noticing, and both are readable from this one number plus the log line.
-    await logSyncEvent({ eventType: 'sync_success', game: 'follows', rowsAffected: sent, logPrefix: '[check-card-follows]' });
+    // C3L-183. A run that could not evaluate part of its input is NOT a success, which is the
+    // C3L-168 rule applied to this function: reporting sync_success while silently dropping a
+    // follow is exactly how this went unnoticed for weeks. rows_affected stays EMAILS SENT in
+    // both branches so the number keeps one meaning; the reason string carries the detail.
+    await logSyncEvent({
+      eventType:    skippedUnsupported > 0 ? 'sync_partial' : 'sync_success',
+      game:         'follows',
+      rowsAffected: sent,
+      errorMessage: skippedUnsupported > 0
+        ? `${skippedUnsupported} follow(s) on games this job cannot evaluate, see C3L-183`
+        : null,
+      logPrefix:    '[check-card-follows]'
+    });
     return new Response(JSON.stringify(summary, null, 2), {
       headers: { 'Content-Type': 'application/json' }
     });

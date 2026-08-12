@@ -252,10 +252,34 @@ reported rather than silently changed. Fix them in a task that is scoped to say 
                           Ball game out of the market fanout entirely.
 
 ### Followable games (7) are NOT the same set as the Core 8
-Only these 7 card-page files import shared/follow-links.mjs and carry a follow button:
-mtg (card-page.mjs), pokemon, yugioh, lorcana, onepiece, starwars, dbsfusionworld.
-Note what that means: riftbound is Core 8 but NOT followable, and yugioh is followable. If you
-add follows to a game, add the card page import too.
+The 7 games that can be followed and alerted on:
+mtg, pokemon, yugioh, lorcana, onepiece, starwars, dbsfusionworld.
+Note what that means: riftbound is Core 8 but NOT followable, and yugioh is followable.
+
+CORRECTED 12 Aug 2026 (C3L-183). This section previously said "only these 7 card-page files
+import shared/follow-links.mjs and carry a follow button" and told you to add the card page
+import when adding a game. Both halves were wrong, and acting on either would have made things
+worse:
+- NOTHING imports follow-links.mjs. It is 17 lines of dead code, superseded by
+  shared/follow-block.mjs, and the only occurrence of its name in the repo is its own header
+  comment. Do not add imports of it. (Second instance of the C3L-174 pattern: a file that
+  passes every check while serving nothing.)
+- The follow button comes from shared/follow-block.mjs, which ALL 32 card pages import. The
+  import is not what makes a game followable and never was.
+
+The single source of truth is now ALERTABLE_GAMES in netlify/functions/shared/game-meta.mjs.
+Both sides read it: follow-block.mjs renders the button only for those games, and
+check-card-follows.mjs derives its per-game maps from it, so the button offered and the alert
+that can fire cannot drift apart.
+
+ADDING A GAME IS NOT A ONE-LINE CHANGE. Adding it to ALERTABLE_GAMES is the LAST step, not the
+first: a game only belongs there once its price-change columns are proven trustworthy enough to
+email a stranger about. That audit is open item C3L-184. Do not add a game to that set to
+"restore" a missing follow button.
+
+Careful with the name GAME_TABLES: game-meta.mjs exports one covering all 32 games. Until
+C3L-183, check-card-follows.mjs defined an unrelated 7-game constant under the SAME name. It
+now derives from game-meta instead, but the name is still ambiguous when read cold.
 
 ### Permanently excluded
 Flesh and Blood (LSS commercial restrictions -- never recommend or build for this game).
@@ -336,8 +360,17 @@ designation back on row count.
 - session.mjs (132) -- task-110. HMAC-SHA256 signed, httpOnly, Secure, SameSite=Lax cookie,
   30 days, constant-time compare. Signed with SESSION_SECRET from Netlify env. If the secret is
   missing it FAILS CLOSED rather than degrading to an unsigned, forgeable cookie.
-- follow-links.mjs (17) -- task-111. The single definition of the "Manage your follows" line
-  under the follow button. Imported by all 7 followable card pages so the wording cannot drift.
+- follow-links.mjs (17) -- task-111, NOW DEAD CODE, imported by NOTHING (verified 12 Aug 2026,
+  C3L-183). It was the definition of the "Manage your follows" line under the follow button.
+  That line now lives inside follow-block.mjs. The file survives only because deleting it is a
+  separate decision; do not import it, and do not treat it as the follow button's source.
+- follow-block.mjs (94+) -- task-132. THE follow button, imported by all 32 card pages. Renders
+  only for the 7 games in ALERTABLE_GAMES (game-meta.mjs) and returns an empty string for the
+  other 25, which is the C3L-183 gate. Self-contained: inline styles plus one scoped script.
+- game-meta.mjs -- the ONE 32-game map (GAME_META, and GAME_TABLES / GAME_IMAGE_COL /
+  GAME_LABELS / GAME_PRINTING_COL derived from it), PLUS ALERTABLE_GAMES, the 7 games that can
+  actually be followed and alerted on. Read the comment above ALERTABLE_GAMES before using any
+  export here to decide whether a follow is offered: the 32 and the 7 are different questions.
 - weekly-report-core.mjs (313) -- shared engine for the weekly emails: price-movement queries,
   the Resend template, batch send. Holds GAME_CONFIG (the Core 8) and TCG_API_GAME_MAP.
 - price-chart.mjs (138) -- the single-line interactive price-history chart.

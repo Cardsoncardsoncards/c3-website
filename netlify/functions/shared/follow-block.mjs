@@ -11,6 +11,22 @@
 //
 // The block is fully self-contained (inline styles + one scoped inline script), so a game adopts
 // it with a single import and one `${followBlockHtml({...})}` call, no per-page CSS needed.
+//
+// C3L-183, and it corrects the paragraph above. "Used by every game card page" was true of the
+// IMPORT and it is still true, but rendering on every game was a defect, not a feature. 32 card
+// pages import this module and only 7 games can produce an alert, because `check-card-follows`
+// can evaluate 7. Nothing checked: not this module, which rendered for whatever `game` it was
+// handed, and not `applyFollow()`, which inserts whatever `game` string it is passed. So the
+// other 25 games offered a working, confirmable follow that was then skipped silently every
+// night, forever. A weissschwarz follow (id 7) is the live proof.
+//
+// The gate is here rather than in `applyFollow()` because this is the only one of the two that
+// can decline BEFORE making a promise to the person. Validating on write would leave a button
+// that fails on click, which is a worse experience than no button. `applyFollow()` is still the
+// place to add a server-side guard later; this is not a substitute for one, it is the half that
+// stops the promise being made.
+
+import { ALERTABLE_GAMES } from './game-meta.mjs';
 
 function esc(s) {
   return String(s == null ? '' : s)
@@ -25,6 +41,13 @@ function esc(s) {
 // Omitting it is not an error: the follow is still recorded, it just falls back to the shared
 // slug rule when read, exactly as every follow did before this task.
 export function followBlockHtml({ game, slug, cardName, printingId = null }) {
+  // Return EMPTY STRING, not a disabled button and not an explanatory notice. Every caller
+  // interpolates this straight into a template with `${followBlockHtml({...})}`, so an empty
+  // string removes the block cleanly on all 25 unsupported pages with no caller change and no
+  // stray empty container. A visible "not available for this game" line was considered and
+  // rejected: it advertises an absence on 25 pages to solve a problem the visitor does not have.
+  if (!ALERTABLE_GAMES.has(String(game))) return '';
+
   const btnStyle = 'display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;border:1px solid rgba(201,168,76,.35);background:rgba(201,168,76,.12);color:#C9A84C;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit';
   return `
 <div class="c3-follow" style="margin-top:12px">

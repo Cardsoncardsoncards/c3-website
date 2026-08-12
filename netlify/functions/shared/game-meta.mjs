@@ -43,6 +43,30 @@ export const GAME_META = {
   wow:               ['wow_cards',               'image_url',        'World of Warcraft'],
 };
 
+// C3L-183. THE 32 GAMES ABOVE ARE NOT THE GAMES THAT CAN ALERT. Read this before using any
+// export in this file to decide whether a follow is offered or honoured.
+//
+// Three names in this repo sound like they mean "games you can follow" and only one of them
+// does. `GAME_META` and `FOLLOW_GAMES` below are all 32 games: that is the set the dashboard
+// can RENDER a stored follow for, which is why task-135 built them. `ALERTABLE_GAMES` is the
+// 7 games `check-card-follows` can actually evaluate and email on. There is also a THIRD
+// thing called `GAME_TABLES`: the one exported here is all 32, and `check-card-follows.mjs`
+// used to define its own unrelated 7-game constant under the SAME NAME. That collision is
+// what this constant exists to end, so that file now derives its maps from here.
+//
+// The gap this closes: `follow-block.mjs` rendered a follow button on all 32 card pages while
+// only these 7 could ever produce an alert, and neither the button nor `applyFollow()`
+// checked. A weissschwarz follow (id 7) was accepted, confirmed and then skipped silently
+// every night. See C3L-183.
+//
+// ADDING A GAME HERE IS NOT A ONE-LINE CHANGE and must not be done to "fix" a missing button.
+// A game only belongs in this set once its price-change columns are proven trustworthy enough
+// to email a stranger about. That audit is the separate open item C3L-184, and it is the work
+// this constant deliberately defers rather than pretends to have done.
+export const ALERTABLE_GAMES = new Set([
+  'mtg', 'pokemon', 'lorcana', 'onepiece', 'yugioh', 'dbsfusionworld', 'starwars'
+]);
+
 export const FOLLOW_GAMES   = new Set(Object.keys(GAME_META));
 export const GAME_TABLES    = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[0]]));
 export const GAME_IMAGE_COL = Object.fromEntries(Object.entries(GAME_META).map(([g, m]) => [g, m[1]]));
