@@ -458,7 +458,8 @@ async function sendLinkEmail(account, kind) {
     html: `<p>Hi,</p><p>${intro}</p>
 <p><a href="${link}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">${btnText}</a></p>
 <p>If you did not request this, you can safely ignore this email.</p>
-<p>The C3 Team</p>`,
+<p>The C3 Team</p>
+<p style="font-size:11px;color:#999">Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.</p>`,
   });
 }
 

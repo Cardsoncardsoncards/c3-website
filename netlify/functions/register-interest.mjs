@@ -184,6 +184,7 @@ export default async (req) => {
             + `<p>You can follow any card for free price alerts and manage everything from <a href="https://cardsoncardsoncards.com.au/account">your C3 account</a>.</p>`
             + `<p>The C3 Team</p>`
             + `<p style="font-size:11px;color:#999">You are receiving this because you signed up at cardsoncardsoncards.com.au. Reply to this email to unsubscribe.</p>`
+            + `<p style="font-size:11px;color:#999">Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.</p>`
         })
       });
       clearTimeout(wcTimer);

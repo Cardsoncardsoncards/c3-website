@@ -6,6 +6,7 @@
 // Runs at 9am AEST (11pm UTC) daily, after price syncs have completed
 
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
+import { escHtml } from './shared/html-escape.mjs';
 
 const SUPABASE_URL      = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY') || Netlify.env.get('SUPABASE_ANON_KEY');
@@ -87,7 +88,7 @@ function buyerEmail(cardName, cardSlug, targetAud, currentAud) {
         </div>
         <div style="padding:24px">
           <p style="font-size:16px;margin-bottom:16px">
-            <strong style="color:#C9A84C">${cardName}</strong> has dropped to
+            <strong style="color:#C9A84C">${escHtml(cardName)}</strong> has dropped to
             <strong style="color:#22c55e">AU$${currentAud.toFixed(2)}</strong>
           </p>
           <p style="color:#9ba3c4;font-size:13px;margin-bottom:20px">
@@ -117,10 +118,14 @@ function buyerEmail(cardName, cardSlug, targetAud, currentAud) {
             This alert has been marked as triggered. To set a new alert, visit the card page on
             <a href="https://cardsoncardsoncards.com.au" style="color:#C9A84C">cardsoncardsoncards.com.au</a>.
             Prices are estimates based on US market data converted to AUD. Check eBay AU for live pricing.
+            C3 participates in the eBay Partner Network and may earn a small commission on purchases made through links, at no extra cost to you.
           </p>
           <p style="font-size:11px;color:#666;margin-top:8px">
             ${MANAGE_ALERTS_LINE}<br>
             To unsubscribe from price alerts, reply to this email with "unsubscribe".
+          </p>
+          <p style="font-size:11px;color:#666;margin-top:8px">
+            Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.
           </p>
         </div>
       </div>
@@ -141,7 +146,7 @@ function sellerEmail(cardName, cardSlug, targetAud, currentAud) {
         </div>
         <div style="padding:24px">
           <p style="font-size:16px;margin-bottom:16px">
-            <strong style="color:#C9A84C">${cardName}</strong> has risen to
+            <strong style="color:#C9A84C">${escHtml(cardName)}</strong> has risen to
             <strong style="color:#ef4444">AU$${currentAud.toFixed(2)}</strong>
           </p>
           <p style="color:#9ba3c4;font-size:13px;margin-bottom:20px">
@@ -169,8 +174,12 @@ function sellerEmail(cardName, cardSlug, targetAud, currentAud) {
           </a>
           <p style="font-size:11px;color:#666;margin-top:16px">
             Prices are estimates based on Scryfall/TCGPlayer data converted to AUD. Always check eBay AU for live Australian pricing before selling.
+            C3 participates in the eBay Partner Network and may earn a small commission on purchases made through links, at no extra cost to you.
             ${MANAGE_ALERTS_LINE}
             To unsubscribe, reply with "unsubscribe".
+          </p>
+          <p style="font-size:11px;color:#666;margin-top:8px">
+            Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.
           </p>
         </div>
       </div>

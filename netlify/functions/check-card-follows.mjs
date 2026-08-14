@@ -195,7 +195,8 @@ ${imageHtml}
 <p><a href="${cardUrl}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">View the card</a></p>
 <p>The C3 Team</p>
 <p style="font-size:11px;color:#999">Don't want alerts for this card any more? <a href="${unsubUrl}">Unsubscribe</a>. You can also <a href="${manageUrl}">manage all your followed cards</a>.</p>
-<p style="font-size:11px;color:#999">Prices are estimates in AUD and are not a quote. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them. This alert fires once. Follow the card again to be alerted on its next move.</p>`
+<p style="font-size:11px;color:#999">Prices are estimates in AUD and are not a quote. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them. This alert fires once. Follow the card again to be alerted on its next move.</p>
+<p style="font-size:11px;color:#999">Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.</p>`
       })
     });
     clearTimeout(timer);

@@ -447,7 +447,8 @@ ${cardImageHtml(imageUrl, cardName || cardSlug)}
 <p>Manage all your follows any time at <a href="${SITE_ORIGIN}/account">your C3 account</a>.</p>
 <p>The C3 Team</p>
 ${unsubscribeFooterHtml(unsubToken)}
-<p style="font-size:11px;color:#999">Prices are estimates in AUD. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them.</p>`
+<p style="font-size:11px;color:#999">Prices are estimates in AUD. See our <a href="${SITE_ORIGIN}/methodology">methodology</a> for how we source them.</p>
+<p style="font-size:11px;color:#999">Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.</p>`
   });
 
   return json({ ok: true, pendingConfirmation: true });
@@ -670,7 +671,8 @@ async function handleMyFollowsRequest(req) {
 <p><a href="${link}" style="background:#C9A84C;color:#0A0C14;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">View my followed cards</a></p>
 <p>This link works for ${MAGIC_LINK_TTL_HOURS} hours, then it expires.</p>
 <p>If you did not request this, you can ignore this email.</p>
-<p>The C3 Team</p>`
+<p>The C3 Team</p>
+<p style="font-size:11px;color:#999">Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.</p>`
           });
         } else {
           console.error('[my-follows] magic link insert failed');
@@ -896,10 +898,11 @@ async function handleSellAlert(req) {
           to: [email],
           subject: `Sell alert set for ${cardName || 'your card'}`,
           html: `<p>Hi,</p>
-<p>You will be notified when <strong>${cardName}</strong> rises above <strong>AU$${targetPriceAud}</strong>.</p>
+<p>You will be notified when <strong>${esc(cardName)}</strong> rises above <strong>AU$${esc(targetPriceAud)}</strong>.</p>
 <p>We check prices daily. When the price hits your target we will email you straight away.</p>
 <p>The C3 Team</p>
-<p style="font-size:11px;color:#999">To unsubscribe from price alerts, reply to this email.</p>`
+<p style="font-size:11px;color:#999">To unsubscribe from price alerts, reply to this email.</p>
+<p style="font-size:11px;color:#999">Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.</p>`
         })
       });
     } catch (e) { console.error('Resend sell-alert error:', e.message); }

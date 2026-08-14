@@ -373,13 +373,14 @@ ${extremeSection(extreme)}  <tr><td bgcolor="#0f1420" style="background:#0f1420;
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.6;margin-top:12px;">Know a seller who would use this? Forward it on. They can join free at <a href="https://cardsoncardsoncards.com.au/pricing" style="color:#C9A84C;text-decoration:none;">cardsoncardsoncards.com.au</a>.</div>
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;line-height:1.6;margin-top:14px;">Prices are indicative AUD market estimates and move constantly. Always check the live price before you buy or sell. C3 participates in the eBay Partner Network and may earn a small commission on purchases made through links, at no extra cost to you.</div>
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;margin-top:12px;">The C3 Team &middot; <a href="https://cardsoncardsoncards.com.au/account" style="color:#8892b0;text-decoration:underline;">Your account</a> &middot; <a href="{$unsubscribe}" style="color:#8892b0;text-decoration:underline;">Manage subscription</a></div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#5a6580;margin-top:8px;">Cards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.</div>
   </td></tr>
 </table>
 </td></tr></table>`;
 }
 
 function plainText(dateStr,reportLabel='C3 Weekly Seller Report'){
-  return `${reportLabel}, ${dateStr}.\n\nYour email client cannot display HTML.\n\nSee the full live market: https://cardsoncardsoncards.com.au/market\nCompare prices across sellers: https://cardsoncardsoncards.com.au/compare\n\nFollow any card for real-time price alerts, no need to wait for the weekly email: https://cardsoncardsoncards.com.au/market\n\nThe C3 Team.\nManage subscription: {$unsubscribe}`;
+  return `${reportLabel}, ${dateStr}.\n\nYour email client cannot display HTML.\n\nSee the full live market: https://cardsoncardsoncards.com.au/market\nCompare prices across sellers: https://cardsoncardsoncards.com.au/compare\n\nFollow any card for real-time price alerts, no need to wait for the weekly email: https://cardsoncardsoncards.com.au/market\n\nThe C3 Team.\nManage subscription: {$unsubscribe}\n\nCards on Cards on Cards is operated by Voxsanity Pty Ltd, ABN 82 700 348 867.`;
 }
 
 // Send up to 100 emails in one Resend batch call.
