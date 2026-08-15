@@ -767,7 +767,10 @@ function runTracker() {
     `Opened a Secrets of Strixhaven box in Australia (AU$${price}). ` +
     `Got ${mythic} mythics, ${rare} rares, ${archive} archive cards. ` +
     `Estimated pull value: AU$${pullValue.toFixed(2)} vs expected AU$${evRef.toFixed(2)}. ` +
-    `Used the C3 EV Calculator: https://cardsoncardsoncards.com.au/ev-calculator/mtg-strixhaven`
+    // Was /ev-calculator/mtg-strixhaven, which is a 404 (the real file is
+    // mtg-strixhaven-school-of-mages.html) and is in the withdrawn C3L-175 catalogue either way.
+    // Points at /tools rather than seeding Reddit with a dead link to a withdrawn calculator.
+    `More C3 tools: https://cardsoncardsoncards.com.au/tools`
   );
   document.getElementById('tracker-reddit-link').href =
     `https://www.reddit.com/r/magicTCG/submit?type=text&title=Strixhaven+box+results+Australia&text=${redditText}`;

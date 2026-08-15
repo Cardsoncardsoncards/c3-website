@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MTG EV Calculator Australia | Is Your Booster Box Worth Opening? | Cards on Cards on Cards</title>
-<meta name="description" content="Free MTG pack expected value calculator for Australian players. Find out if your Magic: The Gathering booster box is worth opening in AUD. 40+ sets covered with official pull rates and current AU market prices.">
+<meta name="description" content="C3's per-set MTG booster box expected value calculators are temporarily withdrawn while their pull rate and pack structure data is re-verified. Card prices elsewhere on C3 are unaffected.">
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
 <link rel="icon" type="image/png" href="/c3logo.png">
 <meta property="og:image" content="https://cardsoncardsoncards.com.au/c3-og-banner.png">
@@ -222,8 +222,8 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 <div class="wrap">
   <div class="page-hd">
     <p class="page-eyebrow">Cards on Cards on Cards</p>
-    <h1 class="page-h1">MTG Booster Box EV Calculator — Australia</h1>
-    <p class="page-desc">Is your booster box worth opening? Expected value calculated in AUD using official pull rates and current Australian market prices. 43 MTG sets covered. Pokemon, Lorcana, and One Piece calculators coming soon.</p>
+    <h1 class="page-h1">MTG Booster Box EV Calculator, Australia</h1>
+    <p class="page-desc">Our per-set booster box calculators are offline while their pack structures and pull rates are re-verified against publisher product records. Card prices elsewhere on C3 are unaffected. Pokemon, Lorcana, and One Piece calculators are still to come.</p>
   </div>
 </div>
 
@@ -231,8 +231,15 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
 
 <div class="wrap" style="margin-top:28px">
 
-  <div class="info-strip">
-    <strong>How this works:</strong> Select a set below to run the expected value calculation. We use official Wizards of the Coast pull rate data combined with current AUD secondary market card values to estimate what a booster box is worth opening versus buying singles. All prices in AUD.
+  <!-- C3L-175: the per-set calculators are under review. Their pack structures and pull rates
+       have not been verified against the publisher's product record, so all 43 set links and
+       their verdict badges were removed from this index rather than left as an entry point.
+       The pages themselves stay live at 200 with noindex and their own review banner, so old
+       links and bookmarks are not broken. Restoring the catalogue is a revert of this hunk. -->
+  <div style="border-radius:10px;padding:18px 22px;margin-bottom:24px;background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.45)">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#F59E0B;margin-bottom:8px">Under review</div>
+    <div style="font-size:15px;font-weight:700;line-height:1.35;margin-bottom:6px">The per-set booster box calculators are unavailable while we rebuild them.</div>
+    <div style="font-size:13px;opacity:.85;line-height:1.5">Each calculator's product data, meaning its pack structure, slot contents and which chase cards can actually appear, has not been verified against the publisher's official product record. We have removed the set listings and their buy or avoid verdicts rather than leave figures up that we cannot stand behind. Card prices elsewhere on C3 are unaffected.</div>
   </div>
 
   <div class="controls-bar">
@@ -246,7 +253,10 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <button class="game-tab" data-game="onepiece" onclick="setGame('onepiece',this)">&#x2620;&#65039; One Piece</button>
       </div>
     </div>
-    <div class="year-filters" id="year-filters">
+    <!-- Hidden with the set catalogue: nothing left in the grid carries a data-year, so every
+         year checkbox would filter the page down to zero results. The markup and the JS that
+         reads it are left intact so restoring the catalogue restores the filter. -->
+    <div class="year-filters" id="year-filters" style="display:none">
       <div class="year-filters-label">Filter by Year</div>
         <label class="year-check"><input type="checkbox" value="2026" onchange="filterSets()"> 2026</label>
         <label class="year-check"><input type="checkbox" value="2025" onchange="filterSets()"> 2025</label>
@@ -261,483 +271,10 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     </div>
   </div>
 
-  <div class="result-count" id="result-count"><span id="count-num">43</span> sets available</div>
+  <div class="result-count" id="result-count"><span id="count-num">5</span> sets listed</div>
 
   <div class="set-grid" id="set-grid">
 
-    <a href="/ev-calculator/mtg-adventures-in-the-forgotten-realms.html" class="set-card" data-game="mtg" data-year="2021">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Adventures in the Forgotten Realms</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$155.00</span>
-        <span>2021</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-aetherdrift.html" class="set-card" data-game="mtg" data-year="2025">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Aetherdrift</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2025</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-assassins-creed.html" class="set-card" data-game="mtg" data-year="2024">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Assassin's Creed</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$180.00</span>
-        <span>2024</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-avatar-the-last-airbender.html" class="set-card" data-game="mtg" data-year="2025">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Avatar: The Last Airbender</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$180.00</span>
-        <span>2025</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-bloomburrow.html" class="set-card" data-game="mtg" data-year="2024">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Bloomburrow</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2024</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-commander-legends-2020.html" class="set-card" data-game="mtg" data-year="2020">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Commander Legends</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$155.00</span>
-        <span>2020</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-commander-legends-baldurs-gate.html" class="set-card" data-game="mtg" data-year="2022">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Commander Legends: Baldur's Gate</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$170.00</span>
-        <span>2022</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-commander-masters.html" class="set-card" data-game="mtg" data-year="2023">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Commander Masters</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$180.00</span>
-        <span>2023</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-core-set-2021.html" class="set-card" data-game="mtg" data-year="2020">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Core Set 2021</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$140.00</span>
-        <span>2020</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-dominaria-united.html" class="set-card" data-game="mtg" data-year="2022">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Dominaria United</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$160.00</span>
-        <span>2022</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-double-masters-2022.html" class="set-card" data-game="mtg" data-year="2022">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Double Masters 2022</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$180.00</span>
-        <span>2022</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-duskmourn.html" class="set-card" data-game="mtg" data-year="2024">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Duskmourn: House of Horror</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2024</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-edge-of-eternities.html" class="set-card" data-game="mtg" data-year="2025">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Edge of Eternities</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2025</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-final-fantasy.html" class="set-card" data-game="mtg" data-year="2025">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Final Fantasy</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2025</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-iconic-masters.html" class="set-card" data-game="mtg" data-year="2017">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Iconic Masters</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$160.00</span>
-        <span>2017</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-ikoria-lair-of-behemoths.html" class="set-card" data-game="mtg" data-year="2020">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Ikoria: Lair of Behemoths</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$145.00</span>
-        <span>2020</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-innistrad-crimson-vow.html" class="set-card" data-game="mtg" data-year="2021">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Innistrad: Crimson Vow</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$160.00</span>
-        <span>2021</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-innistrad-midnight-hunt.html" class="set-card" data-game="mtg" data-year="2021">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Innistrad: Midnight Hunt</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$160.00</span>
-        <span>2021</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-jumpstart-2020.html" class="set-card" data-game="mtg" data-year="2020">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Jumpstart</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$155.00</span>
-        <span>2020</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-kaldheim.html" class="set-card" data-game="mtg" data-year="2021">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Kaldheim</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$155.00</span>
-        <span>2021</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-kamigawa-neon-dynasty.html" class="set-card" data-game="mtg" data-year="2022">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Kamigawa: Neon Dynasty</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$180.00</span>
-        <span>2022</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-lord-of-the-rings.html" class="set-card" data-game="mtg" data-year="2023">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Lord of the Rings: Tales of Middle-earth</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2023</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-lorwyn-eclipsed.html" class="set-card" data-game="mtg" data-year="2026">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Lorwyn Eclipsed</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$180.00</span>
-        <span>2026</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-march-of-the-machine.html" class="set-card" data-game="mtg" data-year="2023">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">March of the Machine</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2023</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-modern-horizons-1.html" class="set-card" data-game="mtg" data-year="2019">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Modern Horizons</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$180.00</span>
-        <span>2019</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-modern-horizons-2.html" class="set-card" data-game="mtg" data-year="2021">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Modern Horizons 2</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$180.00</span>
-        <span>2021</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-modern-horizons-3.html" class="set-card" data-game="mtg" data-year="2024">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Modern Horizons 3</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2024</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-murders-at-karlov-manor.html" class="set-card" data-game="mtg" data-year="2024">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Murders at Karlov Manor</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2024</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-outlaws-of-thunder-junction.html" class="set-card" data-game="mtg" data-year="2024">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Outlaws of Thunder Junction</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2024</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-phyrexia-all-will-be-one.html" class="set-card" data-game="mtg" data-year="2023">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Phyrexia: All Will Be One</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$170.00</span>
-        <span>2023</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-secrets-of-strixhaven.html" class="set-card" data-game="mtg" data-year="2026">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Secrets of Strixhaven</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$259.95</span>
-        <span>2026</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-streets-of-new-capenna.html" class="set-card" data-game="mtg" data-year="2022">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Streets of New Capenna</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$155.00</span>
-        <span>2022</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-strixhaven-school-of-mages.html" class="set-card" data-game="mtg" data-year="2021">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Strixhaven: School of Mages</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$155.00</span>
-        <span>2021</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-tarkir-dragonstorm.html" class="set-card" data-game="mtg" data-year="2025">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Tarkir: Dragonstorm</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2025</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-tmnt.html" class="set-card" data-game="mtg" data-year="2026">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Teenage Mutant Ninja Turtles</div>
-      <div class="set-card-meta">
-        <span>30 packs</span>
-        <span>AU$150.00</span>
-        <span>2026</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-the-brothers-war.html" class="set-card" data-game="mtg" data-year="2022">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">The Brothers' War</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$160.00</span>
-        <span>2022</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-lost-caverns-of-ixalan.html" class="set-card" data-game="mtg" data-year="2023">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">The Lost Caverns of Ixalan</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2023</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-theros-beyond-death.html" class="set-card" data-game="mtg" data-year="2020">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Theros Beyond Death</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$145.00</span>
-        <span>2020</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-time-spiral-remastered.html" class="set-card" data-game="mtg" data-year="2021">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Time Spiral Remastered</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$170.00</span>
-        <span>2021</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-ultimate-masters.html" class="set-card" data-game="mtg" data-year="2018">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Ultimate Masters</div>
-      <div class="set-card-meta">
-        <span>24 packs</span>
-        <span>AU$180.00</span>
-        <span>2018</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-warhammer-40k.html" class="set-card" data-game="mtg" data-year="2022">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Warhammer 40,000</div>
-      <div class="set-card-meta">
-        <span>12 packs</span>
-        <span>AU$320.00</span>
-        <span>2022</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-wilds-of-eldraine.html" class="set-card" data-game="mtg" data-year="2023">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Wilds of Eldraine</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$180.00</span>
-        <span>2023</span>
-      </div>
-      <div class="set-card-verdict verdict-worth">✅ Worth Opening</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
-    <a href="/ev-calculator/mtg-zendikar-rising.html" class="set-card" data-game="mtg" data-year="2020">
-      <div class="set-card-game">⚔️ Magic: The Gathering</div>
-      <div class="set-card-name">Zendikar Rising</div>
-      <div class="set-card-meta">
-        <span>36 packs</span>
-        <span>AU$155.00</span>
-        <span>2020</span>
-      </div>
-      <div class="set-card-verdict verdict-borderline">⚖️ Borderline</div>
-      <div class="set-card-cta">Run the EV Calculator →</div>
-    </a>
 
     <!-- Coming Soon MTG -->
     <div class="set-card set-card--coming" data-game="mtg">
@@ -783,7 +320,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
   <div class="no-results" id="no-results">No sets match your search. Try a different name or clear the filters.</div>
 
   <p class="disclaimer">
-    <strong>EV Disclaimer:</strong> Expected value calculations are estimates based on official pull rates and current secondary market pricing. Actual results will vary. EV is calculated in AUD using published pull rate data and current Australian eBay secondary market prices. This is not financial advice. Always verify current Amazon AU pricing before purchasing as prices fluctuate.
+    <strong>EV Disclaimer:</strong> Expected value calculations are estimates only and actual results will vary. The pull rate and pack structure data behind our per-set calculators is currently unverified against publisher product records, which is why those calculators have been withdrawn pending review. Nothing on this page is financial advice. Always verify current retail pricing before purchasing as prices fluctuate.
   </p>
 
 </div>

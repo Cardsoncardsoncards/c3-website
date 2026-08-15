@@ -2,6 +2,7 @@ import { NAV_CSS, navHtml } from './shared/nav.mjs';
 import { hubPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 import { fxRate } from './shared/fx-rate.mjs';
+import { priceCoverage, coverageNoteHtml } from './shared/price-coverage.mjs';
 // netlify/functions/warhammer-hub.mjs
 // Serves /cards/warhammer
 // Rebuilt to Pokemon hub standard -- 28 May 2026
@@ -168,12 +169,16 @@ export default async (req) => {
 
   const headers = hubPageHeaders();
 
-  const [setsRes, cardsRes] = await Promise.allSettled([
+  // Coverage is measured on the same render as the ranking it qualifies, so the disclosure
+  // and the carousel can never describe two different states of the table.
+  const [setsRes, cardsRes, covRes] = await Promise.allSettled([
     supabaseGet('warhammer_sets?order=release_date.desc.nullslast&limit=30&select=id,name,slug,release_date,card_count'),
     supabaseGet('warhammer_cards?order=market_price.desc&market_price=gt.0&image_url=not.is.null&rarity=not.is.null&rarity=neq.None&limit=24&select=slug,name,image_url,market_price,price_aud,rarity,set_name,updated_at'),
+    priceCoverage('warhammer_cards'),
   ]);
 
   const sets    = setsRes.status  === 'fulfilled' ? setsRes.value  : [];
+  const coverage = covRes.status === 'fulfilled' ? covRes.value : null;
   let rawCards  = cardsRes.status === 'fulfilled' ? cardsRes.value : [];
 
 
@@ -253,6 +258,7 @@ ${topCards.length ? `<section class="carousel-section fade-up fade-up-2">
   <div class="carousel-title">Top Warhammer: Age of Sigmar TCG Cards by Price (AUD)</div>
   <div class="carousel-track-wrap"><div class="carousel-track">${carouselHTML}${carouselHTML2}</div></div>
 </section>
+${coverageNoteHtml(coverage, GAME_LABEL)}
 <p style="text-align:center;color:var(--text2);font-size:11px;margin-top:-12px;margin-bottom:16px">Prices sourced from TCGPlayer (USD), converted to AUD. Updated daily.</p>` : ''}
 
 <div class="wrap">

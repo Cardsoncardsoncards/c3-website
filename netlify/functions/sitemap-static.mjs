@@ -115,53 +115,11 @@ const STATIC_PAGES = [
   { path: '/quizzes/yugioh-archetype',                 priority: '0.7', changefreq: 'monthly' },
   { path: '/quizzes/yugioh-deck',                      priority: '0.7', changefreq: 'monthly' },
 
-  // Booster Box EV Calculator, one page per set. These were only ever discoverable via the
-  // stale sitemap.xml, which task-84 retires. A fixed set of 43 static files under
-  // /ev-calculator/, not DB-driven, so hardcoding them here will not silently go out of date
-  // as games or sets are added.
-  { path: '/ev-calculator/mtg-adventures-in-the-forgotten-realms.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-aetherdrift.html',       priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-assassins-creed.html',   priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-avatar-the-last-airbender.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-bloomburrow.html',       priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-commander-legends-2020.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-commander-legends-baldurs-gate.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-commander-masters.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-core-set-2021.html',     priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-dominaria-united.html',  priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-double-masters-2022.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-duskmourn.html',         priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-edge-of-eternities.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-final-fantasy.html',     priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-iconic-masters.html',    priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-ikoria-lair-of-behemoths.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-innistrad-crimson-vow.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-innistrad-midnight-hunt.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-jumpstart-2020.html',    priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-kaldheim.html',          priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-kamigawa-neon-dynasty.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-lord-of-the-rings.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-lorwyn-eclipsed.html',   priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-lost-caverns-of-ixalan.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-march-of-the-machine.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-modern-horizons-1.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-modern-horizons-2.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-modern-horizons-3.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-murders-at-karlov-manor.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-outlaws-of-thunder-junction.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-phyrexia-all-will-be-one.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-secrets-of-strixhaven.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-streets-of-new-capenna.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-strixhaven-school-of-mages.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-tarkir-dragonstorm.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-the-brothers-war.html',  priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-theros-beyond-death.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-time-spiral-remastered.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-tmnt.html',              priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-ultimate-masters.html',  priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-warhammer-40k.html',     priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-wilds-of-eldraine.html', priority: '0.6', changefreq: 'monthly' },
-  { path: '/ev-calculator/mtg-zendikar-rising.html',   priority: '0.6', changefreq: 'monthly' },
+  // The 43 /ev-calculator/<set>.html pages used to be listed here. They were removed because
+  // all 43 carry <meta name="robots" content="noindex"> (C3L-98), and submitting a noindex URL
+  // in a sitemap asks Google to crawl a page we are telling it not to index. The files are
+  // still served at 200 so existing links and bookmarks keep working, they are just no longer
+  // advertised. Re-add this block when the catalogue comes back and the noindex comes off.
 
   // Misc
   { path: '/dnd',                                      priority: '0.6', changefreq: 'monthly' },

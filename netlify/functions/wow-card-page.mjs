@@ -344,12 +344,13 @@ export default async (req) => {
     </div>
     <h1>${esc(card.name)}</h1>
     ${card.rarity ? `<div style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:#E8C97A;font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;margin-bottom:8px;text-transform:uppercase">${card.rarity}</div>` : ''}
-    <div class="price-tag">${priceAud ? `~AU$${priceAud.toFixed(2)}` : 'Price not available'}</div>
+    <div class="price-tag">${priceAud ? `~AU$${priceAud.toFixed(2)}` : 'No current price'}</div>
+    ${priceAud ? '' : `<p style="font-size:12px;color:var(--text2);line-height:1.5;margin:-4px 0 12px;max-width:460px">We have no current market price for this card. That means it has not traded recently in the data we track, not that it is worth nothing. Pricing data covers only part of the World of Warcraft TCG catalogue. Check the live eBay AU listings below for what it is actually selling for.</p>`}
     <div class="meta-grid">
       ${card.number ? `<div class="meta-item"><div class="meta-label">Card Number</div><div class="meta-value">${card.number}</div></div>` : ''}
       ${card.set_name ? `<div class="meta-item"><div class="meta-label">Set</div><div class="meta-value">${card.set_name}</div></div>` : ''}
       ${card.rarity ? `<div class="meta-item"><div class="meta-label">Rarity</div><div class="meta-value">${card.rarity}</div></div>` : ''}
-      <div class="meta-item"><div class="meta-label">Price (AUD)</div><div class="meta-value" style="color:var(--accent)">${priceAud ? `AU$${priceAud.toFixed(2)}` : 'N/A'}</div></div>
+      <div class="meta-item"><div class="meta-label">Price (AUD)</div><div class="meta-value" style="color:${priceAud ? 'var(--accent)' : 'var(--text2)'}">${priceAud ? `AU$${priceAud.toFixed(2)}` : 'Not priced yet'}</div></div>
     </div>
     <div class="cta-row">
       <a href="${ebaySearchUrl}" target="_blank" rel="noopener" class="cta-btn cta-primary">🛒 Buy on eBay AU →</a>
