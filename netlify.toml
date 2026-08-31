@@ -280,6 +280,35 @@
   status = 301
   force = true
 
+# ── URL-01 BATCH 3, 31 August 2026 ──
+#
+# /legal.html and /pricing.html are the last two static routes serving 200 at BOTH forms. The
+# batch-2 comment above names them and says why they were left: "excluded by this task's
+# permissions and were not touched". This closes them with the identical, proven shape.
+#
+# force = true for the same reason as every rule above it: legal.html and pricing.html are real
+# files that Eleventy publishes, and Netlify serves an existing file in preference to a redirect
+# unless the rule is forced. Without it the rule silently does nothing.
+#
+# The coupled half matters more than the redirect. sitemap-static.mjs was submitting /legal.html
+# AND /contact.html in their .html form. /contact.html has 301d since batch 2, so that sitemap has
+# been advertising a redirecting URL ever since. Both entries were moved onto the clean form in
+# this same commit, so no URL in the sitemap redirects.
+#
+# /pricing is also noindexed by TRIM-01 in this commit and has been dropped from the sitemap
+# entirely, so its rule cannot introduce a redirecting sitemap entry either.
+[[redirects]]
+  from = "/legal.html"
+  to = "/legal"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pricing.html"
+  to = "/pricing"
+  status = 301
+  force = true
+
 # /index.html duplicates the homepage. Note this one is NOT symmetrical with the others:
 # /index already 301s to / on its own, so only the .html form needed a rule.
 [[redirects]]
@@ -366,16 +395,31 @@
   status = 301
   force = true
 
-# A "/blog/p248b-rq-sydney-card-spikes" -> "/blog" force redirect used to sit here. Removed as a
-# task-159 follow-up. Do NOT re-add it: p248b-rq-sydney-card-spikes.md is a LIVE post. It builds
-# to /blog/p248b-rq-sydney-card-spikes/ and is listed in sitemap-blog.xml, but force = true makes
-# a redirect win over an existing built page, so the post was unreachable and Google was being
-# handed a sitemap URL that 301d straight to the blog index.
-# It keeps its pNNN prefix because the permalink rule in .eleventy.js strips /^p\d+-/, and the
-# "b" in "p248b-" stops that pattern matching. It is the only one of 591 files in src/blog/ that
-# does not match, so nothing else is affected.
-# With no rule here the unslashed form gets Netlify's own single 301 to the slashed form, exactly
-# like every other post.
+# P248B-02, 31 August 2026. p248b-rq-sydney-card-spikes.md has been renamed to
+# p934-rq-sydney-card-spikes.md, so the post now publishes at /blog/rq-sydney-card-spikes/ like
+# every other post. The "b" in "p248b-" was the only filename in src/blog/ that did not match the
+# prefix strip in .eleventy.js, which is why that one post carried its post number in its public
+# URL. Verified in the build log, not assumed:
+#   before  ./src/blog/p248b-rq-sydney-card-spikes.md -> ./_site/blog/p248b-rq-sydney-card-spikes/
+#   after   ./src/blog/p934-rq-sydney-card-spikes.md  -> ./_site/blog/rq-sydney-card-spikes/
+#
+# The old URL had live traffic as recently as 24 August and is in sitemap-blog.xml, so these two
+# rules are mandatory, not tidy-up. Both the slashed and unslashed forms are listed explicitly
+# because the slashed form is the one Google holds.
+#
+# force = true is deliberately NOT set. An earlier "/blog/p248b-... -> /blog" FORCED rule sat here
+# and had to be removed in task-159 precisely because force made the redirect beat the built page
+# and took the live post offline. Nothing is built at this path any more, so an unforced rule is
+# both sufficient and the safe choice. Do not add force to these.
+[[redirects]]
+  from = "/blog/p248b-rq-sydney-card-spikes/"
+  to = "/blog/rq-sydney-card-spikes/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/p248b-rq-sydney-card-spikes"
+  to = "/blog/rq-sydney-card-spikes/"
+  status = 301
 
 # task-159: four more legacy pNNN URLs, found by the task-157 crawler. Unlike the ones above,
 # these are not only Google-cached: each is still linked from a LIVE post, so every visitor

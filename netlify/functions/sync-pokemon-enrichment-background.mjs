@@ -1,3 +1,4 @@
+// DISABLED 31 Aug 2026, zero rows affected over 30 days, pending root cause on tcgapi 429 and D1 overload.
 // netlify/functions/sync-pokemon-enrichment-background.mjs
 // C3L-61. Backfills pokemon card enrichment: hp, stage, types, attacks, weaknesses,
 // retreat_cost. Runs on its own schedule, separate from the price sync, and deliberately so.
@@ -43,7 +44,10 @@ const TIME_BUDGET_MS    = 5 * 60 * 1000;
 // Second, independent bound. Even if the clock check were wrong, a run cannot exceed this.
 const MAX_SETS_PER_RUN  = 10;
 
-export const config = { schedule: '40 */6 * * *' };
+// DISABLED 31 August 2026 (ENRICH-02). The schedule key is removed rather than the file,
+// so Netlify stops invoking this and everything below is preserved exactly as it was.
+// To re-enable, restore: schedule: '40 */6 * * *'
+export const config = {};
 
 function derivePokemonStage(supertype, subtypes) {
   const subs = Array.isArray(subtypes) ? subtypes : [];

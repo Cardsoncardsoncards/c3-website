@@ -326,6 +326,13 @@ Process:
     800 and 20 of them sit between 800 and 850, so this writes down the standing practice
     instead of imposing a new one. The two that fall short are both speculative
     "everything we know" posts, 597 and 653 words, which are the cases the bar is for.
+  - WORD-02, 31 August 2026: a task proposed adding "news: minimum 600 words" on the stated
+    premise that PROJECT.md set no news bar at all and that two finished posts had been
+    "blocked against a bar that did not exist". Both halves are wrong. The bar above has been
+    here since 11 August (C3L-112), it is 800, and the two short posts are named in it. NOT
+    APPLIED: 600 would LOWER a documented, measured bar, which is a content strategy decision
+    and not a repair, so it goes to claude.ai rather than being changed here. Recorded so the
+    proposal is not simply lost.
 - Minimum 5 FAQ pairs per post
 - Mandatory CTAs by post type
 - Maximum 3 sentences per paragraph

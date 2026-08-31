@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- TRIM-01, 31 Aug 2026: withdrawn from the index and from sitemap-static.mjs on eight months of GA4 (1 to 92 users each). File retained and still served at 200. -->
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TCG Shop Australia | Pokemon, MTG, One Piece, Lorcana &amp; More | Cards on Cards on Cards</title>
 <meta name="description" content="Curated TCG and D&D products from Amazon Australia. Pokemon, MTG, One Piece, Lorcana, Dragon Ball, Star Wars Unlimited, Riftbound, Yu-Gi-Oh and Dungeons &amp; Dragons. We found them so you don't have to.">
@@ -46,7 +48,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:10px 0}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
 .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
 .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
@@ -312,12 +314,8 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     <div class="nav-links">
       <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/pricing" class="nav-link nav-link--pricing" style="color:#C9A84C;border-color:rgba(201,168,76,.35)">Pricing</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">Shop eBay &#8599;</a>
+      <a href="/search" class="nav-link nav-link--search">Search</a>
     </div>
     <a href="/account" class="nav-account" title="Your C3 account">
       &#128100;<span class="nav-account-text">Account</span>
@@ -325,36 +323,9 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
   </div>
 </nav>
 
-<div id="prime-day-banner" style="background:linear-gradient(90deg,#FF9900 0%,#FFB84D 100%);padding:11px 24px;text-align:center;font-size:13px;font-weight:700;color:#111;letter-spacing:.01em">
-  ⚡ <strong>Prime Day July 7-13.</strong>
-  <span id="pd-countdown-shop" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"></span>
-  <a href="#cat-new" onclick="showTab('new')" style="color:#111;text-decoration:underline;margin-left:8px">See new releases →</a>
-</div>
-<script>
-(function(){
-  var target = new Date('2026-07-06T14:00:00Z'); // July 7 AEST
-  var end    = new Date('2026-07-13T14:00:00Z'); // July 13 AEST end
-  var el = document.getElementById('pd-countdown-shop');
-  var banner = document.getElementById('prime-day-banner');
-  function tick(){
-    var now = new Date();
-    if(now >= end){ if(banner) banner.style.display='none'; return; }
-    var diff = target - now;
-    if(diff <= 0){
-      if(el) el.textContent = 'Prime Day is LIVE now!';
-      setTimeout(tick,1000);
-      return;
-    }
-    var d = Math.floor(diff/86400000);
-    var h = Math.floor((diff%86400000)/3600000);
-    var m = Math.floor((diff%3600000)/60000);
-    var s = Math.floor((diff%60000)/1000);
-    if(el) el.textContent = 'starts in '+d+'d '+String(h).padStart(2,'0')+'h '+String(m).padStart(2,'0')+'m '+String(s).padStart(2,'0')+'s';
-    setTimeout(tick,1000);
-  }
-  tick();
-})();
-</script>
+<!-- COPY-01, 31 Aug 2026: the "Prime Day July 7-13" banner and its countdown script were
+     removed here. The event finished on 13 July. The script did hide the banner after that date,
+     but only once JS had run, so the stale promotion still painted on first render. -->
 
 <div class="wrap">
   <div class="page-hd">
@@ -439,7 +410,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Play Booster Box (30 Packs)</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Magic-Gathering-Jumpstart-Boosters-Display/dp/B0GF4M5P4C?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
@@ -447,7 +418,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Jumpstart Display (24 Boosters)</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Marvel-Collector-Commander-Prevails/dp/B0GLNW5TYQ?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="commander-deck">
@@ -455,7 +426,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-collector">Commander Deck</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Collector Commander Deck Doom Prevails</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
 
@@ -465,7 +436,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Secrets of Strixhaven Play Booster Display (30 Packs)</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Magic-Gathering-Secrets-Strixhaven-Bundle/dp/B0G87VXM5G?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="bundle">
@@ -473,7 +444,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-blue">Bundle</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Secrets of Strixhaven Codex Bundle</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Strixhaven-Commander-Silverquill-Influence/dp/B0GLNZJVSZ?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="commander-deck">
@@ -481,7 +452,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-collector">Commander Deck</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Secrets of Strixhaven Commander Deck Silverquill Influence</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Strixhaven-Commander-Witherbloom-Pestilence/dp/B0GLNJVZC9?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="commander-deck">
@@ -489,7 +460,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-collector">Commander Deck</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Secrets of Strixhaven Commander Deck Witherbloom Pestilence</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
 
@@ -553,7 +524,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         </div>
       </a>
 
-      <!-- PRIME DAY NEW RELEASES (release-date order, nearest first) -->
+      <!-- NEW RELEASES (release-date order, nearest first). Renamed from "PRIME DAY" on 31 Aug 2026 with the banner, COPY-01. -->
       <a href="https://www.amazon.com.au/s?k=one+piece+card+game+OP-16+time+of+battle&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="onepiece">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">☠️</div>
         <div class="product-body">
@@ -581,7 +552,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=digimon+EX-12+digital+world+shambala+booster&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="digimon">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🦕</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-blue">Extra Booster</span><span class="release-date">Jul 3, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-blue">Extra Booster</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Digimon EX-12 Digital World Shambala Extra Booster Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -589,7 +560,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=dragon+ball+super+card+game+DBS-B31&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="dragonball">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🐉</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-red">Booster Box</span><span class="release-date">Jul 3, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-red">Booster Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Dragon Ball Super Card Game Masters DBS-B31 Impact Beyond Dimensions</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -597,7 +568,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=star+wars+unlimited+ashes+empire+prerelease&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="special-product" data-game="starwars">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⭐</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-purple">Prerelease Box</span><span class="release-date">Jul 10, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-purple">Prerelease Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Star Wars Unlimited Ashes of the Empire Prerelease Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -605,7 +576,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=star+wars+unlimited+ashes+empire+booster&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="starwars">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⭐</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-gold">Booster Display</span><span class="release-date">Jul 17, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-gold">Booster Display</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Star Wars Unlimited Ashes of the Empire Booster Display (Set 8)</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -613,7 +584,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=pokemon+pitch+black+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="pokemon">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⚡</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="release-date">Jul 17, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Pokemon Mega Evolution Pitch Black Booster Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -621,7 +592,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=disney+lorcana+attack+vine+booster&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="lorcana">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🏰</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-blue">Prerelease</span><span class="release-date">Jul 17 Prerelease / Jul 24 Wide</span></div>
+          <div class="product-meta"><span class="product-tag tag-blue">Prerelease</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Disney Lorcana Attack of the Vine Booster Box (Chapter 9)</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -629,7 +600,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=gundam+card+game+freedom+ascension+GD05&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="gundam">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🤖</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-blue">Booster Box</span><span class="release-date">Jul 25, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-blue">Booster Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Gundam Card Game GD05 Freedom Ascension Booster Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -637,7 +608,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=riftbound+vendetta+booster&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="riftbound">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🎮</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-blue">Booster Box</span><span class="release-date">Jul 31, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-blue">Booster Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Riftbound Vendetta Booster Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -645,7 +616,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=weiss+schwarz+blue+archive+animation&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="weissschwarz">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🃏</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-gold">Booster Pack</span><span class="release-date">Jul 31, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-gold">Booster Pack</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Weiss Schwarz Blue Archive The Animation Booster Pack</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -653,7 +624,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=final+fantasy+tcg+blissful+eternity&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="finalfantasy">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🔮</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-blue">Booster Display</span><span class="release-date">Aug 7, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-blue">Booster Display</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Final Fantasy TCG Blissful Eternity Booster Display</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -661,7 +632,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=magic+gathering+hobbit+booster+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box" data-game="mtg">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⚔️</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-purple">Pre-Order</span><span class="release-date">August 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-purple">Booster Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">MTG Universes Beyond: The Hobbit Booster Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -1187,8 +1158,8 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <div class="filter-group">
         <div class="filter-group-title">Jump to Set</div>
         <div class="set-links">
-          <a href="#set-mtg-marvel" class="set-jump-link" onclick="jumpToSet('mtg-marvel')">  Marvel Super Heroes (Jun 2026) - Pre-Order</a>
-          <a href="#set-mtg-strixhaven" class="set-jump-link" onclick="jumpToSet('mtg-strixhaven')">  Secrets of Strixhaven (Apr 2026) - Pre-Order</a>
+          <a href="#set-mtg-marvel" class="set-jump-link" onclick="jumpToSet('mtg-marvel')">  Marvel Super Heroes (Jun 2026)</a>
+          <a href="#set-mtg-strixhaven" class="set-jump-link" onclick="jumpToSet('mtg-strixhaven')">  Secrets of Strixhaven (Apr 2026)</a>
           <a href="#set-mtg-tmnt" class="set-jump-link" onclick="jumpToSet('mtg-tmnt')">  Teenage Mutant Ninja Turtles (Mar 2026)</a>
           <a href="#set-mtg-lorwyn" class="set-jump-link" onclick="jumpToSet('mtg-lorwyn')">  Lorwyn Eclipsed (Current)</a>
           <a href="#set-mtg-ff" class="set-jump-link" onclick="jumpToSet('mtg-ff')">  Final Fantasy (Jun 2025)</a>
@@ -1224,13 +1195,13 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <p class="section-desc">Booster boxes, commander decks, collector sets and bundles. All confirmed on Amazon AU.</p>
       </div>
     <div class="set-group" id="set-mtg-marvel" data-set="mtg-marvel">
-      <h3 class="set-header">Marvel Super Heroes (Jun 26 2026) - Pre-Order</h3>
+      <h3 class="set-header">Marvel Super Heroes (Jun 2026)</h3>
       <div class="product-grid">
       <!-- MTG Hobbit Pre-Order -->
       <a href="https://www.amazon.com.au/s?k=magic+the+gathering+hobbit+booster+box+2026&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⚔️</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-purple">Pre-Order</span><span class="release-date">August 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-purple">Booster Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">MTG Universes Beyond: The Hobbit Booster Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -1258,7 +1229,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Play Booster Box (30 Packs)</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Magic-Gathering-Jumpstart-Boosters-Display/dp/B0GF4M5P4C?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
@@ -1266,7 +1237,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Jumpstart Display (24 Boosters)</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Marvel-Heroes-Beginner/dp/B0G87JWX8L?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="bundle">
@@ -1274,7 +1245,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-blue">Bundle</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Beginner Box</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Magic-Gathering-Marvel-Heroes-Bundle/dp/B0G87CB5VB?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="bundle">
@@ -1282,7 +1253,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-blue">Bundle</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Bundle</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Magic-Gathering-Marvel-Heroes-Bundle/dp/B0G87RDQPV?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="bundle">
@@ -1290,7 +1261,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-blue">Bundle</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Gift Bundle</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Marvel-Heroes-Villains-Unleashed/dp/B0GLNWCYMJ?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="special-product">
@@ -1298,7 +1269,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-blue">Special Product</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Scene Box Villains Unleashed</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Marvel-Collector-Commander-Prevails/dp/B0GLNW5TYQ?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="commander-deck">
@@ -1306,20 +1277,20 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-collector">Commander Deck</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Marvel Super Heroes Collector Commander Deck Doom Prevails</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       </div>
     </div>
     <div class="set-group" id="set-mtg-strixhaven" data-set="mtg-strixhaven">
-      <h3 class="set-header">Secrets of Strixhaven (Apr 24 2026) - Pre-Order</h3>
+      <h3 class="set-header">Secrets of Strixhaven (Apr 2026)</h3>
       <div class="product-grid">
       <a href="https://www.amazon.com.au/Magic-Gathering-Secrets-Strixhaven-Boosters/dp/B0GFDJ7GVL?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
         <div class="product-img"><img src="https://m.media-amazon.com/images/I/81X6kVEO4DL._AC_SX679_.jpg" alt="MTG Secrets of Strixhaven Play Booster Display (30 Packs)" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><span class="img-ph" style="display:none">📦</span></div>
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Booster Box</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Secrets of Strixhaven Play Booster Display (30 Packs)</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Magic-Gathering-Secrets-Strixhaven-Bundle/dp/B0G87VXM5G?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="bundle">
@@ -1327,7 +1298,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-blue">Bundle</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Secrets of Strixhaven Codex Bundle</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Strixhaven-Lifegain/dp/B0GLNLH37L?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="sealed">
@@ -1335,7 +1306,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-gold">Sealed Product</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">Secrets of Strixhaven Theme Deck Lifegain White/Black</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Strixhaven-Commander-Silverquill-Influence/dp/B0GLNZJVSZ?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="commander-deck">
@@ -1343,7 +1314,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-collector">Commander Deck</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Secrets of Strixhaven Commander Deck Silverquill Influence</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       <a href="https://www.amazon.com.au/Gathering-Strixhaven-Commander-Witherbloom-Pestilence/dp/B0GLNJVZC9?tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="commander-deck">
@@ -1351,7 +1322,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
         <div class="product-body">
           <div class="product-meta"><span class="product-tag tag-collector">Commander Deck</span><span class="ship-badge ship-au" title="Ships from Amazon Australia">AU</span></div>
           <div class="product-name">MTG Secrets of Strixhaven Commander Deck Witherbloom Pestilence</div>
-          <span class="product-cta">Pre-Order on Amazon ↗</span>
+          <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
       </a>
       </div>
@@ -2639,7 +2610,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=dragon+ball+super+card+game+DBS-B31&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🐉</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-red">Booster Box</span><span class="release-date">Jul 3, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-red">Booster Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Dragon Ball Super Card Game Masters DBS-B31 Impact Beyond Dimensions</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -2746,7 +2717,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=star+wars+unlimited+ashes+empire+booster+display&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="booster-box">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⭐</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-gold">Booster Display</span><span class="release-date">Jul 17, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-gold">Booster Display</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Star Wars Unlimited Ashes of the Empire Booster Display (Set 8)</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -2754,7 +2725,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
       <a href="https://www.amazon.com.au/s?k=star+wars+unlimited+ashes+empire+prerelease+box&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card" data-type="special-product">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">⭐</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-purple">Prerelease Box</span><span class="release-date">Jul 10, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-purple">Prerelease Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Star Wars Unlimited Ashes of the Empire Prerelease Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -3118,13 +3089,13 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     <div class="section-hd">
       <span class="section-eyebrow">Digimon Card Game</span>
       <h2 class="section-title">Digimon Sealed Product</h2>
-      <p class="section-desc">EX-12 Digital World Shambala drops July 3. BT-25 Dual Revolution and AD-01 Advanced Booster also available.</p>
+      <p class="section-desc">EX-12 Digital World Shambala released on 3 July 2026. BT-25 Dual Revolution and AD-01 Advanced Booster also available.</p>
     </div>
     <div class="product-grid">
       <a href="https://www.amazon.com.au/s?k=digimon+EX-12+digital+world+shambala+booster&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🦕</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-blue">Extra Booster</span><span class="release-date">Jul 3, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-blue">Extra Booster</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Digimon EX-12 Digital World Shambala Extra Booster Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -3155,13 +3126,13 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     <div class="section-hd">
       <span class="section-eyebrow">Gundam Card Game</span>
       <h2 class="section-title">Gundam Sealed Product</h2>
-      <p class="section-desc">Freedom Ascension GD05 releases July 25. Phantom Aria and earlier sets available now.</p>
+      <p class="section-desc">Freedom Ascension GD05 released on 25 July 2026. Phantom Aria and earlier sets available now.</p>
     </div>
     <div class="product-grid">
       <a href="https://www.amazon.com.au/s?k=gundam+card+game+GD05+freedom+ascension&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🤖</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-blue">Booster Box</span><span class="release-date">Jul 25, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-blue">Booster Box</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Gundam Card Game GD05 Freedom Ascension Booster Box</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -3213,13 +3184,13 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
     <div class="section-hd">
       <span class="section-eyebrow">Weiss Schwarz</span>
       <h2 class="section-title">Weiss Schwarz Sealed Product</h2>
-      <p class="section-desc">Blue Archive The Animation Booster releasing July 31. BanG Dream 10th anniversary and BEC Spring 2026 titles also coming.</p>
+      <p class="section-desc">Blue Archive The Animation Booster released on 31 July 2026. BanG Dream 10th anniversary and BEC Spring 2026 titles also coming.</p>
     </div>
     <div class="product-grid">
       <a href="https://www.amazon.com.au/s?k=weiss+schwarz+blue+archive+animation+booster&tag=blasdigital-22" target="_blank" rel="noopener sponsored" class="product-card">
         <div class="product-img" style="background:#1a1d2e;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:40px">🃏</div>
         <div class="product-body">
-          <div class="product-meta"><span class="product-tag tag-gold">Booster Pack</span><span class="release-date">Jul 31, 2026</span></div>
+          <div class="product-meta"><span class="product-tag tag-gold">Booster Pack</span><span class="release-date">Now Available</span></div>
           <div class="product-name">Weiss Schwarz Blue Archive The Animation Booster Pack</div>
           <span class="product-cta">Check Price on Amazon AU ↗</span>
         </div>
@@ -6433,14 +6404,14 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;positio
   <div style="text-align:center;padding:28px 24px;border-top:1px solid #1e2235;font-size:12px;color:#7a8099">
     <p>
       <a href="/" style="color:#7a8099;margin:0 8px;text-decoration:none">Home</a>
-      <a href="/shop" style="color:#7a8099;margin:0 8px;text-decoration:none">Shop</a>
       <a href="/blog" style="color:#7a8099;margin:0 8px;text-decoration:none">Blog</a>
+      <a href="/calendar" style="color:#7a8099;margin:0 8px;text-decoration:none">Calendar</a>
+      <a href="/account" style="color:#7a8099;margin:0 8px;text-decoration:none">Account</a>
       <a href="/tracker" style="color:#7a8099;margin:0 8px;text-decoration:none">Tracker</a>
       <a href="/cards" style="color:#7a8099;margin:0 8px;text-decoration:none">Card Prices</a>
       <a href="/compare" style="color:#7a8099;margin:0 8px;text-decoration:none">Compare</a>
       <a href="/market" style="color:#7a8099;margin:0 8px;text-decoration:none">Market</a>
       <a href="/tools" style="color:#7a8099;margin:0 8px;text-decoration:none">Tools</a>
-      <a href="/play" style="color:#7a8099;margin:0 8px;text-decoration:none">Play</a>
       <a href="/contact" style="color:#7a8099;margin:0 8px;text-decoration:none">Contact</a>
       <a href="/legal" style="color:#7a8099;margin:0 8px;text-decoration:none">Legal</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="color:#7a8099;margin:0 8px;text-decoration:none">eBay</a>

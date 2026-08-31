@@ -57,7 +57,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
 .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
 .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
@@ -479,41 +479,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     </div>
     <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
     <div class="nav-links">
-      <a href="/cards"   class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market"  class="nav-link nav-link--market">Market</a>
-      <a href="/tools"   class="nav-link nav-link--tools">Tools</a>
-      <a href="/play"    class="nav-link nav-link--play">Play</a>
-      <a href="/blog"    class="nav-link nav-link--blog">Blog</a>
-      <a href="/subscribe" class="nav-link nav-link--subscribe">Subscribe &#10024;</a>
-      <div class="nav-shop-wrap" id="nav-shop-wrap">
-        <button class="nav-shop-btn" onclick="(function(){var w=document.getElementById('nav-shop-wrap');w.classList.toggle('open');})()">
-          Shop <span class="nav-shop-arrow">&#9660;</span>
-        </button>
-        <div class="nav-shop-dropdown">
-          <a href="/shop" class="nav-shop-item">
-            Booster Boxes and Sealed
-            <span class="nav-shop-item-label">Amazon AU prices</span>
-          </a>
-          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=C3NavShop&toolid=10001&mkevt=1"
-            target="_blank" rel="noopener" class="nav-shop-item">
-            Singles on eBay AU &#8599;
-            <span class="nav-shop-item-label">30,000+ TCG singles listed</span>
-          </a>
-          <a href="/shop#cat-accessories" class="nav-shop-item">
-            Accessories
-            <span class="nav-shop-item-label">Sleeves, binders, deck boxes</span>
-          </a>
-          <a href="/shop#cat-dnd" class="nav-shop-item">
-            D&amp;D
-            <span class="nav-shop-item-label">Dungeons and Dragons products</span>
-          </a>
-          <a href="/calendar" class="nav-shop-item">
-            Release Calendar
-            <span class="nav-shop-item-label">Upcoming set release dates</span>
-          </a>
-        </div>
-      </div>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/search" class="nav-link nav-link--search">Search</a>
     </div>
     <a href="/account" class="nav-account" title="Your C3 account">
       &#128100;<span class="nav-account-text">Account</span>
@@ -652,15 +621,16 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   </div>
 
   <!-- MTG The Hobbit carousel (task-155). Added alongside Marvel rather than replacing it:
-       Marvel (msh, 26 June) is still the latest RELEASED MTG set, and The Hobbit does not come
-       out until 14 August, so it is labelled as upcoming instead of "Latest Set".
+       Marvel (msh, 26 June) was the latest released MTG set when this was written. The Hobbit
+       released on 14 August 2026 and the label was updated on 31 August (COPY-01): it read
+       "Releasing 14 August" for seventeen days after the set was out.
        Set code hob only, not hoc. This mirrors the Marvel carousel above, which deliberately
        uses the flagship code and not its Commander set, and the data agrees: hob has 53 priced
        and imaged cards, hoc has 3, which would render an almost empty carousel. -->
   <div style="margin-bottom:48px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <div>
-        <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#5EEAD4;display:block;margin-bottom:4px">Magic: The Gathering &middot; Releasing 14 August</span>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#5EEAD4;display:block;margin-bottom:4px">Magic: The Gathering &middot; Released 14 August 2026</span>
         <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#F0F2FF">The Hobbit: Top Cards</span>
       </div>
       <a href="/cards/mtg/sets/the-hobbit" style="font-size:12px;color:#5EEAD4;text-decoration:none;font-weight:600">View all &rarr;</a>
@@ -717,18 +687,25 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
         <div style="font-size:11px;font-weight:700;color:#FB923C">Open tools &#8594;</div>
       </a>
 
-      <a href="/play" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(244,114,182,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(244,114,182,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(244,114,182,.25)';this.style.transform=''">
-        <div style="font-size:22px">&#127918;</div>
-        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#F472B6">Play</div>
-        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">TCG quizzes, random commander generator and tools to help you play better.</div>
-        <div style="font-size:11px;font-weight:700;color:#F472B6">Start playing &#8594;</div>
+      <a href="/tracker" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(244,114,182,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(244,114,182,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(244,114,182,.25)';this.style.transform=''">
+        <div style="font-size:22px">&#128202;</div>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#F472B6">Price Tracker</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">Track what your cards are worth over time, with AUD price history across every game we cover.</div>
+        <div style="font-size:11px;font-weight:700;color:#F472B6">Open the tracker &#8594;</div>
       </a>
 
       <a href="/blog" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(96,165,250,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(96,165,250,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(96,165,250,.25)';this.style.transform=''">
         <div style="font-size:22px">&#128214;</div>
         <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#60A5FA">Blog</div>
-        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">250+ buying guides, set reviews and TCG articles written for Australian players.</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">800+ buying guides, set reviews and TCG articles written for Australian players.</div>
         <div style="font-size:11px;font-weight:700;color:#60A5FA">Read articles &#8594;</div>
+      </a>
+
+      <a href="/search" style="display:flex;flex-direction:column;gap:10px;background:var(--card,#161929);border:1px solid rgba(94,234,212,.25);border-radius:12px;padding:22px 24px;text-decoration:none;transition:all .25s;min-height:160px" onmouseover="this.style.borderColor='rgba(94,234,212,.55)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(94,234,212,.25)';this.style.transform=''">
+        <div style="font-size:22px">&#128269;</div>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#5EEAD4">Search</div>
+        <div style="font-size:12px;color:rgba(160,168,192,.65);line-height:1.5;flex:1">Search every card we track by name, set or game, across 32 trading card games in one place.</div>
+        <div style="font-size:11px;font-weight:700;color:#5EEAD4">Search cards &#8594;</div>
       </a>
 
     </div>
@@ -762,14 +739,14 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     <div class="footer-logo">Cards on Cards on Cards</div>
     <div class="footer-links">
       <a href="/" class="footer-link">Home</a>
-      <a href="/shop" class="footer-link">Shop</a>
       <a href="/blog" class="footer-link">Blog</a>
+      <a href="/calendar" class="footer-link">Calendar</a>
+      <a href="/account" class="footer-link">Account</a>
       <a href="/tracker" class="footer-link">Tracker</a>
       <a href="/cards" class="footer-link" style="color:#C9A84C">Card Prices</a>
       <a href="/compare" class="footer-link" style="color:#A78BFA">Compare</a>
       <a href="/market" class="footer-link" style="color:#4ADE80">Market</a>
       <a href="/tools" class="footer-link" style="color:#FB923C">Tools</a>
-      <a href="/play" class="footer-link" style="color:#F472B6">Play</a>
       <a href="/contact" class="footer-link">Contact</a>
       <a href="/legal" class="footer-link">Legal</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" class="footer-link">eBay</a>

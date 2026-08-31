@@ -2,6 +2,8 @@
 <html lang="en-AU">
 <head>
 <meta charset="UTF-8">
+<!-- TRIM-01, 31 Aug 2026: withdrawn from the index and from sitemap-static.mjs on eight months of GA4 (1 to 92 users each). File retained and still served at 200. -->
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pricing | Cards on Cards on Cards</title>
 <meta name="description" content="C3 pricing plans for Australian TCG players, collectors and sellers. Free card prices and tools, plus paid intelligence tiers with weekly AU market reports.">
@@ -207,7 +209,7 @@
 </style>
 <style>
   /* task-121: hamburger/drawer nav (System 1) defined LAST so no earlier base
-     .nav-links{display:flex} rule can override it at mobile. All static pages now
+     .nav-links{display:flex;flex-shrink:0} rule can override it at mobile. All static pages now
      match shop.html's nav behaviour: burger toggles .nav-links via the .open class. */
   .hamburger{display:none;background:transparent;border:1px solid #1e2235;color:#A0A8C0;padding:6px 11px;border-radius:6px;cursor:pointer;font-size:18px;line-height:1;flex-shrink:0}
   .hamburger:focus{outline:none;border-color:#C9A84C}
@@ -240,29 +242,10 @@
     </div>
     <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
     <div class="nav-links">
-      <a href="/cards"   class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market"  class="nav-link nav-link--market">Market</a>
-      <a href="/tools"   class="nav-link nav-link--tools">Tools</a>
-      <a href="/play"    class="nav-link nav-link--play">Play</a>
-      <a href="/blog"    class="nav-link nav-link--blog">Blog</a>
-      <a href="/subscribe" class="nav-link nav-link--subscribe">Subscribe &#10024;</a>
-      <div class="nav-shop-wrap" id="nav-shop-wrap">
-        <button class="nav-shop-btn" onclick="(function(){var w=document.getElementById('nav-shop-wrap');w.classList.toggle('open');})()">
-          Shop <span class="nav-shop-arrow">&#9660;</span>
-        </button>
-        <div class="nav-shop-dropdown">
-          <a href="/shop" class="nav-shop-item">
-            Booster Boxes and Sealed
-            <span class="nav-shop-item-label">Amazon AU prices</span>
-          </a>
-          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=C3NavShop&toolid=10001&mkevt=1"
-            target="_blank" rel="noopener" class="nav-shop-item">
-            Singles on eBay AU &#8599;
-            <span class="nav-shop-item-label">30,000+ TCG singles listed</span>
-          </a>
-        </div>
-      </div>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/search" class="nav-link nav-link--search">Search</a>
     </div>
     <a href="/account" class="nav-account" title="Your C3 account">
       &#128100;<span class="nav-account-text">Account</span>
@@ -388,7 +371,7 @@
 
 <footer>
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
-  <div style="text-align:center;margin:0 0 14px;line-height:2.1"><a href="/" style="color:#8892b0;margin:0 7px">Home</a><a href="/shop" style="color:#8892b0;margin:0 7px">Shop</a><a href="/blog" style="color:#8892b0;margin:0 7px">Blog</a><a href="/tracker" style="color:#8892b0;margin:0 7px">Tracker</a><a href="/cards" style="color:#8892b0;margin:0 7px">Card Prices</a><a href="/compare" style="color:#8892b0;margin:0 7px">Compare</a><a href="/market" style="color:#8892b0;margin:0 7px">Market</a><a href="/tools" style="color:#8892b0;margin:0 7px">Tools</a><a href="/play" style="color:#8892b0;margin:0 7px">Play</a><a href="/contact" style="color:#8892b0;margin:0 7px">Contact</a><a href="/legal" style="color:#8892b0;margin:0 7px">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="color:#8892b0;margin:0 7px">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="color:#8892b0;margin:0 7px">D&amp;D Tools on Etsy &#8599;</a></div>
+  <div style="text-align:center;margin:0 0 14px;line-height:2.1"><a href="/" style="color:#8892b0;margin:0 7px">Home</a><a href="/blog" style="color:#8892b0;margin:0 7px">Blog</a><a href="/calendar" style="color:#8892b0;margin:0 7px">Calendar</a><a href="/account" style="color:#8892b0;margin:0 7px">Account</a><a href="/tracker" style="color:#8892b0;margin:0 7px">Tracker</a><a href="/cards" style="color:#8892b0;margin:0 7px">Card Prices</a><a href="/compare" style="color:#8892b0;margin:0 7px">Compare</a><a href="/market" style="color:#8892b0;margin:0 7px">Market</a><a href="/tools" style="color:#8892b0;margin:0 7px">Tools</a><a href="/contact" style="color:#8892b0;margin:0 7px">Contact</a><a href="/legal" style="color:#8892b0;margin:0 7px">Legal</a><a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="color:#8892b0;margin:0 7px">eBay</a><a href="https://blasdigital.etsy.com" target="_blank" rel="noopener" style="color:#8892b0;margin:0 7px">D&amp;D Tools on Etsy &#8599;</a></div>
   <div class="wrap">
     <div class="mission">Cards on Cards on Cards is an Australian-built TCG card intelligence platform covering 32 games worldwide. Every price in AUD.</div>
     <div class="disc">C3 participates in the Amazon Associates Program and the eBay Partner Network. Purchases made through links on this site may earn a small commission at no extra cost to you.</div>

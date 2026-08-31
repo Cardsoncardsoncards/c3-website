@@ -44,7 +44,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 nav{position:sticky;top:0;z-index:100;background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:10px 0}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:0 20px;gap:12px;flex-wrap:nowrap}
 .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap;flex-shrink:0}
 .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
@@ -274,14 +274,10 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:24px;positio
     </a>
     <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
     <div class="nav-links">
-      <a href="/" class="nav-link">← Home</a>
-      <a href="/cards" class="nav-link" style="color:var(--gold);border-color:rgba(201,168,76,.4)">Card Vault</a>
-      <a href="/shop.html" class="nav-link">Shop</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/tracker.html" class="nav-link">Tracker</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--active">EV Calculator</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=C3Store&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link">eBay</a>
-      <a href="/contact.html" class="nav-link">Contact</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
+      <a href="/blog" class="nav-link nav-link--blog">Blog</a>
+      <a href="/search" class="nav-link nav-link--search">Search</a>
     </div>
     <a href="/account" class="nav-account" title="Your C3 account">
       &#128100;<span class="nav-account-text">Account</span>
@@ -570,14 +566,14 @@ footer{border-top:1px solid var(--border);padding:24px 0;margin-top:24px;positio
     <div class="footer-logo">Cards on Cards on Cards</div>
     <div style="display:flex;gap:16px;flex-wrap:wrap">
       <a href="/" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Home</a>
-      <a href="/shop" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Shop</a>
       <a href="/blog" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Blog</a>
+      <a href="/calendar" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Calendar</a>
+      <a href="/account" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Account</a>
       <a href="/tracker" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tracker</a>
       <a href="/cards" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Card Prices</a>
       <a href="/compare" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Compare</a>
       <a href="/market" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Market</a>
       <a href="/tools" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Tools</a>
-      <a href="/play" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Play</a>
       <a href="/contact" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Contact</a>
       <a href="/legal" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">Legal</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="font-size:12px;color:rgba(160,168,192,.4);text-decoration:none">eBay</a>

@@ -378,22 +378,49 @@ export default async (req) => {
       }
 
       let cardsWritten = 0, snapsWritten = 0;
-      const results = await Promise.allSettled([
-        (async () => {
-          for (let i = 0; i < cardRows.length; i += 200) {
-            const chunk = cardRows.slice(i, i + 200);
-            await supabaseUpsert('onepiece_cards', chunk);
-            cardsWritten += chunk.length;
-          }
-        })(),
-        (async () => {
-          for (let i = 0; i < snapRows.length; i += 500) {
-            const chunk = snapRows.slice(i, i + 500);
-            await supabaseUpsertSnapshots('onepiece_price_snapshots', chunk);
-            snapsWritten += chunk.length;
-          }
-        })()
-      ]);
+
+      // FK-01, 31 August 2026. These two upserts USED to run concurrently inside one
+      // Promise.allSettled. They are not independent: the live constraint is
+      //   onepiece_price_snapshots_card_id_fkey
+      //     FOREIGN KEY (card_id) REFERENCES onepiece_cards(id) ON DELETE CASCADE
+      // so a snapshot row is the CHILD of a card row. Racing them meant that for a brand new
+      // set, whose parent card rows do not exist yet, a snapshot chunk could reach Postgres
+      // before the card chunk had committed, and the whole snapshot upsert was rejected 23503.
+      // That is what happened to "The World's Strongest Warriors" (OP-17) on 26 August: two
+      // sets failed with 23503 x2, and the 183 card rows are present now, so the parent was
+      // never missing, only late.
+      //
+      // Parent first, child second, awaited in order. The two arms are still isolated from one
+      // another (a failed card upsert records itself and does not throw past this block), which
+      // is what the Promise.allSettled shape was there for; only the concurrency is gone, and
+      // the concurrency is the bug. The results array keeps the same shape so the reporting
+      // loop below is unchanged.
+      //
+      // NOT FIXED HERE, and it is not a One Piece bug: 29 other sync-*-background.mjs files
+      // carry the identical pattern and sync_events shows 23503 against yugioh, vanguard,
+      // lorcana, dbsfusionworld, gundam, grandarchive and shadowverse as well, most recently
+      // yugioh on 31 August. That needs its own scoped task, not a blind sweep inside a batch.
+      const results = [];
+      try {
+        for (let i = 0; i < cardRows.length; i += 200) {
+          const chunk = cardRows.slice(i, i + 200);
+          await supabaseUpsert('onepiece_cards', chunk);
+          cardsWritten += chunk.length;
+        }
+        results.push({ status: 'fulfilled' });
+      } catch (err) {
+        results.push({ status: 'rejected', reason: err });
+      }
+      try {
+        for (let i = 0; i < snapRows.length; i += 500) {
+          const chunk = snapRows.slice(i, i + 500);
+          await supabaseUpsertSnapshots('onepiece_price_snapshots', chunk);
+          snapsWritten += chunk.length;
+        }
+        results.push({ status: 'fulfilled' });
+      } catch (err) {
+        results.push({ status: 'rejected', reason: err });
+      }
 
       for (const r of results) {
         if (r.status === 'rejected') {

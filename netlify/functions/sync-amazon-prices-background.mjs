@@ -1,3 +1,4 @@
+// DISABLED 31 Aug 2026, /shop is now noindexed and nothing reads amazon_price_history. NOTE: this job also refreshed amazon_products.current_price_aud, which shop-products.mjs still serves, so those prices are now frozen at their 31 Aug values.
 // netlify/functions/sync-amazon-prices-background.mjs
 // Nightly sync: calls the Amazon Creators API (OAuth2) for all active ASINs
 // Updates current_price_aud and image_url in amazon_products
@@ -262,4 +263,6 @@ export default async (req) => {
   });
 };
 
-export const config = { schedule: '0 2 * * *' };
+// DISABLED 31 August 2026 (SHOP-03). Schedule removed, file and logic retained.
+// To re-enable, restore: schedule: '0 2 * * *'
+export const config = {};

@@ -2,6 +2,8 @@
 <html lang="en-AU">
 <head>
   <meta charset="UTF-8">
+  <!-- TRIM-01, 31 Aug 2026: withdrawn from the index and from sitemap-static.mjs on eight months of GA4 (1 to 92 users each). File retained and still served at 200. -->
+  <meta name="robots" content="noindex,follow">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>D&amp;D Tools Australia &mdash; Coming Soon | Cards on Cards on Cards</title>
   <meta name="description" content="C3 is building online D&D tools for Australian players. Monster comparisons, HP trackers, fight simulators, item databases and more. Register your interest now.">
@@ -23,7 +25,7 @@
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
 .nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
 .nav-logo img{height:40px;width:40px;border-radius:8px;object-fit:cover;transition:box-shadow .2s}.nav-logo:hover img{box-shadow:0 0 12px rgba(201,168,76,.5)}
-.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid #1e2235;color:#A0A8C0;white-space:nowrap}
 .nav-link:hover{color:#F0F2FF;border-color:#A0A8C0;background:rgba(255,255,255,.04);text-decoration:none}
@@ -120,18 +122,10 @@
     </a>
     <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
     <div class="nav-links">
-      <a href="/" class="nav-link nav-link--home">Home</a>
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
-      <a href="/shop.html" class="nav-link nav-link--shop">Shop</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
+      <a href="/compare" class="nav-link nav-link--compare">Compare</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <a href="/ev-calculator.html" class="nav-link nav-link--ev">EV Calc</a>
-      <a href="/tracker.html" class="nav-link nav-link--tracker">Tracker</a>
-      <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=5339146789&customid=C3Nav&toolid=10001&mkevt=1" target="_blank" rel="noopener" class="nav-link nav-link--ebay">eBay</a>
-      <a href="/calendar" class="nav-link nav-link--calendar">Calendar</a>
-      <a href="/generators" class="nav-link nav-link--generators">Generators</a>
-      <a href="/quizzes" class="nav-link nav-link--quiz">Quizzes</a>
-      <a href="/dnd" class="nav-link nav-link--dnd nav-link--active">D&amp;D Tools <span style="font-size:8px;padding:1px 5px;border-radius:3px;background:rgba(139,92,246,.2);color:#A78BFA;letter-spacing:.05em;margin-left:3px">SOON</span></a>
-      <a href="/contact.html" class="nav-link nav-link--contact">Contact</a>
+      <a href="/search" class="nav-link nav-link--search">Search</a>
     </div>
     <a href="/account" class="nav-account" title="Your C3 account">
       &#128100;<span class="nav-account-text">Account</span>
@@ -286,14 +280,14 @@
   <div style="text-align:center;margin:16px 0"><a href="https://buy.stripe.com/3cIdR836CeXk95C475aIM02" target="_blank" rel="noopener" style="background:#C9A84C;color:#0A0C14;padding:9px 20px;border-radius:20px;font-weight:700;text-decoration:none;font-size:13px;display:inline-block">&#10084;&#65039; Support C3</a></div>
   <p>
     <a href="/" style="color:#7a8099;margin:0 8px">Home</a>
-    <a href="/shop" style="color:#7a8099;margin:0 8px">Shop</a>
     <a href="/blog" style="color:#7a8099;margin:0 8px">Blog</a>
+    <a href="/calendar" style="color:#7a8099;margin:0 8px">Calendar</a>
+    <a href="/account" style="color:#7a8099;margin:0 8px">Account</a>
     <a href="/tracker" style="color:#7a8099;margin:0 8px">Tracker</a>
     <a href="/cards" style="color:#7a8099;margin:0 8px">Card Prices</a>
     <a href="/compare" style="color:#7a8099;margin:0 8px">Compare</a>
     <a href="/market" style="color:#7a8099;margin:0 8px">Market</a>
     <a href="/tools" style="color:#7a8099;margin:0 8px">Tools</a>
-    <a href="/play" style="color:#7a8099;margin:0 8px">Play</a>
     <a href="/contact" style="color:#7a8099;margin:0 8px">Contact</a>
     <a href="/legal" style="color:#7a8099;margin:0 8px">Legal</a>
     <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="color:#7a8099;margin:0 8px">eBay</a>

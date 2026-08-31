@@ -392,41 +392,10 @@ function buildNav(gameLabel = '', gameHref = '', nonce = '') {
       </button>
     </div>
     <div class="nav-links">
-      <a href="/cards"   class="nav-link nav-link--vault">Card Vault</a>${gameLink}
+      <a href="/cards"   class="nav-link nav-link--vault">Card Prices</a>${gameLink}
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market"  class="nav-link nav-link--market">Market</a>
-      <a href="/tools"   class="nav-link nav-link--tools">Tools</a>
-      <a href="/play"    class="nav-link nav-link--play">Play</a>
       <a href="/blog"    class="nav-link nav-link--blog">Blog</a>
-      <a href="/subscribe" class="nav-link nav-link--subscribe">Subscribe &#10024;</a>
-      <div class="nav-shop-wrap" id="nav-shop-wrap">
-        <button class="nav-shop-btn" data-nav-shop-toggle>
-          Shop <span class="nav-shop-arrow">&#9660;</span>
-        </button>
-        <div class="nav-shop-dropdown">
-          <a href="/shop" class="nav-shop-item">
-            Booster Boxes and Sealed
-            <span class="nav-shop-item-label">Amazon AU prices</span>
-          </a>
-          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&customid=C3NavShop&toolid=10001&mkevt=1"
-            target="_blank" rel="noopener" class="nav-shop-item">
-            Singles on eBay AU &#8599;
-            <span class="nav-shop-item-label">30,000+ TCG singles listed</span>
-          </a>
-          <a href="/shop#cat-accessories" class="nav-shop-item">
-            Accessories
-            <span class="nav-shop-item-label">Sleeves, binders, deck boxes</span>
-          </a>
-          <a href="/shop#cat-dnd" class="nav-shop-item">
-            D&amp;D
-            <span class="nav-shop-item-label">Dungeons and Dragons products</span>
-          </a>
-          <a href="/calendar" class="nav-shop-item">
-            Release Calendar
-            <span class="nav-shop-item-label">Upcoming set release dates</span>
-          </a>
-        </div>
-      </div>
+      <a href="/search"  class="nav-link nav-link--search">Search</a>
     </div>
     <a href="/account" class="nav-account" title="Your C3 account">
       &#128100;<span class="nav-account-text">Account</span>
@@ -441,20 +410,12 @@ function buildNav(gameLabel = '', gameHref = '', nonce = '') {
 <aside class="nav-drawer" id="nav-drawer" aria-hidden="true" aria-label="Menu">
   <button class="nav-drawer-close" id="nav-drawer-close" type="button" aria-label="Close menu">&times;</button>
   <div class="nav-drawer-links">
-    <a href="/cards" class="nav-drawer-link nav-drawer-link--vault">Card Vault</a>${drawerGameLink}
+    <a href="/cards" class="nav-drawer-link nav-drawer-link--vault">Card Prices</a>${drawerGameLink}
     <a href="/compare" class="nav-drawer-link">Compare</a>
-    <a href="/market" class="nav-drawer-link">Market</a>
-    <a href="/tools" class="nav-drawer-link">Tools</a>
-    <a href="/play" class="nav-drawer-link">Play</a>
     <a href="/blog" class="nav-drawer-link">Blog</a>
-    <a href="/subscribe" class="nav-drawer-link nav-drawer-link--subscribe">Subscribe &#10024;</a>
+    <a href="/search" class="nav-drawer-link">Search</a>
     <div class="nav-drawer-sep"></div>
     <a href="/account" class="nav-drawer-link">&#128100; Your Account</a>
-    <div class="nav-drawer-sep"></div>
-    <a href="/shop" class="nav-drawer-link">Shop: Booster Boxes</a>
-    <a href="/shop#cat-accessories" class="nav-drawer-link">Accessories</a>
-    <a href="/shop#cat-dnd" class="nav-drawer-link">D&amp;D</a>
-    <a href="/calendar" class="nav-drawer-link">Release Calendar</a>
     <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&mkrid=705-53470-19255-0&campid=${EPN_CAMPID}&customid=C3NavDrawer&toolid=10001&mkevt=1"
       target="_blank" rel="noopener" class="nav-drawer-link nav-drawer-ebay">Singles on eBay AU &#8599;</a>
   </div>

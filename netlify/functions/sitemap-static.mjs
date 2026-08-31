@@ -51,7 +51,6 @@ const STATIC_PAGES = [
   // param-free canonical URL to submit, and submitting a demo state as canonical would be
   // wrong, so it is excluded until the bare route renders a landing state of its own.
   { path: '/market',              priority: '0.8', changefreq: 'daily'   },
-  { path: '/generators',          priority: '0.8', changefreq: 'weekly'  },
   { path: '/quizzes',             priority: '0.8', changefreq: 'weekly'  },
   { path: '/blog',                priority: '0.8', changefreq: 'daily'   },
   // task-22 (C3L-65): /tracker and /shop were submitted here in their .html form while the
@@ -66,14 +65,11 @@ const STATIC_PAGES = [
   // left alone: this batch excludes the EV pages and anything EV-adjacent. Logged as C3L-65.
   { path: '/ev-calculator',       priority: '0.7', changefreq: 'weekly'  },
   { path: '/calendar',            priority: '0.7', changefreq: 'weekly'  },
-  { path: '/shop',                priority: '0.6', changefreq: 'weekly'  },
 
   // Section hubs and key pages. All were live, indexable and in NO sitemap at all until
   // task-84, including /tools and /play, the hub pages for the entire tools and quizzes
   // sections, and /methodology, which had never been submitted since it was built.
   { path: '/tools',               priority: '0.8', changefreq: 'weekly'  },
-  { path: '/play',                priority: '0.8', changefreq: 'weekly'  },
-  { path: '/pricing',             priority: '0.8', changefreq: 'weekly'  },
   { path: '/methodology',                              priority: '0.7', changefreq: 'monthly' },
   { path: '/subscribe',                                priority: '0.6', changefreq: 'monthly' },
   // QR destination on the parcel insert card. Not linked from the nav or any other page, so
@@ -121,10 +117,22 @@ const STATIC_PAGES = [
   // still served at 200 so existing links and bookmarks keep working, they are just no longer
   // advertised. Re-add this block when the catalogue comes back and the noindex comes off.
 
+// TRIM-01, 31 August 2026. /shop, /dnd, /generators, /pricing and /play were removed from
+  // this array. All five now carry <meta name="robots" content="noindex,follow">, and
+  // submitting a noindex URL in a sitemap asks Google to crawl a page we are telling it not to
+  // index. This is the same treatment the 43 EV calculator pages got in C3L-98. The five files
+  // are NOT deleted and still answer 200, they are simply no longer advertised. Decision basis:
+  // GA4 1 Jan to 31 Aug 2026 recorded 92, 1, 4, 8 and 9 users respectively, and zero key events
+  // between them. Re-add these entries if a page comes back and its noindex comes off.
+  //
+  // /contact and /legal moved off their .html form in the same pass. Both .html URLs 301 to the
+  // clean form (netlify.toml), so this array was submitting two URLs that redirect. That is the
+  // exact conflict the netlify.toml batch-2 comment warns about, and it had been live since the
+  // redirects landed.
+
   // Misc
-  { path: '/dnd',                                      priority: '0.6', changefreq: 'monthly' },
-  { path: '/contact.html',                             priority: '0.4', changefreq: 'monthly' },
-  { path: '/legal.html',                               priority: '0.3', changefreq: 'monthly' },
+  { path: '/contact',                             priority: '0.4', changefreq: 'monthly' },
+  { path: '/legal',                               priority: '0.3', changefreq: 'monthly' },
 ];
 
 export default async (req) => {

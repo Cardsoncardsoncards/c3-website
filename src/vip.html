@@ -44,7 +44,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 0;position:sticky;top:0;z-index:100}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 24px;gap:12px}
 .nav-logo{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.nav-links{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .nav-links::-webkit-scrollbar{display:none}
 .nav-link{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:1px solid var(--border);color:var(--silver);white-space:nowrap}
 .nav-link:hover{color:var(--white);border-color:var(--silver);background:rgba(255,255,255,.04)}
@@ -244,20 +244,10 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
     </a>
     <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="var n=this.parentNode.querySelector('.nav-links');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;'">&#9776;</button>
     <div class="nav-links">
-      <a href="/cards" class="nav-link nav-link--vault">Card Vault</a>
+      <a href="/cards" class="nav-link nav-link--vault">Card Prices</a>
       <a href="/compare" class="nav-link nav-link--compare">Compare</a>
-      <a href="/market" class="nav-link nav-link--market">Market</a>
-      <a href="/tools" class="nav-link nav-link--tools">Tools</a>
-      <a href="/play" class="nav-link nav-link--play">Play</a>
       <a href="/blog" class="nav-link nav-link--blog">Blog</a>
-      <div class="nav-dropdown">
-        <a href="/shop" class="nav-link nav-link--shop">Shop &#9662;</a>
-        <div class="nav-dropdown-menu">
-          <a href="/shop" class="nav-dropdown-item">Sealed Product</a>
-          <a href="https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=nav-shop&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001" class="nav-dropdown-item" target="_blank" rel="noopener">Singles on eBay &#8599;</a>
-          <a href="https://blasdigital.etsy.com" class="nav-dropdown-item" target="_blank" rel="noopener">Tools on Etsy &#8599;</a>
-        </div>
-      </div>
+      <a href="/search" class="nav-link nav-link--search">Search</a>
     </div>
     <a href="/account" class="nav-account" title="Your C3 account">
       &#128100;<span class="nav-account-text">Account</span>
@@ -355,14 +345,14 @@ footer{border-top:1px solid var(--border);padding:28px 0;position:relative;z-ind
   <div style="text-align:center;padding:28px 24px;border-top:1px solid #1e2235;font-size:12px;color:#7a8099">
     <p>
       <a href="/" style="color:#7a8099;margin:0 8px;text-decoration:none">Home</a>
-      <a href="/shop" style="color:#7a8099;margin:0 8px;text-decoration:none">Shop</a>
       <a href="/blog" style="color:#7a8099;margin:0 8px;text-decoration:none">Blog</a>
+      <a href="/calendar" style="color:#7a8099;margin:0 8px;text-decoration:none">Calendar</a>
+      <a href="/account" style="color:#7a8099;margin:0 8px;text-decoration:none">Account</a>
       <a href="/tracker" style="color:#7a8099;margin:0 8px;text-decoration:none">Tracker</a>
       <a href="/cards" style="color:#7a8099;margin:0 8px;text-decoration:none">Card Prices</a>
       <a href="/compare" style="color:#7a8099;margin:0 8px;text-decoration:none">Compare</a>
       <a href="/market" style="color:#7a8099;margin:0 8px;text-decoration:none">Market</a>
       <a href="/tools" style="color:#7a8099;margin:0 8px;text-decoration:none">Tools</a>
-      <a href="/play" style="color:#7a8099;margin:0 8px;text-decoration:none">Play</a>
       <a href="/contact" style="color:#7a8099;margin:0 8px;text-decoration:none">Contact</a>
       <a href="/legal" style="color:#7a8099;margin:0 8px;text-decoration:none">Legal</a>
       <a href="https://www.ebay.com.au/str/cardsoncardsoncards?mkcid=1&amp;mkrid=705-53470-19255-0&amp;campid=5339146789&amp;customid=Footer&amp;toolid=10001&amp;mkevt=1" target="_blank" rel="noopener" onclick="gtag('event','ebay_click',{'event_category':'affiliate','event_label':'footer'})" style="color:#7a8099;margin:0 8px;text-decoration:none">eBay</a>
