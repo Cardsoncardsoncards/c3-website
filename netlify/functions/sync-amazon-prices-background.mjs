@@ -1,4 +1,13 @@
-// DISABLED 31 Aug 2026, /shop is now noindexed and nothing reads amazon_price_history. NOTE: this job also refreshed amazon_products.current_price_aud, which shop-products.mjs still serves, so those prices are now frozen at their 31 Aug values.
+// SHOP-04, RE-ENABLED 31 August 2026. The batch 1 disable was INCORRECT and is reversed here.
+// It was taken on the gate "nothing reads amazon_price_history", which is true but is the wrong
+// table to have gated on. This job ALSO refreshes amazon_products.current_price_aud and
+// image_url, and shop-products.mjs reads amazon_products live to render /shop, so disabling it
+// froze every price on that page at its 31 August value with no "as at" date shown to the
+// reader. /shop being noindexed does not make a stale price acceptable: the page still serves
+// 200 to anyone holding a link, and it carries affiliate links to Amazon AU.
+// Schedule restored to its original value, taken verbatim from git log -p on this file rather
+// than reconstructed: it was removed by a1db61d and introduced by cb96880, and both agree on
+// '0 2 * * *'.
 // netlify/functions/sync-amazon-prices-background.mjs
 // Nightly sync: calls the Amazon Creators API (OAuth2) for all active ASINs
 // Updates current_price_aud and image_url in amazon_products
@@ -263,6 +272,4 @@ export default async (req) => {
   });
 };
 
-// DISABLED 31 August 2026 (SHOP-03). Schedule removed, file and logic retained.
-// To re-enable, restore: schedule: '0 2 * * *'
-export const config = {};
+export const config = { schedule: '0 2 * * *' };

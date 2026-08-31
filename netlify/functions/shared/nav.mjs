@@ -134,58 +134,6 @@ export const NAV_CSS = `
     background:rgba(201,168,76,.08); }
   .nav-link--subscribe:hover { background:rgba(201,168,76,.18); border-color:#C9A84C; }
 
-  /* Shop dropdown -- click only, no hover */
-  .nav-shop-wrap { position: relative; flex-shrink: 0; }
-  .nav-shop-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 9px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    border: 1px solid rgba(201,168,76,.35);
-    color: #C9A84C;
-    background: rgba(201,168,76,.06);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all .18s;
-    user-select: none;
-  }
-  .nav-shop-btn:hover { background:rgba(201,168,76,.14); border-color:#C9A84C; }
-  .nav-shop-arrow { font-size: 9px; transition: transform .2s; }
-  .nav-shop-wrap.open .nav-shop-arrow { transform: rotate(180deg); }
-  .nav-shop-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
-    background: #111420;
-    border: 1px solid #2d3254;
-    border-radius: 8px;
-    min-width: 200px;
-    z-index: 200;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,.5);
-  }
-  .nav-shop-wrap.open .nav-shop-dropdown { display: block; }
-  .nav-shop-item {
-    display: block;
-    padding: 11px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #e8eaf0;
-    text-decoration: none;
-    border-bottom: 1px solid #1e2235;
-    transition: background .15s;
-  }
-  .nav-shop-item:last-child { border-bottom: none; }
-  .nav-shop-item:hover { background: rgba(201,168,76,.1); color: #C9A84C;
-    text-decoration: none; }
-  .nav-shop-item-label { font-size: 10px; color: #9ba3c4; font-weight: 400;
-    display: block; margin-top: 2px; text-transform: none; letter-spacing: 0; }
 
   /* Disclosure bar */
   .c3-disclosure-bar {
@@ -347,7 +295,6 @@ export const NAV_CSS = `
     .nav-logo-text { display: none; }
     .nav-search-wrap { max-width: 140px; }
     .nav-link { padding: 5px 7px; font-size: 10px; }
-    .nav-shop-btn { padding: 5px 7px; font-size: 10px; }
     .nav-links { display: none; }
     .nav-burger { display: flex; }
     /* Keep the icon, drop the word, so it costs almost no width next to the burger. */
@@ -424,16 +371,12 @@ function buildNav(gameLabel = '', gameHref = '', nonce = '') {
   As an eBay Partner Network affiliate, we earn from qualifying purchases made via eBay links on this site.
 </div>
 <script${nonceAttr}>
-  // Close shop dropdown when clicking outside
-  document.addEventListener('click', function(e) {
-    var wrap = document.getElementById('nav-shop-wrap');
-    if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
-  });
-
-  // CSP pilot. These three behaviours were inline onkeydown/onclick attributes until 11 August
+  // CSP pilot. These behaviours were inline onkeydown/onclick attributes until 11 August
   // 2026. An inline handler is an inline SCRIPT as far as CSP is concerned, so a policy without
   // 'unsafe-inline' silently stops them running: the search box would look normal and do nothing
   // on Enter. Delegated off document so the markup needs no handler attribute at all.
+  // It read "three behaviours" until 31 August 2026. The third was the shop dropdown toggle,
+  // removed with the dropdown itself in NAV-01, so two remain: Enter in the box, and the button.
   function c3NavSearch() {
     var i = document.getElementById('nav-q');
     var v = i && i.value.trim();
@@ -447,11 +390,9 @@ function buildNav(gameLabel = '', gameHref = '', nonce = '') {
     }
   });
   document.addEventListener('click', function(e) {
-    var t = e.target.closest ? e.target.closest('[data-nav-search-go],[data-nav-shop-toggle]') : null;
+    var t = e.target.closest ? e.target.closest('[data-nav-search-go]') : null;
     if (!t) return;
-    if (t.hasAttribute('data-nav-search-go')) return c3NavSearch();
-    var w = document.getElementById('nav-shop-wrap');
-    if (w) w.classList.toggle('open');
+    c3NavSearch();
   });
 </script>
 <script${nonceAttr}>

@@ -203,13 +203,27 @@ const run = async () => {
   if (!events.length) {
     console.error(`  NO EVENTS AT ALL in the last 3 days, which cannot be right for 31 daily syncs.`);
   }
+  // C3L-57 / FK-02, 31 August 2026. `partial` was MISSING from this alternation and that is what
+  // produced the "yugioh::sync started 17.5h ago, no success or error since" alarm that two
+  // separate sessions investigated as a hang. Yugioh was never hanging. C3L-168 introduced
+  // `sync_partial` across 40 sync files on 11 August, meaning "the run finished, some sets
+  // failed", and this regex was never widened to match, so every partial run read as a run that
+  // never terminated. Measured on the live table over the fourteen days to 31 August: yugioh
+  // logged 14 sync_start, 9 sync_success and 5 sync_partial. 9 + 5 = 14, so every run terminated.
+  //
+  // A partial is a COMPLETION, so it belongs in `ends`. It is also a real problem, so it is
+  // counted separately below rather than being silently absorbed: before this change a partial
+  // was reported, wrongly, as a hang; after it, it must still be reported, correctly, as a
+  // partial. Recognising it without reporting it would trade a false alarm for a blind spot.
   const streams = new Map();
+  const partials = [];
   for (const e of events) {
-    const m = /^(.*)_(start|success|error)$/.exec(e.event_type || '');
+    const m = /^(.*)_(start|success|error|partial)$/.exec(e.event_type || '');
     if (!m) continue;
     const key = `${e.game ?? '(none)'}::${m[1]}`;
     if (!streams.has(key)) streams.set(key, { starts: [], ends: [] });
     streams.get(key)[m[2] === 'start' ? 'starts' : 'ends'].push(new Date(e.triggered_at));
+    if (m[2] === 'partial') partials.push({ key, at: e.triggered_at });
   }
   const incomplete = [];
   const cutoff = Date.now() - INCOMPLETE_HOURS * 3600000;
@@ -225,6 +239,10 @@ const run = async () => {
     }
   }
   if (!incomplete.length) console.log('  none, every stream that started also finished');
+
+  console.log('\n=== Signal B2, runs that finished but lost sets (sync_partial) ===');
+  if (!partials.length) console.log('  none in the last 3 days');
+  else for (const pt of partials) console.log(`  ${pt.key.padEnd(40)} partial at ${pt.at}`);
 
   // ---- Heartbeat: did this check itself run when it should have? ----
   console.log('\n=== Heartbeat, this check watching itself ===');
@@ -264,6 +282,8 @@ const run = async () => {
     unreadable.map(u => u.game).join(', '));
   if (incomplete.length) problems.push(`${incomplete.length} sync stream(s) started without ever finishing: ` +
     incomplete.map(i => `${i.key} (${i.hours}h)`).join(', '));
+  if (partials.length) problems.push(`${partials.length} run(s) finished with lost sets (sync_partial): ` +
+    partials.map(pt => pt.key).join(', '));
   if (heartbeatGap) problems.push(`this check did not run for ${heartbeatGap}h, longer than the ${HEARTBEAT_MAX_AGE_HOURS}h it is scheduled for`);
   if (!events.length) problems.push('sync_events recorded nothing in 3 days, so either the syncs stopped firing or their logging broke');
   if (staleMeta.length) problems.push(`${staleMeta.length} game(s) with card metadata stale by ${CARD_STALE_DAYS}+ days, prices may still be current: ` +

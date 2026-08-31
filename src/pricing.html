@@ -62,17 +62,6 @@
   .nav-link--blog:hover   { background:rgba(126,203,161,.08); border-color:#7ECBA1; }
   .nav-link--subscribe { color:#C9A84C; border-color:rgba(201,168,76,.5); background:rgba(201,168,76,.08); }
   .nav-link--subscribe:hover { background:rgba(201,168,76,.18); border-color:#C9A84C; }
-  .nav-shop-wrap { position: relative; flex-shrink: 0; }
-  .nav-shop-btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 9px; border-radius: 6px; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; border: 1px solid rgba(201,168,76,.35); color: #C9A84C; background: rgba(201,168,76,.06); cursor: pointer; white-space: nowrap; transition: all .18s; user-select: none; }
-  .nav-shop-btn:hover { background:rgba(201,168,76,.14); border-color:#C9A84C; }
-  .nav-shop-arrow { font-size: 9px; transition: transform .2s; }
-  .nav-shop-wrap.open .nav-shop-arrow { transform: rotate(180deg); }
-  .nav-shop-dropdown { display: none; position: absolute; top: calc(100% + 6px); right: 0; background: #111420; border: 1px solid #2d3254; border-radius: 8px; min-width: 200px; z-index: 200; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
-  .nav-shop-wrap.open .nav-shop-dropdown { display: block; }
-  .nav-shop-item { display: block; padding: 11px 16px; font-size: 12px; font-weight: 600; color: #e8eaf0; text-decoration: none; border-bottom: 1px solid #1e2235; transition: background .15s; }
-  .nav-shop-item:last-child { border-bottom: none; }
-  .nav-shop-item:hover { background: rgba(201,168,76,.1); color: #C9A84C; text-decoration: none; }
-  .nav-shop-item-label { font-size: 10px; color: #9ba3c4; font-weight: 400; display: block; margin-top: 2px; text-transform: none; letter-spacing: 0; }
 
   /* GAME MARQUEE (full bleed) */
   .marquee{width:100vw;margin-left:calc(-50vw + 50%);position:relative;padding:18px 0;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(201,168,76,.04),transparent);overflow:hidden}
@@ -148,7 +137,6 @@
     .nav-logo-text { display: none; }
     .nav-search-wrap { max-width: 140px; }
     .nav-link { padding: 5px 7px; font-size: 10px; }
-    .nav-shop-btn { padding: 5px 7px; font-size: 10px; }
     .nav-links { display: flex; }
   }
 </style>

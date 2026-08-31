@@ -363,6 +363,7 @@ export default async (req) => {
           snapRows.push({
             card_id:          card.id,
             snapshot_date:    today,
+            source:           'sync-onepiece-background',
             market_price:     marketPrice,
             low_price:        lowPrice,
             foil_price:       foilPrice,

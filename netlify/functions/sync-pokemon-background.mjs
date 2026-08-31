@@ -507,6 +507,7 @@ export default async (req) => {
           snapRows.push({
             card_id:       card.id,
             snapshot_date: today,
+            source:        'sync-pokemon-background',
             market_price:  marketPrice,
             low_price:     lowPrice,
             foil_price:    foilPrice,
@@ -577,6 +578,7 @@ export default async (req) => {
             snapRows.push({
               card_id:       card.id,
               snapshot_date: today,
+              source:        'sync-pokemon-background',
               market_price:  mp,
               price_aud:     parseFloat((mp * audRate).toFixed(2)),
               aud_rate:      audRate,

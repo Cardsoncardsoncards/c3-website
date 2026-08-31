@@ -129,10 +129,63 @@ async function mintToken(userId) {
   return token;
 }
 
+// WF-03, 31 August 2026. DIAGNOSTICS ONLY. No condition, threshold or assertion changed: this
+// function returns exactly what it returned before, for exactly the same inputs, and Part B still
+// fails in exactly the same circumstances. The only difference is that it now says why.
+//
+// This check has failed every scheduled run since between 5 and 9 August and three weeks of
+// failures carry no diagnostic information at all, because the status and body were discarded.
+// Two sessions have now investigated it and disproven five hypotheses (missing SUPABASE_ANON_KEY,
+// the SESSION_SECRET fail-closed gate, a broken service key, an ambiguous PostgREST embed, and
+// SECURITY_HEADERS clobbering Set-Cookie) without being able to see what the endpoint replied.
+//
+// Nothing credential-shaped is printed. The token is never logged, no Set-Cookie VALUE is logged
+// (only the count and the cookie NAMES), and the body excerpt is passed through redact() first.
+function redactForLog(text) {
+  return String(text)
+    // any token= or key= query value
+    .replace(/([?&](?:token|key|apikey|secret|password)=)[^&"'\s<]+/gi, '$1[REDACTED]')
+    // JWT-shaped and base64/hex-shaped runs, which is what a key or a session value looks like
+    .replace(/\b[A-Za-z0-9_-]{24,}\.[A-Za-z0-9_-]{8,}(?:\.[A-Za-z0-9_-]+)?/g, '[REDACTED-JWT]')
+    .replace(/\b[A-Fa-f0-9]{32,}\b/g, '[REDACTED-HEX]');
+}
+
+// Which known /account page came back. This is the actually diagnostic bit: each of these strings
+// is emitted by exactly one branch of account.mjs, so the marker names the branch that ran.
+function accountPageMarker(body) {
+  const marks = [
+    ['That link is not valid', 'resolveMagicLink returned unknown (row not found, OR sbJson threw and was swallowed by its .catch)'],
+    ['That link has expired', 'resolveMagicLink returned expired'],
+    ['Sessions are not configured on this deployment', 'hasSessionSecret() is FALSE, cookie deliberately withheld'],
+    ['Signed out', 'signout branch'],
+    ['Your C3 Account', 'signed-out account page'],
+  ];
+  const hits = marks.filter(m => body.includes(m[0])).map(m => m[0] + ' -> ' + m[1]);
+  return hits.length ? hits.join(' | ') : '(no known marker)';
+}
+
 async function sessionCookie(token) {
   const r = await fetch(`${SITE_ORIGIN}/account?token=${encodeURIComponent(token)}`, { redirect: 'manual' });
   const set = r.headers.getSetCookie ? r.headers.getSetCookie() : [r.headers.get('set-cookie')].filter(Boolean);
-  return (set || []).map(c => c.split(';')[0]).join('; ');
+  const cookie = (set || []).map(c => c.split(';')[0]).join('; ');
+
+  if (!cookie) {
+    console.log('  DIAG sessionCookie: no Set-Cookie came back from /account?token=...');
+    console.log(`    HTTP status      ${r.status} ${r.statusText || ''}`);
+    console.log(`    location         ${r.headers.get('location') || '(none)'}`);
+    console.log(`    content-type     ${r.headers.get('content-type') || '(none)'}`);
+    console.log(`    set-cookie count ${(set || []).length}`);
+    console.log(`    cookie names     ${(set || []).map(c => c.split('=')[0]).join(', ') || '(none)'}`);
+    let body = '';
+    try { body = await r.text(); } catch (err) { body = '(body unreadable: ' + err.message + ')'; }
+    console.log(`    body length      ${body.length}`);
+    console.log(`    page marker      ${accountPageMarker(body)}`);
+    const title = /<title>([^<]*)<\/title>/i.exec(body);
+    console.log(`    title            ${title ? title[1].trim() : '(none)'}`);
+    console.log(`    body excerpt     ${redactForLog(body.replace(/\s+/g, " ").slice(0, 300))}`);
+  }
+
+  return cookie;
 }
 
 async function followRowsFor(userId) {

@@ -312,6 +312,7 @@ export default async (req) => {
           snapRows.push({
             card_id:          card.id,
             snapshot_date:    today,
+            source:           'sync-metazoo-background',
             market_price:     marketPrice,
             low_price:        lowPrice,
             foil_price:       foilPrice,
@@ -327,22 +328,41 @@ export default async (req) => {
       }
 
       let cardsWritten = 0, snapsWritten = 0;
-      const results = await Promise.allSettled([
-        (async () => {
-          for (let i = 0; i < cardRows.length; i += 200) {
-            const chunk = cardRows.slice(i, i + 200);
-            await supabaseUpsert('metazoo_cards', chunk);
-            cardsWritten += chunk.length;
-          }
-        })(),
-        (async () => {
-          for (let i = 0; i < snapRows.length; i += 500) {
-            const chunk = snapRows.slice(i, i + 500);
-            await supabaseUpsertSnapshots('metazoo_price_snapshots', chunk);
-            snapsWritten += chunk.length;
-          }
-        })()
-      ]);
+
+      // FK-02, 31 August 2026. Applied from the One Piece fix in a1db61d (FK-01), unchanged in
+      // shape. These two upserts used to run concurrently inside one Promise.allSettled, and
+      // they are not independent: metazoo_price_snapshots.card_id is a FOREIGN KEY onto
+      // metazoo_cards(id), so a snapshot row is the CHILD of a card row. Racing
+      // them meant that for a brand new set, whose parent card rows do not exist yet, a snapshot
+      // chunk could reach Postgres before the card chunk had committed and the whole snapshot
+      // upsert was rejected 23503. sync_events recorded that against 15 distinct games in the
+      // fourteen days to 31 August.
+      //
+      // Parent first, child second, awaited in order. The two arms stay isolated from one another
+      // (a failed card upsert records itself and does not throw past this block), which is what
+      // the Promise.allSettled shape was for; only the concurrency is gone, and the concurrency
+      // is the bug. The results array keeps its shape so the reporting loop below is unchanged.
+      const results = [];
+      try {
+        for (let i = 0; i < cardRows.length; i += 200) {
+          const chunk = cardRows.slice(i, i + 200);
+          await supabaseUpsert('metazoo_cards', chunk);
+          cardsWritten += chunk.length;
+        }
+        results.push({ status: 'fulfilled' });
+      } catch (err) {
+        results.push({ status: 'rejected', reason: err });
+      }
+      try {
+        for (let i = 0; i < snapRows.length; i += 500) {
+          const chunk = snapRows.slice(i, i + 500);
+          await supabaseUpsertSnapshots('metazoo_price_snapshots', chunk);
+          snapsWritten += chunk.length;
+        }
+        results.push({ status: 'fulfilled' });
+      } catch (err) {
+        results.push({ status: 'rejected', reason: err });
+      }
 
       for (const r of results) {
         if (r.status === 'rejected') {

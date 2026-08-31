@@ -212,6 +212,19 @@ Weiss Schwarz is a publisher/umbrella brand, not a single game. Each licensed pr
   RESOLVED (task-40/41, 10 Jul 2026): the active build script scripts/generate-sitemap-cards.mjs already has fetchWithRetry (exp backoff), a zero-row sanity guard, and process.exit(1) on genuine failure. The stale unused duplicate netlify/functions/generate-sitemap-cards.mjs was deleted in task-41.
 
 ### High priority (affects revenue or data integrity)
+- **WF-02, the weekly RLS and BOLA check has been failing since 9 August 2026.** Three weeks with
+  no recurring object-level security coverage. Part A (anon cannot read 17 sensitive tables)
+  still passes every run; Part B (two-account cross-user test) has not run since. The cause is
+  NOT the missing SUPABASE_ANON_KEY the workflow comment predicts, and NOT the SESSION_SECRET
+  fail-closed gate, both disproven on 31 August. Cause still unidentified. The next step is a
+  diagnostic run, not a fix. Do not "fix" this by relaxing the check.
+- **SHOP-04, 31 August 2026: batch 1 disabled `sync-amazon-prices-background` on a wrong gate and
+  this session reversed it.** The gate used was "nothing reads `amazon_price_history`", which is
+  true and irrelevant. The same job also refreshes `amazon_products.current_price_aud`, which
+  `shop-products.mjs` reads live to render /shop, so the disable froze every price on that page
+  with no "as at" date. Schedule restored to its original `0 2 * * *`. The lesson is the
+  transferable part: gate a disable on every table the job WRITES, not on the one the finding
+  happens to name.
 - var u= minified pattern: present in 8 primary hubs and 7 primary card-pages. Breaks search and A-Z filters.
 - pokemon-set-page.mjs: set.id referenced before set is declared. Runtime crash.
 - lorcana-hub and pokemon-hub: set tile URLs use s.id not s.slug.
