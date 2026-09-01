@@ -348,7 +348,14 @@ Verified directly against the live database, not from memory.
   id, email UNIQUE, stripe_customer_id, stripe_sub_id, plan, status, subscribed_at,
   cancelled_at, updated_at
   CHECK status IN ('active','cancelled','past_due','trialing')
-  Paid tier is resolved from THIS table at send time, never by which table a follow row lives in.
+  CORRECTED 1 September 2026. This table is EMPTY and always has been: 0 live rows and
+  n_tup_ins = 0 over its entire lifetime, and a grep for `rest/v1/subscribers` across the repo
+  returns zero writers. Nothing has ever written to it.
+  Paid entitlement is resolved by MAILERLITE GROUP MEMBERSHIP, group 188799131758626620,
+  granted by stripe-webhook.mjs on checkout.session.completed and revoked by the same file on
+  cancellation. Every `/subscribers` call in that file is the MailerLite API, not Supabase.
+  The table still exists and its shape above is accurate, but it is unused. Do not resolve paid
+  tier from it: a reader who trusts the previous wording would find every customer reads as free.
 
 ### RLS on the four tables above
 All four have RLS ENABLED. accounts, follows and subscribers each carry a single service_role

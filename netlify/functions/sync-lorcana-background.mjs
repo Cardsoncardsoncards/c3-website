@@ -348,7 +348,15 @@ export default async (req) => {
           foil_price_aud:    foilPrice ? parseFloat((foilPrice * audRate).toFixed(2)) : null,
           aud_rate:          audRate,
           price_change_24h:  price.price_change_24h || null,
-          price_change_7d:   price.price_change_7d || null,
+          // C3L-80: the upstream price_change_7d write was REMOVED here on 1 September 2026,
+          // completing the fix that commit 4700961 applied to pokemon, yugioh, onepiece,
+          // dragonball and starwars. These two games were held back then because removal
+          // blanks cards that currently carry a vendor figure. That was checked rather than
+          // assumed before proceeding: of the 108 lorcana cards affected, ZERO have any price
+          // snapshot in C3 at all, priced or otherwise, so this is not the cron lagging, it
+          // is a vendor number C3 has never had the data to verify. update_lorcana_price_changes()
+          // remains the single writer, computing from C3 price_aud snapshots at a fixed 7 day
+          // offset with a 1 day tolerance. The snapshot-row write below is deliberately KEPT.
           price_change_30d:  price.price_change_30d || null,
           total_listings:    price.total_listings || null,
           median_price:      price.median_price || null,
