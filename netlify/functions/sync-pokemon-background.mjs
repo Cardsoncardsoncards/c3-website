@@ -497,7 +497,16 @@ export default async (req) => {
           foil_price_aud:    foilPrice   ? parseFloat((foilPrice   * audRate).toFixed(2)) : null,
           aud_rate:          audRate,
           price_change_24h:  price.price_change_24h  || null,
-          price_change_7d:   price.price_change_7d   || null,
+          // C3L-80: the upstream price_change_7d write was REMOVED here on 1 September 2026.
+          // It copied tcgapi.dev's own figure verbatim, over the vendor's market and currency,
+          // with no window and no tolerance, and it overwrote the value that
+          // update_pokemon_price_changes() computes each night from C3's OWN price_aud snapshots
+          // at a fixed 7 day offset with a 1 day tolerance. Two writers disagreeing on a
+          // percentage is worse than one, because the page cannot say which it is showing.
+          // The cron is the surviving writer. Measured before removal: it can populate more
+          // cards than this line left standing, so removing it widens coverage rather than
+          // narrowing it. The snapshot-row write further down is deliberately KEPT, as a
+          // record of what upstream reported; nothing renders it.
           price_change_30d:  price.price_change_30d  || null,
           last_price_update: price.last_updated_at   || null,
           updated_at:        new Date().toISOString()
