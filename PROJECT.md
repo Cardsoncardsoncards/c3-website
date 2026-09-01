@@ -219,6 +219,21 @@ Weiss Schwarz is a publisher/umbrella brand, not a single game. Each licensed pr
   RESOLVED (task-40/41, 10 Jul 2026): the active build script scripts/generate-sitemap-cards.mjs already has fetchWithRetry (exp backoff), a zero-row sanity guard, and process.exit(1) on genuine failure. The stale unused duplicate netlify/functions/generate-sitemap-cards.mjs was deleted in task-41.
 
 ### High priority (affects revenue or data integrity)
+- **C3L-201, 1 September 2026: seven columns on `pokemon_cards` are populated by nothing.**
+  `hp`, `stage`, `types`, `attacks`, `retreat_cost`, `tcgplayer_url` and `custom_attributes`
+  are NULL on all 32,593 rows. `sync-pokemon-background.mjs` selects `supertype` and
+  `subtypes` from pokemontcg.io, derives a stage, and writes all of them, and none lands.
+  The join is on lowercased name plus number. **This matters beyond the missing stats:
+  pokemontcg.io is a card-only database, so a failed match would have been a genuine
+  upstream sealed-product signal.** It cannot be used while the match rate is zero.
+  Fixing it is a sync change needing its own before-and-after match-rate measurement.
+- **C3L-200, 1 September 2026: sealed product cannot be classified by name, and the durable
+  fix is a `sealed` column, not a keyword.** Word-boundary `tin` shipped to the 28 set pages
+  that carry a sealed block, with 0 false positives inside the rarity-None population that
+  query reads. **It makes 2 items visible, not the 269 that match**, because pokemon, yugioh
+  and onepiece hold 267 of them and none of those three renders a sealed block. `collection`
+  must not be added: as a whole word it still matches 597 rows carrying a real rarity.
+  3,475 priced rarity-None rows across 31 games remain unclassifiable by name.
 - **C3L-199, 1 September 2026: every set page truncates its Singles list and there is no
   pagination anywhere.** 28 of the 31 set-page files cap Singles at `limit=200` ordered
   `name.asc`, so a large set renders roughly A through B and stops. pokemon and onepiece cap at

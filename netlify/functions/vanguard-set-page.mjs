@@ -306,7 +306,13 @@ export default async (req) => {
 
   ${(() => {
     const SEALED_KEYS = ['booster box','booster pack','display','starter deck','starter set','trial deck','trial set','box set','collection box','premium set','booster display','sealed product',' case','bundle','deck set','gift set','trainer box','battle box','battle stadium','structure deck','mini tin','collector tin','tin case'];
-    const sealedItems = (sealedRows||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && (parseFloat(c.price_aud) > 0 || parseFloat(c.market_price) > 0); });
+    // C3L-200. Word-boundary match, deliberately NOT a SEALED_KEYS substring entry.
+    // Bare 'tin' as a substring matches 5,883 real singles (Destiny, Sting, Platinum,
+    // Tinkaton, Everlasting, Fascinating) which is why it was rejected on 1 September.
+    // As a whole word it matches 0 real singles inside the rarity-None population this
+    // block reads, and catches Collectors Tins, Mega-Tins and Stacking Tins.
+    const SEALED_WORD_RE = /\btin\b/;
+    const sealedItems = (sealedRows||[]).filter(c => { const n = (c.name||'').toLowerCase(); return (SEALED_KEYS.some(k => n.includes(k)) || SEALED_WORD_RE.test(n)) && (parseFloat(c.price_aud) > 0 || parseFloat(c.market_price) > 0); });
     if (!sealedItems.length) return '';
     const itemsHTML = sealedItems.slice(0,4).map(p => {
       const priceAud = parseFloat(p.price_aud) > 0 ? parseFloat(p.price_aud) : parseFloat(p.market_price) * audRate;
