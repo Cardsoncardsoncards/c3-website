@@ -1,6 +1,19 @@
 // netlify/functions/register-interest.mjs
-// Handles /api/register-interest POST from subscribe.html
-// Adds to MailerLite paid group + notifies owner via Resend
+// Handles /api/register-interest POST from subscribe.html and from the "Subscribe for Free
+// Updates" panel on /account.
+// Adds to the MailerLite MAIN (free) group + notifies owner via Resend.
+//
+// SUB-01, corrected 1 September 2026. This wrote to 188799131758626620 from the day it was
+// written (d57091c, 17 June 2026), and that is the PAID group, not a second free list:
+// stripe-webhook.mjs ADDS to it on checkout.session.completed and REMOVES from it on
+// cancellation, so membership of that group IS the paid entitlement, and
+// generate-weekly-report.mjs mails the paid C3 Seller Intelligence report to whoever is in it.
+// This endpoint takes a name, an email and two interest checkboxes with no payment step
+// anywhere, and both of its callers describe it as free: /account labels the button
+// "Subscribe for Free Updates", and the welcome email below says everything on C3 is free
+// today. So a free interest registration was granting paid entitlement. The paid signup path
+// is Stripe checkout and always has been, which is why this is a wrong constant rather than a
+// wrongly aimed form.
 
 import { clientIp } from './shared/request-fingerprint.mjs';
 
@@ -57,7 +70,9 @@ export default async (req) => {
 
   const MAILERLITE_KEY = Netlify.env.get('MAILERLITE_API_KEY');
   const RESEND_KEY     = Netlify.env.get('RESEND_API_KEY');
-  const GROUP_ID       = '188799131758626620';
+  // The MAIN (free) list, matching PROJECT.md and email-subscribe.mjs. See the SUB-01 note at
+  // the top of this file before changing this back.
+  const GROUP_ID       = '182892277158381312';
 
   let body;
   try { body = await req.json(); } catch {
@@ -102,6 +117,27 @@ export default async (req) => {
     market_intelligence: (Array.isArray(interests) && interests.includes('Market Intelligence')) ? 1 : 0,
     collection_tools:     (Array.isArray(interests) && interests.includes('Collection Tools')) ? 1 : 0,
   };
+  // SUB-02. A MailerLite failure used to be caught, logged, and followed by an unconditional
+  // 200 {ok:true} at the end of this handler, so a submitter was told they were on the list
+  // while nothing had been stored anywhere. That is the one outcome a signup form must never
+  // produce, and it is invisible from the outside precisely because it looks like success.
+  // The add is now the gate: if it does not succeed, this returns a non-2xx, and neither the
+  // owner notification nor the welcome email is sent, because "thanks for joining" is a false
+  // statement once the write behind it has failed.
+  //
+  // 409 counts as success. It means the subscriber already exists, which is what a double
+  // submit produces, and stripe-webhook.mjs treats that status the same way for the same reason.
+  //
+  // Nothing beyond the status code is logged. MailerLite echoes the submitted address back
+  // inside a validation error body, so logging that body would put a subscriber email into the
+  // function logs; the API key is never in scope for logging at all.
+  if (!MAILERLITE_KEY) {
+    console.error('MAILERLITE_API_KEY is not set, cannot record signup');
+    return new Response(JSON.stringify({ ok: false, error: 'Signup is temporarily unavailable. Please try again shortly.' }), {
+      status: 503, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
+  let mlOk = false;
   const mlController = new AbortController();
   const mlTimer = setTimeout(() => mlController.abort(), 8000);
   try {
@@ -120,13 +156,16 @@ export default async (req) => {
       })
     });
     clearTimeout(mlTimer);
-    if (!mlRes.ok) {
-      const err = await mlRes.text();
-      console.error('MailerLite error:', err);
-    }
+    mlOk = mlRes.ok || mlRes.status === 409;
+    if (!mlOk) console.error('MailerLite add failed, status ' + mlRes.status);
   } catch (e) {
     clearTimeout(mlTimer);
-    console.error('MailerLite fetch failed:', e.message);
+    console.error('MailerLite add failed, no usable response: ' + e.name);
+  }
+  if (!mlOk) {
+    return new Response(JSON.stringify({ ok: false, error: 'Could not complete signup. Please try again shortly.' }), {
+      status: 502, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
   }
 
   // 2. Send owner notification via Resend
@@ -147,7 +186,7 @@ export default async (req) => {
         html: '<p><strong>Name:</strong> ' + esc(name) + '</p>'
           + '<p><strong>Email:</strong> ' + esc(email) + '</p>'
           + '<p><strong>Interested in:</strong> ' + esc(interestList.join(', ')) + '</p>'
-          + '<p>Added to MailerLite group 188799131758626620.</p>'
+          + '<p>Added to MailerLite group ' + GROUP_ID + ' (main, free).</p>'
       })
     });
     clearTimeout(rsTimer);

@@ -227,6 +227,20 @@ async function fetchMTGMovers(period) {
 // builds a URL past 15KB and the request dies with a header overflow before it reaches
 // Supabase. Scan modestly and chunk the lookup so the URL cannot overflow.
 const SIGNAL_MIN_AUD    = 5;
+
+// OUT-03: the display floor. No row in mtg_signals has more than 111 distinct days of price
+// history, so price_52w_high_aud is not a 52 week high whatever its name says. A card below
+// this floor is dropped from the signal lists entirely, because membership of buySignals or
+// sellSignals is itself a signal-derived claim, not merely a container for one. Read time
+// only: no row is altered and no migration is involved, so lowering this number reverts it.
+const MIN_SIGNAL_HISTORY_DAYS = 90;
+
+// NULL fails closed. An un-recomputed row has unknown provenance, which is not the same as
+// having enough history behind it.
+function hasSignalHistory(snap) {
+  const days = snap && snap.days_of_history != null ? Number(snap.days_of_history) : null;
+  return days != null && Number.isFinite(days) && days >= MIN_SIGNAL_HISTORY_DAYS;
+}
 const SIGNAL_SCAN_LIMIT = 120;
 const CARD_LOOKUP_CHUNK = 50;
 
@@ -260,12 +274,12 @@ async function fetchMTGSignals() {
       supabaseGet(
         `mtg_signals?buy_verdict=eq.buy&latest_price_aud=gte.${SIGNAL_MIN_AUD}` +
         `&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}` +
-        `&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud`
+        `&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud,days_of_history`
       ),
       supabaseGet(
         `mtg_signals?sell_verdict=eq.sell&latest_price_aud=gte.${SIGNAL_MIN_AUD}` +
         `&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}` +
-        `&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud`
+        `&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud,days_of_history`
       )
     ]);
     const buySig  = buyRaw.status  === 'fulfilled' && Array.isArray(buyRaw.value)  ? buyRaw.value  : [];
@@ -279,6 +293,12 @@ async function fetchMTGSignals() {
     const enrichBuy = dedupeSignalsByName(buySig.map(snap => {
       const card = cards.find(c => c.scryfall_id === snap.scryfall_id);
       if (!card) return null;
+      // OUT-03: too little history means no buy signal at all, so the row is dropped rather
+      // than returned with a blanked field. This is the "omit entirely" branch of the API
+      // decision: a card below the floor does not appear, so callers never see a discount
+      // whose meaning has quietly changed. For cards that do clear the floor, discount is
+      // computed exactly as before, so the field's meaning is unchanged for every row present.
+      if (!hasSignalHistory(snap)) return null;
       const high = parseFloat(snap.price_52w_high_aud);
       const price = parseFloat(snap.latest_price_aud);
       if (!(high > 0)) return null;
@@ -290,6 +310,9 @@ async function fetchMTGSignals() {
         image:    card.image_uri_small || '',
         slug:     card.slug,
         priceAud: price,
+        // The recent high itself, so /market can show it beside the current price instead of
+        // framing the gap as a percentage. Additive: no existing field changes.
+        high,
         discount,
         spark:    null,
         scryfall_id: card.scryfall_id,
@@ -300,6 +323,8 @@ async function fetchMTGSignals() {
     const enrichSell = dedupeSignalsByName(sellSig.map(snap => {
       const card = cards.find(c => c.scryfall_id === snap.scryfall_id);
       if (!card) return null;
+      // OUT-03: see the buy branch above. Same floor, same reason.
+      if (!hasSignalHistory(snap)) return null;
       const high = parseFloat(snap.price_52w_high_aud);
       const low = parseFloat(snap.price_52w_low_aud);
       const price = parseFloat(snap.latest_price_aud);
@@ -313,6 +338,7 @@ async function fetchMTGSignals() {
         image:    card.image_uri_small || '',
         slug:     card.slug,
         priceAud: price,
+        high,
         nearHighPct,
         spark:    null,
         scryfall_id: card.scryfall_id,

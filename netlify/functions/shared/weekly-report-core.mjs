@@ -222,6 +222,21 @@ async function mtgMovers(direction,limit){
 // URL cannot overflow whatever the scan returns.
 const SIGNAL_SCAN_LIMIT   = 120;
 const SIGNAL_MIN_AUD      = 5;
+
+// OUT-03: the display floor. No row in mtg_signals carries more than 111 distinct days of
+// price history, so price_52w_high_aud is not a 52 week high whatever the column is called.
+// A card below this floor is left out of the buy and sell sections entirely, because being
+// listed there is itself a signal-derived claim. Read time only, nothing is written or
+// migrated, so lowering this number reverts the behaviour.
+const MIN_SIGNAL_HISTORY_DAYS = 90;
+
+// NULL fails closed: an un-recomputed row has unknown provenance, which is not the same as
+// having enough history behind it. This matters more in an email than on a page, because
+// there is no way to correct a figure once it has been sent.
+function hasSignalHistory(row){
+  const days = row && row.days_of_history != null ? Number(row.days_of_history) : null;
+  return days != null && Number.isFinite(days) && days >= MIN_SIGNAL_HISTORY_DAYS;
+}
 const CARD_LOOKUP_CHUNK   = 50;
 
 // A card name has many printings, each its own scryfall_id. The email lists cards,
@@ -257,13 +272,13 @@ async function mtgBuy(limit){
   try{
     // Ordered by value, not cheapness. Ordering ascending surfaced six A$1.01 cards,
     // which is not a buy list any seller can act on.
-    const data=await sbGet(`mtg_signals?buy_verdict=eq.buy&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud`);
+    const data=await sbGet(`mtg_signals?buy_verdict=eq.buy&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud,days_of_history`);
     const pairs=await namedSignals(data);
     const rows=pairs.map(({row:s,card:c})=>{
+      if(!hasSignalHistory(s))return null;
       const high=parseFloat(s.price_52w_high_aud), price=parseFloat(s.latest_price_aud);
       if(!(high>0))return null;
-      const discount=Math.round(((high-price)/high)*100);
-      return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:price,discount,game:'mtg'};
+      return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:price,high,game:'mtg'};
     }).filter(Boolean);
     return dedupeByName(rows)
       .sort((a,b)=>parseFloat(b.priceAud)-parseFloat(a.priceAud))
@@ -272,14 +287,14 @@ async function mtgBuy(limit){
 }
 async function mtgSell(limit){
   try{
-    const data=await sbGet(`mtg_signals?sell_verdict=eq.sell&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud`);
+    const data=await sbGet(`mtg_signals?sell_verdict=eq.sell&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud,days_of_history`);
     const pairs=await namedSignals(data);
     const rows=pairs.map(({row:s,card:c})=>{
+      if(!hasSignalHistory(s))return null;
       const high=parseFloat(s.price_52w_high_aud), low=parseFloat(s.price_52w_low_aud), price=parseFloat(s.latest_price_aud);
       const range=high-low;
       if(!(range>0))return null;
-      const nearHighPct=Math.round(((price-low)/range)*100);
-      return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:price,nearHighPct,game:'mtg'};
+      return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:price,high,game:'mtg'};
     }).filter(Boolean);
     return dedupeByName(rows)
       .sort((a,b)=>parseFloat(b.priceAud)-parseFloat(a.priceAud))
@@ -292,8 +307,13 @@ function row(card,mode){
   let badgeColor,badgeText;
   if(mode==='up'){badgeColor='#22c55e';badgeText='\u25B2 '+Math.abs(parseFloat(card.change7d)).toFixed(1)+'% 7d';}
   else if(mode==='down'){badgeColor='#ef4444';badgeText='\u25BC '+Math.abs(parseFloat(card.change7d)).toFixed(1)+'% 7d';}
-  else if(mode==='buy'){badgeColor='#C9A84C';badgeText=card.discount+'% off high';}
-  else{badgeColor='#f97316';badgeText='Near '+card.nearHighPct+'% of high';}
+  // OUT-03: "% off high" and "Near X% of high" are both gone. Each framed a gap against a
+  // figure the schema calls a 52 week high while no card has more than 111 days of history,
+  // which asserted a precision the data does not carry. The recent high now sits plainly
+  // beneath the current price, which is already rendered directly above this badge in the
+  // same cell, so a reader sees both figures and can judge the gap themselves.
+  else if(mode==='buy'){badgeColor='#C9A84C';badgeText='Recent high '+fmtAUD(card.high);}
+  else{badgeColor='#f97316';badgeText='Recent high '+fmtAUD(card.high);}
   const sub=[cfg.label,card.setName,card.rarity].filter(Boolean).map(esc).join(' &middot; ');
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:10px 0;border-bottom:1px solid #161d2e;padding-bottom:10px;"><tr>
   <td style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#e8eaf0;line-height:1.4;">

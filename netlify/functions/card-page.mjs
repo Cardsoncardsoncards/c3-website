@@ -34,6 +34,23 @@ const CHART_WINDOW_DAYS = 90;
 // no-verdict states is displayed.
 const SIGNAL_MIN_HISTORY_DAYS = 30;
 
+// OUT-03: the DISPLAY floor, distinct from the 30 day floor above. mtg_signals stores a column
+// named price_52w_high_aud, but no row in that table has more than 111 distinct days of price
+// history, so the figure is not a 52 week high and never has been. Rather than rename a column
+// four consumers depend on, every consumer now withholds signal-derived output until a card has
+// at least this many days behind it. Applied at read time only: the stored data is untouched,
+// and reverting is a matter of lowering this number, not a migration.
+const MIN_SIGNAL_HISTORY_DAYS = 90;
+
+// The single gate every signal-derived figure on this page passes through. NULL fails closed,
+// for the C3L-39 reason: a row that has not been recomputed has unknown provenance, which is
+// not the same thing as having enough history.
+function hasSignalHistory(signals) {
+  if (!signals) return false;
+  const days = signals.days_of_history != null ? Number(signals.days_of_history) : null;
+  return days != null && Number.isFinite(days) && days >= MIN_SIGNAL_HISTORY_DAYS;
+}
+
 // Draw a visible break in the chart line when consecutive snapshots are more than this many days
 // apart. C3L-28: the x axis is positioned by date, so a gap leaves real horizontal space, and
 // breaking the line stops it implying continuous data across days that were never collected.
@@ -175,6 +192,10 @@ function formatManaSymbols(manaCost) {
 // sell_verdict are 'buy' / 'sell' / null). A row with neither set is mid-range.
 function getSignalVerdict(signals) {
   if (!signals) return null;
+  // OUT-03: below the display floor nothing is rendered at all, not even the C3L-39
+  // "not enough price history yet" state. Suppressed means absent, not a softer assertion.
+  // The C3L-39 branch below is retained and becomes reachable again if the floor is lowered.
+  if (!hasSignalHistory(signals)) return null;
   // C3L-39, the display half. Two things were wrong here.
   //
   // First, a card with almost no price history got the same confident verdict as a card
@@ -325,8 +346,12 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * fxRate : null;
   const priceAudEtched = card.price_usd_etched ? card.price_usd_etched * fxRate : null;
   // 52-week high/low and buy/sell verdict come from the mtg_signals table.
-  const high52w = signals?.price_52w_high_aud != null ? parseFloat(signals.price_52w_high_aud) : null;
-  const low52w = signals?.price_52w_low_aud != null ? parseFloat(signals.price_52w_low_aud) : null;
+  // OUT-03: both are signal-derived, so both are withheld below the display floor. A card that
+  // fails the gate renders exactly as a card with no mtg_signals row already does, which is to
+  // say the price-stats block is absent entirely rather than showing zeroes or dashes.
+  const signalsUsable = hasSignalHistory(signals);
+  const high52w = signalsUsable && signals.price_52w_high_aud != null ? parseFloat(signals.price_52w_high_aud) : null;
+  const low52w = signalsUsable && signals.price_52w_low_aud != null ? parseFloat(signals.price_52w_low_aud) : null;
   const verdict = getSignalVerdict(signals);
   const edhrecLabel = getEdhrecLabel(card.edhrec_rank);
 

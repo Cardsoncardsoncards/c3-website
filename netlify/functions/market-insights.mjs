@@ -327,10 +327,20 @@ export default async (req) => {
     var cfg=GAME_CONFIG[card.game]||GAME_CONFIG.mtg;
     var path=card.slug?'/cards/'+card.game+'/'+card.slug:null;
     var name=esc(card.name);
+    // OUT-03: the "% off high" and "Near X% of high" badges are gone. Both framed a gap
+    // against a figure whose column is named price_52w_high_aud, when no card in mtg_signals
+    // has more than 111 distinct days of history, so the percentage read as far more
+    // authoritative than the data behind it supports. What replaces it is the recent high
+    // itself, shown beside the current price in the same cell, which states only what is
+    // actually known. The buy and sell colours are kept so the two sections stay legible.
+    // market-data.mjs drops any card below its history floor, so a signal row that reaches
+    // this function has already cleared it; the high>0 test is for a cached response served
+    // from before that field existed, which renders no badge rather than a wrong one.
+    var highTxt=(parseFloat(card.high)>0)?'Recent high '+formatAUD(card.high):'';
     var badge=mode==='buy'
-      ?'<span class="badge buy">'+card.discount+'% off high</span>'
+      ?(highTxt?'<span class="badge buy">'+highTxt+'</span>':'')
       :mode==='sell'
-      ?'<span class="badge sell">Near '+card.nearHighPct+'% of high</span>'
+      ?(highTxt?'<span class="badge sell">'+highTxt+'</span>':'')
       :'<span class="badge '+(parseFloat(card.change7d)>=0?'up':'down')+'">'+pctStr(card.change7d)+'</span>';
     var spark=card.spark?sparkSVG(card.spark,parseFloat(card.change7d||0)>=0||mode==='buy'):'';
     var img=card.image?'<img src="'+esc(card.image)+'" alt="'+name+'" loading="lazy">':'<span class="ph"></span>';
