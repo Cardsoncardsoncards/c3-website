@@ -78,6 +78,17 @@ export default async (req) => {
 
   const gameConfigJson = JSON.stringify(GAME_CONFIG);
 
+  // OUT-03. The buy and sell badges used to read "<pct> off high" and "Near <pct>% of high".
+  // Both framed a gap against a figure whose column is named price_52w_high_aud, when no card
+  // in mtg_signals has more than 111 distinct days of history, so the percentage read as far
+  // more authoritative than the data behind it supports. What replaces it is the recent high
+  // itself, shown beside the current price in the same cell, which states only what is known.
+  // The buy and sell colours are kept so the two sections stay legible.
+  //
+  // market-data.mjs drops any card below its 90 day history floor, so a signal row reaching
+  // cardRowHTML has already cleared it. That function lives inside the html template below,
+  // which means every byte of it, comments included, is sent to the browser; this note is
+  // deliberately out here rather than in there.
   const html = `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -327,15 +338,8 @@ export default async (req) => {
     var cfg=GAME_CONFIG[card.game]||GAME_CONFIG.mtg;
     var path=card.slug?'/cards/'+card.game+'/'+card.slug:null;
     var name=esc(card.name);
-    // OUT-03: the "% off high" and "Near X% of high" badges are gone. Both framed a gap
-    // against a figure whose column is named price_52w_high_aud, when no card in mtg_signals
-    // has more than 111 distinct days of history, so the percentage read as far more
-    // authoritative than the data behind it supports. What replaces it is the recent high
-    // itself, shown beside the current price in the same cell, which states only what is
-    // actually known. The buy and sell colours are kept so the two sections stay legible.
-    // market-data.mjs drops any card below its history floor, so a signal row that reaches
-    // this function has already cleared it; the high>0 test is for a cached response served
-    // from before that field existed, which renders no badge rather than a wrong one.
+    // OUT-03 badge, see the note above the html template. The high>0 test guards a cached
+    // API response from before that field existed.
     var highTxt=(parseFloat(card.high)>0)?'Recent high '+formatAUD(card.high):'';
     var badge=mode==='buy'
       ?(highTxt?'<span class="badge buy">'+highTxt+'</span>':'')
