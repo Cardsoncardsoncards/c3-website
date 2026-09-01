@@ -219,6 +219,25 @@ Weiss Schwarz is a publisher/umbrella brand, not a single game. Each licensed pr
   RESOLVED (task-40/41, 10 Jul 2026): the active build script scripts/generate-sitemap-cards.mjs already has fetchWithRetry (exp backoff), a zero-row sanity guard, and process.exit(1) on genuine failure. The stale unused duplicate netlify/functions/generate-sitemap-cards.mjs was deleted in task-41.
 
 ### High priority (affects revenue or data integrity)
+- **C3L-199, 1 September 2026: every set page truncates its Singles list and there is no
+  pagination anywhere.** 28 of the 31 set-page files cap Singles at `limit=200` ordered
+  `name.asc`, so a large set renders roughly A through B and stops. pokemon and onepiece cap at
+  400. **2,417 sets exist, 376 hold more than 200 rows, and 46,575 cards are unreachable from
+  their own set page.** The true maximum set is 2,003 cards, not the 889 that prompted the
+  investigation. A limit raise alone cannot fix it: measured live at 940.7 bytes per card tile
+  on 29,327 bytes of overhead, covering 2,003 cards is a 1.87MB page. 513 tiles is the 500KB
+  line. **Pagination was deliberately NOT designed in that session** and needs its own task,
+  including a decision on the client-side search and sort, which today operate on the rendered
+  DOM and would silently break across pages.
+- **C3L-198, 1 September 2026: pokemon and yugioh sealed product is mislabelled, not missing,
+  and the earlier finding that said otherwise is superseded.** Neither set page carries a
+  sealed block, which is true, but neither Singles query carries a rarity filter either, so
+  every NULL-rarity row already renders as a single. Confirmed live. **1,403 of the 1,525
+  keyword-matching rows are on the page today.** Porting the sealed block cannot be done
+  without either duplicating every item or adding a rarity exclusion that would hide about
+  1,254 priced pokemon rows to tidy 972, which is the C3L-140 trap. **The durable fix is a
+  sealed flag on the row, a schema change, not a page edit.** Do not port the block as a
+  copy job.
 - **WF-02, the weekly RLS and BOLA check has been failing since 9 August 2026.** Three weeks with
   no recurring object-level security coverage. Part A (anon cannot read 17 sensitive tables)
   still passes every run; Part B (two-account cross-user test) has not run since. The cause is
