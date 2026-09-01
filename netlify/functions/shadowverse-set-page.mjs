@@ -108,7 +108,7 @@ export default async (req) => {
     const set = sets[0];
 
     const [cardsR, sealedR, ebayListingsR] = await Promise.allSettled([
-      supabaseGet(`shadowverse_cards?set_id=eq.${set.id}&rarity=neq.None&order=name.asc&limit=200&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,price_change_7d,price_change_30d`),
+      supabaseGet(`shadowverse_cards?set_id=eq.${set.id}&or=(rarity.neq.None,rarity.is.null)&order=name.asc&limit=200&select=slug,name,number,image_url,market_price,price_aud,rarity,set_name,price_change_7d,price_change_30d`),
       // C3L-137. The singles query above excludes rarity None, and in these tables every
       // booster box, display, case and starter deck carries rarity None or NULL, so the
       // sealed block has never had a row to render. It reads THIS result instead of cards,
@@ -305,7 +305,7 @@ export default async (req) => {
   </div>` : ''}
 
   ${(() => {
-    const SEALED_KEYS = ['booster box','booster pack','display','starter deck','starter set','trial deck','trial set','box set','collection box','premium set'];
+    const SEALED_KEYS = ['booster box','booster pack','display','starter deck','starter set','trial deck','trial set','box set','collection box','premium set','booster display','sealed product',' case','bundle','deck set','gift set','trainer box','battle box','battle stadium','structure deck','mini tin','collector tin','tin case'];
     const sealedItems = (sealedRows||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && (parseFloat(c.price_aud) > 0 || parseFloat(c.market_price) > 0); });
     if (!sealedItems.length) return '';
     const itemsHTML = sealedItems.slice(0,4).map(p => {

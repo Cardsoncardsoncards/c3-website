@@ -303,7 +303,7 @@ export default async (req) => {
   </div>` : ''}
 
   ${(() => {
-    const SEALED_KEYS = ['booster box','booster pack','display','starter deck','starter set','trial deck','trial set','box set','collection box','premium set'];
+    const SEALED_KEYS = ['booster box','booster pack','display','starter deck','starter set','trial deck','trial set','box set','collection box','premium set','booster display','sealed product',' case','bundle','deck set','gift set','trainer box','battle box','battle stadium','structure deck','mini tin','collector tin','tin case'];
     const sealedItems = (sealedRows||[]).filter(c => { const n = (c.name||'').toLowerCase(); return SEALED_KEYS.some(k => n.includes(k)) && (parseFloat(c.price_aud) > 0 || parseFloat(c.market_price) > 0); });
     if (!sealedItems.length) return '';
     const itemsHTML = sealedItems.slice(0,4).map(p => {
