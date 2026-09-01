@@ -1,8 +1,17 @@
 -- C3L-172: blank price_change_7d and price_change_30d on MTG cards that have no current price.
 --
--- STATUS: NOT YET APPLIED. Written 1 September 2026, staged for review and a rehearsed run.
--- Every other migration in this directory records the date it was applied. This one does not,
--- deliberately, and must not be described as live until someone adds that line after running it.
+-- STATUS: APPLIED 1 September 2026, after a rehearsal that predicted the row count exactly.
+-- Rehearsed first against live data: 40,819 rows carried a price_change with no row in the
+-- 2026-09-01 priced snapshot, and 41,433 in the snapshot carried one. Five were spot-checked
+-- by hand and every one held a literal 0 while its last real price was 2026-06-06, 87 days
+-- stale. After CREATE OR REPLACE and one run of the function: stale residual 0 for BOTH
+-- price_change_7d and price_change_30d, and 41,464 in-snapshot cards still carry a figure.
+-- The arithmetic reconciles exactly, which is why the 41,433 to 41,464 move is not a miss:
+-- 82,252 carried a change before, the recompute statement newly set 31, the blanking cleared
+-- 40,819, and 82,252 + 31 - 40,819 = 41,464. Run a second time immediately after: identical
+-- counts and no error, so the added statement is idempotent. Verified live on the rendered
+-- pages too: /cards/mtg/bushy-bodyguard and /cards/mtg/migratory-route, both named in the
+-- note below as showing a false 0, now render no price-7d badge at all.
 --
 -- THE DEFECT
 -- update_mtg_price_changes() computes the 7 and 30 day change correctly: it anchors on real

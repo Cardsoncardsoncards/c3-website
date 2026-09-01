@@ -496,7 +496,6 @@ export default async (req) => {
           price_aud:         marketPrice ? parseFloat((marketPrice * audRate).toFixed(2)) : null,
           foil_price_aud:    foilPrice   ? parseFloat((foilPrice   * audRate).toFixed(2)) : null,
           aud_rate:          audRate,
-          price_change_24h:  price.price_change_24h  || null,
           // C3L-80: the upstream price_change_7d write was REMOVED here on 1 September 2026.
           // It copied tcgapi.dev's own figure verbatim, over the vendor's market and currency,
           // with no window and no tolerance, and it overwrote the value that
@@ -507,7 +506,16 @@ export default async (req) => {
           // cards than this line left standing, so removing it widens coverage rather than
           // narrowing it. The snapshot-row write further down is deliberately KEPT, as a
           // record of what upstream reported; nothing renders it.
-          price_change_30d:  price.price_change_30d  || null,
+          // C3L-202, 1 September 2026: the price_change_24h and price_change_30d writes were
+          // removed from THIS cards upsert for exactly the same reason as the 7 day one above.
+          // update_pokemon_price_changes() computes BOTH fields with the identical 1 day
+          // tolerance, anchored on real snapshot dates, from C3's own price_aud. Verified in the
+          // live function body before removal, not assumed. Coverage measured immediately before,
+          // as sync-written against what the cron alone would set:
+          //   24h 12,967 to 30,835 (wider)
+          //   30d 24,982 to 24,920 (NARROWER by 62, accepted for the same reason)
+          // This game writes no price_change value to its snapshot rows, so nothing is kept:
+          // upstream supplied 0 of 65,758 recent snapshot rows, making both lines pure erasers.
           last_price_update: price.last_updated_at   || null,
           updated_at:        new Date().toISOString()
         });

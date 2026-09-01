@@ -219,6 +219,25 @@ Weiss Schwarz is a publisher/umbrella brand, not a single game. Each licensed pr
   RESOLVED (task-40/41, 10 Jul 2026): the active build script scripts/generate-sitemap-cards.mjs already has fetchWithRetry (exp backoff), a zero-row sanity guard, and process.exit(1) on genuine failure. The stale unused duplicate netlify/functions/generate-sitemap-cards.mjs was deleted in task-41.
 
 ### High priority (affects revenue or data integrity)
+- **C3L-203, 1 September 2026: tcgapi.dev DOES expose a sealed-product signal, which reverses
+  what was recorded earlier the same day.** Its own machine-readable reference at
+  tcgapi.dev/llms-full.txt documents `product_type` on the Card schema with values `Cards` and
+  `Sealed Products`, plus `shipping_category_id` where 1=card, 3=box, 4=case. C3 stores none
+  of it. **This is the missing piece for the 3,475 rows that cannot be classified by name.**
+  It was NOT built on, because every card endpoint returns 402 from the desktop even with the
+  production key, so the field is documented but has never been seen in a real payload.
+  **Next step is small: one authenticated call from a context that can reach the API, confirm
+  `product_type` is populated, then migration plus sync write plus backfill.** Do not build the
+  column before that call succeeds.
+- **C3L-201 was corrected on the day it was opened: it is not a new defect, it is C3L-103,
+  open since 6 August.** `pokemon_sets` still has 0 of 236 rows with an `abbreviation`, so the
+  set-match fallback can never fire. Set names resolve 72 of 236. On a set that does resolve,
+  card keys match 0 of 20 because C3 numbers look like `001/147` and upstream uses `1`.
+  **A mechanical fix was deliberately refused**: the set-level prefix strip is ambiguous
+  ("Base Set" against upstream "Base" and "Base Set 2") and a wrong set match would enrich a
+  hundred cards with stats belonging to a different set. It needs a maintained mapping table, not an algorithm.
+  Separately, `fetchPokemonTCGPricesForSet` does `if (!res.ok) break;` with no retry, and
+  pokemontcg.io currently 500s on roughly half of first attempts, so blips silently enrich nothing.
 - **C3L-201, 1 September 2026: seven columns on `pokemon_cards` are populated by nothing.**
   `hp`, `stage`, `types`, `attacks`, `retreat_cost`, `tcgplayer_url` and `custom_attributes`
   are NULL on all 32,593 rows. `sync-pokemon-background.mjs` selects `supertype` and
