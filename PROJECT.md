@@ -619,6 +619,24 @@ mtg_card_likes and mtg_card_views: 3 policies each (anon INSERT, anon SELECT, se
 
 ---
 
+## AI CRAWLER ACCESS
+
+RE-VERIFIED 2 September 2026 16:31 AEST. STILL BLOCKED. Cloudflare injects a
+managed block into the served robots.txt that this repo never contains and cannot change. Nine
+crawlers remain at Disallow: / : Amazonbot, Applebot-Extended, Bytespider, CCBot, ClaudeBot,
+CloudflareBrowserRenderingCrawler, Google-Extended, GPTBot, meta-externalagent. A dashboard change
+was made earlier today and the served file did NOT change: the live copy is byte identical to the
+copy fetched before it, 7,860 bytes against the repo 6,151, and a cache-busted fetch returned
+cf-cache-status: MISS with the block intact, so this is not a stale cache. Working hypothesis, not
+verified because no CLOUDFLARE_API_TOKEN exists on this machine: the per-crawler toggles that were
+changed govern WAF enforcement, while the managed robots.txt text is a separate feature. Supporting
+it: the six agents named in that dashboard change appear nowhere in the injected nine.
+Consequence for strategy: GPTBot and ClaudeBot cannot index the site, so it cannot be cited in
+index-backed answers from those assistants. Normal Google Search is NOT affected, Googlebot is not
+named and inherits Allow: /. See C3L-207. This is a Cloudflare dashboard change, not a code fix.
+
+---
+
 ## AFFILIATE LINK FORMATS
 
 ### eBay EPN (worldwide, siteid removed)
