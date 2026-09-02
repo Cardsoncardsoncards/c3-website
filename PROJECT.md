@@ -621,19 +621,25 @@ mtg_card_likes and mtg_card_views: 3 policies each (anon INSERT, anon SELECT, se
 
 ## AI CRAWLER ACCESS
 
-RE-VERIFIED 2 September 2026 16:31 AEST. STILL BLOCKED. Cloudflare injects a
-managed block into the served robots.txt that this repo never contains and cannot change. Nine
-crawlers remain at Disallow: / : Amazonbot, Applebot-Extended, Bytespider, CCBot, ClaudeBot,
-CloudflareBrowserRenderingCrawler, Google-Extended, GPTBot, meta-externalagent. A dashboard change
-was made earlier today and the served file did NOT change: the live copy is byte identical to the
-copy fetched before it, 7,860 bytes against the repo 6,151, and a cache-busted fetch returned
-cf-cache-status: MISS with the block intact, so this is not a stale cache. Working hypothesis, not
-verified because no CLOUDFLARE_API_TOKEN exists on this machine: the per-crawler toggles that were
-changed govern WAF enforcement, while the managed robots.txt text is a separate feature. Supporting
-it: the six agents named in that dashboard change appear nowhere in the injected nine.
-Consequence for strategy: GPTBot and ClaudeBot cannot index the site, so it cannot be cited in
-index-backed answers from those assistants. Normal Google Search is NOT affected, Googlebot is not
-named and inherits Allow: /. See C3L-207. This is a Cloudflare dashboard change, not a code fix.
+RESOLVED 2 September 2026 16:48 AEST. The Cloudflare managed robots.txt injection is GONE and the
+served file is now C3's own. Verified by fetch, cache-busted, cf-cache-status MISS, not by reading
+a dashboard. Size went 7,860 bytes (blocked) to 6,024 (now); the 127 byte gap against the repo copy
+is exactly its 127 CRLF endings served as LF, and after normalising newlines the served file equals
+both robots.txt and _site/robots.txt character for character. Zero bare "Disallow: /" remain. All
+nine formerly blocked agents now resolve to C3's own policy. Corroborated from a second hostname:
+www. previously served a 1,836 byte body that was only the Cloudflare block and now returns a clean
+77 byte redirect.
+
+Two things to carry forward. First, the AEO blocker is lifted, so C3L-208 (no JSON-LD on any of the
+32 hubs), C3L-209 (no Organization, WebSite or SearchAction) and C3L-210 (no author byline, no About
+page) are now the priority items in that order. Second, this change also WITHDREW the
+Content-Signal ai-train=no reservation that Cloudflare had been publishing in C3's name. If opting
+out of AI training is wanted as a position, it now has to be asserted deliberately.
+
+Known limit, stated so it is not over-read: this proves what the served robots.txt says, which is
+what a well-behaved crawler reads first. It does NOT prove a real GPTBot or ClaudeBot request now
+succeeds at the WAF layer. That needs Cloudflare AI Crawl Control analytics, which no credential on
+this machine can pull. See C3L-207.
 
 ---
 
