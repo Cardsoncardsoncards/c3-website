@@ -49,6 +49,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/index.html": "index.html"});
   eleventyConfig.addPassthroughCopy({"src/shop.html": "shop.html"});
   eleventyConfig.addPassthroughCopy({"src/contact.html": "contact.html"});
+  // task1 / C3L-210: /about. Netlify resolves the clean URL to this file by its own pretty-URL
+  // handling, the same way /calendar reaches calendar.html, so no status 200 rewrite is needed.
+  eleventyConfig.addPassthroughCopy({"src/about.html": "about.html"});
   eleventyConfig.addPassthroughCopy({"src/tracker.html": "tracker.html"});
   eleventyConfig.addPassthroughCopy({"src/vip.html": "vip.html"});
   eleventyConfig.addPassthroughCopy({"src/ev-calculator.html": "ev-calculator.html"});
@@ -243,6 +246,120 @@ module.exports = function(eleventyConfig) {
 
     return `<script type="application/ld+json">${json}</script>`;
   });
+  // --- Article + Organization + WebSite JSON-LD for blog posts ---------------------
+  //
+  // task1 Part D, folded in from the same 2 September audit as C3L-208/209/210. Blog posts
+  // carried no Article schema, and no Organization or WebSite either, which made the blog the
+  // largest page type on the site with no publisher identity attached to it at all.
+  //
+  // Everything here comes from frontmatter that already exists on every built post: title,
+  // description, date and category. No post file is edited and no new field is introduced.
+  //
+  // Three deliberate omissions, each one a case of not asserting something the repo cannot back:
+  //  - No dateModified. Posts do get edited, but nothing here records when, and emitting
+  //    dateModified equal to datePublished would be inventing a fact rather than reporting one.
+  //  - author is the Organization, not a Person. PROJECT.md line 41 makes "The C3 Team" the
+  //    only permitted sign-off and forbids naming an individual, so a Person author would have
+  //    to be fabricated. The visible byline added to post.njk says the same thing.
+  //  - No articleBody. The rendered content is already on the page.
+  //
+  // headline is truncated to 110 characters, Google's documented limit for the property. A
+  // longer headline is not an error but it is ignored, so it is cut here rather than emitted
+  // and silently dropped.
+  //
+  // The Organization and WebSite nodes are restated rather than imported: this file cannot
+  // import netlify/functions/shared/nav.mjs, which is an ESM module for the Netlify runtime,
+  // and .eleventy.js is CommonJS. That makes three copies of the Organization details in the
+  // repo (here, nav.mjs, and the 18 static pages). Grep for "#organization" before changing any
+  // of them.
+  const SCHEMA_SITE = "https://cardsoncardsoncards.com.au";
+
+  function schemaJson(node) {
+    return JSON.stringify(node)
+      .replace(/</g, "\\u003c")
+      .replace(/>/g, "\\u003e")
+      .replace(/&/g, "\\u0026")
+      .replace(LINE_SEPARATORS, (c) => (c === LS ? "\\u2028" : "\\u2029"));
+  }
+
+  function organizationNode() {
+    return {
+      "@type": "Organization",
+      "@id": SCHEMA_SITE + "/#organization",
+      name: "Cards on Cards on Cards",
+      alternateName: "C3",
+      legalName: "Voxsanity Pty Ltd",
+      url: SCHEMA_SITE,
+      logo: { "@type": "ImageObject", url: SCHEMA_SITE + "/c3logo.png" },
+      description: "Australia's TCG card intelligence platform, covering prices, card knowledge, synergies and releases across 32 trading card games worldwide.",
+      identifier: { "@type": "PropertyValue", name: "ABN", value: "82 700 348 867" },
+      address: { "@type": "PostalAddress", addressLocality: "Sydney", addressRegion: "NSW", addressCountry: "AU" },
+      contactPoint: { "@type": "ContactPoint", contactType: "customer support", url: SCHEMA_SITE + "/contact" }
+    };
+  }
+
+  function webSiteNode() {
+    return {
+      "@type": "WebSite",
+      "@id": SCHEMA_SITE + "/#website",
+      url: SCHEMA_SITE,
+      name: "Cards on Cards on Cards",
+      inLanguage: "en-AU",
+      publisher: { "@id": SCHEMA_SITE + "/#organization" },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: { "@type": "EntryPoint", urlTemplate: SCHEMA_SITE + "/search?q={search_term_string}" },
+        "query-input": "required name=search_term_string"
+      }
+    };
+  }
+
+  eleventyConfig.addFilter("articleSchema", (url, title, description, date, section) => {
+    if (!url || !title) return "";
+
+    let published = "";
+    const d = new Date(date);
+    if (date && !isNaN(d.getTime())) published = d.toISOString();
+
+    const pageUrl = SCHEMA_SITE + url;
+    const titleStr = String(title);
+    const headline = titleStr.length > 110 ? titleStr.slice(0, 110).trim() : titleStr;
+
+    const article = {
+      "@type": "Article",
+      "@id": pageUrl + "#article",
+      headline: headline,
+      name: titleStr,
+      inLanguage: "en-AU",
+      url: pageUrl,
+      mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+      isPartOf: { "@id": SCHEMA_SITE + "/#website" },
+      image: SCHEMA_SITE + "/c3-og-banner.png",
+      author: { "@id": SCHEMA_SITE + "/#organization" },
+      publisher: { "@id": SCHEMA_SITE + "/#organization" }
+    };
+    if (description) article.description = String(description);
+    if (published) article.datePublished = published;
+    if (section) article.articleSection = String(section);
+
+    const graph = [
+      organizationNode(),
+      webSiteNode(),
+      {
+        "@type": "BreadcrumbList",
+        "@id": pageUrl + "#breadcrumb",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SCHEMA_SITE },
+          { "@type": "ListItem", position: 2, name: "Blog", item: SCHEMA_SITE + "/blog" },
+          { "@type": "ListItem", position: 3, name: titleStr, item: pageUrl }
+        ]
+      },
+      article
+    ];
+
+    return '<script type="application/ld+json">' + schemaJson({ "@context": "https://schema.org", "@graph": graph }) + "</script>";
+  });
+
 
   return {
     dir: {

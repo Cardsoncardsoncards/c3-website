@@ -1,4 +1,4 @@
-import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { NAV_CSS, navHtml, hubSchemaHtml } from './shared/nav.mjs';
 import { hubPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 import { fxRate } from './shared/fx-rate.mjs';
@@ -227,6 +227,7 @@ export default async (req) => {
   <title>Dragon Ball Card Prices Australia | AUD Prices Updated Daily | C3</title>
   <meta name="description" content="Browse ${sets.length||'60'}+ Dragon Ball Super TCG sets. Live AUD card prices, eBay AU buy links. Australia's most complete Dragon Ball Super price guide, updated daily.">
   <link rel="canonical" href="${CANONICAL}">
+  ${hubSchemaHtml({ game: 'dragonball', label: "Dragon Ball Super", name: "Dragon Ball Card Prices Australia", description: `Browse ${sets.length||'60'}+ Dragon Ball Super TCG sets. Live AUD card prices, eBay AU buy links. Australia's most complete Dragon Ball Super price guide, updated daily.` })}
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="Dragon Ball Card Prices Australia | Cards on Cards on Cards">
   <meta property="og:description" content="${sets.length||'60'}+ Dragon Ball sets. Live AUD prices and eBay AU buy links updated daily.">

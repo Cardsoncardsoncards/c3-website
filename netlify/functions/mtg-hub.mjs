@@ -1,4 +1,4 @@
-import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { NAV_CSS, navHtml, hubSchemaHtml } from './shared/nav.mjs';
 import { ebaySearchUrl } from './shared/ebay-link.mjs';
 import { htmlCacheHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
@@ -221,6 +221,7 @@ export default async (req) => {
   <title>MTG Card Prices Australia | Cards on Cards on Cards</title>
   <meta name="description" content="Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, recent price ranges, and eBay AU buy links.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg">
+  ${hubSchemaHtml({ game: 'mtg', label: "Magic: The Gathering", name: "MTG Card Prices Australia", description: "Browse Magic: The Gathering card prices in AUD. Australia's MTG price guide with live AUD conversion, recent price ranges, and eBay AU buy links." })}
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="MTG Card Prices Australia | Cards on Cards on Cards">
   <meta property="og:description" content="Browse Magic: The Gathering card prices in AUD. Live pricing, recent ranges, and eBay AU buy links. Updated daily.">

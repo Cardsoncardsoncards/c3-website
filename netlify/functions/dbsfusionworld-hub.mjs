@@ -1,4 +1,4 @@
-import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { NAV_CSS, navHtml, hubSchemaHtml } from './shared/nav.mjs';
 import { hubPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
 import { fxRate } from './shared/fx-rate.mjs';
@@ -224,6 +224,7 @@ export default async (req) => {
   <title>Dragon Ball Super Fusion World Card Prices Australia | AUD Prices Updated Daily | C3</title>
   <meta name="description" content="DBS Fusion World card prices in AUD. Browse sets and buy on eBay AU.">
   <link rel="canonical" href="${CANONICAL}">
+  ${hubSchemaHtml({ game: 'dbsfusionworld', label: "Dragon Ball Fusion World", name: "Dragon Ball Super Fusion World Card Prices Australia", description: "DBS Fusion World card prices in AUD. Browse sets and buy on eBay AU." })}
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="Dragon Ball Super Fusion World Card Prices Australia | Cards on Cards on Cards">
   <meta property="og:description" content="DBS Fusion World card prices in AUD. Browse sets and buy on eBay AU.">

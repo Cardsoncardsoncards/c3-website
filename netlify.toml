@@ -355,6 +355,19 @@
   status = 301
   force = true
 
+# task1 / C3L-210: /about.html 301s to the clean /about, matching the batch-1 treatment every
+# other static page already has. force = true is required for the same reason recorded above:
+# about.html is a real file Eleventy publishes, and Netlify serves an existing file in
+# preference to an unforced redirect, so without it the duplicate keeps answering 200.
+# No loop: nothing redirects /about to /about.html. Netlify resolves /about to the file by its
+# own pretty-URL handling, which is file serving and not a redirect, so it never re-enters
+# this table. That is the same reasoning as /calendar.
+[[redirects]]
+  from = "/about.html"
+  to = "/about"
+  status = 301
+  force = true
+
 # ── 301s for dead URLs flagged in Search Console ──
 [[redirects]]
   from = "/quiz"

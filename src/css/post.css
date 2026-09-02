@@ -24,6 +24,11 @@ nav{background:rgba(10,12,20,.97);backdrop-filter:blur(18px);border-bottom:1px s
 .tag-game{color:#4ABA7A;border:1px solid rgba(74,186,122,.3);background:rgba(74,186,122,.07)}
 .tag-accessory{color:var(--silver);border:1px solid var(--border);background:rgba(160,168,192,.05)}
 .post-date{font-size:12px;color:rgba(160,168,192,.4)}
+/* task1 / C3L-210: author byline. It sits in the same .post-meta-top flex row as the tag and
+   the date, so it inherits that row wrapping behaviour at narrow widths and needs no media query. */
+.post-byline{font-size:12px;color:rgba(160,168,192,.4)}
+.post-byline a{color:rgba(201,168,76,.75);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3)}
+.post-byline a:hover{color:#E8C86A;border-bottom-color:#E8C86A}
 .post-h1{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,42px);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:16px}
 .post-intro{font-size:16px;color:rgba(240,242,255,.55);line-height:1.6;margin-bottom:20px}
 .disclaimer{font-size:12px;color:rgba(160,168,192,.4);background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:24px}

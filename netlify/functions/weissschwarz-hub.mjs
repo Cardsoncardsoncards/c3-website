@@ -1,4 +1,4 @@
-import { NAV_CSS, navHtml } from './shared/nav.mjs';
+import { NAV_CSS, navHtml, hubSchemaHtml } from './shared/nav.mjs';
 import { wsPropertyLabel } from './shared/ws-properties.mjs';
 import { hubPageHeaders } from './shared/cache-headers.mjs';
 import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
@@ -244,6 +244,7 @@ export default async (req) => {
   <title>Weiss Schwarz Card Prices Australia | AUD Prices Updated Daily | C3</title>
   <meta name="description" content="Weiss Schwarz card prices in AUD. Browse 300+ sets and buy on eBay AU.">
   <link rel="canonical" href="${CANONICAL}">
+  ${hubSchemaHtml({ game: 'weissschwarz', label: "Weiss Schwarz", name: "Weiss Schwarz Card Prices Australia", description: "Weiss Schwarz card prices in AUD. Browse 300+ sets and buy on eBay AU." })}
   <link rel="icon" type="image/png" href="/c3logo.png">
   <meta property="og:title" content="Weiss Schwarz Card Prices Australia | Cards on Cards on Cards">
   <meta property="og:description" content="Weiss Schwarz card prices in AUD. Browse 300+ sets and buy on eBay AU.">

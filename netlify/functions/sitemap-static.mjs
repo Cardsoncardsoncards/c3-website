@@ -131,6 +131,10 @@ const STATIC_PAGES = [
   // redirects landed.
 
   // Misc
+  // task1 / C3L-210. /about is submitted in its clean form, matching the batch-1 rule: the
+  // .html form 301s to it (netlify.toml), so submitting /about.html would put a redirecting URL
+  // in the sitemap, which is the exact conflict that pass was written to remove.
+  { path: '/about',                               priority: '0.5', changefreq: 'monthly' },
   { path: '/contact',                             priority: '0.4', changefreq: 'monthly' },
   { path: '/legal',                               priority: '0.3', changefreq: 'monthly' },
 ];

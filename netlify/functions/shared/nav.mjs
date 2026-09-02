@@ -456,3 +456,121 @@ export const NAV_HTML = buildNav() + NAV_PAGE_VIEW_SCRIPT;
 export function navHtml({ gameLabel, gameHref, nonce } = {}) {
   return buildNav(gameLabel, gameHref, nonce) + navPageViewScript(nonce);
 }
+
+// ---------------------------------------------------------------------------
+// task1 / C3L-208 + C3L-209: structured data for the dynamic pages.
+//
+// Why this lives in nav.mjs rather than a new shared/schema.mjs: the task that
+// commissioned it forbids creating any new file under netlify/functions/, and this
+// module is already the place the repo attaches site-wide chrome to all 101 dynamic
+// pages in one edit (see the page-view tracker note above, which made exactly the same
+// call for exactly the same reason). Organization and WebSite are site chrome. Putting
+// them anywhere else would mean 32 separate injections instead of one.
+//
+// The static pages in src/ cannot import this. They inline the same block by hand,
+// which is the established duplication convention here, the same one the nav itself
+// follows. If the Organization details change, they change in 2 places: here and the
+// 18 static pages (grep for "#organization").
+const SCHEMA_SITE_URL = 'https://cardsoncardsoncards.com.au';
+export const SCHEMA_ORG_ID     = `${SCHEMA_SITE_URL}/#organization`;
+export const SCHEMA_WEBSITE_ID = `${SCHEMA_SITE_URL}/#website`;
+
+// Same neutralisation the faqPageSchema filter in .eleventy.js applies, and for the same
+// reason: a value interpolated into these nodes must not be able to close the surrounding
+// script element. U+2028 and U+2029 are built from char codes so this source stays ASCII.
+const SCHEMA_LS = String.fromCharCode(0x2028);
+const SCHEMA_PS = String.fromCharCode(0x2029);
+const SCHEMA_LINE_SEPARATORS = new RegExp('[' + SCHEMA_LS + SCHEMA_PS + ']', 'g');
+
+function schemaScript(node) {
+  const json = JSON.stringify(node)
+    .replace(/</g, '\u003c')
+    .replace(/>/g, '\u003e')
+    .replace(/&/g, '\u0026')
+    .replace(SCHEMA_LINE_SEPARATORS, (c) => (c === SCHEMA_LS ? '\u2028' : '\u2029'));
+  return `<script type="application/ld+json">${json}</script>`;
+}
+
+// C3L-209. One Organization and one WebSite, each with a stable @id so every other node on
+// the site can reference them instead of restating them.
+//
+// The SearchAction target was verified live before it was written, not assumed: GET
+// /search?q=charizard returns 200 and the rendered page contains matching results, so `q` is
+// genuinely the parameter search-page.mjs reads (search-page.mjs:133).
+export function siteSchemaNodes() {
+  return [
+    {
+      // legalName, the ABN and the address are not new claims. All three are already printed
+      // in the footer of src/legal.html and src/methodology.html, so this states in machine
+      // readable form exactly what the site already says in prose.
+      //
+      // No email property, deliberately. ccc.squadhelp@gmail.com is on /contact and /legal but
+      // both wrap it in Cloudflare <!--email_off--> so it is not handed to scrapers. Repeating
+      // it in unobfuscated JSON-LD on every page would undo that, so the contactPoint points at
+      // the /contact page instead.
+      '@type': 'Organization',
+      '@id': SCHEMA_ORG_ID,
+      name: 'Cards on Cards on Cards',
+      alternateName: 'C3',
+      legalName: 'Voxsanity Pty Ltd',
+      url: SCHEMA_SITE_URL,
+      logo: { '@type': 'ImageObject', url: `${SCHEMA_SITE_URL}/c3logo.png` },
+      description: "Australia's TCG card intelligence platform, covering prices, card knowledge, synergies and releases across 32 trading card games worldwide.",
+      identifier: { '@type': 'PropertyValue', name: 'ABN', value: '82 700 348 867' },
+      address: { '@type': 'PostalAddress', addressLocality: 'Sydney', addressRegion: 'NSW', addressCountry: 'AU' },
+      contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', url: `${SCHEMA_SITE_URL}/contact` }
+    },
+    {
+      '@type': 'WebSite',
+      '@id': SCHEMA_WEBSITE_ID,
+      url: SCHEMA_SITE_URL,
+      name: 'Cards on Cards on Cards',
+      inLanguage: 'en-AU',
+      publisher: { '@id': SCHEMA_ORG_ID },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: { '@type': 'EntryPoint', urlTemplate: `${SCHEMA_SITE_URL}/search?q={search_term_string}` },
+        'query-input': 'required name=search_term_string'
+      }
+    }
+  ];
+}
+
+// C3L-208. The 32 game hubs carried zero JSON-LD.
+//
+// CollectionPage, not ItemList, and deliberately so. A hub is a page whose subject is a
+// collection, which is what CollectionPage means; a bare ItemList is a list with no page
+// identity and cannot carry breadcrumb, isPartOf or inLanguage. No itemListElement is emitted
+// either: the things a hub links to are sets, every one of which already serves its own
+// schema from its own set page, and restating them here would be the duplication the task
+// warned about rather than new information.
+//
+// No Product or Offer. Those belong to an individual card, and a hub sells nothing.
+export function hubSchemaHtml({ game, label, name, description } = {}) {
+  const url = `${SCHEMA_SITE_URL}/cards/${game}`;
+  const nodes = [
+    ...siteSchemaNodes(),
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${url}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SCHEMA_SITE_URL },
+        { '@type': 'ListItem', position: 2, name: 'The Card Vault', item: `${SCHEMA_SITE_URL}/cards` },
+        { '@type': 'ListItem', position: 3, name: `${label} Cards`, item: url }
+      ]
+    },
+    {
+      '@type': 'CollectionPage',
+      '@id': `${url}#webpage`,
+      url,
+      name,
+      description,
+      inLanguage: 'en-AU',
+      isPartOf: { '@id': SCHEMA_WEBSITE_ID },
+      breadcrumb: { '@id': `${url}#breadcrumb` },
+      about: { '@type': 'Thing', name: label },
+      publisher: { '@id': SCHEMA_ORG_ID }
+    }
+  ];
+  return schemaScript({ '@context': 'https://schema.org', '@graph': nodes });
+}

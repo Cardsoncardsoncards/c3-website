@@ -24,6 +24,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/post.css">
+{# task1 Part D: Article, Organization, WebSite and BreadcrumbList for this post. Built
+   entirely from frontmatter that already exists. See the articleSchema filter in .eleventy.js
+   for what each property is and, more importantly, which ones are deliberately absent. #}
+{{ page.url | articleSchema(title, description, date, category | tagLabel) | safe }}
+
 {# FAQPage JSON-LD, PROTOTYPE. The filter returns an empty string for any post with no FAQ
    section, or fewer than two parseable question and answer pairs, so posts without one emit
    nothing at all. See the faqPageSchema filter in .eleventy.js for what it matches and why. #}
@@ -106,6 +111,11 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     <div class="post-meta-top">
       <span class="post-tag {{ category | tagClass }}">{{ category | tagLabel }}</span>
       <time datetime="{{ date | dateISO }}" class="post-date">{{ date | dateDisplay }}</time>
+      {# task1 / C3L-210. Every post is signed "The C3 Team" and never by an individual, which
+         is a standing project rule, not a shortcut: PROJECT.md line 41 says the sign-off is
+         "The C3 Team" only. The byline therefore links to /about, where the operating company
+         is named in full, rather than to a person page that would have to invent an author. #}
+      <span class="post-byline">By <a href="/about" rel="author">The C3 Team</a></span>
     </div>
     <h1 class="post-h1">{{ title }}</h1>
     {% if description %}
@@ -223,7 +233,8 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
         <a href="/compare" class="footer-link">Compare</a>
         <a href="/market" class="footer-link">Market</a>
         <a href="/tools" class="footer-link">Tools</a>
-        <a href="/contact" class="footer-link">Contact</a>
+        <a href="/about" class="footer-link">About</a>
+      <a href="/contact" class="footer-link">Contact</a>
         <a href="/legal" class="footer-link">Legal</a>
         <a href="/account" class="footer-link">Account</a>
         <a href="/calendar" class="footer-link">Calendar</a>
