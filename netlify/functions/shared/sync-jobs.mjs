@@ -57,14 +57,17 @@ export const JOBS = {
     background: true,
     note: 'Added 11 August 2026 to verify C3L-166 on demand. This is the game where two sets '
         + 'slugify identically, so it is the one whose cross-batch slug collision has to be '
-        + 'provable without waiting for 00:30 UTC. CORRECTED same day: an earlier version of '
-        + 'this note claimed a manual run on top of the nightly one is idempotent because both '
-        + 'upserts use resolution=merge-duplicates. That is true for cards and FALSE for '
-        + 'snapshots (C3L-170). The snapshot upsert merges on the primary key while a separate '
-        + 'unique index covers (card_id, snapshot_date), so a second run on the same day raises '
-        + '23505 on every card already snapshotted that day. Re-running is safe, nothing is '
-        + 'corrupted and the cards still update, but expect sync_partial and a large failed-set '
-        + 'count that is an artefact of the re-run rather than a real fault.'
+        + 'provable without waiting for 00:30 UTC. '
+        + 'CORRECTED AGAIN 2 September 2026 (task5), and the previous warning is now WRONG, so '
+        + 'do not act on it. This note used to say a same-day re-run raises 23505 on every '
+        + 'already-snapshotted card, because the snapshot upsert merged on the primary key while '
+        + 'a separate unique index covered (card_id, snapshot_date). That C3L-170 hazard has '
+        + 'since been fixed and the fix was verified rather than assumed: this file now upserts '
+        + 'with on_conflict=card_id,snapshot_date, and the live index '
+        + 'weissschwarz_price_snapshots_card_id_snapshot_date_key covers exactly that pair, so '
+        + 'the conflict target and the constraint agree and a second run merges the day row. '
+        + 'All 28 game syncs were checked the same way and all 28 now match. Expect an ordinary '
+        + 'clean re-run, NOT the sync_partial and inflated failed-set count described before.'
   },
   'fx-rate': {
     label: 'USD to AUD rate refresh',
@@ -133,6 +136,409 @@ export const JOBS = {
     note: 'Same shape as ids-lorcana. This is the EXTENDED dragonball game (dragonball_cards), '
         + 'NOT the Core dbsfusionworld. There is no ids job for dbsfusionworld at all. '
         + '0 pending on 11 August 2026.'
+  },
+
+  // ---- BATCH 3, added 2 September 2026 (task5). THE REMAINING 38, so the registry now
+  // covers all 48 scheduled functions. ----
+  //
+  // WHY THIS IS A REGISTRY EDIT AND NOT 38 FILE EDITS. The task that commissioned this asked
+  // for a manual trigger to be added "to each of the 36 functions". That is the one shape that
+  // cannot work, and this file already records why: Netlify answers 403 to any direct HTTP
+  // request for a function whose config carries `schedule`. Editing 38 more files would have
+  // produced 38 more copies of the unreachable guard that already sits, dead, in 45 of them.
+  // Re-confirmed live before writing this, against the deployed site:
+  //   POST /.netlify/functions/sync-fx-rate              403 (empty body, platform layer)
+  //   POST /.netlify/functions/sync-pokemon-background   403 (empty body, platform layer)
+  // The 403 arrives with no body, so it is Netlify refusing to route rather than the
+  // function returning its own 401. The capability has to live off the schedule, which is
+  // what admin-trigger.mjs already is. Adding a job is two lines here plus two there.
+  //
+  // THE SAFEGUARD WAS VERIFIED BEFORE ANY JOB WAS ADDED, not assumed from reading the code.
+  // Against the live endpoint, every unauthenticated shape was refused:
+  //   no x-sync-secret header at all         401 Missing x-sync-secret header
+  //   wrong secret                           401 Bad x-sync-secret header
+  //   empty secret header                    401 Missing x-sync-secret header
+  //   no header but origin and referer set   401 Missing x-sync-secret header
+  //   GET instead of POST                    405 POST only
+  // The fourth case is the one that matters: it is the exact C3L-127 bypass shape, where a
+  // request with no headers was mistaken for the scheduler. checkSyncSecret has no such
+  // branch, and the live result confirms it.
+  //
+  // ON RE-RUN SAFETY FOR THE 28 GAME SYNCS. Every one of them upserts snapshots with
+  // on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX on each
+  // <game>_price_snapshots table, both checked rather than assumed. So a same-day re-run
+  // merges the day row. SEE THE CORRECTION ON THE weissschwarz ENTRY ABOVE: the 23505 hazard
+  // it warns about no longer exists.
+  //
+  // THREE JOBS CARRY A `caution` AND IT IS NOT DECORATION. card-follows, price-alerts and
+  // alert-digest SEND EMAIL TO REAL PEOPLE. A manual re-run can deliver a duplicate alert to
+  // a stranger, and there is no undo on a delivered email. They are registered because the
+  // trigger is secret-protected and only the operator can reach it, but they must not be used
+  // to test the trigger path. describeJobs() surfaces `caution` so a caller listing the jobs
+  // sees the warning rather than having to read this file.
+  alphaclash: {
+    label: 'Alpha Clash card and price sync',
+    file: 'sync-alphaclash-background.mjs',
+    schedule: '0 10 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  bakugan: {
+    label: 'Bakugan card and price sync',
+    file: 'sync-bakugan-background.mjs',
+    schedule: '0 12 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  battlespiritssaga: {
+    label: 'Battle Spirits Saga card and price sync',
+    file: 'sync-battlespiritssaga-background.mjs',
+    schedule: '15 10 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  buddyfight: {
+    label: 'Future Card Buddyfight card and price sync',
+    file: 'sync-buddyfight-background.mjs',
+    schedule: '0 3 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  dbsfusionworld: {
+    label: 'Dragon Ball Super Fusion World card and price sync',
+    file: 'sync-dbsfusionworld-background.mjs',
+    schedule: '0 9 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  digimon: {
+    label: 'Digimon card and price sync',
+    file: 'sync-digimon-background.mjs',
+    schedule: '30 2 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  dragonball: {
+    label: 'Dragon Ball Super CCG card and price sync',
+    file: 'sync-dragonball-background.mjs',
+    schedule: '0 2 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  dragonballz: {
+    label: 'Dragon Ball Z (Panini) card and price sync',
+    file: 'sync-dragonballz-background.mjs',
+    schedule: '30 10 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  finalfantasy: {
+    label: 'Final Fantasy TCG card and price sync',
+    file: 'sync-finalfantasy-background.mjs',
+    schedule: '30 5 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  forceofwill: {
+    label: 'Force of Will card and price sync',
+    file: 'sync-forceofwill-background.mjs',
+    schedule: '30 1 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  gateruler: {
+    label: 'Gate Ruler card and price sync',
+    file: 'sync-gateruler-background.mjs',
+    schedule: '45 10 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  godzilla: {
+    label: 'Godzilla card and price sync',
+    file: 'sync-godzilla-background.mjs',
+    schedule: '0 11 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  grandarchive: {
+    label: 'Grand Archive card and price sync',
+    file: 'sync-grandarchive-background.mjs',
+    schedule: '0 8 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  gundam: {
+    label: 'Gundam card and price sync',
+    file: 'sync-gundam-background.mjs',
+    schedule: '15 11 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  hololive: {
+    label: 'Hololive card and price sync',
+    file: 'sync-hololive-background.mjs',
+    schedule: '30 11 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  lorcana: {
+    label: 'Lorcana card and price sync',
+    file: 'sync-lorcana-background.mjs',
+    schedule: '30 9 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  metazoo: {
+    label: 'MetaZoo card and price sync',
+    file: 'sync-metazoo-background.mjs',
+    schedule: '30 8 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  onepiece: {
+    label: 'One Piece card and price sync',
+    file: 'sync-onepiece-background.mjs',
+    schedule: '30 4 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  riftbound: {
+    label: 'Riftbound card and price sync',
+    file: 'sync-riftbound-background.mjs',
+    schedule: '45 9 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  shadowverse: {
+    label: 'Shadowverse Evolve card and price sync',
+    file: 'sync-shadowverse-background.mjs',
+    schedule: '0 5 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  sorcery: {
+    label: 'Sorcery Contested Realm card and price sync',
+    file: 'sync-sorcery-background.mjs',
+    schedule: '30 7 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  starwars: {
+    label: 'Star Wars Unlimited card and price sync',
+    file: 'sync-starwars-background.mjs',
+    schedule: '0 4 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  unionarena: {
+    label: 'Union Arena card and price sync',
+    file: 'sync-unionarena-background.mjs',
+    schedule: '0 6 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  universus: {
+    label: 'UniVersus card and price sync',
+    file: 'sync-universus-background.mjs',
+    schedule: '30 3 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  vanguard: {
+    label: 'Cardfight Vanguard card and price sync',
+    file: 'sync-vanguard-background.mjs',
+    schedule: '0 1 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  warhammer: {
+    label: 'Warhammer card and price sync',
+    file: 'sync-warhammer-background.mjs',
+    schedule: '45 11 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  wixoss: {
+    label: 'Wixoss card and price sync',
+    file: 'sync-wixoss-background.mjs',
+    schedule: '30 6 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  wow: {
+    label: 'World of Warcraft TCG card and price sync',
+    file: 'sync-wow-background.mjs',
+    schedule: '0 7 * * *',
+    background: true,
+    note: 'Card, set and price-snapshot sync. Safe to re-run on the same day: the snapshot upsert '
+  + 'targets on_conflict=card_id,snapshot_date, and that pair carries a real UNIQUE INDEX '
+  + '(<game>_price_snapshots_card_id_snapshot_date_key, verified live 2 September 2026), so a '
+  + 'second run merges the day row rather than raising 23505.'
+  },
+  'ids-mtg': {
+    label: 'MTG tcgapi id resolution',
+    file: 'sync-ids-mtg-background.mjs',
+    schedule: '0 3 * * *',
+    background: true,
+    note: 'Resolves tcgplayer_id to tcgapi.dev id, selecting only rows where tcgapi_id IS NULL, so '
+  + 'a re-run cannot redo finished work. Like the other ids-* jobs it self-chains by calling '
+  + 'its own scheduled URL, which Netlify answers with 403, so this trigger is the only way '
+  + 'its continuation can fire. See C3L-173.'
+  },
+  'ids-pokemon': {
+    label: 'Pokemon tcgapi id resolution',
+    file: 'sync-ids-pokemon-background.mjs',
+    schedule: '0 3 * * *',
+    background: true,
+    note: 'Same shape and same C3L-173 self-chaining problem as ids-mtg.'
+  },
+  'ids-yugioh': {
+    label: 'Yu-Gi-Oh tcgapi id resolution',
+    file: 'sync-ids-yugioh-background.mjs',
+    schedule: '0 3 * * *',
+    background: true,
+    note: 'Same shape and same C3L-173 self-chaining problem as ids-mtg.'
+  },
+  'enrich-prices': {
+    label: 'Price enrichment across games',
+    file: 'enrich-prices-background.mjs',
+    schedule: '0 5 * * *',
+    background: true,
+    note: 'Fills missing price fields from the shared enrichment path. Reads broadly and writes '
+  + 'price columns only.'
+  },
+  'enrich-apitcg-stats': {
+    label: 'apitcg card detail enrichment',
+    file: 'enrich-apitcg-stats-background.mjs',
+    schedule: '0 13 1 * *',
+    background: false,
+    note: 'Monthly, not daily, so it is the job most likely to be wanted on demand: waiting for the '
+  + 'next run means waiting up to a month.'
+  },
+  indexnow: {
+    label: 'IndexNow URL ping',
+    file: 'sync-indexnow-ping.mjs',
+    schedule: '0 3 * * *',
+    background: false,
+    caution: 'Outward facing. This submits URLs to a third-party indexing service, so a manual run is '
+  + 'visible outside C3 and should not be used to test the trigger path.',
+    note: 'Pings IndexNow with changed URLs, authenticated by the key file served at the site root.'
+  },
+  'sales-history': {
+    label: 'eBay sales history capture',
+    file: 'sync-sales-history.mjs',
+    schedule: '0 17 * * *',
+    background: false,
+    note: 'Appends observed sales. Re-running the same day may add duplicate observations, so '
+  + 'prefer it after a confirmed failure rather than speculatively.'
+  },
+  'card-follows': {
+    label: 'Card follow price-change alerts',
+    file: 'check-card-follows.mjs',
+    schedule: '30 21 * * *',
+    background: false,
+    caution: 'SENDS EMAIL TO REAL PEOPLE. A manual run can deliver a second alert for a movement that '
+  + 'was already notified. There is no undo on a delivered email. Do not use this to test the '
+  + 'trigger path, and do not re-run it to "check something" on a day the scheduled run '
+  + 'already succeeded.',
+    note: 'Evaluates follows for the 7 games in ALERTABLE_GAMES and emails matches via Resend.'
+  },
+  'price-alerts': {
+    label: 'Standalone price alerts',
+    file: 'check-price-alerts.mjs',
+    schedule: '0 23 * * *',
+    background: false,
+    caution: 'SENDS EMAIL TO REAL PEOPLE. Same warning as card-follows: a re-run can double-send.',
+    note: 'The older price alert path, kept alongside the follow system.'
+  },
+  'alert-digest': {
+    label: 'Alert digest email',
+    file: 'sync-alert-digest.mjs',
+    schedule: '0 20 * * *',
+    background: false,
+    caution: 'SENDS EMAIL TO REAL PEOPLE. A re-run delivers a duplicate digest.',
+    note: 'Rolls pending alerts into a single digest send.'
   }
 };
 

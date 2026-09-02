@@ -9,6 +9,44 @@ import idsOnepieceSync from './sync-ids-onepiece-background.mjs';
 import idsStarwarsSync from './sync-ids-starwars-background.mjs';
 import idsRiftboundSync from './sync-ids-riftbound-background.mjs';
 import idsDragonballSync from './sync-ids-dragonball-background.mjs';
+import alphaclashSync from './sync-alphaclash-background.mjs';
+import bakuganSync from './sync-bakugan-background.mjs';
+import battlespiritssagaSync from './sync-battlespiritssaga-background.mjs';
+import buddyfightSync from './sync-buddyfight-background.mjs';
+import dbsfusionworldSync from './sync-dbsfusionworld-background.mjs';
+import digimonSync from './sync-digimon-background.mjs';
+import dragonballSync from './sync-dragonball-background.mjs';
+import dragonballzSync from './sync-dragonballz-background.mjs';
+import finalfantasySync from './sync-finalfantasy-background.mjs';
+import forceofwillSync from './sync-forceofwill-background.mjs';
+import gaterulerSync from './sync-gateruler-background.mjs';
+import godzillaSync from './sync-godzilla-background.mjs';
+import grandarchiveSync from './sync-grandarchive-background.mjs';
+import gundamSync from './sync-gundam-background.mjs';
+import hololiveSync from './sync-hololive-background.mjs';
+import lorcanaSync from './sync-lorcana-background.mjs';
+import metazooSync from './sync-metazoo-background.mjs';
+import onepieceSync from './sync-onepiece-background.mjs';
+import riftboundSync from './sync-riftbound-background.mjs';
+import shadowverseSync from './sync-shadowverse-background.mjs';
+import sorcerySync from './sync-sorcery-background.mjs';
+import starwarsSync from './sync-starwars-background.mjs';
+import unionarenaSync from './sync-unionarena-background.mjs';
+import universusSync from './sync-universus-background.mjs';
+import vanguardSync from './sync-vanguard-background.mjs';
+import warhammerSync from './sync-warhammer-background.mjs';
+import wixossSync from './sync-wixoss-background.mjs';
+import wowSync from './sync-wow-background.mjs';
+import idsmtgSync from './sync-ids-mtg-background.mjs';
+import idspokemonSync from './sync-ids-pokemon-background.mjs';
+import idsyugiohSync from './sync-ids-yugioh-background.mjs';
+import enrichpricesSync from './enrich-prices-background.mjs';
+import enrichapitcgstatsSync from './enrich-apitcg-stats-background.mjs';
+import indexnowSync from './sync-indexnow-ping.mjs';
+import saleshistorySync from './sync-sales-history.mjs';
+import cardfollowsSync from './check-card-follows.mjs';
+import pricealertsSync from './check-price-alerts.mjs';
+import alertdigestSync from './sync-alert-digest.mjs';
 // netlify/functions/admin-trigger-background.mjs
 //
 // C3L-136. The half that actually runs a sync on demand.
@@ -38,7 +76,53 @@ const HANDLERS = {
   'ids-onepiece': idsOnepieceSync,
   'ids-starwars': idsStarwarsSync,
   'ids-riftbound': idsRiftboundSync,
-  'ids-dragonball': idsDragonballSync
+  'ids-dragonball': idsDragonballSync,
+  // Batch 3, 2 September 2026 (task5). The remaining 38, taking the trigger to all 48
+  // scheduled functions. Static imports for the reason stated above: a specifier built from
+  // the job name is not statically analysable, so the bundler would omit the target and the
+  // failure would surface only at invocation.
+  //
+  // The MISSING_HANDLERS check below is what makes adding 38 at once safe. If any JOBS entry
+  // here is misspelled, the drift is logged at startup instead of being discovered as a 202
+  // that silently ran nothing, which is exactly what happened on 11 August.
+  alphaclash: alphaclashSync,
+  bakugan: bakuganSync,
+  battlespiritssaga: battlespiritssagaSync,
+  buddyfight: buddyfightSync,
+  dbsfusionworld: dbsfusionworldSync,
+  digimon: digimonSync,
+  dragonball: dragonballSync,
+  dragonballz: dragonballzSync,
+  finalfantasy: finalfantasySync,
+  forceofwill: forceofwillSync,
+  gateruler: gaterulerSync,
+  godzilla: godzillaSync,
+  grandarchive: grandarchiveSync,
+  gundam: gundamSync,
+  hololive: hololiveSync,
+  lorcana: lorcanaSync,
+  metazoo: metazooSync,
+  onepiece: onepieceSync,
+  riftbound: riftboundSync,
+  shadowverse: shadowverseSync,
+  sorcery: sorcerySync,
+  starwars: starwarsSync,
+  unionarena: unionarenaSync,
+  universus: universusSync,
+  vanguard: vanguardSync,
+  warhammer: warhammerSync,
+  wixoss: wixossSync,
+  wow: wowSync,
+  'ids-mtg': idsmtgSync,
+  'ids-pokemon': idspokemonSync,
+  'ids-yugioh': idsyugiohSync,
+  'enrich-prices': enrichpricesSync,
+  'enrich-apitcg-stats': enrichapitcgstatsSync,
+  indexnow: indexnowSync,
+  'sales-history': saleshistorySync,
+  'card-follows': cardfollowsSync,
+  'price-alerts': pricealertsSync,
+  'alert-digest': alertdigestSync
 };
 
 // JOBS and HANDLERS are two lists that have to agree, and on 11 August 2026 they did not: a job

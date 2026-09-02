@@ -78,7 +78,15 @@ export default async (req) => {
 };
 
 function describeJobs() {
-  return JOB_NAMES.map(n => ({ job: n, label: JOBS[n].label, schedule: JOBS[n].schedule }));
+  return JOB_NAMES.map(n => ({
+    job: n,
+    label: JOBS[n].label,
+    schedule: JOBS[n].schedule,
+    // Surfaced deliberately. Three of these jobs send email to real people and a re-run
+    // double-sends, so the warning has to reach whoever is reading the job list, not sit
+    // only in shared/sync-jobs.mjs where a caller never looks.
+    ...(JOBS[n].caution ? { caution: JOBS[n].caution } : {})
+  }));
 }
 
 function json(obj, status) {
