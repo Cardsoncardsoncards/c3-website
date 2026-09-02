@@ -14,6 +14,12 @@
 <meta name="google-site-verification" content="4iyoNevmAtBUvb3Jqf3RPLWCB2dugngqoZWTKp2n7fI" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR68HPE92S"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WR68HPE92S');</script>
+{# Google Preferred Sources. Per Google's publisher docs (20 August 2026), the button needs
+   this loader in the head, plus the button div in the share bar below where it renders.
+   Blog posts only in this pass: this is an article feature, so card and hub pages are left out.
+   Eligibility is judged at domain level, so it is not gated on this markup, but Google describes
+   these methods as building toward it. #}
+<script async src="https://news.google.com/swg/js/v1/publisher.js"></script>
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -130,6 +136,8 @@ nav{background:rgba(10,12,20,.97) !important;backdrop-filter:blur(18px) !importa
     <a id="share-facebook" href="#" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
     <a id="share-whatsapp" href="#" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
     <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy Link',1500)})">Copy Link</button>
+      {# Static markup, no interpolation, so there is no escaping surface here. #}
+    <div google-add-preferred-source-btn data-theme="dark"></div>
   </div>
 
   <div class="post-body">

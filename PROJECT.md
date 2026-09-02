@@ -542,6 +542,18 @@ Final Fantasy, Force of Will, UniVersus, Shadowverse, Grand Archive, Hololive, W
 ### Tier 4 (suppress from homepage, fix data before promoting)
 Bakugan, Gate Ruler, Godzilla, Dragon Ball Z, Warhammer
 
+STATUS CHECKED 2 September 2026 (SEO and AEO audit). "Suppress from homepage" is effectively
+DONE, and the recommendation that went with it is superseded rather than outstanding. The nav
+was cut to four items on 31 August (/cards, /compare, /blog, /search), so NO game appears in the
+nav at all; all five Tier 4 games grep to zero occurrences in shared/nav.mjs. None of the five is
+among the nine featured tiles on /cards either. They appear only as game-tile entries in the A-Z
+grid further down that page, which is the "Tier 1 named, rest under All games A-Z" shape the July
+persona review asked for, delivered on /cards instead of in the nav.
+Still outstanding, and deliberately so: all five remain in sitemap-static.mjs, one entry each. A
+live page that returns 200 arguably belongs in a sitemap, so this is recorded as a decision, not
+a gap. "Fix data before promoting" is also still open for Warhammer specifically, see C3L-150
+(10.6 per cent of rows priced) and the 7 URL /api/sitemap-warhammer that follows from it.
+
 ### Expansion games (not yet in C3, build after core is stable)
 Argent Saga TCG, The Caster Chronicles, Transformers TCG, Exodus TCG, Dragoborne, Munchkin CCG, Zombie World Order TCG, My Little Pony CCG, KeyForge, Alternate Souls
 

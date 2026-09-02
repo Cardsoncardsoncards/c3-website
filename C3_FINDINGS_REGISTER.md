@@ -821,6 +821,10 @@ those tables would light up the collision instead of the silence.
 | C3L-204, **RESOLVED IN PART 2 September 2026, task batch A part 4. 20 posts corrected, 9 left open and named below** | **120 of the 856 built blog posts, 14.0 per cent, carry a `game:` frontmatter value that no `/blog` filter button matches, so they are reachable only through All Games.** The filter vocabulary is 32 buttons, one of which is `all`, so 31 real game keys, read from `src/blog.njk`. **It is NOT the same set as the 32 games in scope: it omits `dbsfusionworld` and `dragonballz` and adds `dnd`.** Three value mismatches were unambiguous and are fixed here: 14 posts on `one-piece` to `onepiece`, 5 on `star-wars-unlimited` to `starwars`, and 1 on `battlespirits` to `battlespiritssaga`. That takes the unreachable count from 120 to 100 | Re-derived this session by parsing frontmatter across all 925 `.md` files in `src/blog`, of which 856 carry `tags: post` and are built, matching the build's own `Wrote 857` and the 856 URLs in `sitemap-blog.xml`. Button list parsed from the `data-game` attributes in `src/blog.njk`. The diff is 40 changed lines across 20 files and touches only `game:` lines, verified by `git diff` | **The task quoted 119 posts and 12.9 per cent. Both are explained rather than wrong: 119 was measured against the 925 denominator, not the 856 built posts, and before p942 existed. 119 plus p942 is exactly the 120 measured today.** Of the 100 that remain, **91 are not defects**: 88 carry `general` and 3 carry no `game:` key at all and default to it, and a general TCG post has no game filter to belong to. **The 9 real ones are three separate causes, none of them a value typo.** 4 posts carry `dragon-ball-super`, which matches NEITHER Dragon Ball slug and is the exact string CLAUDE.md warns about. Only p211 carries a hard signal, Zenkai Series, so the CCG, so `dragonball`; the other 3 name no product line at all, and since Fusion World is officially branded "Dragon Ball Super Card Game Fusion World" the title alone cannot settle it, so all 4 were left rather than guessed. 3 `dbsfusionworld` posts and 1 `dragonballz` post carry the CORRECT key and are unreachable because **no button exists for either game**, which is a UI gap, not a data error. 1 post, p942, is `cyberpunk`, a game not among the 32 |
 | C3L-205, **OPEN as a local hygiene item only, confirmed harmless to production 2 September 2026** | **`_site/blog/index.html` is a stale build artefact dated 20 April 2026 that no file in `src/` can produce, and it makes local orphan checks fail against a page that does not exist.** The real blog index is `_site/blog.html`, 631,652 bytes, rebuilt today. **The stale file is not even a blog index**: its `<title>` is "Cards on Cards on Cards \| Australian TCG Hub", it contains zero `blog-card` elements, and it is an old copy of the HOMEPAGE written to that path | `src/blog.njk` builds to `blog.html`, and the posts in `src/blog/*.md` build to `/blog/<slug>/index.html`. Nothing targets `/blog/index.html`. `_site/` is gitignored and `git ls-files _site/` returns nothing, so the file is untracked and cannot deploy. Live behaviour read directly: **`/blog/` 301 redirects to `/blog`**, which serves the real index at 619,056 bytes and contains p942. The stale file's mtime stayed at 20 April through today's build, so Eleventy does not write it | **Harmless to production and safe to delete, but NOT regenerable, which is exactly the point: a clean build produces no such file, so deleting it loses nothing.** Deletion was attempted this session and **declined by the permission layer**, so the file is still on disk locally and was not retried. Anyone hitting a false orphan failure for `/blog/index.html` should delete it and move on |
 | C3L-206, **OPEN, flagged for a dedicated read only investigation, deliberately NOT fixed here** | **C3's user-facing eBay affiliate links are split across two domains, and the split is inside the live site rather than between the site and its documentation.** 613 user-facing links use `www.ebay.com.au` and **283 use the global `www.ebay.com`**, all 283 in blog posts, one per post across 283 separate files. Every one carries the correct `campid=5339146789`, so this is a destination question, not a tracking one. `PROJECT.md:613` documents the search pattern as `www.ebay.com` while `PROJECT.md:618` documents the store pattern as `www.ebay.com.au`, so the file is internally split too | Counted this session by extracting `href=` and markdown link targets across `netlify/` and `src/`, then excluding `api.ebay.com`. **That exclusion is what makes the number meaningful**: a naive substring count returns 586 non `.au` matches, but almost all are the `api.ebay.com` OAuth and Browse endpoints, which are correctly global and are not links at all | **The task's premise needed correcting before it could be logged: it stated that all 733 user-facing links use `www.ebay.com.au` and that only the documentation disagreed. They do not.** 283 live links send an Australian audience to eBay US. **Not touched here, as instructed, and it should stay untouched until someone confirms what eBay does with an AU visitor on a `.com` EPN link**, because if the redirect preserves the campid this is cosmetic, and if it does not it is lost revenue across 283 posts. That is a commercial question, not a code change **CORRECTION on re-reading PROJECT.md in full: the `.com` links are not an accident, and this row should not have implied they were.** `PROJECT.md` line 615 states "siteid=15 removed for worldwide routing. International users route to local eBay automatically", so the global domain is a DELIBERATE choice whose stated purpose is to let eBay geo-route each visitor. **That reframes the finding: the open question is not "why are 283 links wrong", it is "is the routing assumption true, and does the campid survive the redirect".** Nobody has ever verified it. The measured split has been recorded next to that note in `PROJECT.md` so the assumption and its scale sit together. |
+| C3L-207, **OPEN, CRITICAL for AEO, confirmed live 2 September 2026, and it is invisible from the repo** | **Cloudflare injects a managed block into the top of `robots.txt` at the edge that `Disallow: /` for nine crawlers, and it overrides the repo's own, more permissive AI policy.** The injected agents are **Amazonbot, Applebot-Extended, Bytespider, CCBot, ClaudeBot, CloudflareBrowserRenderingCrawler, Google-Extended, GPTBot and meta-externalagent**. The same block sets `Content-Signal: search=yes,ai-train=no,use=reference` on `User-agent: *`. **The repo's own robots.txt says the opposite**: it groups GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-Web, PerplexityBot and Google-Extended together and allows them everything except `/api/`, `/rest/` and `/.netlify/` | **The repo is not the source and neither is the build.** `robots.txt` and `_site/robots.txt` are byte identical at **6,151 bytes**; the live file is **7,860 bytes**. The extra 1,709 bytes are delimited in the served file by literal `# BEGIN Cloudflare Managed content` and `# END Cloudflare Managed Content` markers. `netlify.toml` contains no robots or Content-Signal directive, and the repo holds no Cloudflare configuration file at all. Response headers on the live fetch: `server: cloudflare` | **This is the single highest-value finding of the SEO and AEO audit, because it silently defeats the rest of it.** With `Disallow: /` present for GPTBot and ClaudeBot, neither OpenAI's nor Anthropic's indexing crawler may fetch any page, so the site cannot be surfaced as a cited source in those assistants' index-backed answers. **Two important limits on the claim, both checked rather than assumed. (1) Not every AI agent is blocked: ChatGPT-User, OAI-SearchBot, Claude-Web and PerplexityBot appear ONLY in the repo block and remain allowed, so a live user-triggered fetch still works even where indexing does not. `anthropic-ai` is named nowhere and therefore falls to `User-agent: *`, which allows it. (2) Google-Extended does NOT affect normal Google Search ranking**; it governs Gemini and AI Overviews grounding and training only. Googlebot and Bingbot are named nowhere and inherit `Allow: /`, so classic search crawling is untouched. **Where two groups name the same agent, the merge is what decides it, and every reading lands the same way**: Google merges same-agent groups, which yields `Disallow: /`, and a first-match reading also yields `Disallow: /` because the Cloudflare block is physically first. **NOT changed here, because this is a Cloudflare dashboard setting and a rights decision, not a code change.** Sammy has to decide whether the AI-crawler block and the `ai-train=no` signal are wanted; they may well be deliberate |
+| C3L-208, **OPEN, Medium, confirmed live 2 September 2026** | **All 32 game hub pages carry ZERO JSON-LD of any kind**, while every card page carries a complete set. The July 2026 persona review recommended "Product, Offer (priceCurrency AUD), BreadcrumbList and FAQPage schema on card **and hub** pages". **The card half shipped in full and the hub half never did** | Every one of the 32 hubs fetched live and parsed this session: all returned HTTP 200, and all returned **0 `application/ld+json` blocks**. Against that, **19 real card pages sampled across mtg, pokemon, yugioh, lorcana, onepiece, dbsfusionworld, starwars and riftbound every one carried 3 blocks with `BreadcrumbList`, `Product`, `Offer` and `FAQPage`, and `priceCurrency` was `AUD` on all 19**. Zero JSON parse failures anywhere in the sample | **The recommendation is half done, and the half that is missing is the half that ranks for the broad queries.** A hub page is what would compete for "pokemon card prices australia"; a card page competes for one card name. `ItemList` over the hub's own card grid, plus `BreadcrumbList`, is the obvious shape and would reuse data the page already renders. **Not built here, this task was investigation only** |
+| C3L-209, **OPEN, Medium, confirmed live 2 September 2026** | **The site has no `Organization` and no `WebSite` structured data anywhere, so it publishes no machine-readable statement of who it is, and it is not eligible for a sitelinks searchbox.** The homepage, `/market`, `/compare` and `/tracker` all carry zero JSON-LD | Grepped across the whole repo for each `@type`: **`WebSite` 0 files, `SearchAction` 0 files, `Article` 0 files, `BlogPosting` 0 files, `ItemList` 0 files**. `Organization` appears in exactly **1** file, `card-index.mjs:574`, and even there it is nested as a `provider` inside another object on the MTG set page rather than declared for the site. Confirmed live: `/`, `/market`, `/compare` and `/tracker` each returned 200 with 0 JSON-LD blocks | **Two separate misses in one row because they share a cause, namely that structured data was added per template rather than once for the site.** A `WebSite` node with a `SearchAction` is the documented precondition for the sitelinks searchbox, and `/search` already exists to satisfy it. An `Organization` node is the anchor most AI assistants and knowledge panels use to attribute a claim to a publisher, which matters more than usual here given C3L-207 and C3L-210 |
+| C3L-210, **OPEN, Medium, E-E-A-T and AEO, confirmed live 2 September 2026** | **Nothing on this site says who C3 is or who wrote anything.** Across 10 blog posts sampled live, **0 carry an author byline** of any form, no post carries `Article` or `BlogPosting` schema, and **there is no About page**: `/about`, `/about-us`, `/team` and `/authors` all return 404 | 10 posts fetched live and parsed with script and style stripped. **All 10 DO carry a visible `<time datetime>` publish date**, and all 10 open with a direct, extractable factual sentence, so the content itself is in good shape for extraction. **4 of the 10 carry an FAQ section or `FAQPage` schema.** `/methodology` returns 200 and is substantial at 17,354 bytes, but a test for "who we are", "about us", "founder" or "independently" matched **nothing** in it, so it explains how prices are sourced without ever establishing who is doing the sourcing | **The extractability side is genuinely good and should be said plainly: direct opening sentences and a visible date are the two things that most help an assistant quote a page.** What is missing is attribution. An assistant that wants to cite a price needs a publisher to name, and this site currently gives it none, which compounds C3L-207: even where a crawler IS allowed through, there is no entity to attribute the answer to. **The cheapest meaningful fix is an About page plus an `Organization` node (C3L-209), not a per-post byline** |
 
 **Should C3L-51's sync health check be extended to catch enrichment gaps?
 Answered explicitly, 6 August 2026, because Task 19 asked rather than leaving
@@ -2799,3 +2803,92 @@ Priority order for the next session:
      the page. The only defence is re-running the count, so re-run it, and
      update all three places that state it: the START HERE one-line state,
      Section 9, and Section 3's heading range.
+
+---
+
+## SEO and AEO audit, 2 September 2026 (`task-c3-preferred-sources-and-seo-aeo-audit`)
+
+Investigation only. The only site change in that session was the Google Preferred Sources button
+on blog posts. Defects from this audit are logged as C3L-207 to C3L-210 in the table above. The
+two sub-sections below are deliberately NOT defects and are kept separate so they are not
+actioned as though they were.
+
+### Confirmed RESOLVED or SUPERSEDED by this audit, so they are not re-raised
+
+1. **Internal search: the July persona review's "working for 7 of 32 games" is RESOLVED.**
+   Re-derived live this session by querying `/api/compare-search` once per game, each with a
+   real card name pulled from that game's own table, so a nil result would mean the endpoint
+   and not a bad query. **32 of 32 games returned HTTP 200 with at least one result. Zero
+   failures.** Do not re-raise this as open.
+
+2. **"Tier 4 suppression from nav" is SUPERSEDED by the 31 August four-item nav.**
+   `shared/nav.mjs` now carries exactly four links: `/cards`, `/compare`, `/blog`, `/search`.
+   **No game appears in the nav at all**, so there is nothing left to suppress from it. Warhammer,
+   Bakugan, Gate Ruler, Godzilla and Dragon Ball Z were each grepped against `nav.mjs` and all
+   returned zero.
+
+3. **"Grouped mobile nav, Tier 1 named with the rest under All games A-Z" is SUPERSEDED by the
+   same change**, and the pattern it asked for already exists elsewhere: the five Tier 4 games
+   appear on `/cards` as `game-tile` entries in the A-Z grid, carrying `data-letter`, and NOT
+   among the nine featured tiles. That is the shape the recommendation wanted, on `/cards`
+   rather than in the nav.
+
+   **Still true and NOT superseded:** all five remain in `sitemap-static.mjs`, one entry each, so
+   "suppress from sitemap promotion" was not done. That is arguably correct, since a live page
+   that returns 200 belongs in a sitemap, but it is recorded here so the difference is deliberate
+   rather than forgotten.
+
+### BLINDSPOTS, found during this audit and not on its list
+
+1. **The site publishes `llms.txt` for AI consumers while blocking the AI crawlers that would
+   read it.** `/llms.txt` is live at 200 and 2,548 bytes, is well written, and even carries an
+   explicit `Attribution:` line asking to be cited as "Cards on Cards on Cards". Meanwhile
+   C3L-207 has GPTBot, ClaudeBot and CCBot on `Disallow: /`. **Two systems built for the same
+   goal are pulling in opposite directions, and neither one can see the other.** This is the
+   sharpest thing the audit found after C3L-207 itself, and it is only visible if the two are
+   checked in the same pass.
+
+2. **Cloudflare is also asserting a rights position on C3's behalf.** The injected block sets
+   `Content-Signal: search=yes,ai-train=no,use=reference`, and the served file's own preamble
+   describes those signals as **"EXPRESS RESERVATIONS OF RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN
+   UNION DIRECTIVE 2019/790"**. That is a legal reservation published in C3's name. It may well
+   be what Sammy wants, but it was not written by anyone here and does not appear in the repo.
+
+3. **`.eleventy.js` declares a passthrough for a file that does not exist.**
+   `addPassthroughCopy({"src/dashboard.html": "dashboard.html"})`, and `src/dashboard.html` is
+   absent. Checked all 35 declared passthrough sources; this is the only missing one. Eleventy
+   ignores it silently, the build passes, and `/dashboard` returns 404 live. Harmless today, but
+   it is a dangling reference that reads as an existing page to anyone scanning the config.
+
+4. **`/api/sitemap-warhammer` submits 7 URLs.** That is consistent with C3L-150 (warhammer priced
+   on 10.6 per cent of rows) rather than a new fault, and it is noted only because a 7 URL
+   sitemap for a 1,184 row game is the kind of number that looks like a bug when met cold.
+
+### OPPORTUNITIES, ranked by effort against likely value. Not defects
+
+1. **Add an `Organization` and a `WebSite` node with a `SearchAction`, once, site wide.**
+   Low effort, and the `SearchAction` precondition is already met because `/search` exists.
+   **Value is genuinely uncertain**: the sitelinks searchbox is awarded at Google's discretion and
+   markup does not guarantee it. The `Organization` half is the more defensible of the two,
+   because it is what gives an assistant a publisher to attribute a claim to. See C3L-209.
+
+2. **Add an About page.** Low effort, and it is the cheapest fix for C3L-210. `/methodology`
+   already does the hard half, explaining how prices are sourced; it simply never says who is
+   doing it. **Effect on ranking is unproven**, but attribution is a precondition for being cited
+   at all, which is the whole point of the AEO work.
+
+3. **Extend the existing card-page schema to the 32 hub pages.** Medium effort, and the highest
+   likely SEO value on this list, because hubs are what compete for the broad category queries.
+   The data is already rendered on the page. See C3L-208.
+
+4. **Give blog posts `Article` schema and an author.** Medium effort. The posts already have the
+   two things that matter most for extraction, a visible date and a direct opening sentence, so
+   this is completing a job that is mostly done rather than starting one.
+
+5. **`llms.txt` is already built, so the usual opportunity here does not apply.** Recorded
+   explicitly because the obvious recommendation would be to create one. **Stated honestly: the
+   convention remains informal and NO major AI provider has confirmed that `llms.txt` affects
+   ranking or citation.** Its practical value here is currently zero for a different and more
+   concrete reason, which is C3L-207 blocking the crawlers. **Fix the robots.txt question before
+   spending anything further on this file.**
+
