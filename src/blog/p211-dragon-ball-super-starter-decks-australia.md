@@ -1,5 +1,5 @@
 ---
-game: dragon-ball-super
+game: dragonball
 title: "Dragon Ball Super Card Game: Best Starter Decks for Australian"
 description: "Which Dragon Ball Super Card Game starter decks are worth buying in Australia? This guide covers the current options, what each plays like."
 date: 2026-05-05

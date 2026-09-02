@@ -1,0 +1,359 @@
+-- c3l-095-drop-17-dead-tables.sql
+-- task2 Part B, 2 September 2026. Continues C3L-95, which had already dropped 2 of its 13
+-- named tables (tcg_price_movers, tcg_market_summary) on 11 August via
+-- c3l-095-drop-tcg-price-movers-and-market-summary.sql.
+--
+-- ============================================================================
+-- READ THIS BEFORE REUSING THE METHOD. THE COMMISSIONING TASK'S EVIDENCE
+-- STANDARD WAS WRONG, AND THIS FILE DOES NOT USE IT.
+-- ============================================================================
+--
+-- The task asked to drop tables meeting two conditions: n_tup_ins = 0 ("zero lifetime
+-- inserts") AND no code reference in the repo. The first condition does not mean what it
+-- says, and that was established before anything was dropped rather than assumed:
+--
+--   Two ORDINARY TABLES in this database report n_tup_ins = 0 while HOLDING ROWS.
+--     amazon_products  n_tup_ins = 0, n_live_tup = 217, relkind = 'r'
+--     tcg_events       n_tup_ins = 0, n_live_tup =  67, relkind = 'r'
+--
+--   A table cannot hold 217 rows that were never inserted. So pg_stat_user_tables counters
+--   here do NOT span the tables' lifetimes. pg_stat_database.stats_reset is NULL, which means
+--   there is not even a recorded reset point to date them from; the counters were most likely
+--   lost when the instance was resized on 30 June 2026. Corroborating the partial-history
+--   reading rather than a total wipe: card_price_alerts still reports n_tup_ins = 108 against
+--   n_live_tup = 0, so some history survives and some does not.
+--
+--   A THIRD candidate for this list was checked and REJECTED as evidence, which is worth
+--   recording because it is the easy mistake here. mtg_commanders reports n_tup_ins = 0 with
+--   n_live_tup = 10,287 and looks like the strongest example of all, but relkind = 'm': it is
+--   a MATERIALIZED VIEW, populated by REFRESH rather than by INSERT, so a zero insert count is
+--   simply correct for it and proves nothing about lost statistics. pg_stat_user_tables covers
+--   matviews as well as tables, so anything reasoning from that view must check relkind before
+--   drawing a conclusion. It is also why mtg_commanders could never have been dropped by the
+--   DROP TABLE statements below in any case: that would have failed outright.
+--
+--   n_tup_ins = 0 therefore proves "not written since some unknown point", NOT "never
+--   written". Dropping on it alone would eventually destroy a populated table.
+--
+-- What this file drops on instead, both re-verified live on 2 September 2026:
+--   1. n_live_tup = 0, the table is empty RIGHT NOW. This is the condition that actually
+--      bounds the damage: an empty table cannot lose data.
+--   2. Zero references anywhere in netlify/, scripts/, src/ or .eleventy.js, excluding
+--      this migrations directory.
+--
+-- On condition 2, C3L-95's own row warns that grepping for a table NAME misses a table
+-- addressed through a variable or a built string, and that warning is live in this repo:
+-- every function calls supabaseGet(`${table}?select=...`), so the name is a substring of an
+-- argument, not a literal after rest/v1/. Two checks were run because of that.
+--   - A plain substring grep for each name, which is what actually catches the
+--     supabaseGet('x_cards?select=...') form.
+--   - A concatenation check for `${game}_sync_progress` and similar suffix patterns, which a
+--     substring grep for the full name would miss. This one mattered: shared/sync-rotation.mjs
+--     genuinely reads a <game>_sync_progress table by variable. It is safe only because
+--     PROGRESS_TABLE is set in exactly two files, to pokemon_sync_progress and
+--     yugioh_sync_progress, and NEITHER is dropped here.
+--
+-- ============================================================================
+-- FOUR TABLES THAT QUALIFIED ON PAPER AND ARE DELIBERATELY NOT DROPPED
+-- ============================================================================
+--
+--   tcg_events (67 rows) and mtg_commanders (10,287 rows)
+--     Zero code references, but they hold real data. tcg_events is an ordinary table and is
+--     described in PROJECT.md as 67 ANZ tournament events loaded across 18 games. Unreferenced
+--     is not the same as worthless, and dropping it destroys content gathered on purpose.
+--     mtg_commanders is a MATERIALIZED VIEW, not a table at all, so it was never a candidate;
+--     it is named here only because it appears in the same pg_stat_user_tables sweep and would
+--     otherwise look like an omission.
+--
+--   retailer_placements and seller_watchlist
+--     Empty and unreferenced, and they would otherwise qualify. C3L-95 explicitly records
+--     them as "schema for revenue features that were designed and never built" and says that
+--     is a strategy question for claude.ai. CLAUDE.md sends strategy decisions there, so
+--     dropping them is not a call this side makes.
+--
+--   portal_astra_product_cache
+--     Empty and unreferenced IN THIS REPO, which is the limit of what a repo grep can prove.
+--     Its name matches no C3 feature and its RLS policies use `TO public` with
+--     auth.role() = 'service_role', a convention no other C3 table here uses. That is the
+--     signature of a different project sharing this Supabase instance, and PROJECT.md records
+--     one: the ACC Dashboard at aggregation-command-centre.netlify.app. Dropping another
+--     project's table on the strength of this repo's grep would be exactly the mistake the
+--     C3L-95 caveat warns about.
+--
+-- ============================================================================
+-- SAFETY
+-- ============================================================================
+-- No table below has an incoming foreign key from any table outside this set, checked via
+-- information_schema.constraint_column_usage, so the order of the DROPs does not matter and
+-- nothing outside the set loses a parent. CASCADE is deliberately NOT used: if a dependency
+-- appears that this analysis missed, the statement should FAIL loudly rather than silently
+-- take something else with it.
+
+BEGIN;
+
+DROP TABLE public.archetype_cards;
+DROP TABLE public.archetype_watchlist;
+DROP TABLE public.ban_events;
+DROP TABLE public.card_blog_links;
+DROP TABLE public.community_posts;
+DROP TABLE public.deck_session_cards;
+DROP TABLE public.deck_sessions;
+DROP TABLE public.dragonball_sync_progress;
+DROP TABLE public.gsc_page_performance;
+DROP TABLE public.issue_reports;
+DROP TABLE public.lorcana_sync_progress;
+DROP TABLE public.onepiece_sync_progress;
+DROP TABLE public.page_sessions;
+DROP TABLE public.riftbound_sync_progress;
+DROP TABLE public.set_blog_links;
+DROP TABLE public.starwars_sync_progress;
+DROP TABLE public.subscriber_events;
+
+COMMIT;
+
+-- ============================================================================
+-- ROLLBACK
+-- ============================================================================
+-- Every definition below was read out of the live database immediately before the DROPs
+-- above ran, so this recreates the exact shape that was removed: columns, defaults,
+-- indexes, RLS, and every policy. It does NOT restore rows, and it does not need to:
+-- all 17 tables were empty at the moment they were dropped, which is the whole basis on
+-- which they qualified.
+--
+-- Sequences: the integer primary keys below used `nextval('<table>_id_seq')` defaults. Those
+-- sequences are owned by their columns and were dropped with the tables, so the
+-- `bigserial`/`serial` forms here recreate both the sequence and the default in one step.
+-- Every restarted sequence begins at 1, which is correct for an empty table.
+--
+-- To roll back, run everything between the BEGIN and COMMIT below.
+--
+-- BEGIN;
+--
+-- CREATE TABLE public.archetype_cards (
+--   id serial PRIMARY KEY,
+--   archetype_id integer,
+--   card_name text NOT NULL,
+--   scryfall_id text,
+--   role text,
+--   inclusion_pct numeric,
+--   is_basic_land boolean DEFAULT false,
+--   created_at timestamp with time zone DEFAULT now()
+-- );
+-- CREATE INDEX idx_archetype_cards_archetype_id ON public.archetype_cards USING btree (archetype_id);
+-- CREATE INDEX idx_archetype_cards_card_name ON public.archetype_cards USING btree (card_name);
+-- CREATE INDEX idx_archetype_cards_scryfall_id ON public.archetype_cards USING btree (scryfall_id);
+-- ALTER TABLE public.archetype_cards ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_select_archetype_cards ON public.archetype_cards AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_archetype_cards ON public.archetype_cards AS PERMISSIVE FOR ALL TO service_role USING (true);
+-- -- NOTE: archetype_cards.archetype_id carried a foreign key to public.archetypes(id).
+-- -- public.archetypes is NOT dropped by this migration, so the constraint can be restored:
+-- -- ALTER TABLE public.archetype_cards ADD CONSTRAINT archetype_cards_archetype_id_fkey
+-- --   FOREIGN KEY (archetype_id) REFERENCES public.archetypes(id);
+--
+-- CREATE TABLE public.archetype_watchlist (
+--   id serial PRIMARY KEY,
+--   email text NOT NULL,
+--   commander_slug text NOT NULL,
+--   baseline_total_aud numeric,
+--   created_at timestamp with time zone DEFAULT now(),
+--   UNIQUE (email, commander_slug)
+-- );
+-- CREATE INDEX idx_archetype_watchlist_email ON public.archetype_watchlist USING btree (email);
+-- CREATE INDEX idx_archetype_watchlist_slug ON public.archetype_watchlist USING btree (commander_slug);
+-- ALTER TABLE public.archetype_watchlist ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_insert_archetype_watchlist ON public.archetype_watchlist AS PERMISSIVE FOR INSERT TO anon WITH CHECK (true);
+-- CREATE POLICY service_all_archetype_watchlist ON public.archetype_watchlist AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- CREATE TABLE public.ban_events (
+--   id serial PRIMARY KEY,
+--   game text NOT NULL,
+--   card_name text NOT NULL,
+--   format text,
+--   ban_date date,
+--   ban_type text,
+--   source_url text,
+--   created_at timestamp with time zone DEFAULT now()
+-- );
+-- CREATE INDEX idx_ban_events_ban_date ON public.ban_events USING btree (ban_date);
+-- CREATE INDEX idx_ban_events_card_name ON public.ban_events USING btree (card_name);
+-- CREATE INDEX idx_ban_events_game ON public.ban_events USING btree (game);
+-- ALTER TABLE public.ban_events ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_select_ban_events ON public.ban_events AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_ban_events ON public.ban_events AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- CREATE TABLE public.card_blog_links (
+--   id serial PRIMARY KEY,
+--   game text NOT NULL,
+--   card_slug text NOT NULL,
+--   blog_slug text NOT NULL,
+--   created_at timestamp with time zone DEFAULT now(),
+--   UNIQUE (game, card_slug, blog_slug)
+-- );
+-- CREATE INDEX idx_card_blog_links_blog ON public.card_blog_links USING btree (blog_slug);
+-- CREATE INDEX idx_card_blog_links_card ON public.card_blog_links USING btree (game, card_slug);
+-- ALTER TABLE public.card_blog_links ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_select_card_blog_links ON public.card_blog_links AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_card_blog_links ON public.card_blog_links AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- CREATE TABLE public.community_posts (
+--   id serial PRIMARY KEY,
+--   platform text NOT NULL,
+--   community text NOT NULL,
+--   url text,
+--   content text,
+--   archetype_slug text,
+--   posted_at timestamp with time zone DEFAULT now(),
+--   clicks_ga4 integer DEFAULT 0,
+--   result text,
+--   upvotes integer DEFAULT 0,
+--   comments integer DEFAULT 0,
+--   sessions_ga4 integer DEFAULT 0,
+--   UNIQUE (platform, community, archetype_slug)
+-- );
+-- ALTER TABLE public.community_posts ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY service_all_community_posts ON public.community_posts AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- CREATE TABLE public.deck_session_cards (
+--   id serial PRIMARY KEY,
+--   session_id text NOT NULL,
+--   card_name text NOT NULL,
+--   quantity integer NOT NULL DEFAULT 1,
+--   scryfall_id text,
+--   price_aud numeric,
+--   is_basic_land boolean DEFAULT false,
+--   matched boolean DEFAULT false,
+--   created_at timestamp with time zone DEFAULT now()
+-- );
+-- CREATE INDEX idx_deck_session_cards_session_id ON public.deck_session_cards USING btree (session_id);
+-- ALTER TABLE public.deck_session_cards ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_insert_deck_session_cards ON public.deck_session_cards AS PERMISSIVE FOR INSERT TO anon WITH CHECK (true);
+-- CREATE POLICY service_all_deck_session_cards ON public.deck_session_cards AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- CREATE TABLE public.deck_sessions (
+--   id uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+--   session_id text NOT NULL,
+--   game text NOT NULL DEFAULT 'mtg'::text,
+--   format text,
+--   raw_decklist text,
+--   total_aud numeric,
+--   card_count integer,
+--   created_at timestamp with time zone DEFAULT now(),
+--   share_token text UNIQUE,
+--   deck_name text
+-- );
+-- CREATE INDEX idx_deck_sessions_created_at ON public.deck_sessions USING btree (created_at);
+-- CREATE INDEX idx_deck_sessions_session_id ON public.deck_sessions USING btree (session_id);
+-- CREATE INDEX idx_deck_sessions_share_token ON public.deck_sessions USING btree (share_token);
+-- ALTER TABLE public.deck_sessions ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_insert_deck_sessions ON public.deck_sessions AS PERMISSIVE FOR INSERT TO anon WITH CHECK (true);
+-- CREATE POLICY service_all_deck_sessions ON public.deck_sessions AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- CREATE TABLE public.gsc_page_performance (
+--   id serial PRIMARY KEY,
+--   page_url text NOT NULL,
+--   clicks integer,
+--   impressions integer,
+--   avg_position numeric,
+--   ctr numeric,
+--   snapshot_date date NOT NULL,
+--   UNIQUE (page_url, snapshot_date)
+-- );
+-- CREATE INDEX idx_gsc_page_performance_date ON public.gsc_page_performance USING btree (snapshot_date);
+-- CREATE INDEX idx_gsc_page_performance_url ON public.gsc_page_performance USING btree (page_url);
+-- ALTER TABLE public.gsc_page_performance ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_select_gsc_page_performance ON public.gsc_page_performance AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_gsc_page_performance ON public.gsc_page_performance AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- CREATE TABLE public.issue_reports (
+--   id bigserial PRIMARY KEY,
+--   page_url text NOT NULL,
+--   issue_type text NOT NULL,
+--   description text NOT NULL,
+--   game text,
+--   card_name text,
+--   created_at timestamp with time zone NOT NULL DEFAULT now(),
+--   resolved boolean NOT NULL DEFAULT false,
+--   resolved_at timestamp with time zone
+-- );
+-- CREATE INDEX issue_reports_created_at_idx ON public.issue_reports USING btree (created_at DESC);
+-- CREATE INDEX issue_reports_resolved_idx ON public.issue_reports USING btree (resolved, created_at DESC);
+-- ALTER TABLE public.issue_reports ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_insert_issue_reports ON public.issue_reports AS PERMISSIVE FOR INSERT TO anon WITH CHECK (true);
+-- CREATE POLICY service_role_all_issue_reports ON public.issue_reports AS PERMISSIVE FOR ALL TO service_role USING (true) WITH CHECK (true);
+-- -- NOTE: the "Report a Bug" widget on the site does NOT write here. It posts to a Netlify
+-- -- Form named bug-report. This table was a parallel design that was never wired up.
+--
+-- CREATE TABLE public.page_sessions (
+--   id serial PRIMARY KEY,
+--   session_id text NOT NULL,
+--   page_type text NOT NULL,
+--   game text,
+--   slug text,
+--   country_code text,
+--   viewed_at timestamp with time zone DEFAULT now()
+-- );
+-- CREATE INDEX idx_page_sessions_session ON public.page_sessions USING btree (session_id);
+-- CREATE INDEX idx_page_sessions_slug ON public.page_sessions USING btree (game, slug);
+-- CREATE INDEX idx_page_sessions_viewed ON public.page_sessions USING btree (viewed_at);
+-- ALTER TABLE public.page_sessions ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_insert_page_sessions ON public.page_sessions AS PERMISSIVE FOR INSERT TO anon WITH CHECK (true);
+-- CREATE POLICY service_all_page_sessions ON public.page_sessions AS PERMISSIVE FOR ALL TO service_role USING (true);
+-- -- NOTE: this is NOT the table the live page-view tracker writes to. shared/nav.mjs posts to
+-- -- /api/page-view, which is a different path entirely. The near-identical name is exactly the
+-- -- kind of collision that makes a drop dangerous, so it was checked rather than assumed.
+--
+-- CREATE TABLE public.set_blog_links (
+--   id serial PRIMARY KEY,
+--   game text NOT NULL,
+--   set_slug text NOT NULL,
+--   blog_slug text NOT NULL,
+--   created_at timestamp with time zone DEFAULT now(),
+--   UNIQUE (game, set_slug, blog_slug)
+-- );
+-- CREATE INDEX idx_set_blog_links_blog ON public.set_blog_links USING btree (blog_slug);
+-- CREATE INDEX idx_set_blog_links_set ON public.set_blog_links USING btree (game, set_slug);
+-- ALTER TABLE public.set_blog_links ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_select_set_blog_links ON public.set_blog_links AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_set_blog_links ON public.set_blog_links AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- CREATE TABLE public.subscriber_events (
+--   id serial PRIMARY KEY,
+--   email text NOT NULL,
+--   event_type text NOT NULL,
+--   feature text,
+--   stripe_event text,
+--   meta jsonb,
+--   created_at timestamp with time zone DEFAULT now()
+-- );
+-- CREATE INDEX idx_sub_events_created_at ON public.subscriber_events USING btree (created_at DESC);
+-- CREATE INDEX idx_sub_events_email ON public.subscriber_events USING btree (email);
+-- CREATE INDEX idx_sub_events_type ON public.subscriber_events USING btree (event_type, created_at);
+-- ALTER TABLE public.subscriber_events ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY service_all_subscriber_events ON public.subscriber_events AS PERMISSIVE FOR ALL TO service_role USING (true);
+--
+-- -- The five orphaned per-game sync progress tables. All share one shape. They were left
+-- -- behind when Task 19 retired the daily scripts. shared/sync-rotation.mjs still reads a
+-- -- <game>_sync_progress table by variable, but PROGRESS_TABLE is set in only two files, to
+-- -- pokemon_sync_progress and yugioh_sync_progress, and neither of those is dropped here.
+-- CREATE TABLE public.dragonball_sync_progress (set_id integer NOT NULL PRIMARY KEY, synced_at timestamp with time zone DEFAULT now());
+-- CREATE TABLE public.lorcana_sync_progress    (set_id integer NOT NULL PRIMARY KEY, synced_at timestamp with time zone DEFAULT now());
+-- CREATE TABLE public.onepiece_sync_progress   (set_id integer NOT NULL PRIMARY KEY, synced_at timestamp with time zone DEFAULT now());
+-- CREATE TABLE public.riftbound_sync_progress  (set_id integer NOT NULL PRIMARY KEY, synced_at timestamp with time zone DEFAULT now());
+-- CREATE TABLE public.starwars_sync_progress   (set_id integer NOT NULL PRIMARY KEY, synced_at timestamp with time zone DEFAULT now());
+-- ALTER TABLE public.dragonball_sync_progress ENABLE ROW LEVEL SECURITY;
+-- ALTER TABLE public.lorcana_sync_progress    ENABLE ROW LEVEL SECURITY;
+-- ALTER TABLE public.onepiece_sync_progress   ENABLE ROW LEVEL SECURITY;
+-- ALTER TABLE public.riftbound_sync_progress  ENABLE ROW LEVEL SECURITY;
+-- ALTER TABLE public.starwars_sync_progress   ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY anon_read_dragonball_progress ON public.dragonball_sync_progress AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_dragonball_progress ON public.dragonball_sync_progress AS PERMISSIVE FOR ALL TO service_role USING (true) WITH CHECK (true);
+-- CREATE POLICY anon_read_lorcana_progress ON public.lorcana_sync_progress AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_lorcana_progress ON public.lorcana_sync_progress AS PERMISSIVE FOR ALL TO service_role USING (true) WITH CHECK (true);
+-- CREATE POLICY anon_read_onepiece_progress ON public.onepiece_sync_progress AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_onepiece_progress ON public.onepiece_sync_progress AS PERMISSIVE FOR ALL TO service_role USING (true) WITH CHECK (true);
+-- CREATE POLICY anon_read_riftbound_progress ON public.riftbound_sync_progress AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_riftbound_progress ON public.riftbound_sync_progress AS PERMISSIVE FOR ALL TO service_role USING (true) WITH CHECK (true);
+-- CREATE POLICY anon_read_starwars_progress ON public.starwars_sync_progress AS PERMISSIVE FOR SELECT TO anon USING (true);
+-- CREATE POLICY service_all_starwars_progress ON public.starwars_sync_progress AS PERMISSIVE FOR ALL TO service_role USING (true) WITH CHECK (true);
+--
+-- COMMIT;

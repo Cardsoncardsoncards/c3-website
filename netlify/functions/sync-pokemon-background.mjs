@@ -32,12 +32,35 @@ const PROGRESS_TABLE       = 'pokemon_sync_progress';
 // They are now gated on a wall-clock budget instead, in staleness order, so the catalogue
 // rotates rather than latching. See shared/sync-rotation.mjs for why this shape.
 //
-// Netlify kills a background function at 900s. Pass A (full refresh from tcgapi.dev) gets 600s
-// and Pass B (the cheap snapshot-only pass over everything Pass A did not reach) gets until
-// 780s, leaving 120s of headroom. Overrunning is not merely slow: the process is killed, so
-// neither the success nor the error line runs and the whole run goes silent, which is C3L-134.
-const ROTATION_BUDGET_MS   = 600_000;
-const TOTAL_BUDGET_MS      = 780_000;
+// Netlify kills a background function at 900s. Confirmed against Netlify's own Background
+// Functions documentation on 2 September 2026 rather than carried over on trust: background
+// functions "run for up to 15 minutes", which is where the 900s comes from. Overrunning is not
+// merely slow: the process is killed, so neither the success nor the error line runs and the
+// whole run goes silent, which is C3L-134.
+//
+// POKE-02, raised 2 September 2026. Pass A (full refresh from tcgapi.dev) goes 600s to 630s,
+// and the total goes 780s to 810s, so Pass B (the cheap snapshot-only pass over everything
+// Pass A did not reach) keeps exactly the 180s window it already had.
+//
+// The new numbers come from the last four runs recorded in sync_events, not from filling the
+// available ceiling:
+//
+//   30 Aug  160/232 sets  614s budget spent  618s wall clock  (overhead  4s)
+//   31 Aug  183/232 sets  603s budget spent  607s wall clock  (overhead  4s)
+//    1 Sep  175/232 sets  609s budget spent  612s wall clock  (overhead  3s)
+//    2 Sep  152/234 sets  716s budget spent  754s wall clock  (overhead 38s)
+//
+// The column that matters is WALL CLOCK, not budget spent. Netlify kills on wall clock, and it
+// runs ahead of the budget by whatever happens outside the budgeted loops. That overhead is
+// normally 3s to 4s, but it was 38s on 2 September, so 38s is what the margin has to survive.
+//
+// At 810s the worst-case wall clock is about 848s, leaving roughly 52s before the kill. Raising
+// to the top of the 800s to 900s range suggested by the task would spend that margin entirely:
+// at 870s the 2 September run would have landed near 908s and died silently, taking its own
+// error reporting with it. The binding constraint here is the observed overhead, not the
+// platform ceiling, which is why this stops at 810s.
+const ROTATION_BUDGET_MS   = 630_000;
+const TOTAL_BUDGET_MS      = 810_000;
 
 // Checked BEFORE a set is started, never after, so a set is never begun that cannot finish and
 // no card write is ever left half-applied. Measured, not guessed: the 29 July run did 16 sets
