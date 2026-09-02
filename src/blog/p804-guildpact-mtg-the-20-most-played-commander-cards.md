@@ -204,7 +204,7 @@ No. All prices are a snapshot in Australian dollars taken at the time of writing
 No. Every card on this list has only one priced printing within Guildpact, so no ties arise here, though the methodology accounts for them where they do occur in other sets.
 
 **Where can I buy Guildpact singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Guildpact MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Guildpact%20MTG&campid=5339146789&customid=guildpact-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Guildpact MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Guildpact%20MTG&campid=5339146789&customid=guildpact-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

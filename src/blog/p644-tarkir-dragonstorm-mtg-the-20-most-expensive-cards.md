@@ -204,7 +204,7 @@ These prices are a snapshot taken at time of writing. Singles prices move with m
 Certain printings of the basic lands in Tarkir: Dragonstorm carry higher prices than many rares and mythics, which is enough to place them among the twenty most expensive cards by this methodology.
 
 **Where can I buy Tarkir: Dragonstorm singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Tarkir: Dragonstorm MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Tarkir%3A%20Dragonstorm%20MTG&campid=5339146789&customid=tarkir-dragonstorm-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Tarkir: Dragonstorm MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Tarkir%3A%20Dragonstorm%20MTG&campid=5339146789&customid=tarkir-dragonstorm-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

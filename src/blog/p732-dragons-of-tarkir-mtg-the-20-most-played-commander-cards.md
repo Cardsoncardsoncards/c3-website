@@ -202,7 +202,7 @@ No, every price given is a snapshot in Australian dollars taken at time of writi
 Not necessarily. Several of the cheapest cards on this list, such as Tormenting Voice and Naturalize, hold higher play ranks than some of the pricier rares and mythics further down.
 
 **Where can I buy Dragons of Tarkir singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dragons of Tarkir MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dragons%20of%20Tarkir%20MTG&campid=5339146789&customid=dragons-of-tarkir-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dragons of Tarkir MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dragons%20of%20Tarkir%20MTG&campid=5339146789&customid=dragons-of-tarkir-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

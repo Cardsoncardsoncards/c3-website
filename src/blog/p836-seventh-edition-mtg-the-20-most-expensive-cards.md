@@ -202,7 +202,7 @@ No. All prices given are in Australian dollars and are a snapshot at time of wri
 Yes. The great majority of the twenty cards are rares, with only two uncommons, Caltrops and Engineered Plague, and one common, Seeker of Skybreak, breaking up the list.
 
 **Where can I buy Seventh Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Seventh Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Seventh%20Edition%20MTG&campid=5339146789&customid=seventh-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Seventh Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Seventh%20Edition%20MTG&campid=5339146789&customid=seventh-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

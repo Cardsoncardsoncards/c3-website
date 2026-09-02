@@ -202,7 +202,7 @@ No. Prices are quoted in Australian dollars as a snapshot at the time of writing
 Its guild lands and efficient spells continue to show up in EDHREC data well after release, which is reflected in the rank figures used for this list.
 
 **Where can I buy Return to Ravnica singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Return to Ravnica MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Return%20to%20Ravnica%20MTG&campid=5339146789&customid=return-to-ravnica-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Return to Ravnica MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Return%20to%20Ravnica%20MTG&campid=5339146789&customid=return-to-ravnica-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

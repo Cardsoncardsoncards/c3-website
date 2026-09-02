@@ -202,7 +202,7 @@ No, every figure is a snapshot in Australian dollars taken at one point in time,
 No, it covers only the twenty most expensive cards in the set by this pricing snapshot, not the full checklist.
 
 **Where can I buy The Brothers' War singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Brothers' War MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The%20Brothers'%20War%20MTG&campid=5339146789&customid=the-brothers-war-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Brothers' War MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The%20Brothers'%20War%20MTG&campid=5339146789&customid=the-brothers-war-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

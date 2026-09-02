@@ -202,7 +202,7 @@ No, every price quoted is a snapshot taken at one point in time. Singles prices 
 EDHREC rank tracks how often a card is used in decks, not its market price, so a low cost common can outrank an expensive mythic if it appears in more decklists.
 
 **Where can I buy Eldritch Moon singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eldritch Moon MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Eldritch%20Moon%20MTG&campid=5339146789&customid=eldritch-moon-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eldritch Moon MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Eldritch%20Moon%20MTG&campid=5339146789&customid=eldritch-moon-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No, the ranking is based purely on EDHREC rank, which reflects play rate, and ra
 The size of that gap simply reflects the two prices recorded for each printing at the time of the snapshot, and this post reports the gap without speculating on its cause.
 
 **Where can I buy Homelands singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Homelands MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Homelands%20MTG&campid=5339146789&customid=homelands-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Homelands MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Homelands%20MTG&campid=5339146789&customid=homelands-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

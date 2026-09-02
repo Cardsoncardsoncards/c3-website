@@ -204,7 +204,7 @@ No. Every price listed is a snapshot in time, and Magic singles prices move cont
 Not consistently. Several commons and uncommons carry higher prices than some rares, and the list shows rank and price moving independently of rarity in a number of cases.
 
 **Where can I buy Time Spiral singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Time Spiral MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Time%20Spiral%20MTG&campid=5339146789&customid=time-spiral-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Time Spiral MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Time%20Spiral%20MTG&campid=5339146789&customid=time-spiral-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

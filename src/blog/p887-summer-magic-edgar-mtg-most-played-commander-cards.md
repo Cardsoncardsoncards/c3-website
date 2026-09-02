@@ -196,7 +196,7 @@ Readers can buy through the card pages on our own site or through eBay Australia
 No, every price given is a snapshot taken at one point in time. Singles prices move after release, sometimes considerably, so figures here should not be treated as current indefinitely.
 
 **Where can I buy Summer Magic / Edgar singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Summer Magic / Edgar MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Summer%20Magic%20%2F%20Edgar%20MTG&campid=5339146789&customid=summer-magic-edgar-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Summer Magic / Edgar MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Summer%20Magic%20%2F%20Edgar%20MTG&campid=5339146789&customid=summer-magic-edgar-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No. Prices are given in Australian dollars and represent a snapshot at the time 
 Yes, the list runs from number 1, the most played card, down to number 20, the least played of the twenty covered.
 
 **Where can I buy Guilds of Ravnica singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Guilds of Ravnica MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Guilds%20of%20Ravnica%20MTG&campid=5339146789&customid=guilds-of-ravnica-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Guilds of Ravnica MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Guilds%20of%20Ravnica%20MTG&campid=5339146789&customid=guilds-of-ravnica-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

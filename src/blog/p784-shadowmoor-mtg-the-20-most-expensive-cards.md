@@ -204,7 +204,7 @@ No. Every figure in this post is a snapshot taken at one point in time, and Magi
 The top three cards, Painter's Servant, Greater Auramancy and Plague of Vermin, sit well clear of the pack, while the remaining seventeen cards form a much more tightly bunched group. That pattern reflects the figures given here rather than any claim about why demand for those top cards is higher.
 
 **Where can I buy Shadowmoor singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Shadowmoor MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Shadowmoor%20MTG&campid=5339146789&customid=shadowmoor-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Shadowmoor MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Shadowmoor%20MTG&campid=5339146789&customid=shadowmoor-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

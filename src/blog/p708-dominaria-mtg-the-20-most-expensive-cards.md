@@ -202,7 +202,7 @@ Yes, this list is ordered purely by price, and several examples here show common
 The list is based on the highest priced printing recorded for each card in the set, as given in the pricing data, without separating out foil or non foil treatments beyond what that data reflects.
 
 **Where can I buy Dominaria singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dominaria MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dominaria%20MTG&campid=5339146789&customid=dominaria-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dominaria MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dominaria%20MTG&campid=5339146789&customid=dominaria-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

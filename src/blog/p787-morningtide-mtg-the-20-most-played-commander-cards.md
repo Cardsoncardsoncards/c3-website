@@ -204,7 +204,7 @@ Yes. EDHREC rank works in reverse, so a lower number means the card appears in m
 No, all twenty cards in this particular top 20 have only a single priced printing within the set itself, so the printing counts are all one.
 
 **Where can I buy Morningtide singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Morningtide MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Morningtide%20MTG&campid=5339146789&customid=morningtide-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Morningtide MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Morningtide%20MTG&campid=5339146789&customid=morningtide-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

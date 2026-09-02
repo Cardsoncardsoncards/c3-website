@@ -202,7 +202,7 @@ No. The list includes a mix of rarities, including commons and uncommons such as
 Not directly. Several mythics, such as Defiler of Souls and Thraximundar, rank below rares and even uncommons, showing that price and printed rarity don't always line up.
 
 **Where can I buy Alara Reborn singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Alara Reborn MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Alara%20Reborn%20MTG&campid=5339146789&customid=alara-reborn-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Alara Reborn MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Alara%20Reborn%20MTG&campid=5339146789&customid=alara-reborn-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

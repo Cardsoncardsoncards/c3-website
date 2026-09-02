@@ -202,7 +202,7 @@ A small number of cards, such as Starnheim Aspirant and Elven Ambush, have only 
 Not directly. The ranking is based purely on price, which is why some mythics sit lower on the list than certain rares and even one common, Masked Vandal.
 
 **Where can I buy Kaldheim singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kaldheim MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Kaldheim%20MTG&campid=5339146789&customid=kaldheim-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kaldheim MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Kaldheim%20MTG&campid=5339146789&customid=kaldheim-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

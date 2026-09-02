@@ -204,7 +204,7 @@ No. While most are rares, the list also includes several uncommons and one commo
 Alpha had no separate foil or collector printings, so every card on this list is represented by its single standard printing from the set.
 
 **Where can I buy Limited Edition Alpha singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Limited Edition Alpha MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Limited%20Edition%20Alpha%20MTG&campid=5339146789&customid=limited-edition-alpha-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Limited Edition Alpha MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Limited%20Edition%20Alpha%20MTG&campid=5339146789&customid=limited-edition-alpha-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -645,14 +645,40 @@ this machine can pull. See C3L-207.
 
 ## AFFILIATE LINK FORMATS
 
-### eBay EPN (worldwide, siteid removed)
-https://www.ebay.com/sch/i.html?_nkw=[SEARCH]&campid=5339146789&customid=[CONTEXT]&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001
+### eBay EPN (AU-first, siteid removed)
+https://www.ebay.com.au/sch/i.html?_nkw=[SEARCH]&campid=5339146789&customid=[CONTEXT]&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001
 
-Note: siteid=15 removed for worldwide routing.
+DECISION REVERSED 2 September 2026, evening. THIS BLOCK USED TO SPECIFY www.ebay.com AND IT NOW
+SPECIFIES www.ebay.com.au. Every eBay link on this site, blog content included, is AU-first.
 
-CORRECTED 2 September 2026 (task3, C3L-206). This note used to end "International users route to
-local eBay automatically." That was never verified and it is now TESTED AND FALSE, at least for the
-case that matters most here. Tested from a Sydney, Australia IP (AS4804, confirmed before testing),
+The prior reasoning, kept here because reversing a decision without recording what it was is how
+this file goes stale: siteid=15 was stripped so international visitors would be routed to their own
+local eBay automatically, and the .com host was chosen to serve that. The strip was real and stays.
+The routing claim was not: it was tested this same day and is false. From a Sydney IP a .com link
+returns 200 from www.ebay.com with zero redirects and zero AUD pricing, so the "automatic local
+routing" never happened and Australian readers were being shown US listings in USD.
+
+Why AU-first rather than trying to fix worldwide routing: C3 prices everything else in AUD, the
+audience is Australian, and a currency mismatch on the buy link is a conversion cost on every one
+of the 283 blog links that carried it. Tracking was never the problem, so nothing is being fixed
+there.
+
+What changed mechanically: 283 markdown links across 283 blog files, host only. Every query
+parameter is byte-identical, verified before and after as campid,mkcid,mkevt,mkrid,toolid with no
+siteid on either form. No code builds a .com link, so no function was touched.
+
+Verified live on 5 changed links after the change: all HTTP 200, all resolving to www.ebay.com.au,
+campid present in the final URL, 4 rover.ebay.com attribution beacons each (unchanged), and 204 to
+214 "AU $" price markers each against ZERO "US $". The same measurement on the .com form earlier
+that day returned ZERO "AU $" markers. See C3L-206.
+
+Note: siteid=15 remains removed. That part of the original decision is unaffected.
+
+CORRECTED 2 September 2026 (task3, C3L-206). SUPERSEDED THE SAME EVENING BY THE REVERSAL ABOVE:
+this passage describes the state BEFORE the 283 links were switched to .com.au, and is kept as the
+evidence that justified switching them. It is history, not current behaviour. This note used to end
+"International users route to local eBay automatically." That was never verified and it is now
+TESTED AND FALSE, at least for the case that matters most here. Tested from a Sydney, Australia IP (AS4804, confirmed before testing),
 a .com search link built exactly as the blog posts build it returns HTTP 200 from www.ebay.com with
 ZERO redirects: no 3xx, no meta refresh, no JavaScript redirect, and the canonical tag stays on
 www.ebay.com. The page served carried ZERO "AU $" price markers and ZERO references to ebay.com.au,
@@ -669,10 +695,12 @@ Australian buyer being shown US listings, not a click going unrecorded. Deciding
 evidence and its limits, which include that this was an HTTP client rather than a real browser and
 that eBay served inconsistent responses between runs.
 
-MEASURED 2 September 2026 (task batch A, C3L-206). The two patterns above are BOTH live, and the
-split is bigger than "worldwide search, AU store" implies. Counting user-facing links only, that is
-href and markdown link targets across netlify/ and src/, with api.ebay.com excluded because it is an
-API endpoint and not a link:
+MEASURED 2 September 2026 (task batch A, C3L-206). HISTORICAL, and the split it describes NO LONGER
+EXISTS: the 283 .com links were switched to .com.au the same evening. Counted in the rendered HTML
+after that change, www.ebay.com is now 0 and www.ebay.com.au is 4,142. The original measurement, and
+the closing instruction not to "fix" either set until someone checked, are preserved below because
+the check was then done and is what authorised the change:
+
   www.ebay.com.au   613 links
   www.ebay.com      283 links, every one of them in a blog post, one per post across 283 files
 All 283 carry the correct campid=5339146789, so tracking is intact either way. What is NOT verified is

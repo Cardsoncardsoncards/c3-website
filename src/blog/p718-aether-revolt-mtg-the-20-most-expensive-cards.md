@@ -202,7 +202,7 @@ No, the figures given are a snapshot in Australian dollars and singles prices mo
 Yes, Mechanized Production and Planar Bridge share an identical headline price of AU$4.96, the only exact tie in this top twenty.
 
 **Where can I buy Aether Revolt singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Aether Revolt MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Aether%20Revolt%20MTG&campid=5339146789&customid=aether-revolt-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Aether Revolt MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Aether%20Revolt%20MTG&campid=5339146789&customid=aether-revolt-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

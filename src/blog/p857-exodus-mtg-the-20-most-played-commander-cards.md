@@ -199,7 +199,7 @@ Readers can buy through our own card pages on Cards on Cards on Cards or through
 No, every price given is a snapshot at time of writing. Singles prices move over time, so figures quoted here will not stay accurate indefinitely.
 
 **Where can I buy Exodus singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Exodus MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Exodus%20MTG&campid=5339146789&customid=exodus-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Exodus MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Exodus%20MTG&campid=5339146789&customid=exodus-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

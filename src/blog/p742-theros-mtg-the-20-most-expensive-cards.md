@@ -202,7 +202,7 @@ Not directly. The list mixes rares and mythics throughout, including cases where
 Each of these twenty cards has exactly one printing tracked in the set, so no internal tie-breaking between printings of the same card was needed for this particular list.
 
 **Where can I buy Theros singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Theros MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Theros%20MTG&campid=5339146789&customid=theros-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Theros MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Theros%20MTG&campid=5339146789&customid=theros-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

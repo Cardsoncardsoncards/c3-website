@@ -202,7 +202,7 @@ Rarity within the set does not dictate secondary market price on its own. Ponder
 The list runs from number 1, the most expensive card, down to number 20, the least expensive of the twenty featured, as stated in the introduction.
 
 **Where can I buy Magic 2012 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2012 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202012%20MTG&campid=5339146789&customid=magic-2012-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2012 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202012%20MTG&campid=5339146789&customid=magic-2012-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

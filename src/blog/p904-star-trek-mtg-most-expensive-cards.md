@@ -106,7 +106,7 @@ Singles can be bought through the card pages on our own site as well as through 
 No, they are preorder prices tied to a set that has not yet released, and they are expected to shift as release approaches and supply becomes clearer.
 
 **Where can I buy Star Trek singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Star Trek MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Star%20Trek%20MTG&campid=5339146789&customid=star-trek-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Star Trek MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Star%20Trek%20MTG&campid=5339146789&customid=star-trek-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

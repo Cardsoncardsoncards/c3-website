@@ -202,7 +202,7 @@ Not necessarily. Several cards on this list, such as Ravenous Chupacabra, rank h
 Rank reflects how often a card appears in tracked Commander decks, not its rarity or print run. Commons like Evolving Wilds and Negate can outrank mythics simply because of how widely they are played across many different deck strategies.
 
 **Where can I buy Rivals of Ixalan singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Rivals of Ixalan MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Rivals%20of%20Ixalan%20MTG&campid=5339146789&customid=rivals-of-ixalan-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Rivals of Ixalan MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Rivals%20of%20Ixalan%20MTG&campid=5339146789&customid=rivals-of-ixalan-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

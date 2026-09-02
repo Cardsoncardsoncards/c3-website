@@ -204,7 +204,7 @@ Most are, but not all. The list includes several uncommons, such as Clock of Ome
 The lower half of the list is far more tightly clustered than the top, with gaps of only a few cents between several neighbouring cards, compared to the wide gap between the top two entries and the rest of the set.
 
 **Where can I buy Magic 2013 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2013 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202013%20MTG&campid=5339146789&customid=magic-2013-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2013 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202013%20MTG&campid=5339146789&customid=magic-2013-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

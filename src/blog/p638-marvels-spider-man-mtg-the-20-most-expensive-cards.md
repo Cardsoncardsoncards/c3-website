@@ -202,7 +202,7 @@ No. Every figure here is a snapshot taken at one point in time, and prices for t
 Not directly. Some rares outrank mythics and vice versa, since the ranking follows price rather than rarity.
 
 **Where can I buy Marvel's Spider-Man singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Marvel's Spider-Man MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Marvel's%20Spider-Man%20MTG&campid=5339146789&customid=marvels-spider-man-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Marvel's Spider-Man MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Marvel's%20Spider-Man%20MTG&campid=5339146789&customid=marvels-spider-man-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

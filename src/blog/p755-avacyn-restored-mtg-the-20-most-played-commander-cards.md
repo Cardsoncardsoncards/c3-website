@@ -204,7 +204,7 @@ No. Every price given is a snapshot at time of writing, and singles prices move 
 Not necessarily. This list includes commons, uncommons, rares and mythics scattered across the ranking, showing that played rate on EDHREC does not follow rarity directly.
 
 **Where can I buy Avacyn Restored singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Avacyn Restored MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Avacyn%20Restored%20MTG&campid=5339146789&customid=avacyn-restored-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Avacyn Restored MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Avacyn%20Restored%20MTG&campid=5339146789&customid=avacyn-restored-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

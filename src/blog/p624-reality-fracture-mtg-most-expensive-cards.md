@@ -132,7 +132,7 @@ Five mythics in positions two through six share an identical headline price, as 
 Not necessarily. Several cards on this list have multiple printings, sometimes as many as five, but only one printing of each actually carries a price.
 
 **Where can I buy Reality Fracture singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Reality Fracture MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Reality%20Fracture%20MTG&campid=5339146789&customid=reality-fracture-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Reality Fracture MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Reality%20Fracture%20MTG&campid=5339146789&customid=reality-fracture-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

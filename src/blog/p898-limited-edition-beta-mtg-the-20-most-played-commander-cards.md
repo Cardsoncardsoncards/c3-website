@@ -202,7 +202,7 @@ Not directly. The list shows several commons and uncommons ranked ahead of rares
 EDHREC rank measures play frequency, not price, so two cards with similar ranks can still sit far apart in price, as seen between Counterspell and Birds of Paradise.
 
 **Where can I buy Limited Edition Beta singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Limited Edition Beta MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Limited%20Edition%20Beta%20MTG&campid=5339146789&customid=limited-edition-beta-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Limited Edition Beta MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Limited%20Edition%20Beta%20MTG&campid=5339146789&customid=limited-edition-beta-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

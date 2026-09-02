@@ -202,7 +202,7 @@ Rarity within the set does not by itself determine price, as seen with Essence W
 No, it covers only the 20 highest priced cards from the set by current Australian dollar price, not the full card pool.
 
 **Where can I buy Planar Chaos singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Planar Chaos MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Planar%20Chaos%20MTG&campid=5339146789&customid=planar-chaos-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Planar Chaos MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Planar%20Chaos%20MTG&campid=5339146789&customid=planar-chaos-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

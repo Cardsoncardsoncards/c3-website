@@ -202,7 +202,7 @@ No. Prices are a snapshot taken at the time of writing and move over time with m
 Rarity is noted for each card but does not determine its rank. Play rate on EDHREC determines position, which is why commons and rares appear throughout the list rather than being grouped by rarity.
 
 **Where can I buy Seventh Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Seventh Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Seventh%20Edition%20MTG&campid=5339146789&customid=seventh-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Seventh Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Seventh%20Edition%20MTG&campid=5339146789&customid=seventh-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

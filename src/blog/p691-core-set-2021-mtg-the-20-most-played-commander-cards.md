@@ -202,7 +202,7 @@ No, every price is a snapshot taken at one point in time. Singles prices move wi
 EDHREC rank measures how often a card appears in Commander decklists, not its price. A lower rank means the card is used more, and price is tracked separately alongside it.
 
 **Where can I buy Core Set 2021 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Core Set 2021 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Core%20Set%202021%20MTG&campid=5339146789&customid=core-set-2021-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Core Set 2021 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Core%20Set%202021%20MTG&campid=5339146789&customid=core-set-2021-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

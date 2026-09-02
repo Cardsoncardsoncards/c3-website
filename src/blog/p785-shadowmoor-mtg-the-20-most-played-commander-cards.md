@@ -204,7 +204,7 @@ No. Every price is a snapshot in Australian dollars taken at one point in time, 
 No. Several cards on this list, such as Greater Auramancy and Beseech the Queen, show that price and play frequency do not always move in the same direction.
 
 **Where can I buy Shadowmoor singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Shadowmoor MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Shadowmoor%20MTG&campid=5339146789&customid=shadowmoor-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Shadowmoor MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Shadowmoor%20MTG&campid=5339146789&customid=shadowmoor-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

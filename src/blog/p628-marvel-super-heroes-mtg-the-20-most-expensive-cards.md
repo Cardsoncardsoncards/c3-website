@@ -202,7 +202,7 @@ No, every figure here is a snapshot taken at one point in time, and singles pric
 Almost all are mythic, with The Unbeatable Squirrel Girl the only rare to appear in the top twenty.
 
 **Where can I buy Marvel Super Heroes singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Marvel Super Heroes MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Marvel%20Super%20Heroes%20MTG&campid=5339146789&customid=marvel-super-heroes-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Marvel Super Heroes MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Marvel%20Super%20Heroes%20MTG&campid=5339146789&customid=marvel-super-heroes-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

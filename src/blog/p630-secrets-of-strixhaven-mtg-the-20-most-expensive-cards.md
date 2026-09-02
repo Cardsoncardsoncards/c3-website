@@ -204,7 +204,7 @@ Most of the list is mythic, with a handful of rares appearing further down, such
 Not quite. Emeritus of Ideation // Ancestral Recall has three printings in the set but only two of them carry a listed price.
 
 **Where can I buy Secrets of Strixhaven singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Secrets of Strixhaven MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Secrets%20of%20Strixhaven%20MTG&campid=5339146789&customid=secrets-of-strixhaven-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Secrets of Strixhaven MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Secrets%20of%20Strixhaven%20MTG&campid=5339146789&customid=secrets-of-strixhaven-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

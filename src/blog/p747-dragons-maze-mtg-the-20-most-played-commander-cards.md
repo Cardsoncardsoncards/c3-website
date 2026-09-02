@@ -202,7 +202,7 @@ No, prices are a snapshot taken at one point in time and will move as the market
 No, the list spans commons, uncommons, rares and mythics, with the ten Guildgates all being common and the remaining cards spread across the other rarities.
 
 **Where can I buy Dragon's Maze singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dragon's Maze MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dragon's%20Maze%20MTG&campid=5339146789&customid=dragons-maze-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dragon's Maze MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dragon's%20Maze%20MTG&campid=5339146789&customid=dragons-maze-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -199,7 +199,7 @@ Singles can be bought through the card pages on our own site, as well as through
 No, all prices are in Australian dollars and reflect a snapshot at the time of writing. Singles prices move over time, so figures should be checked again before making any purchase.
 
 **Where can I buy Innistrad: Midnight Hunt singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad: Midnight Hunt MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Innistrad%3A%20Midnight%20Hunt%20MTG&campid=5339146789&customid=innistrad-midnight-hunt-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad: Midnight Hunt MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Innistrad%3A%20Midnight%20Hunt%20MTG&campid=5339146789&customid=innistrad-midnight-hunt-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

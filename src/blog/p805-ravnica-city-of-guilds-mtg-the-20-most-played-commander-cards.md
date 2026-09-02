@@ -202,7 +202,7 @@ No, the list mixes rarities, including several rares, a range of commons, and on
 Rank and price measure different things, one reflects how many decks include the card and the other reflects market value, so a card can be expensive without being among the very highest ranked.
 
 **Where can I buy Ravnica: City of Guilds singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ravnica: City of Guilds MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ravnica%3A%20City%20of%20Guilds%20MTG&campid=5339146789&customid=ravnica-city-of-guilds-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ravnica: City of Guilds MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ravnica%3A%20City%20of%20Guilds%20MTG&campid=5339146789&customid=ravnica-city-of-guilds-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

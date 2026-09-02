@@ -202,7 +202,7 @@ The list is ordered purely by price, and in Avacyn Restored several rares such a
 Yes, it covers exactly the 20 most expensive cards in Avacyn Restored by current Australian dollar price.
 
 **Where can I buy Avacyn Restored singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Avacyn Restored MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Avacyn%20Restored%20MTG&campid=5339146789&customid=avacyn-restored-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Avacyn Restored MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Avacyn%20Restored%20MTG&campid=5339146789&customid=avacyn-restored-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

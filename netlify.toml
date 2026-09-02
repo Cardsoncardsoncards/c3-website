@@ -76,6 +76,25 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), camera=(), microphone=()"
 
+# ── Source disclosure guard, 2 September 2026. The Eleventy config used to copy the whole
+#    netlify/ tree into the publish directory, so /netlify/functions/*.mjs and every
+#    migration .sql answered 200 with raw source. The root cause is fixed in .eleventy.js by
+#    removing that passthrough, so after this deploy there is no file here to serve. This rule
+#    is the second layer, kept deliberately: if anyone re-adds a passthrough for netlify/, the
+#    files still are not reachable.
+#
+#    This does NOT touch /.netlify/functions/*, which is a different path with a leading dot
+#    and is how admin-trigger.mjs dispatches to admin-trigger-background. Verified that no
+#    function registers a route under /netlify/ before adding this.
+#
+#    Placed FIRST in the redirect table on purpose. Netlify takes the first matching rule, so
+#    a guard that must never be shadowed belongs above everything else.
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # ── MTG set pages have no dedicated handler yet: send /cards/mtg/sets/* to the hub.
 #    Temporary (302) so it can be removed cleanly if an mtg-set-page function is added later.
 [[redirects]]

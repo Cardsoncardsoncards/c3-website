@@ -202,7 +202,7 @@ Yes, every card in this top twenty is listed at rare, which is consistent with U
 The original ten dual lands were all printed in Unlimited Edition and their prices cluster in the middle and lower sections of this top twenty, reflecting how many of them sit close together in value relative to the Power Nine cards at the top.
 
 **Where can I buy Unlimited Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Unlimited Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Unlimited%20Edition%20MTG&campid=5339146789&customid=unlimited-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Unlimited Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Unlimited%20Edition%20MTG&campid=5339146789&customid=unlimited-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

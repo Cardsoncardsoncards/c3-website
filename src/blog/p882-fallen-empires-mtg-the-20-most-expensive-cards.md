@@ -204,7 +204,7 @@ No. While rares make up most of the top twenty, several uncommons and two common
 Some cards in Fallen Empires had multiple printings within the set itself, so those entries show the headline price alongside the other printings' prices for comparison.
 
 **Where can I buy Fallen Empires singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fallen Empires MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Fallen%20Empires%20MTG&campid=5339146789&customid=fallen-empires-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fallen Empires MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Fallen%20Empires%20MTG&campid=5339146789&customid=fallen-empires-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

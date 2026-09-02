@@ -202,7 +202,7 @@ Most are, but two uncommons, Stubborn Denial and Brave the Sands, also appear on
 Yes, Grim Haruspex and Sorin, Solemn Visitor share an identical price and are noted as tied rather than being separated.
 
 **Where can I buy Khans of Tarkir singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Khans of Tarkir MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Khans%20of%20Tarkir%20MTG&campid=5339146789&customid=khans-of-tarkir-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Khans of Tarkir MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Khans%20of%20Tarkir%20MTG&campid=5339146789&customid=khans-of-tarkir-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ The post reports the figures as given rather than speculating on cause, but Chro
 No. Position is set purely by EDHREC rank, and the list includes commons, uncommons and rares mixed throughout, with no consistent relationship between rarity and either rank or price.
 
 **Where can I buy Mirrodin singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirrodin MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Mirrodin%20MTG&campid=5339146789&customid=mirrodin-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirrodin MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Mirrodin%20MTG&campid=5339146789&customid=mirrodin-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

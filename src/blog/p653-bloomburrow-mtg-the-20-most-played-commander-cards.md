@@ -204,7 +204,7 @@ Some Bloomburrow cards were printed more than once within the set, for example i
 Not necessarily. Play rate is measured separately by EDHREC rank, and the two figures for any given card can move independently of each other.
 
 **Where can I buy Bloomburrow singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Bloomburrow MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Bloomburrow%20MTG&campid=5339146789&customid=bloomburrow-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Bloomburrow MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Bloomburrow%20MTG&campid=5339146789&customid=bloomburrow-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

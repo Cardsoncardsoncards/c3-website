@@ -204,7 +204,7 @@ No. All prices quoted are a snapshot taken at one point in time, and card prices
 Homelands is a relatively small expansion compared to many later Magic sets, which is part of why this list is able to cover a meaningful slice of its higher priced cards.
 
 **Where can I buy Homelands singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Homelands MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Homelands%20MTG&campid=5339146789&customid=homelands-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Homelands MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Homelands%20MTG&campid=5339146789&customid=homelands-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ Rarity is only one factor recorded here. This list tracks price and printing cou
 No, it covers only the twenty most expensive cards in the set by current Australian dollar price, ranked from Null Rod at first down to Well of Knowledge at twentieth.
 
 **Where can I buy Weatherlight singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Weatherlight MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Weatherlight%20MTG&campid=5339146789&customid=weatherlight-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Weatherlight MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Weatherlight%20MTG&campid=5339146789&customid=weatherlight-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

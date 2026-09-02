@@ -202,7 +202,7 @@ No, every price quoted is a snapshot taken at a point in time. Card prices move 
 No, the list spans commons, uncommons and rares, and rarity does not consistently line up with either price or play frequency across these twenty cards.
 
 **Where can I buy The Dark singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Dark MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The%20Dark%20MTG&campid=5339146789&customid=the-dark-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Dark MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The%20Dark%20MTG&campid=5339146789&customid=the-dark-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ Yes. These figures are a snapshot taken at one point in time, and Magic singles 
 Almost all of them are, with the exception of Relic of Legends, which is an uncommon and the only card of that rarity to appear in the top twenty.
 
 **Where can I buy Dominaria United singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dominaria United MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dominaria%20United%20MTG&campid=5339146789&customid=dominaria-united-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dominaria United MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dominaria%20United%20MTG&campid=5339146789&customid=dominaria-united-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

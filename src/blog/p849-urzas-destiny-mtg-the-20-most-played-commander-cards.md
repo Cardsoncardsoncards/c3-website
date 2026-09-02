@@ -202,7 +202,7 @@ No. Prices are a snapshot in Australian dollars taken at time of writing and wil
 Not necessarily. Several lower-ranked cards on this list, such as Yavimaya Elder and Wall of Glare, carry very low prices, while some higher-priced rares sit further down the rankings.
 
 **Where can I buy Urza's Destiny singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Destiny MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Urza's%20Destiny%20MTG&campid=5339146789&customid=urzas-destiny-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Destiny MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Urza's%20Destiny%20MTG&campid=5339146789&customid=urzas-destiny-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

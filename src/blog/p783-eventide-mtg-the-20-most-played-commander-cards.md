@@ -204,7 +204,7 @@ No, on this list a lower EDHREC rank number means a card is played more, so Bloo
 Price and play rank measure different things, one is a market figure and the other is a measure of decklist inclusion, so a card like Sapling of Colfenor can rank last for play while still pricing near the top of the list.
 
 **Where can I buy Eventide singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eventide MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Eventide%20MTG&campid=5339146789&customid=eventide-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eventide MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Eventide%20MTG&campid=5339146789&customid=eventide-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

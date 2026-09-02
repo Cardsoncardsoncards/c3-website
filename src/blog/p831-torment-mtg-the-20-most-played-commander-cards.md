@@ -202,7 +202,7 @@ No, prices are quoted in Australian dollars as a snapshot at time of writing and
 It reflects how often a card is played in Commander decks as tracked by EDHREC, with a lower number meaning the card appears more often.
 
 **Where can I buy Torment singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Torment MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Torment%20MTG&campid=5339146789&customid=torment-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Torment MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Torment%20MTG&campid=5339146789&customid=torment-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

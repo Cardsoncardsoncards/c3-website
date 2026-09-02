@@ -204,7 +204,7 @@ No. Prices are quoted in Australian dollars as a snapshot at the time of writing
 No. Volrath's Stronghold, for example, carries a high price but ranks well down the EDHREC order compared to cheaper cards like Grave Pact or Burgeoning.
 
 **Where can I buy Stronghold singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Stronghold MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Stronghold%20MTG&campid=5339146789&customid=stronghold-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Stronghold MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Stronghold%20MTG&campid=5339146789&customid=stronghold-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

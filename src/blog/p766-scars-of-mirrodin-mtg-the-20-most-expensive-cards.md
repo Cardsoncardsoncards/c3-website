@@ -204,7 +204,7 @@ No. The list mixes mythics, rares and one uncommon throughout, and several rares
 Yes. The list runs from number 1, the most expensive card, down to number 20, the least expensive of the top twenty.
 
 **Where can I buy Scars of Mirrodin singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Scars of Mirrodin MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Scars%20of%20Mirrodin%20MTG&campid=5339146789&customid=scars-of-mirrodin-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Scars of Mirrodin MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Scars%20of%20Mirrodin%20MTG&campid=5339146789&customid=scars-of-mirrodin-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

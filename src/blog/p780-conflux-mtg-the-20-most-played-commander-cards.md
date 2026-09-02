@@ -204,7 +204,7 @@ No, all prices are a snapshot in Australian dollars and move over time with supp
 No, the list mixes rarities, including several uncommons such as Reliquary Tower, Path to Exile, Ancient Ziggurat and Countersquall, and commons such as Unsummon, Armillary Sphere, Rupture Spire and Lapse of Certainty.
 
 **Where can I buy Conflux singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Conflux MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Conflux%20MTG&campid=5339146789&customid=conflux-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Conflux MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Conflux%20MTG&campid=5339146789&customid=conflux-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

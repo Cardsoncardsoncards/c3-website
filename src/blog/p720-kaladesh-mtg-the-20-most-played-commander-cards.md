@@ -204,7 +204,7 @@ No, all prices quoted are a snapshot in Australian dollars and will move over ti
 No, every card in this particular twenty has exactly one printing in the set with a price, so no price splitting between printings was needed here.
 
 **Where can I buy Kaladesh singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kaladesh MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Kaladesh%20MTG&campid=5339146789&customid=kaladesh-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kaladesh MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Kaladesh%20MTG&campid=5339146789&customid=kaladesh-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

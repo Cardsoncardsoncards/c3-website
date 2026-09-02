@@ -204,7 +204,7 @@ Not entirely. Most of the top twenty are rares, but Goblin Lackey is an uncommon
 Gaea's Cradle is priced at more than three times Serra's Sanctum, the second placed card, which is the widest gap found anywhere on this list.
 
 **Where can I buy Urza's Saga singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Saga MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Urza's%20Saga%20MTG&campid=5339146789&customid=urzas-saga-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Saga MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Urza's%20Saga%20MTG&campid=5339146789&customid=urzas-saga-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

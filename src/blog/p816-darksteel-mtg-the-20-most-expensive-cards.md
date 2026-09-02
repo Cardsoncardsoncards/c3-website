@@ -202,7 +202,7 @@ Most are, but three, Nemesis Mask, Geth's Grimoire and Skullclamp, are uncommons
 Several stretches of the list, particularly through the middle, feature cards priced within a small margin of one another, which is simply how the current figures happen to fall rather than any deliberate grouping.
 
 **Where can I buy Darksteel singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Darksteel MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Darksteel%20MTG&campid=5339146789&customid=darksteel-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Darksteel MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Darksteel%20MTG&campid=5339146789&customid=darksteel-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

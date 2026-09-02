@@ -204,7 +204,7 @@ No. Every price quoted here is a snapshot in Australian dollars, and singles pri
 Play frequency and market price are separate measures. A card like Rampant Growth can be played far more often than a much pricier card like Grave Pact simply because rank tracks deck inclusion, not resale value.
 
 **Where can I buy Eighth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eighth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Eighth%20Edition%20MTG&campid=5339146789&customid=eighth-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eighth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Eighth%20Edition%20MTG&campid=5339146789&customid=eighth-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

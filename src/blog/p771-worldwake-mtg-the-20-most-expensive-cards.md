@@ -202,7 +202,7 @@ No, these figures are a snapshot taken at time of writing. Singles prices move o
 Not necessarily. Several rares on this list outprice mythics, and one uncommon, Quest for Renewal, ranks above a number of rares.
 
 **Where can I buy Worldwake singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Worldwake MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Worldwake%20MTG&campid=5339146789&customid=worldwake-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Worldwake MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Worldwake%20MTG&campid=5339146789&customid=worldwake-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

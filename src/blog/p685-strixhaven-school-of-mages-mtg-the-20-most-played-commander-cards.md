@@ -202,7 +202,7 @@ No, the figures are a snapshot in Australian dollars at the time of writing, and
 It measures how often a card appears in Commander decks tracked by EDHREC, a lower number meaning more decks, and it is not a measure of price at all.
 
 **Where can I buy Strixhaven: School of Mages singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Strixhaven: School of Mages MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Strixhaven%3A%20School%20of%20Mages%20MTG&campid=5339146789&customid=strixhaven-school-of-mages-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Strixhaven: School of Mages MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Strixhaven%3A%20School%20of%20Mages%20MTG&campid=5339146789&customid=strixhaven-school-of-mages-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

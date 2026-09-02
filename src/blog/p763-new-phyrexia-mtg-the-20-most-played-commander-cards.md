@@ -202,7 +202,7 @@ No, every price given is a snapshot in Australian dollars, and singles prices mo
 Price and rarity do not move together in a fixed way, price reflects market demand for that specific printing while rarity simply describes how the card was distributed at print, so a mythic can sit below a rare or uncommon in price despite its rarity.
 
 **Where can I buy New Phyrexia singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [New Phyrexia MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=New%20Phyrexia%20MTG&campid=5339146789&customid=new-phyrexia-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [New Phyrexia MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=New%20Phyrexia%20MTG&campid=5339146789&customid=new-phyrexia-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No, every price here is a snapshot taken at the time of writing. Prices on both 
 Play rank and price are measuring different things, one tracks how often a card appears in decks and the other tracks market supply and demand. That is why a card like Urborg, Tomb of Yawgmoth can carry a high price despite sitting outside the very top of the play rank order.
 
 **Where can I buy Magic 2015 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2015 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202015%20MTG&campid=5339146789&customid=magic-2015-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2015 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202015%20MTG&campid=5339146789&customid=magic-2015-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

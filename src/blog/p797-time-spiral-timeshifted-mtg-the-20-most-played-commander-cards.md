@@ -202,7 +202,7 @@ All twenty cards on this list are listed as special rarity, which is the classif
 A lower EDHREC rank means a card is more played in Commander, which is why Disenchant at rank 1094 tops this list.
 
 **Where can I buy Time Spiral Timeshifted singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Time Spiral Timeshifted MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Time%20Spiral%20Timeshifted%20MTG&campid=5339146789&customid=time-spiral-timeshifted-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Time Spiral Timeshifted MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Time%20Spiral%20Timeshifted%20MTG&campid=5339146789&customid=time-spiral-timeshifted-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ No, prices are given in Australian dollars as a snapshot at time of writing and 
 Not necessarily. Several cards on this list, such as Dragon Broodmother and Bituminous Blast, show that rank and price can move in quite different directions.
 
 **Where can I buy Alara Reborn singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Alara Reborn MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Alara%20Reborn%20MTG&campid=5339146789&customid=alara-reborn-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Alara Reborn MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Alara%20Reborn%20MTG&campid=5339146789&customid=alara-reborn-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

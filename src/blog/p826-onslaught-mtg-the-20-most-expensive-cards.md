@@ -202,7 +202,7 @@ No. The figures given are a snapshot in Australian dollars at the time of writin
 Nineteen of the twenty cards are rares, with Chain of Vapor as the sole uncommon in twentieth place.
 
 **Where can I buy Onslaught singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Onslaught MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Onslaught%20MTG&campid=5339146789&customid=onslaught-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Onslaught MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Onslaught%20MTG&campid=5339146789&customid=onslaught-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

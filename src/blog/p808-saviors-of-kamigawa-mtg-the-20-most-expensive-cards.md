@@ -202,7 +202,7 @@ Almost. Nineteen of the twenty cards are rares, with Freed from the Real standin
 Yes, cards such as Erayo, Soratami Ascendant // Erayo's Essence, Rune-Tail, Kitsune Ascendant // Rune-Tail's Essence, and Homura, Human Ascendant // Homura's Essence all appear, each counted once under its single printing in the set.
 
 **Where can I buy Saviors of Kamigawa singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Saviors of Kamigawa MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Saviors%20of%20Kamigawa%20MTG&campid=5339146789&customid=saviors-of-kamigawa-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Saviors of Kamigawa MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Saviors%20of%20Kamigawa%20MTG&campid=5339146789&customid=saviors-of-kamigawa-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

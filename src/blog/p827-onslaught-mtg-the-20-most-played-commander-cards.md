@@ -204,7 +204,7 @@ No. The figures here are a snapshot taken at the time of writing, and singles pr
 The five most played cards in this set are all fetch lands, and they occupy both the highest play ranks and the highest prices, forming a distinct cluster ahead of the rest of the twenty.
 
 **Where can I buy Onslaught singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Onslaught MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Onslaught%20MTG&campid=5339146789&customid=onslaught-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Onslaught MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Onslaught%20MTG&campid=5339146789&customid=onslaught-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

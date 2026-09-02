@@ -202,7 +202,7 @@ No, these figures are a snapshot taken at a point in time. Magic card prices mov
 Yes, Merchant Scroll is listed as uncommon, while every other card in this top twenty is a rare.
 
 **Where can I buy Eighth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eighth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Eighth%20Edition%20MTG&campid=5339146789&customid=eighth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eighth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Eighth%20Edition%20MTG&campid=5339146789&customid=eighth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

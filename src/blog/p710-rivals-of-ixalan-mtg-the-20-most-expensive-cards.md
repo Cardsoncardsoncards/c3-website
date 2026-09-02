@@ -204,7 +204,7 @@ No, each of the 20 cards listed here has a single priced printing within Rivals 
 Not strictly. The list includes an uncommon, Pitiless Plunderer, priced above several rares and mythics, showing that price and rarity don't always move together.
 
 **Where can I buy Rivals of Ixalan singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Rivals of Ixalan MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Rivals%20of%20Ixalan%20MTG&campid=5339146789&customid=rivals-of-ixalan-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Rivals of Ixalan MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Rivals%20of%20Ixalan%20MTG&campid=5339146789&customid=rivals-of-ixalan-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

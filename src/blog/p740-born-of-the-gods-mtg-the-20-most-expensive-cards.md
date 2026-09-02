@@ -202,7 +202,7 @@ All five gods in Born of the Gods, Phenax, Xenagos, Brimaz is not a god but Epha
 Not entirely. Kiora, the Crashing Wave is mythic but sits well down the list, priced below several uncommon and rare cards above it.
 
 **Where can I buy Born of the Gods singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Born of the Gods MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Born%20of%20the%20Gods%20MTG&campid=5339146789&customid=born-of-the-gods-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Born of the Gods MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Born%20of%20the%20Gods%20MTG&campid=5339146789&customid=born-of-the-gods-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

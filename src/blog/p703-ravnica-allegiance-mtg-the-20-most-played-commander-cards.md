@@ -202,7 +202,7 @@ Readers can buy singles through the card pages on our own site or through eBay A
 No, all figures are a snapshot at time of writing in Australian dollars, and prices move over time with supply and demand.
 
 **Where can I buy Ravnica Allegiance singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ravnica Allegiance MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ravnica%20Allegiance%20MTG&campid=5339146789&customid=ravnica-allegiance-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ravnica Allegiance MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ravnica%20Allegiance%20MTG&campid=5339146789&customid=ravnica-allegiance-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

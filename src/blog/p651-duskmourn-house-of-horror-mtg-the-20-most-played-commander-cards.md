@@ -204,7 +204,7 @@ No. Prices are quoted in Australian dollars as a snapshot at the time this list 
 Not necessarily. Murder, for example, is priced in cents but ranks in the middle of this list, showing that price and play frequency do not always track each other.
 
 **Where can I buy Duskmourn: House of Horror singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Duskmourn: House of Horror MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Duskmourn%3A%20House%20of%20Horror%20MTG&campid=5339146789&customid=duskmourn-house-of-horror-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Duskmourn: House of Horror MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Duskmourn%3A%20House%20of%20Horror%20MTG&campid=5339146789&customid=duskmourn-house-of-horror-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

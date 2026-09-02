@@ -202,7 +202,7 @@ Singles can be bought through the card pages on Cards on Cards on Cards, and thr
 No. Every price given here is a snapshot in Australian dollars taken at one point in time, and card prices move afterwards, sometimes considerably, so current listings may differ from the figures quoted.
 
 **Where can I buy Foundations singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Foundations MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Foundations%20MTG&campid=5339146789&customid=foundations-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Foundations MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Foundations%20MTG&campid=5339146789&customid=foundations-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

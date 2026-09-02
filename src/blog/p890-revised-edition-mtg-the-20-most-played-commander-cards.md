@@ -202,7 +202,7 @@ No. Prices are a snapshot in Australian dollars taken at the time of writing and
 Play frequency and price are measured independently. EDHREC rank reflects how often a card is used in decks, which does not always align with how much that card costs.
 
 **Where can I buy Revised Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Revised Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Revised%20Edition%20MTG&campid=5339146789&customid=revised-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Revised Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Revised%20Edition%20MTG&campid=5339146789&customid=revised-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

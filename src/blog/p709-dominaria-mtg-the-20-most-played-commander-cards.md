@@ -204,7 +204,7 @@ No. Prices are in Australian dollars and represent a snapshot at time of writing
 Not directly. The list is ordered purely by EDHREC rank, which measures play frequency, so commons like Llanowar Elves and Opt can outrank mythics and rares that cost considerably more.
 
 **Where can I buy Dominaria singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dominaria MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dominaria%20MTG&campid=5339146789&customid=dominaria-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dominaria MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dominaria%20MTG&campid=5339146789&customid=dominaria-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

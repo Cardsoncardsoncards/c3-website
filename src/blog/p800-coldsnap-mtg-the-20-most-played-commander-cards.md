@@ -202,7 +202,7 @@ No, every price quoted here is a snapshot taken at one point in time, and card p
 Coldsnap was a small, self-contained set, and each card in this list has exactly one printing in it, which is why no printing comparison was required for pricing or ranking.
 
 **Where can I buy Coldsnap singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Coldsnap MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Coldsnap%20MTG&campid=5339146789&customid=coldsnap-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Coldsnap MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Coldsnap%20MTG&campid=5339146789&customid=coldsnap-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ No, all prices are in Australian dollars and represent a snapshot at time of wri
 Because this list measures play frequency in Commander decks, not price. A card's EDHREC rank reflects how often it is played, which does not always correlate with what it costs to buy.
 
 **Where can I buy Darksteel singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Darksteel MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Darksteel%20MTG&campid=5339146789&customid=darksteel-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Darksteel MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Darksteel%20MTG&campid=5339146789&customid=darksteel-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

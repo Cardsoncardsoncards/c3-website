@@ -202,7 +202,7 @@ No, every card in this particular top 20 has just one printing carrying a price,
 No, several uncommons and even one common rank above mythics and rares elsewhere on the list, showing that rarity alone does not determine position.
 
 **Where can I buy Magic 2011 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2011 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202011%20MTG&campid=5339146789&customid=magic-2011-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2011 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202011%20MTG&campid=5339146789&customid=magic-2011-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

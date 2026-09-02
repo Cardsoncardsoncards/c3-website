@@ -204,7 +204,7 @@ No, all prices are a snapshot taken at one point in time. Singles prices move wi
 The 20 cards span rares, uncommons and commons, with rares generally, though not universally, occupying the higher price points on the list.
 
 **Where can I buy Legions singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Legions MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Legions%20MTG&campid=5339146789&customid=legions-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Legions MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Legions%20MTG&campid=5339146789&customid=legions-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

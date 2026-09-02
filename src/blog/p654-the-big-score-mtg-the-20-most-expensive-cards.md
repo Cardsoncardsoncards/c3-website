@@ -204,7 +204,7 @@ No, these figures are a snapshot in Australian dollars. Singles prices move over
 Yes, every card in this top twenty is mythic.
 
 **Where can I buy The Big Score singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Big Score MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The%20Big%20Score%20MTG&campid=5339146789&customid=the-big-score-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Big Score MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The%20Big%20Score%20MTG&campid=5339146789&customid=the-big-score-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

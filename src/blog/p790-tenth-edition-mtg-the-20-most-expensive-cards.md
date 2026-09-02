@@ -202,7 +202,7 @@ Nearly all of them are rare, with the exception of Aura of Silence, which is the
 Yes, the ranking is limited to cards' printings within Tenth Edition itself and does not factor in prices from other Magic sets the same cards may appear in.
 
 **Where can I buy Tenth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Tenth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Tenth%20Edition%20MTG&campid=5339146789&customid=tenth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Tenth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Tenth%20Edition%20MTG&campid=5339146789&customid=tenth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

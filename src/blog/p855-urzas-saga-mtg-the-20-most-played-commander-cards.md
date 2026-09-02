@@ -202,7 +202,7 @@ No. Prices are quoted in Australian dollars as a snapshot at time of writing, an
 Not necessarily. Several cards on this list, such as Gaea's Cradle, show a high price despite a middling play rank, while others rank highly in play but carry a low price, so the two figures do not move together.
 
 **Where can I buy Urza's Saga singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Saga MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Urza's%20Saga%20MTG&campid=5339146789&customid=urzas-saga-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Saga MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Urza's%20Saga%20MTG&campid=5339146789&customid=urzas-saga-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

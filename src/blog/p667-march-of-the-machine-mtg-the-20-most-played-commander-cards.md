@@ -202,7 +202,7 @@ Singles can be bought through the card pages here on Cards on Cards on Cards, as
 No, every price shown is a snapshot taken at one point in time, and singles prices move after release, so current listings should always be checked before buying.
 
 **Where can I buy March of the Machine singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [March of the Machine MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=March%20of%20the%20Machine%20MTG&campid=5339146789&customid=march-of-the-machine-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [March of the Machine MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=March%20of%20the%20Machine%20MTG&campid=5339146789&customid=march-of-the-machine-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

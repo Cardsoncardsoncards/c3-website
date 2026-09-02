@@ -202,7 +202,7 @@ Most of the list is rare or mythic, but Impact Tremors, a common, also appears i
 No. Several mythics, such as Clone Legion and Dragonlord Ojutai, sit below rares like Collected Company and Dragon Tempest, showing rarity does not strictly determine price.
 
 **Where can I buy Dragons of Tarkir singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dragons of Tarkir MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dragons%20of%20Tarkir%20MTG&campid=5339146789&customid=dragons-of-tarkir-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dragons of Tarkir MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dragons%20of%20Tarkir%20MTG&campid=5339146789&customid=dragons-of-tarkir-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

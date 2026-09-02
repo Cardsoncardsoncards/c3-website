@@ -204,7 +204,7 @@ No, every price given is a snapshot at the time of writing. Card prices move ove
 Not directly. The list mixes uncommons, rares and mythics throughout, with some uncommons like Gold-Forged Thopteryx and Filter Out ranking ahead of pricier mythics in play frequency.
 
 **Where can I buy March of the Machine: The Aftermath singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [March of the Machine: The Aftermath MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=March%20of%20the%20Machine%3A%20The%20Aftermath%20MTG&campid=5339146789&customid=march-of-the-machine-the-aftermath-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [March of the Machine: The Aftermath MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=March%20of%20the%20Machine%3A%20The%20Aftermath%20MTG&campid=5339146789&customid=march-of-the-machine-the-aftermath-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

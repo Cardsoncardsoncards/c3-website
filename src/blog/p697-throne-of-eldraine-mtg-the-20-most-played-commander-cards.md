@@ -202,7 +202,7 @@ No, every price is a snapshot in Australian dollars taken at the time of writing
 Play frequency and price are separate measures. A common card can be played very often while costing very little, and a rare or mythic can be played less often while carrying a far higher price.
 
 **Where can I buy Throne of Eldraine singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Throne of Eldraine MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Throne%20of%20Eldraine%20MTG&campid=5339146789&customid=throne-of-eldraine-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Throne of Eldraine MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Throne%20of%20Eldraine%20MTG&campid=5339146789&customid=throne-of-eldraine-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ Most are, but not all. Gray Merchant of Asphodel appears on the list as an uncom
 No. Serpent of Yawning Depths and Kiora Bests the Sea God each have only a single priced printing in Theros Beyond Death, while most other cards on the list have two.
 
 **Where can I buy Theros Beyond Death singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Theros Beyond Death MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Theros%20Beyond%20Death%20MTG&campid=5339146789&customid=theros-beyond-death-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Theros Beyond Death MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Theros%20Beyond%20Death%20MTG&campid=5339146789&customid=theros-beyond-death-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

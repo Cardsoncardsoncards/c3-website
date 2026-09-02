@@ -202,7 +202,7 @@ No, the prices shown are a snapshot taken at the time of writing. Magic single p
 Most are, but Marauding Mako is the sole uncommon to appear in this top 20, which also highlights the widest gap between its own two printings on the list.
 
 **Where can I buy Aetherdrift singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Aetherdrift MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Aetherdrift%20MTG&campid=5339146789&customid=aetherdrift-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Aetherdrift MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Aetherdrift%20MTG&campid=5339146789&customid=aetherdrift-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

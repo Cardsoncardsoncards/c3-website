@@ -204,7 +204,7 @@ No, every price quoted here is a snapshot taken at one point in time. Singles pr
 Not directly. Rarity is recorded for each card, but the ranking itself is driven by EDHREC play rate, and price is a separate figure entirely, so rares, uncommons and mythics all appear scattered throughout the twenty.
 
 **Where can I buy Journey into Nyx singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Journey into Nyx MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Journey%20into%20Nyx%20MTG&campid=5339146789&customid=journey-into-nyx-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Journey into Nyx MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Journey%20into%20Nyx%20MTG&campid=5339146789&customid=journey-into-nyx-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

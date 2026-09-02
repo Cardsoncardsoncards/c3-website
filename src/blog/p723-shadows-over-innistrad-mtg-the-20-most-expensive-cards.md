@@ -204,7 +204,7 @@ Tamiyo's Journal has six printings in the set, four of which carry a tracked pri
 No. When two printings share exactly the same price, such as Essence Flux and The Gitrog Monster, the tie is simply noted rather than being broken by any secondary criteria.
 
 **Where can I buy Shadows over Innistrad singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Shadows over Innistrad MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Shadows%20over%20Innistrad%20MTG&campid=5339146789&customid=shadows-over-innistrad-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Shadows over Innistrad MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Shadows%20over%20Innistrad%20MTG&campid=5339146789&customid=shadows-over-innistrad-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

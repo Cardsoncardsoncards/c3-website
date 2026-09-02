@@ -202,7 +202,7 @@ Yes, all prices are in Australian dollars and reflect a snapshot at the time of 
 No, the list mixes commons, uncommons and rares, and rarity does not consistently line up with either play rate or price across the 20 cards shown.
 
 **Where can I buy Fifth Dawn singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fifth Dawn MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Fifth%20Dawn%20MTG&campid=5339146789&customid=fifth-dawn-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fifth Dawn MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Fifth%20Dawn%20MTG&campid=5339146789&customid=fifth-dawn-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ No, every price is a snapshot in Australian dollars taken at time of writing. Ca
 Not consistently. Several rares and even the one mythic, Sun Titan, are priced lower than some commons and uncommons on this list, so rarity alone does not predict price here.
 
 **Where can I buy Magic 2012 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2012 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202012%20MTG&campid=5339146789&customid=magic-2012-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2012 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202012%20MTG&campid=5339146789&customid=magic-2012-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

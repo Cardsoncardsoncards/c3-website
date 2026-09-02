@@ -38,7 +38,26 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"favicon.ico": "favicon.ico"});
   eleventyConfig.addPassthroughCopy({"ev-calculator": "ev-calculator"});
   eleventyConfig.addPassthroughCopy({"quizzes": "quizzes"});
-  eleventyConfig.addPassthroughCopy({"netlify": "netlify"});
+  // REMOVED 2 September 2026. This line used to read:
+  //     eleventyConfig.addPassthroughCopy({"netlify": "netlify"});
+  // It copied the ENTIRE netlify/ tree into _site/, and _site is the publish directory, so
+  // every function source file and every migration was served as static content. Confirmed
+  // live before removing it, cache-busted, cf-cache-status DYNAMIC:
+  //   /netlify/functions/migrations/c3l172-blank-stale-mtg-price-changes.sql  200 application/sql
+  //   /netlify/functions/card-page.mjs                                        200 127,807 bytes
+  //   /netlify/functions/shared/session.mjs                                   200 (the session signer)
+  // 271 files in total, 240 .mjs and 29 .sql.
+  //
+  // Removing it does NOT affect function execution. Netlify bundles functions from the
+  // repo-root default netlify/functions, not from the publish directory: netlify.toml has a
+  // [functions] block with NO "directory" key, and the deploy immediately before this change
+  // reported 210 available_functions while _site was still receiving the copy. The copy was
+  // only ever additional static content. Nothing in src/ or netlify/ links to /netlify/ as a
+  // URL, checked by grep before removal.
+  //
+  // netlify.toml itself is still passed through on the next line and is left alone here: it
+  // already returns 404 live because Netlify refuses to serve that specific filename from a
+  // publish directory, so it is not an exposure. It is noted rather than changed.
   eleventyConfig.addPassthroughCopy({"netlify.toml": "netlify.toml"});
 
   // Passthrough src HTML files directly to _site root

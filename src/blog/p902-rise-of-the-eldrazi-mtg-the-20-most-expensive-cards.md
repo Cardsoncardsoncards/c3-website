@@ -202,7 +202,7 @@ The list is a mix of both, with mythics dominating the very top and bottom secti
 Several cards in the middle and lower sections of the list are priced within a small margin of each other, which happens naturally when demand and supply across those cards are similar rather than reflecting any change in methodology.
 
 **Where can I buy Rise of the Eldrazi singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Rise of the Eldrazi MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Rise%20of%20the%20Eldrazi%20MTG&campid=5339146789&customid=rise-of-the-eldrazi-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Rise of the Eldrazi MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Rise%20of%20the%20Eldrazi%20MTG&campid=5339146789&customid=rise-of-the-eldrazi-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

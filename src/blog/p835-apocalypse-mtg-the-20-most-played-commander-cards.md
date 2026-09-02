@@ -204,7 +204,7 @@ No, prices are a snapshot in time and move as the singles market shifts, so figu
 Yes, every card on this list has exactly one priced printing within Apocalypse itself, so no tie-breaking between printings was needed for this particular list.
 
 **Where can I buy Apocalypse singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Apocalypse MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Apocalypse%20MTG&campid=5339146789&customid=apocalypse-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Apocalypse MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Apocalypse%20MTG&campid=5339146789&customid=apocalypse-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ No, the prices given are a snapshot at the time of writing. Singles markets move
 EDHREC rank measures how often a card appears in decks, not its price or rarity, so a widely used common land can outrank a rare that sees less frequent play.
 
 **Where can I buy Kamigawa: Neon Dynasty singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kamigawa: Neon Dynasty MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Kamigawa%3A%20Neon%20Dynasty%20MTG&campid=5339146789&customid=kamigawa-neon-dynasty-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kamigawa: Neon Dynasty MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Kamigawa%3A%20Neon%20Dynasty%20MTG&campid=5339146789&customid=kamigawa-neon-dynasty-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

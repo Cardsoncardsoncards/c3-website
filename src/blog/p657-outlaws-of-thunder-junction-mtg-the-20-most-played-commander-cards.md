@@ -202,7 +202,7 @@ No, all prices are given in Australian dollars as a snapshot at a point in time.
 Not directly. The ranking is based purely on EDHREC play data, so commons, uncommons, rares and mythics all appear based on how often they show up in decks rather than their rarity.
 
 **Where can I buy Outlaws of Thunder Junction singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Outlaws of Thunder Junction MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Outlaws%20of%20Thunder%20Junction%20MTG&campid=5339146789&customid=outlaws-of-thunder-junction-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Outlaws of Thunder Junction MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Outlaws%20of%20Thunder%20Junction%20MTG&campid=5339146789&customid=outlaws-of-thunder-junction-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

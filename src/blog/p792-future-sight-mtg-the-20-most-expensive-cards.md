@@ -204,7 +204,7 @@ Most are rare, but the list also includes a small number of uncommons and common
 No, every card on this particular list has only a single printing in the set that carries a price, so the multi-printing and tie-handling parts of the methodology do not come into play here.
 
 **Where can I buy Future Sight singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Future Sight MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Future%20Sight%20MTG&campid=5339146789&customid=future-sight-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Future Sight MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Future%20Sight%20MTG&campid=5339146789&customid=future-sight-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ Yes. Every figure in this list is a snapshot taken at one point in time, and Mag
 Most of the list is rares, though three uncommons, Aura Shards, Sterling Grove and Fact or Fiction, also appear among the twenty.
 
 **Where can I buy Invasion singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Invasion MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Invasion%20MTG&campid=5339146789&customid=invasion-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Invasion MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Invasion%20MTG&campid=5339146789&customid=invasion-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

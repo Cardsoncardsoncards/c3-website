@@ -202,7 +202,7 @@ Most are, but a handful of uncommons such as Malakir Rebirth // Malakir Mire and
 No. This post covers price, printing counts and rarity only, and does not describe how any card functions in play.
 
 **Where can I buy Zendikar Rising singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Zendikar Rising MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Zendikar%20Rising%20MTG&campid=5339146789&customid=zendikar-rising-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Zendikar Rising MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Zendikar%20Rising%20MTG&campid=5339146789&customid=zendikar-rising-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

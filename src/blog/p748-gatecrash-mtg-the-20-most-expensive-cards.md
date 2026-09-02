@@ -202,7 +202,7 @@ No, all prices shown are a snapshot in Australian dollars and can move up or dow
 Five of the top nine cards are guild shocklands, reflecting how consistently that land cycle from Gatecrash has held higher prices than most of the set's spells and creatures on this particular list.
 
 **Where can I buy Gatecrash singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Gatecrash MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Gatecrash%20MTG&campid=5339146789&customid=gatecrash-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Gatecrash MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Gatecrash%20MTG&campid=5339146789&customid=gatecrash-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

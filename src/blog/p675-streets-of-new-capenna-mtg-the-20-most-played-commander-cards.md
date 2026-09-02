@@ -204,7 +204,7 @@ No, every price shown is a snapshot in Australian dollars and card prices move o
 Not every printing of every card has an available price at the time of writing, so a card can show more printings in the set than printings that carry a listed price, as with Void Rend.
 
 **Where can I buy Streets of New Capenna singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Streets of New Capenna MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Streets%20of%20New%20Capenna%20MTG&campid=5339146789&customid=streets-of-new-capenna-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Streets of New Capenna MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Streets%20of%20New%20Capenna%20MTG&campid=5339146789&customid=streets-of-new-capenna-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

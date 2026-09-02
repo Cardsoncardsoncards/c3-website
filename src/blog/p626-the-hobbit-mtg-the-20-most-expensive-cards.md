@@ -204,7 +204,7 @@ No. These are preorder prices for a set that has not yet released, and prices in
 Several cards in this set have more printings than have a tracked price. The Arkenstone // Seek the Heart, for instance, has five printings in total but only three carry a price, so the other two simply aren't reflected in the comparison figures.
 
 **Where can I buy The Hobbit singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Hobbit MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The%20Hobbit%20MTG&campid=5339146789&customid=the-hobbit-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Hobbit MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The%20Hobbit%20MTG&campid=5339146789&customid=the-hobbit-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

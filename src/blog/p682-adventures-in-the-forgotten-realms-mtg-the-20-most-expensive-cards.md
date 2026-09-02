@@ -202,7 +202,7 @@ Not strictly. While mythics generally sit higher, several rares such as Circle o
 Fighter Class has only a single priced printing in the set, so no second figure is available for comparison, unlike the other 19 cards on this list which all carry two.
 
 **Where can I buy Adventures in the Forgotten Realms singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Adventures in the Forgotten Realms MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Adventures%20in%20the%20Forgotten%20Realms%20MTG&campid=5339146789&customid=adventures-in-the-forgotten-realms-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Adventures in the Forgotten Realms MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Adventures%20in%20the%20Forgotten%20Realms%20MTG&campid=5339146789&customid=adventures-in-the-forgotten-realms-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

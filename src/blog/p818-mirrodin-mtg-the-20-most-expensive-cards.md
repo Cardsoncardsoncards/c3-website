@@ -204,7 +204,7 @@ Rarity is only one factor behind a card's price, and this list includes commons 
 No, this ranking covers price, printings and rarity only, and makes no claims about what any card does mechanically.
 
 **Where can I buy Mirrodin singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirrodin MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Mirrodin%20MTG&campid=5339146789&customid=mirrodin-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirrodin MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Mirrodin%20MTG&campid=5339146789&customid=mirrodin-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

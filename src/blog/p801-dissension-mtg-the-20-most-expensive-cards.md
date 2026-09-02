@@ -204,7 +204,7 @@ Most are, but three uncommons appear on the list: Magewright's Stone, Ghost Quar
 Hallowed Fountain, Blood Crypt and Breeding Pool are all part of the same dual land cycle from this set, and they occupy the top three spots with prices clustered closely together well above the rest of the field.
 
 **Where can I buy Dissension singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dissension MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dissension%20MTG&campid=5339146789&customid=dissension-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dissension MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dissension%20MTG&campid=5339146789&customid=dissension-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

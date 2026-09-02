@@ -202,7 +202,7 @@ No. Every price listed is a snapshot at the time of writing, and singles prices 
 Play rate and price are separate figures. A card like Underground River carries the highest price on this list despite ranking well below Swords to Plowshares, and several rares outprice more commonly played commons throughout the list.
 
 **Where can I buy Ice Age singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ice Age MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ice%20Age%20MTG&campid=5339146789&customid=ice-age-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ice Age MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ice%20Age%20MTG&campid=5339146789&customid=ice-age-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No. Prices are a snapshot in Australian dollars taken at the time of writing, an
 Not directly. Play rank measures how often a card appears in decks according to EDHREC, while price reflects the singles market, and the two do not move in lockstep across this list.
 
 **Where can I buy Zendikar Rising singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Zendikar Rising MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Zendikar%20Rising%20MTG&campid=5339146789&customid=zendikar-rising-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Zendikar Rising MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Zendikar%20Rising%20MTG&campid=5339146789&customid=zendikar-rising-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

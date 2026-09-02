@@ -202,7 +202,7 @@ Fourth Edition reprinted a wide range of earlier Magic cards, and some of those 
 No. Most are rare, but Strip Mine, Mishra's Factory and Swords to Plowshares are uncommons that still placed within the top twenty by price.
 
 **Where can I buy Fourth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fourth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Fourth%20Edition%20MTG&campid=5339146789&customid=fourth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fourth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Fourth%20Edition%20MTG&campid=5339146789&customid=fourth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

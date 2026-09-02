@@ -202,7 +202,7 @@ No, every price given is a snapshot taken at time of writing. Singles prices mov
 No, each card on this list had only one printing in Magic 2010 that carried a price, so no ties needed to be noted this time.
 
 **Where can I buy Magic 2010 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2010 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202010%20MTG&campid=5339146789&customid=magic-2010-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2010 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202010%20MTG&campid=5339146789&customid=magic-2010-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

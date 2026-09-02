@@ -129,7 +129,7 @@ Singles can be bought through the card pages on our own site, and through eBay A
 No. These are preorder prices ahead of the set's release, and prices for Magic singles move over time once the set is out and supply settles.
 
 **Where can I buy Reality Fracture singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Reality Fracture MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Reality%20Fracture%20MTG&campid=5339146789&customid=reality-fracture-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Reality Fracture MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Reality%20Fracture%20MTG&campid=5339146789&customid=reality-fracture-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

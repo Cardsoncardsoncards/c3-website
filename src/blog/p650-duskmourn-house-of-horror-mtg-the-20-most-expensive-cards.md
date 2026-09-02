@@ -204,7 +204,7 @@ No. Prices are in Australian dollars and move over time, so the figures in this 
 Not directly. Several rares, including the Verge cycle lands, sit ahead of some mythics, showing that price and rarity do not always move together in this set.
 
 **Where can I buy Duskmourn: House of Horror singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Duskmourn: House of Horror MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Duskmourn%3A%20House%20of%20Horror%20MTG&campid=5339146789&customid=duskmourn-house-of-horror-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Duskmourn: House of Horror MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Duskmourn%3A%20House%20of%20Horror%20MTG&campid=5339146789&customid=duskmourn-house-of-horror-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

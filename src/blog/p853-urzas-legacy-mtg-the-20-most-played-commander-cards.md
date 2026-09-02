@@ -204,7 +204,7 @@ No. Every price here is a snapshot taken at one point in time, and card prices m
 Not necessarily. Grim Monolith is priced far above every other card on this list but is not the most played, and cheaper cards like Frantic Search and Cloud of Faeries outrank several more expensive rares.
 
 **Where can I buy Urza's Legacy singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Legacy MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Urza's%20Legacy%20MTG&campid=5339146789&customid=urzas-legacy-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Legacy MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Urza's%20Legacy%20MTG&campid=5339146789&customid=urzas-legacy-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

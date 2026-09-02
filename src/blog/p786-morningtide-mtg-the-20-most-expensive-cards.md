@@ -204,7 +204,7 @@ Yes, every figure here is a snapshot taken at a point in time, and singles price
 Nearly all of them are, with Thornbite Staff standing out as the sole uncommon among the top 20.
 
 **Where can I buy Morningtide singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Morningtide MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Morningtide%20MTG&campid=5339146789&customid=morningtide-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Morningtide MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Morningtide%20MTG&campid=5339146789&customid=morningtide-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

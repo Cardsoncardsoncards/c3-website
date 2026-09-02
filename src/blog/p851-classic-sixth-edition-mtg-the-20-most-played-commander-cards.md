@@ -204,7 +204,7 @@ By play frequency, specifically EDHREC rank in Commander, where a lower rank num
 Not necessarily. Several uncommons and commons, such as Rampant Growth and Llanowar Elves, rank higher in play frequency than some of the rares further down the list.
 
 **Where can I buy Classic Sixth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Classic Sixth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Classic%20Sixth%20Edition%20MTG&campid=5339146789&customid=classic-sixth-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Classic Sixth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Classic%20Sixth%20Edition%20MTG&campid=5339146789&customid=classic-sixth-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ No, the figures given here are a snapshot taken at one point in time. Prices for
 Not directly. The list is ordered purely by price, and while many of the top entries are mythic, several rares outrank mythic cards further down the list.
 
 **Where can I buy Teenage Mutant Ninja Turtles singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Teenage Mutant Ninja Turtles MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Teenage%20Mutant%20Ninja%20Turtles%20MTG&campid=5339146789&customid=teenage-mutant-ninja-turtles-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Teenage Mutant Ninja Turtles MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Teenage%20Mutant%20Ninja%20Turtles%20MTG&campid=5339146789&customid=teenage-mutant-ninja-turtles-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

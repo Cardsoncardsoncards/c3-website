@@ -202,7 +202,7 @@ No, the prices given are a snapshot in Australian dollars and will move over tim
 Not always. Archmage Emeritus, for example, has three printings in the set but only two of them carry a tracked price.
 
 **Where can I buy Strixhaven: School of Mages singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Strixhaven: School of Mages MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Strixhaven%3A%20School%20of%20Mages%20MTG&campid=5339146789&customid=strixhaven-school-of-mages-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Strixhaven: School of Mages MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Strixhaven%3A%20School%20of%20Mages%20MTG&campid=5339146789&customid=strixhaven-school-of-mages-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

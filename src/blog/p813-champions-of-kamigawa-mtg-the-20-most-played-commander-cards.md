@@ -204,7 +204,7 @@ No. All prices are a snapshot in Australian dollars at the time of writing, and 
 Rarity is noted for each card but does not determine its rank. Commons like Kodama's Reach and Sakura-Tribe Elder outrank several rares here in play rate, though not necessarily in price.
 
 **Where can I buy Champions of Kamigawa singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Champions of Kamigawa MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Champions%20of%20Kamigawa%20MTG&campid=5339146789&customid=champions-of-kamigawa-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Champions of Kamigawa MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Champions%20of%20Kamigawa%20MTG&campid=5339146789&customid=champions-of-kamigawa-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

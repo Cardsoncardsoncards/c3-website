@@ -204,7 +204,7 @@ No. Prices are quoted in Australian dollars as a snapshot at time of writing, an
 Rarity is noted for each card but does not determine its rank. Play rate, measured by EDHREC rank, decides the order, while rarity and price are reported separately.
 
 **Where can I buy Magic 2013 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2013 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202013%20MTG&campid=5339146789&customid=magic-2013-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2013 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202013%20MTG&campid=5339146789&customid=magic-2013-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

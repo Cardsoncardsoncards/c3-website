@@ -202,7 +202,7 @@ Most are, but a few, including Counterspell, Sol Ring, Demonic Tutor and Swords 
 The gaps between adjacent cards vary considerably across the list, with some pairs separated by only a small amount and others, particularly near the top, separated by a much larger margin.
 
 **Where can I buy Limited Edition Beta singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Limited Edition Beta MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Limited%20Edition%20Beta%20MTG&campid=5339146789&customid=limited-edition-beta-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Limited Edition Beta MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Limited%20Edition%20Beta%20MTG&campid=5339146789&customid=limited-edition-beta-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

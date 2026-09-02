@@ -202,7 +202,7 @@ Ravnica Allegiance reprinted five shocklands, Breeding Pool, Blood Crypt, Godles
 Not entirely. The list mixes rares, mythics, an uncommon and a common across its twenty spots, and several mythics sit lower than rares, so rarity alone does not determine position.
 
 **Where can I buy Ravnica Allegiance singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ravnica Allegiance MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ravnica%20Allegiance%20MTG&campid=5339146789&customid=ravnica-allegiance-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ravnica Allegiance MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ravnica%20Allegiance%20MTG&campid=5339146789&customid=ravnica-allegiance-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

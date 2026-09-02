@@ -202,7 +202,7 @@ Singles can be bought through the card pages on our own site or through eBay Aus
 No, all prices are a snapshot in time and will move as market conditions change, so figures should be checked again before buying.
 
 **Where can I buy Throne of Eldraine singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Throne of Eldraine MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Throne%20of%20Eldraine%20MTG&campid=5339146789&customid=throne-of-eldraine-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Throne of Eldraine MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Throne%20of%20Eldraine%20MTG&campid=5339146789&customid=throne-of-eldraine-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

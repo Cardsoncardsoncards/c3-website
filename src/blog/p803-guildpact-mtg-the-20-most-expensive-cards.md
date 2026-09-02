@@ -204,7 +204,7 @@ No, these figures are a snapshot taken at one point in time and secondary market
 Not strictly. Several uncommons, such as Hissing Miasma and Skarrg, the Rage Pits, sit above a number of rares further down the list.
 
 **Where can I buy Guildpact singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Guildpact MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Guildpact%20MTG&campid=5339146789&customid=guildpact-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Guildpact MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Guildpact%20MTG&campid=5339146789&customid=guildpact-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

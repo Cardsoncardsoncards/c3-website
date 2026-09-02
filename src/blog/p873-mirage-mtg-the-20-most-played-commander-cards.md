@@ -202,7 +202,7 @@ Price and play rate measure different things. Lion's Eye Diamond, for example, i
 It reflects how often a card appears across published Commander decklists tracked by EDHREC, with a lower number meaning the card appears more often. It says nothing about price on its own.
 
 **Where can I buy Mirage singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirage MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Mirage%20MTG&campid=5339146789&customid=mirage-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirage MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Mirage%20MTG&campid=5339146789&customid=mirage-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

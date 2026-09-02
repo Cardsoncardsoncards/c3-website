@@ -202,7 +202,7 @@ EDHREC rank reflects how often a card is played in Commander decks, with a lower
 Play frequency and price are measured independently. A card's rarity within Alpha and its overall collector market can push its price well above or below what its EDHREC rank alone would suggest.
 
 **Where can I buy Limited Edition Alpha singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Limited Edition Alpha MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Limited%20Edition%20Alpha%20MTG&campid=5339146789&customid=limited-edition-alpha-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Limited Edition Alpha MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Limited%20Edition%20Alpha%20MTG&campid=5339146789&customid=limited-edition-alpha-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

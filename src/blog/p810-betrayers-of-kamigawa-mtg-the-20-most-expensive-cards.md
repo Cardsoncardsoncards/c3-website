@@ -202,7 +202,7 @@ No, the figures given are a snapshot taken at the time of writing. Card prices m
 Rarity is a printed attribute of the card itself and is listed alongside each entry. Most of the top 20 are rares, with Throat Slitter and Mark of Sakiko being the two uncommons that made the list.
 
 **Where can I buy Betrayers of Kamigawa singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Betrayers of Kamigawa MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Betrayers%20of%20Kamigawa%20MTG&campid=5339146789&customid=betrayers-of-kamigawa-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Betrayers of Kamigawa MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Betrayers%20of%20Kamigawa%20MTG&campid=5339146789&customid=betrayers-of-kamigawa-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ Not strictly. Elves of Deep Shadow, a common, sits above several rares on the li
 The gap between Doubling Season and Breath of Fury near the top is far wider than the gaps seen among the cards ranked in the teens, which sit much closer together in price.
 
 **Where can I buy Ravnica: City of Guilds singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ravnica: City of Guilds MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ravnica%3A%20City%20of%20Guilds%20MTG&campid=5339146789&customid=ravnica-city-of-guilds-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ravnica: City of Guilds MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ravnica%3A%20City%20of%20Guilds%20MTG&campid=5339146789&customid=ravnica-city-of-guilds-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

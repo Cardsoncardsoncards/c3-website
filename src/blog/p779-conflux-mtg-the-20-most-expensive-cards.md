@@ -202,7 +202,7 @@ Not directly. Several uncommons and one common rank above or near mythics and ra
 No, the list includes uncommons such as Reliquary Tower, Path to Exile and Ancient Ziggurat, plus one common, Scattershot Archer, alongside the rares and mythics.
 
 **Where can I buy Conflux singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Conflux MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Conflux%20MTG&campid=5339146789&customid=conflux-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Conflux MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Conflux%20MTG&campid=5339146789&customid=conflux-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

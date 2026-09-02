@@ -202,7 +202,7 @@ No. Each card is listed once using its highest priced printing in the set, even 
 Most are, but the list also includes a handful of uncommons, such as Bolt Bend, Emergence Zone, Dovin's Veto, Evolution Sage and Flux Channeler.
 
 **Where can I buy War of the Spark singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [War of the Spark MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=War%20of%20the%20Spark%20MTG&campid=5339146789&customid=war-of-the-spark-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [War of the Spark MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=War%20of%20the%20Spark%20MTG&campid=5339146789&customid=war-of-the-spark-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

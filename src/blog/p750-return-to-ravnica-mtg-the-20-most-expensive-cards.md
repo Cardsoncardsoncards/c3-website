@@ -202,7 +202,7 @@ No, the figures given are a snapshot taken at one point in time and Magic single
 The five shocklands, Steam Vents, Blood Crypt, Overgrown Tomb, Hallowed Fountain and Temple Garden, all appear in the top eight of this list, clustered closely together in price.
 
 **Where can I buy Return to Ravnica singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Return to Ravnica MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Return%20to%20Ravnica%20MTG&campid=5339146789&customid=return-to-ravnica-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Return to Ravnica MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Return%20to%20Ravnica%20MTG&campid=5339146789&customid=return-to-ravnica-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

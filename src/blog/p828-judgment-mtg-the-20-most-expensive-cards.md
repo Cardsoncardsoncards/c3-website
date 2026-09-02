@@ -202,7 +202,7 @@ Yes, all prices given are a snapshot in Australian dollars and will move with th
 No, most are rare, but Mental Note and Prismatic Strands are commons, and Cabal Therapy and Filth are uncommons.
 
 **Where can I buy Judgment singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Judgment MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Judgment%20MTG&campid=5339146789&customid=judgment-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Judgment MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Judgment%20MTG&campid=5339146789&customid=judgment-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

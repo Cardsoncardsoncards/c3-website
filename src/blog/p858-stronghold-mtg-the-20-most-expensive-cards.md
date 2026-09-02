@@ -204,7 +204,7 @@ The list is ranked purely by price, and rares from this era of Magic tend to car
 The prices quoted reflect the priced printing available for each card in the set as supplied in our data, without breaking figures down further by condition or language.
 
 **Where can I buy Stronghold singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Stronghold MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Stronghold%20MTG&campid=5339146789&customid=stronghold-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Stronghold MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Stronghold%20MTG&campid=5339146789&customid=stronghold-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

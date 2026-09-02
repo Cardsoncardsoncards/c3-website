@@ -204,7 +204,7 @@ No, all prices are a snapshot in Australian dollars taken at time of writing and
 Rarity is listed for context alongside each card but the ranking itself is based purely on EDHREC play rank, not on rarity or price.
 
 **Where can I buy Avatar: The Last Airbender singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Avatar: The Last Airbender MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Avatar%3A%20The%20Last%20Airbender%20MTG&campid=5339146789&customid=avatar-the-last-airbender-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Avatar: The Last Airbender MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Avatar%3A%20The%20Last%20Airbender%20MTG&campid=5339146789&customid=avatar-the-last-airbender-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

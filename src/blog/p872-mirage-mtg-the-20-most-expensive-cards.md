@@ -202,7 +202,7 @@ Not strictly. Most entries are rares, but several uncommons such as Worldly Tuto
 No. Every card in this top twenty has exactly one printing in the set that carries a price, so no secondary printing prices are listed.
 
 **Where can I buy Mirage singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirage MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Mirage%20MTG&campid=5339146789&customid=mirage-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirage MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Mirage%20MTG&campid=5339146789&customid=mirage-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

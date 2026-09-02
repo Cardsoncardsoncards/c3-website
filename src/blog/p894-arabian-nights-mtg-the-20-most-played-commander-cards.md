@@ -202,7 +202,7 @@ No. Every price quoted is a snapshot in Australian dollars at the time of writin
 No. The list mixes commons, uncommons and rares, City of Brass itself is an uncommon despite topping the played rank.
 
 **Where can I buy Arabian Nights singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Arabian Nights MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Arabian%20Nights%20MTG&campid=5339146789&customid=arabian-nights-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Arabian Nights MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Arabian%20Nights%20MTG&campid=5339146789&customid=arabian-nights-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

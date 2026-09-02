@@ -204,7 +204,7 @@ No. Every price here is a snapshot taken at the time of writing, in Australian d
 Not necessarily. Several of the cheapest cards on this list, including Village Rites and Binding the Old Gods, rank well ahead of more expensive rares and mythics further down the list.
 
 **Where can I buy Kaldheim singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kaldheim MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Kaldheim%20MTG&campid=5339146789&customid=kaldheim-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kaldheim MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Kaldheim%20MTG&campid=5339146789&customid=kaldheim-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

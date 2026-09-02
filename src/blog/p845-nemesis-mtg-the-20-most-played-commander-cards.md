@@ -202,7 +202,7 @@ No, all prices are a snapshot in Australian dollars taken at time of writing. Si
 A lower EDHREC rank means a card is played more often. Skyshroud Claim's rank of 293 is the lowest, and therefore the most played, on this list.
 
 **Where can I buy Nemesis singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Nemesis MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Nemesis%20MTG&campid=5339146789&customid=nemesis-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Nemesis MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Nemesis%20MTG&campid=5339146789&customid=nemesis-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

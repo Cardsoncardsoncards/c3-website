@@ -204,7 +204,7 @@ Rarity strongly correlates with price in most sets, and Core Set 2020 is no exce
 The list runs from number 1, the most expensive card, down to number 20, the least expensive of the twenty featured.
 
 **Where can I buy Core Set 2020 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Core Set 2020 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Core%20Set%202020%20MTG&campid=5339146789&customid=core-set-2020-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Core Set 2020 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Core%20Set%202020%20MTG&campid=5339146789&customid=core-set-2020-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

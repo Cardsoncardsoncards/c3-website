@@ -202,7 +202,7 @@ No, all prices are in Australian dollars and are a snapshot at the time of writi
 Rank measures how often a card is played in Commander decks, while price reflects the singles market, and the two do not always move together, as seen with cards like Cryptolith Rite and Diregraf Colossus on this list.
 
 **Where can I buy Shadows over Innistrad singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Shadows over Innistrad MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Shadows%20over%20Innistrad%20MTG&campid=5339146789&customid=shadows-over-innistrad-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Shadows over Innistrad MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Shadows%20over%20Innistrad%20MTG&campid=5339146789&customid=shadows-over-innistrad-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

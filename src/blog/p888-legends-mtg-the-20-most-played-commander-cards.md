@@ -202,7 +202,7 @@ EDHREC rank measures how often a card appears in tracked Commander decks, which 
 Not consistently. The list mixes commons, uncommons and rares throughout, with commons like Chain Lightning and Holy Day appearing well above some rares, and rares like The Tabernacle at Pendrell Vale sitting near the bottom despite carrying the highest price.
 
 **Where can I buy Legends singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Legends MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Legends%20MTG&campid=5339146789&customid=legends-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Legends MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Legends%20MTG&campid=5339146789&customid=legends-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

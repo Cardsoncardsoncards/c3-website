@@ -204,7 +204,7 @@ Most are, but not all. Cavern of Souls, Growing Rites of Itlimoc // Itlimoc, Cra
 No. Chimil, the Inner Sun appears with only one printing carrying a tracked price, and it still ranks purely on that single figure.
 
 **Where can I buy The Lost Caverns of Ixalan singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Lost Caverns of Ixalan MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The%20Lost%20Caverns%20of%20Ixalan%20MTG&campid=5339146789&customid=the-lost-caverns-of-ixalan-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Lost Caverns of Ixalan MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The%20Lost%20Caverns%20of%20Ixalan%20MTG&campid=5339146789&customid=the-lost-caverns-of-ixalan-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

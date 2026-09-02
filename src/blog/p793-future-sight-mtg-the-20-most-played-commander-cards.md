@@ -202,7 +202,7 @@ No. All prices given are a snapshot in Australian dollars and will move over tim
 Not directly. The list is ordered purely by EDHREC play rank, and several rares sit below uncommons and even a common in price, showing rarity and price don't always move together.
 
 **Where can I buy Future Sight singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Future Sight MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Future%20Sight%20MTG&campid=5339146789&customid=future-sight-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Future Sight MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Future%20Sight%20MTG&campid=5339146789&customid=future-sight-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

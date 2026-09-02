@@ -204,7 +204,7 @@ No, every figure in this list is a snapshot taken at the time of writing. Magic 
 A few cards in the set have printings, such as certain promotional versions, that do not currently carry a tracked price, so the priced count shown is lower than the total number of printings that exist.
 
 **Where can I buy Kamigawa: Neon Dynasty singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kamigawa: Neon Dynasty MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Kamigawa%3A%20Neon%20Dynasty%20MTG&campid=5339146789&customid=kamigawa-neon-dynasty-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kamigawa: Neon Dynasty MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Kamigawa%3A%20Neon%20Dynasty%20MTG&campid=5339146789&customid=kamigawa-neon-dynasty-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

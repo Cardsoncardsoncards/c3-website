@@ -202,7 +202,7 @@ No. Every price quoted is a snapshot in Australian dollars and singles prices mo
 Not necessarily. Several cards further down this list carry higher prices than cards ranked above them, showing that price and play frequency do not always track each other.
 
 **Where can I buy Lorwyn singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Lorwyn MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Lorwyn%20MTG&campid=5339146789&customid=lorwyn-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Lorwyn MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Lorwyn%20MTG&campid=5339146789&customid=lorwyn-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

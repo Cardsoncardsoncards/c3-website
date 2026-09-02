@@ -204,7 +204,7 @@ No. Prices are quoted in Australian dollars as a snapshot at time of writing and
 Yes, for this particular top 20, each card has exactly one priced printing within Magic Origins, so there are no ties or spreads to note this time.
 
 **Where can I buy Magic Origins singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic Origins MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%20Origins%20MTG&campid=5339146789&customid=magic-origins-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic Origins MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%20Origins%20MTG&campid=5339146789&customid=magic-origins-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

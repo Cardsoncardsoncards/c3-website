@@ -202,7 +202,7 @@ No, the prices shown are a snapshot at one point in time. Magic singles move wit
 Rarity and price don't always move together. Several rares, including the Triomes and Yidaro, Wandering Monster, are priced ahead of some mythics in this set.
 
 **Where can I buy Ikoria: Lair of Behemoths singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ikoria: Lair of Behemoths MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ikoria%3A%20Lair%20of%20Behemoths%20MTG&campid=5339146789&customid=ikoria-lair-of-behemoths-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ikoria: Lair of Behemoths MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ikoria%3A%20Lair%20of%20Behemoths%20MTG&campid=5339146789&customid=ikoria-lair-of-behemoths-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

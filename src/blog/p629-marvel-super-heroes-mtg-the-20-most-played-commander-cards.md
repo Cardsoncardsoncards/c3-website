@@ -204,7 +204,7 @@ No. Every price here is a snapshot taken at time of writing and quoted in Austra
 Not necessarily. Play rate is measured by EDHREC rank, and price is a separate figure, so some cheaper cards on this list rank above pricier ones.
 
 **Where can I buy Marvel Super Heroes singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Marvel Super Heroes MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Marvel%20Super%20Heroes%20MTG&campid=5339146789&customid=marvel-super-heroes-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Marvel Super Heroes MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Marvel%20Super%20Heroes%20MTG&campid=5339146789&customid=marvel-super-heroes-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

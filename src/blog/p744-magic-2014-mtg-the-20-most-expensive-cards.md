@@ -202,7 +202,7 @@ Once past the top two entries, the prices across much of the list are tightly bu
 Not strictly. Mythic and rare cards are interspersed throughout the ranking, and several rares sit above or beside mythics, showing that price does not track rarity alone.
 
 **Where can I buy Magic 2014 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2014 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202014%20MTG&campid=5339146789&customid=magic-2014-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2014 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202014%20MTG&campid=5339146789&customid=magic-2014-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

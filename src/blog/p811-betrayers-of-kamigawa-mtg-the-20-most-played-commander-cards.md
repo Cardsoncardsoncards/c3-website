@@ -204,7 +204,7 @@ It reflects how often a card appears in Commander decks as tracked by EDHREC, wi
 Play rate and price are measured independently, so a common like Ink-Eyes or Mistblade Shinobi can rank above a pricier card like Higure, the Still Wind, since one reflects deck inclusion and the other reflects market price.
 
 **Where can I buy Betrayers of Kamigawa singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Betrayers of Kamigawa MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Betrayers%20of%20Kamigawa%20MTG&campid=5339146789&customid=betrayers-of-kamigawa-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Betrayers of Kamigawa MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Betrayers%20of%20Kamigawa%20MTG&campid=5339146789&customid=betrayers-of-kamigawa-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

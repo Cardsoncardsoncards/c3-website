@@ -204,7 +204,7 @@ It reflects how often a card appears in Commander decklists tracked by EDHREC, w
 No, it measures play frequency in Commander decks only. Price and rarity are reported alongside it, but the ranking itself is based purely on how often each card is played.
 
 **Where can I buy Mirrodin Besieged singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirrodin Besieged MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Mirrodin%20Besieged%20MTG&campid=5339146789&customid=mirrodin-besieged-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mirrodin Besieged MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Mirrodin%20Besieged%20MTG&campid=5339146789&customid=mirrodin-besieged-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

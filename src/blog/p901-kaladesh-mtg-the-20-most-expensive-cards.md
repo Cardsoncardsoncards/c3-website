@@ -202,7 +202,7 @@ No. Most are rares or mythics, but Diabolic Tutor is the one uncommon to appear 
 Not reliably. Several mythics, such as Skysovereign, Consul Flagship and Metallurgic Summonings, sit below rares in the ranking, showing that price and rarity do not always line up.
 
 **Where can I buy Kaladesh singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kaladesh MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Kaladesh%20MTG&campid=5339146789&customid=kaladesh-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Kaladesh MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Kaladesh%20MTG&campid=5339146789&customid=kaladesh-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

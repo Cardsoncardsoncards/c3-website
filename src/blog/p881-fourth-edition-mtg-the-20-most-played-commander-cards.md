@@ -202,7 +202,7 @@ It reflects how frequently a card is played in Commander decks as tracked by EDH
 Play rank and price are independent figures. Mana Vault, for example, carries the highest price on the list but ranks lower in play than several much cheaper cards like Llanowar Elves.
 
 **Where can I buy Fourth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fourth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Fourth%20Edition%20MTG&campid=5339146789&customid=fourth-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fourth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Fourth%20Edition%20MTG&campid=5339146789&customid=fourth-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

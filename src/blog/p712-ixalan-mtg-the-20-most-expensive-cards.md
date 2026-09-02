@@ -202,7 +202,7 @@ Not strictly. Mythics such as Gishath, Sun's Avatar and Carnage Tyrant sit among
 Ixalan introduced a number of transforming double faced cards, and several of them, such as Primal Amulet // Primal Wellspring and Growing Rites of Itlimoc // Itlimoc, Cradle of the Sun, appear among the higher priced cards in the set.
 
 **Where can I buy Ixalan singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ixalan MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ixalan%20MTG&campid=5339146789&customid=ixalan-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ixalan MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ixalan%20MTG&campid=5339146789&customid=ixalan-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

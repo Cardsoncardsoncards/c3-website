@@ -202,7 +202,7 @@ No, every price given is a snapshot in Australian dollars taken at one point in 
 It reflects how often a card appears across submitted Commander decklists, with a lower rank number meaning the card shows up in more decks relative to other cards.
 
 **Where can I buy War of the Spark singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [War of the Spark MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=War%20of%20the%20Spark%20MTG&campid=5339146789&customid=war-of-the-spark-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [War of the Spark MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=War%20of%20the%20Spark%20MTG&campid=5339146789&customid=war-of-the-spark-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

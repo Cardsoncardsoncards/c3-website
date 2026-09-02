@@ -202,7 +202,7 @@ No, this list is a snapshot in Australian dollars, and prices for Magic singles 
 The ranking is ordered strictly by price, so rarity does not determine position, meaning a rare can and does outrank a mythic when its price is higher.
 
 **Where can I buy Fate Reforged singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fate Reforged MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Fate%20Reforged%20MTG&campid=5339146789&customid=fate-reforged-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fate Reforged MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Fate%20Reforged%20MTG&campid=5339146789&customid=fate-reforged-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

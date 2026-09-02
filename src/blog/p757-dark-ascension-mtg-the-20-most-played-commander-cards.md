@@ -202,7 +202,7 @@ A lower EDHREC rank means a card is played in more decks, not that it costs more
 Yes, for this particular top 20 each card carries a single priced printing within Dark Ascension, though the methodology still accounts for cards with more.
 
 **Where can I buy Dark Ascension singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dark Ascension MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dark%20Ascension%20MTG&campid=5339146789&customid=dark-ascension-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dark Ascension MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dark%20Ascension%20MTG&campid=5339146789&customid=dark-ascension-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

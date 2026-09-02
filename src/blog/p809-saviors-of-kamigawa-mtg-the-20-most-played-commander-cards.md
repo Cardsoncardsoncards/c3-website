@@ -202,7 +202,7 @@ Yes, every price listed here is a snapshot taken at time of writing, and card pr
 Price and EDHREC play rank don't move together in a fixed way, so a common can end up priced above a rare depending on market conditions at the time the snapshot was taken.
 
 **Where can I buy Saviors of Kamigawa singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Saviors of Kamigawa MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Saviors%20of%20Kamigawa%20MTG&campid=5339146789&customid=saviors-of-kamigawa-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Saviors of Kamigawa MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Saviors%20of%20Kamigawa%20MTG&campid=5339146789&customid=saviors-of-kamigawa-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ No, every price here is a snapshot taken at one point in time. Singles prices mo
 Yes, every card on this particular list has only one priced printing in Odyssey, so there was no need to choose between multiple prices for any of them.
 
 **Where can I buy Odyssey singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Odyssey MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Odyssey%20MTG&campid=5339146789&customid=odyssey-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Odyssey MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Odyssey%20MTG&campid=5339146789&customid=odyssey-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

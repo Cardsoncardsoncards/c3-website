@@ -202,7 +202,7 @@ Most are, but two entries, Fabricate and Relentless Rats, are uncommons, while t
 No. Vampire Nocturnus and Liliana Vess are both mythics that sit below several rares in the ranking, showing rarity alone does not determine position.
 
 **Where can I buy Magic 2010 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2010 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202010%20MTG&campid=5339146789&customid=magic-2010-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2010 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202010%20MTG&campid=5339146789&customid=magic-2010-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

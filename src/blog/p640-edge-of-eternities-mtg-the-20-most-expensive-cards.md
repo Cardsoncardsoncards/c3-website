@@ -202,7 +202,7 @@ No. The figures given are a snapshot at time of writing, and Magic singles price
 A card can have several printings in Edge of Eternities, but not all of them carry a listed price, so the count of priced printings can be lower than the total printing count.
 
 **Where can I buy Edge of Eternities singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Edge of Eternities MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Edge%20of%20Eternities%20MTG&campid=5339146789&customid=edge-of-eternities-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Edge of Eternities MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Edge%20of%20Eternities%20MTG&campid=5339146789&customid=edge-of-eternities-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

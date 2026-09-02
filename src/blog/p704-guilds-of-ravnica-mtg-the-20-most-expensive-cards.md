@@ -204,7 +204,7 @@ They occupy the top four spots on this list, though this piece only reports thei
 Not directly. Mythics and rares are mixed throughout the top twenty, and the sole uncommon, Electrostatic Field, still outranks a number of mythic entries lower on the list.
 
 **Where can I buy Guilds of Ravnica singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Guilds of Ravnica MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Guilds%20of%20Ravnica%20MTG&campid=5339146789&customid=guilds-of-ravnica-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Guilds of Ravnica MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Guilds%20of%20Ravnica%20MTG&campid=5339146789&customid=guilds-of-ravnica-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

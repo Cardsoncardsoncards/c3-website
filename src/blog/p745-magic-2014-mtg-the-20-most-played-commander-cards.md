@@ -202,7 +202,7 @@ No, every price here is a snapshot taken at one point in time. Singles prices mo
 Rank reflects how often a card is played in Commander decks, while price reflects market factors like rarity and print run. The two don't always move together, which is why cheaper commons can outrank pricier rares and mythics on this list.
 
 **Where can I buy Magic 2014 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2014 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202014%20MTG&campid=5339146789&customid=magic-2014-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2014 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202014%20MTG&campid=5339146789&customid=magic-2014-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

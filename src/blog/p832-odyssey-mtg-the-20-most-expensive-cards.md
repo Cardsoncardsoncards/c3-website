@@ -202,7 +202,7 @@ Most are, but Dwarven Recruiter, Price of Glory and Standstill are uncommons, th
 No. Every card on this list has exactly one printing in the set, so the ranking reflects a single price point for each card rather than a comparison between versions.
 
 **Where can I buy Odyssey singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Odyssey MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Odyssey%20MTG&campid=5339146789&customid=odyssey-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Odyssey MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Odyssey%20MTG&campid=5339146789&customid=odyssey-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

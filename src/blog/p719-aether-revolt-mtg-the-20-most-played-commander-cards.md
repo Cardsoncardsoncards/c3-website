@@ -204,7 +204,7 @@ No, every price listed is a snapshot taken at the time of writing. Singles price
 Not directly. The list mixes mythics, rares, uncommons and commons, and rarity alone does not predict either a card's play rank or its price.
 
 **Where can I buy Aether Revolt singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Aether Revolt MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Aether%20Revolt%20MTG&campid=5339146789&customid=aether-revolt-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Aether Revolt MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Aether%20Revolt%20MTG&campid=5339146789&customid=aether-revolt-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

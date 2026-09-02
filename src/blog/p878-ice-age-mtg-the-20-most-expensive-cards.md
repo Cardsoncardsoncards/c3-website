@@ -202,7 +202,7 @@ No, the prices shown are a snapshot in Australian dollars and will move over tim
 Price reflects current market movement rather than rarity alone, which is why some commons and uncommons appear above certain rares in this ranking.
 
 **Where can I buy Ice Age singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ice Age MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ice%20Age%20MTG&campid=5339146789&customid=ice-age-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ice Age MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ice%20Age%20MTG&campid=5339146789&customid=ice-age-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ No. Prices are given in Australian dollars as a snapshot only and will move over
 Rarity is noted for each card but the ranking itself is based purely on EDHREC play data, not on how rare or common the printing is.
 
 **Where can I buy Planeshift singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Planeshift MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Planeshift%20MTG&campid=5339146789&customid=planeshift-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Planeshift MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Planeshift%20MTG&campid=5339146789&customid=planeshift-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

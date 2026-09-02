@@ -202,7 +202,7 @@ Yes, each of the 20 cards listed has one priced printing in New Phyrexia, so the
 The list includes mythics, rares and uncommons, with the Praetor cycle of mythics occupying several of the higher positions.
 
 **Where can I buy New Phyrexia singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [New Phyrexia MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=New%20Phyrexia%20MTG&campid=5339146789&customid=new-phyrexia-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [New Phyrexia MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=New%20Phyrexia%20MTG&campid=5339146789&customid=new-phyrexia-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

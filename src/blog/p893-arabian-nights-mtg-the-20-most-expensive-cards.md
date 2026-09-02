@@ -204,7 +204,7 @@ Mountain is the only common among these twenty cards, and its price places it ab
 Not entirely. The top of the list includes uncommons like Bazaar of Baghdad and Library of Alexandria priced above every rare on the list, showing that printed rarity does not always match price ranking in Arabian Nights.
 
 **Where can I buy Arabian Nights singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Arabian Nights MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Arabian%20Nights%20MTG&campid=5339146789&customid=arabian-nights-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Arabian Nights MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Arabian%20Nights%20MTG&campid=5339146789&customid=arabian-nights-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

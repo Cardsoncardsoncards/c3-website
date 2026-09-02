@@ -202,7 +202,7 @@ No, prices are a snapshot taken at time of writing and will move as the singles 
 Rarity within the set does not always match market price, and cards like Crumbling Ashes and Quillspike show that an uncommon can outprice several rares from the same set.
 
 **Where can I buy Eventide singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eventide MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Eventide%20MTG&campid=5339146789&customid=eventide-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eventide MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Eventide%20MTG&campid=5339146789&customid=eventide-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

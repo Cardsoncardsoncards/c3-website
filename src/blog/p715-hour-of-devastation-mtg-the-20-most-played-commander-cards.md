@@ -204,7 +204,7 @@ No. Every price in this list is a snapshot taken at the time of writing, and sin
 Not necessarily. Torment of Hailfire and Hour of Revelation both show that a card can carry a higher price than several cards ranked above it in actual Commander play.
 
 **Where can I buy Hour of Devastation singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Hour of Devastation MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Hour%20of%20Devastation%20MTG&campid=5339146789&customid=hour-of-devastation-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Hour of Devastation MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Hour%20of%20Devastation%20MTG&campid=5339146789&customid=hour-of-devastation-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

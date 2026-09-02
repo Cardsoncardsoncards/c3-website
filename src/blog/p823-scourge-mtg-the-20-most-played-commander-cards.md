@@ -202,7 +202,7 @@ No, the prices quoted are a snapshot in Australian dollars taken at the time of 
 Not directly. Several uncommons on this list are priced above rares ranked ahead of them, showing that rarity and price do not always move together.
 
 **Where can I buy Scourge singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Scourge MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Scourge%20MTG&campid=5339146789&customid=scourge-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Scourge MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Scourge%20MTG&campid=5339146789&customid=scourge-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

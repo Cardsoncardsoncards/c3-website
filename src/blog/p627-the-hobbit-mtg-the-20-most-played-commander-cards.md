@@ -202,7 +202,7 @@ No. These are preorder prices for a set that has not yet released, and prices mo
 Not necessarily. Price and EDHREC rank are separate measures, and several cheaper cards on this list, such as Wood Elves and Settle the Wreckage, outrank far more expensive mythics like Smaug the Magnificent.
 
 **Where can I buy The Hobbit singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Hobbit MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The%20Hobbit%20MTG&campid=5339146789&customid=the-hobbit-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Hobbit MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The%20Hobbit%20MTG&campid=5339146789&customid=the-hobbit-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

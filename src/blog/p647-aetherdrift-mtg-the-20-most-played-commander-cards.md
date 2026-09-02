@@ -202,7 +202,7 @@ No, every price quoted is a snapshot taken at one point in time. Card prices mov
 Some cards were printed more than once within Aetherdrift, for example as both a common land and a variant treatment, and each priced printing is listed separately in the data above each blurb.
 
 **Where can I buy Aetherdrift singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Aetherdrift MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Aetherdrift%20MTG&campid=5339146789&customid=aetherdrift-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Aetherdrift MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Aetherdrift%20MTG&campid=5339146789&customid=aetherdrift-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No. The figures here are a snapshot taken at one point in time, and Magic card p
 The size of the gap depends on the individual card and its printings, and this list simply reports the figures rather than explaining demand behind them.
 
 **Where can I buy Murders at Karlov Manor singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Murders at Karlov Manor MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Murders%20at%20Karlov%20Manor%20MTG&campid=5339146789&customid=murders-at-karlov-manor-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Murders at Karlov Manor MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Murders%20at%20Karlov%20Manor%20MTG&campid=5339146789&customid=murders-at-karlov-manor-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

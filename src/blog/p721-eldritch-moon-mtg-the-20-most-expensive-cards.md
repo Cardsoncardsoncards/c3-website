@@ -204,7 +204,7 @@ Not strictly. Sigarda's Aid, a rare, outranks ten mythics on this list, and Ishk
 Once the top ten cards are excluded, prices compress into a much narrower band, with many consecutive entries separated by only a small amount.
 
 **Where can I buy Eldritch Moon singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eldritch Moon MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Eldritch%20Moon%20MTG&campid=5339146789&customid=eldritch-moon-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Eldritch Moon MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Eldritch%20Moon%20MTG&campid=5339146789&customid=eldritch-moon-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

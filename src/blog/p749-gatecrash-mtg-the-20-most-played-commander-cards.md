@@ -202,7 +202,7 @@ No, all prices are a snapshot in Australian dollars and will move over time as t
 The list spans common, uncommon, rare and mythic cards, including guildgates and basic commons alongside the set's shock lands and mythic legends.
 
 **Where can I buy Gatecrash singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Gatecrash MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Gatecrash%20MTG&campid=5339146789&customid=gatecrash-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Gatecrash MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Gatecrash%20MTG&campid=5339146789&customid=gatecrash-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

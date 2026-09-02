@@ -202,7 +202,7 @@ Every card in this particular top twenty has only a single priced printing withi
 Not directly. While most of the top twenty are rares, commons like Cabal Ritual and uncommons like Cabal Coffers and Grim Lavamancer place highly, showing price and printed rarity don't always line up.
 
 **Where can I buy Torment singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Torment MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Torment%20MTG&campid=5339146789&customid=torment-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Torment MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Torment%20MTG&campid=5339146789&customid=torment-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

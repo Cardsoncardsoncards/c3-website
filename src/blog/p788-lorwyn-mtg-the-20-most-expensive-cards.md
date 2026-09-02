@@ -202,7 +202,7 @@ No. All prices shown are a snapshot taken at one point in time, and Magic single
 Rares make up the large majority of the top 20, with only Merrow Commerce, Elvish Promenade and Elvish Harbinger appearing as uncommons.
 
 **Where can I buy Lorwyn singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Lorwyn MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Lorwyn%20MTG&campid=5339146789&customid=lorwyn-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Lorwyn MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Lorwyn%20MTG&campid=5339146789&customid=lorwyn-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ No. Prices are a snapshot taken at time of writing and move over time, so figure
 EDHREC rank measures how often a card is played across decklists, not its price, so a cheap land that fits into many decks can easily outrank a costly mythic that only suits a narrower set of strategies.
 
 **Where can I buy Tarkir: Dragonstorm singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Tarkir: Dragonstorm MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Tarkir%3A%20Dragonstorm%20MTG&campid=5339146789&customid=tarkir-dragonstorm-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Tarkir: Dragonstorm MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Tarkir%3A%20Dragonstorm%20MTG&campid=5339146789&customid=tarkir-dragonstorm-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

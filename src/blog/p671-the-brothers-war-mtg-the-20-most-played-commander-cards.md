@@ -202,7 +202,7 @@ No. Every price shown is a snapshot taken at one point in time, and singles pric
 That reflects how each card was printed within The Brothers' War itself, whether through a single treatment or additional variant frames, and it is simply reported as given rather than adjusted.
 
 **Where can I buy The Brothers' War singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Brothers' War MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The%20Brothers'%20War%20MTG&campid=5339146789&customid=the-brothers-war-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Brothers' War MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The%20Brothers'%20War%20MTG&campid=5339146789&customid=the-brothers-war-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

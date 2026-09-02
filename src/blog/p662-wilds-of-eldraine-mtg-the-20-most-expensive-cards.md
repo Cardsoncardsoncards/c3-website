@@ -202,7 +202,7 @@ No, these are a snapshot taken at time of writing. Singles prices move over time
 Most are, but Experimental Confectioner is an uncommon, and several others such as Likeness Looter, Lord Skitter, Sewer King and The Goose Mother are rares rather than mythics.
 
 **Where can I buy Wilds of Eldraine singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Wilds of Eldraine MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Wilds%20of%20Eldraine%20MTG&campid=5339146789&customid=wilds-of-eldraine-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Wilds of Eldraine MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Wilds%20of%20Eldraine%20MTG&campid=5339146789&customid=wilds-of-eldraine-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No. All prices are a snapshot in Australian dollars and will shift over time as 
 Not necessarily. Elesh Norn, Mother of Machines carries the highest headline price on the list but ranks only in the middle by EDHREC play rate, while Terramorphic Expanse tops the play rate list at a fraction of that price.
 
 **Where can I buy Phyrexia: All Will Be One singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Phyrexia: All Will Be One MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Phyrexia%3A%20All%20Will%20Be%20One%20MTG&campid=5339146789&customid=phyrexia-all-will-be-one-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Phyrexia: All Will Be One MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Phyrexia%3A%20All%20Will%20Be%20One%20MTG&campid=5339146789&customid=phyrexia-all-will-be-one-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

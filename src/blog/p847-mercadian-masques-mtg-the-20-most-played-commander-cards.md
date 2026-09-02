@@ -202,7 +202,7 @@ No. Every price shown is a snapshot taken at the time of writing, and singles pr
 Not consistently. Several commons and uncommons on this list are priced below rares, and rank position does not track rarity in a simple way across the twenty entries.
 
 **Where can I buy Mercadian Masques singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mercadian Masques MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Mercadian%20Masques%20MTG&campid=5339146789&customid=mercadian-masques-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mercadian Masques MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Mercadian%20Masques%20MTG&campid=5339146789&customid=mercadian-masques-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

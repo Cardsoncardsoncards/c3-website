@@ -204,7 +204,7 @@ No, the figures given here are a snapshot in Australian dollars and will move as
 No, the list mixes mythic and rare cards, with mythics more common near the top and a small number of single printing rares appearing throughout, including at the very bottom.
 
 **Where can I buy Bloomburrow singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Bloomburrow MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Bloomburrow%20MTG&campid=5339146789&customid=bloomburrow-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Bloomburrow MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Bloomburrow%20MTG&campid=5339146789&customid=bloomburrow-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

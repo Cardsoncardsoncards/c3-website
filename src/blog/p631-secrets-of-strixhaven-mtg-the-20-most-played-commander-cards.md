@@ -204,7 +204,7 @@ No. All prices are in Australian dollars and are a snapshot taken at one point i
 Not necessarily. Several of the most played cards on this list, including Terramorphic Expanse and other commons, carry very low prices, while some cards ranked further down are priced much higher despite being used in fewer decks.
 
 **Where can I buy Secrets of Strixhaven singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Secrets of Strixhaven MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Secrets%20of%20Strixhaven%20MTG&campid=5339146789&customid=secrets-of-strixhaven-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Secrets of Strixhaven MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Secrets%20of%20Strixhaven%20MTG&campid=5339146789&customid=secrets-of-strixhaven-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No. Every price in this post is a snapshot taken at a point in time, and singles
 It measures how often a card appears in Commander decklists relative to other cards, with a lower number indicating more frequent play. It is not a measure of price or power level.
 
 **Where can I buy Visions singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Visions MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Visions%20MTG&campid=5339146789&customid=visions-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Visions MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Visions%20MTG&campid=5339146789&customid=visions-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ They count as separate printings of the same card rather than as new entries, so
 The size of the gap simply reflects the difference between whatever prices those printings currently carry. This post reports that gap without speculating on the reasons behind it.
 
 **Where can I buy Innistrad: Midnight Hunt singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad: Midnight Hunt MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Innistrad%3A%20Midnight%20Hunt%20MTG&campid=5339146789&customid=innistrad-midnight-hunt-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad: Midnight Hunt MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Innistrad%3A%20Midnight%20Hunt%20MTG&campid=5339146789&customid=innistrad-midnight-hunt-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

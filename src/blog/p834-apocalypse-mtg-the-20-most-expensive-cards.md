@@ -204,7 +204,7 @@ Several entries in the middle and lower sections of the list differ by only smal
 Not directly. Most entries are rares, but Goblin Ringleader, Dragon Arch and Fire // Ice are uncommons that still price close to several rares around them on the list.
 
 **Where can I buy Apocalypse singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Apocalypse MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Apocalypse%20MTG&campid=5339146789&customid=apocalypse-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Apocalypse MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Apocalypse%20MTG&campid=5339146789&customid=apocalypse-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

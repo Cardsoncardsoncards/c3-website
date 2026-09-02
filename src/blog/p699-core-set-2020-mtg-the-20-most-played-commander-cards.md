@@ -202,7 +202,7 @@ No, all prices are a snapshot in Australian dollars and can move up or down afte
 No, every card in this particular twenty had only a single priced printing in the set.
 
 **Where can I buy Core Set 2020 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Core Set 2020 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Core%20Set%202020%20MTG&campid=5339146789&customid=core-set-2020-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Core Set 2020 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Core%20Set%202020%20MTG&campid=5339146789&customid=core-set-2020-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

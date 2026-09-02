@@ -204,7 +204,7 @@ No. The figures given are a snapshot at the time of writing, and Magic card pric
 Not necessarily by a strict pattern. The list includes a mix of rares and uncommons throughout, including near both the top and bottom of the ranking.
 
 **Where can I buy Fifth Dawn singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fifth Dawn MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Fifth%20Dawn%20MTG&campid=5339146789&customid=fifth-dawn-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fifth Dawn MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Fifth%20Dawn%20MTG&campid=5339146789&customid=fifth-dawn-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

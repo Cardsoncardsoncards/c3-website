@@ -202,7 +202,7 @@ No, every price quoted is a snapshot in Australian dollars and will move over ti
 The size of that gap simply reflects the recorded prices of each printing in the set, and it varies considerably from card to card, as seen with Strip Mine and Mishra's Factory.
 
 **Where can I buy Antiquities singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Antiquities MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Antiquities%20MTG&campid=5339146789&customid=antiquities-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Antiquities MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Antiquities%20MTG&campid=5339146789&customid=antiquities-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

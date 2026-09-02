@@ -204,7 +204,7 @@ No, every price quoted here is a snapshot in Australian dollars taken at the tim
 Not necessarily. Watery Grave has the best rank on the list but is not the most expensive card here, while Ouroboroid carries the highest headline price despite ranking well down the list.
 
 **Where can I buy Edge of Eternities singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Edge of Eternities MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Edge%20of%20Eternities%20MTG&campid=5339146789&customid=edge-of-eternities-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Edge of Eternities MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Edge%20of%20Eternities%20MTG&campid=5339146789&customid=edge-of-eternities-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

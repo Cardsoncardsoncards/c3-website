@@ -204,7 +204,7 @@ Yes. All prices here are a snapshot in Australian dollars, and singles markets m
 That reflects how each card was distributed within Theros Beyond Death itself, whether through a standard printing alone or alongside a showcase, promotional, or alternate finish version, and it is separate from how the card is ranked.
 
 **Where can I buy Theros Beyond Death singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Theros Beyond Death MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Theros%20Beyond%20Death%20MTG&campid=5339146789&customid=theros-beyond-death-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Theros Beyond Death MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Theros%20Beyond%20Death%20MTG&campid=5339146789&customid=theros-beyond-death-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

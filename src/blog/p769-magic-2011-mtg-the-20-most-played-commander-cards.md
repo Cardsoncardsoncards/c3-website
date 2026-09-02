@@ -202,7 +202,7 @@ No. All prices are a snapshot in Australian dollars taken at one point in time, 
 It is ordered by play rate, using EDHREC rank, from number 1 as the most played card down to number 20 as the least played on this particular list.
 
 **Where can I buy Magic 2011 singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2011 MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%202011%20MTG&campid=5339146789&customid=magic-2011-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic 2011 MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%202011%20MTG&campid=5339146789&customid=magic-2011-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

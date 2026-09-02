@@ -204,7 +204,7 @@ Yes, all but one of the twenty cards listed are rares. Seething Song is the sole
 Goblin King and Phyrexian Arena share the same headline price, which the methodology flags as a tie rather than placing one artificially above the other.
 
 **Where can I buy Ninth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ninth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ninth%20Edition%20MTG&campid=5339146789&customid=ninth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ninth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ninth%20Edition%20MTG&campid=5339146789&customid=ninth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -202,7 +202,7 @@ This list ranks purely by price, not by rarity, so an uncommon like Enlightened 
 No, it covers only the twenty most expensive cards in the set by tracked price, not the full checklist.
 
 **Where can I buy Classic Sixth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Classic Sixth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Classic%20Sixth%20Edition%20MTG&campid=5339146789&customid=classic-sixth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Classic Sixth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Classic%20Sixth%20Edition%20MTG&campid=5339146789&customid=classic-sixth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

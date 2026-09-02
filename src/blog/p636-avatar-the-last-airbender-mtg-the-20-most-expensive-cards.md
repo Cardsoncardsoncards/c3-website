@@ -202,7 +202,7 @@ Readers can buy or sell singles through the card pages on our own site, as well 
 No. The figures given here are a snapshot in Australian dollars, and prices for singles move over time as the market for the set develops.
 
 **Where can I buy Avatar: The Last Airbender singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Avatar: The Last Airbender MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Avatar%3A%20The%20Last%20Airbender%20MTG&campid=5339146789&customid=avatar-the-last-airbender-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Avatar: The Last Airbender MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Avatar%3A%20The%20Last%20Airbender%20MTG&campid=5339146789&customid=avatar-the-last-airbender-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

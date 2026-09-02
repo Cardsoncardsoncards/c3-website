@@ -204,7 +204,7 @@ No, every card in this particular top 20 has only a single priced printing in Ur
 The list is mostly rares, with a handful of uncommons such as Mother of Runes, Engineered Plague and Tinker, and one common, Snap, at the bottom.
 
 **Where can I buy Urza's Legacy singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Legacy MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Urza's%20Legacy%20MTG&campid=5339146789&customid=urzas-legacy-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Legacy MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Urza's%20Legacy%20MTG&campid=5339146789&customid=urzas-legacy-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

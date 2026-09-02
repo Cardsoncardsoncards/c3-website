@@ -204,7 +204,7 @@ No. Prices are quoted in Australian dollars as a snapshot at time of writing, an
 Cards printed more than once within the set have each printing priced separately, so the headline price and any other printing prices are both shown for comparison.
 
 **Where can I buy Innistrad: Crimson Vow singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad: Crimson Vow MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Innistrad%3A%20Crimson%20Vow%20MTG&campid=5339146789&customid=innistrad-crimson-vow-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad: Crimson Vow MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Innistrad%3A%20Crimson%20Vow%20MTG&campid=5339146789&customid=innistrad-crimson-vow-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

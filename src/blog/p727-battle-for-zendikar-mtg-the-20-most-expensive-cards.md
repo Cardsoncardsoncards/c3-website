@@ -202,7 +202,7 @@ Rarity affects print numbers but does not by itself determine market price, so s
 Yes, it covers exactly the twenty most expensive cards from Battle for Zendikar by current price, ordered from first to twentieth.
 
 **Where can I buy Battle for Zendikar singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Battle for Zendikar MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Battle%20for%20Zendikar%20MTG&campid=5339146789&customid=battle-for-zendikar-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Battle for Zendikar MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Battle%20for%20Zendikar%20MTG&campid=5339146789&customid=battle-for-zendikar-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

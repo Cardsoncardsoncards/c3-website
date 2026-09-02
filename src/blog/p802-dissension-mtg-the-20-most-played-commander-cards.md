@@ -204,7 +204,7 @@ Rank measures how often a card is played in Commander decks, while price reflect
 Not directly. The list mixes commons, uncommons and rares throughout its twenty entries, since it is ordered purely by EDHREC rank rather than by rarity or price.
 
 **Where can I buy Dissension singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dissension MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dissension%20MTG&campid=5339146789&customid=dissension-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dissension MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dissension%20MTG&campid=5339146789&customid=dissension-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

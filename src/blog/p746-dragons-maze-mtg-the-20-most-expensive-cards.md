@@ -202,7 +202,7 @@ Yes, Mirko Vosk, Mind Drinker and Savageborn Hydra share exactly the same headli
 Mythics and rares fill most of the top twenty, with only two uncommons, Wear // Tear and Debt to the Deathless, appearing among them.
 
 **Where can I buy Dragon's Maze singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dragon's Maze MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dragon's%20Maze%20MTG&campid=5339146789&customid=dragons-maze-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dragon's Maze MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dragon's%20Maze%20MTG&campid=5339146789&customid=dragons-maze-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

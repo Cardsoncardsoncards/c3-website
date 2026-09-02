@@ -202,7 +202,7 @@ Yes, the list runs from number 1, the most expensive card, down to number 20, th
 Almost all of them are rare, with the single exception of Caltrops, which is uncommon.
 
 **Where can I buy Urza's Destiny singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Destiny MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Urza's%20Destiny%20MTG&campid=5339146789&customid=urzas-destiny-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Urza's Destiny MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Urza's%20Destiny%20MTG&campid=5339146789&customid=urzas-destiny-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

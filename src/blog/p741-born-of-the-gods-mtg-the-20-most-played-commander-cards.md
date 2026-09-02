@@ -204,7 +204,7 @@ No. Every price is a snapshot in Australian dollars at the time of writing, and 
 Not necessarily. Satyr Wayfinder is a common but still ranks inside the top ten on this list, ahead of several rares and mythics.
 
 **Where can I buy Born of the Gods singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Born of the Gods MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Born%20of%20the%20Gods%20MTG&campid=5339146789&customid=born-of-the-gods-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Born of the Gods MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Born%20of%20the%20Gods%20MTG&campid=5339146789&customid=born-of-the-gods-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

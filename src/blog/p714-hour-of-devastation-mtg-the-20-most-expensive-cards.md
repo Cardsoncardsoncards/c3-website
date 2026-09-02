@@ -204,7 +204,7 @@ No, all twenty cards in this particular ranking have exactly one priced printing
 Not strictly. Several mythics sit lower on this list than rares, and the set's one uncommon, Obelisk Spider, outprices multiple mythics ranked below it.
 
 **Where can I buy Hour of Devastation singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Hour of Devastation MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Hour%20of%20Devastation%20MTG&campid=5339146789&customid=hour-of-devastation-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Hour of Devastation MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Hour%20of%20Devastation%20MTG&campid=5339146789&customid=hour-of-devastation-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

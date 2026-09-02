@@ -202,7 +202,7 @@ No, every figure here is a snapshot taken at one point in time, and singles pric
 Some printings in the set simply do not carry a tracked price, so only the printings with an available figure are shown.
 
 **Where can I buy Phyrexia: All Will Be One singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Phyrexia: All Will Be One MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Phyrexia%3A%20All%20Will%20Be%20One%20MTG&campid=5339146789&customid=phyrexia-all-will-be-one-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Phyrexia: All Will Be One MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Phyrexia%3A%20All%20Will%20Be%20One%20MTG&campid=5339146789&customid=phyrexia-all-will-be-one-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

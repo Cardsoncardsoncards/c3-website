@@ -202,7 +202,7 @@ Not strictly. Most of the top entries are rares, but uncommons such as Wall of S
 Very close in places. Lightning Serpent and Panglacial Wurm, at nineteenth and twentieth, are separated by only a single cent.
 
 **Where can I buy Coldsnap singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Coldsnap MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Coldsnap%20MTG&campid=5339146789&customid=coldsnap-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Coldsnap MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Coldsnap%20MTG&campid=5339146789&customid=coldsnap-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No. All prices are quoted in Australian dollars and represent a snapshot at the 
 Every card on this particular top twenty had only a single tracked printing with a price, so no ties needed to be reported for this list.
 
 **Where can I buy Unlimited Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Unlimited Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Unlimited%20Edition%20MTG&campid=5339146789&customid=unlimited-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Unlimited Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Unlimited%20Edition%20MTG&campid=5339146789&customid=unlimited-edition-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

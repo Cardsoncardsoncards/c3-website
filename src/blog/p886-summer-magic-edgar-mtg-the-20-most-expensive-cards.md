@@ -202,7 +202,7 @@ No. Every price listed is a snapshot taken at a point in time, and prices for a 
 Summer Magic had a very restricted release, and that scarcity affects basic lands as much as any other card in the set. As a result, printed rarity does not line up neatly with current price for several cards on this list.
 
 **Where can I buy Summer Magic / Edgar singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Summer Magic / Edgar MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Summer%20Magic%20%2F%20Edgar%20MTG&campid=5339146789&customid=summer-magic-edgar-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Summer Magic / Edgar MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Summer%20Magic%20%2F%20Edgar%20MTG&campid=5339146789&customid=summer-magic-edgar-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

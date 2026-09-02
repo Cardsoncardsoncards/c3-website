@@ -202,7 +202,7 @@ Prophecy is a comparatively small expansion, and this list of twenty cards repre
 Rarity is mixed across the list, with rares making up most of the entries alongside a handful of uncommons and one common, Rhystic Study, at the very top.
 
 **Where can I buy Prophecy singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Prophecy MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Prophecy%20MTG&campid=5339146789&customid=prophecy-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Prophecy MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Prophecy%20MTG&campid=5339146789&customid=prophecy-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

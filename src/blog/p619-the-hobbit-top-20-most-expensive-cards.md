@@ -159,7 +159,7 @@ Several cards in The Hobbit have more than one printing, a standard version and 
 Smaug the Magnificent, at AU$310.22 on preorder pricing.
 
 **Where can I buy The Hobbit singles in Australia?**
-Check current listings and pricing on our [The Hobbit set page](https://cardsoncardsoncards.com.au/cards/mtg/sets/the-hobbit), or browse [The Hobbit MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The+Hobbit+MTG&campid=5339146789&customid=hobbit-top20-blog&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Check current listings and pricing on our [The Hobbit set page](https://cardsoncardsoncards.com.au/cards/mtg/sets/the-hobbit), or browse [The Hobbit MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The+Hobbit+MTG&campid=5339146789&customid=hobbit-top20-blog&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

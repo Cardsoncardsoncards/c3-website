@@ -204,7 +204,7 @@ Almost all of them are rare or mythic, with the sole exception being Thought Sco
 Once past the top few positions, the price gaps between neighbouring cards on this list become quite small, often a matter of cents, which is a separate pattern from the wide gap seen near the top of the list.
 
 **Where can I buy Dark Ascension singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dark Ascension MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Dark%20Ascension%20MTG&campid=5339146789&customid=dark-ascension-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Dark Ascension MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Dark%20Ascension%20MTG&campid=5339146789&customid=dark-ascension-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

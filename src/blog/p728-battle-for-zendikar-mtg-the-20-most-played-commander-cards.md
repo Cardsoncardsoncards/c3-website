@@ -204,7 +204,7 @@ No, prices are a snapshot in Australian dollars taken at time of writing. Single
 No, every card on this list had a single priced printing available, so the tie and multi-printing rules in the methodology did not need to resolve any conflicts here.
 
 **Where can I buy Battle for Zendikar singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Battle for Zendikar MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Battle%20for%20Zendikar%20MTG&campid=5339146789&customid=battle-for-zendikar-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Battle for Zendikar MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Battle%20for%20Zendikar%20MTG&campid=5339146789&customid=battle-for-zendikar-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

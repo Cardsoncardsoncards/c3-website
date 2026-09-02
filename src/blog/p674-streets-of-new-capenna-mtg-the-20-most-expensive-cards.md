@@ -204,7 +204,7 @@ No. Prices move over time with supply and demand, so every figure here is a snap
 Some printings in the set simply don't have a tracked price at the time of writing, so the count of priced printings can be lower than the total number of printings that exist.
 
 **Where can I buy Streets of New Capenna singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Streets of New Capenna MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Streets%20of%20New%20Capenna%20MTG&campid=5339146789&customid=streets-of-new-capenna-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Streets of New Capenna MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Streets%20of%20New%20Capenna%20MTG&campid=5339146789&customid=streets-of-new-capenna-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

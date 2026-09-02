@@ -204,7 +204,7 @@ Singles can be bought through the card pages on our own site, and through eBay A
 No. Every price is a snapshot taken at one point in time, and singles prices move with the market after release, so figures will change.
 
 **Where can I buy The Lost Caverns of Ixalan singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Lost Caverns of Ixalan MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=The%20Lost%20Caverns%20of%20Ixalan%20MTG&campid=5339146789&customid=the-lost-caverns-of-ixalan-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [The Lost Caverns of Ixalan MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=The%20Lost%20Caverns%20of%20Ixalan%20MTG&campid=5339146789&customid=the-lost-caverns-of-ixalan-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

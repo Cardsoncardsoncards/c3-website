@@ -202,7 +202,7 @@ Not strictly, the top five spots are all rares, but mythics and rares are mixed 
 Every card on this list has exactly one printing within Zendikar carrying a price, so none of the rankings are affected by multiple print versions.
 
 **Where can I buy Zendikar singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Zendikar MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Zendikar%20MTG&campid=5339146789&customid=zendikar-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Zendikar MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Zendikar%20MTG&campid=5339146789&customid=zendikar-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

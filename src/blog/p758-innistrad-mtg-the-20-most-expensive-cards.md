@@ -202,7 +202,7 @@ No, the figures given here are a snapshot taken at the time of writing, and Magi
 Isolated Chapel, at twentieth place, is a rare, while Moonmist further up the list is the only common to appear in the top twenty.
 
 **Where can I buy Innistrad singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Innistrad%20MTG&campid=5339146789&customid=innistrad-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Innistrad%20MTG&campid=5339146789&customid=innistrad-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

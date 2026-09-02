@@ -204,7 +204,7 @@ Not necessarily. Several uncommons on this list sit above rares and mythics, sho
 Yes, Cascading Cataracts and Combat Celebrant share the exact same headline price, which is noted at that point in the ranking.
 
 **Where can I buy Amonkhet singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Amonkhet MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Amonkhet%20MTG&campid=5339146789&customid=amonkhet-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Amonkhet MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Amonkhet%20MTG&campid=5339146789&customid=amonkhet-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

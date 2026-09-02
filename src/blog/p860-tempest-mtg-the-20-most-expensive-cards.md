@@ -202,7 +202,7 @@ Yes, all prices are a snapshot taken at the time of writing and will move as the
 Not always. Ancient Tomb and Wasteland are both uncommons priced above several rares, and Lotus Petal, a common, outranks numerous rares as well.
 
 **Where can I buy Tempest singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Tempest MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Tempest%20MTG&campid=5339146789&customid=tempest-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Tempest MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Tempest%20MTG&campid=5339146789&customid=tempest-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

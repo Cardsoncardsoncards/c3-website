@@ -204,7 +204,7 @@ Legions leaned heavily on tribal themes, with slivers making up a significant po
 Not entirely. Most of the top twenty are rares, but a few uncommons such as Root Sliver, Noxious Ghoul, Shifting Sliver and Wirewood Channeler are priced high enough to appear on the list alongside them.
 
 **Where can I buy Legions singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Legions MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Legions%20MTG&campid=5339146789&customid=legions-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Legions MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Legions%20MTG&campid=5339146789&customid=legions-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

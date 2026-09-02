@@ -204,7 +204,7 @@ No. Prices are quoted in Australian dollars as a snapshot at the time of writing
 Not consistently. Several uncommons and commons on this list, such as Foil and Alexi's Cloak, sit at very different price points despite similar or lower rarity than nearby rares.
 
 **Where can I buy Prophecy singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Prophecy MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Prophecy%20MTG&campid=5339146789&customid=prophecy-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Prophecy MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Prophecy%20MTG&campid=5339146789&customid=prophecy-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

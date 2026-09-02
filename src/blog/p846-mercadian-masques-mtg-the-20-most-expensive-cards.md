@@ -204,7 +204,7 @@ Price and rarity are not the same measurement. Nether Spirit is a rare and Snuff
 None of the twenty cards here carry a second priced printing within Mercadian Masques, so each is ranked on a single figure rather than a comparison between printings.
 
 **Where can I buy Mercadian Masques singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mercadian Masques MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Mercadian%20Masques%20MTG&campid=5339146789&customid=mercadian-masques-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Mercadian Masques MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Mercadian%20Masques%20MTG&campid=5339146789&customid=mercadian-masques-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

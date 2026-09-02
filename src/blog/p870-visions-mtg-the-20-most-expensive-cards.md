@@ -204,7 +204,7 @@ Most are, but two, Necromancy and Elephant Grass, are uncommon rather than rare.
 It can, since the ranking uses the highest priced printing available, but among these particular 20 cards none had more than one priced printing in Visions.
 
 **Where can I buy Visions singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Visions MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Visions%20MTG&campid=5339146789&customid=visions-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Visions MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Visions%20MTG&campid=5339146789&customid=visions-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

@@ -204,7 +204,7 @@ No. The figures given are a snapshot in Australian dollars at the time of writin
 Not directly. While mythics dominate the top half of the list, rarity alone does not set price, and several rares outrank lower-priced mythics further down.
 
 **Where can I buy Innistrad: Crimson Vow singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad: Crimson Vow MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Innistrad%3A%20Crimson%20Vow%20MTG&campid=5339146789&customid=innistrad-crimson-vow-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Innistrad: Crimson Vow MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Innistrad%3A%20Crimson%20Vow%20MTG&campid=5339146789&customid=innistrad-crimson-vow-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

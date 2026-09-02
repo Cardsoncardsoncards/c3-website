@@ -204,7 +204,7 @@ No. All prices are a snapshot in Australian dollars taken at the time of writing
 EDHREC rank measures how often a card appears in decklists, while price reflects market supply and demand factors not covered in this data, so the two can move independently, as seen with Revel in Riches sitting mid-list by rank but top by price.
 
 **Where can I buy Ixalan singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ixalan MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Ixalan%20MTG&campid=5339146789&customid=ixalan-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Ixalan MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Ixalan%20MTG&campid=5339146789&customid=ixalan-played&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

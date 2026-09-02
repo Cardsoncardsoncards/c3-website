@@ -202,7 +202,7 @@ The list is dominated by rares, with only a handful of uncommons such as Ashnod'
 The list runs from number 1, the most expensive card in the set, down to number 20, the least expensive card that still made the top twenty.
 
 **Where can I buy Fifth Edition singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fifth Edition MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Fifth%20Edition%20MTG&campid=5339146789&customid=fifth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Fifth Edition MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Fifth%20Edition%20MTG&campid=5339146789&customid=fifth-edition-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

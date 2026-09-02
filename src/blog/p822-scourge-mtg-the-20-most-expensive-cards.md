@@ -204,7 +204,7 @@ No, all prices are a snapshot in Australian dollars and will move over time as s
 Not strictly. Carrion Feeder, a common, outranks two rares further down the list, showing that price and printed rarity don't always align.
 
 **Where can I buy Scourge singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Scourge MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Scourge%20MTG&campid=5339146789&customid=scourge-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Scourge MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Scourge%20MTG&campid=5339146789&customid=scourge-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

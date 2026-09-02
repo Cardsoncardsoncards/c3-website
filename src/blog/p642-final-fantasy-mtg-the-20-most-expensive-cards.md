@@ -202,7 +202,7 @@ Printing counts depend on how many versions of that card were included in the se
 Most are mythic, but The Earth Crystal, Genji Glove and Tifa Lockhart are rares that still placed in the top twenty by price.
 
 **Where can I buy Final Fantasy singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Final Fantasy MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Final%20Fantasy%20MTG&campid=5339146789&customid=final-fantasy-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Final Fantasy MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Final%20Fantasy%20MTG&campid=5339146789&customid=final-fantasy-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 

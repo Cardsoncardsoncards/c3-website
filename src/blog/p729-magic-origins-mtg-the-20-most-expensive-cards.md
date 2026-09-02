@@ -204,7 +204,7 @@ Rarity influences how many copies exist, but it does not set price on its own. S
 Yes, several entries such as Liliana, Heretical Healer // Liliana, Defiant Necromancer, Jace, Vryn's Prodigy // Jace, Telepath Unbound, Nissa, Vastwood Seer // Nissa, Sage Animist and Chandra, Fire of Kaladesh // Chandra, Roaring Flame are double-faced planeswalker cards from Magic Origins.
 
 **Where can I buy Magic Origins singles in Australia?**
-Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic Origins MTG singles on eBay Australia](https://www.ebay.com/sch/i.html?_nkw=Magic%20Origins%20MTG&campid=5339146789&customid=magic-origins-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
+Every card above links through to its own page on our site, with current Australian pricing. You can also browse [Magic Origins MTG singles on eBay Australia](https://www.ebay.com.au/sch/i.html?_nkw=Magic%20Origins%20MTG&campid=5339146789&customid=magic-origins-expensive&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001).
 
 ---
 
