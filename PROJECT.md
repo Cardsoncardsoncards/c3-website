@@ -648,7 +648,26 @@ this machine can pull. See C3L-207.
 ### eBay EPN (worldwide, siteid removed)
 https://www.ebay.com/sch/i.html?_nkw=[SEARCH]&campid=5339146789&customid=[CONTEXT]&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001
 
-Note: siteid=15 removed for worldwide routing. International users route to local eBay automatically.
+Note: siteid=15 removed for worldwide routing.
+
+CORRECTED 2 September 2026 (task3, C3L-206). This note used to end "International users route to
+local eBay automatically." That was never verified and it is now TESTED AND FALSE, at least for the
+case that matters most here. Tested from a Sydney, Australia IP (AS4804, confirmed before testing),
+a .com search link built exactly as the blog posts build it returns HTTP 200 from www.ebay.com with
+ZERO redirects: no 3xx, no meta refresh, no JavaScript redirect, and the canonical tag stays on
+www.ebay.com. The page served carried ZERO "AU $" price markers and ZERO references to ebay.com.au,
+against 192 and 839 respectively on the .com.au control. An Australian reader clicking one of the
+283 blog links lands on the US site, in USD, and is not offered the AU site.
+
+What DOES survive is the tracking. campid=5339146789 is preserved into the final URL, appears 690
+times in the .com page body, and the same 4 rover.ebay.com attribution beacons are present on both
+domains. So the links are not silently untracked.
+
+The split to keep in mind: attribution works, targeting does not. Any revenue lost here is an
+Australian buyer being shown US listings, not a click going unrecorded. Deciding what to do about
+283 blog posts is a commercial call and was deliberately left alone. See C3L-206 for the full
+evidence and its limits, which include that this was an HTTP client rather than a real browser and
+that eBay served inconsistent responses between runs.
 
 MEASURED 2 September 2026 (task batch A, C3L-206). The two patterns above are BOTH live, and the
 split is bigger than "worldwide search, AU store" implies. Counting user-facing links only, that is
