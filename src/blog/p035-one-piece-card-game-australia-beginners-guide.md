@@ -1,5 +1,5 @@
 ---
-game: one-piece
+game: onepiece
 title: "One Piece Card Game Australia: Beginner's Guide to Getting Started"
 description: "Never played the One Piece Card Game? This plain-English guide covers how it works, what to buy first in Australia, realistic costs."
 date: 2026-04-07

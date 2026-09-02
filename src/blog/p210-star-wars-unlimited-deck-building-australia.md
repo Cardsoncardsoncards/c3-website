@@ -1,5 +1,5 @@
 ---
-game: star-wars-unlimited
+game: starwars
 title: "Star Wars Unlimited Deck Building"
 description: "Building your first Star Wars Unlimited deck in Australia, Leader choice, Base selection, arena management, and what to buy."
 date: 2026-05-05

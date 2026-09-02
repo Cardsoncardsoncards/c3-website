@@ -580,6 +580,7 @@ async function renderSetIndex(setSlug) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${set.set_name} Card Prices Australia | Cards on Cards on Cards</title>
+  <meta property="og:title" content="${set.set_name} Card Prices Australia | Cards on Cards on Cards">
   <meta name="description" content="Browse all ${cards.length} ${set.set_name} cards with live AUD pricing, colour identity filters, type filters and eBay AU buy links. Updated daily.">
   <link rel="canonical" href="https://cardsoncardsoncards.com.au/cards/mtg/sets/${setSlug}">
   <script type="application/ld+json">${schemaLD}</script>
@@ -761,13 +762,6 @@ ${NAV_HTML}
 
   <!-- Card grid -->
   <div id="card-grid">${cardGrid}</div>
-
-  <!-- Buylist CTA -->
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:36px;text-align:center">
-    <p style="font-size:15px;margin-bottom:8px">Pulled some ${set.set_name} cards worth selling?</p>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Join the C3 buylist waitlist and we will let you know when we start buying Australian TCG cards directly.</p>
-    <a href="/tracker.html" style="background:var(--accent);color:#0A0C14;padding:10px 24px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none">Join the Buylist Waitlist →</a>
-  </div>
 
 </div>
 

@@ -1,5 +1,5 @@
 ---
-game: one-piece
+game: onepiece
 title: "One Piece TCG Card Sleeves and Deck Boxes"
 description: "Protect your One Piece Card Game cards with the right sleeves and deck boxes. This guide covers the best options available in Australia for OP TCG."
 date: 2026-04-07

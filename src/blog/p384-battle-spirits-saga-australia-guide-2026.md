@@ -4,7 +4,7 @@ title: "Battle Spirits Saga in Australia: Most Valuable Cards and Is It Worth St
 description: "A complete guide to Battle Spirits Saga in Australia covering the most valuable cards, entry cost, community access, and whether Battle Spirits Saga is worth starting in 2026."
 date: 2026-05-30
 category: buying-guides
-game: battlespirits
+game: battlespiritssaga
 emoji: ⚔️
 tags: post
 affiliate_disclaimer: true

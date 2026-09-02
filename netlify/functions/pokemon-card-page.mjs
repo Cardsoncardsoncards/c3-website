@@ -1,5 +1,5 @@
 // task-132: unified follow block replaces the old MailerLite "Watch This Card" popup and the
-// bespoke follow box. The buylist-waitlist button (webform mIFDGb) is unaffected.
+// bespoke follow box.
 import { followBlockHtml } from './shared/follow-block.mjs';
 
 import { NAV_CSS, navHtml } from './shared/nav.mjs';
@@ -463,23 +463,6 @@ export default async (req) => {
       </p>
     </div>`;
 
-    const buylistHTML = `
-    <div class="section" style="background:rgba(74,222,128,.04);border-color:rgba(74,222,128,.2)">
-      <h2 style="color:#4ADE80">Sell Your Pokemon Cards</h2>
-      <p style="font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.6">
-        We buy Pokemon singles. Join the waitlist and we will be in touch when the C3 buylist goes live.
-        No obligation, unsubscribe any time.
-      </p>
-      <a href="https://landing.mailerlite.com/webforms/submit/mIFDGb"
-         target="_blank" rel="noopener"
-         class="cta-btn"
-         style="display:inline-block;padding:11px 22px;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.4);color:#4ADE80;border-radius:8px;font-weight:700;font-size:14px"
-         data-gtag-event="buylist_click"
-         data-gtag-game="pokemon">
-        Join the Buylist Waitlist &rarr;
-      </a>
-    </div>`;
-
     const html = `<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -664,8 +647,6 @@ export default async (req) => {
   ${ebayHTML}
 
   ${amazonTileHTML}
-
-  ${buylistHTML}
 
   <div class="section">
     <h2>About ${card.set_name}</h2>

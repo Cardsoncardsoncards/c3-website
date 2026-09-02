@@ -698,10 +698,6 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
     .price-alert-form input { flex: 1; min-width: 160px; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 6px; font-size: 13px; }
     .price-alert-form button { background: var(--accent); color: #000; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; }
 
-    /* Buylist */
-    .buylist-cta { background: var(--bg3); border: 1px dashed var(--border); border-radius: 8px; padding: 16px; text-align: center; font-family: sans-serif; font-size: 14px; color: var(--text2); }
-    .buylist-cta a { color: var(--accent); }
-
 
     /* Share Bar */
     .share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0;padding:16px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:10px;font-family:sans-serif}
@@ -1004,12 +1000,6 @@ ${otherPrintings && otherPrintings.length > 1 ? `
 
 ${relatedCardsHTML}
 ${sealedHTML}
-
-<div style="max-width:1100px;margin:0 auto 32px;padding:0 24px">
-  <div class="buylist-cta">
-    💰 Want to sell your ${card.name}? <a href="/tracker.html">Join the C3 buylist waitlist</a> and be first to know when we launch.
-  </div>
-</div>
 
 
 <!-- Feedback Tab -->

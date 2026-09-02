@@ -1,5 +1,5 @@
 ---
-game: one-piece
+game: onepiece
 title: "Best One Piece TCG Booster Boxes to Buy in Australia"
 description: "Looking for the best One Piece Card Game booster box in Australia? This guide covers every current set on Amazon AU."
 date: 2026-04-07

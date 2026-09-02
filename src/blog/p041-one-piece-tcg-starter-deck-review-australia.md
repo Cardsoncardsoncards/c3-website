@@ -1,5 +1,5 @@
 ---
-game: one-piece
+game: onepiece
 title: "One Piece TCG Starter Deck Review: Which Is Best for New Players?"
 description: "Comparing One Piece Card Game Starter Decks in Australia? This guide covers what's in each current starter, how they play, and which suits."
 date: 2026-04-07

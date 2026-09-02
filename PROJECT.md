@@ -614,6 +614,18 @@ https://www.ebay.com/sch/i.html?_nkw=[SEARCH]&campid=5339146789&customid=[CONTEX
 
 Note: siteid=15 removed for worldwide routing. International users route to local eBay automatically.
 
+MEASURED 2 September 2026 (task batch A, C3L-206). The two patterns above are BOTH live, and the
+split is bigger than "worldwide search, AU store" implies. Counting user-facing links only, that is
+href and markdown link targets across netlify/ and src/, with api.ebay.com excluded because it is an
+API endpoint and not a link:
+  www.ebay.com.au   613 links
+  www.ebay.com      283 links, every one of them in a blog post, one per post across 283 files
+All 283 carry the correct campid=5339146789, so tracking is intact either way. What is NOT verified is
+the claim in the line above: nobody has confirmed that an Australian visitor on a .com EPN link is
+actually routed to ebay.com.au WITH the campid preserved. Until someone checks that, do not "fix"
+either set. If routing preserves the campid this is cosmetic; if it does not, it is lost revenue on
+283 posts. See C3L-206, which is flagged for a dedicated read-only investigation.
+
 ### eBay store link
 https://www.ebay.com.au/str/cardsoncardsoncards?campid=5339146789&customid=[CONTEXT]&mkevt=1&mkcid=1&mkrid=705-53470-19255-0&toolid=10001
 

@@ -1,5 +1,5 @@
 ---
-game: star-wars-unlimited
+game: starwars
 title: "Star Wars Unlimited Booster Boxes in Australia"
 description: "Looking at Star Wars: Unlimited booster boxes in Australia? This guide covers current sets, realistic pull rates, where to buy."
 date: 2026-04-16

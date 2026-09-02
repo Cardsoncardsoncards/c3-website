@@ -1,5 +1,5 @@
 ---
-game: one-piece
+game: onepiece
 title: "One Piece vs Yu-Gi-Oh: Which TCG in Australia?"
 description: "Choosing between the One Piece Card Game and Yu-Gi-Oh in Australia? This honest comparison covers gameplay complexity, cost, community."
 date: 2026-04-07

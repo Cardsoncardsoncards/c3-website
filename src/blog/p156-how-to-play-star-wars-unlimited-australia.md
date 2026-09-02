@@ -1,5 +1,5 @@
 ---
-game: star-wars-unlimited
+game: starwars
 title: "How to Play Star Wars Unlimited"
 description: "How to play Star Wars Unlimited explained step by step. Covers Aspects, the Base mechanic, how combat works, and what makes this game different."
 date: 2026-05-05

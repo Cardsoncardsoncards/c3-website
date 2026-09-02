@@ -1,5 +1,5 @@
 ---
-game: one-piece
+game: onepiece
 title: "Most Expensive One Piece OP-10 Cards in Australia"
 description: "The highest-value One Piece Card Game cards from the Royal Blood (OP10) set with current AUD pricing. Chase Secret Rares, alt arts."
 date: 2026-05-05

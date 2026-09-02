@@ -30,18 +30,80 @@ const results = [];   // {url, status, ms, source, flags}
 const seen = new Set();
 const queue = [];
 
+// task-batchA, 2 September 2026. C3L-76: the content-level checks below were run against the
+// RAW response body, so they matched the site's own minified JavaScript as readily as its copy.
+// Measured on a 40 URL live sample before this fix: 52 flags raised, 45 of them false, 86.5 per
+// cent. Three distinct causes, all fixed here, none of them a fault of the pages flagged.
+//
+//   possible-empty-render   40 of 40 URLs, every single page. The /i regex matched the literal
+//                           "loading" inside 'loading'!==document.readyState, a deferred-script
+//                           snippet sitting just before </body> on every page on the site.
+//   amazon-link-missing-tag 3 of 3. "amazon.com.au" was matched inside the GA4 outbound-click
+//                           handler (href.includes('amazon.com.au')), not in any actual link.
+//   em-or-en-dash           2 of 2. Both dashes came from upstream card type lines rendered from
+//                           the database ("Rare Creature - Cat"), which C3 does not author and
+//                           cannot edit. The no-dash rule governs repo source, not vendor data.
+//
+// So: strip script and style before any content-level test, test link attributes as links rather
+// than as substrings of the whole document, and exclude the DB-rendered card-context block from
+// the dash check. Structural tests (GA4, canonical, og:title) still read the full document,
+// because those tags legitimately live in markup, and they were NOT producing false positives:
+// all 7 missing-og-title hits in the same sample were real.
+
+// Response body with script and style contents removed. Everything that reads page COPY goes
+// through this, never the raw body.
+function contentOnly(html) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ');
+}
+
+// Values of every href on the page, so link checks test links instead of substrings.
+function hrefs(html) {
+  // Backreference to the opening quote. A [^"']+ class stops at the first apostrophe,
+  // so a double-quoted eBay URL containing a raw apostrophe (Mishra's Workshop, Kai'Sa,
+  // Harpie's Feather Duster) was truncated mid-URL and then read as an affiliate link with
+  // no campid. That invented 4 flags on the 40 URL sample. Verified: all 4 cleared by this.
+  return [...html.matchAll(/href=(["'])(.*?)\1/g)].map(m => m[2]);
+}
+
 function flagChecks(url, html) {
   const flags = [];
   if (!html) return flags;
+  const content = contentOnly(html);
+  const links = hrefs(html);
+
   if (html.includes('siteid=15')) flags.push('siteid=15');
+
+  // Structural: these are markup tags, so they are read from the full document on purpose.
   if (!html.includes('G-WR68HPE92S')) flags.push('missing-GA4');
   if (!html.includes('rel="canonical"') && !html.includes("rel='canonical'")) flags.push('missing-canonical');
   if (!/property=["']og:title["']/.test(html)) flags.push('missing-og-title');
-  if (html.includes('\u2014') || html.includes('\u2013')) flags.push('em-or-en-dash');
-  if (!html.includes('campid=5339146789') && html.includes('ebay.com.au')) flags.push('ebay-link-missing-campid');
-  if (html.includes('amazon.com.au') && !html.includes('tag=blasdigital-22') && !html.includes('amzn.to')) flags.push('amazon-link-missing-tag');
-  if (html.includes('amzn.to')) flags.push('amzn.to-shortlink');
-  if (/(Loading|No cards found|No sets found)[\s\S]{0,200}<\/body>/i.test(html)) flags.push('possible-empty-render');
+
+  // Dashes: page copy only, and with the upstream type-line block removed. A dash inside a card
+  // name or type line comes from the vendor feed, so flagging it asks for an edit that cannot be
+  // made. What this still reports is C3-authored and actionable.
+  const authored = content
+    .replace(/<div class="card-context">[\s\S]*?<\/div>/gi, ' ')
+    .replace(/<div class="card-meta">[\s\S]*?<\/div>/gi, ' ');
+  if (authored.includes('\u2014') || authored.includes('\u2013')) flags.push('em-or-en-dash');
+
+  // Affiliate links: judged per link. The old whole-page test also HID real breakage, because a
+  // single correct campid anywhere on the page satisfied it for every other eBay link there.
+  const ebayLinks = links.filter(h => h.includes('ebay.com.au') || h.includes('ebay.com/'));
+  if (ebayLinks.some(h => !h.includes('campid=5339146789'))) flags.push('ebay-link-missing-campid');
+
+  const amazonLinks = links.filter(h => h.includes('amazon.com.au'));
+  if (amazonLinks.some(h => !h.includes('tag=blasdigital-22'))) flags.push('amazon-link-missing-tag');
+
+  if (links.some(h => h.includes('amzn.to'))) flags.push('amzn.to-shortlink');
+
+  // Empty render: a real empty render is a placeholder AND almost no copy. The marker on its own
+  // is not evidence, which is what made this fire on all 40 sampled URLs.
+  const visible = content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const placeholder = /(No cards found|No sets found|Loading\u2026|Loading\.\.\.)/.test(visible);
+  if (placeholder && visible.length < 1500) flags.push('possible-empty-render');
+
   return flags;
 }
 
