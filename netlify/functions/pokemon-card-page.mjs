@@ -149,8 +149,11 @@ async function handleSetPage(setSlug, headers) {
   // are synchronous. fxRate() never throws and falls back to a labelled constant.
   const audRate = await fxRate();
   const accent = '#f5a623';
+  // Same duplicate-slug hazard as pokemon-set-page.mjs: a slug is not unique in pokemon_sets, so
+  // an unordered limit=1 can resolve to a stale re-issued row with no cards. Order by the most
+  // recently synced row, with id.desc as the deterministic tiebreak.
   const [_psr0] = await Promise.allSettled([
-    supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=*`)
+    supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&order=updated_at.desc.nullslast,id.desc&limit=1&select=*`)
   ]);
   if (_psr0.status === 'rejected') return new Response('<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Temporarily Unavailable</title></head><body style="background:#0A0C14;color:#F0F2FF;font-family:sans-serif;text-align:center;padding:60px 20px"><h1>Temporarily Unavailable</h1><p>Our data is briefly unavailable. Please try again shortly.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'Retry-After': '120' } });
   const sets = _psr0.value;

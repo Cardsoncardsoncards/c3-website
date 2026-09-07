@@ -74,8 +74,19 @@ export default async (req) => {
   if (!setSlug) return new Response(graceful404(''), { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
 
   try {
+    // A slug is not unique in pokemon_sets, so limit=1 without an order returns whichever row
+    // Postgres happens to hand back first. When upstream re-issues a set under a NEW id (it did
+    // for Crown Zenith: 5500215 in May, 5500218 in September, same slug), the stale row and the
+    // live one both match, and the stale one won: both Crown Zenith set pages served "0 cards"
+    // while 295 real cards sat on the live row.
+    //
+    // Order by updated_at so the most recently synced row wins, which is the one the card sync
+    // is actually writing cards against. NOT by card_count: that is upstream's own claim and it
+    // does not track reality here, the empty row claimed 224 and the two Galarian Gallery rows
+    // both claim 70, so it cannot separate them at all. id.desc is the deterministic tiebreak,
+    // since a re-issued set always arrives with a higher id.
     const [sets, ebayToken] = await Promise.allSettled([
-      supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&limit=1&select=id,name,slug,release_date,card_count`),
+      supabaseGet(`pokemon_sets?slug=eq.${encodeURIComponent(setSlug)}&order=updated_at.desc.nullslast,id.desc&limit=1&select=id,name,slug,release_date,card_count`),
       getEbayToken()
     ]);
 
