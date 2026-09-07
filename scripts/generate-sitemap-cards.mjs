@@ -6,8 +6,8 @@
 //
 // Price thresholds (balance SEO value vs crawl budget):
 //   MTG: one file, sitemap-cards.xml. A slug is submitted when its RESOLVED printing (see
-//        shared/card-resolver.mjs) is AU$5.00 or more, which is the same gate card-page.mjs
-//        uses for noindex since task-150. The old two-file $2.00 / $0.25-$1.99 split and
+//        shared/card-resolver.mjs) is AU$1.00 or more, which is the same gate card-page.mjs
+//        uses for noindex. The old two-file $2.00 / $0.25-$1.99 split and
 //        sitemap-cards-2.xml were retired in task-82.
 //   Pokemon/Lorcana/YuGiOh: any card with an image
 
@@ -116,7 +116,7 @@ async function generateMtgSitemap() {
   // into two files at the $2.00 line), a different column in a different currency. USD 0.25 is
   // about AU$0.36, so 9,589 of MTG's 20,094 submitted URLs were noindexed (task-81). One file
   // is enough now: the eligible set is far inside Google's 50,000-per-sitemap limit.
-  const INDEX_THRESHOLD_AUD = 5.00; // must track the noindex gate in card-page.mjs
+  const INDEX_THRESHOLD_AUD = 1.00; // must track the noindex gate in card-page.mjs
 
   // Fetch only priced printings, which is the resolver's first pass. A slug with no priced
   // printing anywhere resolves to a null price on the page and is noindexed, so it has no
@@ -157,7 +157,7 @@ async function generateMtgSitemap() {
   // the query silently returned nothing (e.g. a partial Supabase outage) — treat it as a hard
   // failure rather than shipping an empty sitemap that de-indexes every MTG card page.
   if (urls.length === 0) {
-    throw new Error('mtg_cards (AU$5.00+ resolved) returned 0 rows, refusing to write an empty sitemap-cards.xml');
+    throw new Error('mtg_cards (AU$1.00+ resolved) returned 0 rows, refusing to write an empty sitemap-cards.xml');
   }
 
   if (urls.length >= 50000) {
