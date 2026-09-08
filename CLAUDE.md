@@ -377,6 +377,21 @@ designation back on row count.
 - Per-game tables follow the pattern <game>_cards and <game>_sets.
 - <game>_sets columns: id, name, slug, abbreviation, release_date, card_count, game_slug,
   updated_at. Note it is name, NOT set_name.
+- UNIQUE SLUG INDEX ON EVERY <game>_sets TABLE: 32 of 32, VERIFIED 8 September 2026 against the
+  live database, not asserted. mtg_sets is the shape exception, keying on set_slug rather than
+  slug, and it carries mtg_sets_set_slug_key.
+  Why this line exists, because the history is the useful part: until 7 September this was true of
+  only 24 of 32. The 7 earliest games built (dragonball, lorcana, onepiece, pokemon, riftbound,
+  starwars, yugioh) never had one, the index having arrived with the newer games and never been
+  backfilled onto the originals. pokemon_sets is the one that actually accumulated duplicates,
+  which served two Crown Zenith set pages as "0 cards" while 295 real cards sat unreachable
+  (C3L-217).
+  NOTE ON A CLAIM THAT WAS NEVER HERE: the C3L-217 migration header and its register row both
+  said "CLAUDE.md states this is universal". CLAUDE.md said no such thing, in this section or
+  anywhere else, and both have now been corrected. The gap was never a contradicted document, it
+  was an UNDOCUMENTED assumption that nothing had ever checked. It is documented and checked now.
+  Consequence to know before the next upstream re-issue: a set re-issued under a new id reusing an
+  existing slug now aborts that sets upsert with a 23505 rather than quietly creating a second row.
 - tcg_releases is forward-looking only. It has no rows for the recent past and no Marvel entry.
   For a released set, query the per-game <game>_sets table instead. (Learned in task-114.)
 
