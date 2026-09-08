@@ -79,7 +79,7 @@ export default async (req) => {
   const gameConfigJson = JSON.stringify(GAME_CONFIG);
 
   // OUT-03. The buy and sell badges used to read "<pct> off high" and "Near <pct>% of high".
-  // Both framed a gap against a figure whose column is named price_52w_high_aud, when no card
+  // Both framed a gap against a figure whose column was then named price_recent_high_aud, when no card
   // in mtg_signals has more than 111 distinct days of history, so the percentage read as far
   // more authoritative than the data behind it supports. What replaces it is the recent high
   // itself, shown beside the current price in the same cell, which states only what is known.

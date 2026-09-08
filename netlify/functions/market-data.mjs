@@ -214,7 +214,7 @@ async function fetchMTGMovers(period) {
 }
 
 // Signals come from mtg_signals, rebuilt nightly by the update-mtg-signals-daily
-// pg_cron job. This used to read price_52w_high_aud / price_52w_low_aud off
+// pg_cron job. This used to read price_recent_high_aud / price_recent_low_aud off
 // mtg_price_snapshots, but those columns were abandoned on 18 June 2026 when that job
 // took over and have been NULL on every row written since, so both filters matched zero
 // rows and the buy/sell sections on /market rendered empty. mtg_signals carries
@@ -229,11 +229,14 @@ async function fetchMTGMovers(period) {
 const SIGNAL_MIN_AUD    = 5;
 
 // OUT-03: the display floor. No row in mtg_signals has more than 111 distinct days of price
-// history, so price_52w_high_aud is not a 52 week high whatever its name says. A card below
+// history. A card below
 // this floor is dropped from the signal lists entirely, because membership of buySignals or
 // sellSignals is itself a signal-derived claim, not merely a container for one. Read time
 // only: no row is altered and no migration is involved, so lowering this number reverts it.
-const MIN_SIGNAL_HISTORY_DAYS = 90;
+// C3L-34, 8 September 2026: lowered 90 to 75 in step with the explicit 90 day signals window.
+// days_of_history now tops out at 81, so a floor of 90 would match zero cards. Full reasoning
+// is in card-page.mjs beside the same constant.
+const MIN_SIGNAL_HISTORY_DAYS = 75;
 
 // NULL fails closed. An un-recomputed row has unknown provenance, which is not the same as
 // having enough history behind it.
@@ -274,12 +277,12 @@ async function fetchMTGSignals() {
       supabaseGet(
         `mtg_signals?buy_verdict=eq.buy&latest_price_aud=gte.${SIGNAL_MIN_AUD}` +
         `&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}` +
-        `&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud,days_of_history`
+        `&select=scryfall_id,latest_price_aud,price_recent_high_aud,price_recent_low_aud,days_of_history`
       ),
       supabaseGet(
         `mtg_signals?sell_verdict=eq.sell&latest_price_aud=gte.${SIGNAL_MIN_AUD}` +
         `&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}` +
-        `&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud,days_of_history`
+        `&select=scryfall_id,latest_price_aud,price_recent_high_aud,price_recent_low_aud,days_of_history`
       )
     ]);
     const buySig  = buyRaw.status  === 'fulfilled' && Array.isArray(buyRaw.value)  ? buyRaw.value  : [];
@@ -299,7 +302,7 @@ async function fetchMTGSignals() {
       // whose meaning has quietly changed. For cards that do clear the floor, discount is
       // computed exactly as before, so the field's meaning is unchanged for every row present.
       if (!hasSignalHistory(snap)) return null;
-      const high = parseFloat(snap.price_52w_high_aud);
+      const high = parseFloat(snap.price_recent_high_aud);
       const price = parseFloat(snap.latest_price_aud);
       if (!(high > 0)) return null;
       const discount = Math.round(((high - price) / high) * 100);
@@ -325,8 +328,8 @@ async function fetchMTGSignals() {
       if (!card) return null;
       // OUT-03: see the buy branch above. Same floor, same reason.
       if (!hasSignalHistory(snap)) return null;
-      const high = parseFloat(snap.price_52w_high_aud);
-      const low = parseFloat(snap.price_52w_low_aud);
+      const high = parseFloat(snap.price_recent_high_aud);
+      const low = parseFloat(snap.price_recent_low_aud);
       const price = parseFloat(snap.latest_price_aud);
       const range = high - low;
       if (!(range > 0)) return null;

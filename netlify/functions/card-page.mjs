@@ -35,12 +35,21 @@ const CHART_WINDOW_DAYS = 90;
 const SIGNAL_MIN_HISTORY_DAYS = 30;
 
 // OUT-03: the DISPLAY floor, distinct from the 30 day floor above. mtg_signals stores a column
-// named price_52w_high_aud, but no row in that table has more than 111 distinct days of price
+// named price_recent_high_aud, but no row in that table has more than 111 distinct days of price
 // history, so the figure is not a 52 week high and never has been. Rather than rename a column
 // four consumers depend on, every consumer now withholds signal-derived output until a card has
 // at least this many days behind it. Applied at read time only: the stored data is untouched,
 // and reverting is a matter of lowering this number, not a migration.
-const MIN_SIGNAL_HISTORY_DAYS = 90;
+// C3L-34, 8 September 2026: LOWERED FROM 90 TO 75, and the reason is arithmetic rather than
+// taste. compute_mtg_signals_batch now bounds itself to an EXPLICIT 90 day window, so
+// days_of_history can no longer exceed 90, and in practice tops out at 81 because the window
+// carries known snapshot gaps. Measured across all 44,877 rows straight after the change:
+// ZERO cards reach 90 days, max is 81 and median is 81. Leaving the floor at 90 would have
+// withheld Recent High, Recent Low and both verdicts from EVERY MTG card, silently. 75 keeps
+// 38,374 cards, 85.5 per cent, qualifying, which is the proportion the old 90-of-111 floor
+// allowed. The rename is what made this visible: the old column name hid the fact that this
+// floor and the signals window were coupled at all.
+const MIN_SIGNAL_HISTORY_DAYS = 75;
 
 // The single gate every signal-derived figure on this page passes through. NULL fails closed,
 // for the C3L-39 reason: a row that has not been recomputed has unknown provenance, which is
@@ -345,13 +354,13 @@ function renderHTML({ card, snapshots, relatedCards, sealedProducts, prevCard, n
   const priceAud = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? card.price_usd * fxRate : null);
   const priceAudFoil = card.price_usd_foil ? card.price_usd_foil * fxRate : null;
   const priceAudEtched = card.price_usd_etched ? card.price_usd_etched * fxRate : null;
-  // 52-week high/low and buy/sell verdict come from the mtg_signals table.
+  // Recent high/low and buy/sell verdict come from the mtg_signals table.
   // OUT-03: both are signal-derived, so both are withheld below the display floor. A card that
   // fails the gate renders exactly as a card with no mtg_signals row already does, which is to
   // say the price-stats block is absent entirely rather than showing zeroes or dashes.
   const signalsUsable = hasSignalHistory(signals);
-  const high52w = signalsUsable && signals.price_52w_high_aud != null ? parseFloat(signals.price_52w_high_aud) : null;
-  const low52w = signalsUsable && signals.price_52w_low_aud != null ? parseFloat(signals.price_52w_low_aud) : null;
+  const recentHigh = signalsUsable && signals.price_recent_high_aud != null ? parseFloat(signals.price_recent_high_aud) : null;
+  const recentLow = signalsUsable && signals.price_recent_low_aud != null ? parseFloat(signals.price_recent_low_aud) : null;
   const verdict = getSignalVerdict(signals);
   const edhrecLabel = getEdhrecLabel(card.edhrec_rank);
 
@@ -844,11 +853,11 @@ ${contextPara}
         Scryfall estimate · USD to AUD · Updated daily
       </div>
 
-      ${(high52w || low52w) ? `
+      ${(recentHigh || recentLow) ? `
       <div class="price-stats">
-        <div class="price-stat"><div class="price-stat-label">Recent High</div><div class="price-stat-value">${formatAUD(high52w) || 'N/A'}</div></div>
+        <div class="price-stat"><div class="price-stat-label">Recent High</div><div class="price-stat-value">${formatAUD(recentHigh) || 'N/A'}</div></div>
         <div class="price-stat"><div class="price-stat-label">Current</div><div class="price-stat-value">${formatAUD(priceAud) || 'N/A'}</div></div>
-        <div class="price-stat"><div class="price-stat-label">Recent Low</div><div class="price-stat-value">${formatAUD(low52w) || 'N/A'}</div></div>
+        <div class="price-stat"><div class="price-stat-label">Recent Low</div><div class="price-stat-value">${formatAUD(recentLow) || 'N/A'}</div></div>
       </div>` : ''}
 
       ${priceAud ? `<div class="condition-guide">Condition: NM ${formatAUD(priceAud)} · LP ${formatAUD(priceAud * 0.80)} · Played ${formatAUD(priceAud * 0.60)}</div>` : ''}
@@ -1561,11 +1570,11 @@ export default async (req, context) => {
       // Other printings -- same card name, different sets/variants. scryfall_id is unique per printing.
       supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&select=scryfall_id,slug,set_name,released_at,rarity,collector_number,image_uri_normal,image_uri_small,price_usd,price_aud,price_usd_foil&order=released_at.desc&limit=80`, false),
       getFxRate(),
-      // 52-week high/low and buy/sell verdict come from the precomputed mtg_signals table.
+      // Recent high/low and buy/sell verdict come from the precomputed mtg_signals table.
       // C3L-39: days_of_history added to the select, without it getSignalVerdict cannot tell
       // an insufficient-data card from a genuine mid-range one and would fail closed on every
       // card. Selecting it is what makes the guard actually work on this page.
-      supabaseGet(`mtg_signals?scryfall_id=eq.${card.scryfall_id}&select=price_52w_low_aud,price_52w_high_aud,buy_verdict,sell_verdict,days_of_history&limit=1`, false)
+      supabaseGet(`mtg_signals?scryfall_id=eq.${card.scryfall_id}&select=price_recent_low_aud,price_recent_high_aud,buy_verdict,sell_verdict,days_of_history&limit=1`, false)
     ]);
 
     const snapshotData = snapshots.status === 'fulfilled' ? snapshots.value : [];

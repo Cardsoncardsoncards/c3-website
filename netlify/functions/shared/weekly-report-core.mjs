@@ -224,11 +224,14 @@ const SIGNAL_SCAN_LIMIT   = 120;
 const SIGNAL_MIN_AUD      = 5;
 
 // OUT-03: the display floor. No row in mtg_signals carries more than 111 distinct days of
-// price history, so price_52w_high_aud is not a 52 week high whatever the column is called.
+// price history.
 // A card below this floor is left out of the buy and sell sections entirely, because being
 // listed there is itself a signal-derived claim. Read time only, nothing is written or
 // migrated, so lowering this number reverts the behaviour.
-const MIN_SIGNAL_HISTORY_DAYS = 90;
+// C3L-34, 8 September 2026: lowered 90 to 75 in step with the explicit 90 day signals window.
+// days_of_history now tops out at 81, so a floor of 90 would match zero cards. Full reasoning
+// is in card-page.mjs beside the same constant.
+const MIN_SIGNAL_HISTORY_DAYS = 75;
 
 // NULL fails closed: an un-recomputed row has unknown provenance, which is not the same as
 // having enough history behind it. This matters more in an email than on a page, because
@@ -272,11 +275,11 @@ async function mtgBuy(limit){
   try{
     // Ordered by value, not cheapness. Ordering ascending surfaced six A$1.01 cards,
     // which is not a buy list any seller can act on.
-    const data=await sbGet(`mtg_signals?buy_verdict=eq.buy&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud,days_of_history`);
+    const data=await sbGet(`mtg_signals?buy_verdict=eq.buy&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_recent_high_aud,price_recent_low_aud,days_of_history`);
     const pairs=await namedSignals(data);
     const rows=pairs.map(({row:s,card:c})=>{
       if(!hasSignalHistory(s))return null;
-      const high=parseFloat(s.price_52w_high_aud), price=parseFloat(s.latest_price_aud);
+      const high=parseFloat(s.price_recent_high_aud), price=parseFloat(s.latest_price_aud);
       if(!(high>0))return null;
       return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:price,high,game:'mtg'};
     }).filter(Boolean);
@@ -287,11 +290,11 @@ async function mtgBuy(limit){
 }
 async function mtgSell(limit){
   try{
-    const data=await sbGet(`mtg_signals?sell_verdict=eq.sell&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_52w_high_aud,price_52w_low_aud,days_of_history`);
+    const data=await sbGet(`mtg_signals?sell_verdict=eq.sell&latest_price_aud=gte.${SIGNAL_MIN_AUD}&order=latest_price_aud.desc&limit=${SIGNAL_SCAN_LIMIT}&select=scryfall_id,latest_price_aud,price_recent_high_aud,price_recent_low_aud,days_of_history`);
     const pairs=await namedSignals(data);
     const rows=pairs.map(({row:s,card:c})=>{
       if(!hasSignalHistory(s))return null;
-      const high=parseFloat(s.price_52w_high_aud), low=parseFloat(s.price_52w_low_aud), price=parseFloat(s.latest_price_aud);
+      const high=parseFloat(s.price_recent_high_aud), low=parseFloat(s.price_recent_low_aud), price=parseFloat(s.latest_price_aud);
       const range=high-low;
       if(!(range>0))return null;
       return {name:c.name,setName:c.set_name,rarity:c.rarity||'',slug:c.slug,priceAud:price,high,game:'mtg'};
