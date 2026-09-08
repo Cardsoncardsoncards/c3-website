@@ -63,16 +63,22 @@ commit;
 --    See pg_get_functiondef('compute_mtg_signals_batch') for the authoritative text.
 
 -- ---------------------------------------------------------------------------
--- CONTRACT PHASE. Applied 8 September 2026 AFTER the deploy was verified live.
--- Do not run this before the code reading price_recent_* is deployed.
+-- CONTRACT PHASE. APPLIED 8 September 2026, after deploy b6e61a9 was confirmed published by
+-- commit_ref and verified live on real card pages. Recorded as applied, not as pending.
 -- ---------------------------------------------------------------------------
 -- alter table public.mtg_signals
 --   drop column price_52w_high_aud,
 --   drop column price_52w_low_aud;
 --
--- compute_mtg_signals_batch is then redefined to write only the price_recent_* pair, and
--- update_mtg_signals_deprecated_do_not_call, which also referenced the old names, is updated
--- in the same step so nothing is left pointing at a column that no longer exists.
+-- compute_mtg_signals_batch was redefined first to write only the price_recent_* pair, then the
+-- old columns were dropped in the same migration. Verified after: 0 price_52w columns remain on
+-- mtg_signals, 0 functions still reference them alongside mtg_signals, and all 44,877 rows carry
+-- price_recent_high_aud with 4,845 buy and 5,902 sell verdicts standing.
+--
+-- update_mtg_signals_deprecated_do_not_call needed NO change and was deliberately left alone.
+-- It was checked rather than assumed: its price_52w references write to MTG_PRICE_SNAPSHOTS, a
+-- different table whose own abandoned pair is out of scope here, so dropping the mtg_signals
+-- columns does not touch it.
 --
 -- NOT TOUCHED, and deliberately so: mtg_price_snapshots ALSO carries price_52w_high_aud and
 -- price_52w_low_aud. Those are a different, abandoned pair, populated on only 527,793 of
