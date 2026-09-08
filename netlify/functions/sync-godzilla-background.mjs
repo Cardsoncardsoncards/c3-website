@@ -11,6 +11,13 @@ const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const GAME_SLUG            = 'godzilla-card-game'; // task-137: tcgapi.dev renamed from 'godzilla-tcg'
+// C3L-147 / C3L-169, 8 September 2026. GAME_KEY is the canonical C3 game key and is the ONLY
+// value written to sync_events.game. GAME_SLUG above stays exactly as it is: it builds the
+// upstream tcgapi.dev URL and is stored in the game_slug columns, so changing it would break
+// both. NOTE THE COMMENT ON THAT LINE: this is one of the five games whose vendor slug was
+// RENAMED under us, each rename leaving a stub of orphaned sync_events rows under the old
+// name. That is precisely why the game key wins here and the vendor slug does not.
+const GAME_KEY             = 'godzilla';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
@@ -152,7 +159,7 @@ async function logSyncEvent(eventType, rowsAffected = null, errorMessage = null)
       },
       body: JSON.stringify([{
         event_type:    eventType,
-        game:          GAME_SLUG,
+        game:          GAME_KEY,
         rows_affected: rowsAffected,
         error_message: errorMessage
       }]),

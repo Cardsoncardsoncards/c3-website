@@ -18,6 +18,13 @@ const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const GAME_SLUG            = 'yugioh';
+// C3L-147 / C3L-169, 8 September 2026. GAME_KEY is declared even though GAME_SLUG currently
+// holds the SAME string, and that is the point rather than redundancy. The two are different
+// facts that happen to coincide today: GAME_SLUG is the vendor's identifier and can be renamed
+// under us (it has been, on five other games), while GAME_KEY is C3's own and cannot. Writing
+// sync_events.game from GAME_KEY means a future vendor rename changes the API URL only, and
+// does NOT silently start splitting this game's history under a second name.
+const GAME_KEY             = 'yugioh';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
@@ -210,7 +217,7 @@ async function logSyncEvent(eventType, rowsAffected = null, errorMessage = null)
       },
       body: JSON.stringify([{
         event_type:    eventType,
-        game:          GAME_SLUG,
+        game:          GAME_KEY,
         rows_affected: rowsAffected,
         error_message: errorMessage
       }]),

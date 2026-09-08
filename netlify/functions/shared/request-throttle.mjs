@@ -172,7 +172,7 @@ function recordBlock(block, rec, req) {
       },
       body: JSON.stringify({
         event_type: SYNC_EVENT_TYPE,
-        game: null,
+        game: '__throttle__',
         rows_affected: rec.count,
         triggered_at: new Date().toISOString(),
         webhook_fired: false,

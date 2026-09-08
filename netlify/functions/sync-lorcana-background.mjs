@@ -11,6 +11,13 @@ const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const TCGAPI_KEY           = Netlify.env.get('TCGAPI_KEY');
 const SYNC_SECRET          = Netlify.env.get('SYNC_SECRET');
 const GAME_SLUG            = 'lorcana-tcg';
+// C3L-147 / C3L-169, 8 September 2026. GAME_KEY is the canonical C3 game key and is the ONLY
+// value written to sync_events.game. GAME_SLUG above stays exactly as it is: it builds the
+// upstream tcgapi.dev URL and is stored in the game_slug columns, so changing it would break
+// both. The two were previously the same string, which is how sync_events ended up holding
+// two vocabularies at once and why a per-game monitoring query matched only a fraction of
+// real events. Vendor slugs change under us; the game key does not.
+const GAME_KEY             = 'lorcana';
 const TCGAPI_BASE          = 'https://api.tcgapi.dev/v1';
 const RATE_LIMIT_BUFFER    = 200;
 const MAX_PAGES            = 50;
@@ -187,7 +194,7 @@ async function logSyncEvent(eventType, rowsAffected = null, errorMessage = null)
       },
       body: JSON.stringify([{
         event_type:    eventType,
-        game:          GAME_SLUG,
+        game:          GAME_KEY,
         rows_affected: rowsAffected,
         error_message: errorMessage
       }]),

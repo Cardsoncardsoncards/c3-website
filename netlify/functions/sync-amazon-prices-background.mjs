@@ -181,7 +181,7 @@ async function logSyncEvent(eventType, rowsAffected = null) {
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify([{ event_type: eventType, game: null, rows_affected: rowsAffected }]),
+      body: JSON.stringify([{ event_type: eventType, game: 'amazon-prices', rows_affected: rowsAffected }]),
       signal: controller.signal
     });
     clearTimeout(timer);
