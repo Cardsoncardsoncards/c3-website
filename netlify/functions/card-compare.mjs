@@ -90,10 +90,18 @@ async function fetchMTGCard(token, usdToAud) {
   }
   if (!card) return null;
 
-  const [snapshots, cheapestPrinting] = await Promise.all([
-    supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.asc&limit=14&select=snapshot_date,price_aud,price_usd,price_buy_ck_aud,price_buy_ck_usd`).catch(() => []),
+  // Order DESC so the 14 rows we get are the fourteen most RECENT snapshots, then reverse to
+  // chronological for everything downstream. This used to be .asc with no date filter, which
+  // returned the OLDEST 14 rows in the table: the sparkline, the change percentage and the
+  // "Updated" date were all describing a fixed historical fortnight (Time Walk was showing a
+  // May 2026 window in September). Deliberately no CURRENT_DATE filter: like the signals window
+  // (C3L-34) this anchors on the data, so a card whose sync has stalled shows its last real
+  // fortnight rather than an empty comparison.
+  const [snapshotsDesc, cheapestPrinting] = await Promise.all([
+    supabaseGet(`mtg_price_snapshots?scryfall_id=eq.${card.scryfall_id}&order=snapshot_date.desc&limit=14&select=snapshot_date,price_aud,price_usd,price_buy_ck_aud,price_buy_ck_usd`).catch(() => []),
     supabaseGet(`mtg_cards?name=eq.${encodeURIComponent(card.name)}&scryfall_id=neq.${encodeURIComponent(card.scryfall_id)}&select=slug,set_name,price_aud,price_usd&order=price_aud.asc.nullslast&limit=1`).catch(() => [])
   ]);
+  const snapshots = Array.isArray(snapshotsDesc) ? snapshotsDesc.slice().reverse() : [];
 
   const priceAud     = card.price_aud > 0 ? parseFloat(card.price_aud) : (card.price_usd ? parseFloat(card.price_usd) * usdToAud : null);
   const priceAudFoil = card.price_usd_foil ? parseFloat(card.price_usd_foil) * usdToAud : null;
@@ -195,9 +203,16 @@ async function fetchNonMTGCard(game, slug, usdToAud, cfg) {
   let sevenDayChange  = null;
   let buySignal       = null;
   try {
-    const snaps = await supabaseGet(`${snapshotTable}?card_id=eq.${card.id}&order=snapshot_date.asc&limit=14`);
-    if (snaps && snaps.length >= 2) {
-      sparklinePoints = snaps.map(s => parseFloat(s.price_aud || s.price_usd * usdToAud || 0)).filter(v => v > 0);
+    // DESC then reversed, for the same reason as the MTG branch above: .asc with no date filter
+    // returned the OLDEST 14 rows in the table, so the sparkline and the change percentage
+    // described a fixed historical fortnight rather than recent movement.
+    // The USD fallback reads market_price, not price_usd: these 31 tables have no price_usd
+    // column at all, so the old `s.price_usd * usdToAud` was always NaN and fell through to 0,
+    // which `v > 0` then discarded. Any card with a null price_aud silently lost that point.
+    const snapsDesc = await supabaseGet(`${snapshotTable}?card_id=eq.${card.id}&order=snapshot_date.desc&limit=14&select=snapshot_date,price_aud,market_price`);
+    const snaps = Array.isArray(snapsDesc) ? snapsDesc.slice().reverse() : [];
+    if (snaps.length >= 2) {
+      sparklinePoints = snaps.map(s => parseFloat(s.price_aud || (s.market_price ? s.market_price * usdToAud : 0) || 0)).filter(v => v > 0);
       if (sparklinePoints.length >= 2) {
         const first = sparklinePoints[0];
         const last  = sparklinePoints[sparklinePoints.length - 1];
@@ -332,9 +347,11 @@ function buildMetricBars(cards, allMtg) {
     const s = cardMetricScores(c);
     return row(c, i, (s.price / 10) * 100, c.priceAud ? (fmtAUD(c.priceAud) || 'N/A') : 'N/A');
   }).join('')}</div>`);
-  // Trend -- signed 7-day %, green up / red down; grey "no recent data" when null
+  // Trend -- signed 14-day %, green up / red down; grey "no recent data" when null.
+  // 14 not 7: the query pulls the 14 most recent daily snapshots, and the sparkline, this
+  // number and this label now all describe that same window.
   // (no faked bar). Bar width scales |pct| x5 so a 20% move fills the track.
-  groups.push(`<div class="metric-group"><div class="metric-group-label">7-Day Trend</div>${cards.map((c, i) => {
+  groups.push(`<div class="metric-group"><div class="metric-group-label">14-Day Trend</div>${cards.map((c, i) => {
     if (!c.sevenDayChange) return row(c, i, 0, 'no recent data', '#888', true);
     const pct = parseFloat(c.sevenDayChange.pct);
     const up = c.sevenDayChange.up;
@@ -625,7 +642,7 @@ function renderStatStrips(cards) {
       val: fmtAUD(hasFoil.priceAudFoil) || '-',
       sub: hasFoil.name
     } : hasTrend ? {
-      label: '7D trend',
+      label: '14D trend',
       val: `${hasTrend.sevenDayChange.up ? '▲' : '▼'} ${Math.abs(hasTrend.sevenDayChange.pct)}%`,
       sub: hasTrend.name,
       trending: true,
@@ -694,7 +711,7 @@ function renderCompareTable(cards) {
     cell(i, foilWin, `<span class="tbl-price aud-val" data-aud="${c.priceAudFoil || 0}" data-usd="${c.priceAudFoil ? (c.priceAudFoil / 1.45).toFixed(2) : 0}">${fmtAUD(c.priceAudFoil) || '-'}</span>`)
   ).join('')}</tr>` : '';
 
-  const trendRow = `<tr><th class="tbl-label">7D Trend</th>${cards.map(c => {
+  const trendRow = `<tr><th class="tbl-label">14D Trend</th>${cards.map(c => {
     if (!c.sevenDayChange) return `<td class="tbl-val tbl-dim">-</td>`;
     return `<td class="tbl-val"><span class="trend ${c.sevenDayChange.up ? 'trend-up' : 'trend-down'}">${c.sevenDayChange.up ? '▲' : '▼'} ${Math.abs(c.sevenDayChange.pct)}%</span></td>`;
   }).join('')}</tr>`;
@@ -1215,7 +1232,7 @@ ${cards.length >= 2 ? `
     <div class="profile-viz profile-viz-bars">${metricBars}</div>
     <div class="profile-side">
       <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px">Card Strength Profile</div>
-      <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.5;margin:6px 0 10px;">Horizontal bars compare each card on Price, 7-day Trend, a combined Value Score and Rarity${allMtg ? ', plus MTG format legality' : ''}. Longer bars indicate a stronger signal on that metric.</p>
+      <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8892b0;line-height:1.5;margin:6px 0 10px;">Horizontal bars compare each card on Price, 14-day Trend, a combined Value Score and Rarity${allMtg ? ', plus MTG format legality' : ''}. Longer bars indicate a stronger signal on that metric.</p>
       <div class="radar-legend">
         ${cards.map((c, i) => `<div class="radar-legend-item"><div class="radar-swatch" style="background:${BAR_COLORS[i] || '#888'}"></div><span>${escHtml(c.name)}</span></div>`).join('')}
       </div>
