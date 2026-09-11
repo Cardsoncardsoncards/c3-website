@@ -39,6 +39,11 @@ import { ALERTABLE_GAMES, GAME_TABLES, GAME_IMAGE_COL, GAME_LABELS } from './sha
 import { requestFingerprint } from './shared/request-fingerprint.mjs';
 import { fxRate } from './shared/fx-rate.mjs';
 
+// C3L-222. /api/card-view was the endpoint the 10 to 11 September 2026 crawl hit 114,213
+// times, and it was the one public write path with no rate limit on any key: this file was
+// not one of the 98 that import the throttle. It is now, scoped to the view beacon only.
+import { checkThrottle, throttleResponse } from './shared/request-throttle.mjs';
+
 const SUPABASE_URL = Netlify.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Netlify.env.get('SUPABASE_SERVICE_KEY');
 const SUPABASE_ANON_KEY = Netlify.env.get('SUPABASE_ANON_KEY');
@@ -165,13 +170,99 @@ async function handleLike(req) {
 // Generic sitewide view logging: writes to card_views keyed by (game, card_ref).
 // card_ref is scryfall_id for MTG (ambiguous slugs) and the unique slug for the
 // other 31 games. Best-effort analytics: never fail the request.
+//
+// C3L-222 HARDENING. Until 11 September 2026 this handler checked that `game` and `cardRef`
+// were truthy and nothing else: no rate limit, no Origin or Referer check, no test that
+// `game` was one of the 32, and no size cap on either field. A bare POST with no page load
+// behind it wrote a row, which is how one actor put 114,213 rows into card_views in 33
+// hours, 29 per cent of the table. Four checks were added, cheapest first, and each one is
+// about making a forged row cost something rather than about making it impossible.
+//
+// WHAT THIS DELIBERATELY DOES NOT DO: it does not try to decide whether the caller is a real
+// browser. C3L-222 argued against a navigator.webdriver gate on the grounds that it is
+// trivially spoofed and would suppress the very rows that made the event visible. The same
+// reasoning applies here. A determined forger can set an Origin header and read the game
+// list off the site. The point is that the beacon is no longer free.
+
+// Reject anything whose Origin or Referer is not this site. Both headers are sent by the
+// real beacon: it is a same-origin fetch POST, which always carries Origin, and
+// shared/security-headers.mjs sets Referrer-Policy to strict-origin-when-cross-origin, which
+// sends the full URL same-origin. EITHER matching is enough, so a privacy tool that strips
+// one of the two does not cost a real visitor their view.
+// The canonical hosts, plus whatever host this request actually arrived on. The second half
+// is what makes the check work on a deploy preview (*.netlify.app) without a special case,
+// and it is the more honest test anyway: what is being asked is "did this beacon come from a
+// page on the site that served it", which is a same-origin question.
+const VIEW_ALLOWED_HOSTS = new Set(['cardsoncardsoncards.com.au', 'www.cardsoncardsoncards.com.au']);
+
+function viewHostAllowed(req, host) {
+  if (VIEW_ALLOWED_HOSTS.has(host)) return true;
+  try { return new URL(req.url).hostname === host; } catch { return false; }
+}
+
+// The same shape the router already returns for a wrong method on this route: a 404 that
+// says nothing about why. no-store is added because a rejection must never be cached and
+// then served back to a real visitor whose next request would have been fine.
+function notFoundNoStore() {
+  return new Response(JSON.stringify({ error: 'Not found' }), {
+    status: 404,
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store',
+      'X-Robots-Tag': 'noindex',
+    },
+  });
+}
+
+function originAllowed(req) {
+  const origin = req.headers.get('origin');
+  const referer = req.headers.get('referer');
+  if (!origin && !referer) return false;
+  for (const value of [origin, referer]) {
+    if (!value) continue;
+    try {
+      if (viewHostAllowed(req, new URL(value).hostname)) return true;
+    } catch { /* unparseable header, treat as no evidence */ }
+  }
+  return false;
+}
+
 async function handleView(req, context) {
-  const body = await req.json();
+  // ORDER MATTERS AND IT IS NOT THE SAME ORDER AS A PAGE FUNCTION. The 98 page functions call
+  // checkThrottle as their very first statement, because a URL path is all the throttle needs.
+  // This endpoint has one path for every request, so its breadth key has to be the card, which
+  // cannot be known until the body is parsed. The guarantee that actually matters is preserved:
+  // nothing here touches Supabase until every check has passed. Parsing JSON and slicing two
+  // strings is not a round trip, and the cheap rejections (unknown game, bad Origin) are done
+  // before the throttle so that obvious junk never even costs a counter write.
+  const body = await req.json().catch(() => ({}));
   let { game, cardRef, sessionId, scryfallId } = body;
   // Backward-compat: the old MTG-only client shape sent { scryfallId } with no
   // game/cardRef, so any caller not yet redeployed keeps working as game='mtg'.
   if (!game && scryfallId) { game = 'mtg'; cardRef = scryfallId; }
   if (!game || !cardRef) return json({ ok: true });
+
+  // Cap both before they are used as a throttle key or written, exactly as handlePageView
+  // caps path and pageType and requestFingerprint caps user_agent at 400. They arrive from
+  // the client and are attacker controlled. Real data sits far inside these: measured 11
+  // September 2026 across all 387,707 rows, the longest card_ref is 160 characters, the
+  // longest game 17 and the longest session_id 14.
+  game = String(game).slice(0, 32);
+  cardRef = String(cardRef).slice(0, 200);
+  sessionId = sessionId ? String(sessionId).slice(0, 64) : null;
+
+  // Not one of the 32 games in shared/game-meta.mjs. GAME_TABLES is the canonical roster and
+  // is already imported by this file for the follow path.
+  if (!GAME_TABLES[game]) return notFoundNoStore();
+
+  if (!originAllowed(req)) return notFoundNoStore();
+
+  const t = await checkThrottle(req, {
+    scope: 'card-view',
+    breadthKey: `${game}:${cardRef}`,
+  });
+  if (t.throttled) return throttleResponse(t.retryAfter);
+
   try {
     await supabasePost('card_views', {
       game,
